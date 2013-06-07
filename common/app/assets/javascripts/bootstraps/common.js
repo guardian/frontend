@@ -28,7 +28,6 @@ define([
     'modules/analytics/omnitureMedia',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/swipenav',
     "modules/adverts/video"
 ], function (
     common,
@@ -59,7 +58,6 @@ define([
     OmnitureMedia,
     Debug,
     AB,
-    swipeNav,
     VideoAdvert
 ) {
 
@@ -231,25 +229,6 @@ define([
                     }, config.modules.sharedWisdomToolbar);
                 });
             }
-        },
-
-        initSwipe: function(config) {
-            if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
-                swipeNav(config);
-            }
-            if (config.switches.swipeNav && detect.canSwipe()) {
-                bonzo(document.body).addClass('can-swipe');
-                common.mediator.on('module:clickstream:click', function(clickSpec){
-                    if (clickSpec.tag.indexOf('switch-swipe-on') > -1) {
-                        userPrefs.switchOn('swipe');
-                        window.location.reload();
-                    }
-                    else if (clickSpec.tag.indexOf('switch-swipe-off') > -1) {
-                        userPrefs.switchOff('swipe');
-                        window.location.reload();
-                    }
-                });
-            }
         }
     };
 
@@ -280,7 +259,6 @@ define([
             modules.transcludeTopStories();
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
-            modules.initSwipe(config);
         }
         common.mediator.emit("page:common:ready", config, context);
     };
