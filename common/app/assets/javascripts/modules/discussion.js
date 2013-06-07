@@ -27,10 +27,10 @@ define([
             commentsHaveLoaded    = false,
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
-            actionsTemplate       = '<button class="d-actions__link js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
+            actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<div class="d-actions">' +
                 '<a class="d-actions__link" href="' + config.page.canonicalUrl + '?mobile-redirect=false#start-of-comments">' +
-                    'Want to comment? Visit the desktop site ›</a>' +
+                    'Want to comment? Visit the desktop site</a>' +
                 '<button class="top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
             self;
 
