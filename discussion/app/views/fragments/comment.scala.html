@@ -2,7 +2,8 @@
 
 <li class="d-comment
            @if(isResponse){d-comment--response}else{d-comment--top-level}
-           @if(comment.isBlocked){d-comment--blocked}"
+           @if(comment.isBlocked){d-comment--blocked}
+           @if(comment.responses.nonEmpty){d-comment--has-replies}"
     id="comment-@comment.id">
     <div class="d-comment__inner">
         @if(comment.isHighlighted && !comment.isBlocked){
