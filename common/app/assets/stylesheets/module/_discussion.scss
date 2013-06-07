@@ -80,8 +80,11 @@
     padding-top: 12px;
     position: relative;
 }
+// Highlight the targetted Comment.
+// ie: http://path/to/url#comment-123
+//     highlights comment with ID 123
 .d-comment:target > .d-comment__inner {
-    background: rgba(149, 177, 202, .3);
+    background: $mushroom;
     padding-left: 4px;
     padding-right: 4px;
     margin-left: -4px;
