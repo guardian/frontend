@@ -1,7 +1,7 @@
 !function ($) {
   var r = require('reqwest')
-    , integrate = function(method) {
-        return function() {
+    , integrate = function (method) {
+        return function () {
           var args = Array.prototype.slice.call(arguments, 0)
             , i = (this && this.length) || 0
           while (i--) args.unshift(this[i])
@@ -16,6 +16,7 @@
     , serialize: r.serialize
     , serializeArray: r.serializeArray
     , toQueryString: r.toQueryString
+    , ajaxSetup: r.ajaxSetup
   })
 
   $.ender({
