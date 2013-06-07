@@ -331,11 +331,12 @@
 .d-show-cta:visited,
 .d-show-cta:hover,
 .d-show-cta:focus {
-  @extend %type-5;
+  @extend %type-6;
+  position: relative;
   line-height: 1em;
   display: block;
   margin: $baseline*2 $gutter $baseline*4 $gutter;
-  padding: $baseline*3 $baseline*2 $baseline*2 $baseline*2;
+  padding: $baseline*4 $baseline*2 $baseline*4 $baseline*2;
   text-align: left;
   overflow: auto;
   background-color: $mushroom;
@@ -343,7 +344,9 @@
   @include box-sizing(border-box);
 
   .d-commentcount {
-    float: right;
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 }
 
