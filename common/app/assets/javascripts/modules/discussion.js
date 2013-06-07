@@ -53,16 +53,17 @@ define([
                         self.bindEvents();
                     }
                 });
+
             },
 
             upgradeByline: function(commentCount) {
                 var bylineNode = bonzo(context.querySelector('.byline'));
                 var tabsHtml = '<div class="d-tabs">' +
                                  '<ol class="d-tabs__container unstyled">' +
-                                 '  <li class="d-tabs__byline d-tabs--active js-show-article" data-link-name="Article Tab" data-is-ajax>' +
+                                 '  <li class="d-tabs__item d-tabs__item--byline d-tabs__item--is-active js-show-article" data-link-name="Article Tab" data-is-ajax>' +
                                       bylineNode.html() +
                                  '  </li>' +
-                                 '  <li class="d-tabs__commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
+                                 '  <li class="d-tabs__item d-tabs__item--commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
                                  '    <button class="d-commentcount speech-bubble">'+ commentCount + '</button>' +
                                  '  </li>' +
                                  '</ol>' +
@@ -169,8 +170,8 @@ define([
 
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
                     e.preventDefault();
-                    bonzo(tabsNode.querySelectorAll('li')).removeClass('d-tabs--active');
-                    bonzo(tabsNode.querySelector('.d-tabs__commentcount')).addClass('d-tabs--active');
+                    bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
+                    bonzo(tabsNode.querySelector('.d-tabs__item--commentcount')).addClass('d-tabs__item--is-active');
 
                     self.discussionContainerNode.style.display = 'block';
                     self.articleContainerNode.style.display = 'none';
@@ -182,8 +183,8 @@ define([
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
-                    bonzo(tabsNode.querySelectorAll('li')).removeClass('d-tabs--active');
-                    bonzo(tabsNode.querySelector('.d-tabs__byline')).addClass('d-tabs--active');
+                    bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
+                    bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
 
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';
