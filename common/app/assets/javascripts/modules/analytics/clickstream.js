@@ -32,7 +32,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
             return !urlHost || (urlHost === host && urlProtocol === protocol);
         };
 
-        var getClickSpec = function (spec) {
+        var getClickSpec = function (spec, forceValid) {
             var el = spec.el,
                 elName = el.tagName.toLowerCase(),
                 dataLinkName = el.getAttribute('data-link-name'),
@@ -59,7 +59,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
             }
 
             if(!spec.validTarget) {
-                spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0;
+                spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0 || forceValid;
                 if(spec.validTarget) {
                     spec.target = el;
                     href = el.getAttribute('href');
