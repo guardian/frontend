@@ -3,12 +3,14 @@ define([
 
     "modules/autoupdate",
     "modules/matchnav",
-    "modules/analytics/reading"
+    "modules/analytics/reading",
+    "modules/discussion"
 ], function (
     common,
     AutoUpdate,
     MatchNav,
-    Reading
+    Reading,
+    Discussion
 ) {
 
     var modules = {
@@ -46,11 +48,23 @@ define([
             });
         },
 
+        initDiscussion: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.page.commentable) {
+                    var discussionArticle = new Discussion({
+                        id: config.page.shortUrl,
+                        context: context,
+                        config: config
+                    }).init();
+                }
+            });
+        },
+
         logReading: function(context) {
             common.mediator.on('page:article:ready', function(config, context) {
                 var wordCount = config.page.wordCount;
                 if(wordCount !== "") {
-                    
+
                     var reader = new Reading({
                         id: config.page.pageId,
                         wordCount: parseInt(config.page.wordCount, 10),
@@ -70,6 +84,8 @@ define([
             modules.matchNav();
             modules.initLiveBlogging();
             modules.logReading(context);
+
+            modules.initDiscussion();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

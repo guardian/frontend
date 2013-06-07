@@ -55,7 +55,7 @@
 }
 
 .article-body {
-    padding: 0 $gutter $baseline*2 $gutter;
+    padding: $baseline*2 $gutter $baseline*2 $gutter;
 }
 
 .gu-video {
@@ -67,4 +67,8 @@ video {
     max-width: 100%;
     height: auto;
     @include user-select;
+}
+
+.article__discussion {
+    margin: 0 $gutter;
 }
