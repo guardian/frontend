@@ -17,7 +17,7 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
 
   it should "return JSONP when callback is supplied" in Fake {
     val fakeRequest = FakeRequest(GET, s"${articleUrl}?callback=$callbackName")
-        .withHeaders("host" -> "localhost:9000")
+      .withHeaders("host" -> "localhost:9000")
         
     val result = controllers.ArticleController.render(articleUrl)(fakeRequest)
     status(result) should be(200)
@@ -58,9 +58,10 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP for expired content" in Fake {
-    val fakeRequest = FakeRequest(GET, s"/${expiredArticle}?callback=${callbackName}").withHeaders("host" -> "localhost:9000")
-    val result = controllers.ArticleController.render(expiredArticle)(fakeRequest)
+    val fakeRequest = FakeRequest(GET, s"/${expiredArticle}?callback=${callbackName}")
+      .withHeaders("host" -> "localhost:9000")
 
+    val result = controllers.ArticleController.render(expiredArticle)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""") // the callback

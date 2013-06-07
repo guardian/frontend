@@ -19,7 +19,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
   )
 
 
-  def render(path: String) = Action { implicit request =>
+  def render(path: String, format: String = "html") = Action { implicit request =>
     val edition = Edition(request)
     val globalPopular = MostPopularAgent.mostPopular(edition).map(MostPopular("The Guardian", "", _)).toList
     val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)

@@ -5,11 +5,15 @@
 # For dev machines
 GET    /assets/*file                    controllers.Assets.at(path="/public", file)
 
-GET    /most-read                       controllers.MostPopularController.render(path = "")
-GET    /most-read/*path                 controllers.MostPopularController.render(path)
+GET    /most-read                       controllers.MostPopularController.render(path = "", format = "html")
+GET    /most-read.:format               controllers.MostPopularController.render(path = "", format)
+GET    /most-read/*path                 controllers.MostPopularController.render(path, format = "html")
+GET    /most-read/*path.:format         controllers.MostPopularController.render(path, format)
 
-GET    /top-stories                     controllers.TopStoriesController.render()
-GET    /top-stories/trails              controllers.TopStoriesController.renderTrails()
+GET    /top-stories                     controllers.TopStoriesController.render(format = "html")
+GET    /top-stories.:format             controllers.TopStoriesController.render(format)
+GET    /top-stories/trails              controllers.TopStoriesController.renderTrails(format = "html")
+GET    /top-stories/trails.:format      controllers.TopStoriesController.renderTrails(format)
 
 GET    /related/*path                   controllers.RelatedController.render(path)
 
