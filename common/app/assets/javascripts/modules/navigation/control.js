@@ -18,8 +18,6 @@ define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
                     });
                 }
             });
-
-            this.reset();
         };
 
         this.reset = function() {
