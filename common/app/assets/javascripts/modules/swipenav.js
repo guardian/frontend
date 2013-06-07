@@ -26,6 +26,7 @@ define([
         clickSelector,
         contentAreaTop,
         header,
+        headerTopPos = 0,
         height,
         hiddenPaneMargin = 0,
         initiatedBy = 'initial',
@@ -401,7 +402,9 @@ define([
     function pinHeader() {
         var scrollTop = body.scrollTop();
         header = header || $('#header');
-        header.css('top', scrollTop + 'px');
+        if(scrollTop !== headerTopPos) {
+            header.css('top', scrollTop + 'px');
+        }
     }
 
     var pushDownSidepanes = common.debounce(function(){
