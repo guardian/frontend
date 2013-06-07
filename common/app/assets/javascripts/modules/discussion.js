@@ -30,8 +30,8 @@ define([
             actionsTemplate       = '<button class="d-actions__link js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<div class="d-actions">' +
                 '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments?mobile-redirect=false">' +
-                    'Want to comment? Visit the desktop site</a>' +
-                '<button class="top js-show-article" data-link-name="Discussion: Back to article">Return to article</button></div>',
+                    'Want to comment? Visit the desktop site ›</a>' +
+                '<button class="top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
             self;
 
         return {
@@ -68,8 +68,6 @@ define([
                                  '  </li>' +
                                  '</ol>' +
                                '</div>';
-
-
 
                 bylineNode.replaceWith(tabsHtml);
                 Array.prototype.forEach.call(context.querySelectorAll(".d-commentcount"), function(el) {

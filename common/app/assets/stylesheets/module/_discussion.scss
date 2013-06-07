@@ -61,12 +61,12 @@
     margin-bottom: 1em;
 }
 .d-thread .d-thread {
-    padding-left: 24px; /* aligns with top level comment's body */
-    border-left: 12px solid $darkMushroom;
+    padding-left: 28px; /* aligns with top level comment's body */
+    border-left: 8px solid $darkMushroom;
 
     @media (min-width: 768px) {
-        padding-left: 40px;
-        border-left-width: 20px;
+        padding-left: 44px;
+        border-left-width: 16px;
     }
 }
 .d-comment {
