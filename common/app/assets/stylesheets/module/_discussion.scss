@@ -84,12 +84,17 @@
     padding-top: 12px;
     position: relative;
 }
+// Highlight targetted comment
+// ie: http://path/to/url#comment-123
+//     highlights comment with ID 123
 .d-comment:target > .d-comment__inner {
-    background: rgba(149, 177, 202, .3);
-    padding-left: 4px;
-    padding-right: 4px;
-    margin-left: -4px;
-    margin-right: -4px;
+    background: $mushroom;
+
+    $highlightBleedingOffset: $gutter/4;
+    padding-left: $highlightBleedingOffset;
+    padding-right: $highlightBleedingOffset;
+    margin-left: $highlightBleedingOffset * -1;
+    margin-right: $highlightBleedingOffset * -1;
 }
 
 .d-comment__pick {
@@ -294,19 +299,19 @@
     border: 0;
     border-radius: 4px;
     text-align: center;
-    font: normal 14px/1 "EgyptianText",georgia,serif;
+    font: normal 14px/1 $serif;
     color: white;
     text-decoration: none;
+}
 
-    &:after {
-        content: "";
-        position: absolute;
-        bottom: -7px;
-        left: 6px;
-        border-width: 0 0 8px 8px;
-        border-style: solid;
-        border-color: transparent #F5644F;
-    }
+.speech-bubble:after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: 6px;
+    border-width: 0 0 8px 8px;
+    border-style: solid;
+    border-color: transparent #F5644F;
 }
 
 .d-actions {

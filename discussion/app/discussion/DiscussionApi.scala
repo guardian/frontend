@@ -8,12 +8,13 @@ import org.joda.time.DateTime
 
 // TODO
 case class CommentPage(
+  override val id: String,
   title: String,
   comments: Seq[Comment],
   contentUrl: String,
   currentPage: Int,
   pages: Int
-) extends Page(canonicalUrl = None, id = "TODO", section = "TODO", webTitle = title, analyticsName = "TODO") {
+) extends Page(canonicalUrl = None, id = id, section = "Global", webTitle = title, analyticsName = s"GFE:Article:Comment discussion page $currentPage") {
   lazy val hasMore: Boolean = currentPage < pages
 }
 
@@ -37,6 +38,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           }
 
           CommentPage(
+            id = s"discussion/$id",
             title = (json \ "discussion" \ "title").as[String],
             contentUrl = InBodyLink((json \ "discussion" \ "webUrl").as[String]),
             comments = comments,
