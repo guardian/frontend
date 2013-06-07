@@ -462,8 +462,6 @@ define([
         // SwipeView
         panes = new SwipeView(swipeContainer, {});
 
-        updateHeight();
-
         panes.onFlip(function () {
             paneNow = mod3(panes.pageIndex+1);
             if (paneThen !== paneNow) {
@@ -581,7 +579,10 @@ define([
                 clickSelector = "a:not([data-is-ajax]):not(.control)";
             }
 
-            // Set up the DOM structure
+            // Set explicit height on container, because it's about to be absolute-positioned.
+            updateHeight();
+
+            // Set up the DOM structure, CSS
             prepareDOM();
 
             // Set the initial sequence
