@@ -186,6 +186,8 @@ define([
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--commentcount')).addClass('d-tabs__item--is-active');
 
+                    bonzo(context.querySelector('.d-show-cta')).addClass('h');
+
                     self.discussionContainerNode.style.display = 'block';
                     self.articleContainerNode.style.display = 'none';
 
@@ -200,6 +202,7 @@ define([
                 bean.on(context, 'click', '.js-show-article', function(e) {
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
+                    bonzo(context.querySelector('.d-show-cta')).removeClass('h');
 
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';
