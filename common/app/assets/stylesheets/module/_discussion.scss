@@ -320,14 +320,41 @@
 
 /* CTA's
  ========================================================================== */
-.d-actions {
-  border-top: 2px solid #EDEDE7;
+.d-actions .top {
+  color: #808080;
+  background-color: #fff;
+  border: 1px solid #bbb;
+  position: relative;
+  padding-left: $gutter*2;
 }
 
-.d-actions__link {
-  @extend %type-8;
+.d-actions .top:before {
+  @extend .i-filter-arrow-right;
+  position:absolute;
+  top:10px;
+  left: 10px;
+  content: ' ';
+  display: inline-block;
+  @include rotate(-90deg);
+}
+
+.d-actions__link,
+.d-actions__link:link,
+.d-actions__link:visited,
+.d-actions__link:hover,
+.d-actions__link:focus {
+  @extend %type-11;
+  padding-right: $gutter*2;
+  color: #808080;
   display: block;
   margin: $baseline*4 0;
+}
+
+.d-actions__link:after {
+  margin: 0 0 -3px 20px;
+  content: ' ';
+  display: inline-block;
+  @extend .i-filter-arrow-right;
 }
 
 .d-show-cta,
