@@ -23,15 +23,15 @@
                         </a>
                     }
 
-                    <a href="/stories/@story.id" class="type-7 trail-story-title" data-link-name="story | title">@story.title</a>
+                    <a href="/stories/@story.id" class="type-7 trail__story-title" data-link-name="story | title">@story.title</a>
 
-                    <h2 class="media-body trail-headline type-5">
+                    <h2 class="media-body trail__headline type-5">
                         <a href="/stories/@story.id" data-link-name="story | text" data-article-url="@trail.url">
                             @RemoveOuterParaHtml(trail.headlineOverride)
                         </a>
                     </h2>
 
-                    @trail.trailText.map { text => <div class="trail-text">@cleanTrailText(text)</div> }
+                    @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
                 </div>
 
             </li>
