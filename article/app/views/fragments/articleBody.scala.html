@@ -1,4 +1,5 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
+@import CommonSwitches.DiscussionSwitch
 
 <h2 class="article-zone type-1">
     <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
@@ -47,7 +48,7 @@
         </div>
     </div>
 
-    @if(article.isCommentable) {
+    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
         <div class="article__discussion"></div>
     }
 
@@ -55,7 +56,7 @@
 
 @fragments.social(article)
 
-@if(article.isCommentable) {
+@if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
     <div class="article__discussion"></div>
     <a class="d-show-cta js-show-discussion js-top" href="/discussion/@article.shortUrlId" data-link-name="View all comments">
         View all comments <span class="d-commentcount speech-bubble"></span>
