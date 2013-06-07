@@ -5,7 +5,8 @@ import play.api.libs.ws.WS
 import play.api.libs.json.{JsArray, Json}
 import model._
 import System.currentTimeMillis
-import conf.DiscussionHttpTimingMetric
+import conf.{CommonSwitches, DiscussionHttpTimingMetric}
+import CommonSwitches._
 
 // TODO
 case class CommentPage(
@@ -23,7 +24,9 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
   def commentsFor(id: String, page: String) = {
 
-    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=50&page=$page&orderBy=oldest&showSwitches=true"
+    val size = if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
+
+    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=$size&page=$page&orderBy=oldest&showSwitches=true"
 
     val start = currentTimeMillis
 
