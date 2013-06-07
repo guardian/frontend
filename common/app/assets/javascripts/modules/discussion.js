@@ -31,7 +31,7 @@ define([
                 '<div class="d-actions">' +
                 '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments">' +
                     'Want to comment? Visit the desktop site</a>' +
-                '<button class="top js-show-article">Back to article</button></div>',
+                '<button class="top js-show-article" data-link-name="Discussion: Back to article">Back to article</button></div>',
             self;
 
         return {
@@ -165,12 +165,13 @@ define([
 
             bindEvents: function() {
                 // Setup events
-                var tabsNode = context.querySelector('.d-tabs');
+                var tabsNode = context.querySelector('.d-tabs__container');
 
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
                     e.preventDefault();
-                    bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
-                    bonzo(e.currentTarget).addClass('d-tabs--active');
+                    bonzo(tabsNode.querySelectorAll('li')).removeClass('d-tabs--active');
+                    bonzo(tabsNode.querySelector('.d-tabs__commentcount')).addClass('d-tabs--active');
+
                     self.discussionContainerNode.style.display = 'block';
                     self.articleContainerNode.style.display = 'none';
 
@@ -181,10 +182,16 @@ define([
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
-                    bonzo(e.currentTarget.parentNode.children).removeClass('d-tabs--active');
-                    bonzo(e.currentTarget).addClass('d-tabs--active');
+                    bonzo(tabsNode.querySelectorAll('li')).removeClass('d-tabs--active');
+                    bonzo(tabsNode.querySelector('.d-tabs__byline')).addClass('d-tabs--active');
+
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';
+
+                    if (e.currentTarget.className.indexOf('top') !== -1) {
+                        var topPos = bonzo(tabsNode).offset().top;
+                        window.scrollTo(0, topPos);
+                    }
                 });
 
                 bean.on(context, 'click', '.js-show-more-comments', function(e) {
