@@ -154,10 +154,14 @@ define([
             showMoreReplies: function(el) {
                 var threadNode = el.parentNode,
                     totalResponses = parseInt(threadNode.dataset.responses, 10),
-                    visibleResponses = parseInt(threadNode.dataset.visibleResponses, 10) + responsesIncrement,
-                    selector = '.d-comment:nth-child(n-'+(visibleResponses)+')';
+                    visibleResponses = parseInt(threadNode.dataset.visibleResponses, 10) + responsesIncrement;
 
-                bonzo(threadNode.querySelectorAll(selector)).removeAttr('hidden');
+                Array.prototype.forEach.call(threadNode.querySelectorAll('.d-comment'), function(commentNode, i) {
+                    if (i < visibleResponses) {
+                        commentNode.removeAttribute('hidden');
+                    }
+                });
+
                 threadNode.dataset.visibleResponses = visibleResponses;
 
                 if (visibleResponses >= totalResponses) {
