@@ -29,9 +29,9 @@ define([
             currentPage           = 0,
             actionsTemplate       = '<button class="d-actions__link js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<div class="d-actions">' +
-                '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments">' +
-                    'Want to comment? Visit the desktop site</a>' +
-                '<button class="top js-show-article" data-link-name="Discussion: Back to article">Back to article</button></div>',
+                '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments?mobile-redirect=false">' +
+                    'Want to comment? Visit the desktop site ›</a>' +
+                '<button class="top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
             self;
 
         return {
@@ -70,6 +70,9 @@ define([
                                '</div>';
 
                 bylineNode.replaceWith(tabsHtml);
+                Array.prototype.forEach.call(context.querySelectorAll(".d-commentcount"), function(el) {
+                    el.innerHTML = commentCount;
+                });
             },
 
             getCommentCount: function(callback) {
@@ -185,6 +188,8 @@ define([
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--commentcount')).addClass('d-tabs__item--is-active');
 
+                    bonzo(context.querySelector('.d-show-cta')).addClass('h');
+
                     self.discussionContainerNode.style.display = 'block';
                     self.articleContainerNode.style.display = 'none';
 
@@ -193,12 +198,18 @@ define([
                         self.loadDiscussion();
                     }
 
+                    if (e.currentTarget.className.indexOf('js-top') !== -1) {
+                        var topPos = bonzo(tabsNode).offset().top;
+                        window.scrollTo(0, topPos);
+                    }
+
                     location.hash = 'comments';
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
+                    bonzo(context.querySelector('.d-show-cta')).removeClass('h');
 
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';

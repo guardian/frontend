@@ -61,12 +61,12 @@
     margin-bottom: 1em;
 }
 .d-thread .d-thread {
-    padding-left: 24px; /* aligns with top level comment's body */
-    border-left: 12px solid $darkMushroom;
+    padding-left: 28px; /* aligns with top level comment's body */
+    border-left: 8px solid $darkMushroom;
 
     @media (min-width: 768px) {
-        padding-left: 40px;
-        border-left-width: 20px;
+        padding-left: 44px;
+        border-left-width: 16px;
     }
 }
 .d-comment {
@@ -314,6 +314,8 @@
     border-color: transparent #F5644F;
 }
 
+/* CTA's
+ ========================================================================== */
 .d-actions {
   border-top: 2px solid #EDEDE7;
 }
@@ -322,4 +324,33 @@
   @extend %type-8;
   display: block;
   margin: $baseline*4 0;
+}
+
+.d-show-cta,
+.d-show-cta:link,
+.d-show-cta:visited,
+.d-show-cta:hover,
+.d-show-cta:focus {
+  @extend %type-6;
+  position: relative;
+  line-height: 1em;
+  display: block;
+  margin: $baseline*2 $gutter $baseline*4 $gutter;
+  padding: $baseline*4 $baseline*2 $baseline*4 $baseline*2;
+  text-align: left;
+  overflow: auto;
+  background-color: $mushroom;
+  color: #444;
+  @include box-sizing(border-box);
+
+  .d-commentcount {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.d-show-cta:hover,
+.d-show-cta:focus {
+  background-color: $darkMushroom;
 }
