@@ -310,6 +310,8 @@
     border-color: transparent #F5644F;
 }
 
+/* CTA's
+ ========================================================================== */
 .d-actions {
   border-top: 2px solid #EDEDE7;
 }
@@ -318,4 +320,30 @@
   @extend %type-8;
   display: block;
   margin: $baseline*4 0;
+}
+
+.d-show-cta,
+.d-show-cta:link,
+.d-show-cta:visited,
+.d-show-cta:hover,
+.d-show-cta:focus {
+  @extend %type-5;
+  line-height: 1em;
+  display: block;
+  margin: $baseline*2 $gutter $baseline*4 $gutter;
+  padding: $baseline*3 $baseline*2 $baseline*2 $baseline*2;
+  text-align: left;
+  overflow: auto;
+  background-color: $mushroom;
+  color: #444;
+  @include box-sizing(border-box);
+
+  .d-commentcount {
+    float: right;
+  }
+}
+
+.d-show-cta:hover,
+.d-show-cta:focus {
+  background-color: $darkMushroom;
 }

@@ -34,6 +34,7 @@ class Content(
   lazy val webPublicationDate: DateTime = delegate.webPublicationDate
   lazy val lastModified: DateTime = fields("lastModified").parseISODateTimeNoMillis
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
+  lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
   lazy val headline: String = fields("headline")
   lazy val webTitle: String = delegate.webTitle

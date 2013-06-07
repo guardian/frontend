@@ -31,7 +31,7 @@ define([
                 '<div class="d-actions">' +
                 '<a class="d-actions__link" href="' + config.page.canonicalUrl + '#start-of-comments">' +
                     'Want to comment? Visit the desktop site</a>' +
-                '<button class="top js-show-article" data-link-name="Discussion: Back to article">Back to article</button></div>',
+                '<button class="top js-show-article" data-link-name="Discussion: Back to article">Return to article</button></div>',
             self;
 
         return {
@@ -68,7 +68,12 @@ define([
                                  '</ol>' +
                                '</div>';
 
+
+
                 bylineNode.replaceWith(tabsHtml);
+                Array.prototype.forEach.call(context.querySelectorAll(".d-commentcount"), function(el) {
+                    el.innerHTML = commentCount;
+                });
             },
 
             getCommentCount: function(callback) {
