@@ -4,14 +4,16 @@ define([
     'qwery',
     'bean',
     'ajax',
-    'modules/userPrefs'
+    'modules/userPrefs',
+    'modules/analytics/clickstream'
 ], function (
     common,
     bonzo,
     qwery,
     bean,
     ajax,
-    userPrefs
+    userPrefs,
+    ClickStream
     ) {
 
     var Discussion = function(options) {
@@ -31,13 +33,14 @@ define([
                 '<div class="d-actions">' +
                 '<a class="d-actions__link" href="' + config.page.canonicalUrl + '?mobile-redirect=false#start-of-comments">' +
                     'Want to comment? Visit the desktop site</a>' +
-                '<button class="top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
+                '<button class="top js-top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
+            clickstream           = new ClickStream({ addListener: false }),
             self;
 
         return {
             init: function() {
                 if (config.page.commentable === true &&
-                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev'))) {
+                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev')) && context.querySelector('.byline')) {
 
                         self = this;
                         self.discussionUrl           = '/discussion' + discussionId;
@@ -179,6 +182,13 @@ define([
                 return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
             },
 
+            jumpToTop: function() {
+                var tabsNode = context.querySelector('.d-tabs__container'),
+                    topPos   = bonzo(tabsNode).offset().top - tabsNode.offsetHeight;
+
+                window.scrollTo(0, topPos);
+            },
+
             bindEvents: function() {
                 // Setup events
                 var tabsNode = context.querySelector('.d-tabs__container');
@@ -199,8 +209,7 @@ define([
                     }
 
                     if (e.currentTarget.className.indexOf('js-top') !== -1) {
-                        var topPos = bonzo(tabsNode).offset().top;
-                        window.scrollTo(0, topPos);
+                        self.jumpToTop();
                     }
 
                     location.hash = 'comments';
@@ -214,9 +223,14 @@ define([
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';
 
-                    if (e.currentTarget.className.indexOf('top') !== -1) {
-                        var topPos = bonzo(tabsNode).offset().top;
-                        window.scrollTo(0, topPos);
+                    if (e.currentTarget.className.indexOf('js-top') !== -1) {
+                        self.jumpToTop();
+                    }
+
+                    // We force analytics on the Article/Byline tab, because
+                    // the byline can be a complex mix of multiple <a>'s
+                    if (e.target.className.match('.d-tabs__item--byline')) {
+                        common.mediator.emit('module:clickstream:click', clickstream.getClickSpec({el: e.target}, true));
                     }
 
                     location.hash = 'story';

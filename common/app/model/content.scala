@@ -51,7 +51,7 @@ class Content(
   override lazy val canonicalUrl = Some(webUrl)
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
-  lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
+  lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false) && byline.isDefined
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
