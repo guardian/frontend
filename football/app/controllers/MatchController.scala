@@ -40,9 +40,9 @@ object MatchController extends Controller with Football with Requests with Loggi
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
-  def renderMatchId(matchId: String) = render(Competitions.findMatch(matchId))
+  def renderMatchId(matchId: String, format: String = "html") = render(Competitions.findMatch(matchId))
 
-  def renderMatch(year: String, month: String, day: String, home: String, away: String) = {
+  def renderMatch(year: String, month: String, day: String, home: String, away: String, format: String = "html") = {
 
     val date = dateFormat.parseDateTime(year + month + day).toDateMidnight
 

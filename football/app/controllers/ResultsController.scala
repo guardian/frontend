@@ -46,15 +46,17 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
       filters = filters,
       comp = comp
     )
-
+    
     Cached(page) {
-      request.getQueryString("callback").map { callback =>
+      if (request.isJson)
         JsonComponent(
-          resultsPage.page,
-          Switches.all,
-          "html" -> views.html.fragments.matchesBody(resultsPage),
-          "more" -> Html(previousPage.getOrElse("")))
-      }.getOrElse(Ok(views.html.matches(resultsPage)))
+          resultsPage.page, 
+          Switches.all, 
+          "html" -> views.html.fragments.matchesBody(resultsPage), 
+          "more" -> Html(previousPage.getOrElse(""))
+        )
+      else
+        Ok(views.html.matches(resultsPage))
     }
   }
 
@@ -72,11 +74,11 @@ object ResultsController extends ResultsRenderer with Logging {
     "GFE:Football:automatic:results"
   )
 
-  def renderFor(year: String, month: String, day: String) = render(
+  def renderFor(year: String, month: String, day: String, format: String = "html") = render(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
-  def render(date: Option[DateMidnight] = None) = Action { implicit request =>
+  def render(date: Option[DateMidnight] = None, format: String = "html") = Action { implicit request =>
     renderResults(page, Competitions.withTodaysMatchesAndPastResults, None, date, None)
   }
 
@@ -88,7 +90,7 @@ object ResultsController extends ResultsRenderer with Logging {
     TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamResultsController.render(tag, teamId) }
   }
 
-  def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
+  def renderTag(tag: String, format: String = "html") = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
     case today if today == DateMidnight.now => "/football/results"
@@ -100,7 +102,7 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
 
   override val daysToDisplay = 20
 
-  def renderFor(year: String, month: String, day: String, competitionName: String) = render(
+  def renderFor(year: String, month: String, day: String, competitionName: String, format: String = "html") = render(
     competitionName,
     Competitions.withTag(competitionName).get,
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)

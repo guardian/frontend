@@ -11,7 +11,7 @@ object FrontScoresController extends Controller with implicits.Football with Log
   /*
    * Finds the first competition with matches on today in a list of competition ids passed in
    */
-  def render() = Action { implicit request =>
+  def render(format: String = "html") = Action { implicit request =>
     val competitionIds = request.queryString("competitionId")
 
     val numVisible = request.getIntParameter("numVisible").getOrElse(0)
