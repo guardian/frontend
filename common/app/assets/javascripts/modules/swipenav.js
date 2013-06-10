@@ -24,9 +24,7 @@ define([
         bodyPartSelector = '.parts__body',
         canonicalLink,
         clickSelector,
-        contentAreaTop,
         header,
-        headerTopPos = 0,
         height,
         hiddenPaneMargin = 0,
         initiatedBy = 'initial',
@@ -572,7 +570,6 @@ define([
             referrerPageName = config.page.analyticsName;
             body             = $('body');
             canonicalLink    = $('link[rel=canonical]');
-            contentAreaTop   = $(swipeContainerEl).offset().top;
             visiblePane      = $('#preloads-inner > #preload-1', swipeContainerEl)[0];
 
             if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-dev-on-click')) {
