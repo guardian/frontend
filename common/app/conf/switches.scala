@@ -102,6 +102,10 @@ object CommonSwitches {
     "If this switch is on, comments are displayed on articles.",
     initiallyOn = false)
 
+  val ShortDiscussionSwitch = DefaultSwitch("short-discussion",
+    "If this switch is on, only 10 top level comments are requested from discussion api.",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     AutoRefreshSwitch,
     FontDelaySwitch,
@@ -124,7 +128,8 @@ object CommonSwitches {
     SwipeNav,
     SwipeNavOnClick,
     ABStoryArticleSwap,
-    DiscussionSwitch
+    DiscussionSwitch,
+    ShortDiscussionSwitch
   )
 }
 
