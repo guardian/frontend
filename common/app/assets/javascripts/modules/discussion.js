@@ -33,7 +33,7 @@ define([
                 '<div class="d-actions">' +
                 '<a class="d-actions__link" href="' + config.page.canonicalUrl + '?mobile-redirect=false#start-of-comments">' +
                     'Want to comment? Visit the desktop site</a>' +
-                '<button class="top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
+                '<button class="top js-top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
             clickstream           = new ClickStream({ addListener: false }),
             self;
 
@@ -182,6 +182,13 @@ define([
                 return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
             },
 
+            jumpToTop: function() {
+                var tabsNode = context.querySelector('.d-tabs__container'),
+                    topPos   = bonzo(tabsNode).offset().top - tabsNode.offsetHeight;
+
+                window.scrollTo(0, topPos);
+            },
+
             bindEvents: function() {
                 // Setup events
                 var tabsNode = context.querySelector('.d-tabs__container');
@@ -202,8 +209,7 @@ define([
                     }
 
                     if (e.currentTarget.className.indexOf('js-top') !== -1) {
-                        var topPos = bonzo(tabsNode).offset().top;
-                        window.scrollTo(0, topPos);
+                        self.jumpToTop();
                     }
 
                     location.hash = 'comments';
@@ -217,9 +223,8 @@ define([
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';
 
-                    if (e.currentTarget.className.indexOf('top') !== -1) {
-                        var topPos = bonzo(tabsNode).offset().top;
-                        window.scrollTo(0, topPos);
+                    if (e.currentTarget.className.indexOf('js-top') !== -1) {
+                        self.jumpToTop();
                     }
 
                     // We force analytics on the Article/Byline tab, because
