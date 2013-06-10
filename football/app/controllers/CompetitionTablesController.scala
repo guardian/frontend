@@ -32,7 +32,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
     } getOrElse (BadRequest("need a competition id"))
   }
 
-  def renderTeam(teamId: String) = Action { implicit request =>
+  def renderTeam(teamId: String, format: String = "html") = Action { implicit request =>
     loadTableWithTeam(teamId).map { table =>
       val html = () => views.html.fragments.frontTableBlock(table, Some(teamId))
       renderFormat(html, html, 60)

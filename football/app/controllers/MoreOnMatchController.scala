@@ -50,7 +50,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     }.getOrElse(Cached(300)(JsonNotFound()))
   }
 
-  def moreOn(matchId: String) = Action { implicit request =>
+  def moreOn(matchId: String, format: String = "html") = Action { implicit request =>
     findMatch(matchId).map { theMatch =>
       val promiseOfRelated = loadMoreOn(request, theMatch)
       Async {

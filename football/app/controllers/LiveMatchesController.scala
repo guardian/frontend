@@ -17,7 +17,7 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
     override val cacheSeconds = 10
   }
 
-  def renderFor(competitionName: String) = Action { implicit request =>
+  def renderFor(competitionName: String, format: String = "html") = Action { implicit request =>
     Competitions.competitions.find(_.url.endsWith(competitionName)).map { competition =>
       renderLive(Competitions.withCompetitionFilter(s"/football/$competitionName"), Some(competition))
     }.getOrElse(NotFound)
