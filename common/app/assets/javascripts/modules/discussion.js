@@ -40,7 +40,7 @@ define([
         return {
             init: function() {
                 if (config.page.commentable === true &&
-                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev')) && context.querySelector('.byline')) {
+                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev'))) {
 
                         self = this;
                         self.discussionUrl           = '/discussion' + discussionId;
@@ -72,7 +72,11 @@ define([
                                  '</ol>' +
                                '</div>';
 
-                bylineNode.replaceWith(tabsHtml);
+                if(bylineNode.length) {
+                    bylineNode.replaceWith(tabsHtml);
+                } else {
+                    bonzo(context.querySelector('.article__container')).before(tabsHtml);
+                }
                 Array.prototype.forEach.call(context.querySelectorAll(".d-commentcount"), function(el) {
                     el.innerHTML = commentCount;
                 });
@@ -197,7 +201,7 @@ define([
                     e.preventDefault();
 
                     //Toggles view for accidental clicks
-                    if(self.discussionContainerNode.style.display === 'block') {
+                    if(self.discussionContainerNode.style.display === 'block' && commentsHaveLoaded) {
                         bean.fire(context.querySelector('.js-show-article'), 'click');
                         return;
                     }
