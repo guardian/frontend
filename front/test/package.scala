@@ -4,8 +4,9 @@ import org.fluentlenium.core.domain.FluentWebElement
 import play.api.GlobalSettings
 import controllers.front.{Front, FrontLifecycle}
 import common.editions.Uk
+import dev.DevParametersLifecycle
 
-object FrontTestGlobal extends GlobalSettings with FrontLifecycle{
+object FrontTestGlobal extends GlobalSettings with FrontLifecycle with DevParametersLifecycle {
 
   override def onStart(app: play.api.Application) {
     //Front.startup()
