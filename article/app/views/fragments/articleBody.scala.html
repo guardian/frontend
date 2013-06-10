@@ -49,7 +49,7 @@
     </div>
 
     @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-        <div class="article__discussion"></div>
+        <div class="article__discussion article-body"></div>
     }
 
 </article>
@@ -57,7 +57,7 @@
 @fragments.social(article)
 
 @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-    <div class="article__discussion"></div>
+    <div class="article__discussion article-body"></div>
     <a class="d-show-cta js-show-discussion js-top" href="/discussion/@article.shortUrlId"
        data-is-ajax data-link-name="View all comments">
         View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
