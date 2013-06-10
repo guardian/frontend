@@ -6,5 +6,6 @@
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
-GET     /*path                      controllers.GalleryController.render(path)
+GET     /*path                      controllers.GalleryController.render(path, format = "html")
+GET     /*path.:format              controllers.GalleryController.render(path, format)
 
