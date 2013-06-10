@@ -14,7 +14,7 @@ case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections with QueryDefaults {
 
-  def render(path: String) = Action { implicit request =>
+  def render(path: String, format: String = "html") = Action { implicit request =>
     val promiseOfTag = lookup(path)
     Async {
       promiseOfTag.map {
@@ -24,7 +24,7 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     }
   }
 
-  def renderTrails(path: String) = Action { implicit request =>
+  def renderTrails(path: String, format: String = "html") = Action { implicit request =>
     val promiseOfTag = lookup(path)
     Async {
       promiseOfTag.map {

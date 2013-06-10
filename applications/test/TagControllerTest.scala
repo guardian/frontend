@@ -19,7 +19,7 @@ class TagControllerTest extends FlatSpec with ShouldMatchers {
   it should "return JSONP when callback is supplied" in Fake {
     val fakeRequest = FakeRequest(GET, s"${tagUrl}?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
-
+      
     val result = TagController.render(tagUrl)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
@@ -30,7 +30,7 @@ class TagControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"${tagUrl}.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-
+    
     val result = TagController.render(tagUrl)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
