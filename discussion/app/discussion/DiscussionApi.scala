@@ -43,7 +43,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           val json = Json.parse(response.body)
 
           val comments = (json \\ "comments")(0).asInstanceOf[JsArray].value.map{ commentJson =>
-            val responses = (commentJson \\ "responses")(0).asInstanceOf[JsArray].value.map(responseJson => Comment(responseJson))
+            val responses = (commentJson \\ "responses").headOption.map(_.asInstanceOf[JsArray].value.map(responseJson => Comment(responseJson))).getOrElse(Nil)
             Comment(commentJson, responses)
           }
 
