@@ -19,7 +19,7 @@ class GalleryControllerTest extends FlatSpec with ShouldMatchers {
   it should "return JSONP when callback is supplied" in Fake {
     val fakeRequest = FakeRequest(GET, s"${galleryUrl}?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
-
+      
     val result = controllers.GalleryController.render(galleryUrl)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
@@ -30,7 +30,7 @@ class GalleryControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"${galleryUrl}.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-
+      
     val result = controllers.GalleryController.render(galleryUrl)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
