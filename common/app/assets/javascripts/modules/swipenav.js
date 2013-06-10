@@ -407,7 +407,7 @@ define([
     var pushDownSidepanes = common.debounce(function(){
         hiddenPaneMargin = Math.max( 0, body.scrollTop());
 
-        if( hiddenPaneMargin <= visiblePaneMargin) {
+        if( hiddenPaneMargin < visiblePaneMargin) {
             // We've scrolled up over the offset; reset all margins and jump to topmost scroll
             $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
             $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
