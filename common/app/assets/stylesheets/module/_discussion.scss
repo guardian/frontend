@@ -7,6 +7,10 @@
     max-width: 600px; // Cap the number of words per line for readability
 }
 
+.d-discussion__header {
+    margin-bottom: $baseline*3;
+}
+
 $keylineColor: darken($darkMushroom, 15%);
 $keylineSize: 1px;
 
@@ -72,8 +76,7 @@ $keylineSize: 1px;
 
 .d-thread {
     list-style: none;
-    margin-left: 0;
-    margin-bottom: 1em;
+    margin: 0 0 1em;
 }
 .d-thread .d-thread {
     padding-left: 28px; /* aligns with top level comment's body */
@@ -87,9 +90,6 @@ $keylineSize: 1px;
 .d-comment {
     color: #333;
     font-family: sans-serif;
-}
-.d-comment + .d-comment,
-.d-thread .d-thread .d-comment {
     border-top: 1px solid #EDEDE7;
 }
 .d-comment--has-replies + .d-comment {
@@ -100,7 +100,7 @@ $keylineSize: 1px;
     opacity: .5;
 }
 .d-comment__inner {
-    padding-top: 12px;
+    padding-top: $baseline*3;
     position: relative;
 }
 // Highlight targetted comment
@@ -250,9 +250,10 @@ $keylineSize: 1px;
     *zoom:1; /* 4 */
 }
 
-.d-comment__meta-item {
+.d-meta-item {
     color: #767676;
     font-size: .85714285714em;
+    font-family: $sans-serif; // Force font when used outside of comment context
 }
 
 .d-comment__actions {
