@@ -40,7 +40,7 @@ define([
         return {
             init: function() {
                 if (config.page.commentable === true &&
-                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev'))) {
+                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev')) && context.querySelector('.byline')) {
 
                         self = this;
                         self.discussionUrl           = '/discussion' + discussionId;
