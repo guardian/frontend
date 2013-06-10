@@ -14,7 +14,7 @@ case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestCo
 
 object SectionController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
-  def render(path: String) = Action { implicit request =>
+  def render(path: String, format: String = "html") = Action { implicit request =>
     val promiseOfSection = lookup(path)
     Async {
       promiseOfSection.map {
@@ -24,7 +24,7 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     }
   }
 
-  def renderTrails(path: String) = Action { implicit request =>
+  def renderTrails(path: String, format: String = "html") = Action { implicit request =>
     val promiseOfSection = lookup(path)
     Async {
       promiseOfSection.map {

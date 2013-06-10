@@ -4,16 +4,23 @@
 
 
 # For dev machines
-GET     /assets/*file                              controllers.Assets.at(path="/public", file)
+GET     /assets/*file                                                 controllers.Assets.at(path="/public", file)
 
-GET		/sections					               controllers.SectionsController.render()
+GET		/sections					                                  controllers.SectionsController.render(format = "html")
+GET     /sections.:format                                             controllers.SectionsController.render(format)
 
-GET    /$path<(?!culture|sport|australia)[\w\d-]*>/trails    controllers.SectionController.renderTrails(path)
-GET    /$path<(?!culture|sport|australia)[\w\d-]*>           controllers.SectionController.render(path)
+GET     /$path<(?!culture|sport|australia)[\w\d-]*>/trails            controllers.SectionController.renderTrails(path, format = "html")
+GET     /$path<(?!culture|sport|australia)[\w\d-]*>/trails.:format    controllers.SectionController.renderTrails(path, format)
+GET     /$path<(?!culture|sport|australia)[\w\d-]*>                   controllers.SectionController.render(path, format = "html")
+GET     /$path<(?!culture|sport|australia)[\w\d-]*>.:format           controllers.SectionController.render(path, format)
 
-GET     /$path<[\w\d-]*/[\w\d-]*>                            controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*>/trails                     controllers.TagController.renderTrails(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                   controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails            controllers.TagController.renderTrails(path)
+GET     /$path<[\w\d-]*/[\w\d-]*>                                     controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*>.:format                             controllers.TagController.render(path, format)
+GET     /$path<[\w\d-]*/[\w\d-]*>/trails                              controllers.TagController.renderTrails(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*>/trails.:format                      controllers.TagController.renderTrails(path, format)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                            controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.:format                    controllers.TagController.render(path, format)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails                     controllers.TagController.renderTrails(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails.:format             controllers.TagController.renderTrails(path, format)
 
 # culture and sport sections now live in front
