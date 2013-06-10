@@ -39,7 +39,7 @@ define([
         return {
             init: function() {
                 if (config.page.commentable === true &&
-                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev')) && context.querySelector('.byline')) {
+                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev'))) {
 
                         self = this;
                         self.discussionUrl           = '/discussion' + discussionId;
@@ -66,15 +66,20 @@ define([
                                  '  </li>' +
                                  '  <li class="d-tabs__item d-tabs__item--commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
                                  '    <a href="/discussion/'+ discussionId + '" class="d-commentcount speech-bubble">' +
-                                        '<span class="h">View all </span>' +
-                                        '<span class="js-commentcount__number">' + commentCount + '</span>' +
-                                        '<span class="h"> comments</span></a>' +
+                                 '       <span class="h">View all </span>' +
+                                 '       <span class="js-commentcount__number">' + commentCount + '</span>' +
+                                 '       <span class="h"> comments</span>' +
+                                 '    </a>' +
                                  '  </li>' +
                                  '</ol>' +
                                '</div>';
 
-                bylineNode.replaceWith(tabsHtml);
-                Array.prototype.forEach.call(context.querySelectorAll('.js-commentcount__number'), function(el) {
+                if(bylineNode.length) {
+                    bylineNode.replaceWith(tabsHtml);
+                } else {
+                    bonzo(context.querySelector('.article__container')).before(tabsHtml);
+                }
+                Array.prototype.forEach.call(context.querySelectorAll(".js-commentcount__number"), function(el) {
                     el.innerHTML = commentCount;
                 });
             },
@@ -198,7 +203,7 @@ define([
                     e.preventDefault();
 
                     //Toggles view for accidental clicks
-                    if(self.discussionContainerNode.style.display === 'block') {
+                    if(self.discussionContainerNode.style.display === 'block' && commentsHaveLoaded) {
                         bean.fire(context.querySelector('.js-show-article'), 'click');
                         return;
                     }

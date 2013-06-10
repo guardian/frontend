@@ -1,6 +1,7 @@
 import conf.RequestMeasurementMetrics
+import dev.DevParametersLifecycle
 import play.api.{Application, GlobalSettings}
 import play.api.mvc.WithFilters
 
 
-object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*)
+object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with DevParametersLifecycle
