@@ -25,7 +25,6 @@ define([
             discussionId          = options.id.replace('http://gu.com', ''),
             discussionContainer   = options.discussionContainer || '.article__discussion',
             articleContainer      = options.articleContainer || '.article__container',
-            commentCountSelector  = options.commentCountSelector || '.d-commentcount',
             commentsHaveLoaded    = false,
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
@@ -47,7 +46,6 @@ define([
                         self.discussionCountUrl      = config.page.discussionApiUrl + '/discussion/'+discussionId+'/comments/count';
                         self.discussionContainerNode = context.querySelector(discussionContainer);
                         self.articleContainerNode    = context.querySelector(articleContainer);
-                        self.commentCountNode        = context.querySelector(commentCountSelector);
 
                         self.getCommentCount(function(commentCount) {
                             if (commentCount > 0) {
@@ -67,7 +65,11 @@ define([
                                       bylineNode.html() +
                                  '  </li>' +
                                  '  <li class="d-tabs__item d-tabs__item--commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
-                                 '    <button class="d-commentcount speech-bubble">'+ commentCount + '</button>' +
+                                 '    <a href="/discussion/'+ discussionId + '" class="d-commentcount speech-bubble">' +
+                                 '       <span class="h">View all </span>' +
+                                 '       <span class="js-commentcount__number">' + commentCount + '</span>' +
+                                 '       <span class="h"> comments</span>' +
+                                 '    </a>' +
                                  '  </li>' +
                                  '</ol>' +
                                '</div>';
@@ -77,7 +79,7 @@ define([
                 } else {
                     bonzo(context.querySelector('.article__container')).before(tabsHtml);
                 }
-                Array.prototype.forEach.call(context.querySelectorAll(".d-commentcount"), function(el) {
+                Array.prototype.forEach.call(context.querySelectorAll(".js-commentcount__number"), function(el) {
                     el.innerHTML = commentCount;
                 });
             },
