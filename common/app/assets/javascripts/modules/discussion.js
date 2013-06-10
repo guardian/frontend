@@ -4,14 +4,16 @@ define([
     'qwery',
     'bean',
     'ajax',
-    'modules/userPrefs'
+    'modules/userPrefs',
+    'modules/analytics/clickstream'
 ], function (
     common,
     bonzo,
     qwery,
     bean,
     ajax,
-    userPrefs
+    userPrefs,
+    ClickStream
     ) {
 
     var Discussion = function(options) {
@@ -32,6 +34,7 @@ define([
                 '<a class="d-actions__link" href="' + config.page.canonicalUrl + '?mobile-redirect=false#start-of-comments">' +
                     'Want to comment? Visit the desktop site</a>' +
                 '<button class="top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
+            clickstream           = new ClickStream({ addListener: false }),
             self;
 
         return {
@@ -217,6 +220,12 @@ define([
                     if (e.currentTarget.className.indexOf('top') !== -1) {
                         var topPos = bonzo(tabsNode).offset().top;
                         window.scrollTo(0, topPos);
+                    }
+
+                    // We force analytics on the Article/Byline tab, because
+                    // the byline can be a complex mix of multiple <a>'s
+                    if (e.target.className.match('.d-tabs__item--byline')) {
+                        common.mediator.emit('module:clickstream:click', clickstream.getClickSpec({el: e.target}, true));
                     }
 
                     location.hash = 'story';
