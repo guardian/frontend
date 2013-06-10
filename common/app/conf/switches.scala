@@ -85,11 +85,11 @@ object CommonSwitches {
   val ImageServerSwitch = DefaultSwitch("image-server",
     "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
     initiallyOn = false)
-  
+
   val SwipeNav = DefaultSwitch("swipe-nav",
     "If this switch is on then swipe navigation is enabled",
     initiallyOn = false)
-  
+
   val SwipeNavOnClick = DefaultSwitch("swipe-nav-on-click",
     "If this switch is also on then swipe navigation on clicks is enabled",
     initiallyOn = false)
@@ -97,7 +97,15 @@ object CommonSwitches {
   val ABStoryArticleSwap = DefaultSwitch("ab-story-article-swap",
     "If this switch is on, swaps the latest article in a story for the story.",
     initiallyOn = false)
-  
+
+  val DiscussionSwitch = DefaultSwitch("discussion",
+    "If this switch is on, comments are displayed on articles.",
+    initiallyOn = false)
+
+  val ShortDiscussionSwitch = DefaultSwitch("short-discussion",
+    "If this switch is on, only 10 top level comments are requested from discussion api.",
+    initiallyOn = false)
+
   val all: Seq[Switchable] = Seq(
     AutoRefreshSwitch,
     FontDelaySwitch,
@@ -119,7 +127,9 @@ object CommonSwitches {
     ImageServerSwitch,
     SwipeNav,
     SwipeNavOnClick,
-    ABStoryArticleSwap
+    ABStoryArticleSwap,
+    DiscussionSwitch,
+    ShortDiscussionSwitch
   )
 }
 
