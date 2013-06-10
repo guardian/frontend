@@ -195,6 +195,13 @@ define([
 
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
                     e.preventDefault();
+
+                    //Toggles view for accidental clicks
+                    if(self.discussionContainerNode.style.display === 'block') {
+                        bean.fire(context.querySelector('.js-show-article'), 'click');
+                        return;
+                    }
+
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--commentcount')).addClass('d-tabs__item--is-active');
 
