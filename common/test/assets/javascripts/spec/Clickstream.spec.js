@@ -166,7 +166,21 @@ define(['analytics/clickstream', 'bean', 'common'], function(Clickstream, bean, 
             });
         });
 
+        it("should not fire clicks when instantiated without the listener", function(){
 
+            var cs  = new Clickstream({ filter: ['a'], addListener: false }), // disable the listener on the body
+                object = { method: function (tag) {} },
+                spy = sinon.spy(object, "method");
+
+            common.mediator.on('module:clickstream:click', spy);
+
+            bean.fire(document.getElementById('click-me'), 'click');
+
+            runs(function(){
+                expect(spy.callCount).toBe(0);
+            });
+
+        });
 
     });
 

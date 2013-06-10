@@ -25,9 +25,14 @@
 
 // Accessible hidden content.
 .h {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
     position: absolute !important;
-    clip: rect(1px 1px 1px 1px);
-    clip: rect(1px, 1px, 1px, 1px);
+    width: 1px;
 }
 
 [hidden] {

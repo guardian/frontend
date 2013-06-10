@@ -1,14 +1,14 @@
 package discussion
 
 import common.{InBodyLink, ExecutionContexts, Logging}
-import play.api.libs.ws.WS
+import play.api.libs.ws.{Response, WS}
 import play.api.libs.json.{JsArray, Json}
 import model._
 import System.currentTimeMillis
 import conf.{CommonSwitches, DiscussionHttpTimingMetric}
 import CommonSwitches._
+import scala.concurrent.Future
 
-// TODO
 case class CommentPage(
   override val id: String,
   title: String,
@@ -22,6 +22,8 @@ case class CommentPage(
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
+  def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
+
   def commentsFor(id: String, page: String) = {
 
     val size = if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
@@ -30,7 +32,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
     val start = currentTimeMillis
 
-    WS.url(apiUrl).withTimeout(2000).get().map{ response =>
+    GET(apiUrl).map{ response =>
 
       DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
 
@@ -60,6 +62,16 @@ trait DiscussionApi extends ExecutionContexts with Logging {
       }
     }
   }
+}
+
+object DiscussionApi extends DiscussionApi {
+
+  private var _http: String => Future[Response] = super.GET _
+  def http = _http
+  def http_=(http: String => Future[Response]) { _http = http }
+
+  override def GET(url: String): Future[Response] = _http(url)
+
 }
 
 
