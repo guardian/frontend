@@ -2,7 +2,6 @@
     padding: 13px 0 14px 0;
     margin: 0 $gutter;
     line-height: 1em;
-    border-top: 4px solid $mushroom;
     border-bottom: 1px solid $mushroom;
     @include box-sizing(border-box);
 
@@ -54,7 +53,6 @@
 .article .main-image {
     margin-bottom: 0;
 }
-
 .article-body {
     padding: $baseline*2 $gutter $baseline*2 $gutter;
 }
@@ -68,8 +66,4 @@ video {
     max-width: 100%;
     height: auto;
     @include user-select;
-}
-
-.article__discussion {
-    margin: 0 $gutter;
 }

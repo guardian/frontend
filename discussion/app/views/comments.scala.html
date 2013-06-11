@@ -2,19 +2,20 @@
 
 
 @main(page, Switches.all){ }{
-
     <h2 class="page-head page-head--article">Comments</h2>
 
-    <header class="article__head">
-        <h1 class="article-headline">
-            <a href="@page.contentUrl">@page.title</a>
-        </h1>
-    </header>
+    <div class="article-body">
+        <header class="article__head">
+            <h1 class="article-headline">
+                <a href="@page.contentUrl">@page.title</a>
+            </h1>
+        </header>
+    
+        @fragments.commentsBody(page)
 
-    @fragments.commentsBody(page)
-
-    @if(page.currentPage + 1 <= page.pages){
-      <a href="/@page.id?page=@(page.currentPage + 1)">Next page</a>
-    }
+        @if(page.currentPage + 1 <= page.pages){
+          <a href="/@page.id?page=@(page.currentPage + 1)">Next page</a>
+        }
+    </div>
 
 }
