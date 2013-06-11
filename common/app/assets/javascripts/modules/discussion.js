@@ -160,11 +160,18 @@ define([
 
                     bonzo(threadNode.querySelectorAll('.d-comment:nth-child(n+'+(numToShow+1)+')')).attr('hidden','hidden');
 
-                    var moreCommentsNum = totalResponses - threadNode._visibleResponses;
-                    if (moreCommentsNum > 0 && totalResponses < responsesIncrement) {
-                        // In this case, we just show the rest of the responses
+                    var moreCommentsNum = responsesIncrement;// The amount of comments the CTA will reveal
+
+                    if (totalResponses <= (threadNode._visibleResponses + responsesIncrement)) {
+                        // If the number of hidden responses is less than the
+                        // increment, we just show all of them
+                        moreCommentsNum = totalResponses - threadNode._visibleResponses;
+                    }
+
+                    if (moreCommentsNum > 0) {
+                        // Show the CTA only if there's more to reveal
                         bonzo(threadNode).append('<button class="cta js-show-more-replies" data-link-name="Show more replies" data-is-ajax>'+
-                                                    self.buildShowMoreLabel(moreCommentsNum) +
+                                                   self.buildShowMoreLabel(moreCommentsNum) +
                                                  '</button>');
                     }
                 });
