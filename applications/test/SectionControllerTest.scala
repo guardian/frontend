@@ -6,8 +6,9 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 
 class SectionControllerTest extends FlatSpec with ShouldMatchers {
-  
+
   val section = "books"
+  val callbackName = "aFunction"
 
   "Section Controller" should "200 when content type is front" in Fake {
     val result = controllers.SectionController.render(section)(TestRequest())
@@ -15,10 +16,24 @@ class SectionControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied to front" in Fake {
-    val fakeRequest = FakeRequest(GET, section + "?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, s"${section}?callback=$callbackName")
+      .withHeaders("host" -> "localhost:9000")
+
     val result = controllers.SectionController.render(section)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
+    contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
+  }
+
+  it should "return JSON when .json format is supplied to front" in Fake {
+    val fakeRequest = FakeRequest(GET, s"${section}.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+
+    val result = controllers.SectionController.render(section)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
   }
 
   it should "internal redirect when content type is not front" in Fake {
@@ -33,10 +48,24 @@ class SectionControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied to front trails" in Fake {
-    val fakeRequest = FakeRequest(GET, section + "/trails?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, s"${section}/trails?callback=$callbackName")
+      .withHeaders("host" -> "localhost:9000")
+
     val result = controllers.SectionController.renderTrails(section)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
+    contentAsString(result) should startWith(s"""${callbackName}({\"html\"""")
   }
-  
+
+  it should "return JSON when .json format is supplied to front trails" in Fake {
+    val fakeRequest = FakeRequest(GET, s"${section}/trails.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+
+    val result = controllers.SectionController.renderTrails(section)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"html\"")
+  }
+
 }
