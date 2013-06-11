@@ -64,8 +64,8 @@ define([
                                  '  <li class="d-tabs__item d-tabs__item--byline d-tabs__item--is-active js-show-article" data-link-name="Article Tab" data-is-ajax>' +
                                       bylineNode.html() +
                                  '  </li>' +
-                                 '  <li class="d-tabs__item d-tabs__item--commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
-                                 '    <a href="/discussion/'+ discussionId + '" class="d-commentcount speech-bubble">' +
+                                 '  <li class="d-tabs__item d-tabs__item--commentcount js-show-discussion" data-link-name="Discussion Tab">' +
+                                 '    <a href="/discussion/'+ discussionId + '" class="d-commentcount speech-bubble" data-is-ajax>' +
                                  '       <span class="h">View all </span>' +
                                  '       <span class="js-commentcount__number">' + commentCount + '</span>' +
                                  '       <span class="h"> comments</span>' +
