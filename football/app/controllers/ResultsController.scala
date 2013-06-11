@@ -46,7 +46,7 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
       filters = filters,
       comp = comp
     )
-    
+
     Cached(page) {
       if (request.isJson)
         JsonComponent(

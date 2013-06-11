@@ -106,6 +106,7 @@ GET     /football/match/:matchId.json                                           
 #Front
 GET     /_warmup                                            controllers.FrontController.warmup()
 GET     /_up                                                controllers.FrontController.isUp()
+GET     /                                                   controllers.FrontController.render(path = "front")
 GET     /.json                                              controllers.FrontController.render(path = "front")
 GET     /$path<culture|sport|australia>                     controllers.FrontController.render(path)
 GET     /$path<culture|sport|australia>.json                controllers.FrontController.render(path)
