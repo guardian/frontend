@@ -55,8 +55,11 @@ a.competition-title {
 }
 
 .match {
-    border-bottom: 1px solid #DEDEDD;
     position: relative;
+
+    & + & {
+        border-top: 1px solid #DEDEDD;
+    }
 
     a {
         display: block;
@@ -67,9 +70,6 @@ a.competition-title {
             color: #ffffff !important;
             text-decoration: none;
         }
-    }
-    &:last-child {
-        border-bottom: none;
     }
 }
 
@@ -88,7 +88,6 @@ a.competition-title {
 }
 
 .match-team {
-    display: block;
     float: left;
     width: 50%;
     @include box-sizing(border-box);
