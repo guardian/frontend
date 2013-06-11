@@ -5,6 +5,8 @@
 # Lint stuff before commiting
 grunt jshint:common
 
+git diff --cached --name-only
+
 #Analyse css if changed
 SRC_PATTERN=".scss"
 git diff --cached --name-only | if grep "$SRC_PATTERN"
