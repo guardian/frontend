@@ -42,6 +42,18 @@
         + p {
             text-indent: 1.5em;
         }
+        + figure,
+        + video {
+            margin-top: $baseline;
+        }
+    }
+    > p,
+    > figure,
+    > video {
+        + h2,
+        + h3 {
+            margin-top: $baseline*3;
+        }
     }
 }
 
