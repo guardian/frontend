@@ -21,34 +21,34 @@
 .is-active .i-arrow-small-down {
     @extend .i-arrow-small-up;
     border-color: transparent !important;
-}
 
-.svg .is-active .i-arrow-small-down {
-    @extend .svg-i-arrow-small-up;
+    .svg & {
+        @extend .svg-i-arrow-small-up;
+    }
 }
 
 .is-active .i-menu {
     @extend .i-menu-active;
-}
 
-.svg .is-active .i-menu {
-    @extend .svg-i-menu-active;
+    .svg & {
+        @extend .svg-i-menu-active;
+    }
 }
 
 .is-active .i-search {
     @extend .i-search-blue;
-}
 
-.svg .is-active .i-top-stories {
-    @extend .svg-i-search-blue;
+    .svg & {
+        @extend .svg-i-search-blue;
+    }
 }
 
 .is-active .i-top-stories {
     @extend .i-top-stories-active;
-}
 
-.svg .is-active .i-top-stories {
-    @extend .svg-i-top-stories-active;
+    .svg & {
+        @extend .svg-i-top-stories-active;
+    }
 }
 
 .i-date {
@@ -72,11 +72,10 @@
     content: '';
     margin: 21px 0 $baseline*2 0;
     clear: both;
-}
 
-.svg .from-content-api blockquote:before,
-.svg .from-content-api .block .quoted:before {
-    @extend .svg-i-livequote-before;
+    .svg & {
+        @extend .svg-i-livequote-before;
+    }
 }
 
 .from-content-api blockquote:after,
@@ -86,9 +85,8 @@
     display: block;
     content: '';
     margin-bottom: 22px;
-}
 
-.svg .from-content-api blockquote:after,
-.svg .from-content-api .block .quoted:after {
-    @extend .svg-i-livequote-after;
+    .svg & {
+        @extend .svg-i-livequote-after;
+    }
 }
