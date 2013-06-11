@@ -1,3 +1,4 @@
+@discussion
 Feature:
 As a Guardian reader
 I want to read comments
