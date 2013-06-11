@@ -1,7 +1,7 @@
 package discussion
 
 import org.joda.time.DateTime
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsNumber, JsString, JsObject, JsValue}
 import model._
 
 case class Profile(
@@ -40,7 +40,12 @@ object ResponseTo {
 case class CommentCount(
   id: String,
   count: Int
-)
+) {
+  lazy val toJson = JsObject(Seq(
+    "id" -> JsString(id),
+    "count" -> JsNumber(count))
+  )
+}
 
 case class Comment(
   id: Int,

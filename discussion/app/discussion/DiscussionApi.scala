@@ -39,14 +39,11 @@ trait DiscussionApi extends ExecutionContexts with Logging {
       response.status match {
 
         case 200 =>
-
-          val json = Json.parse(response.body).asInstanceOf[JsObject].fieldSet
-
-          println("-----------------------------------------------------------------------------------------")
-          println(json)
-
-          json.map{ case (id, JsNumber(i)) => CommentCount(id , i.toInt)}
-
+          val json = Json.parse(response.body).asInstanceOf[JsObject].fieldSet.toSeq
+          json.map{
+            case (id, JsNumber(i)) => CommentCount(id , i.toInt)
+            case bad => throw new RuntimeException(s"never understood $bad")
+          }
         case other =>
           log.error(s"Error loading comment counts id: $ids status: $other message: ${response.statusText}")
           throw new RuntimeException("Error from discussion API")
