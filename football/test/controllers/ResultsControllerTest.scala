@@ -18,6 +18,17 @@ class ResultsControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
+
+  it should "return JSON when .json format is supplied to results" in Fake {
+    val fakeRequest = FakeRequest(GET, "/football/results.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.ResultsController.render()(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
+  }
   
   val tag = "premierleague"
   
@@ -32,6 +43,17 @@ class ResultsControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
+
+  it should "return JSON when .json format is supplied to tag results" in Fake {
+    val fakeRequest = FakeRequest(GET, "/football/" + tag + "/results.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.ResultsController.renderTag(tag)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
+  }
   
   it should "200 when content type is for results" in Fake {
     val result = controllers.ResultsController.renderFor("2012", "oct", "20")(TestRequest())
@@ -43,6 +65,17 @@ class ResultsControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.ResultsController.renderFor("2012", "oct", "20")(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
+  }
+
+  it should "return JSON when .json format is supplied to for results" in Fake {
+    val fakeRequest = FakeRequest(GET, "/football/results/2012/oct/20.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.ResultsController.renderFor("2012", "oct", "20")(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
   }
   
 }

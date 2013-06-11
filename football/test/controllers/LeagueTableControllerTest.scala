@@ -20,6 +20,17 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
+
+  it should "return JSON when .json format is supplied to table" in Fake {
+    val fakeRequest = FakeRequest(GET, "/football/tables.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.LeagueTableController.render()(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
+  }
   
   it should "200 when content type is teams" in Fake {
     val result = controllers.LeagueTableController.renderTeamlist()(TestRequest().withHeaders("Accept" -> "application/javascript"))
@@ -33,6 +44,17 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.LeagueTableController.renderTeamlist()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
+  }
+
+  it should "return JSON when .json format is supplied to teams" in Fake {
+    val fakeRequest = FakeRequest(GET, "/football/teams.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.LeagueTableController.renderTeamlist()(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
   }
   
   val competitionId = "premierleague"
@@ -49,6 +71,17 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
+  }
+
+  it should "return JSON when .json format is supplied to competition table" in Fake {
+    val fakeRequest = FakeRequest(GET, "/football/" + competitionId + "/table.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
   }
   
 }
