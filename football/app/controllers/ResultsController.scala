@@ -48,13 +48,15 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
     )
 
     Cached(page) {
-      request.getQueryString("callback").map { callback =>
+      if (request.isJson)
         JsonComponent(
-          resultsPage.page,
-          Switches.all,
-          "html" -> views.html.fragments.matchesBody(resultsPage),
-          "more" -> Html(previousPage.getOrElse("")))
-      }.getOrElse(Ok(views.html.matches(resultsPage)))
+          resultsPage.page, 
+          Switches.all, 
+          "html" -> views.html.fragments.matchesBody(resultsPage), 
+          "more" -> Html(previousPage.getOrElse(""))
+        )
+      else
+        Ok(views.html.matches(resultsPage))
     }
   }
 

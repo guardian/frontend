@@ -20,6 +20,17 @@ class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
+
+  it should "return JSON when .json format is supplied to live match" in Fake {
+    val fakeRequest = FakeRequest(GET, "/football/live.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.LiveMatchesController.render()(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
+  }
   
   val competitionId = "premierleague"
   
@@ -35,6 +46,17 @@ class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.LiveMatchesController.renderFor(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
+  }
+
+  it should "return JSON .json format is supplied to competition live match" in Fake {
+    val fakeRequest = FakeRequest(GET, "/football/" + competitionId + "/live.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.LiveMatchesController.renderFor(competitionId)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
   }
   
 }
