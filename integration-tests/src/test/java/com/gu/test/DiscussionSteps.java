@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DiscussionSteps {
     private final SharedDriver webDriver;
@@ -33,7 +34,7 @@ public class DiscussionSteps {
 
     @When("^I choose to view the comments$")
     public void I_choose_to_view_the_comments()  {
-        WebElement commentlink=webDriver.findElement(By.cssSelector(" .d-commentcount"));
+    WebElement commentlink=webDriver.findElement(By.cssSelector(".js-commentcount__number"));
     webDriver.click(commentlink);
     webDriver.waitForElement(By.cssSelector(".d-discussion"));
     }
@@ -46,7 +47,7 @@ public class DiscussionSteps {
 
     @And("^the first comment is authored by \"([^\"]*)\"$")
     public void the_first_comment_is_authored_by(String author){
-        assertEquals(webDriver.findElement(By.cssSelector(".d-comment__author")).getText(),"monkeyface");
+        assertEquals(webDriver.findElement(By.cssSelector(".d-comment__author")).getText(),author);
 
     }
 
@@ -60,6 +61,11 @@ public class DiscussionSteps {
                 return d.findElements(By.cssSelector(".d-comment--top-level")).size() == topLevelComments.size()+10;
             }
         });
+    }
+
+    @And("^the first comment body contains \"([^\"]*)\"$")
+    public void the_first_comment_body_contains(String bodytext) {
+        assertTrue(webDriver.findElement(By.cssSelector(".d-comment__body")).getText().contains(bodytext));
     }
 }
 
