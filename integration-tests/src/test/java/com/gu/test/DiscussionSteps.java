@@ -22,7 +22,7 @@ public class DiscussionSteps {
         this.webDriver = webDriver;
     }
 
-    protected String articlewithcomments = "/help/insideguardian/2012/feb/29/threaded-comments";
+    protected String articlewithcomments = "/world/2013/jun/11/us-senators-government-secret-court-surveillance";
     List<WebElement> topLevelComments;
 
 
@@ -34,9 +34,10 @@ public class DiscussionSteps {
 
     @When("^I choose to view the comments$")
     public void I_choose_to_view_the_comments()  {
-    WebElement commentlink=webDriver.findElement(By.cssSelector(".js-commentcount__number"));
-    webDriver.click(commentlink);
-    webDriver.waitForElement(By.cssSelector(".d-discussion"));
+        WebElement commentlink = webDriver.findElement(By.cssSelector(".js-commentcount__number"));
+        webDriver.click(commentlink);
+        assertTrue(webDriver.findElements(By.cssSelector(".media-primary--comments-on")).size() == 1);
+        webDriver.waitForElement(By.cssSelector(".d-discussion"));
     }
 
     @Then("^I can see (\\d+) top level comments$")
@@ -48,9 +49,7 @@ public class DiscussionSteps {
     @And("^the first comment is authored by \"([^\"]*)\"$")
     public void the_first_comment_is_authored_by(String author){
         assertEquals(webDriver.findElement(By.cssSelector(".d-comment__author")).getText(),author);
-
     }
-
 
     @When("^I show more comments$")
     public void I_show_more_comments()  {
