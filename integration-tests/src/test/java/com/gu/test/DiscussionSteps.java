@@ -22,6 +22,7 @@ public class DiscussionSteps {
     }
 
     protected String articlewithcomments = "/help/insideguardian/2012/feb/29/threaded-comments";
+    List<WebElement> topLevelComments;
 
 
     @Given("^I am on an article with comments$")
@@ -39,7 +40,7 @@ public class DiscussionSteps {
 
     @Then("^I can see (\\d+) top level comments$")
     public void I_can_see_top_level_comments(int parentcommentsshownbydefault)  {
-        List<WebElement> topLevelComments = webDriver.findElements(By.cssSelector(".d-comment--top-level"));
+        topLevelComments = webDriver.findElements(By.cssSelector(".d-comment--top-level"));
         assertEquals(topLevelComments.size(), parentcommentsshownbydefault);
     }
 
@@ -52,10 +53,11 @@ public class DiscussionSteps {
 
     @When("^I show more comments$")
     public void I_show_more_comments()  {
+
     webDriver.findElement(By.cssSelector(".js-show-more-comments")).click();
         (new WebDriverWait(webDriver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return d.findElements(By.cssSelector(".d-comment--top-level")).size() == 20;
+                return d.findElements(By.cssSelector(".d-comment--top-level")).size() == topLevelComments.size()+10;
             }
         });
     }
