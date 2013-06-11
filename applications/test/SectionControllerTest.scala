@@ -66,7 +66,7 @@ class SectionControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"${section}/trails.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-      
+
     val result = controllers.SectionController.renderTrails(section)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
