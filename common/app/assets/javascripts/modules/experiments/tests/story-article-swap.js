@@ -50,13 +50,13 @@ define(['common', 'ajax', 'bonzo', 'bootstraps/story'], function (common, ajax, 
 
     var StoryArticleSwap = function () {
         
-        this.id = 'StoryArticleSwap';
+        this.id = 'StoryArticleSwapV2';
         this.audience = 1;
         this.description = 'Swap the latest article within the story with the story itself';
         this.canRun = function(config, context) {
             _context = context;
-            // only run on article pages
-            return config.page.contentType === 'Article';
+            // only run on article pages (and if switch is on)
+            return config.page.contentType === 'Article' && config.switches.storyArticleSwap === true;
         };
         this.variants = [
             {
