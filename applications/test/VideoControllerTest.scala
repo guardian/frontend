@@ -1,0 +1,35 @@
+import play.api.test._
+import play.api.test.Helpers._
+import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.FlatSpec
+
+class VideoControllerTest extends FlatSpec with ShouldMatchers {
+  
+  val videoUrl = "/uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
+
+  "Video Controller" should "200 when content type is video" in Fake {
+    val result = controllers.VideoController.render(videoUrl)(TestRequest())
+    status(result) should be(200)
+  }
+
+  it should "return JSONP when callback is supplied" in Fake {
+    val fakeRequest = FakeRequest(GET, videoUrl + "?callback=foo").withHeaders("host" -> "localhost:9000")
+    val result = controllers.VideoController.render(videoUrl)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/javascript")
+  }
+
+  it should "internal redirect when content type is not video" in Fake {
+    val result = controllers.VideoController.render("uk/2012/jun/27/queen-martin-mcguinness-shake-hands")(TestRequest())
+    status(result) should be(200)
+    header("X-Accel-Redirect", result).get should be("/type/article/uk/2012/jun/27/queen-martin-mcguinness-shake-hands")
+  }
+
+  it should "display an expired message for expired content" in Fake {
+    val result = controllers.VideoController.render("world/video/2008/dec/11/guantanamo-bay")(TestRequest())
+    status(result) should be(410)
+    contentAsString(result) should include("Video: Inside Guant&aacute;namo")
+    contentAsString(result) should include("This content has been removed as our copyright has expired.")
+  }
+
+}
