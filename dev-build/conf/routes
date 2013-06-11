@@ -9,26 +9,37 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 #Note the order of these is important
 
 # Discussion
-GET     /discussion/*shortUrl                               controllers.CommentPageController.render(shortUrl)
+GET     /discussion/*shortUrl                               controllers.CommentPageController.render(shortUrl, format = "html")
+GET     /discussion/*shortUrl.:format                       controllers.CommentPageController.render(shortUrl, format)
 
 #Core nav
-GET    /most-read                                           controllers.MostPopularController.render(path = "")
-GET    /most-read/*path                                     controllers.MostPopularController.render(path)
-GET    /top-stories                                         controllers.TopStoriesController.render()
-GET    /top-stories/trails                                  controllers.TopStoriesController.renderTrails()
-GET    /related/*path                                       controllers.RelatedController.render(path)
-
+GET    /most-read                                           controllers.MostPopularController.render(path = "", format = "html")
+GET    /most-read.:format                                   controllers.MostPopularController.render(path = "", format)
+GET    /most-read/*path                                     controllers.MostPopularController.render(path, format = "html")
+GET    /most-read/*path.:format                             controllers.MostPopularController.render(path, format)
+GET    /top-stories                                         controllers.TopStoriesController.render(format = "html")
+GET    /top-stories.:format                                 controllers.TopStoriesController.render(format)
+GET    /top-stories/trails                                  controllers.TopStoriesController.renderTrails(format = "html")
+GET    /top-stories/trails.:format                          controllers.TopStoriesController.renderTrails(format)
+GET    /related/*path                                       controllers.RelatedController.render(path, format = "html")
+GET    /related/*path.:format                               controllers.RelatedController.render(path, format)
 # more stories for swipe
-GET    /most-viewed                                         controllers.MoreStoriesController.render(path = "", moreStoriesType = "mostViewed")
-GET    /most-viewed/*path                                   controllers.MoreStoriesController.render(path, moreStoriesType = "mostViewed")
-GET    /front-trails                                        controllers.MoreStoriesController.render(path = "", moreStoriesType = "frontTrails")
-GET    /front-trails/*path                                  controllers.MoreStoriesController.render(path, moreStoriesType = "frontTrails")
+GET    /most-viewed                                         controllers.MoreStoriesController.render(path = "", moreStoriesType = "mostViewed", format = "html")
+GET    /most-viewed.:format                                 controllers.MoreStoriesController.render(path = "", moreStoriesType = "mostViewed", format)
+GET    /most-viewed/*path                                   controllers.MoreStoriesController.render(path, moreStoriesType = "mostViewed", format = "html")
+GET    /most-viewed/*path.:format                           controllers.MoreStoriesController.render(path, moreStoriesType = "mostViewed", format)
+GET    /front-trails                                        controllers.MoreStoriesController.render(path = "", moreStoriesType = "frontTrails", format = "html")
+GET    /front-trails.:format                                controllers.MoreStoriesController.render(path = "", moreStoriesType = "frontTrails", format)
+GET    /front-trails/*path                                  controllers.MoreStoriesController.render(path, moreStoriesType = "frontTrails", format = "html")
+GET    /front-trails/*path.:format                          controllers.MoreStoriesController.render(path, moreStoriesType = "frontTrails", format)
 
 #Stories
-GET    /stories                                             controllers.StoryController.latest()
+GET    /stories                                             controllers.StoryController.latest(format = "html")
+GET    /stories.:format                                     controllers.StoryController.latest(format)
 GET    /stories/articles                                    controllers.StoryController.latestWithContent()
 GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
-GET    /stories/*id                                         controllers.StoryController.byId(id)
+GET    /stories/*id                                         controllers.StoryController.byId(id, format = "html")
+GET    /stories/*id.:format                                 controllers.StoryController.byId(id, format)
 
 #Style-guide
 GET     /style-guide                                        controllers.StyleGuideController.renderIndex
@@ -40,61 +51,95 @@ GET     /style-guide/csshelpers                             controllers.StyleGui
 GET     /style-guide/codingstandards                        controllers.StyleGuideController.codingStandards
 
 #Football
-GET     /football/fixtures/:year/:month/:day                controllers.FixturesController.renderFor(year, month, day)
-GET     /football/fixtures                                  controllers.FixturesController.render()
-GET     /football/:competition/fixtures/:year/:month/:day   controllers.CompetitionFixturesController.renderFor(year, month, day, competition)
-GET     /football/:tag/fixtures                             controllers.FixturesController.renderTag(tag)
+GET     /football/fixtures/:year/:month/:day                         controllers.FixturesController.renderFor(year, month, day, format = "html")
+GET     /football/fixtures/:year/:month/:day.:format                 controllers.FixturesController.renderFor(year, month, day, format)
+GET     /football/fixtures                                           controllers.FixturesController.render(date: Option[org.joda.time.DateMidnight] = None, format = "html")
+GET     /football/fixtures.:format                                   controllers.FixturesController.render(date: Option[org.joda.time.DateMidnight] = None, format)
+GET     /football/:competition/fixtures/:year/:month/:day            controllers.CompetitionFixturesController.renderFor(year, month, day, competition, format = "html")
+GET     /football/:competition/fixtures/:year/:month/:day.:format    controllers.CompetitionFixturesController.renderFor(year, month, day, competition, format)
+GET     /football/:competition/fixtures                              controllers.FixturesController.renderTag(competition, format = "html")
+GET     /football/:competition/fixtures.:format                      controllers.FixturesController.renderTag(competition, format)
 
-GET     /football/results/:year/:month/:day                 controllers.ResultsController.renderFor(year, month, day)
-GET     /football/results                                   controllers.ResultsController.render()
-GET     /football/:competition/results/:year/:month/:day    controllers.CompetitionResultsController.renderFor(year, month, day, competition)
-GET     /football/:tag/results                              controllers.ResultsController.renderTag(tag)
+GET     /football/results/:year/:month/:day                          controllers.ResultsController.renderFor(year, month, day, format = "html")
+GET     /football/results/:year/:month/:day.:format                  controllers.ResultsController.renderFor(year, month, day, format)
+GET     /football/results                                            controllers.ResultsController.render(date: Option[org.joda.time.DateMidnight] = None, format = "html")
+GET     /football/results.:format                                    controllers.ResultsController.render(date: Option[org.joda.time.DateMidnight] = None, format)
+GET     /football/:competition/results/:year/:month/:day             controllers.CompetitionResultsController.renderFor(year, month, day, competition, format = "html")
+GET     /football/:competition/results/:year/:month/:day.:format     controllers.CompetitionResultsController.renderFor(year, month, day, competition, format)
+GET     /football/:tag/results                                       controllers.ResultsController.renderTag(tag, format = "html")
+GET     /football/:tag/results,:format                               controllers.ResultsController.renderTag(tag, format)
 
-GET     /football/live                                      controllers.LiveMatchesController.render()
-GET     /football/:competition/live                         controllers.LiveMatchesController.renderFor(competition)
+GET     /football/live                                               controllers.LiveMatchesController.render(format = "html")
+GET     /football/live.:format                                       controllers.LiveMatchesController.render(format)
+GET     /football/:competition/live                                  controllers.LiveMatchesController.renderFor(competition, format = "html")
+GET     /football/:competition/live.:format                          controllers.LiveMatchesController.renderFor(competition, format)
 
-GET     /football/tables                                    controllers.LeagueTableController.render()
-GET     /football/:competition/table                        controllers.LeagueTableController.renderCompetition(competition)
+GET     /football/tables                                             controllers.LeagueTableController.render(format = "html")
+GET     /football/tables.:format                                     controllers.LeagueTableController.render(format)
+GET     /football/:competition/table                                 controllers.LeagueTableController.renderCompetition(competition, format = "html")
+GET     /football/:competition/table.:format                         controllers.LeagueTableController.renderCompetition(competition, format)
 
-GET     /football/api/frontscores                           controllers.FrontScoresController.render()
-GET     /football/api/competitiontable                      controllers.CompetitionTablesController.renderCompetition()
-GET     /football/api/teamtable/:teamId                     controllers.CompetitionTablesController.renderTeam(teamId)
-GET     /football/api/teamfixtures/:teamId                  controllers.TeamFixturesController.renderComponent(teamId)
-GET     /football/api/match-nav/:matchId                          controllers.MoreOnMatchController.moreOn(matchId)
-GET     /football/api/match-nav/:year/:month/:day/:home/:away     controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
+GET     /football/api/frontscores                                    controllers.FrontScoresController.render(format = "html")
+GET     /football/api/frontscores.:format                            controllers.FrontScoresController.render(format)
+GET     /football/api/competitiontable                               controllers.CompetitionTablesController.renderCompetition(format = "html")
+GET     /football/api/competitiontable.:format                       controllers.CompetitionTablesController.renderCompetition(format)
+GET     /football/api/teamtable/:teamId                              controllers.CompetitionTablesController.renderTeam(teamId, format = "html")
+GET     /football/api/teamtable/:teamId.:format                      controllers.CompetitionTablesController.renderTeam(teamId, format)
+GET     /football/api/teamfixtures/:teamId                           controllers.TeamFixturesController.renderComponent(teamId, format = "html")
+GET     /football/api/teamfixtures/:teamId.:format                   controllers.TeamFixturesController.renderComponent(teamId, format)
 
+GET     /football/api/match-nav/:year/:month/:day/:home/:away            controllers.MoreOnMatchController.matchNav(year, month, day, home, away, format = "html")
+GET     /football/api/match-nav/:year/:month/:day/:home/:away.:format    controllers.MoreOnMatchController.matchNav(year, month, day, home, away, format)
+GET     /football/api/match-nav/:matchId                                 controllers.MoreOnMatchController.moreOn(matchId, format = "html")
+GET     /football/api/match-nav/:matchId.:format                         controllers.MoreOnMatchController.moreOn(matchId, format)
 
-GET     /football/competitions                              controllers.CompetitionListController.render()
-GET     /football/teams                                     controllers.LeagueTableController.renderTeamlist()
+GET     /football/competitions                                       controllers.CompetitionListController.render(format = "html")
+GET     /football/competitions.:format                               controllers.CompetitionListController.render(format)
+GET     /football/teams                                              controllers.LeagueTableController.renderTeamlist(format = "html")
+GET     /football/teams.:format                                      controllers.LeagueTableController.renderTeamlist(format)
 
-GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> controllers.MatchController.renderMatch(year,month,day,home,away)
-GET     /football/match/:matchId                            controllers.MatchController.renderMatchId(matchId)
+GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+>            controllers.MatchController.renderMatch(year,month,day,home,away, format = "html")
+GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+>.:format    controllers.MatchController.renderMatch(year,month,day,home,away, format)
+GET     /football/match/:matchId                                                           controllers.MatchController.renderMatchId(matchId, format = "html")
+GET     /football/match/:matchId.:format                                                   controllers.MatchController.renderMatchId(matchId, format)
 
 #Front
 GET     /_warmup                                            controllers.FrontController.warmup()
 GET     /_up                                                controllers.FrontController.isUp()
-GET     /                                                   controllers.FrontController.render(path = "front")
-GET     /$path<culture|sport|australia>                     controllers.FrontController.render(path)
-GET     /$path<culture|sport|australia>/trails              controllers.FrontController.renderTrails(path)
+GET     /.:format                                           controllers.FrontController.render(path = "front", format)
+GET     /$path<culture|sport|australia>                     controllers.FrontController.render(path, format = "html")
+GET     /$path<culture|sport|australia>.:format             controllers.FrontController.render(path, format)
+GET     /$path<culture|sport|australia>/trails              controllers.FrontController.renderTrails(path, format = "html")
+GET     /$path<culture|sport|australia>/trails.:format      controllers.FrontController.renderTrails(path, format)
 
 #Video
-GET     /$path<.*/video/.*>                                 controllers.VideoController.render(path)
+GET     /$path<.*/video/.*>            controllers.VideoController.render(path, format = "html")
+GET     /$path<.*/video/.*>.:format    controllers.VideoController.render(path, format)
 
 #Gallery
-GET     /$path<.*/gallery/.*>                               controllers.GalleryController.render(path)
+GET     /$path<.*/gallery/.*>            controllers.GalleryController.render(path, format = "html")
+GET     /$path<.*/gallery/.*>.:format    controllers.GalleryController.render(path, format)§
 
 #Tag
 # note: reg ex so this doesn't interfer with $section/trails
-GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>                 controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>/trails          controllers.TagController.renderTrails(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                  controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails           controllers.TagController.renderTrails(path)
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>                          controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>.:format                  controllers.TagController.render(path, format)
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>/trails                   controllers.TagController.renderTrails(path, format = "html")
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>/trails.:format           controllers.TagController.renderTrails(path, format)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                           controllers.TagController.render(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.:format                   controllers.TagController.render(path, format)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails                    controllers.TagController.renderTrails(path, format = "html")
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails.:format            controllers.TagController.renderTrails(path, format)
 
 #Section
-GET		/sections							               controllers.SectionsController.render()
+GET     /sections                                                     controllers.SectionsController.render(format = "html")
+GET     /sections.:format                                             controllers.SectionsController.render(format)
 # culture and sport sections now live in front
-GET    /$path<(?!culture|sport)[\w\d-]*>                   controllers.SectionController.render(path)
-GET    /$path<(?!culture|sport)[\w\d-]*>/trails            controllers.SectionController.renderTrails(path)
+GET     /$path<(?!culture|sport|australia)[\w\d-]*>/trails            controllers.SectionController.renderTrails(path, format = "html")
+GET     /$path<(?!culture|sport|australia)[\w\d-]*>/trails.:format    controllers.SectionController.renderTrails(path, format)
+GET     /$path<(?!culture|sport|australia)[\w\d-]*>                   controllers.SectionController.render(path, format = "html")
+GET     /$path<(?!culture|sport|australia)[\w\d-]*>.:format           controllers.SectionController.render(path, format)
 
 #Articles
-GET     /*path                                             controllers.ArticleController.render(path)
+GET     /*path                      controllers.ArticleController.render(path, format = "html")
+GET     /*path.:format              controllers.ArticleController.render(path, format)
