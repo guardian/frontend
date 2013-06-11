@@ -8,8 +8,13 @@ GET     /assets/*file                              controllers.Assets.at(path="/
 
 GET		/sections					               controllers.SectionsController.render()
 
-GET    /$path<(?!culture|sport|australia)[\w\d-]*>/trails    controllers.SectionController.renderTrails(path)
-GET    /$path<(?!culture|sport|australia)[\w\d-]*>           controllers.SectionController.render(path)
+
+# TODO when we go live on new domainstructure
+# /$path<\w\w/[\w\d-]*>/trails
+# /$path<\w\w/[\w\d-]*>
+
+GET    /$path<[\w\d-]*(/\w\w-edition)?>/trails               controllers.SectionController.renderTrails(path)
+GET    /$path<[\w\d-]*(/\w\w-edition)?>                      controllers.SectionController.render(path)
 
 GET     /$path<[\w\d-]*/[\w\d-]*>                            controllers.TagController.render(path)
 GET     /$path<[\w\d-]*/[\w\d-]*>/trails                     controllers.TagController.renderTrails(path)
