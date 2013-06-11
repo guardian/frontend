@@ -9,6 +9,7 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 #Note the order of these is important
 
 # Discussion
+GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)
 GET     /discussion/*shortUrl                               controllers.CommentPageController.render(shortUrl)
 
 #Core nav

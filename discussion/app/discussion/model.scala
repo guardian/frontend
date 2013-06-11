@@ -37,6 +37,11 @@ object ResponseTo {
   }
 }
 
+case class CommentCount(
+  id: String,
+  count: Int
+)
+
 case class Comment(
   id: Int,
   body: String,
