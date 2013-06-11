@@ -144,13 +144,15 @@ define([
                         return;
                     }
 
-                    var totalResponses = threadNode.dataset.responses;
+                    var totalResponses = parseInt(threadNode.getAttribute('data-responses'), 10);
 
                     threadNode._processed = true;
-                    threadNode.dataset.visibleResponses = numToShow;
+                    threadNode._responses = totalResponses;
+                    threadNode._visibleResponses = numToShow;
+
                     bonzo(threadNode.querySelectorAll('.d-comment:nth-child(n+'+(numToShow+1)+')')).attr('hidden','hidden');
 
-                    var moreCommentsNum = totalResponses-threadNode.dataset.visibleResponses;
+                    var moreCommentsNum = totalResponses - threadNode._visibleResponses;
                     if (moreCommentsNum > 0 && totalResponses < responsesIncrement) {
                         // In this case, we just show the rest of the responses
                         bonzo(threadNode).append('<button class="cta js-show-more-replies" data-link-name="Show more replies" data-is-ajax>'+
@@ -163,8 +165,8 @@ define([
 
             showMoreReplies: function(el) {
                 var threadNode = el.parentNode,
-                    totalResponses = parseInt(threadNode.dataset.responses, 10),
-                    visibleResponses = parseInt(threadNode.dataset.visibleResponses, 10) + responsesIncrement;
+                    totalResponses = threadNode._responses,
+                    visibleResponses = threadNode._visibleResponses + responsesIncrement;
 
                 Array.prototype.forEach.call(threadNode.querySelectorAll('.d-comment'), function(commentNode, i) {
                     if (i < visibleResponses) {
@@ -172,7 +174,7 @@ define([
                     }
                 });
 
-                threadNode.dataset.visibleResponses = visibleResponses;
+                threadNode._visibleResponses = visibleResponses;
 
                 if (visibleResponses >= totalResponses) {
                     threadNode.querySelector('.js-show-more-replies').style.display = 'none';
