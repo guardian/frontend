@@ -34,6 +34,12 @@
         padding: 0;
         color: #333;
     }
+
+    // Experiment with indents
+    > p {
+        margin-bottom: 0;
+        text-indent: 1.5em;
+    }
 }
 
 .article blockquote,
