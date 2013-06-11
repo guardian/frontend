@@ -1,3 +1,5 @@
+package test
+
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 
