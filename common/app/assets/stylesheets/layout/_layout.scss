@@ -82,9 +82,19 @@
 #preload-1,
 #preload-2 {
     @include transform(translateZ(0px));
-    top: 0;
-    height: 100%;
-    width: 100%;
+}
+
+.has-swipe {
+    #preload-0,
+    #preload-1,
+    #preload-2 {
+        position: absolute;
+        width: 100%;
+    }
+
+    #preload-0 {left: -100%;}
+    #preload-1 {left:     0;}
+    #preload-2 {left:  100%;}
 }
 
 /*

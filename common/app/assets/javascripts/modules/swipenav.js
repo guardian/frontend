@@ -80,14 +80,6 @@ define([
             foot  = page1.querySelector('.parts__foot'),
             initialBodyHtml = '<div class="parts__body">' + pendingHTML + '</div>';
 
-        var css = document.createElement("style");
-        css.type = "text/css";
-        css.innerHTML = "\
-            #preload-0 {left: -100%; position: absolute} \
-            #preload-1 {left:    0%; position: absolute} \
-            #preload-2 {left:  100%; position: absolute}";
-        document.body.appendChild(css);
-
         bonzo(page0).append(head.cloneNode(true));
         bonzo(page0).append(bonzo.create(initialBodyHtml));
         bonzo(page0).append(foot.cloneNode(true));
@@ -482,9 +474,6 @@ define([
         visiblePane = panes.masterPages[1];
         visiblePane.dataset.url = initialUrl;
 
-        // Set a body class. Might be useful.
-        body.addClass('has-swipe');
-
         // Render panes that come into view, and that are not still loading
         common.mediator.on('module:swipenav:pane:loaded', function(el){
             if(el === visiblePane && !el.pending) {
@@ -578,6 +567,9 @@ define([
 
             // Set explicit height on container, because it's about to be absolute-positioned.
             updateHeight();
+
+            // Set a body class.
+            body.addClass('has-swipe');
 
             // Set up the DOM structure, CSS
             prepareDOM();
