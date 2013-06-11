@@ -47,6 +47,12 @@ define([
                         self.discussionContainerNode = context.querySelector(discussionContainer);
                         self.articleContainerNode    = context.querySelector(articleContainer);
 
+                        if(self.discussionContainerNode.isInitialised) {
+                            return;
+                        } else {
+                            self.discussionContainerNode.isInitialised = true;
+                        }
+
                         self.getCommentCount(function(commentCount) {
                             if (commentCount > 0) {
                                 self.upgradeByline(commentCount);
