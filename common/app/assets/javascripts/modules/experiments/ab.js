@@ -10,7 +10,7 @@ define([
     StoryArticleSwap) {
     
     var TESTS = {
-            StoryArticleSwap: new StoryArticleSwap()
+            StoryArticleSwapV2: new StoryArticleSwap()
         };
 
     var testKey = 'gu.ab.current',
