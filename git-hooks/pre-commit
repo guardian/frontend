@@ -7,7 +7,7 @@ grunt jshint:common
 
 #Analyse css if changed
 SRC_PATTERN=".scss"
-git diff --cached --name-only | if grep --quiet "$SRC_PATTERN"
+git diff --cached --name-only | if grep "$SRC_PATTERN"
 then
     grunt analyse:common:css
 fi
