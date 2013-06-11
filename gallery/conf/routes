@@ -3,8 +3,7 @@
 # ~~~~
 
 # For assets on dev machines
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                 controllers.Assets.at(path="/public", file)
 
-
-GET     /*path                      controllers.GalleryController.render(path)
-
+GET     /$path<.*/gallery/.*>         controllers.GalleryController.render(path)
+GET     /$path<.*/gallery/.*>.json    controllers.GalleryController.render(path)

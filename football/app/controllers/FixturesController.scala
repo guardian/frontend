@@ -48,13 +48,15 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
     )
     
     Cached(page) {
-      request.getQueryString("callback").map { callback =>
+      if (request.isJson)
         JsonComponent(
-          fixturesPage.page,
-          Switches.all,
-          "html" -> views.html.fragments.matchesBody(fixturesPage),
-          "more" -> Html(nextPage.getOrElse("")))
-      }.getOrElse(Ok(views.html.matches(fixturesPage)))
+          fixturesPage.page, 
+          Switches.all, 
+          "html" -> views.html.fragments.matchesBody(fixturesPage), 
+          "more" -> Html(nextPage.getOrElse(""))
+        )
+      else
+        Ok(views.html.matches(fixturesPage))
     }
   }
 

@@ -8,6 +8,7 @@ import org.scalatest.FlatSpec
 class VideoControllerTest extends FlatSpec with ShouldMatchers {
   
   val videoUrl = "/uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
+  val callbackName = "aFunction"
 
   "Video Controller" should "200 when content type is video" in Fake {
     val result = controllers.VideoController.render(videoUrl)(TestRequest())
@@ -15,10 +16,24 @@ class VideoControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "return JSONP when callback is supplied" in Fake {
-    val fakeRequest = FakeRequest(GET, videoUrl + "?callback=foo").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, s"${videoUrl}?callback=$callbackName")
+      .withHeaders("host" -> "localhost:9000")
+    
     val result = controllers.VideoController.render(videoUrl)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
+    contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
+  }
+
+  it should "return JSON when .json format is supplied" in Fake {
+    val fakeRequest = FakeRequest(GET, s"${videoUrl}.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+      
+    val result = controllers.VideoController.render(videoUrl)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
   }
 
   it should "internal redirect when content type is not video" in Fake {
