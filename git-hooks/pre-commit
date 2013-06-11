@@ -4,3 +4,10 @@
 
 # Lint stuff before commiting
 grunt jshint:common
+
+#Analyse css if changed
+SRC_PATTERN=".min.css"
+git diff --cached --name-only | if grep --quiet "$SRC_PATTERN"
+then
+    grunt analyse:common:css
+fi
