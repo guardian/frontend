@@ -55,13 +55,15 @@ define([
             },
 
             hideColumns :  function(sectionsHeader, sectionsNav) {
+                var firstTopPos,
+                    visibleItems = [],
+                    popupItems = common.$g('.nav__item', sectionsHeader).removeClass('h');
+
                 common.$g('.nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
 
-                var visibleItems = [],
-                popupItems = common.$g('.nav__item', sectionsHeader).removeClass('h');
-
                 common.$g('.nav__item', sectionsNav).each(function(e) {
-                    if(bonzo(e).offset().top < 160) {
+                    firstTopPos = firstTopPos || bonzo(e).offset().top;
+                    if(bonzo(e).offset().top === firstTopPos) {
                         visibleItems.push(e);
                     }
                 });

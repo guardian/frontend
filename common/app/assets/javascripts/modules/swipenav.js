@@ -1,3 +1,5 @@
+/*jshint multistr: true */
+
 define([
     'common',
     'modules/userPrefs',
@@ -22,7 +24,7 @@ define([
         bodyPartSelector = '.parts__body',
         canonicalLink,
         clickSelector,
-        contentAreaTop,
+        header,
         height,
         hiddenPaneMargin = 0,
         initiatedBy = 'initial',
@@ -80,7 +82,10 @@ define([
 
         var css = document.createElement("style");
         css.type = "text/css";
-        css.innerHTML = "#preload-0{left: -100%} #preload-1{left:0%} #preload-2{left: 100%}";
+        css.innerHTML = "\
+            #preload-0 {left: -100%; position: absolute} \
+            #preload-1 {left:    0%; position: absolute} \
+            #preload-2 {left:  100%; position: absolute}";
         document.body.appendChild(css);
 
         bonzo(page0).append(head.cloneNode(true));
@@ -171,6 +176,8 @@ define([
             urls.pushUrl({}, document.title, window.location.href);
             return;
         }
+
+        pinHeader();
 
         url = context.dataset.url;
         setSequencePos(url);
@@ -390,16 +397,23 @@ define([
         });
     }
 
-    var pushDownSidepanes = common.debounce(function(){
-        hiddenPaneMargin = Math.max( 0, body.scrollTop() - contentAreaTop );
+    function pinHeader() {
+        header = header || $('#header');
+        header.css('top', body.scrollTop() + 'px');
+    }
 
-        if( hiddenPaneMargin < visiblePaneMargin ) {
+    var pushDownSidepanes = common.debounce(function(){
+        hiddenPaneMargin = Math.max( 0, body.scrollTop());
+
+        if( hiddenPaneMargin < visiblePaneMargin) {
             // We've scrolled up over the offset; reset all margins and jump to topmost scroll
             $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
             $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
             $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
             // And reset the scroll
-            body.scrollTop( contentAreaTop );
+            body.scrollTop(0);
+            pinHeader();
+
             visiblePaneMargin = 0;
             hiddenPaneMargin = 0;
         }
@@ -445,8 +459,6 @@ define([
 
         // SwipeView
         panes = new SwipeView(swipeContainer, {});
-
-        updateHeight();
 
         panes.onFlip(function () {
             paneNow = mod3(panes.pageIndex+1);
@@ -558,14 +570,16 @@ define([
             referrerPageName = config.page.analyticsName;
             body             = $('body');
             canonicalLink    = $('link[rel=canonical]');
-            contentAreaTop   = $(swipeContainerEl).offset().top;
             visiblePane      = $('#preloads-inner > #preload-1', swipeContainerEl)[0];
 
             if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-dev-on-click')) {
                 clickSelector = "a:not([data-is-ajax]):not(.control)";
             }
 
-            // Set up the DOM structure
+            // Set explicit height on container, because it's about to be absolute-positioned.
+            updateHeight();
+
+            // Set up the DOM structure, CSS
             prepareDOM();
 
             // Set the initial sequence
