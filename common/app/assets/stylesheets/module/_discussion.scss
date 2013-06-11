@@ -281,7 +281,7 @@ $keylineSize: 1px;
     top: -.1em;
     background: #005689;
     color: #fff;
-    font: bold 13px/.9 EgyptianHeadline, Georgia, serif;
+    font: bold 13px/1 EgyptianHeadline, Georgia, serif;
     width: 1em;
     height: 1em;
     margin-left: .2em;
@@ -295,7 +295,7 @@ $keylineSize: 1px;
 }
 .d-badge--guardian-staff:after {
     content: 'g';
-    line-height: .7;
+    line-height: .9;
 }
 .d-badge__label {
     /* Hide the label but not to screen readers */
