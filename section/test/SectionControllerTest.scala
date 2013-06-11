@@ -14,6 +14,11 @@ class SectionControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
   }
 
+  it should "200 when it gets an editionalised path" in Fake {
+    val result = controllers.SectionController.render("commentisfree/uk-edition")(TestRequest())
+    status(result) should be(200)
+  }
+
   it should "return JSONP when callback is supplied to front" in Fake {
     val fakeRequest = FakeRequest(GET, section + "?callback=foo").withHeaders("host" -> "localhost:9000")
     val result = controllers.SectionController.render(section)(fakeRequest)
