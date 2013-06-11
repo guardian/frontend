@@ -40,9 +40,9 @@ public class DiscussionSteps {
     }
 
     @Then("^I can see (\\d+) top level comments$")
-    public void I_can_see_top_level_comments(int parentcommentsshownbydefault)  {
+    public void I_can_see_top_level_comments(int parentcomments)  {
         topLevelComments = webDriver.findElements(By.cssSelector(".d-comment--top-level"));
-        assertEquals(topLevelComments.size(), parentcommentsshownbydefault);
+        assertEquals(topLevelComments.size(), parentcomments);
     }
 
     @And("^the first comment is authored by \"([^\"]*)\"$")
