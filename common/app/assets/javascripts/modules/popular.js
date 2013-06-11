@@ -6,7 +6,7 @@ define(['common', 'modules/lazyload'], function (common, LazyLoad) {
         if (container) {
             url = url || '/most-read' + (config.page && config.page.section ? '/' + config.page.section : '');
             new LazyLoad({
-                url: url,
+                url: url + '.json',
                 container: container,
                 success: function () {
                     common.mediator.emit('modules:popular:loaded', container);
