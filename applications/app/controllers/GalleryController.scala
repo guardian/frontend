@@ -16,7 +16,7 @@ case class GalleryPage(
 
 object GalleryController extends Controller with Logging with ExecutionContexts {
 
-  def render(path: String, format: String = "html") = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
 
     val index = request.getQueryString("index") map (_.toInt) getOrElse 1
     val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false

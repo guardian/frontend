@@ -11,7 +11,7 @@ case class Related(heading: String, trails: Seq[Trail])
 
 object RelatedController extends Controller with Logging with ExecutionContexts {
 
-  def render(path: String, format:String = "html") = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
     val edition = Edition(request)
     val promiseOfRelated = lookup(edition, path)
     Async {

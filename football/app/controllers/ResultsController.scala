@@ -46,7 +46,7 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
       filters = filters,
       comp = comp
     )
-    
+
     Cached(page) {
       if (request.isJson)
         JsonComponent(
@@ -92,7 +92,7 @@ object ResultsController extends ResultsRenderer with Logging {
     TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamResultsController.render(tag, teamId) }
   }
 
-  def renderTag(tag: String, format: String = "html") = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
+  def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
     case today if today == DateMidnight.now => "/football/results"

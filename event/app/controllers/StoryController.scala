@@ -62,7 +62,7 @@ object StoryController extends Controller with Logging with ExecutionContexts {
     }
   }
 
-  def byId(id: String, format: String = "html") = Action {
+  def byId(id: String) = Action {
     implicit request =>
       val edition = Edition(request)
       val promiseOfStory = Future(Story.mongo.byId(id))

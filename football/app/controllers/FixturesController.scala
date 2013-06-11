@@ -91,7 +91,7 @@ object FixturesController extends FixtureRenderer with Logging with ExecutionCon
     TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamFixturesController.render(tag, teamId) }
   }
 
-  def renderTag(tag: String, format: String = "html") = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
+  def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
 
   override def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]) = date match {
     case today if today == DateMidnight.now => "/football/fixtures"
@@ -160,7 +160,7 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
     }.getOrElse(NotFound)
   }
 
-  def renderComponent(teamId: String, format: String = "html") = Action { implicit request =>
+  def renderComponent(teamId: String) = Action { implicit request =>
     Competitions.findTeam(teamId).map { team =>
       val fixtures = Competitions.withTeamMatches(teamId).sortBy(_.fixture.date.getMillis)
 
