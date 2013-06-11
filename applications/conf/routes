@@ -2,18 +2,26 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-
 # For dev machines
-GET     /assets/*file                              controllers.Assets.at(path="/public", file)
+GET     /assets/*file                               controllers.Assets.at(path="/public", file)
 
-GET		/sections					               controllers.SectionsController.render()
+# Section paths
+GET		/sections					                controllers.SectionsController.render()
 
-GET    /$path<(?!culture|sport|australia)[\w\d-]*>/trails    controllers.SectionController.renderTrails(path)
-GET    /$path<(?!culture|sport|australia)[\w\d-]*>           controllers.SectionController.render(path)
+# Note: culture|sport|australia are routed to front
+GET    /$path<[\w\d-]*>/trails                      controllers.SectionController.renderTrails(path)
+GET    /$path<[\w\d-]*>                             controllers.SectionController.render(path)
 
-GET     /$path<[\w\d-]*/[\w\d-]*>                            controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*>/trails                     controllers.TagController.renderTrails(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                   controllers.TagController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails            controllers.TagController.renderTrails(path)
+# Tag paths
+GET     /$path<[\w\d-]*/[\w\d-]*>                   controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*>/trails            controllers.TagController.renderTrails(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>          controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails   controllers.TagController.renderTrails(path)
 
-# culture and sport sections now live in front
+# Gallery paths
+GET     /$path<[\w\d-]*/gallery/.*>                 controllers.GalleryController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>        controllers.GalleryController.render(path)
+
+# Video paths
+GET     /$path<[\w\d-]*/video/.*>                   controllers.VideoController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/video/.*>          controllers.VideoController.render(path)
