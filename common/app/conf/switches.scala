@@ -94,7 +94,7 @@ object CommonSwitches {
     "If this switch is also on then swipe navigation on clicks is enabled",
     initiallyOn = false)
 
-  val ABStoryArticleSwapV2 = DefaultSwitch("ab-story-article-swap",
+  val ABStoryArticleSwapV2 = DefaultSwitch("ab-story-article-swap-v2",
     "If this switch is on, swaps the latest article in a story for the story.",
     initiallyOn = false)
 
@@ -104,6 +104,10 @@ object CommonSwitches {
 
   val ShortDiscussionSwitch = DefaultSwitch("short-discussion",
     "If this switch is on, only 10 top level comments are requested from discussion api.",
+    initiallyOn = false)
+
+  val StoryArticleSwap = DefaultSwitch("story-article-swap",
+    "If this switch is on, for the latest story, swaps it in in place of the latest article in that story. Confused?.",
     initiallyOn = false)
 
   val all: Seq[Switchable] = Seq(
@@ -129,7 +133,8 @@ object CommonSwitches {
     SwipeNavOnClick,
     ABStoryArticleSwapV2,
     DiscussionSwitch,
-    ShortDiscussionSwitch
+    ShortDiscussionSwitch,
+    StoryArticleSwap
   )
 }
 
