@@ -38,7 +38,10 @@
     // Experiment with indents
     > p {
         margin-bottom: 0;
-        text-indent: 1.5em;
+
+        + p {
+            text-indent: 1.5em;
+        }
     }
 }
 
