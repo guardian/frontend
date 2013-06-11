@@ -94,7 +94,7 @@ object CommonSwitches {
     "If this switch is also on then swipe navigation on clicks is enabled",
     initiallyOn = false)
 
-  val ABStoryArticleSwap = DefaultSwitch("ab-story-article-swap",
+  val ABStoryArticleSwapV2 = DefaultSwitch("ab-story-article-swap",
     "If this switch is on, swaps the latest article in a story for the story.",
     initiallyOn = false)
 
@@ -127,7 +127,7 @@ object CommonSwitches {
     ImageServerSwitch,
     SwipeNav,
     SwipeNavOnClick,
-    ABStoryArticleSwap,
+    ABStoryArticleSwapV2,
     DiscussionSwitch,
     ShortDiscussionSwitch
   )
