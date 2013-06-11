@@ -113,7 +113,7 @@ define([
                 }
 
                 ajax({
-                    url: self.discussionUrl + '?page=' + page,
+                    url: self.discussionUrl + '.json?page=' + page,
                     type: 'json',
                     method: 'get',
                     crossOrigin: true,

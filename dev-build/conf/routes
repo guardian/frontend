@@ -39,6 +39,7 @@ GET    /front-trails/*path                                  controllers.MoreStor
 GET    /stories                                             controllers.StoryController.latest()
 GET    /stories.json                                        controllers.StoryController.latestJson()
 GET    /stories/articles                                    controllers.StoryController.latestWithContent()
+GET    /stories/articles.json                               controllers.StoryController.latestWithContent()
 GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
 GET    /stories/*id.json                                    controllers.StoryController.byId(id)
 GET    /stories/*id                                         controllers.StoryController.byId(id)

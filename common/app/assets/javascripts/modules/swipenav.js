@@ -124,7 +124,7 @@ define([
             else {
                 el.pending = true;
                 ajax({
-                    url: url + '.json',
+                    url: url,
                     method: 'get',
                     type: 'jsonp',
                     jsonpCallbackName: 'swipePreload',
@@ -236,7 +236,7 @@ define([
     function loadSequence(callback) {
         var section = window.location.pathname.match(/^\/[^\/]+/);
         ajax({
-            url: '/front-trails' + (section ? section[0] : '') + '.json',
+            url: '/front-trails' + (section ? section[0] : ''),
             type: 'jsonp',
             success: function (json) {
                 if (json.stories && json.stories.length >= 3) {

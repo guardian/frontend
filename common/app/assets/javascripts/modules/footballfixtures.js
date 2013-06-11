@@ -27,7 +27,7 @@ define([
         //Mappings can be found here: http://cms.guprod.gnl/tools/mappings/pafootballtournament
         this.competitions = ['500', '510', '100', '300', '301', '101', '120', '127', '301', '213', '320', '701', '650', '102', '103', '121', '122', '123'];
 
-        this.path =  "/football/api/frontscores?";
+        this.path =  "/football/api/frontscores.json?";
         this.queryString = "&competitionId=";
 
         // View
@@ -52,7 +52,7 @@ define([
                 that = this;
 
             return ajax({
-                url: path + '.json',
+                url: path,
                 type: 'json',
                 crossOrigin: true
             }).then(

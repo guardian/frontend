@@ -2,7 +2,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
     function FootballTables(options) {
 
-        this.path =  "/football/api/competitiontable?";
+        this.path =  "/football/api/competitiontable.json?";
         this.queryString = "&competitionId=";
 
         // View
@@ -17,7 +17,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         this.load = function (query) {
             var that = this;
             return ajax({
-                url: query + '.json',
+                url: query,
                 type: 'json',
                 crossOrigin: true
             }).then(

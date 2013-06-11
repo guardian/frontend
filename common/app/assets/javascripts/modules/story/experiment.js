@@ -86,7 +86,7 @@ define([
 
         this.load = function (url) {
             return ajax({
-                url: url + '.json',
+                url: url,
                 type: 'jsonp',
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showExperiment',
