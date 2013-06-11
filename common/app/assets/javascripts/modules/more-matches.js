@@ -24,7 +24,7 @@ define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean)
             function clicked(_link) {
                 var link = bonzo(_link);
                 ajax({
-                    url: link.attr('href'),
+                    url: link.attr('href') + '.json',
                     type: 'json',
                     crossOrigin: true
                 }).then(

@@ -26,7 +26,7 @@ define([
         this.load = function(url) {
             var that = this;
             ajax({
-                url: url,
+                url: url + '.json',
                 type: "jsonp",
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'storycontent',

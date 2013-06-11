@@ -81,7 +81,7 @@ define([
                 url += '?storyId=' + storyId;
             }
             return ajax({
-                url: url,
+                url: url + '.json',
                 type: 'jsonp',
                 jsonpCallback: 'callback',
                 jsonpCallbackName: 'showStoryTrails',

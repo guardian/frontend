@@ -30,7 +30,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 into = bonzo(opts.container);
                 if (opts.force || ! into.hasClass('lazyloaded')) {
                     return ajax({
-                        url: opts.url,
+                        url: opts.url + '.json',
                         type: 'json',
                         crossOrigin: true
                     }).then(

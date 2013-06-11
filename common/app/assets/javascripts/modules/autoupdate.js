@@ -100,7 +100,7 @@ define([
                 that = this;
 
             return ajax({
-                url: path,
+                url: path + '.json',
                 type: 'json',
                 crossOrigin: true
             }).then(

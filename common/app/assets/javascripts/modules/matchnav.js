@@ -18,7 +18,7 @@ define(['common', 'ajax', 'modules/pad'], function (common, ajax, Pad) {
         this.load = function (url, context) {
             var that = this;
             ajax({
-                url: url,
+                url: url + '.json',
                 type: 'json',
                 crossOrigin: true
             }).then(

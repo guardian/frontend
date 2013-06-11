@@ -86,7 +86,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                 } else {
                     $cta.attr('disabled', 'disabled');
                     ajax({
-                        url: opts.url || '/' +  section + '/trails',
+                        url: opts.url || '/' +  section + '/trails.json',
                         type: 'json',
                         crossOrigin: true
                     }).then(
