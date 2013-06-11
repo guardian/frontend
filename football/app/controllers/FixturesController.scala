@@ -73,11 +73,11 @@ object FixturesController extends FixtureRenderer with Logging with ExecutionCon
     "GFE:Football:automatic:fixtures"
   )
 
-  def renderFor(year: String, month: String, day: String, format: String = "html") = render(
+  def renderFor(year: String, month: String, day: String) = render(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
-  def render(date: Option[DateMidnight] = None, format: String = "html") = Action { implicit request =>
+  def render(date: Option[DateMidnight] = None) = Action { implicit request =>
     renderFixtures(page, Competitions.withTodaysMatchesAndFutureFixtures, date, None, None)
   }
 
@@ -89,7 +89,7 @@ object FixturesController extends FixtureRenderer with Logging with ExecutionCon
     TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamFixturesController.render(tag, teamId) }
   }
 
-  def renderTag(tag: String, format: String = "html") = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
+  def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
 
   override def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]) = date match {
     case today if today == DateMidnight.now => "/football/fixtures"
@@ -101,7 +101,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
 
   override val daysToDisplay = 20
 
-  def renderFor(year: String, month: String, day: String, competitionName: String, format: String = "html") = render(
+  def renderFor(year: String, month: String, day: String, competitionName: String) = render(
     competitionName,
     Competitions.withTag(competitionName).map { comp => comp }.get,
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
@@ -157,7 +157,7 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
     }.getOrElse(NotFound)
   }
 
-  def renderComponent(teamId: String, format: String = "html") = Action { implicit request =>
+  def renderComponent(teamId: String) = Action { implicit request =>
     Competitions.findTeam(teamId).map { team =>
       val fixtures = Competitions.withTeamMatches(teamId).sortBy(_.fixture.date.getMillis)
 

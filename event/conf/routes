@@ -5,9 +5,9 @@
 # For dev machines
 GET    /assets/*file                         controllers.Assets.at(path="/public", file)
 
-GET    /stories                              controllers.StoryController.latest(format = "html")
-GET    /stories.:format                      controllers.StoryController.latest(format)
-GET    /stories/articles                     controllers.StoryController.latestWithContent()
-GET    /stories/storymodule01/*id            controllers.StoryController.headerAndBlock(id)
-GET    /stories/*id                          controllers.StoryController.byId(id, format = "html")
-GET    /stories/*id.:format                  controllers.StoryController.byId(id, format)
+GET    /stories                                             controllers.StoryController.latest()
+GET    /stories.json                                        controllers.StoryController.latest()
+GET    /stories/articles                                    controllers.StoryController.latestWithContent()
+GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
+GET    /stories/*id                                         controllers.StoryController.byId(id)
+GET    /stories/*id.json                                    controllers.StoryController.byId(id)

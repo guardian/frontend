@@ -28,7 +28,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd")
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
-  def matchNav(year: String, month: String, day: String, team1: String, team2: String, format: String = "html") = Action { implicit request =>
+  def matchNav(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
 
     val contentDate = dateFormat.parseDateTime(year + month + day).toDateMidnight
     val interval = new Interval(contentDate - 2.days, contentDate + 3.days)
@@ -49,7 +49,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     }.getOrElse(Cached(300)(JsonNotFound()))
   }
 
-  def moreOn(matchId: String, format: String = "html") = Action { implicit request =>
+  def moreOn(matchId: String) = Action { implicit request =>
     findMatch(matchId).map { theMatch =>
       val promiseOfRelated = loadMoreOn(request, theMatch)
       Async {

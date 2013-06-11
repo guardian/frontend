@@ -76,7 +76,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     Ok("Ok")
   }
   
-  def render(path: String, format: String = "html") = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
 
     val edition = Edition(request)
 
@@ -105,7 +105,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     }
   }
   
-  def renderTrails(path: String, format: String = "html") = Action { implicit request =>
+  def renderTrails(path: String) = Action { implicit request =>
 
     val edition = Edition(request)
 

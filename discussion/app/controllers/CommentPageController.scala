@@ -7,7 +7,7 @@ import model.Cached
 
 object CommentPageController extends Controller with Logging with ExecutionContexts {
 
-  def render(shortUrl: String, format: String = "html") = Action { implicit request =>
+  def render(shortUrl: String) = Action { implicit request =>
     val page = request.getQueryString("page").getOrElse("1")
     val promiseOfComments = DiscussionApi.commentsFor(shortUrl, page)
 

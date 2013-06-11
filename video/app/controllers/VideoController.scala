@@ -11,7 +11,7 @@ case class VideoPage(video: Video, storyPackage: List[Trail])
 
 object VideoController extends Controller with Logging with ExecutionContexts {
 
-  def render(path: String, format: String = "html") = Action { implicit request =>
+  def render(path: String) = Action { implicit request =>
     val promiseOfVideo = lookup(path)
     Async {
       promiseOfVideo.map {

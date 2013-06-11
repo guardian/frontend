@@ -3,7 +3,7 @@
 # ~~~~
 
 # For dev machines
-GET     /assets/*file                  controllers.Assets.at(path="/public", file)
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-GET     /$path<.*/video/.*>            controllers.VideoController.render(path, format = "html")
-GET     /$path<.*/video/.*>.:format    controllers.VideoController.render(path, format)
+GET     /$path<.*/video/.*>         controllers.VideoController.render(path)
+GET     /$path<.*/video/.*>.json    controllers.VideoController.render(path)

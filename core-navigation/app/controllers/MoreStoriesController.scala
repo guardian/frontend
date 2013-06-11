@@ -14,7 +14,7 @@ import akka.dispatch.OnFailure
 
 object MoreStoriesController extends Controller with Logging {
 
-  def render(path: String, moreStoriesType: String, format: String = "html") = Action { implicit request =>
+  def render(path: String, moreStoriesType: String) = Action { implicit request =>
     val edition = Edition(request)
     val moreStories = moreStoriesType match {
       case "mostViewed" => getMostViewed(path, edition)

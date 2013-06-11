@@ -20,7 +20,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
     .filterNot(_.multiGroup)
     .headOption
 
-  def renderCompetition(format: String = "html") = Action { implicit request =>
+  def renderCompetition() = Action { implicit request =>
     val competitionId = request.queryString("competitionId").headOption
 
     competitionId.map { id =>
@@ -31,7 +31,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
     } getOrElse (BadRequest("need a competition id"))
   }
 
-  def renderTeam(teamId: String, format: String = "html") = Action { implicit request =>
+  def renderTeam(teamId: String) = Action { implicit request =>
     loadTableWithTeam(teamId).map { table =>
       val html = () => views.html.fragments.frontTableBlock(table, Some(teamId))
       renderFormat(html, html, 60)
