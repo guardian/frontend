@@ -25,13 +25,12 @@ define([
             discussionId          = options.id.replace('http://gu.com', ''),
             discussionContainer   = options.discussionContainer || '.article__discussion',
             articleContainer      = options.articleContainer || '.article__container',
-            commentCountSelector  = options.commentCountSelector || '.d-commentcount',
             commentsHaveLoaded    = false,
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<div class="d-actions">' +
-                '<a class="d-actions__link" href="' + config.page.canonicalUrl + '?mobile-redirect=false#start-of-comments">' +
+                '<a data-link-name="Comment on desktop" class="d-actions__link" href="' + config.page.canonicalUrl + '?mobile-redirect=false#start-of-comments">' +
                     'Want to comment? Visit the desktop site</a>' +
                 '<button class="top js-top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
             clickstream           = new ClickStream({ addListener: false }),
@@ -40,14 +39,13 @@ define([
         return {
             init: function() {
                 if (config.page.commentable === true &&
-                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev')) && context.querySelector('.byline')) {
+                    (config.switches.discussion === true || userPrefs.isOn('discussion-dev'))) {
 
                         self = this;
                         self.discussionUrl           = '/discussion' + discussionId;
                         self.discussionCountUrl      = config.page.discussionApiUrl + '/discussion/'+discussionId+'/comments/count';
                         self.discussionContainerNode = context.querySelector(discussionContainer);
                         self.articleContainerNode    = context.querySelector(articleContainer);
-                        self.commentCountNode        = context.querySelector(commentCountSelector);
 
                         self.getCommentCount(function(commentCount) {
                             if (commentCount > 0) {
@@ -67,13 +65,21 @@ define([
                                       bylineNode.html() +
                                  '  </li>' +
                                  '  <li class="d-tabs__item d-tabs__item--commentcount js-show-discussion" data-link-name="Discussion Tab" data-is-ajax>' +
-                                 '    <button class="d-commentcount speech-bubble">'+ commentCount + '</button>' +
+                                 '    <a href="/discussion/'+ discussionId + '" class="d-commentcount speech-bubble">' +
+                                 '       <span class="h">View all </span>' +
+                                 '       <span class="js-commentcount__number">' + commentCount + '</span>' +
+                                 '       <span class="h"> comments</span>' +
+                                 '    </a>' +
                                  '  </li>' +
                                  '</ol>' +
                                '</div>';
 
-                bylineNode.replaceWith(tabsHtml);
-                Array.prototype.forEach.call(context.querySelectorAll(".d-commentcount"), function(el) {
+                if(bylineNode.length) {
+                    bylineNode.replaceWith(tabsHtml);
+                } else {
+                    bonzo(context.querySelector('.article__container')).before(tabsHtml);
+                }
+                Array.prototype.forEach.call(context.querySelectorAll(".js-commentcount__number"), function(el) {
                     el.innerHTML = commentCount;
                 });
             },
@@ -195,6 +201,13 @@ define([
 
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
                     e.preventDefault();
+
+                    //Toggles view for accidental clicks
+                    if(self.discussionContainerNode.style.display === 'block' && commentsHaveLoaded) {
+                        bean.fire(context.querySelector('.js-show-article'), 'click');
+                        return;
+                    }
+
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--commentcount')).addClass('d-tabs__item--is-active');
 
