@@ -2,13 +2,10 @@
 
 <ul class="unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        <li class="trail t@info.rowNum @if(info.rowNum == 1 && trail.mainPicture(width=220)) { trail--has-image }"
-            data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
-            @info.rowNum match {
-                case featuredRow if featuredRow == 1 & showFeatured => { @fragments.trails.featured(trail, featuredRow, related) }
-                case thumbnailRow if thumbnailRow <= numWithImages  => { @fragments.trails.thumbnail(trail, thumbnailRow, related) }
-                case headlineRow                                    => { @fragments.trails.headline(trail, headlineRow, related) }
-            }
-        </li>
+        @info.rowNum match {
+            case featuredRow if featuredRow == 1 & showFeatured => { @fragments.trails.featured(trail, featuredRow, related) }
+            case thumbnailRow if thumbnailRow <= numWithImages  => { @fragments.trails.thumbnail(trail, thumbnailRow, related) }
+            case headlineRow                                    => { @fragments.trails.headline(trail, headlineRow, related) }
+        }
     }
 </ul>
