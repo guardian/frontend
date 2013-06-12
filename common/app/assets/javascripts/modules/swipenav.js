@@ -2,6 +2,7 @@
 
 define([
     'common',
+    'modules/storage',
     'modules/userPrefs',
     'modules/pageconfig',
     'swipeview',
@@ -11,6 +12,7 @@ define([
     'modules/url'
 ], function(
     common,
+    storage,
     userPrefs,
     pageConfig,
     SwipeView,
@@ -23,12 +25,12 @@ define([
         body,
         bodyPartSelector = '.parts__body',
         canonicalLink,
-        clickSelector,
         header,
         height,
         hiddenPaneMargin = 0,
         initiatedBy = 'initial',
         initialUrl,
+        linkContext,
         noHistoryPush = false,
         panes,
         paneNow = 1,
@@ -40,8 +42,10 @@ define([
         sequence = [],
         sequenceCache,
         sequenceLen = 0,
+        storePrefix = 'gu.swipe.',
         swipeContainer = '#preloads',
         swipeContainerEl = document.querySelector(swipeContainer),
+        swipeNavOnClick,
         throttle,
         visiblePane,
         visiblePaneMargin = 0;
@@ -125,9 +129,8 @@ define([
                 el.pending = true;
                 ajax({
                     url: url,
-                    method: 'get',
-                    type: 'jsonp',
-                    jsonpCallbackName: 'swipePreload',
+                    type: 'json',
+                    crossOrigin: true,
                     success: function (frag) {
                         var html;
 
@@ -209,7 +212,7 @@ define([
         referrer = window.location.href;
         referrerPageName = config.page.analyticsName;
 
-        if(clickSelector && initiatedBy === 'click') {
+        if(initiatedBy === 'click') {
             loadSequence(function(sequence){
                 setSequence(sequence);
                 loadSidePanes();
@@ -234,10 +237,24 @@ define([
     }
 
     function loadSequence(callback) {
-        var section = window.location.pathname.match(/^\/[^\/]+/);
+        var sequenceId = linkContext;
+
+        if (sequenceId) {
+            linkContext = undefined;
+        } else {
+            sequenceId = storage.get(storePrefix + 'linkContext');
+            if (sequenceId) {
+                storage.remove(storePrefix + 'linkContext');
+            } else {
+                sequenceId = window.location.pathname.match(/^\/([^\/]+)/),
+                sequenceId = sequenceId ? sequenceId[1] : undefined;
+            }
+        }
+
         ajax({
-            url: '/front-trails' + (section ? section[0] : ''),
-            type: 'jsonp',
+            url: '/front-trails' + (sequenceId ? '/' + sequenceId : ''),
+            type: 'json',
+            crossOrigin: true,
             success: function (json) {
                 if (json.stories && json.stories.length >= 3) {
                     callback(json.stories);
@@ -316,21 +333,6 @@ define([
             throttle = true;
             slideInPane(dir);
         }
-    }
-
-    function validateClick(event) {
-        var link = event.currentTarget;
-
-        // Middle click, cmd click, and ctrl click should open links in a new tab as normal.
-        if (event.which > 1 || event.metaKey || event.ctrlKey) { return; }
-
-        // Ignore cross origin links
-        if (location.protocol !== link.protocol || location.host !== link.host) { return; }
-
-        // Ignore anchors on the same page
-        if (link.hash && link.href.replace(link.hash, '') === location.href.replace(location.hash, '')) { return; }
-
-        return true;
     }
 
     function gotoSequencePage(pos) {
@@ -497,27 +499,35 @@ define([
 
         // BINDINGS
 
-        // Bind clicks to cause swipe-in transitions
-        if (clickSelector){
-            bean.on(document, 'click', clickSelector, function (e) {
-                var url;
+        common.mediator.on('module:clickstream:click', function(clickSpec){
+            var url;
 
-                if (!validateClick(e)) { return true; }
+            if (clickSpec.sameHost && !clickSpec.samePage) {
 
-                e.preventDefault();
+                if (swipeNavOnClick) {
 
-                url = urlAbsPath($(this).attr('href'));
+                    linkContext = clickSpec.linkContext;
+                    url = urlAbsPath(clickSpec.target.href);
 
-                if (url === urlAbsPath(window.location.href)) {
-                    // Force a complete reload if the link is for the current page
-                    window.location.reload(true);
+                    if (!url) {
+                        return;
+                    } else if (url === urlAbsPath(window.location.href)) {
+                        // Force a complete reload if the link is for the current page
+                        window.location.reload(true);
+                    }
+                    else {
+                        clickSpec.event.preventDefault();
+                        initiatedBy = 'click';
+                        gotoUrl(url);
+                    }
+
+                } else if (clickSpec.linkContext) {
+                    storage.set(storePrefix + 'linkContext', clickSpec.linkContext, {
+                        expires: 5000000 + (new Date()).getTime()
+                    });
                 }
-                else {
-                    initiatedBy = 'click';
-                    gotoUrl(url);
-                }
-            });
-        }
+            }
+        });
 
         // Fix pane margins, so sidepanes come in at their top
         bean.on(window, 'scroll', function () {
@@ -572,9 +582,7 @@ define([
             canonicalLink    = $('link[rel=canonical]');
             visiblePane      = $('#preloads-inner > #preload-1', swipeContainerEl)[0];
 
-            if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-dev-on-click')) {
-                clickSelector = "a:not([data-is-ajax]):not(.control)";
-            }
+            swipeNavOnClick = config.switches.swipeNavOnClick || userPrefs.isOn('swipe-dev-on-click');
 
             // Set explicit height on container, because it's about to be absolute-positioned.
             updateHeight();

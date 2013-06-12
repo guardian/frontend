@@ -71,6 +71,11 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
                 }
             }
 
+            // Pick up the nearest data-link-context
+            if(!spec.linkContext) {
+                spec.linkContext = el.getAttribute('data-link-context');
+            }
+
             // Recurse
             spec.el = el.parentNode;
             return getClickSpec(spec);
@@ -79,7 +84,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
         // delegate, emit the derived tag
         if (opts.addListener !== false) {
             bean.add(document.body, 'click', function (event) {
-                var clickSpec = getClickSpec({el: event.target});
+                var clickSpec = getClickSpec({el: event.target, event: event});
                 if (clickSpec) {
                     common.mediator.emit('module:clickstream:click', clickSpec);
                 }
