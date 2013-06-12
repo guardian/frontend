@@ -10,8 +10,7 @@ define([
         countUrl = "/discussion/comment-counts.json?shortUrls=",
         tpl = '';
         tpl += '<span class="trail__comment-count">';
-        tpl += '<i class="i i-comment-count-small"></i>';
-        tpl += '<a href="[URL]" data-link-name="Comment count">[COUNT]</a>';
+        tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-count-small"></i>[COUNT]</a>';
         tpl += '</span>';
 
 
