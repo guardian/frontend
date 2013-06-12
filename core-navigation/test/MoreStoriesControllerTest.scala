@@ -6,11 +6,19 @@ import play.api.test._
 import play.api.test.Helpers._
 import play.api.libs.json._
 import play.api.mvc.Result
+import feed.MostPopularAgent
+import common.Edition
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import org.joda.time.DateTime
+import model.Content
 
 class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
   
   val callbackName = "aFunction"
   val section = "football"
+
+  val testContent = Seq(new Content(new ApiContent("the/id", None, None, new DateTime(), "the title", "http://www.guardian.co.uk/canonical",
+    "http://foo.bar", elements = None)))
     
   private def unWrapJson(json: String): JsValue = {
     Json.parse(json.stripPrefix(callbackName + "(").stripSuffix(");"))
@@ -19,13 +27,13 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
   private def makeRequestFrontTrails(page: String): Result = {
     val fakeRequest = FakeRequest(GET, s"/front-trails/${page}?callback=${callbackName}")
         .withHeaders("host" -> "localhost:9000")
-    controllers.MoreStoriesController.render(page, "frontTrails")(fakeRequest)
+    controllers.MoreStoriesController.renderFrontTrails(page)(fakeRequest)
   }
   
   private def makeRequestMostViewed(page: String): Result = {
     val fakeRequest = FakeRequest(GET, s"/most-viewed/${page}?callback=${callbackName}")
         .withHeaders("host" -> "localhost:9000")
-    controllers.MoreStoriesController.render(page, "mostViewed")(fakeRequest)
+    controllers.MoreStoriesController.renderMostViewed(page)(fakeRequest)
   }
   
   private def extractStories(json: JsValue): Seq[JsValue] = {
@@ -37,7 +45,7 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"stories\"""") // the callback
-    
+
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     stories.size should be (15)
   }
@@ -47,7 +55,7 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"stories\"""") // the callback
-    
+
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     stories.size should be (20)
   }
@@ -56,22 +64,20 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"/most-viewed/${section}.json")
       .withHeaders("host" -> "http://localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-    
-    val result = controllers.MoreStoriesController.render(section, "mostViewed")(fakeRequest)
+
+    val result = controllers.MoreStoriesController.renderMostViewed(section)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"stories\"")
-    
+
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     stories.size should be (20)
   }
 
   it should "return global most read if unknown page" in Fake {
-    val result = makeRequestFrontTrails("a/bad/page")
-
+    val result = makeRequestFrontTrails("a/bad/pasdfsdfge")
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories.size should be > (20)
-    stories.head should not be(Json.toJson(Map("url" -> "/foo")))
+    stories should contain(Json.toJson(Map("url" -> "/uk/2013/apr/03/offshore-secrets-offshore-tax-haven")))
   }
   
 }

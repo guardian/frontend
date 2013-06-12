@@ -25,6 +25,7 @@ case class StoryPage(story: Story) extends Page(
 
 object StoryController extends Controller with Logging with ExecutionContexts {
 
+  def latestJson() = latest()
   def latest() = Action { implicit request =>
     val promiseOfStories = Future(Story.mongo.latest())
 

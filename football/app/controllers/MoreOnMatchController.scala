@@ -28,6 +28,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd")
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
+  def matchNavJson(year: String, month: String, day: String, team1: String, team2: String) = matchNav(year, month, day, team1, team2)
   def matchNav(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
 
     val contentDate = dateFormat.parseDateTime(year + month + day).toDateMidnight
