@@ -20,6 +20,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
     .filterNot(_.multiGroup)
     .headOption
 
+  def renderCompetitionJson() = renderCompetition()
   def renderCompetition() = Action { implicit request =>
     val competitionId = request.queryString("competitionId").headOption
 

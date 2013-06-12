@@ -35,7 +35,7 @@ GET    /front-trails/*path                                  controllers.MoreStor
 
 #Stories
 GET    /stories                                             controllers.StoryController.latest()
-GET    /stories.json                                        controllers.StoryController.latest()
+GET    /stories.json                                        controllers.StoryController.latestJson()
 GET    /stories/articles                                    controllers.StoryController.latestWithContent()
 GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
 GET    /stories/*id.json                                    controllers.StoryController.byId(id)
@@ -138,7 +138,7 @@ GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails.json            controllers.Ta
 
 #Section
 GET     /sections                                                  controllers.SectionsController.render()
-GET     /sections.json                                             controllers.SectionsController.render()
+GET     /sections.json                                             controllers.SectionsController.renderJson()
 # culture and sport sections now live in front
 GET     /$path<(?!culture|sport|australia)[\w\d-]*>/trails         controllers.SectionController.renderTrails(path)
 GET     /$path<(?!culture|sport|australia)[\w\d-]*>/trails.json    controllers.SectionController.renderTrails(path)
