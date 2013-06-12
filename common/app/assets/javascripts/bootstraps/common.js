@@ -29,7 +29,8 @@ define([
     'modules/debug',
     'modules/experiments/ab',
     'modules/swipenav',
-    "modules/adverts/video"
+    "modules/adverts/video",
+    "modules/discussion/commentCount"
 ], function (
     common,
     ajax,
@@ -60,7 +61,8 @@ define([
     Debug,
     AB,
     swipeNav,
-    VideoAdvert
+    VideoAdvert,
+    CommentCount
 ) {
 
     var modules = {
@@ -126,6 +128,14 @@ define([
 
         initClickstream: function () {
             var cs = new Clickstream({filter: ["a", "button"]});
+        },
+
+        transcludeCommentCounts: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                if(context.querySelector("[data-discussion-id]")) {
+                    CommentCount.init(context);
+                }
+            });
         },
 
         loadAnalytics: function () {
@@ -282,6 +292,7 @@ define([
             modules.loadVideoAdverts(config);
             modules.initClickstream();
             modules.initSwipe(config);
+            modules.transcludeCommentCounts();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

@@ -4,7 +4,7 @@ define([
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/discussion"
+    "modules/discussion/discussion"
 ], function (
     common,
     AutoUpdate,

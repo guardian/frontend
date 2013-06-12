@@ -312,14 +312,14 @@ $keylineSize: 1px;
 .speech-bubble,
 .speech-bubble:link,
 .speech-bubble:visited {
+    @include font($sans-serif, normal, 14, 14);
     position: relative;
     display: inline-block;
-    background: #F5644F;
-    padding: .3125em .6em .375em;
+    background: #F6644F;
+    padding: .3125em .6em .275em;
     border: 0;
     border-radius: 4px;
     text-align: center;
-    font: normal 16px/1 Times, "Times New Roman", serif;
     color: white;
     text-decoration: none;
 }
@@ -331,7 +331,7 @@ $keylineSize: 1px;
     left: 6px;
     border-width: 0 0 8px 8px;
     border-style: solid;
-    border-color: transparent #F5644F;
+    border-color: transparent #F6644F;
 }
 
 /* CTA's

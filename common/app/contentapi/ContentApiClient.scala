@@ -12,7 +12,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   val supportedTypes = "type/gallery|type/article|type/video"
 
   //NOTE - do NOT add body to this list
-  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount"
+  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl"
 
   val references = "pa-football-competition,pa-football-team,witness-assignment"
 

@@ -22,8 +22,9 @@ public class DiscussionSteps {
         this.webDriver = webDriver;
     }
 
-    protected String articlewithcomments = "/help/insideguardian/2012/feb/29/threaded-comments";
+    protected String articlewithcomments = "/world/2013/jun/06/us-tech-giants-nsa-data";
     List<WebElement> topLevelComments;
+    List<WebElement> mediaPrimary;
 
 
     @Given("^I am on an article with comments$")
@@ -34,9 +35,15 @@ public class DiscussionSteps {
 
     @When("^I choose to view the comments$")
     public void I_choose_to_view_the_comments()  {
-    WebElement commentlink=webDriver.findElement(By.cssSelector(".js-commentcount__number"));
-    webDriver.click(commentlink);
-    webDriver.waitForElement(By.cssSelector(".d-discussion"));
+        WebElement commentlink=webDriver.findElement(By.cssSelector(".js-commentcount__number"));
+        webDriver.click(commentlink);
+        webDriver.waitForElement(By.cssSelector(".d-discussion"));
+    }
+
+    @Then("^the main image has a toggle class applied to it$")
+    public void Main_image_has_toggle_class()  {
+        mediaPrimary = webDriver.findElements(By.cssSelector(".media-primary.media-primary--comments-on"));
+        assertEquals("There should be one (and only one) primary image in the page", mediaPrimary.size(), 1);
     }
 
     @Then("^I can see (\\d+) top level comments$")
@@ -48,17 +55,14 @@ public class DiscussionSteps {
     @And("^the first comment is authored by \"([^\"]*)\"$")
     public void the_first_comment_is_authored_by(String author){
         assertEquals(webDriver.findElement(By.cssSelector(".d-comment__author")).getText(),author);
-
     }
-
 
     @When("^I show more comments$")
     public void I_show_more_comments()  {
-
-    webDriver.findElement(By.cssSelector(".js-show-more-comments")).click();
+        webDriver.findElement(By.cssSelector(".js-show-more-comments")).click();
         (new WebDriverWait(webDriver, 10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return d.findElements(By.cssSelector(".d-comment--top-level")).size() == topLevelComments.size()+10;
+                return d.findElements(By.cssSelector(".d-comment--top-level")).size() == topLevelComments.size()*2;
             }
         });
     }

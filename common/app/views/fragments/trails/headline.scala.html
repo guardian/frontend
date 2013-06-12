@@ -1,9 +1,13 @@
-@(trail: Trail, rowNum: Int, related: Boolean = false, headingLevel: Int = 2)(implicit request: RequestHeader)
+@(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-@fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+<@element class="trail trail--headline t@rowNum" data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
 
-<h@headingLevel class="trail__headline type-5">
-    <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
-        @cleanTrailText(trail.headline)
-    </a>
-</h@headingLevel>
+    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
+    <h@headingLevel class="trail__headline type-5">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+            @cleanTrailText(trail.headline)
+        </a>
+    </h@headingLevel>
+
+</@element>
