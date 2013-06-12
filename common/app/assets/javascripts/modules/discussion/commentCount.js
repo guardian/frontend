@@ -16,13 +16,12 @@ define([
 
     function getContentIds(context) {
         var nodes = context.querySelectorAll("[" + attributeName + "]"),
-            i = 1, l = nodes.length,
+            l = nodes.length-1,
             data = "";
 
-        Array.prototype.forEach.call(nodes, function(el) {
+        Array.prototype.forEach.call(nodes, function(el, i) {
             data += el.getAttribute(attributeName);
             if(i < l) { data += ','; }
-            i++;
         });
 
         return data;
