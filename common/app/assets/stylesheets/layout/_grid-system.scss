@@ -1,0 +1,13 @@
+// Helpers
+@mixin gs-container {
+	position: relative;
+	margin: 0 auto;
+	max-width: 940px; // 12 columns
+}
+
+// Output grid system
+@mixin grid-system {
+	.gs-container {
+		@include gs-container;
+	}	
+}
