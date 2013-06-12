@@ -213,8 +213,7 @@ define([
         referrerPageName = config.page.analyticsName;
 
         if(initiatedBy === 'click') {
-            loadSequence(function(sequence){
-                setSequence(sequence);
+            loadSequence(function(){
                 loadSidePanes();
             });
         } else {
@@ -251,54 +250,53 @@ define([
             }
         }
 
+        // 'news' should return top stories, i.e. the default/front
+        sequenceId = sequenceId !== 'news' ? sequenceId : undefined;
+
         ajax({
             url: '/front-trails' + (sequenceId ? '/' + sequenceId : ''),
             type: 'json',
             crossOrigin: true,
             success: function (json) {
-                if (json.stories && json.stories.length >= 3) {
-                    callback(json.stories);
+                var arr = json.stories,
+                    len = arr.length,
+                    url = window.location.pathname,
+                    sectionUrl = url.match(/^\/[^\/]*/)[0],
+                    s,
+                    i;
+
+                if (len >= 3) {
+                    // Make sure url is the first in the sequence
+                    if(arr[0].url !== url) {
+                        arr.unshift({url: url});
+                        len += 1;
+                    }
+
+                    // Add the "section" page as the last position in the sequence
+                    arr.push({url: '/' + (sequenceId ? sequenceId : '')});
+                    len += 1;
+
+                    sequence = [];
+                    sequenceLen = 0;
+                    sequenceCache = {};
+
+                    for (i = 0; i < len; i += 1) {
+                        s = arr[i];
+                        // dedupe, while also creating a lookup obj
+                        if(!sequenceCache[s.url]) {
+                            s.pos = sequenceLen;
+                            sequenceCache[s.url] = s;
+                            sequence.push(s);
+                            sequenceLen += 1;
+                            window.console.log(i + " " + s.url);
+                        }
+                    }
+                    setSequencePos(window.location.pathname);
                 }
+
+                callback();
             }
         });
-    }
-
-    function setSequence(arr) {
-        var len = arr.length,
-            url = window.location.pathname,
-            sectionUrl = url.match(/^\/[^\/]*/)[0],
-            s,
-            i;
-
-        if (len) {
-
-            // Make sure url is the first in the sequence
-            if(arr[0].url !== url) {
-                arr.unshift({url: url});
-                len += 1;
-            }
-
-            // Add the "section" page as the last position in the sequence
-            arr.push({url: sectionUrl});
-            len += 1;
-
-            sequence = [];
-            sequenceLen = 0;
-            sequenceCache = {};
-
-            for (i = 0; i < len; i += 1) {
-                s = arr[i];
-                // dedupe, while also creating a lookup obj
-                if(!sequenceCache[s.url]) {
-                    s.pos = sequenceLen;
-                    sequenceCache[s.url] = s;
-                    sequence.push(s);
-                    sequenceLen += 1;
-                    //window.console.log(i + " " + s.url);
-                }
-            }
-            setSequencePos(window.location.pathname);
-        }
     }
 
     function gotoUrl(url, dir) {
@@ -428,14 +426,6 @@ define([
 
     // This'll be the public api
     var api = {
-        setSequence: setSequence,
-
-        loadSidePanes: loadSidePanes,
-
-        getSequence: function(){
-            return sequence;
-        },
-
         gotoSequencePage: function(pos, type){
             initiatedBy = type ? type.toString() : 'position';
             gotoSequencePage(pos, type);
@@ -572,7 +562,7 @@ define([
     }
 
     var initialise = function(config) {
-        loadSequence(function(sequence){
+        loadSequence(function(){
             var loc = window.location.href;
 
             initialUrl       = urlAbsPath(loc);
@@ -589,9 +579,6 @@ define([
 
             // Set up the DOM structure, CSS
             prepareDOM();
-
-            // Set the initial sequence
-            setSequence(sequence);
 
             // Cache the config of the initial page, in case the 2nd swipe is backwards to this page.
             if (sequenceCache[initialUrl]) {
