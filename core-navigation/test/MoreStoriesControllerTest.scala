@@ -9,7 +9,7 @@ import play.api.mvc.Result
 
 class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
   
-  val callbackName = "moreStories"
+  val callbackName = "aFunction"
   val section = "football"
     
   private def unWrapJson(json: String): JsValue = {
@@ -17,12 +17,14 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
   }
   
   private def makeRequestFrontTrails(page: String): Result = {
-    val fakeRequest = FakeRequest(GET, s"/front-trails/${page}?callback=${callbackName}").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, s"/front-trails/${page}?callback=${callbackName}")
+        .withHeaders("host" -> "localhost:9000")
     controllers.MoreStoriesController.render(page, "frontTrails")(fakeRequest)
   }
   
   private def makeRequestMostViewed(page: String): Result = {
-    val fakeRequest = FakeRequest(GET, s"/most-viewed/${page}?callback=${callbackName}").withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(GET, s"/most-viewed/${page}?callback=${callbackName}")
+        .withHeaders("host" -> "localhost:9000")
     controllers.MoreStoriesController.render(page, "mostViewed")(fakeRequest)
   }
   
@@ -34,7 +36,7 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     val result = makeRequestFrontTrails(section)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(callbackName + "({\"stories\"") // the callback
+    contentAsString(result) should startWith(s"""${callbackName}({\"stories\"""") // the callback
     
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     stories.size should be (15)
@@ -44,7 +46,21 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     val result = makeRequestMostViewed(section)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(callbackName + "({\"stories\"") // the callback
+    contentAsString(result) should startWith(s"""${callbackName}({\"stories\"""") // the callback
+    
+    val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
+    stories.size should be (20)
+  }
+
+  it should "return a 200 JSON response for most viewed when .json format requested" in Fake {
+    val fakeRequest = FakeRequest(GET, s"/most-viewed/${section}.json")
+      .withHeaders("host" -> "http://localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+    
+    val result = controllers.MoreStoriesController.render(section, "mostViewed")(fakeRequest)
+    status(result) should be(200)
+    contentType(result).get should be("application/json")
+    contentAsString(result) should startWith("{\"stories\"")
     
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
     stories.size should be (20)

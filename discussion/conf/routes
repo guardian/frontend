@@ -3,8 +3,7 @@
 # ~~~~
 
 # For assets on dev machines
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                    controllers.Assets.at(path="/public", file)
 
-
-GET     /discussion/*shortUrl       controllers.CommentPageController.render(shortUrl)
-
+GET     /discussion/*shortUrl.json                          controllers.CommentPageController.render(shortUrl)
+GET     /discussion/*shortUrl                               controllers.CommentPageController.render(shortUrl)
