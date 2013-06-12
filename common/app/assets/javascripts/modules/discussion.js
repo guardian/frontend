@@ -25,6 +25,7 @@ define([
             discussionId          = options.id.replace('http://gu.com', ''),
             discussionContainer   = options.discussionContainer || '.article__discussion',
             articleContainer      = options.articleContainer || '.article__container',
+            mediaPrimary          = options.mediaPrimary || '.media-primary',
             commentsHaveLoaded    = false,
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
@@ -46,6 +47,7 @@ define([
                         self.discussionCountUrl      = config.page.discussionApiUrl + '/discussion/'+discussionId+'/comments/count';
                         self.discussionContainerNode = context.querySelector(discussionContainer);
                         self.articleContainerNode    = context.querySelector(articleContainer);
+                        self.mediaPrimaryNode        = context.querySelector(mediaPrimary);
 
                         if(self.discussionContainerNode.isInitialised) {
                             return;
@@ -227,6 +229,7 @@ define([
                     bonzo(tabsNode.querySelector('.d-tabs__item--commentcount')).addClass('d-tabs__item--is-active');
 
                     bonzo(context.querySelector('.d-show-cta')).addClass('h');
+                    bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');
 
                     self.discussionContainerNode.style.display = 'block';
                     self.articleContainerNode.style.display = 'none';
@@ -246,7 +249,9 @@ define([
                 bean.on(context, 'click', '.js-show-article', function(e) {
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
+
                     bonzo(context.querySelector('.d-show-cta')).removeClass('h');
+                    bonzo(self.mediaPrimaryNode).removeClass('media-primary--comments-on');
 
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';
