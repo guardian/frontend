@@ -11,17 +11,17 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
 
   val validFormats: Seq[String] = Seq("html", "json")
 
+  def renderJson() = render()
   def render() = Action { implicit request =>
-    val edition = Edition(request)
-    val promiseOfTopStories = lookup(edition)
+    val promiseOfTopStories = lookup(Edition(request))
     Async {
       promiseOfTopStories.map(_.map { renderTopStories(_) } getOrElse { NotFound })
     }
   }
 
+  def renderJsonTrails() = renderTrails()
   def renderTrails() = Action { implicit request =>
-    val edition = Edition(request)
-    val promiseOfTopStories = lookup(edition)
+    val promiseOfTopStories = lookup(Edition(request))
     Async {
       promiseOfTopStories.map(_.map { renderTopStoriesTrails(_) } getOrElse { NotFound })
     }
