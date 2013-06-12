@@ -47,7 +47,7 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     contentAsString(result) should startWith(s"""${callbackName}({\"stories\"""") // the callback
 
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories.size should be (15)
+    stories.size should be (16)
   }
 
   it should "return a 200 JSONP response for most viewed" in Fake {
@@ -57,7 +57,7 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     contentAsString(result) should startWith(s"""${callbackName}({\"stories\"""") // the callback
 
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories.size should be (20)
+    stories.size should be (19)
   }
 
   it should "return a 200 JSON response for most viewed when .json format requested" in Fake {
@@ -71,13 +71,13 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
     contentAsString(result) should startWith("{\"stories\"")
 
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories.size should be (20)
+    stories.size should be (19)
   }
 
   it should "return global most read if unknown page" in Fake {
     val result = makeRequestFrontTrails("a/bad/pasdfsdfge")
     val stories: Seq[JsValue] = extractStories(unWrapJson(contentAsString(result)))
-    stories should contain(Json.toJson(Map("url" -> "/uk/2013/apr/03/offshore-secrets-offshore-tax-haven")))
+    stories should contain(Json.toJson(Map("url" -> "/world/video/2013/jun/12/kitten-two-faces-oregon-video")))
   }
   
 }
