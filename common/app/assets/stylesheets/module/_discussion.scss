@@ -312,14 +312,14 @@ $keylineSize: 1px;
 .speech-bubble,
 .speech-bubble:link,
 .speech-bubble:visited {
+    @include font($sans-serif, normal, 14, 14);
     position: relative;
     display: inline-block;
     background: #F6644F;
-    padding: .3125em .6em .375em;
+    padding: .3125em .6em .275em;
     border: 0;
     border-radius: 4px;
     text-align: center;
-    font: normal 16px/1 Times, "Times New Roman", serif;
     color: white;
     text-decoration: none;
 }
