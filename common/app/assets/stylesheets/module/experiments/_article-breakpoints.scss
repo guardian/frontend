@@ -29,7 +29,7 @@ $column-width: 60px;
 		margin-left: -16px !important;
 		margin-right: -16px !important;
 	}
-	@media (max-height: $desktop) {
+	@media (max-height: 768px) { // Decided with Chris, to refine with real world usage examples
 		.media-primary:first-of-type {
 			margin-left: 0;
 			margin-right: 0;
