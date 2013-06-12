@@ -1,29 +1,34 @@
-@(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, headingLevel: Int = 2)(implicit request: RequestHeader)
+@(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-@fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
-<div class="media">
-    @if(showThumbnail) {
-        @trail.thumbnailPath.map{ thumbnailPath =>
-            <a href="@trail.url" class="media-img" data-link-name="@rowNum | image">
-                <img class="maxed" src="@thumbnailPath"
-                    data-thumb-width="140"
-                    @trail.mainPicture(width=220).map { largeCrop =>
-                        data-fullsrc="@largeCrop.path"
-                        data-full-width="@largeCrop.width"
-                        alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))" 
-                        title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
-                    }
-                    itemprop="contentURL"
-                />
-            </a>
+<@element class="trail trail--thumbnail t@rowNum" data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+
+    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
+    <div class="media">
+        @if(showThumbnail) {
+            @trail.thumbnailPath.map{ thumbnailPath =>
+                <a href="@trail.url" class="media__img" data-link-name="@rowNum | image">
+                    <img class="maxed" src="@thumbnailPath"
+                        data-thumb-width="140"
+                        @trail.mainPicture(width=220).map { largeCrop =>
+                            data-fullsrc="@largeCrop.path"
+                            data-full-width="@largeCrop.width"
+                            alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))"
+                            title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
+                        }
+                        itemprop="contentURL"
+                    />
+                </a>
+            }
         }
-    }
 
-    <h@headingLevel class="media-body trail__headline type-5">
-        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
-            @RemoveOuterParaHtml(trail.headline)
-        </a>
-    </h@headingLevel>
+        <h@headingLevel class="media__body trail__headline type-5">
+            <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+                @RemoveOuterParaHtml(trail.headline)
+            </a>
+        </h@headingLevel>
 
-    @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
-</div>
+        @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
+    </div>
+
+</@element>

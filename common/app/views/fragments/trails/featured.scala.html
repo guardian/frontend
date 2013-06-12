@@ -1,27 +1,33 @@
-@(trail: Trail, rowNum: Int, related: Boolean = false, headingLevel: Int = 2)(implicit request: RequestHeader)
+@(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-@fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+<@element class="trail trail--featured t@rowNum @if(trail.mainPicture(width=220)) { trail--has-image}"
+    data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
 
-<h@headingLevel class="type-3">
-    <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
-        @RemoveOuterParaHtml(trail.headline)
-    </a>
-</h@headingLevel>
+    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
-@trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
+    <h@headingLevel class="type-3">
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+            @RemoveOuterParaHtml(trail.headline)
+        </a>
+    </h@headingLevel>
 
-@trail.mainPicture(width=220).map{ smallCrop =>
-    <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
-        <img class="maxed" src="@smallCrop.path"
-            data-force-upgrade="true"
-            data-thumb-width="@smallCrop.width"
-            @trail.mainPicture.map { largeCrop =>
-                data-fullsrc="@largeCrop.path"
-                data-full-width="@largeCrop.width"
-            }
-            itemprop="contentURL"
-            alt="@StripHtmlTags(smallCrop.altText.getOrElse(""))" 
-            title="@StripHtmlTags(smallCrop.caption.getOrElse(""))"
-        />
-    </a>
-}
+    @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
+
+    @trail.mainPicture(width=220).map{ smallCrop =>
+        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
+            <img class="maxed" src="@smallCrop.path"
+                data-force-upgrade="true"
+                data-thumb-width="@smallCrop.width"
+                @trail.mainPicture.map { largeCrop =>
+                    data-fullsrc="@largeCrop.path"
+                    data-full-width="@largeCrop.width"
+                }
+                itemprop="contentURL"
+                alt="@StripHtmlTags(smallCrop.altText.getOrElse(""))"
+                title="@StripHtmlTags(smallCrop.caption.getOrElse(""))"
+            />
+        </a>
+    }
+
+</@element>
+

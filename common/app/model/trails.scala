@@ -21,6 +21,8 @@ trait Trail extends Images with Tags {
   def isLive: Boolean
   def storyItems: Option[StoryItems] = None
 
+  def discussionId: Option[String] = None
+
 
   // This is a hack. We need to move this somewhere better.
   def importance = storyItems.map(_.importance).getOrElse(0)
