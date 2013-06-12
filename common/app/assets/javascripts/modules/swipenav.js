@@ -236,27 +236,27 @@ define([
     }
 
     function loadSequence(callback) {
-        // sequenceTerm will be the used in the xhr request for a sequence array. Use the data-link-context val
-        // from the previous click (retreived in-context or from localStorage), or default to the section implied by the current url.
-        var sequenceTerm = linkContext;
+        var sequenceUrl = linkContext;
 
-        if (sequenceTerm) {
+        if (sequenceUrl) {
+            sequenceUrl = '/' + sequenceUrl;
             linkContext = undefined;
         } else {
-            sequenceTerm = storage.get(storePrefix + 'linkContext');
-            if (sequenceTerm) {
+            sequenceUrl = storage.get(storePrefix + 'linkContext');
+            if (sequenceUrl) {
+                sequenceUrl = '/' + sequenceUrl;
                 storage.remove(storePrefix + 'linkContext');
             } else {
-                sequenceTerm = window.location.pathname.match(/^\/([^\/]+)/);
-                sequenceTerm = sequenceTerm ? sequenceTerm[1] : undefined;
+                sequenceUrl = window.location.pathname.match(/^\/([^\/]+)/);
+                sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl[1] : '');
             }
         }
 
         // 'news' should return top stories, i.e. the default response
-        sequenceTerm = sequenceTerm !== 'news' ? sequenceTerm : undefined;
+        sequenceUrl = (sequenceUrl === '/front-trails/news' ? '/front-trails' : sequenceUrl);
 
         ajax({
-            url: '/front-trails' + (sequenceTerm ? '/' + sequenceTerm : ''),
+            url: sequenceUrl,
             type: 'json',
             crossOrigin: true,
             success: function (json) {
@@ -273,10 +273,6 @@ define([
                         stories.unshift({url: url});
                         len += 1;
                     }
-
-                    // Add the "section" page as the last position in the sequence
-                    stories.push({url: '/' + (sequenceTerm ? sequenceTerm : '')});
-                    len += 1;
 
                     sequence = [];
                     sequenceLen = 0;
@@ -495,7 +491,6 @@ define([
             var url;
 
             if (clickSpec.sameHost && !clickSpec.samePage) {
-
                 if (swipeNavOnClick) {
 
                     linkContext = clickSpec.linkContext;
