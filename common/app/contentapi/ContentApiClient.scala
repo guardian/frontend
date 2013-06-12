@@ -20,7 +20,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
   val inlineElements = "picture,witness,video"
 
-  val leadContentMaxAge = 3.days
+  val leadContentMaxAge = 2.days
 
   object EditorsPicsOrLeadContentAndLatest {
 
