@@ -30,6 +30,7 @@ define([
     'modules/experiments/ab',
     'modules/swipenav',
     "modules/adverts/video"
+//    "modules/discussion/commentCount"
 ], function (
     common,
     ajax,
@@ -61,6 +62,7 @@ define([
     AB,
     swipeNav,
     VideoAdvert
+//    CommentCount
 ) {
 
     var modules = {
@@ -123,6 +125,13 @@ define([
                 dates.init(el);
             });
         },
+
+//        transcludeCommentCounts: function () {
+//            common.mediator.on('page:common:ready', function(config, context) {
+//                if(context.querySelector("[data-short-url]"))
+//                CommentCount.init();
+//            });
+//        },
 
         loadAnalytics: function () {
             var cs = new Clickstream({filter: ["a", "button"]}),
