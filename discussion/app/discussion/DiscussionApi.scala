@@ -24,13 +24,15 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
   def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
 
-
-
   def commentCounts(ids: String) = {
 
     val apiUrl = s"http://discussion.guardianapis.com/discussion-api/getCommentCounts?short-urls=$ids"
 
     val start = currentTimeMillis
+
+    println("========================================================================================================================================")
+    println(apiUrl)
+    println("========================================================================================================================================")
 
     GET(apiUrl).map{ response =>
 

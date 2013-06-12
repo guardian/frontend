@@ -10,8 +10,9 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)
-GET     /discussion/*shortUrl                               controllers.CommentPageController.render(shortUrl)
+GET     /discussion/comment-counts.json                     controllers.CommentCountController.render(shortUrls: String)
 GET     /discussion/*shortUrl.json                          controllers.CommentPageController.render(shortUrl)
+GET     /discussion/*shortUrl                               controllers.CommentPageController.render(shortUrl)
 
 #Core nav
 GET    /most-read                                           controllers.MostPopularController.render(path = "")

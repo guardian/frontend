@@ -29,8 +29,8 @@ define([
     'modules/debug',
     'modules/experiments/ab',
     'modules/swipenav',
-    "modules/adverts/video"
-//    "modules/discussion/commentCount"
+    "modules/adverts/video",
+    "modules/discussion/commentCount"
 ], function (
     common,
     ajax,
@@ -61,8 +61,8 @@ define([
     Debug,
     AB,
     swipeNav,
-    VideoAdvert
-//    CommentCount
+    VideoAdvert,
+    CommentCount
 ) {
 
     var modules = {
@@ -126,12 +126,13 @@ define([
             });
         },
 
-//        transcludeCommentCounts: function () {
-//            common.mediator.on('page:common:ready', function(config, context) {
-//                if(context.querySelector("[data-short-url]"))
-//                CommentCount.init();
-//            });
-//        },
+        transcludeCommentCounts: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                if(context.querySelector("[data-discussion-id]")) {
+                    CommentCount.init(context);
+                }
+            });
+        },
 
         loadAnalytics: function () {
             var cs = new Clickstream({filter: ["a", "button"]}),
@@ -287,6 +288,7 @@ define([
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initSwipe(config);
+            modules.transcludeCommentCounts();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

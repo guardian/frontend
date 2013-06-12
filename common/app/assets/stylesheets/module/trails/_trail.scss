@@ -2,6 +2,7 @@
    Trail object
    ========================================================================== */
 .trail {
+    position: relative;
     overflow: hidden;
     margin: 0 0 $baseline 0;
     border-bottom: 1px solid #EDEDE7;
@@ -49,6 +50,29 @@
 
     @media (min-width: 37.5em) {
         clear: none;
+    }
+}
+
+.trail__comment-count{
+    position: absolute;
+    top: 9px;
+    right: 0;
+
+    a,
+    a:hover,
+    a:link,
+    a:active,
+    a:visited {
+        @extend %type-11;
+        float: right;
+        display: inline-block;
+        margin: 0 0 0 4px;
+        color: #F6644F;
+    }
+
+    i {
+      float: left;
+      margin-top: 3px;
     }
 }
 
