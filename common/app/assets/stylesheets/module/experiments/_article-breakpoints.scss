@@ -1,14 +1,7 @@
-// Columning helpers
-$gutter: 20px;
-$column-width: 60px;
-
-@function span($n-columns) {
-	@return $n-columns * $column-width + $gutter * ($n-columns - 1);
-}
 @media (min-width: $tablet) {
 	.social,
 	.article {
-		max-width: span(8);
+		max-width: gs-span(8);
 		padding: 0 16px !important;
 		margin: 0 auto !important;
 	}
@@ -34,7 +27,7 @@ $column-width: 60px;
 			margin-left: 0;
 			margin-right: 0;
 			float: left;
-			width: span(4);
+			width: gs-span(4);
 			margin-right: $gutter;
 		}
 		.media-primary--comments-on {

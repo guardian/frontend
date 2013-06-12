@@ -1,8 +1,15 @@
 // Helpers
+$gutter: 20px;
+$column-width: 60px;
+
+@function gs-span($n-columns) {
+	@return $n-columns * $column-width + $gutter * ($n-columns - 1);
+}
+
 @mixin gs-container {
 	position: relative;
 	margin: 0 auto;
-	max-width: 940px; // 12 columns
+	max-width: gs-span(12);
 }
 
 // Output grid system
@@ -10,4 +17,10 @@
 	.gs-container {
 		@include gs-container;
 	}	
+}
+
+// Temporary layout fixes
+@mixin temporarily-cap-content-width {
+    max-width: gs-span(8);
+    margin: 0 auto;
 }
