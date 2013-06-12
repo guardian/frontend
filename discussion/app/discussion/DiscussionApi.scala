@@ -30,10 +30,6 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
     val start = currentTimeMillis
 
-    println("========================================================================================================================================")
-    println(apiUrl)
-    println("========================================================================================================================================")
-
     GET(apiUrl).map{ response =>
 
       DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
