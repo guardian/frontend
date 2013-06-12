@@ -239,14 +239,17 @@ define([
         var sequenceUrl = linkContext;
 
         if (sequenceUrl) {
+            // data-link-context was from a click within this app
             sequenceUrl = '/' + sequenceUrl;
             linkContext = undefined;
         } else {
             sequenceUrl = storage.get(storePrefix + 'linkContext');
             if (sequenceUrl) {
+                // data-link-context was set by a click on a previous page
                 sequenceUrl = '/' + sequenceUrl;
                 storage.remove(storePrefix + 'linkContext');
             } else {
+                // No data-link-context, so infer the section from current url
                 sequenceUrl = window.location.pathname.match(/^\/([^\/]+)/);
                 sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl[1] : '');
             }
@@ -263,13 +266,12 @@ define([
                 var stories = json.stories,
                     len = stories.length,
                     url = window.location.pathname,
-                    sectionUrl = url.match(/^\/[^\/]*/)[0],
                     s,
                     i;
 
                 if (len >= 3) {
                     // Make sure url is the first in the sequence
-                    if(stories[0].url !== url) {
+                    if (stories[0].url !== url) {
                         stories.unshift({url: url});
                         len += 1;
                     }
@@ -492,8 +494,6 @@ define([
 
             if (clickSpec.sameHost && !clickSpec.samePage) {
                 if (swipeNavOnClick) {
-
-                    linkContext = clickSpec.linkContext;
                     url = urlAbsPath(clickSpec.target.href);
 
                     if (!url) {
@@ -504,13 +504,14 @@ define([
                     }
                     else {
                         clickSpec.event.preventDefault();
+                        linkContext = clickSpec.linkContext;
                         initiatedBy = 'click';
                         gotoUrl(url);
                     }
 
                 } else if (clickSpec.linkContext) {
                     storage.set(storePrefix + 'linkContext', clickSpec.linkContext, {
-                        expires: 5000000 + (new Date()).getTime()
+                        expires: 10000 + (new Date()).getTime()
                     });
                 }
             }
