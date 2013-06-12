@@ -6,3 +6,4 @@
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 GET     /*path                      controllers.ArticleController.render(path)
+GET     /*path.json                 controllers.ArticleController.render(path)

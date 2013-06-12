@@ -3,9 +3,9 @@
 # ~~~~
 
 # For assets on dev machines
+<<<<<<< HEAD
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 GET     /discussion/comment-counts       controllers.CommentCountController.render(shortUrls: String)
 GET     /discussion/*shortUrl            controllers.CommentPageController.render(shortUrl)
-
-
+GET     /discussion/*shortUrl.json       controllers.CommentPageController.render(shortUrl)
