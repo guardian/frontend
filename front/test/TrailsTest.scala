@@ -19,7 +19,7 @@ class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with
       Given("I have a custom query through a QueryTrailblockDescription")
       Fake {
         val agent = TrailblockAgent(CustomTrailblockDescription("lifeandstyle", "Life and style", 5){
-          EditorsPicsAndLatest(ContentApi.item("football", Uk).pageSize(7).response)
+          EditorsPicsOrLeadContentAndLatest(ContentApi.item("football", Uk).pageSize(7).response)
         })
 
         agent.refresh()
@@ -30,6 +30,24 @@ class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with
         Then("I should get the section and the size I requested")
         trails should have length (7)
         trails.head.section should be ("football")
+      }
+    }
+
+    scenario("Should use lead content if there is no editors picks") {
+
+      Given("I have a query that has no editiors picks, but does have lead content")
+      Fake {
+        val agent = TrailblockAgent(CustomTrailblockDescription("world/nsa", "NSA", 5){
+          EditorsPicsOrLeadContentAndLatest(ContentApi.item("world/nsa", Uk).pageSize(7).response)
+        })
+
+        agent.refresh()
+        loadOrTimeout(agent)
+
+        val trails = agent.trailblock.get.trails
+
+        Then("The first item should be lead content")
+        trails.head.url should endWith("world/2013/jun/11/nsa-surveillance-challenged-court-data")
       }
     }
   }
