@@ -104,7 +104,7 @@ object CommonSwitches {
 
   val ShortDiscussionSwitch = DefaultSwitch("short-discussion",
     "If this switch is on, only 10 top level comments are requested from discussion api.",
-    initiallyOn = false)
+    initiallyOn = true)
 
   val StoryArticleSwap = DefaultSwitch("story-article-swap",
     "If this switch is on, for the latest story, swaps it in in place of the latest article in that story. Confused?.",
