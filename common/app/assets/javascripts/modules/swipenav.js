@@ -236,30 +236,32 @@ define([
     }
 
     function loadSequence(callback) {
-        var sequenceId = linkContext;
+        // sequenceTerm will be the used in the xhr request for a sequence array. Use the data-link-context val
+        // from the previous click (retreived in-context or from localStorage), or default to the section implied by the current url.
+        var sequenceTerm = linkContext;
 
-        if (sequenceId) {
+        if (sequenceTerm) {
             linkContext = undefined;
         } else {
-            sequenceId = storage.get(storePrefix + 'linkContext');
-            if (sequenceId) {
+            sequenceTerm = storage.get(storePrefix + 'linkContext');
+            if (sequenceTerm) {
                 storage.remove(storePrefix + 'linkContext');
             } else {
-                sequenceId = window.location.pathname.match(/^\/([^\/]+)/),
-                sequenceId = sequenceId ? sequenceId[1] : undefined;
+                sequenceTerm = window.location.pathname.match(/^\/([^\/]+)/);
+                sequenceTerm = sequenceTerm ? sequenceTerm[1] : undefined;
             }
         }
 
-        // 'news' should return top stories, i.e. the default/front
-        sequenceId = sequenceId !== 'news' ? sequenceId : undefined;
+        // 'news' should return top stories, i.e. the default response
+        sequenceTerm = sequenceTerm !== 'news' ? sequenceTerm : undefined;
 
         ajax({
-            url: '/front-trails' + (sequenceId ? '/' + sequenceId : ''),
+            url: '/front-trails' + (sequenceTerm ? '/' + sequenceTerm : ''),
             type: 'json',
             crossOrigin: true,
             success: function (json) {
-                var arr = json.stories,
-                    len = arr.length,
+                var stories = json.stories,
+                    len = stories.length,
                     url = window.location.pathname,
                     sectionUrl = url.match(/^\/[^\/]*/)[0],
                     s,
@@ -267,13 +269,13 @@ define([
 
                 if (len >= 3) {
                     // Make sure url is the first in the sequence
-                    if(arr[0].url !== url) {
-                        arr.unshift({url: url});
+                    if(stories[0].url !== url) {
+                        stories.unshift({url: url});
                         len += 1;
                     }
 
                     // Add the "section" page as the last position in the sequence
-                    arr.push({url: '/' + (sequenceId ? sequenceId : '')});
+                    stories.push({url: '/' + (sequenceTerm ? sequenceTerm : '')});
                     len += 1;
 
                     sequence = [];
@@ -281,14 +283,14 @@ define([
                     sequenceCache = {};
 
                     for (i = 0; i < len; i += 1) {
-                        s = arr[i];
+                        s = stories[i];
                         // dedupe, while also creating a lookup obj
                         if(!sequenceCache[s.url]) {
                             s.pos = sequenceLen;
                             sequenceCache[s.url] = s;
                             sequence.push(s);
                             sequenceLen += 1;
-                            window.console.log(i + " " + s.url);
+                            //window.console.log(i + " " + s.url);
                         }
                     }
                     setSequencePos(window.location.pathname);
