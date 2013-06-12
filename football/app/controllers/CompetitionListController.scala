@@ -10,6 +10,7 @@ object CompetitionListController extends Controller with CompetitionListFilters 
 
   val page = Page(canonicalUrl = None, "football/competitions", "football", "Leagues & competitions", "GFE:Football:automatic:Leagues & competitions")
 
+  def renderJson() = render()
   def render = Action { implicit request =>
 
     val competitionList = List(

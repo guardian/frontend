@@ -88,11 +88,11 @@ object PlayAssetHash extends Plugin {
 
       IO.delete(resourceManaged / "assetmaps")
       IO.write(assetMapFile, assetMapContents)
-      log.info("Generated assetmap file at %s:\n%s".format(assetMapFile, assetMapContents).indentContinuationLines)
+      log.debug("Generated assetmap file at %s:\n%s".format(assetMapFile, assetMapContents).indentContinuationLines)
 
       // Copy assets to include md5Hex chunk. Moving would break subsequent calls.
       IO.copy(assetRemappings)
-      log.info(
+      log.debug(
         ("Renamed assets to include md5Hex chunk:\n" + (assetRemappings mkString "\n").sortLines).
           indentContinuationLines.
           deleteAll(resourceManaged / "public" + "/")
