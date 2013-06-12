@@ -3,9 +3,9 @@
 <ul class="unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
         @if(info.rowNum == 1) {
-            @fragments.trails.featured(trail, info.rowNum, related, "li")
+            @fragments.trails.featured(trail, info.rowNum, related)
         } else {
-            @fragments.trails.thumbnail(trail, info.rowNum, related, "li")
+            @fragments.trails.thumbnail(trail, info.rowNum, related)
         }
     }
 </ul>
