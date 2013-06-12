@@ -47,6 +47,7 @@ object LiveMatchesController extends Controller with CompetitionLiveFilters with
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)
   }
 
+  def renderJson() = render()
   def render() = Action { implicit request =>
     renderLive(Competitions, None)
   }

@@ -73,10 +73,12 @@ object FixturesController extends FixtureRenderer with Logging with ExecutionCon
     "GFE:Football:automatic:fixtures"
   )
 
+  def renderForJson(year: String, month: String, day: String) = renderFor(year, month, day)
   def renderFor(year: String, month: String, day: String) = render(
     Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
   )
 
+  def renderJson(date: Option[DateMidnight] = None) = render(date)
   def render(date: Option[DateMidnight] = None) = Action { implicit request =>
     renderFixtures(page, Competitions.withTodaysMatchesAndFutureFixtures, date, None, None)
   }
@@ -101,6 +103,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
 
   override val daysToDisplay = 20
 
+  def renderForJson(year: String, month: String, day: String, competitionName: String) = renderFor(year, month, day, competitionName)
   def renderFor(year: String, month: String, day: String, competitionName: String) = render(
     competitionName,
     Competitions.withTag(competitionName).map { comp => comp }.get,
