@@ -1,7 +1,8 @@
 @media (min-width: $tablet) {
     h2.article-zone,
     .social,
-    .article {
+    .article,
+    .d-show-cta-wrapper {
         max-width: gs-span(8);
         padding-left: 16px !important;
         padding-right: 16px !important;
@@ -44,38 +45,29 @@
     }
 }
 
-@media (min-width: $desktop) {
-    h2.article-zone,
-    .social,
-    .article {
-        max-width: gs-span(9);
-    }
-}
-
-
 // Scaling typography up
 .article-headline {
     @media (min-width: $tablet) {
+        -webkit-font-smoothing: antialiased;
         font-size: 28px;
         line-height: 32px;
         margin-bottom: $baseline*3;
     }
     @media (min-width: $desktop) {
-        -webkit-font-smoothing: antialiased;
         font-size: 32px;
         line-height: 40px;
     }
 }
 .article-standfirst {
     @media (min-width: $tablet) {
+        -webkit-font-smoothing: antialiased;
         font-size: 16px;
         line-height: 24px;
         margin-bottom: $baseline;
     }
     @media (min-width: $desktop) {
-        -webkit-font-smoothing: antialiased;
-        font-size: 20px;
-        line-height: 28px;
+        font-size: 18px;
+        line-height: 24px;
     }
 }
 .from-content-api {
@@ -100,13 +92,8 @@
     blockquote p {
         @media (min-width: $tablet) {
             font-size: 18px;
-            line-height: 28px;
+            line-height: 30px;
             margin-bottom: $baseline*3 !important;
-        }
-        @media (min-width: $desktop) {
-            font-size: 20px;
-            line-height: 28px;
-            margin-bottom: $baseline*4 !important;
         }
     }
 }
@@ -115,10 +102,6 @@
 .article blockquote p {
     @media (min-width: $tablet) {
         font-size: 18px;
-        line-height: 28px;
-    }
-    @media (min-width: $desktop) {
-        font-size: 20px;
         line-height: 28px;
     }
 }

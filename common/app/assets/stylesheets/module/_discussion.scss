@@ -372,7 +372,9 @@ $keylineSize: 1px;
     display: inline-block;
     @extend .i-filter-arrow-right;
 }
-
+.d-show-cta-wrapper {
+    padding: $baseline*2 $gutter $baseline*4 $gutter;
+}
 .d-show-cta,
 .d-show-cta:link,
 .d-show-cta:visited,
@@ -382,7 +384,6 @@ $keylineSize: 1px;
     position: relative;
     line-height: 1em;
     display: block;
-    margin: $baseline*2 $gutter $baseline*4 $gutter;
     padding: $baseline*4 $baseline*2 $baseline*4 $baseline*2;
     text-align: left;
     overflow: auto;
