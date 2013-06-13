@@ -60,7 +60,7 @@ class ItemTrailblockDescription(
   {
     lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query() = EditorsPicsAndLatest(
+  def query() = EditorsPicsOrLeadContentAndLatest(
     ContentApi.item(id, edition)
       .showEditorsPicks(true)
       .pageSize(20)

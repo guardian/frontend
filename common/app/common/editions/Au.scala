@@ -28,7 +28,7 @@ object Au extends Edition("AU", "Australia edition", DateTimeZone.forID("Austral
       .tag(s"-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography,($supportedTypes)")
       .response
 
-    EditorsPicsAndLatest(promiseOfCulture)
+    EditorsPicsOrLeadContentAndLatest(promiseOfCulture)
   }
 
   val commentCustomBlock = CustomTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)){
@@ -44,7 +44,7 @@ object Au extends Edition("AU", "Australia edition", DateTimeZone.forID("Austral
       .tag(s"world/australia,($supportedTypes)")
       .response
 
-    EditorsPicsAndLatest(promiseOfComment)
+    EditorsPicsOrLeadContentAndLatest(promiseOfComment)
   }
 
   val videoCustomBlock = CustomTrailblockDescription("type/video", "Video", numItemsVisible = 1, style = Some(Featured)){
