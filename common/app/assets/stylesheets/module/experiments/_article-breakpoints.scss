@@ -1,9 +1,12 @@
 @media (min-width: $tablet) {
+	h2.article-zone,
 	.social,
 	.article {
 		max-width: gs-span(8);
-		padding: 0 16px !important;
-		margin: 0 auto !important;
+		padding-left: 16px !important;
+		padding-right: 16px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
 	}
 	.article-headline {
 		font-size: 2.4rem;
