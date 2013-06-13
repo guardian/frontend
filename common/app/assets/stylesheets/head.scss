@@ -16,6 +16,8 @@
 @import "base/_lists";
 
 //layout
+@import "layout/_grid-system";
+	@include grid-system;
 @import "layout/_layout";
 
 //Global modules
