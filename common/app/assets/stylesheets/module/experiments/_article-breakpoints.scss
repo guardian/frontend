@@ -21,9 +21,8 @@
 		margin-left: 0;
 		margin-right: 0;
 	}
-	.d-tabs {
-		margin-left: -16px !important;
-		margin-right: -16px !important;
+	.d-tabs__item--byline {
+		padding-left: $baseline !important;
 	}
 	@media (max-height: 768px) { // Decided with Chris, to refine with real world usage examples
 		.media-primary:first-of-type {
