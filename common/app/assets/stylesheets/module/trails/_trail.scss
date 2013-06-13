@@ -1,8 +1,6 @@
 /* ==========================================================================
    Trail object
    ========================================================================== */
-
-$commentCountVerticalOffset: 8px;
 .trail {
     position: relative;
     overflow: hidden;
@@ -11,15 +9,11 @@ $commentCountVerticalOffset: 8px;
     padding: $baseline*2 0 $baseline*3 0;
 
     &:first-child {
-        padding-top: $baseline*3;
-
-        .trail__comment-count {
-            top: $commentCountVerticalOffset + $baseline;
-        }
+      padding-top: $baseline*3
     }
 
     &:last-child {
-        margin-bottom: 0;
+      margin-bottom: 0;
     }
 }
 
@@ -59,9 +53,9 @@ $commentCountVerticalOffset: 8px;
     }
 }
 
-.trail__comment-count {
+.trail__comment-count{
     position: absolute;
-    top: $commentCountVerticalOffset;
+    top: 9px;
     right: 0;
 
     a,
@@ -77,8 +71,8 @@ $commentCountVerticalOffset: 8px;
     }
 
     i {
-        float: left;
-        margin: 3px 4px 0 0;
+          float: left;
+          margin: 3px 4px 0 0;
     }
 }
 
@@ -100,7 +94,7 @@ $commentCountVerticalOffset: 8px;
     }
 
     img {
-        vertical-align: bottom;
+      vertical-align: bottom;
     }
 }
 
@@ -108,9 +102,9 @@ $commentCountVerticalOffset: 8px;
 /* Featured
  ========================================================================== */
 .trail--featured {
-    .trail__headline {
-        margin-bottom: $baseline;
-    }
+  .trail__headline {
+      margin-bottom: $baseline;
+  }
 }
 
 /* Thumbnail
@@ -145,10 +139,10 @@ $commentCountVerticalOffset: 8px;
  * @todo: Clean these up into proper modifiers
  **/
 .matches-container .trail__text {
-    display: none;
+  display: none;
 }
 
 .competition .trail {
-    margin-top: $baseline*3;
-    border-bottom: none;
+  margin-top: $baseline*3;
+  border-bottom: none;
 }
