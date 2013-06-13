@@ -40,6 +40,7 @@ define([
                 data = tpl.replace("[URL]", url);
 
             bonzo(node).append(data.replace("[COUNT]", c.count));
+            node.removeAttribute(attributeName);
         });
     }
 
@@ -62,6 +63,11 @@ define([
 
     function init(context) {
         getCommentCounts(context);
+
+        //Load new counts when more trails are loaded
+        common.mediator.on('module:trailblock-show-more:render', function() {
+            getCommentCounts(context);
+        });
     }
 
     return {
