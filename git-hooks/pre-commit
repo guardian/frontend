@@ -3,9 +3,9 @@
 # Pre-commit hooks
 
 # Lint stuff before commiting
-grunt jshint:common
+#grunt jshint:common
 
-git diff --cached --name-only
+#git diff --cached --name-only
 
 #Analyse css if changed
 SRC_PATTERN=".scss"
