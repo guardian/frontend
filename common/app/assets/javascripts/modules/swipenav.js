@@ -25,7 +25,6 @@ define([
         canonicalLink,
         clickSelector,
         header,
-        height,
         hiddenPaneMargin = 0,
         initiatedBy = 'initial',
         initialUrl,
@@ -42,6 +41,7 @@ define([
         sequenceLen = 0,
         swipeContainer = '#preloads',
         swipeContainerEl = document.querySelector(swipeContainer),
+        swipeContainerHeight,
         throttle,
         visiblePane,
         visiblePaneMargin = 0;
@@ -157,9 +157,9 @@ define([
     // Make the swipeContainer height equal to the visiblePane height. (We view the latter through the former.)
     function updateHeight() {
         var h = $('*:first-child', visiblePane).offset().height; // NB visiblePane has height:100% set by swipeview, so we look within it
-        if (height !== h) {
-            height = h;
-            $(swipeContainer).css('height', height + visiblePaneMargin + 'px');
+        if (swipeContainerHeight !== h) {
+            swipeContainerHeight = h;
+            $(swipeContainer).css('height', h + visiblePaneMargin + 'px');
         }
     }
 
@@ -398,8 +398,10 @@ define([
     }
 
     function pinHeader() {
+        var height;
         header = header || $('#header');
-        header.css('top', body.scrollTop() + 'px');
+        height = header.offset().height;
+        header.css('top', $(visiblePane.querySelector('*:first-child')).offset().top - height + 'px');
     }
 
     var pushDownSidepanes = common.debounce(function(){
