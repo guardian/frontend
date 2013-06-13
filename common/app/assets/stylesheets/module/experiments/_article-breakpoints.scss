@@ -55,7 +55,7 @@
         -webkit-font-smoothing: antialiased;
         font-size: 28px;
         line-height: 32px;
-        margin-bottom: $baseline*3;
+        margin-bottom: $baseline*4;
     }
     @media (min-width: $desktop) {
         font-size: 32px;
@@ -67,7 +67,6 @@
         -webkit-font-smoothing: antialiased;
         font-size: 16px;
         line-height: 24px;
-        margin-bottom: $baseline;
     }
     @media (min-width: $desktop) {
         font-size: 18px;
