@@ -28,6 +28,7 @@ define([
             common.$g('body').append(fixtureTrails);
 
             sinon.spy(common.mediator, 'emit');
+            sinon.spy(commentCount, 'getCommentCounts');
 
             server = sinon.fakeServer.create();
             server.respondWith("GET",
@@ -45,6 +46,7 @@ define([
 
         afterEach(function() {
             common.$g('.comment-trails').remove();
+            commentCount.getCommentCounts.restore();
             common.mediator.emit.restore();
             server.restore();
         });
@@ -63,6 +65,13 @@ define([
         it("should append comment counts to DOM", function(){
             waits(function() {
                 expect(query.selectorAll('.trail__comment-count').length).toBe(3)
+            });
+        });
+
+        it("re run when new trail appear in DOM", function(){
+            waits(function() {
+                //common.mediator.emit('module:trailblock-show-more:render');
+                expect(commentCount.getCommentCounts.calledTwice).toBe(true)
             });
         });
 
