@@ -10,7 +10,7 @@ define([
     StoryArticleSwap) {
     
     var TESTS = {
-            StoryArticleSwap: new StoryArticleSwap()
+            StoryArticleSwapV2: new StoryArticleSwap()
         };
 
     var testKey = 'gu.ab.current',
@@ -46,7 +46,10 @@ define([
     }
 
     function hasParticipated(testName) {
-        return (getParticipation().indexOf(testName) > -1) ? true : false;
+        // NOTE: allowing user's to participate in the same test more than once - something screwy going on with
+        // switches
+        //return (getParticipation().indexOf(testName) > -1) ? true : false;
+        return false;
     }
 
     function getParticipation() {

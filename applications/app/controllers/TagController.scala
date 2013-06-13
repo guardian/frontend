@@ -4,15 +4,15 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
-import play.api.mvc.{ Result, RequestHeader, Controller, Action }
+import play.api.mvc.{ RequestHeader, Controller, Action }
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 
-import concurrent.Future
+import contentapi.QueryDefaults
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
-object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections {
+object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections with QueryDefaults {
 
   def render(path: String) = Action { implicit request =>
     val promiseOfTag = lookup(path)
@@ -42,7 +42,7 @@ object TagController extends Controller with Logging with JsonTrails with Execut
 
       val tag = response.tag map { new Tag(_) }
 
-      val leadContentCutOff = DateTime.now - 7.days
+      val leadContentCutOff = DateTime.now - leadContentMaxAge
       val editorsPicks: Seq[Content] = response.editorsPicks.map(new Content(_))
 
       val leadContent: Seq[Content] = if (editorsPicks.isEmpty)

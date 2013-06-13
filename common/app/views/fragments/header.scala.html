@@ -1,9 +1,8 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import CommonSwitches.SearchSwitch
 
-<header id="header" class="cf" role="banner" data-link-name="global navigation: header">
-
-    <a  href="/" id="logo" class="i i-guardian-logo" data-link-name="site logo">The Guardian</a>
+<header id="header" class="gs-container cf" role="banner" data-link-name="global navigation: header">
+    <a href="/" id="logo" class="i i-guardian-logo" data-link-name="site logo">The Guardian</a>
 
     <div class="nav-container">
         <ul class="nav nav--global" data-link-name="Sections">
@@ -21,7 +20,6 @@
         <i class="i i-menu-active"></i>
     </a>
 
-
     @if(SearchSwitch.isSwitchedOn) {
         <a href="https://www.google.co.uk/advanced_search?q=site:www.guardian.co.uk" data-is-ajax data-link-name="Search icon" class="control control--search" data-control-for="nav-popup-search">
             <i class="i i-nav-divider"></i>
@@ -36,13 +34,13 @@
         <span>Top stories</span>
         <i class="i i-top-stories"></i>
     </a>
+
+    <div class="nav-popup-topstories nav-popup nav-popup--box is-off"></div>
+
+    <div class="nav-popup-search nav-popup nav-popup--box is-off"></div>
+
+    <div class="nav-popup-sections nav-popup nav-popup--small is-off">
+        @fragments.sections(page, false)
+    </div>
 </header>
-
-<div class="nav-popup-topstories nav-popup nav-popup--box is-off"></div>
-
-<div class="nav-popup-search nav-popup nav-popup--box is-off"></div>
-
-<div class="nav-popup-sections nav-popup nav-popup--small is-off">
-    @fragments.sections(page, false)
-</div>
 

@@ -3,20 +3,28 @@
      ========================================================================== */
 
 #preloads {
-    position: relative;
+    @include gs-container;
     clear: both;
-    max-width: 64em;
-    max-width: 102.4rem;
-    margin: 0 auto;
+    margin: 58px auto 0;
+
+    @media only screen and (min-width: $tablet) {
+        margin-top: 104px;
+    }
 }
+
 
 /* ==========================================================================
      Global header and navigation
      ========================================================================== */
 
 #header {
-    position: relative;
+    min-height: 58px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     background-color: $blue;
+    z-index: 99;
 }
 
 #logo {
@@ -25,7 +33,6 @@
     margin: 20px 0 18px $gutter;
     text-indent: -9999px;
 }
-
 
 /*
      Layout helpers
@@ -57,6 +64,25 @@
     max-width: $inArticleInlineImgWidth;
 }
 
+/* ==========================================================================
+     Preloads (for swipe)
+     ========================================================================== */
+
+#preloads-inner {
+    position: relative;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#preload-0,
+#preload-1,
+#preload-2 {
+    @include transform(translateZ(0px));
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
 
 /*
      Ajax loading helpers

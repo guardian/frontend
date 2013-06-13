@@ -5,4 +5,5 @@
 # For dev machines
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
+GET     /*path.json                 controllers.ArticleController.render(path)
 GET     /*path                      controllers.ArticleController.render(path)

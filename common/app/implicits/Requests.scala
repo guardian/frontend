@@ -15,6 +15,6 @@ trait Requests {
       header.contains("application/json") ||
       header.contains("text/javascript") ||
       header.contains("application/javascript")
-    }
+    } || r.path.endsWith(".json")
   }
 }
