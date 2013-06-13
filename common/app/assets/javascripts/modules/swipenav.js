@@ -155,11 +155,18 @@ define([
     }
 
     // Make the swipeContainer height equal to the visiblePane height. (We view the latter through the former.)
-    function updateHeight() {
-        var h = $('*:first-child', visiblePane).offset().height; // NB visiblePane has height:100% set by swipeview, so we look within it
-        if (swipeContainerHeight !== h) {
-            swipeContainerHeight = h;
-            $(swipeContainer).css('height', h + visiblePaneMargin + 'px');
+    function recalcHeight(pinHeader) {
+        var contentOffset = $('*:first-child', visiblePane).offset(),
+            contentHeight = contentOffset.height;
+
+        if (pinHeader) {
+            header = header || $('#header');
+            header.css('top', contentOffset.top - header.offset().height + 'px');
+        }
+
+        if (swipeContainerHeight !== contentHeight) {
+            swipeContainerHeight = contentHeight;
+            $(swipeContainer).css('height', contentHeight + visiblePaneMargin + 'px');
         }
     }
 
@@ -177,7 +184,7 @@ define([
             return;
         }
 
-        pinHeader();
+        recalcHeight(true);
 
         url = context.dataset.url;
         setSequencePos(url);
@@ -397,13 +404,6 @@ define([
         });
     }
 
-    function pinHeader() {
-        var height;
-        header = header || $('#header');
-        height = header.offset().height;
-        header.css('top', $(visiblePane.querySelector('*:first-child')).offset().top - height + 'px');
-    }
-
     var pushDownSidepanes = common.debounce(function(){
         hiddenPaneMargin = Math.max( 0, body.scrollTop());
 
@@ -414,7 +414,7 @@ define([
             $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
             // And reset the scroll
             body.scrollTop(0);
-            pinHeader();
+            recalcHeight(true);
 
             visiblePaneMargin = 0;
             hiddenPaneMargin = 0;
@@ -559,7 +559,7 @@ define([
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
         setInterval(function(){
-            updateHeight();
+            recalcHeight();
         }, 1009); // Prime number, for good luck
     }
 
@@ -579,7 +579,7 @@ define([
             }
 
             // Set explicit height on container, because it's about to be absolute-positioned.
-            updateHeight();
+            recalcHeight();
 
             // Set up the DOM structure, CSS
             prepareDOM();
