@@ -76,6 +76,8 @@
     }
 }
 
+  .trail:first-child .trail__comment-count { top: 13px; }
+
 @media screen and (min-width: 53.125em) {
     .trail .img img {
         width: 160px;

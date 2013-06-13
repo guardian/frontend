@@ -1,7 +1,9 @@
 define([
+    'common',
     'bonzo',
     'ajax'
 ], function (
+    common,
     bonzo,
     ajax
 ) {
@@ -52,6 +54,7 @@ define([
             success: function(response) {
                 if(response && response.counts) {
                     renderCounts(response.counts, context);
+                    common.mediator.emit('modules:commentcount:loaded', response.counts);
                 }
             }
         });
@@ -62,7 +65,8 @@ define([
     }
 
     return {
-        init: init
+        init: init,
+        getContentIds: getContentIds
     };
 
 });
