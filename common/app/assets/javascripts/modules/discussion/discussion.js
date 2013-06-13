@@ -44,7 +44,7 @@ define([
 
                         self = this;
                         self.discussionUrl           = '/discussion' + discussionId;
-                        self.discussionCountUrl      = config.page.discussionApiUrl + '/discussion/'+discussionId+'/comments/count';
+                        self.discussionCountUrl      = "/discussion/comment-counts.json?shortUrls=" + discussionId;
                         self.discussionContainerNode = context.querySelector(discussionContainer);
                         self.articleContainerNode    = context.querySelector(articleContainer);
                         self.mediaPrimaryNode        = context.querySelector(mediaPrimary);
@@ -95,11 +95,13 @@ define([
             getCommentCount: function(callback) {
                 ajax({
                     url: self.discussionCountUrl,
-                    type: 'jsonp',
-                    jsonpCallback: 'callback',
-                    jsonpCallbackName: 'commentcount',
+                    type: 'json',
+                    method: 'get',
+                    crossOrigin: true,
                     success: function(response) {
-                        callback(response.numberOfComments);
+                        if(response && response.counts &&response.counts.length) {
+                            callback(response.counts[0].count);
+                        }
                     }
                 });
             },
