@@ -65,6 +65,9 @@
   <script type="text/javascript" src="components/seedrandom/index.js"></script>
   <script type="text/javascript">
 
+    // adding the 'withCredentials' property, so reqwest thinks it can do cors
+    sinon.FakeXMLHttpRequest.prototype.withCredentials = false;
+
     window.onhashchange = function(){
       window.location.reload();
     }
