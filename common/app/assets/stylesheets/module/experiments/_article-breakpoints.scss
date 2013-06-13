@@ -1,16 +1,12 @@
-// Columning helpers
-$gutter: 20px;
-$column-width: 60px;
-
-@function span($n-columns) {
-	@return $n-columns * $column-width + $gutter * ($n-columns - 1);
-}
 @media (min-width: $tablet) {
+	h2.article-zone,
 	.social,
 	.article {
-		max-width: span(8);
-		padding: 0 16px !important;
-		margin: 0 auto !important;
+		max-width: gs-span(8);
+		padding-left: 16px !important;
+		padding-right: 16px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
 	}
 	.article-headline {
 		font-size: 2.4rem;
@@ -25,16 +21,15 @@ $column-width: 60px;
 		margin-left: 0;
 		margin-right: 0;
 	}
-	.d-tabs {
-		margin-left: -16px !important;
-		margin-right: -16px !important;
+	.d-tabs__item--byline {
+		padding-left: $baseline !important;
 	}
 	@media (max-height: 768px) { // Decided with Chris, to refine with real world usage examples
 		.media-primary:first-of-type {
 			margin-left: 0;
 			margin-right: 0;
 			float: left;
-			width: span(4);
+			width: gs-span(4);
 			margin-right: $gutter;
 		}
 		.media-primary--comments-on {

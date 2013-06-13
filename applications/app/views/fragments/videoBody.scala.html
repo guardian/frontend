@@ -23,14 +23,14 @@
             </video>
         </div>
 
-    </article>
+        <div class="gallery-byline">
+            @fragments.byline(video.byline, video)
+        </div>
+        <div class="video-standfirst">
+            @fragments.standfirst(video)
+        </div>
 
-    <div class="gallery-byline">
-        @fragments.byline(video.byline, video)
-    </div>
-    <div class="box-indent video-standfirst">
-        @fragments.standfirst(video)
-    </div>
+    </article>
 
     @fragments.social(video)
 
