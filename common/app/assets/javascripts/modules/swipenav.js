@@ -62,7 +62,7 @@ define([
     function urlAbsPath(url) {
         var a = document.createElement('a');
         a.href = url;
-        a = a.pathname + a.search;
+        a = a.pathname + a.search + a.hash;
         a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
         return a;
     }
@@ -353,8 +353,6 @@ define([
             url = getAdjacentUrl(dir);
         }
 
-        url = urlAbsPath(url);
-
         el = panes.masterPages[mod3(paneNow + dir)];
         
         // Only load if not already loaded into this pane
@@ -495,7 +493,6 @@ define([
             if (clickSpec.sameHost && !clickSpec.samePage) {
                 if (swipeNavOnClick) {
                     url = urlAbsPath(clickSpec.target.href);
-
                     if (!url) {
                         return;
                     } else if (url === urlAbsPath(window.location.href)) {
