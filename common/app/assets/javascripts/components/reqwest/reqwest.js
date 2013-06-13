@@ -46,18 +46,19 @@
 
     , xhr = function(o) {
         // is it x-domain
-        if (typeof o.crossOrigin !== 'undefined' && !!o.crossOrigin === true) {
-          if (win[xmlHttpRequest] && 'withCredentials' in new XMLHttpRequest()) {
-            return new XMLHttpRequest();
+        if (o.crossOrigin === true) {
+          var xhr = win[xmlHttpRequest] ? new XMLHttpRequest() : null
+          if (xhr && 'withCredentials' in xhr) {
+            return xhr
           } else if (win[xDomainRequest]) {
-            return new XDomainRequest();
+            return new XDomainRequest()
           } else {
-            throw new Error('Browser does not support cross-origin requests');
+            throw new Error('Browser does not support cross-origin requests')
           }
         } else if (win[xmlHttpRequest]) {
-          return new XMLHttpRequest();
+          return new XMLHttpRequest()
         } else {
-          return new ActiveXObject('Microsoft.XMLHTTP');
+          return new ActiveXObject('Microsoft.XMLHTTP')
         }
       }
     , globalSetupOptions = {
@@ -183,6 +184,7 @@
         ? reqwest.toQueryString(o.data)
         : (o.data || null)
       , http
+      , sendWait = 0
 
     // if we're working on a GET request and we have data then we should append
     // query string to end of URL and not post data
@@ -193,18 +195,23 @@
 
     if (o.type == 'jsonp') return handleJsonp(o, fn, err, url)
 
-    http = xhr(o);
+    http = xhr(o)
     http.open(method, url, o.async === false ? false : true)
     setHeaders(http, o)
     setCredentials(http, o)
     if (win[xDomainRequest] && http instanceof win[xDomainRequest]) {
-        http.onload = fn;
-        http.onerror = err;
+        http.onload = fn
+        http.onerror = err
+        // NOTE: see http://social.msdn.microsoft.com/Forums/en-US/iewebdevelopment/thread/30ef3add-767c-4436-b8a9-f1ca19b4812e
+        http.onprogress = function() {}
+        sendWait = 200
     } else {
       http.onreadystatechange = handleReadyState(this, fn, err)
     }
     o.before && o.before(http)
-    http.send(data)
+    setTimeout(function () {
+      http.send(data)
+    }, sendWait);
     return http
   }
 
@@ -275,7 +282,7 @@
     }
 
     function success (resp) {
-      resp = (type !== 'jsonp') ? self.request : resp;
+      resp = (type !== 'jsonp') ? self.request : resp
       // use global data filter on response text
       var filteredResponse = globalSetupOptions.dataFilter(resp.responseText, type)
         , r = resp.responseText = filteredResponse
@@ -316,6 +323,7 @@
     }
 
     function error(resp, msg, t) {
+      resp = self.request
       self._responseArgs.resp = resp
       self._responseArgs.msg = msg
       self._responseArgs.t = t
