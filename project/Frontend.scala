@@ -63,7 +63,7 @@ object Frontend extends Build with Prototypes {
 
   val admin = application("admin").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "com.amazonaws" % "aws-java-sdk" % "1.3.27",
+      "com.amazonaws" % "aws-java-sdk" % "1.4.5",
       "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
     )
   )
