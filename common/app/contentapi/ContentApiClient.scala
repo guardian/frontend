@@ -7,6 +7,8 @@ import scala.concurrent.Future
 import common.{ExecutionContexts, Edition, Logging, GuardianConfiguration}
 import com.gu.openplatform.contentapi.model.ItemResponse
 import model.{Content, Trail}
+import org.joda.time.DateTime
+import org.scala_tools.time.Implicits._
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   val supportedTypes = "type/gallery|type/article|type/video"
@@ -18,9 +20,25 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
   val inlineElements = "picture,witness,video"
 
-  object EditorsPicsAndLatest {
+  val leadContentMaxAge = 2.days
+
+  object EditorsPicsOrLeadContentAndLatest {
+
     def apply(result: Future[ItemResponse]): Future[Seq[Trail]] =
-      result.map(r => (r.editorsPicks.map(new Content(_)) ++ r.results.map(new Content(_))).distinctBy(_.id))
+      result.map{ r =>
+
+        val leadContentCutOff = DateTime.now.toDateMidnight - leadContentMaxAge
+
+        var results = r.results.map(new Content(_))
+        var editorsPicks = r.editorsPicks.map(new Content(_))
+
+        val leadContent = if (editorsPicks.isEmpty)
+            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff).map(new Content(_)).take(1)
+          else
+            Nil
+
+        (editorsPicks ++ leadContent ++ results).distinctBy(_.id)
+      }
   }
 }
 
