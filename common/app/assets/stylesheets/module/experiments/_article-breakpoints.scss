@@ -1,80 +1,124 @@
 @media (min-width: $tablet) {
-	h2.article-zone,
-	.social,
-	.article {
-		max-width: gs-span(8);
-		padding-left: 16px !important;
-		padding-right: 16px !important;
-		margin-left: auto !important;
-		margin-right: auto !important;
-	}
-	.article-body,
-	.article-head,
-	.main-caption {
-		padding-left: 0 !important;  // Forced use for the moment
-		padding-right: 0 !important; // overridden by stuff in _from-content-api.scss
-	}
-	.byline {
-		margin-left: 0;
-		margin-right: 0;
-	}
-	.d-tabs__item--byline {
-		padding-left: $baseline !important;
-	}
+    h2.article-zone,
+    .social,
+    .article {
+        max-width: gs-span(8);
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    .article-body,
+    .article-head,
+    .main-caption {
+        padding-left: 0 !important;  // Forced use for the moment
+        padding-right: 0 !important; // overridden by stuff in _from-content-api.scss
+    }
+    .byline {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .d-tabs__item--byline {
+        padding-left: $baseline !important;
+    }
+    @media (max-height: 768px) { // Decided with Chris, to refine with real world usage examples
+        .media-primary:first-of-type {
+            margin-left: 0;
+            margin-right: 0;
+            float: left;
+            width: gs-span(4);
+            margin-right: $gutter;
+        }
+        .media-primary--comments-on {
+            display: none;
+        }
+        .byline,
+        .d-tabs {
+            display: table-cell;
+            width: 100000px;
+            max-width: 100%;
+        }
+        .d-tabs__item--byline.d-tabs__item--is-active {
+            padding-left: 0 !important;
+        }
+    }
+}
 
-	// Scaling typography up
-	.article-headline {
-		font-size: 28px;
-		line-height: 32px;
-	}
-	.article-standfirst {
-		font-size: 16px;
-		line-height: 24px;
-	}
-	.from-content-api {
-	    h2 {
-	        font-size: 22px;
-	        line-height: 28px;
-	    }
+@media (min-width: $desktop) {
+    h2.article-zone,
+    .social,
+    .article {
+        max-width: gs-span(9);
+    }
+}
 
-		h3,
-	    > p,
-	    .block-elements > p,
-	    ul,
-	    ol,
-	    address,
-	    blockquote,
-	    blockquote p {
-	        font-size: 18px;
-	        line-height: 28px;
-	        margin-bottom: $baseline*3 !important;
-	    }
-	}
 
-	.article blockquote,
-	.article blockquote p {
-	    font-size: 18px;
-		line-height: 28px;
-	}
-	@media (max-height: 768px) { // Decided with Chris, to refine with real world usage examples
-		.media-primary:first-of-type {
-			margin-left: 0;
-			margin-right: 0;
-			float: left;
-			width: gs-span(4);
-			margin-right: $gutter;
-		}
-		.media-primary--comments-on {
-			display: none;
-		}
-		.byline,
-		.d-tabs {
-			display: table-cell;
-			width: 100000px;
-			max-width: 100%;
-		}
-		.d-tabs__item--byline.d-tabs__item--is-active {
-			padding-left: 0 !important;
-		}
-	}
+// Scaling typography up
+.article-headline {
+    @media (min-width: $tablet) {
+        font-size: 28px;
+        line-height: 32px;
+        margin-bottom: $baseline*3;
+    }
+    @media (min-width: $desktop) {
+        -webkit-font-smoothing: antialiased;
+        font-size: 32px;
+        line-height: 40px;
+    }
+}
+.article-standfirst {
+    @media (min-width: $tablet) {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: $baseline;
+    }
+    @media (min-width: $desktop) {
+        -webkit-font-smoothing: antialiased;
+        font-size: 20px;
+        line-height: 28px;
+    }
+}
+.from-content-api {
+    h2 {
+        @media (min-width: $tablet) {
+            font-size: 22px;
+            line-height: 28px;
+        }
+        @media (min-width: $desktop) {
+            font-size: 22px;
+            line-height: 28px;
+        }
+    }
+
+    h3,
+    > p,
+    .block-elements > p,
+    ul,
+    ol,
+    address,
+    blockquote,
+    blockquote p {
+        @media (min-width: $tablet) {
+            font-size: 18px;
+            line-height: 28px;
+            margin-bottom: $baseline*3 !important;
+        }
+        @media (min-width: $desktop) {
+            font-size: 20px;
+            line-height: 28px;
+            margin-bottom: $baseline*4 !important;
+        }
+    }
+}
+
+.article blockquote,
+.article blockquote p {
+    @media (min-width: $tablet) {
+        font-size: 18px;
+        line-height: 28px;
+    }
+    @media (min-width: $desktop) {
+        font-size: 20px;
+        line-height: 28px;
+    }
 }

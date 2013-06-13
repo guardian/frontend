@@ -8,9 +8,9 @@
     //For expandables
     position: relative;
     z-index: 1000;
-    @media only screen and (min-width: $desktopAd) {
-        min-height: 96px;
-    }
+    // @media only screen and (min-width: $desktopAd) {
+    //     min-height: 96px;
+    // }
 
     iframe {
         margin: 0 auto;
