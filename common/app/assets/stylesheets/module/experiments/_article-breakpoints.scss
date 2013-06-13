@@ -8,9 +8,6 @@
 		margin-left: auto !important;
 		margin-right: auto !important;
 	}
-	.article-headline {
-		font-size: 2.4rem;
-	}
 	.article-body,
 	.article-head,
 	.main-caption {
@@ -23,6 +20,41 @@
 	}
 	.d-tabs__item--byline {
 		padding-left: $baseline !important;
+	}
+
+	// Scaling typography up
+	.article-headline {
+		font-size: 28px;
+		line-height: 32px;
+	}
+	.article-standfirst {
+		font-size: 16px;
+		line-height: 24px;
+	}
+	.from-content-api {
+	    h2 {
+	        font-size: 22px;
+	        line-height: 28px;
+	    }
+
+		h3,
+	    > p,
+	    .block-elements > p,
+	    ul,
+	    ol,
+	    address,
+	    blockquote,
+	    blockquote p {
+	        font-size: 18px;
+	        line-height: 28px;
+	        margin-bottom: $baseline*3 !important;
+	    }
+	}
+
+	.article blockquote,
+	.article blockquote p {
+	    font-size: 18px;
+		line-height: 28px;
 	}
 	@media (max-height: 768px) { // Decided with Chris, to refine with real world usage examples
 		.media-primary:first-of-type {
