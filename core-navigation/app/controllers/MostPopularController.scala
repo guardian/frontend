@@ -30,7 +30,8 @@ object MostPopularController extends Controller with Logging with ExecutionConte
             case Nil => NotFound
             case popular => {
               val htmlResponse = () => views.html.mostPopular(page, popular)
-              val jsonResponse = () => views.html.fragments.mostPopular(popular, 5)
+              val trails = sectionPopular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
+              lazy val jsonResponse = Map("html" -> views.html.fragments.mostPopular(popular, 5), "trails" -> trails)
               renderFormat(htmlResponse, jsonResponse, 900)
             }
           }
