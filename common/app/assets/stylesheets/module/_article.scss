@@ -3,7 +3,6 @@
     margin: 0 $gutter;
     line-height: 1em;
     border-bottom: 1px solid $mushroom;
-    @include box-sizing(border-box);
 
     @media only screen and (min-width: $tablet) {
         border-top: none;

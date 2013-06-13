@@ -9,12 +9,13 @@ GET     /assets/*file                               controllers.Assets.at(path="
 GET		/sections					                controllers.SectionsController.render()
 GET     /sections.json                              controllers.SectionsController.renderJson()
 
+
 # Note: culture|sport|australia are routed to front.
 # i.e. don't need negative lookahead to exclude them.
-GET     /$path<[\w\d-]*>/trails                      controllers.SectionController.renderTrails(path)
-GET     /$path<[\w\d-]*>/trails.json                 controllers.SectionController.renderTrails(path)
-GET     /$path<[\w\d-]*>                             controllers.SectionController.render(path)
-GET     /$path<[\w\d-]*>.json                        controllers.SectionController.render(path)
+GET    /$path<[\w\d-]*(/\w\w-edition)?>/trails.json          controllers.SectionController.renderJsonTrails(path)
+GET    /$path<[\w\d-]*(/\w\w-edition)?>/trails               controllers.SectionController.renderTrails(path)
+GET    /$path<[\w\d-]*(/\w\w-edition)?>.json                 controllers.SectionController.renderJson(path)
+GET    /$path<[\w\d-]*(/\w\w-edition)?>                      controllers.SectionController.render(path)
 
 # Gallery paths
 GET     /$path<[\w\d-]*/gallery/.*>.json            controllers.GalleryController.render(path)
