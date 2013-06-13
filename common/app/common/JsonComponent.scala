@@ -55,6 +55,7 @@ object JsonComponent extends Results {
         case (name, value: Int) => (name -> toJson(value))
         case (name, value: Double) => (name -> toJson(value))
         case (name, value: Float) => (name -> toJson(value))
+        case (name, value: List[String]) => (name -> toJson(value))
         case (name, value: JsValue) => (name -> value)
       }
     ))
