@@ -3,7 +3,7 @@ package metrics
 import java.io.File
 import au.com.bytecode.opencsv.CSVParser
 import com.gu.management.{ CountMetric, Metric }
-import net.sf.uadetector.UADetectorServiceFactory
+import net.sf.uadetector.service.UADetectorServiceFactory
 import org.apache.commons.io.input.{ TailerListenerAdapter, Tailer }
 import conf.Configuration
 
@@ -94,13 +94,12 @@ object NginxLog {
     )
 
     def apply(userAgent: String) {
-
       total.recordCount(1)
 
       val ua = agent.parse(userAgent)
       val os = ua.getOperatingSystem
 
-      val uaFamily = ua.getFamily.replaceAll(" ", "")
+      val uaFamily = ua.getFamily.getName.replaceAll(" ", "")
       val osFamily = os.getFamilyName.replaceAll(" ", "")
       val osVersion = os.getVersionNumber.getMajor
 
@@ -114,7 +113,6 @@ object NginxLog {
           case "ios_4_mobilesafari" | "ios_3_mobilesafari" => js_ios_4_and_lower_mobilesafari.recordCount(1)
           case "ios_5_chromemobile" | "ios_6_chromemobile" => js_ios_x_chrome.recordCount(1)
           case _ => js_ios_other.recordCount(1)
-
         }
 
         case "android" => key match {
@@ -143,7 +141,6 @@ object NginxLog {
         case "symbianos" => js_symbianos.recordCount(1)
         case "linux" => js_linux.recordCount(1)
         case _ => js_other.recordCount(1)
-
       }
     }
   }
