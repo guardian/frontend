@@ -1,7 +1,7 @@
 define(["reqwest"], function (reqwest) {
 
     var makeAbsolute = function () {
-        throw new Error("AJAX has not been initialised yet test");
+        throw new Error("AJAX has not been initialised yet");
     };
 
     var edition = function () {
