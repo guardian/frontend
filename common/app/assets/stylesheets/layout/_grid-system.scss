@@ -18,9 +18,3 @@ $column-width: 60px;
 		@include gs-container;
 	}	
 }
-
-// Temporary layout fixes
-@mixin temporarily-cap-content-width {
-    max-width: gs-span(8);
-    margin: 0 auto;
-}

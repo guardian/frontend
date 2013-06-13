@@ -1,9 +1,12 @@
 @media (min-width: $tablet) {
+	h2.article-zone,
 	.social,
 	.article {
 		max-width: gs-span(8);
-		padding: 0 16px !important;
-		margin: 0 auto !important;
+		padding-left: 16px !important;
+		padding-right: 16px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
 	}
 	.article-headline {
 		font-size: 2.4rem;
@@ -18,9 +21,8 @@
 		margin-left: 0;
 		margin-right: 0;
 	}
-	.d-tabs {
-		margin-left: -16px !important;
-		margin-right: -16px !important;
+	.d-tabs__item--byline {
+		padding-left: $baseline !important;
 	}
 	@media (max-height: 768px) { // Decided with Chris, to refine with real world usage examples
 		.media-primary:first-of-type {
