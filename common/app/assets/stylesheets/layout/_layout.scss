@@ -3,17 +3,14 @@
      ========================================================================== */
 
 #preloads {
-    position: relative;
+    @include gs-container;
     clear: both;
-    max-width: 64em;
-    max-width: 102.4rem;
-    margin: 58px auto 0 auto;
+    margin: 58px auto 0;
 
     @media only screen and (min-width: $tablet) {
         margin-top: 104px;
     }
 }
-
 
 
 /* ==========================================================================
@@ -75,7 +72,7 @@
     position: relative;
     top: 0;
     height: 100%;
-    width: 100%; 
+    width: 100%;
 }
 
 #preload-0,
@@ -85,6 +82,13 @@
     top: 0;
     height: 100%;
     width: 100%;
+}
+/* ==========================================================================
+    Parts (for swipe)
+     ========================================================================== */
+
+.parts {
+    @include temporarily-cap-content-width;
 }
 
 /*
