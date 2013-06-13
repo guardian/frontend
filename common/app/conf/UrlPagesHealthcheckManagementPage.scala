@@ -2,15 +2,12 @@ package conf
 
 import scala.concurrent.Await
 import common.{ExecutionContexts, Logging}
-import java.util.concurrent.TimeUnit
 import play.api.libs.concurrent.Promise
 import play.api.libs.ws.WS
 import com.gu.management.ManagementPage
 import com.gu.management.HttpRequest
 import com.gu.management.PlainTextResponse
 import com.gu.management.ErrorResponse
-import java.net.{ HttpURLConnection, URL }
-import scala.concurrent.duration.Duration
 import scala.concurrent.duration._
 
 class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPage with Logging with ExecutionContexts {
@@ -27,11 +24,8 @@ class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPag
       WS.url(url).get().map{ response => url -> response }
     }
 
-
-
     val sequenced = Promise.sequence(checks) // List[Promise[...]] -> Promise[List[...]]
     val failed = sequenced map { _ filter { _._2.status / 100 != 2 } }
-
 
     Await.result(failed, 10 -> SECONDS) match {
       case Nil =>

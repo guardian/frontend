@@ -61,6 +61,13 @@ object Frontend extends Build with Prototypes {
 
   val styleGuide = application("style-guide").dependsOn(commonWithTests)
 
+  val admin = application("admin").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      "com.amazonaws" % "aws-java-sdk" % "1.3.27",
+      "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
+    )
+  )
+
   val dev = application("dev-build")
     .dependsOn(front)
     .dependsOn(article)
@@ -87,6 +94,7 @@ object Frontend extends Build with Prototypes {
     router,
     diagnostics,
     styleGuide,
-    dev
+    dev,
+    admin
   )
 }

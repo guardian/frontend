@@ -165,7 +165,7 @@ class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchab
     }
   }
 
-  override def onStart() = schedule
+  override def onStart() { schedule }
 
-  override def onStop() = schedule.cancel()
+  override def onStop() { schedule.cancel() }
 }

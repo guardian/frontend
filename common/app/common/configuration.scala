@@ -4,6 +4,7 @@ import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 import java.net.InetAddress
 import play.api.Play
+import java.io.{FileInputStream, File}
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
@@ -35,6 +36,18 @@ class GuardianConfiguration(
   override val application: String,
   override val webappConfDirectory: String = "env")
     extends BaseGuardianConfiguration(application, webappConfDirectory) {
+
+  object environment {
+    private val props = new java.util.Properties()
+
+    if(new File("/etc/gu/install_vars").exists()) {
+      props.load(new FileInputStream("/etc/gu/install_vars"))
+    }
+
+    def apply(key: String, default: String) = props.getProperty(key, default).map(_.toLower)
+
+    val stage = apply("STAGE", "unknown")
+  }
 
   object contentApi {
     lazy val host = configuration.getStringProperty("content.api.host") getOrElse {
