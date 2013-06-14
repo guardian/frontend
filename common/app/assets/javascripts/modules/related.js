@@ -17,7 +17,7 @@ define(['common', 'modules/lazyload', 'modules/expandable'], function (common, L
             container = context.querySelector('.js-related');
             if (container) {
                 new LazyLoad({
-                    url: url || '/related/' + config.page.pageId,
+                    url: url || '/related/' + config.page.pageId + '.json',
                     container: container,
                     success: function () {
                         new Expandable({dom: container.querySelector('.related-trails'), expanded: false, showCount: false}).init();
