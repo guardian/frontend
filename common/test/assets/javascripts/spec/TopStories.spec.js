@@ -13,20 +13,31 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
                     '</div>'
                 ]
             },
-            config = { pathPrefix: "fixtures", page: { edition: 'uk' }};
+            config = { page: { edition: 'uk' }},
+            server;
 
         beforeEach(function () {
             ajax.init({page: {
                 ajaxUrl: "",
                 edition: "UK"
             }});
-            fixtures.render(conf)
+            fixtures.render(conf);
+            // set up fake server
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
+        });
+
+        afterEach(function () {
+            fixtures.clean(conf.id);
+            server.restore();
         });
 
         it("Should load the current top stories and show the navigation button", function () {
 
             var callback = sinon.stub();
             common.mediator.on('modules:topstories:loaded', callback);
+
+            server.respondWith([200, {}, '{ "html": "<b>top stories</b>" }']);
 
             runs(function () {
                 new TopStories().load(config, document.querySelector('#topstories-context'));

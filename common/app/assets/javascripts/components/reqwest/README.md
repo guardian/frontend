@@ -224,6 +224,19 @@ $('#myform input[name=myradios]').serialize({type:'map'})['myradios'] // get the
 $('input[type=text],#specialthing').serialize() // turn any arbitrary set of form elements into a query string
 ```
 
+ajaxSetup
+---------
+
+Use the `request.ajaxSetup` to predefine a data filter on all requests. See the example below that demonstrates JSON hijacking prevention:
+
+``` js
+$.ajaxSetup({
+  dataFilter: function (response, type) {
+    if (type == 'json') return response.substring('])}while(1);</x>'.length)
+    else return response
+  }
+})
+```
 
 RequireJs and Jam
 ------------------

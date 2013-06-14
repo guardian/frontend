@@ -100,15 +100,11 @@ define([
                 that = this;
 
             return ajax({
-                url: path,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'autoUpdate',
-                success: function (response) {
-                    if (!response) {
-                        common.mediator.emit('module:error', 'Failed to load auto-update: ' + options.path, 'autoupdate.js');
-                        return;
-                    }
+                url: path + '.json',
+                type: 'json',
+                crossOrigin: true
+            }).then(
+                function(response) {
                     if(response.refreshStatus === false) {
                         that.off();
                         that.view.destroy();
@@ -116,8 +112,11 @@ define([
                         that.view.render(response);
                         common.mediator.emit('modules:autoupdate:loaded', response);
                     }
+                },
+                function(req) {
+                    common.mediator.emit('module:error', 'Failed to load auto-update: ' + req.statusText, 'modules/autoupdate.js');
                 }
-            });
+            );
         };
 
         this.on = function () {

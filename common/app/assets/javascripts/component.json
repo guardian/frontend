@@ -10,7 +10,7 @@
     "eventEmitter": "4.0",
     "ios-orientationchange-fix": "git://github.com/scottjehl/iOS-Orientationchange-Fix.git",
     "qwery": "3.4",
-    "reqwest": "0.6",
+    "reqwest": "git@github.com:ironsidevsquincy/reqwest.git",
     "swipe": "git://github.com/guardian/Swipe.git",
     "swipeview": "git@github.com:guardian/SwipeView.git",
     "moment": "2.0"

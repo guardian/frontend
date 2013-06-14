@@ -7,7 +7,6 @@ define(['common', 'ajax', 'qwery', 'modules/footballfixtures'], function(common,
                 ajaxUrl: "",
                 edition: "UK"
             }});
-            mockAjax = jasmine.createSpy('ajax');
             prependTo = qwery('ul > li', '#football-fixtures')[0];
             competitions = [500, 510, 100];
             
@@ -16,52 +15,75 @@ define(['common', 'ajax', 'qwery', 'modules/footballfixtures'], function(common,
 
             common.mediator.on('modules:footballfixtures:render', renderCall);
             common.mediator.on('modules:footballfixtures:expand', expandCall);
-            
+
+            // set up fake server
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
+        });
+
+        // json test needs to be run asynchronously
+        it("should request the given competitions from the fixtures api", function(){
+            server.respondWith([200, {}, '{ "html": "<p>foo</p>" }']);
             runs(function() {
                 new FootballFixtures({
                     prependTo: prependTo,
                     expandable: true,
                     competitions: competitions
-                }).init({ajax: mockAjax});
+                }).init();
             });
-        });
 
-        // json test needs to be run asynchronously 
-        it("should request the given competitions from the fixtures api", function(){
-            waits(500);
-
-            runs(function(){
-                expect(mockAjax.wasCalled).toBeTruthy();
-                expect(mockAjax.mostRecentCall.args[0].url.indexOf('/football/api/frontscores?&competitionId=500&competitionId=510&competitionId=100')).toEqual(0);
-            });
+            waitsFor(function () {
+                return renderCall.calledOnce === true
+            }, "football fixtures callback never called", 500);
         });
 
         it("should prepend a successful fixtures request to the DOM", function() {
+            server.respondWith([200, {}, '{ "html": "<p>foo</p>" }']);
+            runs(function() {
+                new FootballFixtures({
+                    prependTo: prependTo,
+                    expandable: true,
+                    competitions: competitions
+                }).init();
+            });
+            waitsFor(function () {
+                return renderCall.calledOnce === true
+            }, "football fixtures callback never called", 500);
 
-            waits(500);
-
-            runs(function(){
-                mockAjax.mostRecentCall.args[0].success.call(this, {html: '<p>foo</p>'});
+            runs(function() {
                 expect(document.getElementById('football-fixtures').innerHTML).toContain('<p>foo</p>');
-                expect(renderCall).toHaveBeenCalled();
             });
         });
 
         it("should fail silently if no response is returned from fixtures request", function() {
-
-            waits(500);
-
-            runs(function(){
-                mockAjax.mostRecentCall.args[0].success.call(this);
+            server.respondWith([200, {}, 'null']);
+            runs(function() {
+                new FootballFixtures({
+                    prependTo: prependTo,
+                    expandable: true,
+                    competitions: competitions
+                }).init();
+            });
+ 
+            runs(function() {
                 expect(renderCall).not.toHaveBeenCalled();
             });
         });
 
         it("should trigger expandable module", function() {
-            waits(1000);
-
-            runs(function(){
-                mockAjax.mostRecentCall.args[0].success.call(this, {html: '<p>foo</p>'});
+            server.respondWith([200, {}, '{ "html": "<p>foo</p>" }']);
+            runs(function() {
+                new FootballFixtures({
+                    prependTo: prependTo,
+                    expandable: true,
+                    competitions: competitions
+                }).init();
+            });
+            waitsFor(function () {
+                return expandCall.called === true
+            }, "football fixtures callback never called", 500);
+            
+            runs(function() {
                 expect(expandCall).toHaveBeenCalled();
             });
         });

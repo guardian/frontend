@@ -26,7 +26,7 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
             sinon.spy(common.mediator, 'emit');
 
             server = sinon.fakeServer.create();
-            server.respondWith("GET", '/fixtures/trails?_edition=UK',
+            server.respondWith("GET", '/fixtures/trails.json?_edition=UK',
                 [
                     200,
                     { "Content-Type": "application/json" },
