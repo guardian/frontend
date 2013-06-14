@@ -24,6 +24,10 @@
         padding-left: 0 !important;  // Forced use for the moment
         padding-right: 0 !important; // overridden by stuff in _from-content-api.scss
     }
+    .article-head {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
     .d-tabs__item--byline,
     .byline {
         font-size: 16px !important;
@@ -65,11 +69,12 @@
         -webkit-font-smoothing: antialiased;
         font-size: 28px;
         line-height: 32px;
-        margin-bottom: $baseline*4;
+        margin-bottom: $baseline*5;
     }
     @media (min-width: $desktop) {
         font-size: 32px;
         line-height: 40px;
+        margin-bottom: $baseline*6;
     }
 }
 .article-standfirst {
