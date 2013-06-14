@@ -1,6 +1,5 @@
 .footer {
     overflow: hidden;
-    margin: 0;
     padding: 0 0 $baseline*4 0;
     background-color: $darkMushroom;
 
@@ -30,7 +29,7 @@
         width: 42%;
         margin: 0;
         padding: $baseline*2 $gutter 0 $gutter;
-        float:left;
+        float: left;
         color: $blue;
 
         a {

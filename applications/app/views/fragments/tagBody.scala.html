@@ -7,7 +7,7 @@
     @if(tag.isContributor) {
         <div class="profile media">
             @tag.contributorImagePath.map { url =>
-                <div class="profile-img media-img">
+                <div class="profile-img media__img">
                     <img src="@url" alt="@tag.name" />
                 </div>
             }

@@ -46,6 +46,8 @@ class Content(
   lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
+  override lazy val discussionId = Some(shortUrlPath)
+
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
 
   override lazy val canonicalUrl = Some(webUrl)

@@ -2,7 +2,7 @@ package discussion
 
 import common.{InBodyLink, ExecutionContexts, Logging}
 import play.api.libs.ws.{Response, WS}
-import play.api.libs.json.{JsArray, Json}
+import play.api.libs.json.{JsNumber, JsObject, JsArray, Json}
 import model._
 import System.currentTimeMillis
 import conf.{CommonSwitches, DiscussionHttpTimingMetric}
@@ -23,6 +23,31 @@ case class CommentPage(
 trait DiscussionApi extends ExecutionContexts with Logging {
 
   def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
+
+  def commentCounts(ids: String) = {
+
+    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/getCommentCounts?short-urls=$ids"
+
+    val start = currentTimeMillis
+
+    GET(apiUrl).map{ response =>
+
+      DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
+
+      response.status match {
+
+        case 200 =>
+          val json = Json.parse(response.body).asInstanceOf[JsObject].fieldSet.toSeq
+          json.map{
+            case (id, JsNumber(i)) => CommentCount(id , i.toInt)
+            case bad => throw new RuntimeException(s"never understood $bad")
+          }
+        case other =>
+          log.error(s"Error loading comment counts id: $ids status: $other message: ${response.statusText}")
+          throw new RuntimeException("Error from discussion API")
+      }
+    }
+  }
 
   def commentsFor(id: String, page: String) = {
 

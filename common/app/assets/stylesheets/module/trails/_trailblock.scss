@@ -1,4 +1,6 @@
-
+/* ==========================================================================
+   Trailblocks
+   ========================================================================== */
 .trailblock {
     max-height: none;
     padding: 0 $gutter;
@@ -8,6 +10,8 @@
         margin-bottom: 0;
     }
 
+/* Trailblock expandables
+========================================================================== */
     .trailblock.shut .count {
         display: inline-block;
     }
@@ -21,6 +25,8 @@
         max-height: 0;
     }
 
+/* Trailblock topstories
+========================================================================== */
 .trailblock-topstories .trail__headline {
     @extend %type-3;
 }
@@ -29,6 +35,8 @@
     border-top:none;
 }
 
+/* Toggle trailblock
+========================================================================== */
 .toggle-trailblock {
     @extend %type-8;
     position: absolute;
