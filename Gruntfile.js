@@ -32,6 +32,20 @@ module.exports = function (grunt) {
                 }
             }
         },
+
+        cssmetrics: {
+            common: {
+                src: [
+                    'common/app/assets/stylesheets/*.min.css'
+                ],
+                options: {
+                    quiet: false,
+                    maxRules: 4096, //IE max rules
+                    maxFileSize: 1048576 //1mb in bytes
+                }
+            }
+        },
+
         // Compile into single, minified Javascript files
         requirejs: {
             common: {
@@ -188,6 +202,7 @@ module.exports = function (grunt) {
 
     // Load the plugins
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-css-metrics');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-webfontjson');
@@ -200,10 +215,12 @@ module.exports = function (grunt) {
 
     grunt.registerTask('compile:common:css', ['sass:common']);
     grunt.registerTask('compile:common:js', ['requirejs:common']);
-
     grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
 
-    grunt.registerTask('default', ['test', 'compile']);
+    grunt.registerTask('analyse:common:css', ['cssmetrics:common']);
+    grunt.registerTask('analyse', ['analyse:common:css']);
+
+    grunt.registerTask('default', ['test', 'compile', 'analyse']);
 
     // Clean the .git/hooks/pre-commit file then copy in the latest version
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
