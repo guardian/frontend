@@ -1,7 +1,7 @@
 package discussion
 
 import common.{InBodyLink, ExecutionContexts, Logging}
-import conf.DiscussionHttpTimingMetric
+import common.DiscussionMetrics.DiscussionHttpTimingMetric
 import conf.Switches.ShortDiscussionSwitch
 import model._
 import play.api.libs.ws.{Response, WS}

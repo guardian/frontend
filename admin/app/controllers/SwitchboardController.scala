@@ -1,7 +1,8 @@
 package controllers
 
-import common.{Properties, Logging}
-import conf._
+import common.{ ExecutionContexts, Properties, Logging }
+import common.AdminMetrics.{SwitchesUpdateCounter, SwitchesUpdateErrorCounter}
+import conf.{ Switches, AdminConfiguration }
 import play.api.mvc._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka

@@ -4,19 +4,16 @@ import common.Metrics
 import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
-import play.api.{ Application => PlayApp }
-
-class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
 object Management extends GuManagement {
-  val applicationName = "frontend-event"
-  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.mongo
+  val applicationName = "frontend-admin"
+  val metrics = Metrics.admin
 
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      "/stories"
-    ), 
+      "/login"
+    ),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)

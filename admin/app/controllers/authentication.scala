@@ -1,13 +1,13 @@
 package controllers
 
-import common.Logging
+import conf.AdminConfiguration
+import common.{ ExecutionContexts, Logging }
+import net.liftweb.json.{ Serialization, NoTypeHints }
+import net.liftweb.json.Serialization.{ read, write }
 import play.api.mvc._
 import play.api.mvc.Results._
 import play.api.mvc.BodyParsers._
-import net.liftweb.json.{Serialization, NoTypeHints}
-import net.liftweb.json.Serialization.{read, write}
 import play.api.libs.openid.OpenID
-import conf.{ExecutionContexts, AdminConfiguration}
 import play.api.Play
 
 case class Identity(openid: String, email: String, firstName: String, lastName: String) {

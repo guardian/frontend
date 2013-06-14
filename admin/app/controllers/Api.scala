@@ -1,10 +1,9 @@
 package controllers
 
-import implicits._
-
+import conf.Configuration
+import common.{ExecutionContexts, Logging}
+import implicits.Strings
 import play.api.mvc._
-import conf._
-import common.Logging
 import play.api.libs.ws.WS
 
 object Api extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
