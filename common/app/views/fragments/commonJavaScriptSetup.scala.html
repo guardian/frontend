@@ -1,7 +1,7 @@
 @(item: MetaData, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
-@import CommonSwitches.FontSwitch
-@import CommonSwitches.FontDelaySwitch
+@import conf.Switches.FontSwitch
+@import conf.Switches.SearchSwitch
 
 <script id="gu">
     // we want this to happen ASAP to avoid FOUC

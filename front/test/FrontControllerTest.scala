@@ -4,7 +4,6 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
-import conf.CommonSwitches
 
 class FrontControllerTest extends FlatSpec with ShouldMatchers {
   

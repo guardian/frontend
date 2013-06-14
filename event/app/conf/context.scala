@@ -8,10 +8,6 @@ import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import contentapi.ContentApiMetrics
 
-object Switches {
-  val all: Seq[Switchable] = CommonSwitches.all
-}
-
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
 object MongoTimingMetric extends TimingMetric("performance", "database", "Mongo request", "outgoing Mongo calls")

@@ -1,12 +1,12 @@
 package discussion
 
 import common.{InBodyLink, ExecutionContexts, Logging}
+import conf.DiscussionHttpTimingMetric
+import conf.Switches.ShortDiscussionSwitch
+import model._
 import play.api.libs.ws.{Response, WS}
 import play.api.libs.json.{JsNumber, JsObject, JsArray, Json}
-import model._
 import System.currentTimeMillis
-import conf.{CommonSwitches, DiscussionHttpTimingMetric}
-import CommonSwitches._
 import scala.concurrent.Future
 
 case class CommentPage(

@@ -1,5 +1,5 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
-@import CommonSwitches.DiscussionSwitch
+@import conf.Switches.DiscussionSwitch
 
 <h2 class="article-zone type-1">
     <a class="zone-color" data-link-name="article section" href="/@article.section">@Html(article.sectionName)</a>
