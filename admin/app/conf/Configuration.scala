@@ -1,22 +1,26 @@
 package conf
 
+import common.Properties
 import com.gu.conf.ConfigurationFactory
 import com.gu.management._
+import java.io.{FileInputStream, File}
 import logback.LogbackLevelPage
 import play.{Management => GuManagement}
-import java.io.{FileInputStream, File}
+import org.apache.commons.io.IOUtils
 
 object AdminConfiguration {
 
   val configuration = ConfigurationFactory.getConfiguration("frontend", "env")
 
   object environment {
-    private val props = new java.util.Properties()
-    if(new File("/etc/gu/install_vars").exists()) {
-      props.load(new FileInputStream("/etc/gu/install_vars"))
+    private val installVars = (new File("/etc/gu/install_vars")) match {
+      case f if f.exists => IOUtils.toString(new FileInputStream(f))
+      case _ => ""
     }
 
-    def apply(key: String, default: String) = props.getProperty(key, default).map(_.toLower)
+    private val properties = Properties(installVars)
+
+    def apply(key: String, default: String) = properties.getOrElse(key, default).toLowerCase
 
     val stage = apply("STAGE", "unknown")
   }

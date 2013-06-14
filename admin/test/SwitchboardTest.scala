@@ -1,4 +1,4 @@
-import controllers.{Switch, SwitchboardController}
+import controllers.{SwitchState, SwitchboardController}
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 
@@ -14,8 +14,8 @@ class SwitchboardTest extends FlatSpec with ShouldMatchers {
   }
 
   they should "have a description" in {
-    SwitchboardController.switches.foreach{
-      case Switch(name, _, desc) => desc.trim should not be("")
+    SwitchboardController.switches foreach {
+      case SwitchState(name, _, desc) => desc.trim should not be("")
     }
   }
 }
