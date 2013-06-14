@@ -83,7 +83,7 @@ define([
 
             var table = new FootballTable({
                 prependTo: context.querySelector('.t3'),
-                path: '/football/api/teamtable/' + team + '.json
+                path: '/football/api/teamtable/' + team + '.json'
             }).init();
         },
 
