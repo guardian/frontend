@@ -33,12 +33,11 @@ define([
         this.play = function() {
             if (initialPlay.content === true && initialPlay.advert === true) {
                 bean.one(video, 'loadedmetadata', function() {
-                   self.trackUserInteraction("Play", "User clicked play", false, function() {
+                   self.trackUserInteraction("Play", "User clicked play", false);
                        if(video.advertWasRequested) {
                            self.trackUserInteraction("Advert", "Video advert was requested", false);
                        }
                    });
-                });
             }
 
             if ((videoType === 'content' && initialPlay[videoType] === true) ||
@@ -54,7 +53,6 @@ define([
             } else {
                 s.Media.play(mediaName, self.getPosition());
             }
-
         };
 
         this.pause = function() {
@@ -92,11 +90,8 @@ define([
                 s.linkTrackVars = "prop43,prop44,prop45,eVar43,eVar44,eVar45,prop41,events";
                 s.linkTrackEvents = event;
                 s.events = event;
-                if(callback && typeof callback === "function") {
-                    s.tl(true, "o", name, null, callback);
-                } else {
-                    s.tl(true, "o", name);
-                }
+
+                s.tl(true, "o", name);
             };
 
             if(debounce) {
@@ -129,7 +124,10 @@ define([
             s.eVar44 = s.prop44;
             s.eVar45 = s.prop45;
 
-            bean.on(video, 'play', function(){ that.play(); });
+            var play = common.debounce(that.play, 250);
+
+            bean.on(video, 'play', play);
+
             bean.on(video, 'pause', function() { that.pause(); });
             bean.on(video, 'seeking', function() { that.seeking(); });
             bean.on(video, 'seeked', function() {that.seeked(); });
