@@ -20,6 +20,11 @@ $keylineSize: 1px;
     margin: 0 $gutter*-1;
     padding-bottom: $baseline*3;
 }
+
+    .d-tabs--is-live {
+        margin-bottom: $baseline*6;
+    }
+
 .d-tabs__container {
     display: table;
     background-color: $darkMushroom;
