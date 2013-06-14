@@ -4,7 +4,8 @@ define(['common', 'modules/lazyload'], function (common, LazyLoad) {
         var container = context.querySelector('.js-popular');
 
         if (container) {
-            url = url || '/most-read' + (config.page && config.page.section ? '/' + config.page.section : '');
+            var hasSection = config.page && config.page.section && config.page.section !== 'global';
+            url = url || '/most-read' + (hasSection ? '/' + config.page.section : '');
             new LazyLoad({
                 url: url + '.json',
                 container: container,
