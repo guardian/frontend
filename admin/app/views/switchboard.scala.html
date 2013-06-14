@@ -1,0 +1,21 @@
+@(switches: Seq[Switch], env: String)
+
+@admin_main("Switchboard", env, isAuthed = true) {
+<div class="row">
+    <h4>Switchboard</h4>
+    <form id="switchboard" action="/dev/switchboard" method="POST">
+        @switches.sortBy(switch => switch.name).map { switch =>
+            <div class="row">
+                <fieldset>
+                    <legend>
+                        <input class="status" id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isOn) { checked="checked" }/>
+                        <label for="switch-@switch.name">@switch.name</label>
+                        <small>- @switch.description</small>
+                    </legend>
+                </fieldset>
+            </div>
+        }
+        <input type="submit" value="Save">
+    </form>
+</div>
+}
