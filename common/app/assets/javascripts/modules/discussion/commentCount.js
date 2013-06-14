@@ -1,7 +1,9 @@
 define([
+    'common',
     'bonzo',
     'ajax'
 ], function (
+    common,
     bonzo,
     ajax
 ) {
@@ -33,17 +35,19 @@ define([
 
     function renderCounts(counts, context) {
         counts.forEach(function(c){
-            var node = context.querySelector('[data-discussion-id="' + c.id +'"]'),
-                url = getContentUrl(node),
-                data = tpl.replace("[URL]", url);
+            var node = context.querySelector('[data-discussion-id="' + c.id +'"]');
+            if(node) {
+                var url = getContentUrl(node),
+                    data = tpl.replace("[URL]", url);
 
-            bonzo(node).append(data.replace("[COUNT]", c.count));
+                bonzo(node).append(data.replace("[COUNT]", c.count));
+                node.removeAttribute(attributeName);
+            }
         });
     }
 
     function getCommentCounts(context) {
         var ids = getContentIds(context);
-
         ajax({
             url: countUrl + ids,
             type: 'json',
@@ -52,17 +56,26 @@ define([
             success: function(response) {
                 if(response && response.counts) {
                     renderCounts(response.counts, context);
+                    common.mediator.emit('modules:commentcount:loaded', response.counts);
                 }
             }
         });
     }
 
     function init(context) {
-        getCommentCounts(context);
+        if(context.querySelector("[data-discussion-id]")) {
+            getCommentCounts(context);
+        }
+
+        //Load new counts when more trails are loaded
+        common.mediator.on('module:trailblock-show-more:render', function() { getCommentCounts(context); });
+        common.mediator.on('modules:related:loaded', function() { getCommentCounts(context); });
     }
 
     return {
-        init: init
+        init: init,
+        getCommentCounts: getCommentCounts,
+        getContentIds: getContentIds
     };
 
 });

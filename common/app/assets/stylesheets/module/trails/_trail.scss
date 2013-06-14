@@ -36,7 +36,6 @@
     }
 
     .trail__headline a:active {
-      color:#333333;
       text-decoration: underline;
     }
 
@@ -55,7 +54,7 @@
 
 .trail__comment-count{
     position: absolute;
-    top: 9px;
+    top: 8px;
     right: 0;
 
     a,
@@ -75,6 +74,8 @@
           margin: 3px 4px 0 0;
     }
 }
+
+  .trail:first-child .trail__comment-count { top: 12px; }
 
 @media screen and (min-width: 53.125em) {
     .trail .img img {
