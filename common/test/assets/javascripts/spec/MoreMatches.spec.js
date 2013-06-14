@@ -2,11 +2,23 @@ define(['modules/more-matches', 'bonzo', 'qwery', 'common', 'ajax'], function(Mo
 
     describe("MoreMatches", function() {
 
+        var server;
+
         beforeEach(function () {
             ajax.init({page: {
                 ajaxUrl: "",
                 edition: "UK"
             }});
+
+            // set up fake server
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
+
+            server.respondWith([200, {}, '{ "html": "<p>foo</p>", "more": "fixtures/football-next" }']);
+        });
+
+        afterEach(function () {
+            server.restore();
         });
 
         var footballIndexRegex = /\/football(\/.*)?\/(fixtures|results)$/g;

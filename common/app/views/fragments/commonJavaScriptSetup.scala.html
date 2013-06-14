@@ -8,7 +8,15 @@
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
     var guardian = {
-            isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window && 'withCredentials' in new XMLHttpRequest()),
+            isModernBrowser: (
+                'querySelector' in document
+                &&  'addEventListener' in window
+                && 'localStorage' in window
+                && (
+                    ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
+                    || 'XDomainRequest' in window
+                )
+            ),
             css: {
                 football: '@Static("stylesheets/football.min.css")',
                 gallery: '@Static("stylesheets/gallery.min.css")',
