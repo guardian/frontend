@@ -1,23 +1,28 @@
+.monocolumn-wrapper {
+    padding-left: $gutter;
+    padding-right: $gutter;
+
+    .article-zone {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .page-head {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
 @media (min-width: $tablet) {
-    h2.article-zone,
-    .social,
-    .article,
-    .d-show-cta-wrapper {
+    .monocolumn-wrapper {
         max-width: gs-span(8);
-        padding-left: 16px !important;
-        padding-right: 16px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
+        margin-left: auto;
+        margin-right: auto;
     }
     .article-body,
     .article-head,
     .main-caption {
         padding-left: 0 !important;  // Forced use for the moment
         padding-right: 0 !important; // overridden by stuff in _from-content-api.scss
-    }
-    .byline {
-        margin-left: 0;
-        margin-right: 0;
     }
     .d-tabs__item--byline,
     .byline {
@@ -26,13 +31,17 @@
     .d-tabs__item--byline {
         padding-left: $baseline !important;
     }
+    .d-tabs,
+    .byline,
+    .media-primary {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
     @media (max-height: 768px) { // Decided with Chris, to refine with real world usage examples
-        .media-primary:first-of-type {
-            margin-left: 0;
-            margin-right: 0;
+        .media-primary {
             float: left;
             width: gs-span(4);
-            margin-right: $gutter;
+            margin-right: $gutter !important;
         }
         .media-primary--comments-on {
             display: none;

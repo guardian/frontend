@@ -1,7 +1,7 @@
 .social {
    margin: 0;  
    list-style: none;
-   padding: $baseline*3 $gutter $baseline*4 $gutter;
+   padding: $baseline*3 0 $baseline*4 0;
    min-height: 40px;
 }
  
@@ -32,10 +32,6 @@ a.social-btn {
 }
 
 @media (min-width: 20em) {
-
-    .social {
-        padding: $baseline*3 0 $baseline*4 $gutter;
-    }
     
     .social .social-network {
         float: left;

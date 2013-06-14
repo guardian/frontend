@@ -17,7 +17,8 @@ $keylineSize: 1px;
 /* Tabs
  ========================================================================== */
 .d-tabs {
-    margin: 20px 0 $baseline*3 0;
+    margin: 0 $gutter*-1;
+    padding-bottom: $baseline*3;
 }
 .d-tabs__container {
     display: table;
@@ -373,7 +374,7 @@ $keylineSize: 1px;
     @extend .i-filter-arrow-right;
 }
 .d-show-cta-wrapper {
-    padding: $baseline*2 $gutter $baseline*4 $gutter;
+    padding: $baseline*2 0 $baseline*4 0;
 }
 .d-show-cta,
 .d-show-cta:link,

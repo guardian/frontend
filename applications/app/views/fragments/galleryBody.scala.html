@@ -1,20 +1,23 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-<h2 class="article-zone type-2">
-    <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
-</h2>
+<div class="monocolumn-wrapper">
+   <h2 class="article-zone type-2">
+       <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
+   </h2> 
+</div>
+
 
 <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
+    <div class="monocolumn-wrapper">
+        <header class="article-head">
+            @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
+            @fragments.headline(gallery.headline)
+            @fragments.standfirst(gallery)
+        </header>
 
-    <header class="article-head">
-        @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
-        @fragments.headline(gallery.headline)
-        @fragments.standfirst(gallery)
-    </header>
-
-    @fragments.byline(gallery.byline, gallery)
-
+        @fragments.byline(gallery.byline, gallery)
+    </div>
     <p class="js-gallery-nav box-indent gallery-nav type-11">
 
         @if(index > 1) {
@@ -67,8 +70,9 @@
     </div>
 
 </article>
-
-@fragments.social(gallery)
+<div class="monocolumn-wrapper">
+    @fragments.social(gallery)
+</div>
 
 @if(storyPackage.nonEmpty) {
     <aside role="complementary">

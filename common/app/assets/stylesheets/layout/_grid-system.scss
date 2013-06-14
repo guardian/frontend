@@ -1,9 +1,9 @@
 // Helpers
-$gutter: 20px;
-$column-width: 60px;
+$gs-gutter: 20px;
+$gs-column-width: 60px;
 
 @function gs-span($n-columns) {
-	@return $n-columns * $column-width + $gutter * ($n-columns - 1);
+	@return $n-columns * $gs-column-width + $gs-gutter * ($n-columns - 1);
 }
 
 @mixin gs-container {
