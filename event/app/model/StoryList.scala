@@ -1,12 +1,12 @@
 package model
 
-import common.AkkaSupport
 import akka.actor.Cancellable
-import tools.Mongo
+import common.AkkaSupport
+import common.MongoMetrics.{MongoErrorCount, MongoOkCount, MongoTimingMetric}
 import com.mongodb.casbah.commons.MongoDBObject
 import com.mongodb.casbah.Imports._
-import conf.{ MongoErrorCount, MongoOkCount, MongoTimingMetric }
 import scala.concurrent.duration._
+import tools.Mongo
 
 
 object StoryList extends AkkaSupport {

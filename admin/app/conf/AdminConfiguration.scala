@@ -4,8 +4,6 @@ import common.Properties
 import com.gu.conf.ConfigurationFactory
 import com.gu.management._
 import java.io.{FileInputStream, File}
-import logback.LogbackLevelPage
-import play.{Management => GuManagement}
 import org.apache.commons.io.IOUtils
 
 object AdminConfiguration {
@@ -52,28 +50,4 @@ object AdminConfiguration {
         configuration.getStringProperty(property).get
       }
     }
-}
-
-object ConfigUpdateCounter extends CountMetric("actions", "config_updates", "Config updates", "number of times config was updated")
-object ConfigUpdateErrorCounter extends CountMetric("actions", "config_update_errors", "Config update errors", "number of times config update failed")
-
-object SwitchesUpdateCounter extends CountMetric("actions", "switches_updates", "Switches updates", "number of times switches was updated")
-object SwitchesUpdateErrorCounter extends CountMetric("actions", "switches_update_errors", "Switches update errors", "number of times switches update failed")
-
-
-object Management extends GuManagement {
-
-  val applicationName = "frontend-admin"
-
-  lazy val pages = List(
-    new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(
-      "/login"
-    ),
-    StatusPage(applicationName,
-      Seq(ConfigUpdateCounter, ConfigUpdateErrorCounter, SwitchesUpdateCounter, SwitchesUpdateErrorCounter)
-    ),
-    new PropertiesPage(Configuration.toString),
-    new LogbackLevelPage(applicationName)
-  )
 }
