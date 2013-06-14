@@ -7,10 +7,6 @@ import com.gu.management.play._
 import logback.LogbackLevelPage
 import contentapi.ContentApiMetrics
 
-object Switches {
-  val all: Seq[Switchable] = CommonSwitches.all // ++ new DefaultSwitch("name", "Description Text")
-}
-
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
 object Metrics {

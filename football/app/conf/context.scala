@@ -1,6 +1,6 @@
 package conf
 
-import _root_.play.api.libs.ws.WS
+import play.api.libs.ws.WS
 import play.api.{ Application => PlayApp, Plugin }
 import common._
 import com.gu.management._
@@ -16,13 +16,13 @@ import contentapi.ContentApiMetrics
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
 
-  override def onStart() = {
+  override def onStart() {
     Competitions.startup()
     LiveBlog.startup()
     TeamMap.startup()
   }
 
-  override def onStop() = {
+  override def onStop() {
     Competitions.shutDown()
     LiveBlog.shutdown()
     TeamMap.shutdown()
@@ -63,9 +63,6 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   }
 }
 
-object Switches {
-  val all: Seq[Switchable] = CommonSwitches.all
-}
 
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 

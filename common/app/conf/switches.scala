@@ -2,17 +2,13 @@ package conf
 
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
-import org.apache.commons.io.IOUtils
-import java.util.Properties
 import play.api.Plugin
-import akka.actor.Cancellable
-import scala.concurrent.duration.FiniteDuration
+import play.api.libs.ws.WS
 import scala.concurrent.duration._
-import play.api.{ Application => PlayApp }
-import com.gu.management.play.RequestMetrics
-import play.api.libs.ws.{Response, WS}
 
-object CommonSwitches {
+object Switches {
+
+  // Switch names can be letters numbers and hyphens only
 
   val AutoRefreshSwitch = DefaultSwitch("auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
@@ -31,7 +27,7 @@ object CommonSwitches {
     initiallyOn = true)
 
   val DoubleCacheTimesSwitch = DefaultSwitch("double-cache-times",
-    "If this switch is turned on it doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
+    "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     initiallyOn = false)
 
   val RelatedContentSwitch = DefaultSwitch("related-content",
@@ -59,39 +55,39 @@ object CommonSwitches {
     initiallyOn = false)
 
   val SocialSwitch = DefaultSwitch("social-icons",
-    "If this switch is enabled the icons to popular social media sites will be displayed",
+    "Enable the social media share icons (Facebook, Twitter etc.)",
     initiallyOn = false)
 
   val SearchSwitch = DefaultSwitch("google-search",
-    "If this switch is turned on then Google search is added to the sections nav",
+    "If this switch is turned on then Google search is added to the sections nav.",
     initiallyOn = false)
 
   val QuantcastSwitch = DefaultSwitch("quantcast",
-    "If this switch is enabled the Quantcast audience segment web bug will be embedded in all responses",
+    "Enable the Quantcast audience segment tracking.",
     initiallyOn = false)
 
   val HomescreenSwitch = DefaultSwitch("homescreen",
-    "If this switch is enabled the add-to-homescreen popup will plague iOS users",
+    "If this switch is enabled the add-to-homescreen popup will plague iOS users.",
     initiallyOn = false)
 
   val AdvertSwitch = DefaultSwitch("adverts",
-    "If this switch is on OAS adverts will be enabled.",
+    "If this switch is on then OAS adverts will be loaded with JavaScript.",
     initiallyOn = true)
 
   val VideoAdvertSwitch = DefaultSwitch("video-adverts",
-    "If this switch is on OAS video adverts will be enabled.",
+    "If this switch is on then OAS video adverts will be loaded with JavaScript.",
     initiallyOn = false)
 
   val ImageServerSwitch = DefaultSwitch("image-server",
-    "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
+    "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     initiallyOn = false)
 
   val SwipeNav = DefaultSwitch("swipe-nav",
-    "If this switch is on then swipe navigation is enabled",
+    "If this switch is on then swipe navigation is enabled.",
     initiallyOn = false)
 
   val SwipeNavOnClick = DefaultSwitch("swipe-nav-on-click",
-    "If this switch is also on then swipe navigation on clicks is enabled",
+    "If this switch is also on then swipe navigation on clicks is enabled.",
     initiallyOn = false)
 
   val ABStoryArticleSwapV2 = DefaultSwitch("ab-story-article-swap-v2",
@@ -107,30 +103,40 @@ object CommonSwitches {
     initiallyOn = true)
 
   val StoryArticleSwap = DefaultSwitch("story-article-swap",
-    "If this switch is on, for the latest story, swaps it in in place of the latest article in that story. Confused?.",
+    "If this switch is on, for the latest story, swaps it in in place of the latest article in that story. Confused?",
     initiallyOn = false)
 
-  val all: Seq[Switchable] = Seq(
+  val AustraliaFrontSwitch = DefaultSwitch("australia-front",
+    "If this switch is on the australia front will be available. Otherwise it will 404.",
+    initiallyOn = false)
+
+  val IntegrationTestSwitch = DefaultSwitch("integration-test-switch",
+    "Switch that is only used while running tests. You never need to change this switch.",
+    initiallyOn = false)
+
+  val all: Seq[DefaultSwitch] = Seq(
+    AudienceScienceSwitch,
     AutoRefreshSwitch,
+    DoubleCacheTimesSwitch,
     FontDelaySwitch,
     FontSwitch,
-    AudienceScienceSwitch,
-    DoubleCacheTimesSwitch,
     RelatedContentSwitch,
+    SearchSwitch,
     NetworkFrontAppealSwitch,
     WitnessVideoSwitch,
     ExperimentStoryModule01Switch,
-    StoryVersionBSwitch,
     StoryFrontTrails,
     SocialSwitch,
-    SearchSwitch,
     QuantcastSwitch,
+    IntegrationTestSwitch,
+    StoryVersionBSwitch,
     HomescreenSwitch,
+    ImageServerSwitch,
     AdvertSwitch,
     VideoAdvertSwitch,
-    ImageServerSwitch,
     SwipeNav,
     SwipeNavOnClick,
+    AustraliaFrontSwitch,
     ABStoryArticleSwapV2,
     DiscussionSwitch,
     ShortDiscussionSwitch,
@@ -140,21 +146,18 @@ object CommonSwitches {
 
 class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with Plugin {
 
-  val configUrl = config.switches.configurationUrl
-
   private lazy val schedule = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
     refresh()
   }
 
   def refresh() {
     log.info("Refreshing switches")
-    WS.url(configUrl).get().foreach{ response =>
+    WS.url(config.switches.configurationUrl).get() foreach { response =>
       response.status match {
         case 200 =>
-          val properties = new Properties()
-          properties.load(IOUtils.toInputStream(response.body))
-          switches.foreach { switch =>
-            Option(properties.getProperty(switch.name)).map {
+          val properties = Properties(response.body)
+          for (switch <- switches) {
+            properties.get(switch.name) foreach {
               case "on" => switch.switchOn()
               case "off" => switch.switchOff()
               case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
@@ -166,6 +169,5 @@ class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchab
   }
 
   override def onStart() { schedule }
-
   override def onStop() { schedule.cancel() }
 }
