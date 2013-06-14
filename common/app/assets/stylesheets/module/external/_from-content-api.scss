@@ -88,7 +88,8 @@ figure {
     }
 
     &.img-extended {
-      margin: $baseline*4 0 $baseline*4 0;
+        margin-top: $baseline*4;
+        margin-bottom: $baseline*4;
     }
 }
 

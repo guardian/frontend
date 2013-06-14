@@ -67,8 +67,8 @@ define([
 
             upgradeByline: function(commentCount) {
                 var bylineNode = bonzo(context.querySelector('.byline')),
-                    tabsClass = (config.page.isLive) ? "d-tabs d-tabs--is-live" : "d-tabs",
-                    tabsHtml = '<div class="' + tabsClass + '">' +
+                    isLive = (config.page.isLive) ? 'd-tabs--is-live' : '',
+                    tabsHtml = '<div class="d-tabs' + isLive + '">' +
                                  '<ol class="d-tabs__container unstyled">' +
                                  '  <li class="d-tabs__item d-tabs__item--byline d-tabs__item--is-active js-show-article" data-link-name="Article Tab" data-is-ajax>' +
                                       bylineNode.html() +

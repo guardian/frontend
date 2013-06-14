@@ -81,7 +81,8 @@
     }
 
     @media only screen and (min-width: $tablet) {
-        margin: 0 0 $baseline*4 0;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
