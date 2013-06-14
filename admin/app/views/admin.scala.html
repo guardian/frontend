@@ -1,0 +1,19 @@
+@(env: String)
+
+@admin_main("Front editor", env, isAuthed = true) {
+    <div class="row">
+        <h3>Site building tools</h3>
+        <p class="muted">Tools for editorially configuring the site</p>
+        <ul>
+            <li><a href="/admin/feature-trailblock">Feature trailblock editor</a></li>
+            <li><a href="/events">Stories</a> - Experimental</li>
+        </ul>
+    </div>
+    <div class="row">
+        <h3>Development tools</h3>
+        <p class="muted">Tools for the development team</p>
+        <ul>
+            <li><a href="/dev/switchboard">Switchboard</a></li>
+        </ul>
+    </div>
+}
