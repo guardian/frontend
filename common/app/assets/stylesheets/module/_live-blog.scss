@@ -82,17 +82,20 @@
 
 //Tweets
 //---------------------------------------------
-.tweet,
-.from-content-api blockquote.tweet  { //has to be over qualified :(
+.tweet {
     background-color: #f4f4f4;
     background-image: url(../images/twitter/bird.fc3f9a265a2d205df6f372402546bef1.png) !important;
     background-position: $baseline*2 $baseline*2 !important;
     background-repeat: no-repeat;
-    border-left-width: 0; 
+    border-left-width: 0;
     border-top: 4px solid #3299d0;
-    padding: $baseline*2;
-    margin: $baseline*3 0 $baseline*4 0;
 }
+    .tweet,
+    .from-content-api blockquote.tweet {
+        margin: $baseline*3 0 $baseline*4 0;
+        border-left-width: 0;
+        padding: $baseline*2;
+    }
 
     .tweet:before,
     .live-blog .tweet:before,
