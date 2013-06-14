@@ -31,6 +31,7 @@
     .d-tabs__item--byline,
     .byline {
         font-size: 16px !important;
+        font-size: 1.6rem !important;
     }
     .d-tabs__item--byline {
         padding-left: $baseline !important;
@@ -68,12 +69,16 @@
     @media (min-width: $tablet) {
         -webkit-font-smoothing: antialiased;
         font-size: 28px;
+        font-size: 2.8rem;
         line-height: 32px;
+        line-height: 3.2rem;
         margin-bottom: $baseline*5;
     }
     @media (min-width: $desktop) {
         font-size: 32px;
+        font-size: 3.2rem;
         line-height: 40px;
+        line-height: 4rem;
         margin-bottom: $baseline*6;
     }
 }
@@ -81,22 +86,30 @@
     @media (min-width: $tablet) {
         -webkit-font-smoothing: antialiased;
         font-size: 16px;
+        font-size: 1.6rem;
         line-height: 24px;
+        line-height: 2.4rem;
     }
     @media (min-width: $desktop) {
         font-size: 18px;
+        font-size: 1.8rem;
         line-height: 24px;
+        line-height: 2.4rem;
     }
 }
 .from-content-api {
     h2 {
         @media (min-width: $tablet) {
             font-size: 22px;
+            font-size: 2.2rem;
             line-height: 28px;
+            line-height: 2.8rem;
         }
         @media (min-width: $desktop) {
             font-size: 22px;
+            font-size: 2.2rem;
             line-height: 28px;
+            line-height: 2.8rem;
         }
     }
 
@@ -110,8 +123,11 @@
     blockquote p {
         @media (min-width: $tablet) {
             font-size: 18px;
-            line-height: 28px;
-            margin-bottom: $baseline*3 !important;
+            font-size: 1.8rem;
+            line-height: 26px;
+            line-height: 2.6rem;
+            margin-bottom: 16px !important;
+            margin-bottom: 1.6rem !important;
         }
     }
 }
@@ -120,6 +136,8 @@
 .article blockquote p {
     @media (min-width: $tablet) {
         font-size: 18px;
-        line-height: 28px;
+        font-size: 1.8rem;
+        line-height: 26px;
+        line-height: 2.6rem;
     }
 }
