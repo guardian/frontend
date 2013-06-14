@@ -128,9 +128,7 @@ define([
 
         transcludeCommentCounts: function () {
             common.mediator.on('page:common:ready', function(config, context) {
-                if(context.querySelector("[data-discussion-id]")) {
-                    CommentCount.init(context);
-                }
+                CommentCount.init(context);
             });
         },
 
