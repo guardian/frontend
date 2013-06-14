@@ -1,0 +1,72 @@
+@(title: String, env: String, isAuthed: Boolean = false, identity: String = "{}")(content: Html)
+
+<!DOCTYPE html>
+
+<html ng-app>
+    <head>
+        <title>@title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+
+        <link href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" rel="stylesheet">
+        <link href="@routes.Assets.at("css/style.css")" rel="stylesheet">
+        <script>
+            var curl = {
+                paths: {
+                    EventEmitter: '@routes.Assets.at("javascripts/vendor/EventEmitter")',
+                    Common: '@routes.Assets.at("javascripts/common")',
+                    Reqwest: '@routes.Assets.at("javascripts/vendor/reqwest")',
+                    TagSearch: '@routes.Assets.at("javascripts/modules/TagSearch")',
+                    TagEntry: '@routes.Assets.at("javascripts/modules/tagEntry")',
+                    ItemSearch: '@routes.Assets.at("javascripts/modules/ItemSearch")',
+                    Knockout: '@routes.Assets.at("javascripts/vendor/knockout-2.1.0.debug")',
+                    KnockoutSortable: '@routes.Assets.at("javascripts/vendor/knockout-sortable")',
+                    AutoComplete: '@routes.Assets.at("javascripts/modules/AutoComplete")',
+                    models: '@routes.Assets.at("javascripts/models")'
+                }
+            }
+        </script>
+        <script src="@routes.Assets.at("javascripts/vendor/curl.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/vendor/underscore.js")" type="text/javascript"></script>
+
+        <script>
+            define('Config', function() {
+                return {
+                    apiKey: '@conf.Configuration.contentApi.key',
+                    identity: @{Html(identity)}
+                }
+            });
+        </script>
+
+    </head>
+    <body>
+        
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div id="environment">
+                <span class="label label-warning">Environment: @env</span>
+            </div>
+            @if(isAuthed){
+                <ul class="nav pull-right">
+                    <li><a href="/logout" id="logout-button">Logout</a></li>
+                </ul>
+            } else {
+                <form action="@routes.Login.loginPost()" method="post" class="pull-right" style="margin:0px;">
+                    <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
+                </form>
+            }
+        </div>
+    </div>
+    
+    @content
+
+    <script src="@routes.Assets.at("javascripts/vendor/jquery-ui-1.8.23.custom/js/jquery-1.7.2.min.js")"></script>
+    <script src="@routes.Assets.at("javascripts/vendor/jquery-ui-1.8.23.custom/js/jquery-ui-1.8.23.custom.min.js")"></script>
+    <script src="@routes.Assets.at("bootstrap/js/bootstrap.js")"></script>
+    <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
+
+    </body>
+</html>
+
+
