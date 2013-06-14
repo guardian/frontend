@@ -79,6 +79,10 @@
     &.hidden {
         display: none;
     }
+
+    @media only screen and (min-width: $tablet) {
+        margin: 0 0 $baseline*4 0;
+    }
 }
 
 .update-text {

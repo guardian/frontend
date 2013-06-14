@@ -86,6 +86,10 @@ figure {
         display: block;
         margin-bottom: $baseline*2;
     }
+
+    &.img-extended {
+      margin: $baseline*4 0 $baseline*4 0;
+    }
 }
 
 //Citations

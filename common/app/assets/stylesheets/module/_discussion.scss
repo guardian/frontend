@@ -18,7 +18,12 @@ $keylineSize: 1px;
  ========================================================================== */
 .d-tabs {
     margin: 20px 0 $baseline*3 0;
+
+    &.d-tabs--is-live {
+        margin-bottom: $baseline*6;
+    }
 }
+
 .d-tabs__container {
     display: table;
     background-color: $darkMushroom;
