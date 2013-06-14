@@ -6,12 +6,12 @@ import model._
 import org.jsoup.nodes.{ Element, Document }
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
+import org.jsoup.safety.Cleaner
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-
 import scala.Some
 import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
@@ -19,6 +19,7 @@ import org.joda.time.format.DateTimeFormat
 import conf.Configuration
 import com.gu.openplatform.contentapi.model.MediaAsset
 import play.Play
+import org.jsoup.nodes.Entities.EscapeMode
 
 sealed trait Style {
   val className: String
@@ -330,6 +331,15 @@ object cleanTrailText {
 
 object StripHtmlTags {
   def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
+}
+
+object StripAndEscapeHtmlTags{
+   def apply( html: String) : String = {
+ 
+val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
+doc.outputSettings().escapeMode(EscapeMode.xhtml)
+doc.body().html()
+   }
 }
 
 object Head {

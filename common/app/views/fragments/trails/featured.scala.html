@@ -24,7 +24,7 @@
                 }
                 itemprop="contentURL"
                 alt="@StripHtmlTags(smallCrop.altText.getOrElse(""))"
-                title="@StripHtmlTags(smallCrop.caption.getOrElse(""))"
+                title="@StripAndEscapeHtmlTags(smallCrop.caption.getOrElse(""))"
             />
         </a>
     }
