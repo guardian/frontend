@@ -5,7 +5,8 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
         var callback,
             delay,
             path,
-            attachTo;
+            attachTo,
+            server;
 
         // Have to stub the global guardian object
         window.guardian = {
@@ -25,12 +26,21 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             delay = 1000;
             attachTo = document.getElementById('update-area');
             callback = sinon.stub();
+            // set up fake server
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
+
         });
 
-        afterEach(function() { callback = null });
+        afterEach(function() {
+            callback = null;
+            server.restore();
+        });
 
         // json test needs to be run asynchronously
         it("should request the feed and attach response to the dom", function(){
+
+            server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
             common.mediator.on('modules:autoupdate:loaded', callback);
 
             var a = new Autoupdate({
@@ -46,12 +56,14 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             runs(function(){
                 expect(callback).toHaveBeenCalled();
                 expect(attachTo.innerHTML).toBe('<span>foo</span>');
+                a.off();
             });
         });
         
         it("should optionally load the load the first update immediately after the module has initialised", function(){
             
             var callback1 = sinon.stub();
+            server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
             common.mediator.on('modules:autoupdate:loaded', callback1);
 
             var a = new Autoupdate({
@@ -68,11 +80,13 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             runs(function(){
                 expect(callback1).toHaveBeenCalled();
                 expect(attachTo.innerHTML).toBe('<span>foo</span>');
+                a.off();
             });
         });
 
 
         it("should get user prefs from local storage ", function(){
+            server.respondWith([200, {}, '']);
             storage.set('gu.prefs.auto-update', 'off');
 
             var a = new Autoupdate({
@@ -89,10 +103,12 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             runs(function(){
                  var off = common.$g('[data-action="off"]').hasClass('is-active');
                  expect(off).toBe(true);
+                a.off();
             });
         });
 
         it("should destroy itself if server sends turn off response", function() {
+            server.respondWith([200, {}, '{ "refreshStatus": false }']);
             common.mediator.on('modules:autoupdate:destroyed', callback);
 
             var a = new Autoupdate({
@@ -107,10 +123,12 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
 
             runs(function(){
                 expect(callback).toHaveBeenCalled();
+                a.off();
             });
         });
         
         it('should not poll if `autoRefresh` switch turned off (default)', function() {
+            server.respondWith([200, {}, '']);
             common.mediator.on('modules:autoupdate:destroyed', callback);
             
             var a = new Autoupdate({
@@ -124,6 +142,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
 
             runs(function(){
                 expect(callback).not.toHaveBeenCalled();
+                a.off();
             });
         });
        

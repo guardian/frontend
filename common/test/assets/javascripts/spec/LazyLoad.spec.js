@@ -1,8 +1,9 @@
-define(['modules/lazyload', 'bonzo', 'ajax'], function(lazyLoad, bonzo, ajax) {
+define(['modules/lazyload', 'bonzo', 'ajax'], function(LazyLoad, bonzo, ajax) {
 
     describe('Lazy Load', function() {
         
-        var $container = bonzo(bonzo.create('<div id="lazy-load-container"></div>'));
+        var $container = bonzo(bonzo.create('<div id="lazy-load-container"></div>')),
+            server;
 
         beforeEach(function() {
             // create container
@@ -11,25 +12,30 @@ define(['modules/lazyload', 'bonzo', 'ajax'], function(lazyLoad, bonzo, ajax) {
                 ajaxUrl: "",
                 edition: "UK"
             }});
+            // set up fake server
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
         });
 
         afterEach(function() {
             $container.remove();
+            server.restore();
         });
 
         it('should lazy load', function() {
+            server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
+
             var success = false;
             function lazyLoadSuccess() {
                 success = true;
             }
             
             waitsFor(function() {
-                lazyLoad({
+                new LazyLoad({
                     url: 'fixtures/lazy-load',
                     container: $container[0],
-                    jsonpCallbackName: 'lazyLoad',
                     success: lazyLoadSuccess
-                });
+                }).load();
                 return success;
               }, 'Lazy loaded data not loaded in', 100);
             

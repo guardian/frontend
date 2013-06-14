@@ -27,7 +27,7 @@ define([
         //Mappings can be found here: http://cms.guprod.gnl/tools/mappings/pafootballtournament
         this.competitions = ['500', '510', '100', '300', '301', '101', '120', '127', '301', '213', '320', '701', '650', '102', '103', '121', '122', '123'];
 
-        this.path =  "/football/api/frontscores?";
+        this.path =  "/football/api/frontscores.json?";
         this.queryString = "&competitionId=";
 
         // View
@@ -53,19 +53,19 @@ define([
 
             return ajax({
                 url: path,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'footballfixtures',
-                success: function (response) {
+                type: 'json',
+                crossOrigin: true
+            }).then(
+                function (response) {
                     //This is because the endpoint can also return a 204 no-content
                     if(response) {
-                       that.view.render(response.html);
+                        that.view.render(response.html);
                     }
                 },
-                error: function () {
-                    common.mediator.emit("modules:error", 'Failed to load football fixtures', 'footballfixtures.js');
+                function (req) {
+                    common.mediator.emit("modules:error", 'Failed to load football fixtures: ' + req.statusText, 'modules/footballfixtures.js');
                 }
-            });
+            );
         };
 
         this.generateQuery = function() {

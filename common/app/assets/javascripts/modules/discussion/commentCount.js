@@ -10,11 +10,9 @@ define([
 
     var attributeName = "data-discussion-id",
         countUrl = "/discussion/comment-counts.json?shortUrls=",
-        tpl = '';
-        tpl += '<span class="trail__comment-count">';
-        tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-count-small"></i>[COUNT]</a>';
-        tpl += '</span>';
-
+        tpl = '<span class="trail__comment-count">';
+        tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-count-small"></i>[COUNT]';
+        tpl += '<span class="h"> comments</span></a></span>';
 
     function getContentIds(context) {
         var nodes = context.querySelectorAll("[" + attributeName + "]"),
