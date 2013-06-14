@@ -67,7 +67,9 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage("http://localhost:9000/login"),
+    new UrlPagesHealthcheckManagementPage(
+      "/login"
+    ),
     StatusPage(applicationName,
       Seq(ConfigUpdateCounter, ConfigUpdateErrorCounter, SwitchesUpdateCounter, SwitchesUpdateErrorCounter)
     ),
