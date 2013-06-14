@@ -44,8 +44,7 @@ define(['common', 'bonzo', 'ajax', 'modules/popular'], function(common, bonzo, a
             });
         });
 
-        // json test needs to be run asynchronously
-        it('should not pass section if section it "global"', function(){
+        it('should not pass section if section is "global"', function(){
 
             server.respondWith('/most-read.json?_edition=UK', [200, {}, '{ "html": "<b>popular</b>" }']);
 
