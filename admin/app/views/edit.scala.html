@@ -1,0 +1,42 @@
+@(config: String, env: String)
+
+@admin_main("Front editor", env, isAuthed = true) {
+
+    <script>
+        var frontConfig = @Html(config);
+    </script>
+
+    <form id="network-front-tool"  data-bind="template: { name: 'edition-template', foreach: editions }">
+        <div id="autocomplete"></div>
+        <fieldset id="controls">
+            <input type="submit" value="Save" id="save-frontend" class="btn btn-success"/>
+            <input type="button" value="Clear" id="clear-frontend" class="btn btn-danger"/>
+        </fieldset>    
+    </form>
+
+    <script type="text/html" id="edition-template">
+        <fieldset>
+            <legend><span data-bind="text: id.toUpperCase()"></span> Edition</legend>
+            <div data-bind="template: { name: 'trailblock-template', foreach: trailblocks }" />
+        <fieldset>
+    </script>
+
+    <script type="text/html" id="trailblock-template">
+        <label for="tag-id">Tag ID</label>
+        <input data-bind="value: id" type="text" class="typeahead" autocomplete="off" name="tag-id" placeholder="Eg, sport/traithlon" />
+        <label for="tag-title">Tag Title</label>
+        <input data-bind="value: title" type="text"name="tag-title" placeholder="Eg, Triathlon" />
+        <label for="num-items">Number of items to show:</label>
+        <select data-bind="numericValue: numItems" type="text"name="num-items">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected="selected">3</option>
+        </select>
+        <label for="has-show-more">Display 'Show more'?
+            <input type="checkbox" name="has-show-more" value="true" data-bind="checked: showMore">
+        </label>
+    </script>
+
+    <script src="@routes.Assets.at("javascripts/networkFrontTool.js")" type="text/javascript"></script>
+
+}
