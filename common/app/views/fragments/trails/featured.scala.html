@@ -23,7 +23,7 @@
                     data-full-width="@largeCrop.width"
                 }
                 itemprop="contentURL"
-                alt="@StripHtmlTags(smallCrop.altText.getOrElse(""))"
+                alt="@StripAndEscapeHtmlTags(smallCrop.altText.getOrElse(""))"
                 title="@StripAndEscapeHtmlTags(smallCrop.caption.getOrElse(""))"
             />
         </a>

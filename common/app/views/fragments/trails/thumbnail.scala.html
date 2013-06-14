@@ -13,8 +13,8 @@
                         @trail.mainPicture(width=220).map { largeCrop =>
                             data-fullsrc="@largeCrop.path"
                             data-full-width="@largeCrop.width"
-                            alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))"
-                            title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
+                            alt="@StripAndEscapeHtmlTags(largeCrop.altText.getOrElse(""))"
+                            title="@StripAndEscapeHtmlTags(largeCrop.caption.getOrElse(""))"
                         }
                         itemprop="contentURL"
                     />
