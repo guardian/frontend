@@ -1,18 +1,18 @@
 .js-on .js-hidden,
 .js-off .js-visible {
-    display: none;
+  display: none;
 }
 
 .is-off {
-    display: none;
+  display: none;
 }
 
 .current {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .is-on {
-    display: block;
+  display: block;
 }
 
 .has-cursor {
@@ -20,120 +20,124 @@
 }
 
 .maxed {
-    width: 100%;
+  width: 100%;
 }
 
 .gu-image {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .cta { /* call to action */
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.expander:before {
-    content: '- ';
-}
-
-.shut .expander:before {
+.expander {
+  &:before {
+    position: relative;
+    top: -1px;
+    content: '− ';
+  }
+  .shut &:before {
     content: '+ ';
+  }
 }
+
 
 .collapsible {
-    // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
-    padding: 9px $gutter*2 9px $baseline*2; // double space on right to avoid icon
-    position: relative;
-    cursor: pointer;
+  // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
+  padding: 9px $gutter*2 9px $baseline*2; // double space on right to avoid icon
+  position: relative;
+  cursor: pointer;
 }
 
 .collapsible i {
-    position: absolute;
-    right: 14px;
-    display: inline-block;
-    top: 40%;
+  position: absolute;
+  right: 14px;
+  display: inline-block;
+  top: 40%;
 }
 
 //These should be refactored to is-shut/is-open
 .trailblock .panel,
 .rolled-out {
-    height: auto;
-    margin-bottom: 0;
+  height: auto;
+  margin-bottom: 0;
 }
 
 .shut > .panel,
 .rolled-up {
-    overflow: hidden;
-    position: relative;
-    max-height: 0;
-    padding-top: 0;
+  overflow: hidden;
+  position: relative;
+  max-height: 0;
+  padding-top: 0;
 }
 
 .update {
 	display:block;
-    background-color: $mushroom;
-    margin-bottom: $baseline*4;
-    padding: 0 0 0 $baseline*2;
-    overflow: hidden;
+  background-color: $mushroom;
+  margin-bottom: $baseline*4;
+  padding: 0 0 0 $baseline*2;
+  overflow: hidden;
 
-    &.hidden {
-        display: none;
-    }
+  &.hidden {
+    display: none;
+  }
 
-    @media only screen and (min-width: $tablet) {
-        margin-left: 0;
-        margin-right: 0;
-    }
+  @media only screen and (min-width: $tablet) {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .update-text {
-    float:left;
-    margin: 0 $gutter 0 0;
-    padding: 6px 0 0 0;
-    line-height: 32px;
+  float:left;
+  margin: 0 $gutter 0 0;
+  padding: 6px 0 0 0;
+  line-height: 32px;
 }
 
 .update-btn {
-    float: right;
-    margin: 0;
-    padding: 13px 12px;
-    background-color: $mushroom;
-    color: #333333;
-    font-weight: normal;
-    border: none;
-    text-shadow: none;
-    @include box-shadow(none);
+  float: right;
+  margin: 0;
+  padding: 13px 12px;
+  background-color: $mushroom;
+  color: #333333;
+  font-weight: normal;
+  border: none;
+  text-shadow: none;
+  @include box-shadow(none);
 }
 
 .update-btn.is-active,
 .update-btn:hover {
-    color: #ffffff;
-    background-color: #E47A39;
+  color: #ffffff;
+  background-color: #E47A39;
 }
 
 .update-live-matches .update-btn.is-active,
 .update-live-matches .update-btn:hover {
-    background-color: $sportBright;
+  background-color: $sportBright;
 }
 
 .is-updating {
-    display: none;
-    width: 36px;
-    height: 12px;
-    background-size: 100%;
-    margin-top: 18px;
+  display: none;
+  width: 36px;
+  height: 12px;
+  background-size: 100%;
+  margin-top: 18px;
 
-    &.is-active {
-        display: inline-block;
-    }
+  &.is-active {
+    display: inline-block;
+  }
 }
 
 .is-live-icon {
-    padding: $baseline;
-    margin-right: 5px;
-    font-size: 10px;
-    font-style: normal;
-    line-height: 1em;
-    color: #ffffff;
-    background-color: #ec1c1c;
+  padding: $baseline;
+  margin-right: 5px;
+  font-size: 10px;
+  font-style: normal;
+  line-height: 1em;
+  color: #ffffff;
+  background-color: #ec1c1c;
 }
