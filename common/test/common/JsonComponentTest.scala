@@ -16,6 +16,8 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "build json output with standard name" in {
+    AutoRefreshSwitch.switchOn()
+
     val request = FakeRequest("GET", "http://foo.bar.com?callback=success_0")
     val result = JsonComponent(Html("hello world"))(request)
     contentType(result) should be(Some("application/javascript"))
@@ -24,6 +26,8 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "build json from multiple items" in {
+    AutoRefreshSwitch.switchOn()
+
     val request = FakeRequest("GET", "http://foo.bar.com?callback=callbackName3")
     val result = JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"))(request)
     contentType(result) should be(Some("application/javascript"))
@@ -32,6 +36,8 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "render booleans properly" in {
+    AutoRefreshSwitch.switchOn()
+
     val request = FakeRequest("GET", "http://foo.bar.com?callback=callbackName3")
     val result = JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"), "refresh" -> false)(request)
     contentType(result) should be(Some("application/javascript"))
@@ -40,10 +46,10 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "render a json object properly" in {
+    AutoRefreshSwitch.switchOn()
+
     val request = FakeRequest("GET", "http://foo.bar.com?callback=callbackName3")
-
     val result = JsonComponent(obj("name" -> "foo"))(request)
-
     contentType(result) should be(Some("application/javascript"))
     status(result) should be(200)
     contentAsString(result) should be("""callbackName3({"name":"foo","refreshStatus":true});""")
@@ -61,6 +67,7 @@ class JsonComponentTest extends FlatSpec with ShouldMatchers {
 
   it should "disable refreshing if auto refresh switch is off" in {
     AutoRefreshSwitch.switchOff()
+
     val request = FakeRequest("GET", "http://foo.bar.com?callback=success")
     val result = JsonComponent(Html("hello world"))(request)
     contentAsString(result) should be("""success({"html":"hello world","refreshStatus":false});""")
