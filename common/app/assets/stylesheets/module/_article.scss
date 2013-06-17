@@ -5,7 +5,7 @@
     line-height: 1em;
     border-bottom: 1px solid $mushroom;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         border-top: none;
     }
 

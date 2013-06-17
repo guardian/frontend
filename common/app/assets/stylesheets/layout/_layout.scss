@@ -7,7 +7,7 @@
     clear: both;
     margin: 58px auto 0;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         margin-top: 104px;
     }
 }
