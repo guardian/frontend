@@ -1,7 +1,7 @@
 package views.support
 
 import model.Image
-import conf.CommonSwitches.ImageServerSwitch
+import conf.Switches.ImageServerSwitch
 import java.net.URI
 import conf.Configuration
 

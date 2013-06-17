@@ -1,23 +1,16 @@
 package conf
 
+import common.Metrics
+import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
+import com.gu.management.play.{ Management => GuManagement }
+import com.gu.management.logback.LogbackLevelPage
 import play.api.{ Application => PlayApp }
-import common._
-import com.gu.management._
-import com.gu.management.play._
-import logback.LogbackLevelPage
-
-object Switches {
-  val all: Seq[Switchable] = CommonSwitches.all // ++ new DefaultSwitch("name", "Description Text")
-}
 
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
-object Metrics {
-  val all: Seq[Metric] = CommonMetrics.all
-}
-
-object Management extends Management {
+object Management extends GuManagement {
   val applicationName = Configuration.application
+  val metrics = Metrics.common
 
   lazy val pages = List(
     new ManifestPage,
@@ -25,7 +18,7 @@ object Management extends Management {
       // TODO: Add gif and png.
       "/resize/sclr/sys-images/Guardian/Pix/pictures/2013/4/14/1365945821204/John-Kerry-in-Tokyo-009.jpg"
     ),
-    StatusPage(applicationName, Metrics.all),
+    StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
   )

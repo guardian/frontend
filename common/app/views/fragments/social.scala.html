@@ -1,8 +1,6 @@
 @(page: MetaData)(implicit request: RequestHeader)
 
-@import CommonSwitches.SocialSwitch
-
-@if(SocialSwitch.isSwitchedOn) {
+@if(Switches.SocialSwitch.isSwitchedOn) {
 
 @defining(page.canonicalUrl.getOrElse(s"http://${request.host}${request.path}")){ url =>
     <ul class="social">

@@ -1,22 +1,24 @@
 package conf
 
+import common.Properties
 import com.gu.conf.ConfigurationFactory
 import com.gu.management._
-import logback.LogbackLevelPage
-import play.{Management => GuManagement}
 import java.io.{FileInputStream, File}
+import org.apache.commons.io.IOUtils
 
 object AdminConfiguration {
 
   val configuration = ConfigurationFactory.getConfiguration("frontend", "env")
 
   object environment {
-    private val props = new java.util.Properties()
-    if(new File("/etc/gu/install_vars").exists()) {
-      props.load(new FileInputStream("/etc/gu/install_vars"))
+    private val installVars = (new File("/etc/gu/install_vars")) match {
+      case f if f.exists => IOUtils.toString(new FileInputStream(f))
+      case _ => ""
     }
 
-    def apply(key: String, default: String) = props.getProperty(key, default).map(_.toLower)
+    private val properties = Properties(installVars)
+
+    def apply(key: String, default: String) = properties.getOrElse(key, default).toLowerCase
 
     val stage = apply("STAGE", "unknown")
   }
@@ -48,26 +50,4 @@ object AdminConfiguration {
         configuration.getStringProperty(property).get
       }
     }
-}
-
-object ConfigUpdateCounter extends CountMetric("actions", "config_updates", "Config updates", "number of times config was updated")
-object ConfigUpdateErrorCounter extends CountMetric("actions", "config_update_errors", "Config update errors", "number of times config update failed")
-
-object SwitchesUpdateCounter extends CountMetric("actions", "switches_updates", "Switches updates", "number of times switches was updated")
-object SwitchesUpdateErrorCounter extends CountMetric("actions", "switches_update_errors", "Switches update errors", "number of times switches update failed")
-
-
-object Management extends GuManagement {
-
-  val applicationName = "frontend-admin"
-
-  lazy val pages = List(
-    new ManifestPage,
-    new UrlPagesHealthcheckManagementPage("http://localhost:9000/login"),
-    StatusPage(applicationName,
-      Seq(ConfigUpdateCounter, ConfigUpdateErrorCounter, SwitchesUpdateCounter, SwitchesUpdateErrorCounter)
-    ),
-    new PropertiesPage(Configuration.toString),
-    new LogbackLevelPage(applicationName)
-  )
 }

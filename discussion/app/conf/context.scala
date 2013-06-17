@@ -1,39 +1,23 @@
 package conf
 
+import common.Metrics
+import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
+import com.gu.management.play.{ Management => GuManagement }
+import com.gu.management.logback.LogbackLevelPage
 import play.api.{ Application => PlayApp }
-import common._
-import com.gu.management._
-import com.gu.management.play._
-import logback.LogbackLevelPage
-import contentapi.ContentApiMetrics
-
-object Switches {
-  val all: Seq[Switchable] = CommonSwitches.all
-}
 
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
-object DiscussionHttpTimingMetric extends TimingMetric(
-  "performance",
-  "discussion-api-calls",
-  "Discussion API calls",
-  "outgoing requests to discussion api"
-) with TimingMetricLogging
-
-object Metrics {
-  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all :+ DiscussionHttpTimingMetric
-}
-
-object Management extends Management {
+object Management extends GuManagement {
   val applicationName = "frontend-discussion"
+  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.discussion
 
   lazy val pages = List(
     new ManifestPage,
-
     new UrlPagesHealthcheckManagementPage(
       "/discussion/p/3g9nk"
     ),
-    StatusPage(applicationName, Metrics.all),
+    StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
   )

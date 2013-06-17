@@ -1,8 +1,8 @@
 package views.support
 
+import conf.Switches.WitnessVideoSwitch
 import org.jsoup.nodes.{ Element, Document }
 import scala.collection.JavaConversions._
-import conf.CommonSwitches._
 
 object WitnessCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {

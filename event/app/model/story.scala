@@ -1,18 +1,18 @@
 package model
 
-import org.joda.time.DateTime
+import common.ExecutionContexts
+import common.editions.Uk
+import common.MongoMetrics.{ MongoErrorCount, MongoOkCount, MongoTimingMetric }
+import conf.ContentApi
 import com.mongodb.casbah.Imports._
 import com.novus.salat._
-import json.{ StringDateStrategy, JSONConfig }
-import tools.Mongo
+import com.novus.salat.json.{ StringDateStrategy, JSONConfig }
+import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
-import conf.{ MongoOkCount, MongoErrorCount, ContentApi, MongoTimingMetric }
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
-import concurrent.{Await, Future}
-import concurrent.duration._
-
-import common.editions.Uk
-import common.ExecutionContexts
+import scala.concurrent.Await
+import scala.concurrent.duration._
+import tools.Mongo
 
 
 // model :- Story -> Event -> Articles|Agents|Places
@@ -149,10 +149,10 @@ object Story extends ExecutionContexts{
     }
 
     def latestWithContent(storyId: Option[String] = None, limit: Int = 10): Seq[Story] = {
-      val query = storyId.map{ storyId =>
-        DBObject("id" -> storyId)
-      } getOrElse(DBObject.empty)
-      measure(Stories.find(query).sort(DBObject("_id" -> -1)).limit(limit).map(grater[ParsedStory].asObject(_))).toSeq.map(loadContent(_))
+      val query = storyId map { storyId => DBObject("id" -> storyId) } getOrElse DBObject.empty
+      val results = Stories.find(query).sort(DBObject("_id" -> -1)).limit(limit)
+
+      measure(results.map(grater[ParsedStory].asObject(_))).toSeq.map(loadContent(_))
     }
 
     def latest(): Seq[Story] = {

@@ -1,14 +1,12 @@
 package common
 
-import conf.CommonSwitches.AutoRefreshSwitch
+import conf.Switches.AutoRefreshSwitch
 import org.scalatest.FlatSpec
 import play.api.test.FakeRequest
 import play.api.templates.Html
 import org.scalatest.matchers.ShouldMatchers
 import play.api.test.Helpers._
 import play.api.libs.json.Json._
-import play.api.libs.json.Json
-import conf.Configuration
 
 class JsonComponentTest extends FlatSpec with ShouldMatchers {
 
