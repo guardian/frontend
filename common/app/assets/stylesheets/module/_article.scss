@@ -1,6 +1,7 @@
 .article-zone {
     padding: 13px 0 14px 0;
-    margin: 0 $gutter;
+    margin-left: $gutter;
+    margin-right: $gutter;
     line-height: 1em;
     border-bottom: 1px solid $mushroom;
 
@@ -17,14 +18,23 @@
     @extend %type-6;
 }
 
-
 .article-head {
-    padding: $baseline*3 $gutter $baseline*4 $gutter;
+    padding: $baseline*3 0 $baseline*4;
 }
 
 .article-headline {
     @extend %type-3;
     margin-bottom: $baseline*2;
+
+    a {
+        &:link,
+        &:visited,
+        &:hover,
+        &:active,
+        &:focus {
+            color: #333;
+        }
+    }
 }
 
 .article-standfirst {
@@ -45,15 +55,18 @@
 .byline {
     border-top: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
-    margin: 0 $gutter $baseline*2 $gutter;
+    margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
 }
-
+.media-primary {
+    margin-left: $gutter * -1;
+    margin-right: $gutter * -1;
+}
 .article .main-image {
     margin-bottom: 0;
 }
 .article-body {
-    padding: $baseline*2 $gutter $baseline*2 $gutter;
+
 }
 
 .gu-video {
