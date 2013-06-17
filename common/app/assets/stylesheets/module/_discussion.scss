@@ -168,32 +168,7 @@ $keylineSize: 1px;
 }
 
 .d-comment__body {
-    word-wrap: break-word;
-    line-height: 1.4;
-
-    @media (min-width: 768px) {
-        line-height: 22px;
-    }
-
-    p {
-        margin-bottom: 12px;
-    }
-    blockquote {
-        margin-top: 0;
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 14px;
-        border-left: 2px solid #cfcfcd;
-
-        &,
-        p {
-            // Override article styles
-            color: #767676;
-            font-family: $sans-serif;
-            font-size: inherit;
-            line-height: inherit;
-        }
-    }
+    @include d-comment__body;
 }
 
 
@@ -277,18 +252,7 @@ $keylineSize: 1px;
    ========================================================================== */
 
 .d-badge:after {
-    display: inline-block;
-    position: relative;
-    top: -.1em;
-    background: #005689;
-    color: #fff;
-    font: bold 13px/1 EgyptianHeadline, Georgia, serif;
-    width: 1em;
-    height: 1em;
-    margin-left: .2em;
-    vertical-align: middle;
-    text-align: center;
-    cursor: help;
+    @extend %d-badge-icon;
 }
 .d-badge--contributor:after {
     content: 'c';
