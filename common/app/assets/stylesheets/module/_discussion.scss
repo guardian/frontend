@@ -4,7 +4,6 @@
 .d-discussion {
     font-size: 14px;
     font-size: 1.4rem;
-    max-width: 600px; // Cap the number of words per line for readability
 }
 
 .d-discussion__header {
@@ -17,7 +16,8 @@ $keylineSize: 1px;
 /* Tabs
  ========================================================================== */
 .d-tabs {
-    margin: 20px 0 $baseline*3 0;
+    margin: 0 $gutter*-1;
+    padding-bottom: $baseline*3;
 }
 
     .d-tabs--is-live {
@@ -377,7 +377,9 @@ $keylineSize: 1px;
     display: inline-block;
     @extend .i-filter-arrow-right;
 }
-
+.d-show-cta-wrapper {
+    padding: $baseline*2 0 $baseline*4 0;
+}
 .d-show-cta,
 .d-show-cta:link,
 .d-show-cta:visited,
@@ -387,7 +389,6 @@ $keylineSize: 1px;
     position: relative;
     line-height: 1em;
     display: block;
-    margin: $baseline*2 $gutter $baseline*4 $gutter;
     padding: $baseline*4 $baseline*2 $baseline*4 $baseline*2;
     text-align: left;
     overflow: auto;
