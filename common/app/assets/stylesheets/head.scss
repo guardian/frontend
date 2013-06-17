@@ -3,6 +3,7 @@
 //Variables and mixins
 @import "_vars";
 @import "_mixins";
+@import "module/_discussion-mixins";
 @import "_extends-only";
 
 //External components
@@ -10,7 +11,6 @@
 
 //Base
 @import "base/_type";
-@import "_extends-only";
 @import "base/_links";
 @import "base/_helpers";
 @import "base/_lists";
