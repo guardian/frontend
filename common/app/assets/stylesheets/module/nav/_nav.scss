@@ -93,18 +93,18 @@
     }
 
         .nav-popup--small .nav--section-divider {
-            @media only screen and (min-width: $tablet) {
+            @media (min-width: $tablet) {
                 margin-top: -5px !important;
                 .nav__item { margin: 0; }
             }
 
-            @media only screen and (min-width: 78em) {
+            @media (min-width: 78em) {
                 margin-top: -13px !important;
             }
         }
 
         .control--sections .i-nav-divider {
-            @media only screen and (min-width: $tablet) {
+            @media (min-width: $tablet) {
                 border-left: 0;
             }
         }
@@ -141,7 +141,7 @@
     padding: 0 $gutter;
     background-color: #ffffff;
 
-    @media only screen and (min-width: $tablet) { display: block; }
+    @media (min-width: $tablet) { display: block; }
 }
 
 .nav--global {
@@ -156,7 +156,7 @@
     background-color: #ffffff;
     border-bottom: 2px solid $darkMushroom;
 
-    @media only screen and (min-width: $tablet) { display: block; }
+    @media (min-width: $tablet) { display: block; }
 
 
     .nav__item {
@@ -189,7 +189,7 @@
     display: none;
     margin: 0 $baseline*2 0 $gutter;
     padding: $baseline*3 0 0 0;
-    @media only screen and (min-width: $tablet) { display: block; }
+    @media (min-width: $tablet) { display: block; }
 
     .nav__item {
         margin: $baseline 0 0 0;

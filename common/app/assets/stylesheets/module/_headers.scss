@@ -39,7 +39,7 @@
     @include box-sizing(border-box);
 
     &.zone-color {
-        @media only screen and (min-width: $tablet) {
+        @media (min-width: $tablet) {
             border-top: none;
         }
     }
@@ -55,7 +55,7 @@
     border-top: 4px solid $mushroom;
     border-bottom: 1px solid $mushroom;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         border-top: none;
     }
 }

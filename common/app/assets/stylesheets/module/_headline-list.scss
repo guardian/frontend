@@ -49,7 +49,7 @@
     border-bottom: 1px solid #DDDDDD;
     padding: $baseline $baseline $baseline*3 0;  
 
-    @media only screen and (min-width: 26.25em) {
+    @media (min-width: 26.25em) {
         display: none;
     }
 }

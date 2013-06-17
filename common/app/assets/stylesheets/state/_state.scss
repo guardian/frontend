@@ -80,7 +80,7 @@
         display: none;
     }
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         margin-left: 0;
         margin-right: 0;
     }
