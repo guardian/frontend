@@ -100,7 +100,12 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
       InternalServerError
     } else {
       val htmlResponse = () => views.html.front(frontPage, trailblocks)
-      val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
+      lazy val jsonResponse = Map(
+        "html" -> views.html.fragments.frontBody(frontPage, trailblocks),
+        "trails" -> trailblocks.headOption.map{ trailblock =>
+          trailblock.trails.map(_.url)
+        }.getOrElse(Nil)
+      )
       renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
     }
   }
