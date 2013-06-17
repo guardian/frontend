@@ -274,11 +274,11 @@ $orange: #FF7F00;
     max-width: 100%;
     max-height: 200px;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         max-height: 400px;
     }
 
-    @media only screen and (min-width: $desktop) {
+    @media (min-width: $desktop) {
         max-height: 600px;
     }
 }

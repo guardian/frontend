@@ -43,7 +43,6 @@
   }
 }
 
-
 .collapsible {
   // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
   padding: 9px $gutter*2 9px $baseline*2; // double space on right to avoid icon
@@ -84,7 +83,7 @@
     display: none;
   }
 
-  @media only screen and (min-width: $tablet) {
+  @media (min-width: $tablet) {
     margin-left: 0;
     margin-right: 0;
   }

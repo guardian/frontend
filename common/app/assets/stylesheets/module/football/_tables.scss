@@ -121,7 +121,7 @@
 .stats-3 {
     display: none;
 }
-@media screen and (min-width: 25em) {
+@media (min-width: 25em) {
     .stats-1 {
         display: table-cell;
     }
@@ -131,7 +131,7 @@
         display: table-cell;
     }
 }
-@media screen and (min-width: 53.125em) {
+@media (min-width: 53.125em) {
     .stats-3 {
         display: table-cell;
     }
