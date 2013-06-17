@@ -103,10 +103,87 @@ object SystemMetrics extends implicits.Numbers {
     MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric)
 }
 
+object ContentApiMetrics {
+  object HttpTimingMetric extends TimingMetric(
+    "performance",
+    "content-api-calls",
+    "Content API calls",
+    "outgoing requests to content api"
+  ) with TimingMetricLogging
+
+  object HttpTimeoutCountMetric extends CountMetric(
+    "timeout",
+    "content-api-timeouts",
+    "Content API timeouts",
+    "Content api calls that timeout"
+  )
+
+  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
+}
+
+object DiscussionMetrics {
+  object DiscussionHttpTimingMetric extends TimingMetric(
+    "performance",
+    "discussion-api-calls",
+    "Discussion API calls",
+    "outgoing requests to discussion api"
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(DiscussionHttpTimingMetric)
+}
+
+object MongoMetrics {
+  object MongoTimingMetric extends TimingMetric("performance", "database", "Mongo request", "outgoing Mongo calls")
+  object MongoOkCount extends CountMetric("database-status", "ok", "Ok", "number of mongo requests successfully completed")
+  object MongoErrorCount extends CountMetric("database-status", "error", "Error", "number of mongo requests that error")
+
+  val all: Seq[Metric] = Seq(MongoTimingMetric, MongoOkCount, MongoErrorCount)
+}
+
+object PaMetrics {
+  object PaApiHttpTimingMetric extends TimingMetric(
+    "pa-api",
+    "pa-api-calls",
+    "PA API calls",
+    "outgoing requests to pa api",
+    None
+  ) with TimingMetricLogging
+
+  object PaApiHttpOkMetric extends CountMetric(
+    "pa-api",
+    "pa-api-ok",
+    "PA API calls OK",
+    "AP api returned OK"
+  )
+
+  object PaApiHttpErrorMetric extends CountMetric(
+    "pa-api",
+    "pa-api-error",
+    "PA API calls error",
+    "AP api returned error"
+  )
+
+  val all: Seq[Metric] = Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
+}
+
+object AdminMetrics {
+  object ConfigUpdateCounter extends CountMetric("actions", "config_updates", "Config updates", "number of times config was updated")
+  object ConfigUpdateErrorCounter extends CountMetric("actions", "config_update_errors", "Config update errors", "number of times config update failed")
+
+  object SwitchesUpdateCounter extends CountMetric("actions", "switches_updates", "Switches updates", "number of times switches was updated")
+  object SwitchesUpdateErrorCounter extends CountMetric("actions", "switches_update_errors", "Switches update errors", "number of times switches update failed")
+
+  val all = Seq(ConfigUpdateCounter, ConfigUpdateErrorCounter, SwitchesUpdateCounter, SwitchesUpdateErrorCounter)
+}
 
 
-case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
+//case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
 
-object CommonMetrics {
-  lazy val all = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ SystemMetrics.all
+object Metrics {
+  lazy val common = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ SystemMetrics.all
+  lazy val contentApi = ContentApiMetrics.all
+  lazy val discussion = DiscussionMetrics.all
+  lazy val mongo = MongoMetrics.all
+  lazy val pa = PaMetrics.all
+  lazy val admin = AdminMetrics.all
 }

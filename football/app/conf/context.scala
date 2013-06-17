@@ -1,20 +1,18 @@
 package conf
 
-import play.api.libs.ws.WS
-import play.api.{ Application => PlayApp, Plugin }
-import common._
-import com.gu.management._
-import com.gu.management.play._
+import common.PaMetrics._
+import common.{Logging, ExecutionContexts, Metrics}
+import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
+import com.gu.management.play.{ Management => GuManagement }
+import com.gu.management.logback.LogbackLevelPage
 import feed.Competitions
-import logback.LogbackLevelPage
-import pa.{ Http, PaClient }
-import model.{ TeamMap, LiveBlog }
-import concurrent.Future
-import System.currentTimeMillis
-import contentapi.ContentApiMetrics
+import model.{TeamMap, LiveBlog}
+import pa.{Http, PaClient}
+import play.api.{Application => PlayApp, Plugin}
+import play.api.libs.ws.WS
+import scala.concurrent.Future
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
-
 
   override def onStart() {
     Competitions.startup()
@@ -35,9 +33,9 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
 
   private var _http: Http = new Http {
     override def GET(urlString: String): Future[pa.Response] = {
-        val start = currentTimeMillis()
+        val start = System.currentTimeMillis()
         val promiseOfResponse = WS.url(urlString).withTimeout(2000).get()
-        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordTimeSpent(currentTimeMillis() - start))
+        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordTimeSpent(System.currentTimeMillis() - start))
 
         promiseOfResponse.map{ r =>
 
@@ -63,37 +61,11 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   }
 }
 
-
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
 
-object PaApiHttpTimingMetric extends TimingMetric(
-  "pa-api",
-  "pa-api-calls",
-  "PA API calls",
-  "outgoing requests to pa api",
-  None
-) with TimingMetricLogging
-
-object PaApiHttpOkMetric extends CountMetric(
-  "pa-api",
-  "pa-api-ok",
-  "PA API calls OK",
-  "AP api returned OK"
-)
-
-object PaApiHttpErrorMetric extends CountMetric(
-  "pa-api",
-  "pa-api-error",
-  "PA API calls error",
-  "AP api returned error"
-)
-
-object Metrics {
-  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all ++ Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
-}
-
-object Management extends Management {
+object Management extends GuManagement {
   val applicationName = "frontend-football"
+  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa
 
   lazy val pages = List(
     new ManifestPage,
@@ -101,7 +73,7 @@ object Management extends Management {
       "/football/live",
       "/football/premierleague/results"
     ),
-    StatusPage(applicationName, Metrics.all),
+    StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
   )

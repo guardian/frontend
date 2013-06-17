@@ -1,17 +1,19 @@
 package conf
 
-import common._
+import common.BaseGuardianConfiguration
+import com.gu.management.{ PropertiesPage, ManifestPage }
 import com.gu.management.{ Manifest => ManifestFile }
-import com.gu.management._
+import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
+import implicits.Strings
 
 object RouterConfiguration extends BaseGuardianConfiguration("frontend-router")
 
-object ManifestData {
+object ManifestData extends Strings {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
 }
 
-object Management extends com.gu.management.play.Management {
+object Management extends GuManagement {
   val applicationName = "frontend-router"
 
   lazy val pages = List(

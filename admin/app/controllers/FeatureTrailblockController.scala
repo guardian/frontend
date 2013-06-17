@@ -1,13 +1,14 @@
 package controllers
 
-import common.Logging
+import common.{ ExecutionContexts, Logging }
+import common.AdminMetrics.{ ConfigUpdateCounter, ConfigUpdateErrorCounter }
+import conf.AdminConfiguration
 import play.api.mvc._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
-import tools.S3
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.json.Json.toJson
-import conf._
+import tools.S3
 
 object FeatureTrailblockController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
