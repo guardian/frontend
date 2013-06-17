@@ -1,23 +1,27 @@
 $orange: #FF7F00;
 
-/* ==========================================================================
-   Story-title
+/* Story title
    ========================================================================== */
+
 .story-title {
     font-family: $serifheadline;
+    font-size: 26px;
     font-size: 2.6rem;
     font-weight: 600;
+    line-height: 30px;
     line-height: 3rem;
-    padding: 12px 0 32px 0;
+    padding: 12px 0 32px;
     min-height: 100px;
     margin: 0 10px;
     @include box-sizing(border-box);
 }
 
 .story-title--section {
+    font-size: 18px;
     font-size: 1.8rem;
+    line-height: 24px;
     line-height: 2.4rem;
-    padding: 0 0 6px 0;
+    padding: 0 0 6px;
     border-top: 1px solid #9D9D9D;
     border-bottom: 1px dotted #9D9D9D;
     min-height: 36px;
@@ -36,9 +40,10 @@ $orange: #FF7F00;
     margin-bottom: 12px;
 }
 
-/* ==========================================================================
-   Story articles
+
+/* Story articles
    ========================================================================== */
+
 .story-container {
 
     .article-head {
@@ -66,11 +71,11 @@ $orange: #FF7F00;
 
     .byline {
         padding: 2px 0 8px 0;
-        margin: 0 10px 8px 10px;
+        margin: 0 10px 8px;
     }
 
     .article-body {
-        padding: 0 10px 8px 10px;
+        padding: 0 10px 8px;
     }
 
     .main-caption {
@@ -103,11 +108,11 @@ $orange: #FF7F00;
 }
 
 .story-overview figure {
-    margin: 12px 10px 12px 10px;
+    margin: 12px 10px;
 }
 
 .story-explainer {
-    margin: 0 10px 12px 10px;
+    margin: 0 10px 12px;
 }
 
 .story-section {
@@ -123,16 +128,14 @@ $orange: #FF7F00;
     font-size: 1.2rem;
 }
 
-/* ==========================================================================
-   Story quote
+/* Story quote
    ========================================================================== */
 
 .story-quote__quote {
     position: relative;
     display: inline-block;
-    margin: 0;
     padding: 0;
-    margin: 0 10px 12px 10px;
+    margin: 0 10px 12px;
 
     p {
         padding-left: 2px;
@@ -140,7 +143,7 @@ $orange: #FF7F00;
         font-weight: 200;
         font-size: 2rem;
         line-height: 2.4rem;
-        margin: 0 0 4px 0;
+        margin: 0 0 4px;
         color: #000;
     }
 
@@ -160,8 +163,10 @@ $orange: #FF7F00;
     margin-bottom: 15px;
     font-family: $serifheadline;
     font-weight: 600;
+    font-size: 16px;
     font-size: 1.6rem;
     font-style: normal;
+    line-height: 24px;
     line-height: 2.4rem;
     color: #000;
 }
@@ -203,9 +208,10 @@ $orange: #FF7F00;
     @include rotate(180deg);
 }
 
-/* ==========================================================================
-   Story maps
+
+/* Story maps
    ========================================================================== */
+
 .story-map {
     position: relative;
     margin: $baseline*3 10px;
@@ -229,19 +235,20 @@ $orange: #FF7F00;
     margin: 0 2.5% 5px 0;
 }
 
-/* ==========================================================================
-   In-pictures
+
+/* In pictures
    ========================================================================== */
+
 .story-pictures {
     margin-bottom: 12px;
 
     .story-title--white {
         padding-left: 2px;
-        background-color: #333333;
+        background-color: #333;
     }
 
     .js-swipe {
-        background-color: #333333
+        background-color: #333
     }
 }
 
@@ -308,16 +315,16 @@ $orange: #FF7F00;
     color: #fff !important;
 }
 
-/* ==========================================================================
-   Story-agent
+/* Story agent
    ========================================================================== */
+
 .story-agents,
 .story-agents .story-title {
-  margin-bottom: 12px;
+    margin-bottom: 12px;
 }
 
 .story-agents figcaption:before {
-	background-image: none;
+    background-image: none;
 }
 
 .agent__name,
@@ -347,8 +354,8 @@ $orange: #FF7F00;
     color: #929396;
 }
 
-/* ==========================================================================
-   New call to actions
+
+/* New call to action
    ========================================================================== */
 
 .cta-new {
@@ -366,7 +373,7 @@ $orange: #FF7F00;
 }
 
 .cta-new--dark {
-    background-color: #333333;
+    background-color: #333;
     border-top-style: solid;
 
     .cta-new__btn {
@@ -398,14 +405,14 @@ $orange: #FF7F00;
 }
 
 .cta-new__btn--wide {
-	width: 100%;
-	text-align: left;
-	padding: 0 5px;
-	height: 26px;
-	
-	.cta-new__text {
+    width: 100%;
+    text-align: left;
+    padding: 0 5px;
+    height: 26px;
+    
+    .cta-new__text {
         color: #005689;
-	}
+    }
 }
 
 .cta-new--blue {
@@ -450,7 +457,7 @@ $orange: #FF7F00;
 }
 
 .cta-new__icn-container--blue {
-    border-left: 1px solid #ffffff;
+    border-left: 1px solid #fff;
 }
 
 .cta-new__icn--right,
@@ -470,8 +477,8 @@ i.is-open.cta-new__icn--right {
     }
 }
 
-/* ==========================================================================
-   Tabs 
+
+/* Tabs
    ========================================================================== */
 
 .tabs-container {
@@ -483,7 +490,7 @@ i.is-open.cta-new__icn--right {
 }
 
 .story-live .article-head .dateline {
-	display: block;
+    display: block;
 }
 
 .story-live .article-zone, 
@@ -523,7 +530,7 @@ i.is-open.cta-new__icn--right {
     }
     
     .tabs-selected a {
-    	padding-top: 3px;
+        padding-top: 3px;
         background-color: #fff;
     }
 }
@@ -535,7 +542,7 @@ i.is-open.cta-new__icn--right {
     text-decoration: none;
 }
 .cta-new--story {
-	border-top: 1px solid #fff;
+    border-top: 1px solid #fff;
 
     a {
         padding-left: 5px;

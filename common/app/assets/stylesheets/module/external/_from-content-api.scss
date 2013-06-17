@@ -5,12 +5,13 @@
 
 //This is the only place where direct element selectors are allowed!
 
-//Core elements
-//---------------------------------------------
+/* Core elements
+   ========================================================================== */
+
 .from-content-api {
     h2 {
         @extend %type-4;
-        color: #333333;
+        color: #333;
         margin-bottom: $baseline;
         clear: both;
     }
@@ -31,32 +32,35 @@
         @extend %type-6;
         margin: 0 0 $baseline*2 0;
         padding: 0;
-        color: #333333;
+        color: #333;
     }
 }
 
 .article blockquote,
 .article blockquote p {
     @extend %type-6;
-    color: #333333;
+    color: #333;
     font-weight: normal;
     border-left: none;
 }
 
-//Blocks
-//---------------------------------------------
+
+/* Blocks
+   ========================================================================== */
 
 .from-content-api .block {
-  overflow: hidden;
+    overflow: hidden;
 }
 
-//Captions
-//---------------------------------------------
+
+/* Captions
+   ========================================================================== */
+
 .caption,
 figcaption,
 .main-caption {
     @extend %type-12;
-    color:#666666;
+    color: #666;
 }
 
 .main-caption {
@@ -77,8 +81,10 @@ figcaption:before {
     @extend .svg-i-image;
 }
 
-//Figures
-//---------------------------------------------
+
+/* Figures
+   ========================================================================== */
+
 figure {
     margin: 0;
 
@@ -93,14 +99,15 @@ figure {
     }
 }
 
-//Citations
-//---------------------------------------------
+
+/* Citations
+   ========================================================================== */
 .from-content-api {
     cite {
         @extend %type-7;
 
         a {
-            color: #666666;
+            color: #666;
 
             &:hover,
             &:visited:hover {
@@ -116,8 +123,9 @@ figure {
 }
 
 
-//Comments
-//---------------------------------------------
+/* Comments
+   ========================================================================== */
+
 .d2-comment-embedded {
     background-color: #fff;
     border: 1px solid #ddd;

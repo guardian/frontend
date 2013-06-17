@@ -29,16 +29,16 @@
         @media (min-width: 641px) {
             position: absolute;
             top: 40px;
-            left: 0px;
+            left: 0;
             box-sizing: border-box;
             width: 32.5%;
-            margin-bottom: 0px;
+            margin-bottom: 0;
         }
     }
 
     .module-container > h2 {
         @media (min-width: 641px) {
-            padding: bottom 8px;
+            padding-bottom: 8px;
             margin-bottom: 12px;
             border-bottom: 1px solid #f4f4ee;
         }
@@ -68,9 +68,9 @@ table code {
     .styleguide-table th {
         padding: 4px 8px;
         background-color: #E3E3DB;
-        border-right: 1px solid #ffffff;
+        border-right: 1px solid #fff;
         text-align: left;
-        color: #777777;
+        color: #777;
     }
 
     .styleguide-table tr {
@@ -83,7 +83,7 @@ table code {
 
     .styleguide-table td {
         padding: 8px;
-        border-right: 2px solid #ffffff;
+        border-right: 2px solid #fff;
     }
 
         .styleguide-table-two-col td:first-child {

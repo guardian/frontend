@@ -14,7 +14,7 @@
 .table-football-header th,
 .table-football-body .table-football-legend th { // can't get this less specific, sorry (MA)
     background-color: #f4f4ee;
-    color: #777777;
+    color: #777;
     font-weight: normal;    
 }
 
@@ -64,7 +64,7 @@
 }
 
 .table-football-body a {
-    color: #000000;
+    color: #000;
     font-weight: 500;
 }
 
@@ -92,7 +92,7 @@
 }
 
 .table-football-body {
-    border-bottom: 3px solid #ffffff; // this is a border because margins don't appear
+    border-bottom: 3px solid #fff; // this is a border because margins don't appear
 }
 
 // overriding pasteup :(

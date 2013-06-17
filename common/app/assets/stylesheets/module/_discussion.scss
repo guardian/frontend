@@ -14,7 +14,8 @@ $keylineColor: darken($darkMushroom, 15%);
 $keylineSize: 1px;
 
 /* Tabs
- ========================================================================== */
+   ========================================================================== */
+
 .d-tabs {
     margin: 0 $gutter*-1;
     padding-bottom: $baseline*3;
@@ -42,7 +43,7 @@ $keylineSize: 1px;
 
     a {
         pointer-events: none;
-        color: #666666;
+        color: #666;
     }
     &.d-tabs__item--is-active {
         padding-bottom: 4px + $keylineSize;
@@ -54,8 +55,6 @@ $keylineSize: 1px;
             color: $linkBlue;
         }
     }
-
-
 }
 
 
@@ -166,8 +165,8 @@ $keylineSize: 1px;
 }
 
 .d-comment__main {
-    padding-bottom: 12px;
     padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 .d-comment__body {
@@ -203,7 +202,7 @@ $keylineSize: 1px;
 
 
 /* Header
- ========================================================================== */
+   ========================================================================== */
 /**
  * Simulate Media object on Comments header
  * To have an image or a media on the left,
@@ -279,7 +278,8 @@ $keylineSize: 1px;
 
 
 /* Badges
- ========================================================================== */
+   ========================================================================== */
+
 .d-badge:after {
     display: inline-block;
     position: relative;
@@ -339,8 +339,10 @@ $keylineSize: 1px;
     border-color: transparent #F6644F;
 }
 
-/* CTA's
- ========================================================================== */
+
+/* CTAs
+   ========================================================================== */
+
 .d-actions .top {
     color: #808080;
     background-color: #fff;
@@ -378,7 +380,7 @@ $keylineSize: 1px;
     @extend .i-filter-arrow-right;
 }
 .d-show-cta-wrapper {
-    padding: $baseline*2 0 $baseline*4 0;
+    padding: $baseline*2 0 $baseline*4;
 }
 .d-show-cta,
 .d-show-cta:link,
@@ -386,14 +388,14 @@ $keylineSize: 1px;
 .d-show-cta:hover,
 .d-show-cta:focus {
     @extend %type-6;
+    line-height: 1;
+    color: #444;
     position: relative;
-    line-height: 1em;
     display: block;
-    padding: $baseline*4 $baseline*2 $baseline*4 $baseline*2;
+    padding: $baseline*4 $baseline*2;
     text-align: left;
     overflow: auto;
     background-color: $mushroom;
-    color: #444;
 
     .d-commentcount {
         position: absolute;
