@@ -132,6 +132,7 @@ figure {
     font-family: sans-serif;
     overflow: hidden;
     position: relative;
+    padding-top: 15px;
     margin-bottom: 1.5em;
     font-size: 14px;
     font-size: 1.4rem;
@@ -161,11 +162,9 @@ figure {
 }
 
 .d2-left-col {
-    float: left;
-    margin-right: 15px;
-
     img {
-        display: block;
+        float: left;
+        margin-right: 15px;
         margin-bottom: 12px;
 
         @media (min-width: 768px) {
@@ -177,12 +176,12 @@ figure {
 }
 
 .d2-right-col {
-
+    position: relative;
+    top: -3px;
+    padding-right: 16px; // prevent colliding with badge
 }
 
 .d2-username {
-    margin-top: -3px;
-    padding-right: 20px; // prevent colliding with badge
     font-family: $serif;
 
     @media (min-width: 768px) {
@@ -215,7 +214,7 @@ figure {
     font: normal 0/0 a;
     color: white;
     position: absolute;
-    top: 0;
+    top: 16px;
     right: 0;
     text-indent: 0;
 
