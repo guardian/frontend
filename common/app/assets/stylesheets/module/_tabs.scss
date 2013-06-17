@@ -10,7 +10,7 @@ $tabBorderWidth: 2px;
     border-bottom: none;
     list-style-type: none;
     overflow: hidden;
-    background: #ffffff;
+    background: #fff;
 
     li {
         width: 50%;
@@ -45,13 +45,13 @@ $tabBorderWidth: 2px;
 }
 
 .tabs .tabs-selected a {
-    background: #ffffff;
-    color: #333333;
+    background: #fff;
+    color: #333;
     font-weight: 500;
 }
 
 .tabs a:active {
-    background-color: #ffffff;
+    background-color: #fff;
 }
 
 .tabs-content {
@@ -72,7 +72,7 @@ $tabBorderWidth: 2px;
 
 .tabs-multiple li {
     display: table-cell;
-    border-left: $tabBorderWidth solid #ffffff;
+    border-left: $tabBorderWidth solid #fff;
     width: auto;
     float: none;
 

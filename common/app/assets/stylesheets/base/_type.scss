@@ -1,9 +1,9 @@
 //Set's baseline font size to 10px
 //This is used for all em's
 html {
-	font-size: 62.5%;
-	font-size: (10/16)*1em;
-	font-family: $serif;
+    font-size: 62.5%;
+    font-size: (10/16)*1em;
+    font-family: $serif;
 }
 
 .delay-font-render {
@@ -26,15 +26,15 @@ html {
 
 //Bump font-size back upto 16px
 body {
-	font-size: 100%;
-	font-size: 1.6em;
-    line-height: 1.4em;
+    font-size: 100%;
+    font-size: 1.6em;
+    line-height: 1.4;
 }
 
 // Base headings
 h1, h2, h3, h4, h5, h6 {
-	font-family: $serif;
-	margin: 0;
+    font-family: $serif;
+    margin: 0;
 }
 
 .type-0 { @extend %type-0; }
@@ -66,7 +66,7 @@ h1, h2, h3, h4, h5, h6 {
 //Default type elements
 p {
     color: #545454;
-    margin: 0 0 $baseline*2 0;
+    margin: 0 0 $baseline*2;
 }
 
 h1 {
@@ -74,13 +74,13 @@ h1 {
 }
 
 h3 {
-    margin: 0 0 7px 0;
+    margin: 0 0 7px;
     @extend %type-6;
 }
 
 h4 {
     margin: 0;
-    padding: 8px 10px 7px 10px;
+    padding: 8px 10px 7px;
     background-color: #ededed;
     border-top: 1px solid #cccccc;
     @extend %type-6;
@@ -88,5 +88,5 @@ h4 {
 
 th,
 td {
-    @extend %type-10
+    @extend %type-10;
 }

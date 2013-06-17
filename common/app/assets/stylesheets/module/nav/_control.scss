@@ -3,7 +3,8 @@
    ========================================================================== */
 
 /* Control
- ========================================================================== */
+   ========================================================================== */
+
 .control {
     &,
     &:link,
@@ -19,7 +20,7 @@
 
     &.is-active,
     &.is-active {
-      background-color: #ffffff;
+      background-color: #fff;
       color: $blue;
     }
 }
@@ -34,12 +35,13 @@
 }
 
 .is-active .i-nav-divider {
-    border-color: #ffffff;
-    background-color: #ffffff;
+    border-color: #fff;
+    background-color: #fff;
 }
 
+
 /* Sections control - (Hamburger icon )
- ========================================================================== */
+   ========================================================================== */
 
 .control--sections,
 .control--sections:link,
@@ -58,7 +60,7 @@
         padding: 0 $gutter 10px $gutter;
         margin: $baseline*2 0 $baseline*2 0;
         background-color: transparent;
-        color: #444444;
+        color: #444;
         font-size: 14px;
     }
 }
@@ -91,12 +93,13 @@ span.control__menu.i-menu {
     @media (min-width: $tablet) {
         margin-right: $baseline*3;
         border-color: #BBBBBB;
-        background-color: #ffffff;
+        background-color: #fff;
     }
 }
 
 /* Top stories control
- ========================================================================== */
+   ========================================================================== */
+
 .control--topstories {
     &:link,
     &:active,
@@ -160,7 +163,7 @@ span.control__menu.i-menu {
 
 
 /* Search control
- ========================================================================== */
+   ========================================================================== */
 
 .control--search {
     float:right;

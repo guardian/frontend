@@ -54,7 +54,7 @@
 }
 
 .m-status {
-    padding: 2px 5px 2px 5px;
+    padding: 2px 5px;
 }
 
 .home-header {
@@ -82,12 +82,12 @@
 }
 
 .i-status {
-    padding: 5px 5px;
+    padding: 5px;
     margin-right: 5px;
     font-size: 10px;
     font-style: normal;
     line-height: 1;
-    color: #ffffff;
+    color: #fff;
     background-color: $sportBright;
 
     abbr {
@@ -112,5 +112,5 @@
 }
 
 .update.update-match-stats {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
 }

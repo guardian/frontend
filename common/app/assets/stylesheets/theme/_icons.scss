@@ -70,7 +70,7 @@
     @extend .i-livequote-before;
     display: block;
     content: '';
-    margin: 21px 0 $baseline*2 0;
+    margin: 21px 0 $baseline*2;
     clear: both;
 
     .svg & {

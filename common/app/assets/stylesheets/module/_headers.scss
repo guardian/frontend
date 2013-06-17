@@ -1,5 +1,6 @@
-//Fronts/Sections/tags
-//---------------------------------------------
+/* Fronts/Sections/tags
+   ========================================================================== */
+
 .front-section-head,
 .sub-section-head {
     position: relative;
@@ -10,7 +11,7 @@
     .front-section-head h1,
     .sub-section-head h1 {
         margin-bottom: 0;
-        line-height: 1em;
+        line-height: 1;
     }
 
     .front-section-head a,
@@ -22,7 +23,7 @@
     .front-section-head a, 
     .front-section-head a:link, 
     .front-section-head a:visited {
-        color: #ffffff;
+        color: #fff;
     }
 
 .sub-section-head {
@@ -33,7 +34,7 @@
     @extend %type-0;
     padding: 14px 0 15px 0;
     margin: 0 $gutter;
-    line-height: 1em;
+    line-height: 1;
     border-top: 4px solid $mushroom;
     border-bottom: 1px solid $mushroom;
     @include box-sizing(border-box);
@@ -45,13 +46,14 @@
     }
 }
 
-//Articles
-//---------------------------------------------
+/* Articles
+   ========================================================================== */
+
 .article-section-head {
     @include box-sizing(border-box);
-    padding: 13px 0 14px 0;
+    padding: 13px 0 14px;
     margin: 0 $gutter;
-    line-height: 1em;
+    line-height: 1;
     border-top: 4px solid $mushroom;
     border-bottom: 1px solid $mushroom;
 
@@ -60,9 +62,10 @@
     }
 }
 
-//Static pages and misc
-//---------------------------------------------
+/* Static pages and misc
+   ========================================================================== */
+
 .page-head {
     @extend %type-4;
-    padding: 0 $gutter $baseline*2 $gutter;
+    padding: 0 $gutter $baseline*2;
 }
