@@ -1,0 +1,28 @@
+@mixin d-comment__body {
+    word-wrap: break-word;
+    line-height: 1.4;
+
+    @media (min-width: 768px) {
+        line-height: 22px;
+    }
+
+    p {
+        margin-bottom: 12px;
+    }
+    blockquote {
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 14px;
+        border-left: 2px solid #cfcfcd !important; // To override .block blockquote
+
+        &,
+        p {
+            // Override article styles
+            color: #767676;
+            font-family: $sans-serif;
+            font-size: inherit;
+            line-height: inherit;
+        }
+    }
+}

@@ -4,7 +4,7 @@
     display: block;
     color: #545454;
     text-align: center;
-    padding: $baseline*3 0 $baseline*3 0;
+    padding: ($baseline * 3 - 1) 0 ($baseline * 3 + 1);
     margin: $baseline*2 0;
     background-color: $mushroom;
     text-shadow: none;
