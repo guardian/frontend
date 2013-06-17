@@ -11,7 +11,7 @@
     list-style: none;
     margin-bottom: -4px;
     border-bottom: $baseline solid $blue;
-    background: #ffffff;
+    background: #fff;
     width: 100%;
 }
 
@@ -24,9 +24,9 @@
     }
 }
 
-
 /* Small
    ========================================================================== */
+
 .nav-popup--small {
     padding-bottom: 0;
 
@@ -37,7 +37,7 @@
         width: auto;
         padding: 0;
         min-width: 160px;
-        background-color: #ffffff;
+        background-color: #fff;
         border-bottom: 2px solid $darkMushroom;
         border-left: 2px solid $darkMushroom;
     }
@@ -59,7 +59,7 @@
         @extend %type-7;
 
         @media (min-width: $tablet) {
-            color: #444444;
+            color: #444;
             padding: $baseline*3 0 $baseline*3 0;
             @include font($serifheadline, 200, 14, 14);
         }

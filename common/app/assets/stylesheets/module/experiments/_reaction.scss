@@ -1,18 +1,19 @@
 /* ==========================================================================
-     Story-latest reaction
-     ========================================================================== */
+   Story-latest reaction
+   ========================================================================== */
+
 .story-reactions {
     margin-bottom: 12px;
-}
 
-.story-reactions .story-title,
-.story-reactions ul {
-    background-color: #E1E1E1;
-}
+    .story-title,
+    ul {
+        background-color: #E1E1E1;
+    }
 
-.story-reactions ul {
-    margin: 0 10px;
-    overflow: auto;
+    ul {
+        margin: 0 10px;
+        overflow: auto;
+    }
 }
 
 .story-reaction {
@@ -22,7 +23,9 @@
     margin-bottom: 12px;
     border-top: 1px solid #9D9D9D;
 
-    &:first-child { border-top: none; }
+    &:first-child {
+        border-top: none;
+    }
 }
 
 .story-reaction__lead {

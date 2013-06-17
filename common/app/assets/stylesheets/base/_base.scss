@@ -3,20 +3,20 @@ html {
 }
 
 body {
-    background-color: #ffffff;
+    background-color: #fff;
 }
 
 .dateline {
     font-family: $sans-serif;
     margin: 0 0 $baseline*2 0;
-    color: #666666;
+    color: #666;
     @extend %type-11;
 }
 
 .relative-timestamp {
     display: block;
     height: 10px;
-    color: #777777;
+    color: #777;
     margin: 0;
     padding:0 0 $baseline*3 0;
 }
