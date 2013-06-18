@@ -114,6 +114,10 @@ object Switches {
     "Switch that is only used while running tests. You never need to change this switch.",
     initiallyOn = false)
 
+  val LocalNavSwitch = DefaultSwitch("local-nav",
+    "If this switch is on, a secondary local nav is shown.",
+    initiallyOn = false)
+
   val all: Seq[DefaultSwitch] = Seq(
     AudienceScienceSwitch,
     AutoRefreshSwitch,
@@ -140,7 +144,8 @@ object Switches {
     ABStoryArticleSwapV2,
     DiscussionSwitch,
     ShortDiscussionSwitch,
-    StoryArticleSwap
+    StoryArticleSwap,
+    LocalNavSwitch
   )
 }
 
