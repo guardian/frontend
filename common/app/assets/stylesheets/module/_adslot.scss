@@ -1,5 +1,7 @@
 .ad-slot {
-    display: block;
+    display: none;
+    .js-on & { display: block; }
+
     width: 100%;
     padding: 10px 0 0 0;
     text-align: center;
