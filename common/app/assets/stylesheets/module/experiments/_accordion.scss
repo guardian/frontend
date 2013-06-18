@@ -1,5 +1,5 @@
 .accordion {
-    margin: $baseline*2 $baseline*4 $baseline*4 $baseline*4;
+    margin: $baseline*2 $baseline*4 $baseline*4;
     padding: 0;
 
     .is-open {
@@ -38,18 +38,18 @@ a.accordion-btn {
 
 .accordion-btn:hover,
 .accordion-btn.active {
-    background: #ffffff;
-    color: #333333;
+    background: #fff;
+    color: #333;
 }
 
 .accordion section {
     display: none; /* I NEED TO FIX THIS */
     float: left;
-    background-color: #ffffff;
+    background-color: #fff;
     overflow: hidden;
-    padding: $baseline*3 0 0 0;
+    padding: $baseline*3 0 0;
 }
 
-.no-js .accordion section {
+.js-off .accordion section {
     display: block; /* I NEED TO FIX THIS */
 }

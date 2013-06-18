@@ -4,7 +4,6 @@
 .d-discussion {
     font-size: 14px;
     font-size: 1.4rem;
-    max-width: 600px; // Cap the number of words per line for readability
 }
 
 .d-discussion__header {
@@ -15,9 +14,11 @@ $keylineColor: darken($darkMushroom, 15%);
 $keylineSize: 1px;
 
 /* Tabs
- ========================================================================== */
+   ========================================================================== */
+
 .d-tabs {
-    margin: 20px 0 $baseline*3 0;
+    margin: 0 $gutter*-1;
+    padding-bottom: $baseline*3;
 }
 
     .d-tabs--is-live {
@@ -42,7 +43,7 @@ $keylineSize: 1px;
 
     a {
         pointer-events: none;
-        color: #666666;
+        color: #666;
     }
     &.d-tabs__item--is-active {
         padding-bottom: 4px + $keylineSize;
@@ -54,8 +55,6 @@ $keylineSize: 1px;
             color: $linkBlue;
         }
     }
-
-
 }
 
 
@@ -139,8 +138,6 @@ $keylineSize: 1px;
 
 .d-comment__meta {
     line-height: 1.3;
-    word-break: break-all;
-    word-break: break-word;
     word-wrap: break-word;
 }
 .d-comment__author {
@@ -166,44 +163,17 @@ $keylineSize: 1px;
 }
 
 .d-comment__main {
-    padding-bottom: 12px;
     padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 .d-comment__body {
-    word-break: break-all;
-    word-break: break-word;
-    word-wrap: break-word;
-    line-height: 1.4;
-
-    @media (min-width: 768px) {
-        line-height: 22px;
-    }
-
-    p {
-        margin-bottom: 12px;
-    }
-    blockquote {
-        margin-top: 0;
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 14px;
-        border-left: 2px solid #cfcfcd;
-
-        &,
-        p {
-            // Override article styles
-            color: #767676;
-            font-family: $sans-serif;
-            font-size: inherit;
-            line-height: inherit;
-        }
-    }
+    @include d-comment__body;
 }
 
 
 /* Header
- ========================================================================== */
+   ========================================================================== */
 /**
  * Simulate Media object on Comments header
  * To have an image or a media on the left,
@@ -279,20 +249,10 @@ $keylineSize: 1px;
 
 
 /* Badges
- ========================================================================== */
+   ========================================================================== */
+
 .d-badge:after {
-    display: inline-block;
-    position: relative;
-    top: -.1em;
-    background: #005689;
-    color: #fff;
-    font: bold 13px/1 EgyptianHeadline, Georgia, serif;
-    width: 1em;
-    height: 1em;
-    margin-left: .2em;
-    vertical-align: middle;
-    text-align: center;
-    cursor: help;
+    @extend %d-badge-icon;
 }
 .d-badge--contributor:after {
     content: 'c';
@@ -339,8 +299,10 @@ $keylineSize: 1px;
     border-color: transparent #F6644F;
 }
 
-/* CTA's
- ========================================================================== */
+
+/* CTAs
+   ========================================================================== */
+
 .d-actions .top {
     color: #808080;
     background-color: #fff;
@@ -377,22 +339,23 @@ $keylineSize: 1px;
     display: inline-block;
     @extend .i-filter-arrow-right;
 }
-
+.d-show-cta-wrapper {
+    padding: $baseline*2 0 $baseline*4;
+}
 .d-show-cta,
 .d-show-cta:link,
 .d-show-cta:visited,
 .d-show-cta:hover,
 .d-show-cta:focus {
     @extend %type-6;
+    line-height: 1;
+    color: #444;
     position: relative;
-    line-height: 1em;
     display: block;
-    margin: $baseline*2 $gutter $baseline*4 $gutter;
-    padding: $baseline*4 $baseline*2 $baseline*4 $baseline*2;
+    padding: $baseline*4 $baseline*2;
     text-align: left;
     overflow: auto;
     background-color: $mushroom;
-    color: #444;
 
     .d-commentcount {
         position: absolute;

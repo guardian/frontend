@@ -61,7 +61,7 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   }
 }
 
-class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
+class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 object Management extends GuManagement {
   val applicationName = "frontend-football"
