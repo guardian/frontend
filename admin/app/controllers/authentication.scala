@@ -25,8 +25,9 @@ object Identity {
 
   def readJson(json: String) = read[Identity](json)
 
-  def apply(request: Request[Any]): Option[Identity] = {
-    request.session.get(KEY).map(credentials => Identity.readJson(credentials))
+  def apply(request: Request[Any]): Option[Identity] = request match {
+    case authenticated: AuthenticatedRequest[_] => authenticated.identity
+    case _ => request.session.get(KEY).map(credentials => Identity.readJson(credentials))
   }
 }
 
