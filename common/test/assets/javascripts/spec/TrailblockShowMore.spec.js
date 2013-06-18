@@ -14,7 +14,7 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
                 + '</div>'
             + '</div>',
             $cta;
-        
+
         ajax.init({page: {
             ajaxUrl: "",
             edition: "UK"
@@ -26,6 +26,7 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
             sinon.spy(common.mediator, 'emit');
 
             server = sinon.fakeServer.create();
+            server.autoRespond = true;
             server.respondWith("GET", '/fixtures/trails.json?_edition=UK',
                 [
                     200,
@@ -45,8 +46,6 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
 
             $cta = common.$g('.front-container .trailblock .cta');
             bean.fire($cta[0], 'click');
-
-            server.respond();
         });
 
         afterEach(function() {
@@ -59,32 +58,32 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
         it("should append the 'show more' cta", function(){
             expect($cta.length).toBe(1);
         });
-        
+
         it("should emit 'module:trailblock-show-more:loaded' on success", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
-            
+
             runs(function() {
                 expect(common.mediator.emit.firstCall).toHaveBeenCalledWith('module:trailblock-show-more:loaded');
             });
         });
-        
+
         it("should emit 'module:trailblock-show-more:render' on render", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
-            
+
             runs(function() {
                 expect(common.mediator.emit.secondCall).toHaveBeenCalledWith('module:trailblock-show-more:render');
             });
         });
-        
+
         it('should append 5 more trails', function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
-            
+
             runs(function() {
                 expect(common.$g('.front-container ul').length).toBe(1);
                 expect(common.$g('.front-container .trail').length).toBe(7);
@@ -96,12 +95,12 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
                 });
             });
         });
-        
+
         it("should not show duplicates", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
-            
+
             runs(function() {
                 bean.fire($cta[0], 'click');
                 common.$g('.front-container .trail').each(function(trail) {
@@ -110,12 +109,12 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
                 });
             });
         });
-        
+
         it("should increase cta omniture count by one on 'module:clickstream:click' event", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
-            
+
             runs(function() {
                 common.mediator.emit('module:clickstream:click', { target: document.querySelector('.front-container .cta') });
                 expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 3');
@@ -123,23 +122,23 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
                 expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 4');
             });
         });
-        
+
         it("shouldn't listen to non-cta clickstream clicks", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
-            
+
             runs(function() {
                 common.mediator.emit('module:clickstream:click', { target: document.querySelector('body') });
                 expect(common.$g('.front-container .trailblock .cta').attr('data-link-name')).toEqual('Show more | 2');
             });
         });
-        
+
         it("should correctly increment omniture count on trails", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
-            
+
             runs(function() {
                 bean.fire($cta[0], 'click');
                 common.$g('.front-container .trail h2 a').each(function(trail, index) {
@@ -147,12 +146,12 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
                 });
             });
         });
-        
+
         it("should remove cta when no more trails", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
-            
+
             runs(function() {
                 bean.fire($cta[0], 'click');
                 bean.fire($cta[0], 'click');
@@ -161,6 +160,6 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', '../fi
                 expect(common.$g('.front-container .trailblock .cta').length).toBe(0);
             });
         });
-       
+
     });
 });
