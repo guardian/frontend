@@ -22,7 +22,7 @@
     left: 0;
     right: 0;
     background-color: $blue;
-    z-index: 1001;
+    z-index: 99;
 }
 
 #logo {
@@ -74,7 +74,7 @@
 #preload-0,
 #preload-1,
 #preload-2 {
-    @include transform(translateZ(0px));
+    @include transform(translateZ(0));
 }
 
 .has-swipe {
