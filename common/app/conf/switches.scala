@@ -140,9 +140,9 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
-  val LocalNavSwitch = DefaultSwitch("local-nav",
+  val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
-    initiallyOn = false)
+    safeState = Off)
 
 
   // A/B Test Switches
