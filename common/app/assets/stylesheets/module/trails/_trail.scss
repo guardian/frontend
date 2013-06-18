@@ -47,13 +47,14 @@
     clear: left;
     padding: 0;
     color: #555555;
+    text-rendering: optimizeLegibility;
 
     @media (min-width: 37.5em) {
         clear: none;
     }
 }
 
-.trail__comment-count{
+.trail__comment-count {
     position: absolute;
     top: 8px;
     right: 0;
