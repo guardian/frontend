@@ -268,7 +268,7 @@ define([
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.loadAdverts();
-                if (!config.switches.analyticsOnDomReady) {                  
+                if (!config.switches.analyticsOnDomReady) {
                     modules.loadAnalytics();
                 }
 
@@ -291,7 +291,7 @@ define([
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initClickstream();
-            if (config.switches.analyticsOnDomReady) {                  
+            if (config.switches.analyticsOnDomReady) {         
                 modules.loadAnalytics();
             }
             modules.initSwipe(config);
