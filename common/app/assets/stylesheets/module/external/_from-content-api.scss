@@ -35,8 +35,26 @@
         color: #333;
     }
 
-    .test--paragraph-indentation & {
-        // Experiment with indents
+    // Experiment with paragraph spacing
+    .test-paragraph-spacing--no-spacing & {
+        > p {
+            margin-bottom: 0;
+
+            + figure,
+            + video {
+                margin-top: $baseline;
+            }
+        }
+        > p,
+        > figure,
+        > video {
+            + h2,
+            + h3 {
+                margin-top: $baseline*3;
+            }
+        }
+    }
+    .test-paragraph-spacing--no-spacing-indents & {
         > p {
             margin-bottom: 0;
 
@@ -55,6 +73,17 @@
             + h3 {
                 margin-top: $baseline*3;
             }
+        }
+    }
+    .test-paragraph-spacing--more-spacing & {
+        > p,
+        .block-elements > p,
+        ul,
+        ol,
+        address,
+        blockquote,
+        blockquote p {
+            margin: 0 0 $baseline*3 0;
         }
     }
 }

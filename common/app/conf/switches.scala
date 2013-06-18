@@ -147,6 +147,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
     safeState = Off)
 
+  val ParagraphSpacingSwitch = Switch("A/B Tests", "paragraph-spacing",
+    "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
+    safeState = Off)
+
 
   // Dummy Switch
 
@@ -181,6 +185,7 @@ object Switches extends Collections {
     ImageServerSwitch,
     AustraliaFrontSwitch,
     FontDelaySwitch,
+    ParagraphSpacingSwitch,
     IntegrationTestSwitch
   )
 
