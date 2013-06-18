@@ -7,8 +7,16 @@
     clear: both;
     margin: 58px auto 0;
 
+    &.has-localnav {
+        margin-top: 110px;
+    }
+
     @media only screen and (min-width: $tablet) {
         margin-top: 104px;
+
+        &.has-localnav {
+            margin-top: 156px;
+        }
     }
 }
 

@@ -10,18 +10,43 @@ define([
     detect
 ) {
 
-    function Sections() {
+    function Sections(config) {
 
         var className = 'is-off',
             that = this,
             hasCrossedBreakpoint = detect.hasCrossedBreakpoint(),
-            contexts = {};
+            contexts = {},
+            sections = [
+                {
+                    sectionId:   'culture',
+                    sectionName: 'Culture',
+                    zones: {
+                        '/film'        : 'Film',
+                        '/music'       : 'Music',
+                        '/books'       : 'Books',
+                        '/tv-and-radio': 'Television & radio',
+                        '/artanddesign': 'Art & design',
+                        '/stage'       : 'Stage'
+                    }
+                },{
+                    sectionId:   'sport',
+                    sectionName: 'Sport',
+                    zones: {
+                        '/football'          : 'Football',
+                        '/sport/cricket'     : 'Cricket',
+                        '/sport/tennis'      : 'Tennis',
+                        '/sport/rugby-union' : 'Rugby union',
+                        '/sport/cycling'     : 'Cycling',
+                        '/sport/us-sport'    : 'US Sport'
+                    }
+                }
+            ];
 
 
         this.view = {
             bindings : function(context) {
                 var id = context.id;
-                
+
                 if(contexts[id]){
                     return;
                 }
@@ -29,6 +54,7 @@ define([
 
                 var sectionsHeader = context.querySelector('.nav-popup-sections'),
                     sectionsNav    = context.querySelector('.nav--global'),
+                    subSectionsNav = context.querySelector('.nav--local'),
                     $sectionsHeader = bonzo(sectionsHeader);
 
                 bean.on(window, 'resize', common.debounce(function(e){
@@ -71,11 +97,76 @@ define([
                 for(var i=0, l=visibleItems.length; i < l; i++) {
                     bonzo(popupItems[i]).addClass('h');
                 }
+            },
+
+            getCurrentSection: function() {
+                for(var i=0; i < sections.length; i++) {
+                    var zones = Object.keys(sections[i].zones);
+
+                    if (zones.indexOf('/' + config.page.section) != -1 ||
+                        sections[i].sectionId == config.page.section) {
+                        return sections[i];
+                    }
+                }
+
+                return false;
+            },
+
+            insertLocalNav: function(context) {
+                // This is a temporary measure for local navigation,
+                // pending a backend solution to section hierarchies
+                var currentSection = this.getCurrentSection();
+
+                if (currentSection) {
+                    var localNavItems = '';
+
+                    for (var zonePath in currentSection.zones) {
+                        var zoneName = currentSection.zones[zonePath],
+                            className = (zonePath == '/'+config.page.section) ? 'nav__item is-active' : 'nav__item';
+
+                        localNavItems += '<li class="' + className + '">' +
+                                           '<a href="'+zonePath+'" class="nav__link" data-link-name="'+zoneName+'">'+zoneName+'</a>' +
+                                         '</li>';
+
+                    }
+
+                    // Insert the desktop local nav
+                    var localNavHtml = '<ul class="nav nav--local" data-link-name="Local Navigation">' + localNavItems + '</ul>';
+                    common.$g('#header .control--topstories', context).after('<div class="localnav-container">' + localNavHtml + '</div>');
+
+                    // Insert the popup local nav
+                    var localNavPopupHtml = '<div class="nav-popup-localnav nav-popup nav-popup--small is-off">' +
+                                            '  <ul class="nav nav--columns cf" data-link-name="Sub Sections">' +
+                                                 localNavItems +
+                                            '  </ul>' +
+                                            '</div>';
+
+                    // Insert the CTA for the popup local nav
+                    var currentZoneName = currentSection.zones['/'+config.page.section] || currentSection.sectionName;
+                    var localNavCtaHtml = '<div class="localnav--small cf">' +
+                                          '  <h1 class="localnav__title zone-color">'+currentZoneName+'</h1>' +
+                                          '    <button class="cta localnav__cta control" data-link-name="Popup Localnav" data-control-for="nav-popup-localnav">' +
+                                          '      <i class="i i-arrow-blue-down"></i>' +
+                                          '    </button>' +
+                                          '</div>';
+
+                    common.$g('#header', context).append(localNavPopupHtml + localNavCtaHtml);
+
+                    // Remove the other section head from the page
+                    common.$g('.section-head', context).remove();
+
+                    common.$g('#preloads').addClass('has-localnav');
+                }
+
             }
         };
 
         this.init = function (context) {
             this.view.bindings(context);
+
+            if (config.switches.localNav) {
+                this.view.insertLocalNav(context);
+            }
         };
      }
 
