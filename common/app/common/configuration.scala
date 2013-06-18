@@ -100,7 +100,7 @@ class GuardianConfiguration(
     // But does not change accross environments
     lazy val config: Map[String, String] = Map(
       "oasUrl" -> "http://oas.guardian.co.uk/RealMedia/ads/",
-      "oasSiteId" -> "beta.guardian.co.uk/oas.html",
+      "oasSiteIdHost" -> configuration.getStringProperty("oas.siteId.host").getOrElse("m.guardian.co.uk"),
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
       "discussionApiUrl" -> "http://discussion.guardianapis.com/discussion-api"

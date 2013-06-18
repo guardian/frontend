@@ -25,7 +25,7 @@ define([
         page: {
             'keywords': 'keyword,go here,there',
             'oasUrl':"http://oas.guardian.co.uk/RealMedia/ads/",
-            'oasSiteId':"m.guardian.co.uk/oas.html",
+            'oasSiteIdHost':"m.guardian.co.uk",
             'contentType': 'contentType',
             'section': 'section',
             'pageType': 'page',
