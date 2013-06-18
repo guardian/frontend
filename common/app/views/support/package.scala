@@ -337,7 +337,7 @@ object StripAndEscapeHtmlTags{
   def apply( html: String) : String = {
   val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
   doc.outputSettings().escapeMode(EscapeMode.xhtml).charset("UTF-8");
-  doc.body().html() 
+  doc.body().html()
    }
 }
 
