@@ -268,6 +268,9 @@ define([
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.loadAdverts();
+                if (!config.switches.analyticsOnDomReady) {                  
+                    modules.loadAnalytics();
+                }
 
                 // TODO: make these run in event 'page:common:deferred:loaded'
                 modules.cleanupCookies(context);
@@ -288,7 +291,9 @@ define([
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initClickstream();
-            modules.loadAnalytics();
+            if (config.switches.analyticsOnDomReady) {                  
+                modules.loadAnalytics();
+            }
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
         }
