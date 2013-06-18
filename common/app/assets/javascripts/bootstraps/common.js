@@ -80,15 +80,16 @@ define([
         initialiseNavigation: function (config) {
             var navControl = new NavControl(),
                 topStories = new TopStories(),
-                sections = new Sections(),
+                sections = new Sections(config),
                 search = new Search(config),
                 aus = new Australia(config), // TODO temporary till we have single domain editions
                 editions = new EditionSwitch(),
                 header = document.querySelector('body');
 
+
+            sections.init(header);
             navControl.init(header);
             topStories.load(config, header);
-            sections.init(header);
             search.init(header);
             aus.init(header);
 
