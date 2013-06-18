@@ -1,26 +1,21 @@
 package tools
 
 import common.Logging
+import conf.{ Configuration, AdminConfiguration }
 import com.amazonaws.services.s3.AmazonS3Client
-import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.s3.model._
-import io.Source
-import com.amazonaws.util.StringInputStream
 import com.amazonaws.services.s3.model.CannedAccessControlList.PublicRead
-import conf.AdminConfiguration
+import com.amazonaws.util.StringInputStream
+import scala.io.Source
+
 
 trait S3 extends Logging {
 
-  lazy val bucket = AdminConfiguration.aws.bucket
+  lazy val bucket = Configuration.aws.bucket
   lazy val configKey = AdminConfiguration.configKey
   lazy val switchesKey = AdminConfiguration.switchesKey
 
-  lazy val accessKey = AdminConfiguration.aws.accessKey
-
-  lazy val secretKey = AdminConfiguration.aws.secretKey
-
-  private def createClient = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey))
-
+  private def createClient = new AmazonS3Client(Configuration.aws.credentials)
 
   def getConfig = get(configKey)
   def putConfig(config: String) { put(configKey, config, "application/json") }

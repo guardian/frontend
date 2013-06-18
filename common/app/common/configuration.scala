@@ -2,9 +2,9 @@ package common
 
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
+import com.amazonaws.auth.{ BasicAWSCredentials, AWSCredentials }
 import java.net.InetAddress
 import play.api.Play
-import java.io.{FileInputStream, File}
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
@@ -58,7 +58,6 @@ class GuardianConfiguration(
   }
 
   object proxy {
-
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
 
     private lazy val hostOption = Option(System.getenv("proxy_host"))
@@ -130,6 +129,19 @@ class GuardianConfiguration(
 
   object nginx {
     lazy val log: String = configuration.getStringProperty("nginx.log").getOrElse("/var/log/nginx/access.log")
+  }
+
+  object aws {
+    lazy val accessKey = configuration.getStringProperty("aws.access.key").getOrElse(throw new RuntimeException("AWS access key not set"))
+    lazy val secretKey = configuration.getStringProperty("aws.access.secret.key").getOrElse(throw new RuntimeException("AWS secret key not set"))
+    lazy val region = configuration.getStringProperty("aws.region").getOrElse(throw new RuntimeException("AWS region is not setup"))
+
+    lazy val bucket = configuration.getStringProperty("aws.bucket").getOrElse(throw new RuntimeException("AWS bucket is not setup"))
+    lazy val sns: String = configuration.getStringProperty("sns.notification.topic.arn").getOrElse {
+      throw new IllegalStateException("Cannot send SNS notifications without topic ARN property (sns.notification.topic.arn).")
+    }
+
+    lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
   }
 
   // log out Play config on start

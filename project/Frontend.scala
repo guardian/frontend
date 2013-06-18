@@ -11,15 +11,19 @@ object Frontend extends Build with Prototypes {
       "com.gu.openplatform" %% "content-api-client" % "2.0",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
-      "commons-io" % "commons-io" % "2.4",
-      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6",
+
+      "org.jsoup" % "jsoup" % "1.6.3",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
       "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",
 
       "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
-      "org.jsoup" % "jsoup" % "1.6.3",
-      "org.jboss.dna" % "dna-common" % "0.6"
+
+      "com.amazonaws" % "aws-java-sdk" % "1.4.5",
+
+      "org.jboss.dna" % "dna-common" % "0.6",
+      "commons-io" % "commons-io" % "2.4",
+      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
     )
   )
   val commonWithTests = common % "test->test;compile->compile"
@@ -63,7 +67,6 @@ object Frontend extends Build with Prototypes {
 
   val admin = application("admin").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "com.amazonaws" % "aws-java-sdk" % "1.4.5",
       "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
     )
   )
