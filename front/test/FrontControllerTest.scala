@@ -12,7 +12,17 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
   val callbackName = "aFunction"
 
   "Front Controller" should "200 when content type is front" in Fake {
-    val result = controllers.FrontController.render("front")(TestRequest())
+    val result = controllers.FrontController.render("")(TestRequest())
+    status(result) should be(200)
+  }
+
+  it should "understand the editionalised network front" in Fake {
+    val result = controllers.FrontController.render("uk-edition")(TestRequest())
+    status(result) should be(200)
+  }
+
+  it should "understand editionalised section fronts" in Fake {
+    val result = controllers.FrontController.render("culture/uk-edition")(TestRequest())
     status(result) should be(200)
   }
 
@@ -20,7 +30,7 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"?callback=$callbackName")
         .withHeaders("host" -> "localhost:9000")
         
-    val result = controllers.FrontController.render("front")(fakeRequest)
+    val result = controllers.FrontController.render("")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""$callbackName({\"config\"""")
@@ -31,14 +41,14 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("Host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.FrontController.render("front")(fakeRequest)
+    val result = controllers.FrontController.render("")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
 
   it should "200 when content type is front trails" in Fake {
-    val result = controllers.FrontController.renderTrails("front")(TestRequest())
+    val result = controllers.FrontController.renderTrails("")(TestRequest())
     status(result) should be(200)
   }
 
@@ -46,7 +56,7 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"/culture/trails?callback=$callbackName")
         .withHeaders("host" -> "localhost:9000")
         
-    val result = controllers.FrontController.renderTrails("front")(fakeRequest)
+    val result = controllers.FrontController.renderTrails("")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
@@ -57,7 +67,7 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("Host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.FrontController.renderTrails("front")(fakeRequest)
+    val result = controllers.FrontController.renderTrails("")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"html\"")

@@ -15,14 +15,14 @@ class Front extends AkkaSupport with Logging {
     log.info("Refreshing Front")
     Front.refresh()
   }
-  // Map of edition -> (path -> front)
-  lazy val fronts = Edition.all.map{ edition =>
-    edition.id -> edition.configuredFronts.map{ case (name, blocks) =>
-      name ->  new ConfiguredEdition(edition, blocks)
+
+  lazy val fronts: Map[String, ConfiguredEdition] = Edition.all.flatMap{ edition =>
+    edition.configuredFronts.map{
+      case (name, blocks) => name ->  new ConfiguredEdition(edition, blocks)
     }.toMap
   }.toMap
 
-  private def allFronts = fronts.values.flatMap(_.values)
+  private def allFronts = fronts.values
 
   def refresh() {
     allFronts.foreach(_.refresh())
@@ -37,12 +37,7 @@ class Front extends AkkaSupport with Logging {
     refreshSchedule
   }
 
-  def apply(path: String, edition: Edition): Seq[Trailblock] = fronts(edition.id)(path)()
-
-  lazy val warmup = {
-    refresh()
-    allFronts.foreach { _.warmup() }
-  }
+  def apply(path: String): Seq[Trailblock] = fronts(path)()
 
 }
 

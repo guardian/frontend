@@ -10,7 +10,6 @@ define([
                 var edition = link.getAttribute("data-edition");
                 bean.on(link, "click", function (event) {
                     Cookies.add("GU_EDITION", edition);
-                    common.hardRefresh(event);
                 });
             });
         }

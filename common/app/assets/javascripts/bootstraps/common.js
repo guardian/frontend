@@ -82,7 +82,7 @@ define([
                 topStories = new TopStories(),
                 sections = new Sections(),
                 search = new Search(config),
-                aus = new Australia(config), // TODO temporary till we have single domain editions
+                aus = new Australia(config),
                 editions = new EditionSwitch(),
                 header = document.querySelector('body');
 
