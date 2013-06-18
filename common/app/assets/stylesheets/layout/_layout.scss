@@ -1,21 +1,19 @@
-/* ==========================================================================
-     Global wrapper
-     ========================================================================== */
+/* Global wrapper
+   ========================================================================== */
 
 #preloads {
     @include gs-container;
     clear: both;
     margin: 58px auto 0;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         margin-top: 104px;
     }
 }
 
 
-/* ==========================================================================
-     Global header and navigation
-     ========================================================================== */
+/* Global header and navigation
+   ========================================================================== */
 
 #header {
     min-height: 58px;
@@ -34,9 +32,8 @@
     text-indent: -9999px;
 }
 
-/*
-     Layout helpers
-     ========================================================================== */
+/* Layout helpers
+   ========================================================================== */
 
 /**
  * @todo Should these be moved to helpers?
@@ -47,7 +44,7 @@
 }
 
 .box-indent {
-    padding: 0 $gutter $baseline*1 $gutter;
+    padding: 0 $gutter $baseline*1;
 }
 
 .inline-image {
@@ -64,9 +61,8 @@
     max-width: $inArticleInlineImgWidth;
 }
 
-/* ==========================================================================
-     Preloads (for swipe)
-     ========================================================================== */
+/* Preloads (for swipe)
+   ========================================================================== */
 
 #preloads-inner {
     position: relative;
@@ -78,22 +74,24 @@
 #preload-0,
 #preload-1,
 #preload-2 {
-    @include transform(translateZ(0px));
-    top: 0;
-    height: 100%;
-    width: 100%;
-}
-/* ==========================================================================
-    Parts (for swipe)
-     ========================================================================== */
-
-.parts {
-    @include temporarily-cap-content-width;
+    @include transform(translateZ(0));
 }
 
-/*
-     Ajax loading helpers
-     ========================================================================== */
+.has-swipe {
+    #preload-0,
+    #preload-1,
+    #preload-2 {
+        position: absolute;
+        width: 100%;
+    }
+
+    #preload-0 {left: -100%;}
+    #preload-1 {left:     0;}
+    #preload-2 {left:  100%;}
+}
+
+/* Ajax loading helpers
+   ========================================================================== */
 
 .preload-msg {
     padding: 50px 50px 250px 50px;

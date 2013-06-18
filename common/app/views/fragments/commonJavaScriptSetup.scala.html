@@ -1,14 +1,22 @@
 @(item: MetaData, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
-@import CommonSwitches.FontSwitch
-@import CommonSwitches.FontDelaySwitch
+@import conf.Switches.FontSwitch
+@import conf.Switches.SearchSwitch
 
 <script id="gu">
     // we want this to happen ASAP to avoid FOUC
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
     var guardian = {
-            isModernBrowser: ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window && 'withCredentials' in new XMLHttpRequest()),
+            isModernBrowser: (
+                'querySelector' in document
+                &&  'addEventListener' in window
+                && 'localStorage' in window
+                && (
+                    ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
+                    || 'XDomainRequest' in window
+                )
+            ),
             css: {
                 football: '@Static("stylesheets/football.min.css")',
                 gallery: '@Static("stylesheets/gallery.min.css")',

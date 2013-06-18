@@ -1,9 +1,8 @@
 package assets
 
-import common.Logging
+import common.{Properties, Logging}
 import java.io.File
 import java.net.{ URLConnection, URL }
-import java.util.Properties
 import java.util.jar.JarFile
 import play.api.{ Mode, Play, Plugin, Application }
 import scala.collection.JavaConversions._
@@ -17,20 +16,6 @@ object `package` {
       val keyInstances = keys groupBy { k => k }
       (keyInstances filter { case (key, instances) => instances.length > 1 }).keySet
     }
-  }
-
-  def using[S <: { def close() }, T](closable: S)(block: S => T): T = {
-    try {
-      block(closable)
-    } finally {
-      closable.close()
-    }
-  }
-
-  def loadProperties(url: URL): Map[String, String] = {
-    val properties = new Properties()
-    using(url.openStream) { properties load _ }
-    properties.toMap
   }
 
   object ClassLoaders {
@@ -66,7 +51,7 @@ class AssetsPlugin(val app: Application) extends Plugin with Logging {
   }
 
   private def loadAssetMappings(base: String = ""): Map[String, String] = {
-    val assetMaps = assetMapResources() map { loadProperties }
+    val assetMaps = assetMapResources() map { Properties(_) }
 
     // You determine a precedence order here if you like...
     val keyCollisions = assetMaps.duplicateKeys

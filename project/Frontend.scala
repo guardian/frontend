@@ -1,46 +1,39 @@
 import sbt._
-
 import sbt.Keys._
-
 import play.Project._
-import SbtGruntPlugin._
 
-import sbtassembly.Plugin.AssemblyKeys._
-import sbtassembly.Plugin.MergeStrategy
+object Frontend extends Build with Prototypes {
 
-object Frontend extends Build with Prototypes with Testing {
-  val version = "1-SNAPSHOT"
+  val common = grunt("common").settings(
+    libraryDependencies ++= Seq(
+      "com.gu" %% "management-play" % "5.26",
+      "com.gu" %% "configuration" % "3.9",
+      "com.gu.openplatform" %% "content-api-client" % "2.0",
 
-  val javascriptFiles = SettingKey[PathFinder]("javascript-files", "All javascript")
-  val cssFiles = SettingKey[PathFinder]("css-files", "All css")
+      "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
-  val common = library("common").settings(
-    javascriptFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.js" },
-    cssFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.scss" },
-    (test in Test) <<= (test in Test) dependsOn (gruntTask("test")),
-    resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile:common:js", javascriptFiles)),
-    resources in Compile <<=  (resources in Compile) dependsOn (gruntTask("compile:common:css", cssFiles))
+      "org.jsoup" % "jsoup" % "1.6.3",
+      "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
+      "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",
+
+      "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
+      "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
+
+      "com.amazonaws" % "aws-java-sdk" % "1.4.5",
+
+      "org.jboss.dna" % "dna-common" % "0.6",
+      "commons-io" % "commons-io" % "2.4",
+      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
+    )
   )
-
   val commonWithTests = common % "test->test;compile->compile"
 
   val front = application("front").dependsOn(commonWithTests)
   val article = application("article").dependsOn(commonWithTests)
   val applications = application("applications").dependsOn(commonWithTests)
-  val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
-  val router = application("router").dependsOn(commonWithTests)
-  val styleGuide = application("style-guide").dependsOn(commonWithTests)
-
   val event = application("event").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
   )
-
-  val discussion = application("discussion").dependsOn(commonWithTests).settings(
-    templatesImport ++= Seq(
-      "discussion._"
-    )
-  )
-
   val football = application("football").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
     templatesImport ++= Seq(
@@ -49,19 +42,32 @@ object Frontend extends Build with Prototypes with Testing {
     )
   )
 
+  val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val image = application("image").dependsOn(commonWithTests).settings(
-       libraryDependencies ++= Seq(
-         "org.imgscalr" % "imgscalr-lib" % "4.2",
-         "org.im4java" % "im4java" % "1.4.0",
-         "commons-io" % "commons-io" % "2.0.1",
-         "commons-lang" % "commons-lang" % "2.5"
-       )
-   )
-  
+    libraryDependencies ++= Seq(
+      "org.imgscalr" % "imgscalr-lib" % "4.2",
+      "org.im4java" % "im4java" % "1.4.0",
+      "commons-io" % "commons-io" % "2.0.1",
+      "commons-lang" % "commons-lang" % "2.5"
+    )
+  )
+  val discussion = application("discussion").dependsOn(commonWithTests).settings(
+    templatesImport ++= Seq("discussion._")
+  )
+
+  val router = application("router").dependsOn(commonWithTests)
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "net.sf.uadetector" % "uadetector-resources" % "2012.08",
+      "net.sf.uadetector" % "uadetector-resources" % "2013.04",
       "net.sf.opencsv" % "opencsv" % "2.3"
+    )
+  )
+
+  val styleGuide = application("style-guide").dependsOn(commonWithTests)
+
+  val admin = application("admin").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
     )
   )
 
@@ -69,27 +75,29 @@ object Frontend extends Build with Prototypes with Testing {
     .dependsOn(front)
     .dependsOn(article)
     .dependsOn(applications)
+    .dependsOn(event)
     .dependsOn(football)
-    .dependsOn(image)
     .dependsOn(coreNavigation)
+    .dependsOn(image)
+    .dependsOn(discussion)
     .dependsOn(router)
     .dependsOn(diagnostics)
     .dependsOn(styleGuide)
-    .dependsOn(event)
-    .dependsOn(discussion)
 
   val main = root().aggregate(
     common,
     front,
     article,
     applications,
+    event,
     football,
-    image,
     coreNavigation,
+    image,
+    discussion,
     router,
     diagnostics,
-    dev,
     styleGuide,
-    event
+    dev,
+    admin
   )
 }

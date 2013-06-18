@@ -1,5 +1,6 @@
 package test
 
+import conf.Switches
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
@@ -15,7 +16,9 @@ class RelatedControllerTest extends FlatSpec with ShouldMatchers {
   "Related Controller" should "serve the correct headers when the article exists" in Fake {
     val fakeRequest = TestRequest()
       .withHeaders("Accept" -> "text/html")
-    
+
+    Switches.DoubleCacheTimesSwitch.switchOff()
+
     val result = controllers.RelatedController.render(article)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("text/html")

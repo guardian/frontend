@@ -76,21 +76,22 @@ define([
         };
 
         this.load = function () {
-            var url = '/stories/articles';
+            var url = '/stories/articles.json';
             if (storyId) {
                 url += '?storyId=' + storyId;
             }
             return ajax({
                 url: url,
-                type: 'jsonp',
-                jsonpCallback: 'callback',
-                jsonpCallbackName: 'showStoryTrails',
-                success: function (json) {
+                type: 'json',
+                crossOrigin: true
+            }).then(
+                function (json) {
                     if (json) {
                         self.view.render(json);
                     }
-                }
-            });
+                },
+                function (req) { }
+            );
         };
     }
     

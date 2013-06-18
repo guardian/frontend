@@ -3,7 +3,7 @@ package test
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.matchers.ShouldMatchers
 import collection.JavaConversions._
-import conf.{CommonSwitches, Configuration}
+import conf.{Switches, Configuration}
 
 class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -28,7 +28,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
     scenario("Should display the profile images") {
 
       Given("I visit the 'Jemima Kiss' contributor page")
-      CommonSwitches.ImageServerSwitch.switchOn()
+      Switches.ImageServerSwitch.switchOn()
 
       HtmlUnit("/profile/jemimakiss") { browser =>
         import browser._

@@ -16,7 +16,7 @@
 }
 
 .has-cursor {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .maxed {
@@ -70,14 +70,19 @@
 }
 
 .update {
-	display:block;
+    display:block;
     background-color: $mushroom;
-    margin: 0 $gutter $baseline*4 $gutter;
+    margin-bottom: $baseline*4;
     padding: 0 0 0 $baseline*2;
     overflow: hidden;
 
     &.hidden {
         display: none;
+    }
+
+    @media (min-width: $tablet) {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -102,7 +107,7 @@
 
 .update-btn.is-active,
 .update-btn:hover {
-    color: #ffffff;
+    color: #fff;
     background-color: #E47A39;
 }
 
@@ -128,7 +133,7 @@
     margin-right: 5px;
     font-size: 10px;
     font-style: normal;
-    line-height: 1em;
-    color: #ffffff;
+    line-height: 1;
+    color: #fff;
     background-color: #ec1c1c;
 }

@@ -2,6 +2,7 @@ package common
 
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
+import com.amazonaws.auth.{ BasicAWSCredentials, AWSCredentials }
 import java.net.InetAddress
 import play.api.Play
 
@@ -57,7 +58,6 @@ class GuardianConfiguration(
   }
 
   object proxy {
-
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
 
     private lazy val hostOption = Option(System.getenv("proxy_host"))
@@ -100,7 +100,7 @@ class GuardianConfiguration(
     // But does not change accross environments
     lazy val config: Map[String, String] = Map(
       "oasUrl" -> "http://oas.guardian.co.uk/RealMedia/ads/",
-      "oasSiteId" -> "beta.guardian.co.uk/oas.html",
+      "oasSiteIdHost" -> configuration.getStringProperty("oas.siteId.host").getOrElse("m.guardian.co.uk"),
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
       "discussionApiUrl" -> "http://discussion.guardianapis.com/discussion-api"
@@ -129,6 +129,19 @@ class GuardianConfiguration(
 
   object nginx {
     lazy val log: String = configuration.getStringProperty("nginx.log").getOrElse("/var/log/nginx/access.log")
+  }
+
+  object aws {
+    lazy val accessKey = configuration.getStringProperty("aws.access.key").getOrElse(throw new RuntimeException("AWS access key not set"))
+    lazy val secretKey = configuration.getStringProperty("aws.access.secret.key").getOrElse(throw new RuntimeException("AWS secret key not set"))
+    lazy val region = configuration.getStringProperty("aws.region").getOrElse(throw new RuntimeException("AWS region is not setup"))
+
+    lazy val bucket = configuration.getStringProperty("aws.bucket").getOrElse(throw new RuntimeException("AWS bucket is not setup"))
+    lazy val sns: String = configuration.getStringProperty("sns.notification.topic.arn").getOrElse {
+      throw new IllegalStateException("Cannot send SNS notifications without topic ARN property (sns.notification.topic.arn).")
+    }
+
+    lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
   }
 
   // log out Play config on start

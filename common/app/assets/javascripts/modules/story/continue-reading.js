@@ -39,9 +39,10 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
                         // make request to endpoint
                         ajax({
                             url: href + '.json',
-                            type: 'jsonp',
-                            jsonpCallback: 'callback',
-                            success: function(resp) {
+                            type: 'json',
+                            crossOrigin: true
+                        }).then(
+                            function(resp) {
                                 // skip first n paras
                                 var skip = parseInt($el.attr('data-skip-paras'), 10) + 1,
                                     // assuming the link is in a 'p'
@@ -61,8 +62,9 @@ define(['common', 'ajax', 'bean', 'bonzo'], function (common, ajax, bean, bonzo)
                                 
                                 bonzo($p.previous()).append($story);
                                 toggleStory();
-                            }
-                        });
+                            },
+                            function(req) { }
+                        );
                     }
                 }
             });

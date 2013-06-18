@@ -6,7 +6,7 @@
     position: relative;
     margin-left: 20px;
     padding: 0 0 12px 30px;
-    border-left: 1px solid #333333;
+    border-left: 1px solid #333;
 }
 
 .chapter__marker {
@@ -16,7 +16,7 @@
     left: -10px;
     width: 20px;
     height: 20px;
-    background-color: #333333;
+    background-color: #333;
     border-radius: 100px;
 }
 
@@ -30,8 +30,10 @@
 
 .chapter__title {
     font-family: $serifheadline;
+    font-size: 18px;
     font-size: 1.8rem;
     font-weight: 600;
+    line-height: 22px;
     line-height: 2.2rem;
     min-height: 44px;
     margin-bottom: 12px;
@@ -66,7 +68,9 @@
     .article-headline {
         background-color: #fff;
         border-top: none;
+        font-size: 16px;
         font-size: 1.6rem;
+        line-height: 20px;
         line-height: 2rem;
     }
 

@@ -1,13 +1,16 @@
 @(block: Trailblock)(implicit request: RequestHeader)
 
-<section class="front-section zone-@block.description.section" data-link-name="block | @block.description.name">
+<section 
+    class="front-section zone-@block.description.section" 
+    data-link-name="block | @block.description.name"
+    data-link-context="front-trails/@block.description.section">
 
     @if(block.description.id != "") {
 	    @if("/" + block.description.id == request.path) {
             @fragments.headers.sectionHead(block.description.name)
 	    } else {
 	       @fragments.headers.frontSectionHead(block.description, Some(Edition(request)))
-        }
+        } 
 	}
 
     <div class="trailblock front-trailblock-@SafeName(block.description) @if(block.description.showMore){ js-show-more}"

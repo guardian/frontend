@@ -1,31 +1,23 @@
 package conf
 
+import common.Metrics
+import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
+import com.gu.management.play.{ Management => GuManagement }
+import com.gu.management.logback.LogbackLevelPage
 import play.api.{ Application => PlayApp }
-import common._
-import com.gu.management._
-import com.gu.management.play._
-import logback.LogbackLevelPage
-import contentapi.ContentApiMetrics
 
-object Switches {
-  val all: Seq[Switchable] = CommonSwitches.all // ++ new DefaultSwitch("name", "Description Text")
-}
+class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
-class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration, Switches.all)
-
-object Metrics {
-  val all: Seq[Metric] = ContentApiMetrics.all ++ CommonMetrics.all
-}
-
-object Management extends Management {
+object Management extends GuManagement {
   val applicationName = "frontend-style-guide"
+  val metrics = Metrics.contentApi ++ Metrics.common
 
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
       "/style-guide"
     ),
-    StatusPage(applicationName, Metrics.all),
+    StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
   )

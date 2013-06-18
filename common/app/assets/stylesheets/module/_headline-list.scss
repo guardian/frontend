@@ -10,7 +10,7 @@
     li {
         display: block;
         overflow: auto;
-        border-bottom: 1px solid #DDDDDD;
+        border-bottom: 1px solid #ddd;
         padding: $baseline*2 0;
 
         &:last-child {
@@ -25,10 +25,10 @@
     }
 
     a {
-        color: #333333;
+        color: #333;
 
         &:visited {
-            color:#777777;
+            color:#777;
         }
     }
 
@@ -36,7 +36,7 @@
         @extend %type-7;
         float:left;
         line-height: 16px;
-        color: #777777;
+        color: #777;
         width: 12px;
     }
 }
@@ -44,12 +44,12 @@
 
 .headline-list__tile {
     @extend %type-6;
-    color: #333333;
-    margin: 0 $gutter $baseline $gutter;
-    border-bottom: 1px solid #DDDDDD;
+    color: #333;
+    margin: 0 $gutter $baseline;
+    border-bottom: 1px solid #ddd;
     padding: $baseline $baseline $baseline*3 0;  
 
-    @media only screen and (min-width: 26.25em) {
+    @media (min-width: 26.25em) {
         display: none;
     }
 }

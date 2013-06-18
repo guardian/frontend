@@ -126,17 +126,18 @@ define([
             });
         },
 
+        initClickstream: function () {
+            var cs = new Clickstream({filter: ["a", "button"]});
+        },
+
         transcludeCommentCounts: function () {
             common.mediator.on('page:common:ready', function(config, context) {
-                if(context.querySelector("[data-discussion-id]")) {
-                    CommentCount.init(context);
-                }
+                CommentCount.init(context);
             });
         },
 
         loadAnalytics: function () {
-            var cs = new Clickstream({filter: ["a", "button"]}),
-                omniture = new Omniture();
+            var omniture = new Omniture();
 
             common.mediator.on('page:common:deferred:loaded:omniture', function(config, context) {
                 omniture.go(config, function(){
@@ -287,6 +288,7 @@ define([
             modules.transcludePopular();
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
+            modules.initClickstream();
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
         }

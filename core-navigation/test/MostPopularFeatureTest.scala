@@ -3,6 +3,7 @@ package test
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import scala.collection.JavaConversions._
+import conf.Switches
 
 class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -46,7 +47,10 @@ class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
     }
 
     scenario("Most popular caching") {
-      Given("I load most popular")
+      Given("Double cache time switch is off")
+      Switches.DoubleCacheTimesSwitch.switchOff()
+
+      And("I load most popular")
       HtmlUnit.connection("/most-read") { connection =>
         Then("the requested should be cached for 15 minutes")
         connection.getHeaderFields.get("Cache-Control").head should be("public, max-age=900, stale-while-revalidate=900, stale-if-error=345600")

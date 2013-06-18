@@ -14,10 +14,11 @@ define(['common', 'ajax', 'modules/adverts/adverts', 'modules/adverts/iframeadsl
         page: {
             'keywords': 'keyword,go,here',
             'oasUrl':"http://oas.guardian.co.uk/RealMedia/ads/",
-            'oasSiteId':"beta.guardian.co.uk/oas.html",
+            'oasSiteIdHost':"beta.guardian.co.uk",
             'contentType': 'contentType',
             'section': 'section',
-            'audienceScienceUrl': 'http://js.revsci.net/gateway/gw.js?csid=E05516'
+            'audienceScienceUrl': 'http://js.revsci.net/gateway/gw.js?csid=E05516',
+            'pageId': ''
         },
         switches: {
             'audienceScience': true

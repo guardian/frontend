@@ -129,7 +129,7 @@ GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>        controllers.GalleryControlle
 
 #Section
 GET     /sections                                                  controllers.SectionsController.render()
-GET     /sections.json                                             controllers.SectionsController.render()
+GET     /sections.json                                             controllers.SectionsController.renderJson()
 # culture and sport sections now live in front
 GET    /$path<[\w\d-]*(/\w\w-edition)?>/trails.json          controllers.SectionController.renderJsonTrails(path)
 GET    /$path<[\w\d-]*(/\w\w-edition)?>/trails               controllers.SectionController.renderTrails(path)

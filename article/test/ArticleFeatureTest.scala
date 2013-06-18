@@ -1,11 +1,10 @@
 package test
 
+import conf.Configuration
+import conf.Switches._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import org.fluentlenium.core.domain.FluentWebElement
-import conf.{CommonSwitches, Configuration}
-import CommonSwitches._
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -76,7 +75,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
         import browser._
 
-        CommonSwitches.ImageServerSwitch.switchOn
+        ImageServerSwitch.switchOn
 
         Then("I should see the article's image")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] img[itemprop=contentURL]").getAttribute("src") should
@@ -159,7 +158,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
 
-        CommonSwitches.ImageServerSwitch.switchOn
+        ImageServerSwitch.switchOn
         inBodyImage.getAttribute("class") should be("img-extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
@@ -335,7 +334,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
       Given("I read an aricle and want to share it with my friends")
       
-      CommonSwitches.SocialSwitch.switchOn
+      SocialSwitch.switchOn
       
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
@@ -352,7 +351,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       
       Given("I want to track the responsive share buttons using Facebook Insights")
       
-      CommonSwitches.SocialSwitch.switchOn
+      SocialSwitch.switchOn
 
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
@@ -371,8 +370,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
       Given("I read an article")
       
-      CommonSwitches.SocialSwitch.switchOn
-      CommonSwitches.SearchSwitch.switchOn
+      SocialSwitch.switchOn
+      SearchSwitch.switchOn
       
       HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
         import browser._
