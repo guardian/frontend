@@ -1,8 +1,8 @@
 .article-zone {
-    padding: 13px 0 14px 0;
+    padding: 13px 0 14px;
     margin-left: $gutter;
     margin-right: $gutter;
-    line-height: 1em;
+    line-height: 1;
     border-bottom: 1px solid $mushroom;
 
     @media (min-width: $tablet) {
@@ -39,6 +39,7 @@
 
 .article-standfirst {
     margin-bottom: 0;
+    text-rendering: optimizeLegibility;
 }
 
 .bullet {

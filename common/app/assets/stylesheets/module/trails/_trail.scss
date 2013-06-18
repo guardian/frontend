@@ -1,19 +1,20 @@
 /* ==========================================================================
    Trail object
    ========================================================================== */
+
 .trail {
     position: relative;
     overflow: hidden;
-    margin: 0 0 $baseline 0;
+    margin: 0 0 $baseline;
     border-bottom: 1px solid #EDEDE7;
-    padding: $baseline*2 0 $baseline*3 0;
+    padding: $baseline*2 0 $baseline*3;
 
     &:first-child {
-      padding-top: $baseline*3
+        padding-top: $baseline*3
     }
 
     &:last-child {
-      margin-bottom: 0;
+        margin-bottom: 0;
     }
 }
 
@@ -32,11 +33,11 @@
     .trail__headline a:active,
     .trail__headline a:visited,
     .trail h2 a {
-      color: #333333;
+        color: #333;
     }
 
     .trail__headline a:active {
-      text-decoration: underline;
+        text-decoration: underline;
     }
 
 
@@ -46,13 +47,14 @@
     clear: left;
     padding: 0;
     color: #555555;
+    text-rendering: optimizeLegibility;
 
     @media (min-width: 37.5em) {
         clear: none;
     }
 }
 
-.trail__comment-count{
+.trail__comment-count {
     position: absolute;
     top: 8px;
     right: 0;
@@ -70,8 +72,8 @@
     }
 
     i {
-          float: left;
-          margin: 3px 4px 0 0;
+        float: left;
+        margin: 3px 4px 0 0;
     }
 }
 
@@ -87,31 +89,23 @@
    Trail modifiers
    ========================================================================== */
 
-/* Has image
- ========================================================================== */
 .trail--has-image {
     .trail__text {
         padding-bottom: $baseline*4;
     }
 
     img {
-      vertical-align: bottom;
+        vertical-align: bottom;
     }
 }
 
-
-/* Featured
- ========================================================================== */
 .trail--featured {
-  .trail__headline {
-      margin-bottom: $baseline;
-  }
+    .trail__headline {
+        margin-bottom: $baseline;
+    }
 }
 
-/* Thumbnail
- ========================================================================== */
 .trail--thumbnail {
-
     .trail__headline {
         padding: 0;
         margin-bottom: $baseline;
@@ -130,20 +124,19 @@
     }
 
     .trail__text {
-      padding: 0;
+        padding: 0;
     }
 }
 
-/* Misc
-   ========================================================================== */
 /**
  * @todo: Clean these up into proper modifiers
- **/
+ */
+
 .matches-container .trail__text {
-  display: none;
+    display: none;
 }
 
 .competition .trail {
-  margin-top: $baseline*3;
-  border-bottom: none;
+    margin-top: $baseline*3;
+    border-bottom: none;
 }
