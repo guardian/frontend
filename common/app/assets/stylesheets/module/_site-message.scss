@@ -1,5 +1,5 @@
 .site-message {
-    margin: 32px 10px 0 10px;
+    margin: 32px 10px 0;
     background-color: #F2F2F2;
 }
 
@@ -8,7 +8,9 @@
     margin: 0 2px;
     font-family: $serifheadline;
     font-weight: 600;
+    font-size: 18px;
     font-size: 1.8rem;
+    line-height: 22px;
     line-height: 2.2rem;
 }
 
@@ -16,7 +18,9 @@
     color: #000;
     min-height: 88px;
     font-family: $serif;
+    font-size: 18px;
     font-size: 1.8rem;
+    line-height: 20px;
     line-height: 2.0rem;
     margin: 0 2px;
     border-top: 1px solid #717272;

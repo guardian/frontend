@@ -2,7 +2,6 @@ package conf
 
 import common.Properties
 import com.gu.conf.ConfigurationFactory
-import com.gu.management._
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
 
@@ -23,12 +22,6 @@ object AdminConfiguration {
     val stage = apply("STAGE", "unknown")
   }
 
-  object aws {
-    lazy val accessKey = configuration.getStringProperty("aws.access.key").getOrElse(throw new RuntimeException("AWS access key not set"))
-    lazy val secretKey = configuration.getStringProperty("aws.access.secret.key").getOrElse(throw new RuntimeException("AWS secret key not set"))
-    lazy val bucket = configuration.getStringProperty("aws.bucket").getOrElse(throw new RuntimeException("AWS bucket is not setup"))
-  }
-
   object mongo {
     lazy val connection = configuration.getStringProperty("mongo.connection.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
   }
@@ -40,14 +33,4 @@ object AdminConfiguration {
   object stories {
     val preview = configuration.getStringProperty("stories.preview.url")
   }
-
-  object healthcheck {
-      lazy val properties = configuration.getPropertyNames filter {
-        _ matches """healthcheck\..*\.url"""
-      }
-
-      lazy val urls = properties map { property =>
-        configuration.getStringProperty(property).get
-      }
-    }
 }

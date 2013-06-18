@@ -28,7 +28,7 @@ define([
     }
 
     function getContentUrl(node) {
-        return node.querySelector('a').href + '#comments';
+        return node.querySelector('a').pathname + '#comments';
     }
 
     function renderCounts(counts, context) {

@@ -187,9 +187,6 @@
         <!-- Related.spec -->
         <div class="js-related"></div>
 
-        <!-- Popular.spec -->
-        <div class="js-popular"></div>
-
         <!-- Expandables -->
         <style>
             ul.flex {
@@ -338,6 +335,11 @@
             <p href="#hello" id="click-me-slow" data-link-name="paragraph">Paragraph 'Link'</p>
             <a href="/foo" id="click-me-internal" data-link-name="internal link">Same-host link</a>
             <a href="http://google.com/foo" id="click-me-external" data-link-name="external link">Other-host link</a>
+            <span data-link-context="the outer context">
+              <span data-link-context="the inner context">
+                <button href="/foo" id="click-me-link-context" data-link-name="the contextual link">The link</button>
+              </span>
+            </span>
         </p>
     </div>
 

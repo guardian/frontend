@@ -3,7 +3,8 @@
    ========================================================================== */
 
 /* Control
- ========================================================================== */
+   ========================================================================== */
+
 .control {
     &,
     &:link,
@@ -19,7 +20,7 @@
 
     &.is-active,
     &.is-active {
-      background-color: #ffffff;
+      background-color: #fff;
       color: $blue;
     }
 }
@@ -34,12 +35,13 @@
 }
 
 .is-active .i-nav-divider {
-    border-color: #ffffff;
-    background-color: #ffffff;
+    border-color: #fff;
+    background-color: #fff;
 }
 
+
 /* Sections control - (Hamburger icon )
- ========================================================================== */
+   ========================================================================== */
 
 .control--sections,
 .control--sections:link,
@@ -51,14 +53,14 @@
     height: 28px;
     padding: 15px $gutter 15px 0;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         position: absolute;
         right: 0;
         top: 58px;
         padding: 0 $gutter 10px $gutter;
         margin: $baseline*2 0 $baseline*2 0;
         background-color: transparent;
-        color: #444444;
+        color: #444;
         font-size: 14px;
     }
 }
@@ -73,7 +75,7 @@ span.control__menu.i-menu {
     display: inline-block;
     margin-left: 6px;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         display: none;
     }
 }
@@ -81,22 +83,23 @@ span.control__menu.i-menu {
 .control--sections .i-menu-active {
     display: none;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         margin-top: $baseline*2;
         display: inline-block;
     }
 }
 
 .control--sections .i-nav-divider {
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         margin-right: $baseline*3;
         border-color: #BBBBBB;
-        background-color: #ffffff;
+        background-color: #fff;
     }
 }
 
 /* Top stories control
- ========================================================================== */
+   ========================================================================== */
+
 .control--topstories {
     &:link,
     &:active,
@@ -113,7 +116,7 @@ span.control__menu.i-menu {
             color: $blue;
         }
 
-        @media only screen and (min-width: $tablet) {
+        @media (min-width: $tablet) {
             position: absolute;
             top: 0;
             right: 48px;
@@ -135,7 +138,7 @@ span.control__menu.i-menu {
     margin-right: $baseline*2;
     margin-left: $baseline*2;
 
-    @media only screen and (min-width: 26.25em) {
+    @media (min-width: 26.25em) {
         display: inline-block;
     }
 }
@@ -148,7 +151,7 @@ span.control__menu.i-menu {
 .control--topstories .i-top-stories {
     margin: 5px $baseline*4 0 $baseline*2;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         margin-left: 0;
     }
 }
@@ -160,7 +163,7 @@ span.control__menu.i-menu {
 
 
 /* Search control
- ========================================================================== */
+   ========================================================================== */
 
 .control--search {
     float:right;
@@ -168,7 +171,7 @@ span.control__menu.i-menu {
     padding: 15px $baseline*4 15px 0;
     border: none;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         position: absolute;
         top: 0;
         right: 0;

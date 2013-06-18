@@ -21,8 +21,8 @@ define([
     }
 
     function getPageUrl(config) {
-            var id = (config.pageId === '') ? '' : config.pageId + '/';
-            return 'm.guardian.co.uk/' + id + 'oas.html';
+        var id = (config.pageId === '') ? '' : config.pageId + '/';
+        return config.oasSiteIdHost + '/' + id + 'oas.html';
     }
 
     function getKeywords(config) {
@@ -42,7 +42,7 @@ define([
     }
 
     function generateUrl(config, slots) {
-        var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config)+ '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
+        var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config) + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
         var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'mjx';
         var query = '?';
 
