@@ -1,11 +1,10 @@
 package implicits
 
-import model.Gallery
-import model.{ Content => ModelContent }
+import model.{ Gallery, Content }
 
-trait Content {
+trait ContentImplicits {
 
-  implicit class MaybeGallery(c: ModelContent) {
+  implicit class MaybeGallery(c: Content) {
 
     lazy val maybeGallery = c match {
       case g: Gallery => Some(g)
