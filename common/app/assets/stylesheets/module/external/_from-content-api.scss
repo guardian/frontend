@@ -34,6 +34,27 @@
         padding: 0;
         color: #333;
     }
+
+    // Experiment with indents
+    > p {
+        margin-bottom: 0;
+
+        + p {
+            text-indent: 1.5em;
+        }
+        + figure,
+        + video {
+            margin-top: $baseline;
+        }
+    }
+    > p,
+    > figure,
+    > video {
+        + h2,
+        + h3 {
+            margin-top: $baseline*3;
+        }
+    }
 }
 
 .article blockquote,
@@ -86,8 +107,6 @@ figcaption:before {
    ========================================================================== */
 
 figure {
-    margin: 0;
-
     img {
         display: block;
         margin-bottom: $baseline*2;
