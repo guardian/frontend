@@ -1,20 +1,20 @@
 // Helpers
-$gutter: 20px;
-$column-width: 60px;
+$gs-gutter: 20px;
+$gs-column-width: 60px;
 
 @function gs-span($n-columns) {
-	@return $n-columns * $column-width + $gutter * ($n-columns - 1);
+    @return $n-columns * $gs-column-width + $gs-gutter * ($n-columns - 1);
 }
 
 @mixin gs-container {
-	position: relative;
-	margin: 0 auto;
-	max-width: gs-span(12);
+    position: relative;
+    margin: 0 auto;
+    max-width: gs-span(12);
 }
 
 // Output grid system
 @mixin grid-system {
-	.gs-container {
-		@include gs-container;
-	}	
+    .gs-container {
+        @include gs-container;
+    }
 }

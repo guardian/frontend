@@ -23,16 +23,17 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
 
         // json test needs to be run asynchronously 
         it("should request the related links and graft them on to the dom", function(){
+            
+            var pageId = 'some/news'
 
-            server.respondWith([200, {}, '{ "html": "<b>1</b>" }']);
+            server.respondWith('/related/' + pageId + '.json?_edition=UK', [200, {}, '{ "html": "<b>1</b>" }']);
             
             appendTo = document.querySelector('.js-related');
 
             runs(function() {
                 new Related(
-                    {switches: {relatedContent: true}, page: {}}, 
-                    document,
-                    'fixtures/json'
+                    {page: {pageId: pageId}, switches: {relatedContent: true}, page: {}},
+                    document
                 );
             });
 
@@ -52,8 +53,7 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
             runs(function() {
                 new Related(
                     {switches: {relatedContent: false}, page: {}}, 
-                    document,
-                    'fixtures/json'
+                    document
                 );
             });
 

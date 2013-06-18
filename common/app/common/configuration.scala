@@ -4,6 +4,7 @@ import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 import java.net.InetAddress
 import play.api.Play
+import java.io.{FileInputStream, File}
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)

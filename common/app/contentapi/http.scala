@@ -3,9 +3,8 @@ package contentapi
 import com.gu.openplatform.contentapi.connection.{HttpResponse, Http}
 import scala.concurrent.Future
 import conf.Configuration
-import common.{ExecutionContexts, TimingMetricLogging}
+import common.{ContentApiMetrics, ExecutionContexts}
 import java.util.concurrent.TimeoutException
-import com.gu.management.{Metric, CountMetric, TimingMetric}
 import play.api.libs.ws.WS
 
 trait WsHttp extends Http[Future] with ExecutionContexts {
@@ -51,20 +50,3 @@ trait DelegateHttp extends Http[Future] with ExecutionContexts {
   override def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = _http.GET(url, headers)
 }
 
-object ContentApiMetrics {
-  object HttpTimingMetric extends TimingMetric(
-    "performance",
-    "content-api-calls",
-    "Content API calls",
-    "outgoing requests to content api"
-  ) with TimingMetricLogging
-
-  object HttpTimeoutCountMetric extends CountMetric(
-    "timeout",
-    "content-api-timeouts",
-    "Content API timeouts",
-    "Content api calls that timeout"
-  )
-
-  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
-}

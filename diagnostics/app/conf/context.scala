@@ -1,11 +1,11 @@
 package conf
 
-import common._
-import com.gu.management._
+import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
+import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
-import metrics._
+import metrics.NginxLog
 
-object Management extends com.gu.management.play.Management {
+object Management extends GuManagement {
   val applicationName = "frontend-diagnostics"
 
   lazy val pages = List(

@@ -1,10 +1,9 @@
 package model
 
+import conf.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
-
 import org.scala_tools.time.Imports._
 import play.api.mvc.{ Result, SimpleResult, Results }
-import conf.CommonSwitches.DoubleCacheTimesSwitch
 
 object Cached extends Results {
 
