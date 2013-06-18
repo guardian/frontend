@@ -120,8 +120,7 @@ define([
             else {
                 el.pending = true;
                 ajax({
-                    url: url,
-                    type: 'json',
+                    url: url + '.json',
                     crossOrigin: true,
                     success: function (frag) {
                         var html;
@@ -226,12 +225,11 @@ define([
     }
 
     function getSequencePos(url) {
-        url = sequenceCache[url];
-        return url ? url.pos : -1;
+        return sequence.indexOf(url);
     }
 
     function getSequenceUrl(pos) {
-        return pos > -1 && pos < sequenceLen ? sequence[pos].url : sequence[0].url;
+        return pos > -1 && pos < sequenceLen ? sequence[pos] : sequence[0];
     }
 
     function loadSequence(callback) {
@@ -249,29 +247,28 @@ define([
                 storage.remove(storePrefix + 'linkContext');
             } else {
                 // No data-link-context, so infer the section from current url
-                sequenceUrl = window.location.pathname.match(/^\/([^\/]+)/);
-                sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl[1] : '');
+                sequenceUrl = window.location.pathname.match(/^(\/[^0-9]+)/);
+                sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '/');
             }
         }
 
-        // 'news' should return top stories, i.e. the default response
-        sequenceUrl = (sequenceUrl === '/front-trails/news' ? '/front-trails' : sequenceUrl);
+        // 'news' should return top trails, i.e. the default response
+        sequenceUrl = (sequenceUrl === '/news' ? '/' : sequenceUrl);
 
         ajax({
-            url: sequenceUrl,
-            type: 'json',
+            url: sequenceUrl + '.json',
             crossOrigin: true,
             success: function (json) {
-                var stories = json.stories,
-                    len = stories.length,
+                var trails = json.trails,
+                    len = trails ? trails.length : 0,
                     url = window.location.pathname,
                     s,
                     i;
 
                 if (len >= 3) {
                     // Make sure url is the first in the sequence
-                    if (stories[0].url !== url) {
-                        stories.unshift({url: url});
+                    if (trails[0] !== url) {
+                        trails.unshift(url);
                         len += 1;
                     }
 
@@ -280,14 +277,13 @@ define([
                     sequenceCache = {};
 
                     for (i = 0; i < len; i += 1) {
-                        s = stories[i];
+                        s = trails[i];
                         // dedupe, while also creating a lookup obj
-                        if(!sequenceCache[s.url]) {
-                            s.pos = sequenceLen;
-                            sequenceCache[s.url] = s;
+                        if(!sequenceCache[s]) {
+                            sequenceCache[s] = {};
                             sequence.push(s);
                             sequenceLen += 1;
-                            //window.console.log(i + " " + s.url);
+                            window.console.log(i + " " + s);
                         }
                     }
                     setSequencePos(window.location.pathname);
