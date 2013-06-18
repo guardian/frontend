@@ -26,9 +26,7 @@ object Notification {
     // Now just forget about it.
   }
 
-  def onSwitchChanges(requester: String, stage: String, current: List[String], updated: List[String]) {
-    val changes = updated filterNot { current contains _ }
-
+  def onSwitchChanges(requester: String, stage: String, changes: List[String]) {
     val subject = s"${stage.toUpperCase}: Switch changes by ${requester}"
     val message =
       s"""
