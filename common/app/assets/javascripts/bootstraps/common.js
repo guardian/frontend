@@ -291,7 +291,7 @@ define([
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initClickstream();
-            if (config.switches.analyticsOnDomReady) {         
+            if (config.switches.analyticsOnDomReady) {
                 modules.loadAnalytics();
             }
             modules.initSwipe(config);
