@@ -6,7 +6,7 @@ define(['common'], function (common) {
         this.audience = 0.1;
         this.description = 'Impact of macro typography on readability';
         this.canRun = function(config) {
-            // only run on article pages (and if switch is on)
+            // only run on article pages
             return config.page.contentType === 'Article';
         };
         this.variants = [
