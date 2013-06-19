@@ -9,13 +9,14 @@ our CDN, then we can start to release server-generated varations at segments of 
 
 # Guide
 
-There is four simple steps to releasing a test :-
+There is five simple steps to releasing a test :-
 
  - Adding a switch to turn the test on & off
  - Writing a test, which is typically a simple AMD module
  - Running the test
  - Analysis of the test data
-
+ - Share your findings
+ - 
 ## Adding a switch
 
 A switch allows you to stop and start the AB test outside of a normal software release cycle.
@@ -121,3 +122,7 @@ For simple analysis of the data you can use [Omniture](https://sc.omniture.com)
 ### Ophan
 
 For inspection of the raw test data you can query the RedShift instance created by the data team.
+
+## Share your findings
+
+At the very least summarize your findings by email or add a write-up to the frontend repository in markdown format.
