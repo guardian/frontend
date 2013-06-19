@@ -1,0 +1,9 @@
+{
+  "name": "html5sortable",
+  "version": "0.0.0",
+  "commit": "b90b6baac95cdc0df1ec1682b7181ff94b1f7820",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:farhadi/html5sortable.git"
+  }
+}

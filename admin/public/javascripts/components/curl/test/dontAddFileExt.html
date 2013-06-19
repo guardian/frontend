@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Packages test</title>
+
+<script src="../src/curl.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+(function () {
+"use strict";
+
+	var cfg, tests, privateCfg, domReady;
+
+	cfg = {
+		baseUrl: '',
+		dontAddFileExt: '\\bwithout\\b',
+		paths: { curl: '../src/curl' }
+	};
+
+	curl(cfg);
+
+	tests = {
+		'curl should not add file extension if excluded by dontAddFileExt rx': function (cb, assert, require, done) {
+			curl(['stuff/module-without-ext'])
+				.then(cb.success, cb.failure)
+				.then(done, done);
+		},
+		'curl should add file extension if not excluded by dontAddFileExt rx': function (cb, assert, require, done) {
+			curl(['stuff/one'])
+				.then(cb.success, cb.failure)
+				.then(done, done);
+		}
+	};
+
+	curl(
+		cfg,
+		['curl/_privileged', 'curl/tdd/runner', 'curl/domReady', 'tdd/configureAsserts']
+	).then(
+		function (priv, runner, ready, asserts) {
+			var testRunner, assertions;
+
+			privateCfg = priv.cfg;
+			testRunner = runner;
+			assertions = asserts;
+			domReady = ready;
+
+			for (var name in tests) (function (name) {
+				var cb, assert;
+				cb = configureCallbacks(success, failure, name);
+				assert = assertions(success, failure, name);
+				testRunner().run(function (require, done) {
+					tests[name](cb, assert, require, done);
+				});
+			}(name));
+		}
+	);
+
+	function configureSetup (config) {
+		return function setup () {
+			resetCurl();
+			curl(config);
+		};
+	}
+
+	function configureCallbacks (success, failure, msg) {
+		return {
+			success: function () { success(msg); },
+			failure: function (ex) { failure(msg + (ex ? ' - ' + ex.message : '')); }
+		};
+	}
+
+	function write (msg) {
+		domReady(function () {
+			document.body.appendChild(document.createElement('div')).innerHTML = msg;
+		})
+	}
+
+	function failure (msg) { write('FAILED: ' + msg); }
+	function success (msg) { write('SUCCESS: ' + msg); }
+
+	function resetCurl () {
+		for (var name in privateCfg) {
+			delete privateCfg[name];
+		}
+	}
+
+}());
+</script>
+
+</head>
+<body>
+
+</body>
+</html>
