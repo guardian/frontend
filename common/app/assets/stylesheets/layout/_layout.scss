@@ -21,9 +21,11 @@
     top: 0;
     left: 0;
     right: 0;
-    background-color: $blue;
-    z-index: 1001;
+    z-index: 99;
 }
+    .header__inner {
+        background-color: $blue;
+    }
 
 #logo {
     display: block;
@@ -74,10 +76,20 @@
 #preload-0,
 #preload-1,
 #preload-2 {
-    @include transform(translateZ(0px));
-    top: 0;
-    height: 100%;
-    width: 100%;
+    @include transform(translateZ(0));
+}
+
+.has-swipe {
+    #preload-0,
+    #preload-1,
+    #preload-2 {
+        position: absolute;
+        width: 100%;
+    }
+
+    #preload-0 {left: -100%;}
+    #preload-1 {left:     0;}
+    #preload-2 {left:  100%;}
 }
 
 /* Ajax loading helpers

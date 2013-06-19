@@ -1,15 +1,10 @@
 package test
 
-import controllers.{Identity, AuthenticatedRequest}
-import org.scalatest.{BeforeAndAfterAll, BeforeAndAfter, FeatureSpec}
+import org.scalatest.{BeforeAndAfterAll, FeatureSpec}
 import org.scalatest.matchers.ShouldMatchers
-import play.api.mvc._
-import play.api.GlobalSettings
-import play.api.test.{FakeRequest, FakeApplication, TestServer}
 import  play.api.test.Helpers._
 import play.api.test.TestServer
 import play.api.test.FakeApplication
-import scala.Some
 
 class SwitchboardFeatureTest extends FeatureSpec with ShouldMatchers with BeforeAndAfterAll {
 

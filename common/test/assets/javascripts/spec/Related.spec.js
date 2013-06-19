@@ -1,7 +1,7 @@
 define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
 
     describe("Related", function() {
-       
+
         var callback, appendTo, server;
 
         beforeEach(function() {
@@ -21,18 +21,18 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
             server.restore();
         });
 
-        // json test needs to be run asynchronously 
+        // json test needs to be run asynchronously
         it("should request the related links and graft them on to the dom", function(){
-            
+
             var pageId = 'some/news'
 
             server.respondWith('/related/' + pageId + '.json?_edition=UK', [200, {}, '{ "html": "<b>1</b>" }']);
-            
+
             appendTo = document.querySelector('.js-related');
 
             runs(function() {
                 new Related(
-                    {page: {pageId: pageId}, switches: {relatedContent: true}, page: {}},
+                    {page: {pageId: pageId}, switches: {relatedContent: true}},
                     document
                 );
             });
@@ -52,7 +52,7 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
 
             runs(function() {
                 new Related(
-                    {switches: {relatedContent: false}, page: {}}, 
+                    {switches: {relatedContent: false}, page: {}},
                     document
                 );
             });
@@ -63,10 +63,10 @@ define(['common', 'ajax', 'modules/related'], function(common, ajax, Related) {
                 expect(appendTo.innerHTML).toBe('');
             });
         });
-        
+
         xit("should request the related links per edition", function(){
             expect(0).toBeTruthy();
         });
-    
+
     });
 });

@@ -1,7 +1,7 @@
 package controllers
 
-import common.{ ExecutionContexts, Properties, Logging }
-import common.AdminMetrics.{SwitchesUpdateCounter, SwitchesUpdateErrorCounter}
+import common._
+import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
 import conf.{ Switches, AdminConfiguration }
 import play.api.mvc._
 import play.api.Play.current
@@ -12,12 +12,12 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def render() = AuthAction{ request =>
+  def render() = AuthAction { request =>
     log("loaded Switchboard", request)
 
     val promiseOfSwitches = Akka future { S3.getSwitches }
 
-    Async{
+    Async {
       promiseOfSwitches map { configuration =>
         val nextStateLookup = Properties(configuration getOrElse "")
 
@@ -34,30 +34,39 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
   }
 
   def save() = AuthAction { request =>
-    log("saved switchboard", request)
+    log("saving switchboard", request)
 
-    val switchValues = request.body.asFormUrlEncoded.map{ params =>
+    val requester = Identity(request).get.fullName
+    val updates = request.body.asFormUrlEncoded.map { params =>
       Switches.all map { switch =>
         switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")
       }
     }.get
 
-    val promiseOfSavedSwitches = Akka.future(saveSwitchesOrError(switchValues.mkString("\n")))
+    val promiseOfSavedSwitches = Akka.future {
+      saveSwitchesOrError(requester, updates)
+    }
 
     Async {
-      promiseOfSavedSwitches map { result =>
-        result
-      }
+      promiseOfSavedSwitches
     }
   }
 
-  private def saveSwitchesOrError(switches: String) = try {
-    // TODO: Diff from current and notify/audit
+  private def saveSwitchesOrError(requester: String, updates: List[String]) = try {
+    val current =  Switches.all map { switch =>
+      switch.name + "=" + (if (switch.isSwitchedOn) "on" else "off")
+    }
 
-    S3.putSwitches(switches)
+    S3.putSwitches(updates mkString "\n")
     SwitchesUpdateCounter.recordCount(1)
 
     log.info("switches successfully updated")
+
+    val changes = updates filterNot { current contains _ }
+    Notification.onSwitchChanges(requester, AdminConfiguration.environment.stage, changes)
+    changes foreach { change =>
+      Audit(s"Switch change by ${requester}: ${change}")
+    }
 
     Redirect(routes.SwitchboardController.render())
   } catch { case e: Throwable =>

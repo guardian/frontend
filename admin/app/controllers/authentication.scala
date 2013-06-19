@@ -25,8 +25,9 @@ object Identity {
 
   def readJson(json: String) = read[Identity](json)
 
-  def apply(request: Request[Any]): Option[Identity] = {
-    request.session.get(KEY).map(credentials => Identity.readJson(credentials))
+  def apply(request: Request[Any]): Option[Identity] = request match {
+    case authenticated: AuthenticatedRequest[_] => authenticated.identity
+    case _ => request.session.get(KEY).map(credentials => Identity.readJson(credentials))
   }
 }
 
@@ -72,17 +73,13 @@ object AuthAction {
 
   import Play.current
 
-  def apply(f: Request[AnyContent] => Result): Action[AnyContent] = {
-    Action {
-      request =>
-        request match {
-          case auth: AuthenticatedRequest[_] => f(auth)
-          case req if Play.isTest => f(new AuthenticatedRequest( Some(Identity("1234", "foo@bar.com", "John", "Smith")), req))
-          case req => Identity(request).map {
-            identity =>
-              f(new AuthenticatedRequest(Some(identity), request))
-          }.getOrElse(Redirect(routes.Login.login).withSession(request.session +("loginFromUrl", request.uri)))
-        }
+  def apply(f: Request[AnyContent] => Result): Action[AnyContent] = Action { request =>
+    request match {
+      case auth: AuthenticatedRequest[_] => f(auth)
+      case req if Play.isTest => f(new AuthenticatedRequest(Some(Identity("1234", "foo@bar.com", "John", "Smith")), req))
+      case req => Identity(request).map { identity =>
+          f(new AuthenticatedRequest(Some(identity), request))
+      }.getOrElse(Redirect(routes.Login.login).withSession(request.session +("loginFromUrl", request.uri)))
     }
   }
 }

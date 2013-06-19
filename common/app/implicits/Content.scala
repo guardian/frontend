@@ -1,6 +1,6 @@
 package implicits
 
-import model.{Gallery, Content}
+import model.{ Gallery, Content }
 
 trait ContentImplicits {
 

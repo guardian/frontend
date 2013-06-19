@@ -13,6 +13,8 @@
     border-bottom: $baseline solid $blue;
     background: #fff;
     width: 100%;
+    @include transform(translateZ(0)); // Hotfix to make popups stay on top 
+                                       // of .preload elements in Chrome Android
 }
 
 .nav-popup .nav--section-divider {

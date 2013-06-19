@@ -1,5 +1,7 @@
 .ad-slot {
-    display: block;
+    display: none;
+    .js-on & { display: block; }
+
     width: 100%;
     padding: 10px 0 0 0;
     text-align: center;
@@ -8,10 +10,9 @@
     //For expandables
     position: relative;
     z-index: 1000;
-    // We do not get desktop ads yet. Uncomment when needed.
-    // @media (min-width: $desktopAd) {
-    //     min-height: 96px;
-    // }
+    @media (min-width: $desktopAd) {
+        min-height: 96px;
+    }
 
     iframe {
         margin: 0 auto;
