@@ -31,7 +31,10 @@ You also need to add it to the list of available switches at the foot of the sam
 
 ```
 val all: List[Switch] = List(
+    FooSwitch,
+    BarSwitch,
     FontDelaySwitch,
+    ..
     )
 ```
 
@@ -101,7 +104,10 @@ define([
     var TESTS = {
             Related: new ExperimentRelatedContent()    //  and here. 
         };
+    
+    ...
 
+    })
 ```
 
 ## Running the test
