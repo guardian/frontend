@@ -61,11 +61,6 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
     configAgent().foreach(_.close())
   }
 
-  override def warmup() = {
-    super.warmup()
-    quietly(configAgent.await(5.seconds).foreach(_.warmup))
-  }
-
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList
 
   private def toBlocks(editionJson: JsValue): Seq[TrailblockDescription] = editionJson match {

@@ -64,6 +64,12 @@
         .d-tabs__item--byline.d-tabs__item--is-active {
             padding-left: 0 !important;
         }
+        .byline {
+            margin-bottom: 0 !important;
+        }
+        .byline + .article__container {
+            padding-top: 12px;
+        }
     }
 }
 

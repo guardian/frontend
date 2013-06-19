@@ -72,7 +72,7 @@ case class Story(
     explainer: Option[String] = None,
     hero: Option[String] = None,
     labels: Map[String, String] = Map()
-    ) extends implicits.Collections with implicits.Content {
+    ) extends implicits.Collections with implicits.ContentImplicits {
 
   lazy val hasHero: Boolean = hero.isDefined
   lazy val hasEvents: Boolean = events.nonEmpty
