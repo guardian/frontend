@@ -1,8 +1,6 @@
 This explains how to run an A/B test in frontend.
 
-Frontend does not use [Optimizely](https://www.optimizely.com).
-
-Instead we have a homebrewed AB testing framework running in the application. The data it collects is logged with both Ophan and Omniture.
+We have a homebrewed AB testing framework running in the application. The data it collects is logged with both Ophan and Omniture.
 
 For the moment we write tests in JavaScript, which limits their usefulness. With Varnish, and the ability to serve variants from
 our CDN, then we can start to release server-generated varations at segments of our audience.
@@ -16,7 +14,7 @@ There is five simple steps to releasing a test :-
  - Running the test
  - Analysis of the test data
  - Share your findings
- - 
+
 ## Adding a switch
 
 A switch allows you to stop and start the AB test outside of a normal software release cycle.
@@ -125,4 +123,59 @@ For inspection of the raw test data you can query the RedShift instance created 
 
 ## Share your findings
 
-At the very least summarize your findings by email or add a write-up to the frontend repository in markdown format.
+At the very least summarize your findings by email or add a
+[write-up](https://github.com/guardian/frontend/blob/master/docs/web-font-rendering-tests.md) to the frontend repository in markdown format.
+
+# Designing a test
+
+Some notes from Greg Detre.
+
+## Hypothesis
+
+In other words, what are you trying to prove? For example,
+
+> We could do more with the bottom of the article and that related content is boring.
+
+## Buckets
+
+Each AB test have a control group and _n_ variants, or buckets. For example,
+
+> - Control - Shows related content
+> - Variant 1 = Hide related content box
+> - Variant 2 = Hide related content AND top 5 site links
+> - Variant 3 = Magical recommendations algorithm
+> - Variant 4 = Random links
+
+## Prediction
+
+What metrics do you think will improve? Writing this down before the test helps
+
+For example, 
+
+> - Bounce rate is going to improve by 1%
+> - Time on page increase by 5%
+> - Page views per visit increase twofold
+
+You should also predict which varients are, in your eyes, going to provide the most positive improvements.
+
+> - Magical recommendations algorithm
+> - Control
+> - Variant 1
+
+# Why not Optimizely?
+
+The r2-frontend project integrates [https://www.optimizely.com](https://www.optimizely.com). We decided to try an alternate approach.
+
+Some things we do not like about Optimizely,
+
+Optimizely relies on JQuery, which the frontend code does not use as a base JS library and do not want to add.
+
+The Optimisely set-up allows _anyone_ to insert bits of code/design in to the site outside of a release cycle. While this sort of democratisation of AB testing is important we strongly feel, like all code/design/ux, the tests should follow this route through the review systems we have in place. Git pull etc.
+
+Given we already have 2 repositories of user behaviour data (Omniture, Ophan/RedShift) creating a third just adds another silo. Typically the data is much easier to analyse in our existing tools.
+
+Optimizely is relatively expensive - several thousand pounds p/month.
+
+Optimizely is a client-side framework, which is limited for some types of testing. 
+ 
+It adds a rather large overhead to the cookie.
