@@ -1,4 +1,3 @@
-
 This explains how to run an A/B test in frontend.
 
 Frontend does not use [Optimizely](https://www.optimizely.com).
@@ -10,13 +9,14 @@ our CDN, then we can start to release server-generated varations at segments of 
 
 # Guide
 
-There is four simple steps to releasing a test :-
+There is five simple steps to releasing a test :-
 
  - Adding a switch to turn the test on & off
  - Writing a test, which is typically a simple AMD module
  - Running the test
  - Analysis of the test data
-
+ - Share your findings
+ - 
 ## Adding a switch
 
 A switch allows you to stop and start the AB test outside of a normal software release cycle.
@@ -81,7 +81,7 @@ define(['bonzo'], function (bonzo) {
 The AMD module must return an object with the following properties,
 
 - id: The unique name of the test.
-- audience: The ratio of people who 0.2 = 20% of users will see the variant.
+- audience: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
 - description: A plain English summary of the test.
 - canRun: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.)
 - variants: An array of two functions - the first representing the _control_ group, the second the variant.
@@ -122,3 +122,7 @@ For simple analysis of the data you can use [Omniture](https://sc.omniture.com)
 ### Ophan
 
 For inspection of the raw test data you can query the RedShift instance created by the data team.
+
+## Share your findings
+
+At the very least summarize your findings by email or add a write-up to the frontend repository in markdown format.
