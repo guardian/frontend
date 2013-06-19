@@ -32,7 +32,7 @@ object Frontend extends Build with Prototypes {
   val article = application("article").dependsOn(commonWithTests)
   val applications = application("applications").dependsOn(commonWithTests)
   val event = application("event").dependsOn(commonWithTests).settings(
-    libraryDependencies += "com.novus" % "salat_2.9.2" % "1.9.1"
+    libraryDependencies += "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
   )
   val football = application("football").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
@@ -67,7 +67,7 @@ object Frontend extends Build with Prototypes {
 
   val admin = application("admin").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "com.novus" % "salat_2.9.2" % "1.9.1"
+      "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
     )
   )
 
