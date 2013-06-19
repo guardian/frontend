@@ -1,7 +1,7 @@
-@(fixture: pa.Fixture)
+@(fixture: pa.Fixture)(implicit request: RequestHeader)
 
 <li class="match">
-    <a href="@MatchUrl(fixture)" data-link-name="fixture stats" data-match-id="@fixture.id">
+    <a href="@InBodyLink{@MatchUrl(fixture)}" data-link-name="fixture stats" data-match-id="@fixture.id">
         <p class="match-desc type-10">
 
             <span class="match-home match-team">@fixture.homeTeam.name</span>

@@ -10,7 +10,7 @@
 
         @if(zone.name.title != "News") {
         	<h1 class="article-zone type-2">
-                <a href="@zone.name.href" data-link-name="zone:text" class="zone-color">
+                <a href="@InBodyLink(zone.name.href)" data-link-name="zone:text" class="zone-color">
                     @HtmlFormat.raw(zone.name.title)
                 </a>
             </h1>
@@ -20,7 +20,7 @@
 
             @zone.sections.map{ section =>
                 <li class="nav__item">
-                    <a class="nav__link" href="@section.href" data-link-name="@section.linkName:text">
+                    <a class="nav__link" href="@InBodyLink(section.href)" data-link-name="@section.linkName:text">
                         @HtmlFormat.raw(section.title)
                     </a>
                 </li>

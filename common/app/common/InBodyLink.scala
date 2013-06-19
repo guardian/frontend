@@ -1,5 +1,7 @@
 package common
 
+import play.api.templates.Html
+
 object InBodyLink extends Logging {
 
   //all content types except article (they do not have the word "article" in the url)
@@ -8,12 +10,16 @@ object InBodyLink extends Logging {
     "crossword", "competition", "podcast", "signup", "cartoon", "table", "graphic", "audioslideshow", "data",
     "document")
 
-  private val domain = """http://www.(guardian.co.uk|guardiannews.com)"""
+  private val domain = """http://www.(guardian.co.uk|guardiannews.com|theguardian.com)"""
   private val section = """(/[\w\d\.-]+)"""
   private val blog = section
   private val date = """(/\d\d\d\d/\w\w\w/\d\d)"""
   private val contentType = section
   private val wordsForUrl = section
+
+  private val Front = domain.r
+
+  private val SectionPath = section.r
 
   private val SectionUrl = (domain + section).r
   private val TagUrl = (domain + section + wordsForUrl).r
@@ -37,9 +43,11 @@ object InBodyLink extends Logging {
     def unapply(s: String): Option[String] = if (unSupportedContentTypes.exists(_ == s.drop(1))) Some(s) else None
   }
 
+  def apply(html: Html)(implicit edition: Edition): String = this(html.toString())
+
   // see http://www.scala-lang.org/node/7290
   // partial functions with Regex grow exponentially and the JVM has a max size for a method
-  def apply(url: String): String = {
+  def apply(url: String)(implicit edition: Edition): String = {
     val queryParams = url.dropWhile(_ != '?')
     val urlWithoutParams: String = url.takeWhile(_ != '?')
     val hash = urlWithoutParams.dropWhile(_ != '#')
@@ -69,7 +77,11 @@ object InBodyLink extends Logging {
       unknown
   }
 
-  private def pageTypes(url: String): PartialFunction[String, String] = {
+  private def pageTypes(url: String)(implicit edition: Edition): PartialFunction[String, String] = {
+
+    case Front(_) | "/" =>
+      log.debug(s"supported: resolved $url as a front")
+      s"/${Editionalise("", edition)}"
 
     case FeedArticle(_) =>
       log.debug("unsupported: resolved %s as a feed article" format (url))
@@ -81,7 +93,11 @@ object InBodyLink extends Logging {
 
     case SectionUrl(_, section) =>
       log.debug("supported: resolved %s as a section" format (url))
-      section
+      s"/${Editionalise(section.drop(1), edition)}"
+
+    case SectionPath(_) =>
+      log.debug(s"supported: resolved $url as a section path")
+      s"/${Editionalise(url.drop(1), edition)}"
 
     case TagUrl(_, section, wordsForUrl) =>
       log.debug("supported: resolved %s as a tag" format (url))

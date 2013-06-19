@@ -1,7 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 <h2 class="article-zone type-1">
-    <a class="zone-color" data-link-name="article section" href="/@content.section">@Html(content.sectionName)</a>
+    <a class="zone-color" data-link-name="article section" href="@InBodyLink{/@content.section}">@Html(content.sectionName)</a>
 </h2>
 
 <article id="article" class="article" itemprop="mainContentOfPage" itemscope itemtype="@content.schemaType">

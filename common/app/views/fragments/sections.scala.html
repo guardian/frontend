@@ -5,16 +5,29 @@
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
     <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} cf">
-
-        @Edition(request).navigation(page).map{ section =>
-        <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
-            <a href="@section.name.href"
-                data-link-name="@section.name.linkName"
-                class="nav__link@if("/" + page.id == section.name.href) { is-active}"
+        @* <!-- TODO delete site after switch to single domain --> *@
+        @SiteOr{ site =>
+            @Edition(request).navigation(page).map{ section =>
+            <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
+                <a href="@section.name.href"
+                   data-link-name="@section.name.linkName"
+                   class="nav__link@if("/" + page.id == section.name.href) { is-active}"
                 @if(section.name.newWindow){ target="_blank" }>
-                    @HtmlFormat.raw(section.name.title)
-            </a>
-        </li>
+                @HtmlFormat.raw(section.name.title)
+                </a>
+            </li>
+            }
+        }{
+            @Edition(request).navigation(page).map{ section =>
+                <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
+                    <a href="@InBodyLink{@section.name.href}"
+                        data-link-name="@section.name.linkName"
+                        class="nav__link@if("/" + page.id == section.name.href) { is-active}"
+                        @if(section.name.newWindow){ target="_blank" }>
+                            @HtmlFormat.raw(section.name.title)
+                    </a>
+                </li>
+            }
         }
         <li class="nav__item @if(!isFooter){ mobile-only}"><a class="nav__link" data-link-name="all sections" href="/sections">All sections</a></li>
     </ul>
@@ -36,7 +49,7 @@
             <li class="nav__item"><a class="nav__link edition edition-au" data-link-name="switch to au edition" href="http://@site.ukHost/australia@if(site.isUsEdition){#gu.prefs.switchOn=australia-edition}">Australia edition</a></li>
         }{
             @Edition.others(request).map{ edition =>
-                <li class="nav__item"><a class="nav__link edition" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="/@{Editionalise("", edition)}">@edition.displayName</a></li>
+                <li class="nav__item"><a class="nav__link edition" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="@InBodyLink{/}(edition)">@edition.displayName</a></li>
             }
         }
     </ul>

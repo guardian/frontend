@@ -8,14 +8,14 @@
         <div class="article-body">
             <header class="article__head">
                 <h1 class="article-headline">
-                    <a href="@page.contentUrl">@Html(page.title)</a>
+                    <a href="@InBodyLink{@page.contentUrl}">@Html(page.title)</a>
                 </h1>
             </header>
         
             @fragments.commentsBody(page)
 
             @if(page.currentPage + 1 <= page.pages){
-              <a href="/@page.id?page=@(page.currentPage + 1)">Next page</a>
+              <a href="@InBodyLink{/@page.id?page=@(page.currentPage + 1)}">Next page</a>
             }
         </div>
     </div>

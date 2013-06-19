@@ -5,8 +5,8 @@
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
     <h@headingLevel class="trail__headline type-5">
-        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
-            @cleanTrailText(trail.headline)
+        <a href="@InBodyLink{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+            @cleanTrailText(trail.headline)(Edition(request))
         </a>
     </h@headingLevel>
 

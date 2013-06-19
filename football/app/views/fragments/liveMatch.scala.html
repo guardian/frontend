@@ -1,8 +1,8 @@
-@(live: pa.FootballMatch)
+@(live: pa.FootballMatch)(implicit request: RequestHeader)
 @import implicits.Football._
 
 <li class="match live-match">
-    <a href="@MatchUrl(live)" data-link-name="stats" data-match-id="@live.id">
+    <a href="@InBodyLink{@MatchUrl(live)}" data-link-name="stats" data-match-id="@live.id">
         <p class="match-desc type-10">
             <span class="match-home match-team">@live.homeTeam.name</span>
             <span class="match-result">@live.homeTeam.score-@live.awayTeam.score</span>

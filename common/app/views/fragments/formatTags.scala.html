@@ -1,3 +1,3 @@
-@(tag: Tag)
+@(tag: Tag)(implicit request: RequestHeader)
 
-<li class="b1"><a href="@tag.url">@Html(tag.name)</a></li>
+<li class="b1"><a href="@InBodyLink{@tag.url}">@Html(tag.name)</a></li>

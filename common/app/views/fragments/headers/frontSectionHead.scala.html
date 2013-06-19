@@ -1,7 +1,7 @@
 @(description: TrailblockDescription,  edition: Option[Edition] = None)(implicit request: RequestHeader)
 <div class="@if(request.path == "/"){front-section-head zone-background} else {sub-section-head}">
     <h1>
-       <a @if(request.path != ""){class="zone-color"} data-link-name="section heading" href="/@description.id">
+       <a @if(request.path != ""){class="zone-color"} data-link-name="section heading" href="@InBodyLink{/@description.id}">
          @description.name
         </a>
     </h1>
