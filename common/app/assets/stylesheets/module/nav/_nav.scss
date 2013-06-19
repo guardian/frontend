@@ -174,11 +174,14 @@
         }
 
         &.is-active:after {
-            content: "\25B2";
+            content: " ";
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #333333;
             position: absolute;
-            left: 38%;
-            display: block;
-            top: 32px;
+            bottom: -5px;
+            margin-left: -10px;
+            left:50%;
         }
     }
 
