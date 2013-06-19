@@ -147,7 +147,7 @@
     width: 100%;
     padding: 0 $gutter;
     background-color: $mushroom;
-    border-bottom: 1px solid $darkMushroom;
+    border-bottom: 2px solid $darkMushroom;
 
     @media (min-width: $tablet) { display: block; }
 }
@@ -179,7 +179,7 @@
             border-right: 10px solid transparent;
             border-bottom: 10px solid #333333;
             position: absolute;
-            bottom: -5px;
+            bottom: -6px;
             margin-left: -10px;
             left:50%;
         }
@@ -212,7 +212,7 @@
     width: 100%;
     padding: 0 $gutter;
     background-color: #ffffff;
-    border-bottom: 1px solid $darkMushroom;
+    border-bottom: 2px solid $darkMushroom;
 
     @media only screen and (min-width: $tablet) { display: block; }
 }
@@ -266,22 +266,33 @@
     margin-top: 58px;
     display: none;
 
+
     @media only screen and (max-width: $tablet) { display: block; }
 
     .localnav__cta {
         float: right;
-        width: 60px;
+        width: 50px;
+        margin-right: -16px;
+        border-left: 1px solid #EDEDE7;
+        background-color: transparent;
 
         &.is-active i {
             @include rotate(180deg);
         }
     }
+
+}
+
+.localnav__wrapper {
+    border-bottom: 1px solid #EDEDE7;
+    margin: 0 $gutter;
 }
 
 .localnav__title {
     @extend .section-head;
     float: left;
     border: 0 !important;
+    margin: 0 !important;
 }
 
 

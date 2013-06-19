@@ -21,6 +21,7 @@ define([
                     sectionId:   'culture',
                     sectionName: 'Culture',
                     zones: {
+                        '/culture'        : 'Culture',
                         '/film'        : 'Film',
                         '/music'       : 'Music',
                         '/books'       : 'Books',
@@ -32,12 +33,13 @@ define([
                     sectionId:   'sport',
                     sectionName: 'Sport',
                     zones: {
+                        '/sport'          : 'Sport',
                         '/football'          : 'Football',
                         '/sport/cricket'     : 'Cricket',
                         '/sport/tennis'      : 'Tennis',
                         '/sport/rugby-union' : 'Rugby union',
                         '/sport/cycling'     : 'Cycling',
-                        '/sport/us-sport'    : 'US Sport'
+                        '/sport/us-sport'    : 'US sports'
                     }
                 }
             ];
@@ -142,18 +144,21 @@ define([
                                             '</div>';
 
                     // Insert the CTA for the popup local nav
-                    var currentZoneName = currentSection.zones['/'+config.page.section] || currentSection.sectionName;
-                    var localNavCtaHtml = '<div class="localnav--small cf">' +
-                                          '  <h1 class="localnav__title zone-color">'+currentZoneName+'</h1>' +
-                                          '    <button class="cta localnav__cta control" data-link-name="Popup Localnav" data-control-for="nav-popup-localnav">' +
-                                          '      <i class="i i-arrow-blue-down"></i>' +
-                                          '    </button>' +
+                    var sectionHeadNode = common.$g('.section-head', context),
+                        currentZoneName = sectionHeadNode.text() || currentSection.zones['/'+config.page.section] || currentSection.sectionName,
+                        localNavCtaHtml = '<div class="localnav--small">' +
+                                          '  <div class="localnav__wrapper cf">' +
+                                          '    <h1 class="localnav__title zone-color">'+currentZoneName+'</h1>' +
+                                          '      <button class="cta localnav__cta control" data-link-name="Popup Localnav" data-control-for="nav-popup-localnav">' +
+                                          '        <i class="i i-arrow-blue-down"></i>' +
+                                          '      </button></div>' +
+                                          '  </div>' +
                                           '</div>';
 
                     common.$g('#header', context).append(localNavPopupHtml + localNavCtaHtml);
 
                     // Remove the other section head from the page
-                    common.$g('.section-head', context).remove();
+                    common.$g('.section-head, .article-zone', context).remove();
 
                     common.$g('#preloads').addClass('has-localnav');
                 }
