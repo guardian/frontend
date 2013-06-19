@@ -263,27 +263,26 @@
 
 .localnav--small {
     background-color: #fff;
-    margin-top: 58px;
     display: none;
-
 
     @media only screen and (max-width: $tablet) { display: block; }
 
     .localnav__cta {
         float: right;
         width: 50px;
+        height: 37px;
         margin-right: -16px;
-        border-left: 1px solid #EDEDE7;
-        background-color: transparent;
+        padding: 0;
 
         &.is-active i {
             @include rotate(180deg);
+            background-position: center left !important;
         }
     }
 
 }
 
-.localnav__wrapper {
+.localnav__inner {
     border-bottom: 1px solid #EDEDE7;
     margin: 0 $gutter;
 }

@@ -147,15 +147,16 @@ define([
                     var sectionHeadNode = common.$g('.section-head', context),
                         currentZoneName = sectionHeadNode.text() || currentSection.zones['/'+config.page.section] || currentSection.sectionName,
                         localNavCtaHtml = '<div class="localnav--small">' +
-                                          '  <div class="localnav__wrapper cf">' +
+                                          '  <div class="localnav__inner cf">' +
                                           '    <h1 class="localnav__title zone-color">'+currentZoneName+'</h1>' +
-                                          '      <button class="cta localnav__cta control" data-link-name="Popup Localnav" data-control-for="nav-popup-localnav">' +
-                                          '        <i class="i i-arrow-blue-down"></i>' +
+                                          '      <button class="cta localnav__cta control zone-background" data-link-name="Popup Localnav" data-control-for="nav-popup-localnav">' +
+                                          '        <i class="i i-local-nav-arrow"></i>' +
                                           '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
 
-                    common.$g('#header', context).append(localNavPopupHtml + localNavCtaHtml);
+                    //common.$g('#header', context).append(localNavCtaHtml + localNavPopupHtml);
+                    common.$g('.parts__head').append(localNavCtaHtml + localNavPopupHtml);
 
                     // Remove the other section head from the page
                     common.$g('.section-head, .article-zone', context).remove();
