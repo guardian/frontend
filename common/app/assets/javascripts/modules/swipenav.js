@@ -283,7 +283,6 @@ define([
                             sequenceCache[s] = {};
                             sequence.push(s);
                             sequenceLen += 1;
-                            window.console.log(i + " " + s);
                         }
                     }
                     setSequencePos(window.location.pathname);
