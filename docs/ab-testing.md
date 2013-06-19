@@ -127,6 +127,8 @@ You can stop and start the test using our [switchboard](https://frontend.gutools
 
 For simple analysis of the data you can use [Omniture](https://sc.omniture.com) 
 
+The data is logged under the Omniture property _p51_.
+
 ### Ophan
 
 For inspection of the raw test data you can query the RedShift instance created by the data team.
