@@ -69,6 +69,9 @@ GET     /countries*id                    controllers.event.EntityController.read
 GET     /organisations                   controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Organization")
 GET     /organisations*id                controllers.event.EntityController.read(id, rdfType = "http://schema.org/Organization")
 
+# Fronts
+GET     /fronts                          controllers.FrontsController.index()
+
 
 #Metrics
 

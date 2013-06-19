@@ -1,0 +1,15 @@
+@(env: String)
+
+@admin_main("Fronts editor", env, isAuthed = true) {
+
+    <h1>Fronts</h1>
+    <div class="top-stories">
+        <h2>Top Stories</h2>
+        <input class="top-stories__search search-query input-xxlarge" type="text" placeholder="Search for an article" autocomplete="off">
+        <ol class="top-stories__articles"></ol>
+        <button type="button" class="btn btn-success">Save</button>
+    </div>
+    
+    <script src="@routes.Assets.at("javascripts/fronts.js")"></script>
+
+}
