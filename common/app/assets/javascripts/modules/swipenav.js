@@ -100,7 +100,7 @@ define([
             callback = o.callback || noop,
             frag;
 
-        if (url && el) {            
+        if (url && el) {
             // Associate a contenet area with this pane, if not already done so
             el.bodyPart = el.bodyPart || el.querySelector(bodyPartSelector);
             el.bodyPart.innerHTML = pendingHTML;
@@ -242,7 +242,7 @@ define([
                 // data-link-context was set by a click on a previous page
                 storage.remove(storePrefix + 'linkContext');
             } else {
-                // No data-link-context, so infer the section/tag component from the url, 
+                // No data-link-context, so infer the section/tag component from the url,
                 sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
                 sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
             }
@@ -296,9 +296,9 @@ define([
     function loadSequenceRetry (sequenceUrl, callback) {
         // drop last component of url, then retry
         sequenceUrl = sequenceUrl.split('/');
-        sequenceUrl.pop(); 
+        sequenceUrl.pop();
         if(sequenceUrl.length > 0) {
-            linkContext = sequenceUrl.join('/'); 
+            linkContext = sequenceUrl.join('/');
             loadSequence(callback);
         }
     }
