@@ -132,11 +132,12 @@ define([
                     if (el.pendingUrl === url) {
                         el.url = url;
                         populate(el, html);
-                        common.mediator.emit('module:swipenav:pane:loaded', el);
                     }
+                }).fail(function () {
                 }).always(function () {
                     delete el.pendingUrl;
                     callback();
+                    common.mediator.emit('module:swipenav:pane:loaded', el);
                 });
             }
         }
