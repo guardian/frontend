@@ -1,4 +1,3 @@
-
 This explains how to run an A/B test in frontend.
 
 Frontend does not use [Optimizely](https://www.optimizely.com).
@@ -81,7 +80,7 @@ define(['bonzo'], function (bonzo) {
 The AMD module must return an object with the following properties,
 
 - id: The unique name of the test.
-- audience: The ratio of people who 0.2 = 20% of users will see the variant.
+- audience: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
 - description: A plain English summary of the test.
 - canRun: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.)
 - variants: An array of two functions - the first representing the _control_ group, the second the variant.
