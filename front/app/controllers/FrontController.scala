@@ -105,14 +105,17 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
       if (trailblocks.isEmpty) {
         InternalServerError
       } else {
-        val htmlResponse = () => views.html.front(frontPage, trailblocks)
-        lazy val jsonResponse = Map(
-          "html" -> views.html.fragments.frontBody(frontPage, trailblocks),
-          "trails" -> trailblocks.headOption.map{ trailblock =>
-            trailblock.trails.map(_.url)
-          }.getOrElse(Nil)
-        )
-        renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+        Cached(frontPage){
+          if (request.isJson)
+            JsonComponent(
+              "html" -> views.html.fragments.frontBody(frontPage, trailblocks),
+              "trails" -> trailblocks.headOption.map{ trailblock =>
+                trailblock.trails.map(_.url)
+              }.getOrElse(Nil)
+            )
+          else
+            Ok(views.html.front(frontPage, trailblocks))
+        }
       }
 
     }.getOrElse(NotFound) //TODO is 404 the right thing here

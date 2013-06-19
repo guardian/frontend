@@ -61,12 +61,15 @@ object TagController extends Controller with Logging with JsonTrails with Execut
   }
 
   private def renderTag(model: TagAndTrails)(implicit request: RequestHeader) = {
-    val htmlResponse = () => views.html.tag(model.tag, model.trails, model.leadContent)
-    lazy val jsonResponse = Map(
-      "html" -> views.html.fragments.tagBody(model.tag, model.trails, model.leadContent),
-      "trails" -> (model.leadContent ++ model.trails).map(_.url)
-    )
-    renderFormat(htmlResponse, jsonResponse, model.tag, Switches.all)
+    Cached(model.tag){
+      if (request.isJson)
+        JsonComponent(
+          "html" -> views.html.fragments.tagBody(model.tag, model.trails, model.leadContent),
+          "trails" -> (model.leadContent ++ model.trails).map(_.url)
+        )
+      else
+        Ok(views.html.tag(model.tag, model.trails, model.leadContent))
+    }
   }
   
   private def renderTrailsFragment(model: TagAndTrails)(implicit request: RequestHeader) = {
