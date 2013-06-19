@@ -1,6 +1,5 @@
 package common
 
-import play.api.mvc.RequestHeader
 import model.{Tag, MetaData}
 
 case class SectionLink(zone: String, linkName: String, href: String, title: String, newWindow: Boolean = false)
@@ -8,7 +7,7 @@ case class SectionLink(zone: String, linkName: String, href: String, title: Stri
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Boolean = false) {
-def currentFor(metadata: MetaData) = {
+  def currentFor(metadata: MetaData) = {
     val sectionId = s"/${metadata.section}"
     sectionId == name.href || name.href == s"/${metadata.id}" || links.exists(_.href == sectionId)
   }

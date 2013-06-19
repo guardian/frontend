@@ -10,122 +10,124 @@ import scala.Some
 
 import concurrent.Future
 
-object NetworkFrontPage extends MetaData {
-  override val canonicalUrl = Some("http://www.guardian.co.uk")
-  override val id = ""
-  override val section = ""
-  override val webTitle = "The Guardian"
-  override lazy val analyticsName = "GFE:Network Front"
+// TODO, this needs a rethink, does not seem elegant
+object FrontPage {
 
-  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    "content-type" -> "Network Front"
+  private val fronts = Seq(
+
+    new MetaData {
+      override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
+      override val id = "australia"
+      override val section = "australia"
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front"
+      )
+    },
+
+    new MetaData {
+      override val canonicalUrl = Some("http://www.guardian.co.uk/sport")
+      override val id = "sport"
+      override val section = "sport"
+      override val webTitle = "Sport"
+      override lazy val analyticsName = "GFE:sport"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Sport",
+        "content-type" -> "Section"
+      )
+    },
+
+    new MetaData {
+      override val canonicalUrl = Some("http://www.guardian.co.uk/culture")
+      override val id = "culture"
+      override val section = "culture"
+      override val webTitle = "Culture"
+      override lazy val analyticsName = "GFE:culture"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Culture",
+        "content-type" -> "Section"
+      )
+    },
+
+    //TODO important this one is last for matching purposes
+    new MetaData {
+      override val canonicalUrl = Some("http://www.guardian.co.uk")
+      override val id = ""
+      override val section = ""
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front"
+      )
+    }
   )
-}
 
-object AustraliaNetworkFrontPage extends MetaData {
-  override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
-  override val id = "australia"
-  override val section = "australia"
-  override val webTitle = "The Guardian"
-  override lazy val analyticsName = "GFE:Network Front"
+  def apply(path: String): Option[MetaData] = fronts.find(f => path.startsWith(f.id))
 
-  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    "content-type" -> "Network Front"
-  )
-}
-
-object SportFrontPage extends MetaData {
-  override val canonicalUrl = Some("http://www.guardian.co.uk/sport")
-  override val id = "sport"
-  override val section = "sport"
-  override val webTitle = "Sport"
-  override lazy val analyticsName = "GFE:sport"
-
-  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> "Sport",
-    "content-type" -> "Section"
-  )
-}
-
-object CultureFrontPage extends MetaData {
-  override val canonicalUrl = Some("http://www.guardian.co.uk/culture")
-  override val id = "culture"
-  override val section = "culture"
-  override val webTitle = "Culture"
-  override lazy val analyticsName = "GFE:culture"
-
-  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> "Culture",
-    "content-type" -> "Section"
-  )
 }
 
 
 class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
+  val EditionalisedKey = """(.*\w\w-edition)""".r
+
   val front: Front = Front
 
-  def warmup() = Action {
-    val promiseOfWarmup = Future(Front.warmup)
-    Async {
-      promiseOfWarmup.map(warm => Ok("warm"))
-    }
+  private def editionPath(path: String, edition: Edition) = path match {
+    case EditionalisedKey(_) => path
+    case _ => Editionalise(path, edition)
   }
 
-  def isUp() = Action {
-    Ok("Ok")
-  }
-  
   def render(path: String) = Action { implicit request =>
 
-    val edition = Edition(request)
+    // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
+    // go live
+    val realPath = editionPath(path, Edition(request))
 
-    val frontPage: MetaData = path match {
-      case "front" => NetworkFrontPage
-      case "australia" => AustraliaNetworkFrontPage
-      case "sport" => SportFrontPage
-      case "culture" => CultureFrontPage
-    }
+    FrontPage(realPath).map { frontPage =>
 
-    // get the trailblocks
-    val trailblocks: Seq[Trailblock] = front(path, edition).filterNot{ trailblock =>
-      // filter out configured trailblocks if not on the network front
-      path match {
-        case "front" => false
-        case _ => trailblock.description.isConfigured
+      // get the trailblocks
+      val trailblocks: Seq[Trailblock] = front(realPath).filterNot { trailblock =>
+
+        // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
+        // filter out configured trailblocks if not on the network front
+        path match {
+          case "front" => false
+          case _ => trailblock.description.isConfigured
+        }
       }
-    }
 
-    if (trailblocks.isEmpty) {
-      InternalServerError
-    } else {
-      val htmlResponse = () => views.html.front(frontPage, trailblocks)
-      val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
-      renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
-    }
+      if (trailblocks.isEmpty) {
+        InternalServerError
+      } else {
+        val htmlResponse = () => views.html.front(frontPage, trailblocks)
+        val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
+        renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+      }
+    }.getOrElse(NotFound) //TODO is 404 the right thing here
   }
-  
+
   def renderTrails(path: String) = Action { implicit request =>
 
-    val edition = Edition(request)
+    val realPath = editionPath(path, Edition(request))
 
-    val frontPage: MetaData = path match {
-      case "front" => NetworkFrontPage
-      case "australia" => AustraliaNetworkFrontPage
-      case "sport" => SportFrontPage
-      case "culture" => CultureFrontPage
-    }
+    FrontPage(realPath).map{ frontPage =>
+      // get the first trailblock
+      val trailblock: Option[Trailblock] = front(realPath).headOption
 
-    // get the first trailblock
-    val trailblock: Option[Trailblock] = front(path, edition).headOption
-
-    if (trailblock.isEmpty) {
-      InternalServerError
-    } else {
-      val trails: Seq[Trail] = trailblock.get.trails
-      val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
-      renderFormat(response, response, frontPage)
-    }
+      if (trailblock.isEmpty) {
+        InternalServerError
+      } else {
+        val trails: Seq[Trail] = trailblock.get.trails
+        val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
+        renderFormat(response, response, frontPage)
+      }
+    }.getOrElse(NotFound)
   }
 
 }

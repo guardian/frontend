@@ -29,9 +29,11 @@
     top: 0;
     left: 0;
     right: 0;
-    background-color: $blue;
     z-index: 99;
 }
+    .header__inner {
+        background-color: $blue;
+    }
 
 #logo {
     display: block;

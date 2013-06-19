@@ -40,7 +40,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
 
 
   val configuredFronts = Map(
-    "front" -> Seq(
+    Editionalise("", Uk) -> Seq(
       ItemTrailblockDescription("", "News", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
@@ -52,7 +52,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
       ItemTrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
     ),
 
-    "sport" -> Seq(
+    Editionalise("sport", Uk) -> Seq(
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -67,7 +67,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
       ItemTrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1, style = Some(Headline))
     ),
 
-    "culture" -> Seq(
+    Editionalise("culture", Uk) -> Seq(
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -78,7 +78,7 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
       ItemTrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
     ),
 
-    "australia" -> Seq(
+    Editionalise("australia", Uk) -> Seq(
       ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = false)(Au),
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = false)(Au),
       ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Thumbnail), showMore = false)(Au),

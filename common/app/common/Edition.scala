@@ -52,3 +52,26 @@ object Edition {
     all.filter(_ != currentEdition)
   }
 }
+
+object Editionalise {
+  import common.editions.EditionalisedSections._
+
+  //TODO this scheme changes at some point (awaiting content api work)
+  def apply(id: String, edition: Edition, request: Option[RequestHeader] = None): String = {
+
+    // TODO temporarily support old style (non-editionalised) ids
+    val isLegacy = request.flatMap(Site(_)).isDefined
+
+    if (isLegacy || !isEditionalised(id)) {
+      id
+    } else {
+      id match {
+        case "" => s"${edition.id.toLowerCase}-edition"
+        case _ => s"$id/${edition.id.toLowerCase}-edition"
+      }
+    }
+  }
+
+  def apply(id: String, request: RequestHeader): String = this(id, Edition(request), Some(request))
+
+}
