@@ -30,6 +30,18 @@ define([
                         '/stage'       : 'Stage'
                     }
                 },{
+                    sectionId:   'football',
+                    sectionName: 'Football',
+                    zones: {
+                        '/football'              : 'Football',
+                        '/football/tables'       : 'Tables',
+                        '/football/live'         : 'Live scores',
+                        '/football/fixtures'     : 'Fixtures',
+                        '/football/results'      : 'Results',
+                        '/football/teams'        : 'Teams',
+                        '/football/competitions' : 'Leagues & competitions'
+                    }
+                },{
                     sectionId:   'sport',
                     sectionName: 'Sport',
                     zones: {
@@ -154,6 +166,9 @@ define([
                                           '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
+
+
+
 
                     //common.$g('#header', context).append(localNavCtaHtml + localNavPopupHtml);
                     common.$g('.parts__head').append(localNavCtaHtml + localNavPopupHtml);
