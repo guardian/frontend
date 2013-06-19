@@ -184,4 +184,4 @@ Optimizely is relatively expensive - several thousand pounds p/month.
 
 Optimizely is a client-side framework, which is limited for some types of testing. 
  
-It adds a rather large overhead to the cookie.
+It adds a rather large overhead to the cookie (mine is 2.5kb).
