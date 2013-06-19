@@ -2,17 +2,31 @@ package common
 
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import views.support.{StripAndEscapeHtmlTags, HtmlCleaner}
+import views.support.{StripAndEscapeHtmlTags}
 
 class UnescapeHtmlInAttributesTest extends FlatSpec with ShouldMatchers {
 
-  "Unescape HTML in attributes" should "remove strip HTML and unescape entities" in {
+  "Unescape HTML in attributes" should "unescape entities" in {
 
 
 
     val html: String = StripAndEscapeHtmlTags(
-      "Wigan Athletic have appointed Owen Coyle, the former Burnley and Bolton manager, to succeed Roberto Mart&iacute;nez. Photograph: Carl Recine/Action Images")
+    "Wigan Athletic have appointed Owen Coyle, the former Burnley and Bolton manager, to succeed Roberto Mart&iacute;nez. Photograph: Carl Recine/Action Images")
+
     html should equal ("Wigan Athletic have appointed Owen Coyle, the former Burnley and Bolton manager, to succeed Roberto Martínez. Photograph: Carl Recine/Action Images")
+
+  }
+
+  it should "strip out HTML" in {
+    val html: String = StripAndEscapeHtmlTags(
+     "<a href=\"https://www.facebook.com/pages/Jacob-Everett/295006103859003\">Jacob Everett </a> has a simple idea, but one that he carries out beautifully: the head of a famous person imposed on shoulders made from a map of the area they are associated with. This one of Groucho Marx and a map of New York from 1939 is available to buy at <a href=\"http://www.jacobeverett.com/\">jacobeverett.com</a>. Recommended by Guardian reader <a href=\"http://discussion.guardian.co.uk/comment-permalink/23575543\">Adamki</a>.")
+      html should equal ("Jacob Everett  has a simple idea, but one that he carries out beautifully: the head of a famous person imposed on shoulders made from a map of the area they are associated with. This one of Groucho Marx and a map of New York from 1939 is available to buy at jacobeverett.com. Recommended by Guardian reader Adamki.")
+  }
+
+   it should "escape quote marks" in {
+    val html: String = StripAndEscapeHtmlTags(
+      "\"quoted text\"")
+    html should equal ("&quot;quoted text&quot;")
   }
 
 
