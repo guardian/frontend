@@ -22,10 +22,12 @@ A switch allows you to stop and start the AB test outside of a normal software r
 Inside, `common/app/conf/switches.scala` you want to create a Switch like this,
 
 ```
-val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
+val ABFontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
     "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
     safeState = Off)
 ```
+
+The only convention is that the test name has to start with the characters _'AB'_.
 
 You also need to add it to the list of available switches at the foot of the same file,
 
@@ -33,7 +35,7 @@ You also need to add it to the list of available switches at the foot of the sam
 val all: List[Switch] = List(
     FooSwitch,
     BarSwitch,
-    FontDelaySwitch,
+    ABFontDelaySwitch,
     ..
     )
 ```
@@ -87,7 +89,9 @@ The AMD module must return an object with the following properties,
 - canRun: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.)
 - variants: An array of two functions - the first representing the _control_ group, the second the variant.
 
-You will also need to mark the module as a dependency of the AB testing module in `./common/app/assets/javascripts/modules/experiments/ab.js`,  
+You will also need to mark the module as a dependency of the AB testing module.
+
+Do that here, `./common/app/assets/javascripts/modules/experiments/ab.js` 
 
 ```
 define([
