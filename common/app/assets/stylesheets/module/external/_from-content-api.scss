@@ -14,6 +14,19 @@
         color: #333;
         margin-bottom: $baseline;
         clear: both;
+
+        @media (min-width: $tablet) {
+            font-size: 22px;
+            font-size: 2.2rem;
+            line-height: 28px;
+            line-height: 2.8rem;
+        }
+        @media (min-width: $desktop) {
+            font-size: 22px;
+            font-size: 2.2rem;
+            line-height: 28px;
+            line-height: 2.8rem;
+        }
     }
 
     h3 {
@@ -35,8 +48,30 @@
         color: #333;
     }
 
+
+    h3,
+    > p,
+    .block-elements > p,
+    ul,
+    ol,
+    address,
+    blockquote,
+    blockquote p {
+        @media (min-width: $tablet) {
+            font-size: 18px;
+            font-size: 1.8rem;
+            line-height: 26px;
+            line-height: 2.6rem;
+            margin-bottom: 16px;
+            margin-bottom: 1.6rem;
+        }
+    }
+
     // Experiment with paragraph spacing
+    .test-paragraph-spacing--no-spacing-indents &,
     .test-paragraph-spacing--no-spacing & {
+        padding-bottom: 8px;
+
         > p {
             margin-bottom: 0;
 
@@ -56,22 +91,13 @@
     }
     .test-paragraph-spacing--no-spacing-indents & {
         > p {
-            margin-bottom: 0;
-
             + p {
                 text-indent: 1.5em;
-            }
-            + figure,
-            + video {
-                margin-top: $baseline;
-            }
-        }
-        > p,
-        > figure,
-        > video {
-            + h2,
-            + h3 {
-                margin-top: $baseline*3;
+
+                @media (min-width: $tablet) {
+                    text-indent: 26px;
+                    text-indent: 2.6rem;
+                }
             }
         }
     }
@@ -83,19 +109,28 @@
         address,
         blockquote,
         blockquote p {
-            margin: 0 0 $baseline*4 0;
+            line-height: 26px;
+            line-height: 2.6rem;
+            margin-bottom: 32px;
+            margin-bottom: 3.2rem;
+
+            @media (min-width: $tablet) {
+                line-height: 32px;
+                line-height: 3.2rem;
+            }
         }
     }
 }
 
 .article blockquote,
 .article blockquote p {
-    @extend %type-6;
-    color: #333;
-    font-weight: normal;
-    border-left: none;
+    @media (min-width: $tablet) {
+        font-size: 18px;
+        font-size: 1.8rem;
+        line-height: 26px;
+        line-height: 2.6rem;
+    }
 }
-
 
 /* Blocks
    ========================================================================== */
