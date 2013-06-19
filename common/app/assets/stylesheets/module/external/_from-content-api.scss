@@ -109,14 +109,12 @@
         address,
         blockquote,
         blockquote p {
-            line-height: 26px;
-            line-height: 2.6rem;
-            margin-bottom: 32px;
-            margin-bottom: 3.2rem;
+            margin-bottom: 24px;
+            margin-bottom: 2.4rem;
 
             @media (min-width: $tablet) {
-                line-height: 32px;
-                line-height: 3.2rem;
+                margin-bottom: 26px;
+                margin-bottom: 2.6rem;
             }
         }
     }
