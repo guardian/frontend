@@ -27,7 +27,7 @@ val FontDelaySwitch = Switch("A/B Tests", "ab-web-fonts-delay",
     safeState = Off)
 ```
 
-The only convention is that the test id has to start with the characters _'ab-'_ (Eg, ab-web-fonts-delay).
+The only convention is that the test id has to start with the characters _'ab-'_.
 
 You also need to add it to the list of available switches at the foot of the same file,
 
