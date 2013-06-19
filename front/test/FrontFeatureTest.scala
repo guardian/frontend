@@ -265,7 +265,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       Fake {
         val controller = new FrontController {
           override val front = new Front() {
-            override def apply(path: String, edition: Edition) = Nil
+            override def apply(path: String) = Nil
           }
         }
 
