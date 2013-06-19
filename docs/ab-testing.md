@@ -22,12 +22,12 @@ A switch allows you to stop and start the AB test outside of a normal software r
 Inside, `common/app/conf/switches.scala` you want to create a Switch like this,
 
 ```
-val ABFontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
+val FontDelaySwitch = Switch("A/B Tests", "ab-web-fonts-delay",
     "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
     safeState = Off)
 ```
 
-The only convention is that the test name has to start with the characters _'AB'_.
+The only convention is that the test id has to start with the characters _'ab-'_ (Eg, ab-web-fonts-delay).
 
 You also need to add it to the list of available switches at the foot of the same file,
 
