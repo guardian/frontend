@@ -40,7 +40,6 @@ class TrailblockAgent(val description: TrailblockDescription) extends AkkaSuppor
 
   def trailblock: Option[Trailblock] = agent()
 
-  lazy val warmup = agent().orElse(quietlyWithDefault[Option[Trailblock]](None) { agent.await(5.seconds) })
 }
 
 object TrailblockAgent {
