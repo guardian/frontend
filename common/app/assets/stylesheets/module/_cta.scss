@@ -1,14 +1,14 @@
 .cta {
     @extend %type-10;
     line-height: 1;
-    display: block;
     color: #545454;
     text-align: center;
-    padding: ($baseline * 3 - 1) 0 ($baseline * 3 + 1);
+    display: block;
+    padding: $baseline*3 0 $baseline*3 0;
     margin: $baseline*2 0;
+    border: none;
     background-color: $mushroom;
     text-shadow: none;
-    border: none;
 
     &:link,
     &:visited {
@@ -28,8 +28,8 @@ button.cta {
     @extend %type-8;
     display: block;
     padding-top: 7px;
-    padding-bottom: 9px;
-    color: #666;
+    padding-bottom: 10px;
+    color: #666666;
 }
 
 .top {
