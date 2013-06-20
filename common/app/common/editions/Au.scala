@@ -13,7 +13,11 @@ import contentapi.QueryDefaults
 //This object exists to be used with ItemTrailblockDescription and is not a real edition like the others.
 //All that is really being used is Edition.id, which is AU
 //It is not included in the Edition.all sequence
-object Au extends Edition("AU", "Australia edition", DateTimeZone.forID("Australia/Sydney")) with Sections with Zones with QueryDefaults {
+object Au extends Edition(
+  "AU",
+  "Australia edition",
+  DateTimeZone.forID("Australia/Sydney"),
+  hreflang = "en-au") with Sections with Zones with QueryDefaults {
 
   val cultureCustomBlock = CustomTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)){
 
