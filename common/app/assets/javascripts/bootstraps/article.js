@@ -4,13 +4,15 @@ define([
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/discussion/discussion"
+    "modules/discussion/discussion",
+    "modules/userPrefs"
 ], function (
     common,
     AutoUpdate,
     MatchNav,
     Reading,
-    Discussion
+    Discussion,
+    userPrefs
 ) {
 
     var modules = {
@@ -75,12 +77,26 @@ define([
                     reader.init();
                 }
             });
+        },
+
+        paragraphSpacing: function(config) {
+            // NOTE: force user's to view particular paragraph spacing - can be deleted
+            // TODO: ability to force user in particular ab test
+            if (config.page.contentType === 'Article') {
+                ['no-spacing', 'no-spacing-indents', 'no-spacing-indents', 'more-spacing'].some(function(test) {
+                    if (userPrefs.isOn('paragraph-spacing.' + test)) {
+                        document.body.className += ' test-paragraph-spacing--' + test;
+                        return true;
+                    }
+                });
+            }
         }
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.paragraphSpacing(config);
             modules.matchNav();
             modules.initLiveBlogging();
             modules.logReading(context);
