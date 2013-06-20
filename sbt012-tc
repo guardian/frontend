@@ -59,9 +59,11 @@ fi
 
 #MaxPermSize specifies the the maximum size for the permanent generation heap,
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
-java -Xmx4096M -XX:MaxPermSize=2048m \
+cat /dev/null | java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
+  -Dsbt.log.noformat=true \
+  -DAPP_SECRET="m=KV8HQkjcaxygbDu>neHBe=Fgs=[M8^CFFOx_DoT0QGu<rY7I_ammS<P1VivCxS" \
   $PROXY_CONF \
   $BUILD_PARAMS \
   $IVY_PARAMS \

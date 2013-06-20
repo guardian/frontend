@@ -55,6 +55,8 @@ java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
   -Djava.awt.headless=true \
+  -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044 \
+  -DAPP_SECRET="m=KV8HQkjcaxygbDu>neHBe=Fgs=[M8^CFFOx_DoT0QGu<rY7I_ammS<P1VivCxS" \
   $BUILD_PARAMS \
   $IVY_PARAMS \
   $SBT_EXTRA_PARAMS \
