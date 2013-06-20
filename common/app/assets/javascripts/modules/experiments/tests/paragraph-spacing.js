@@ -1,7 +1,7 @@
 define(['common'], function (common) {
 
     var ParagraphSpacing = function () {
-        
+
         this.id = 'ParagraphSpacing';
         this.audience = 0.1;
         this.description = 'Impact of macro typography on readability';
@@ -19,19 +19,19 @@ define(['common'], function (common) {
             {
                 id: 'no-spacing',
                 test: function () {
-                    common.$g('#article').addClass('test-paragraph-spacing--no-spacing');
+                    common.$g('body').addClass('test-paragraph-spacing--no-spacing');
                 }
             },
             {
                 id: 'no-spacing-indents',
                 test: function () {
-                    common.$g('#article').addClass('test-paragraph-spacing--no-spacing-indents');
+                    common.$g('body').addClass('test-paragraph-spacing--no-spacing-indents');
                 }
             },
             {
                 id: 'more-spacing',
                 test: function () {
-                    common.$g('#article').addClass('test-paragraph-spacing--more-spacing');
+                    common.$g('body').addClass('test-paragraph-spacing--more-spacing');
                 }
             }
         ];

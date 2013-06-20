@@ -83,9 +83,13 @@ define([
             // NOTE: force user's to view particular paragraph spacing - can be deleted
             // TODO: ability to force user in particular ab test
             if (config.page.contentType === 'Article') {
-                ['no-spacing', 'no-spacing-indents', 'no-spacing-indents', 'more-spacing'].some(function(test) {
+                ['control', 'no-spacing-indents', 'more-spacing'].some(function(test) {
                     if (userPrefs.isOn('paragraph-spacing.' + test)) {
-                        document.body.className += ' test-paragraph-spacing--' + test;
+                        // remove any existing 'test-paragpraph-spacing--' classes (from the ab test)
+                        document.body.className = document.body.className.replace(/\btest-paragraph-spacing--[^\b]*/g, '')
+                            + ' test-paragraph-spacing--' + test;
+                        // force ab test off, in case it happens after this
+                        config.switches.abParagraphSpacing = false;
                         return true;
                     }
                 });
