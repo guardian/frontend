@@ -32,12 +32,15 @@
     cursor: pointer;
 }
 
-.expander:before {
-    content: '- ';
-}
-
-.shut .expander:before {
-    content: '+ ';
+.expander {
+    &:before {
+        position: relative;
+        top: -1px;
+        content: '− ';
+    }
+    .shut &:before {
+        content: '+ ';
+    }
 }
 
 .collapsible {

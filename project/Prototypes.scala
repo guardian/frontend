@@ -82,13 +82,15 @@ trait Prototypes {
 
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "1.9.1" % "test"
-    )
+    ),
+
+    (javaOptions in test) += "-DAPP_SECRET=secret"
   )
 
   val frontendAssemblySettings = Seq(
     test in assembly := {},
     executableName <<= (name) { "frontend-%s" format _ },
-    jarName in assembly <<= (executableName) { "%s.jar" format _ },
+    jarName in assembly <<= (executableName) map { "%s.jar" format _ },
 
     mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
       {
