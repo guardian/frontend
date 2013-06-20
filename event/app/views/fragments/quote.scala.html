@@ -1,4 +1,4 @@
-@(story: Story, index: Int)
+@(story: Story, index: Int)(implicit request: RequestHeader)
 
 @if(story.hasQuotes) {
     @story.contentWithQuotes.filter(_.colour > 0).drop(index).headOption.map{ article =>
@@ -20,12 +20,12 @@
                 <blockquote class="story-quote__quote" data-link-name="story quote">
                     @quote.text.map{ text =>
                       <p>
-                        @cleanTrailText(text)
+                        @cleanTrailText(text)(Edition(request))
                       </p>
                     }
                     <cite class="story-quote__cite">@quote.by.getOrElse(article.byline) @quote.subject.map{ subject => on @subject}</cite>
 
-                    <a class="cta-new" data-link-name="Continue reading" href="@article.url">
+                    <a class="cta-new" data-link-name="Continue reading" href="@LinkTo{@article.url}">
                         Continue reading
                         <button class="cta-new__btn cta-new__btn--right">
                             <i class="i i-arrow-blue-down cta-new__icn"></i>

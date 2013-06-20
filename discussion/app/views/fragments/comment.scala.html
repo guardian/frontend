@@ -39,7 +39,7 @@
                     Replies may also be deleted. For more detail see <a href="http://www.guardian.co.uk/community-faqs" data-link-name="FAQs">our FAQs</a>.
                 }else{
                     @withJsoup(BulletCleaner(comment.body))(
-                        InBodyLinkCleaner("in body link")
+                        InBodyLinkCleaner("in body link")(Edition(request))
                     )
                 }
             </div>

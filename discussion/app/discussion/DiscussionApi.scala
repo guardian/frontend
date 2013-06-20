@@ -1,6 +1,6 @@
 package discussion
 
-import common.{InBodyLink, ExecutionContexts, Logging}
+import common.{ExecutionContexts, Logging}
 import common.DiscussionMetrics.DiscussionHttpTimingMetric
 import conf.Switches.ShortDiscussionSwitch
 import model._
@@ -75,7 +75,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           CommentPage(
             id = s"discussion/$id",
             title = (json \ "discussion" \ "title").as[String],
-            contentUrl = InBodyLink((json \ "discussion" \ "webUrl").as[String]),
+            contentUrl = (json \ "discussion" \ "webUrl").as[String],
             comments = comments,
             currentPage =  (json \ "currentPage").as[Int],
             pages = (json \ "pages").as[Int]
