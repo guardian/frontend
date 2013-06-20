@@ -1,4 +1,4 @@
-@(team:pa.FootballTeam, previousResult: Seq[TeamFixture], upcomingFixtures: Seq[TeamFixture])
+@(team:pa.FootballTeam, previousResult: Seq[TeamFixture], upcomingFixtures: Seq[TeamFixture])(implicit request: RequestHeader)
 @import org.joda.time.DateTime
 
 <li class="team-fixtures competition-table js-front-trailblock" data-link-name="Team fixtures">
