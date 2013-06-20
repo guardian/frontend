@@ -134,7 +134,7 @@ define([
                 var currentSection = this.getCurrentSection();
 
                 if (currentSection) {
-                    var localNavItems = '';
+                    var localNavItems = [];
 
                     Object.keys(currentSection.zones).forEach(function(zonePath, i) {
                         var zoneName = currentSection.zones[zonePath],
@@ -142,22 +142,19 @@ define([
                             className = isActive ? 'nav__item is-active' : 'nav__item',
                             linkClass = isActive ? 'nav__link zone-color' : 'nav__link';
 
-                        localNavItems += '<li class="' + className + '">' +
+                        localNavItems.push('<li class="' + className + '">' +
                                            '<a href="'+zonePath+'" class="'+linkClass+'" data-link-name="'+zoneName+'">'+zoneName+'</a>' +
-                                         '</li>';
+                                         '</li>');
 
                     });
-
-                    // Insert the desktop local nav
-                    var localNavHtml = '<ul class="nav nav--local" data-link-name="Local Navigation">' + localNavItems + '</ul>';
-                    common.$g('#header .control--topstories', context).after('<div class="localnav-container">' + localNavHtml + '</div>');
 
                     // Insert the popup local nav
                     var localNavPopupHtml = '<div class="nav-popup-localnav nav-popup nav-popup--small is-off">' +
                                             '  <ul class="nav nav--columns cf" data-link-name="Sub Sections">' +
-                                                 localNavItems +
+                                                 localNavItems.join('') +
                                             '  </ul>' +
                                             '</div>';
+
 
                     // Insert the CTA for the popup local nav
                     var sectionHeadNode = common.$g('.section-head', context),
@@ -170,11 +167,17 @@ define([
                                           '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
-
-
-
-
                     common.$g('#header', context).append(localNavCtaHtml + localNavPopupHtml);
+
+
+
+                    // Insert the desktop local nav
+                    var localNavHtml = '<ul class="nav nav--local" data-link-name="Local Navigation">' +
+                                        localNavItems.splice(1).join('') + // Skip the first link to the top section for desktop
+                                        '</ul>';
+                    common.$g('#header .control--topstories', context).after('<div class="localnav-container">' + localNavHtml + '</div>');
+
+
 
                     // Remove the other section head from the page
                     common.$g('.section-head, .article-zone', context).remove();
