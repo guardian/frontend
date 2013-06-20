@@ -8,7 +8,7 @@
             <li class="social__item--mail social__item">
                 <a  class="social__action"
                     data-link-name="social-mail"
-                    href="mailto:?subject=@helper.urlEncode(page.webTitle)&body=@helper.urlEncode(url)">
+                    href="mailto:?subject=@helper.urlEncode(page.webTitle).replaceAll("\\+", "%20")&body=@helper.urlEncode(url)">
                     <span class="h">Share via Email</span>
                     <i class="i-mail i social__icon"></i>
                 </a>
