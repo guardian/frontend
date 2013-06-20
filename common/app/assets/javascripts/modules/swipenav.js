@@ -34,7 +34,7 @@ define([
         panes,
         paneNow = 1,
         paneThen = 1,
-        pendingHTML = '<div class="preload-msg">Loading page...<div class="is-updating"></div></div>',
+        pendingHTML = '<div class="preload-msg">Loading page…<div class="is-updating"></div></div>',
         referrer,
         referrerPageName,
         sequencePos = -1,
@@ -484,7 +484,7 @@ define([
             if (clickSpec.sameHost && !clickSpec.samePage) {
                 if (swipeNavOnClick) {
                     url = urlAbsPath(clickSpec.target.href);
-                    if (!url) {
+                    if (!url || clickSpec.target.href.indexOf('mailto:') === 0) {
                         return;
                     } else if (url === urlAbsPath(window.location.href)) {
                         // Force a complete reload if the link is for the current page
