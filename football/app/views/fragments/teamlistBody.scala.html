@@ -7,7 +7,7 @@
         <ul class="nav nav--columns nav--top-border-off cf">
             @comp.teams.map{ team =>
             <li class="nav__item" data-team-id="@team.id">
-                @TeamUrl(team).map{ url => <a href="@InBodyLink{@url}" class="nav__link" data-link-name="@team.name">
+                @TeamUrl(team).map{ url => <a href="@LinkTo{@url}" class="nav__link" data-link-name="@team.name">
                     @team.name
                 </a> }.getOrElse{ <span class="nav__link no-link-team">@team.name</span> }
 
@@ -18,7 +18,7 @@
 }
 
 <h2 class="article-zone type-1 sport-header">
-    <a class="zone-color" data-link-name="article section" href="@InBodyLink{/football}">Football</a>
+    <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
 </h2>
 
 <h1 class="page-head">@pageModel.page.webTitle</h1>

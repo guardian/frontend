@@ -25,7 +25,7 @@
                     }
                     <cite class="story-quote__cite">@quote.by.getOrElse(article.byline) @quote.subject.map{ subject => on @subject}</cite>
 
-                    <a class="cta-new" data-link-name="Continue reading" href="@InBodyLink{@article.url}">
+                    <a class="cta-new" data-link-name="Continue reading" href="@LinkTo{@article.url}">
                         Continue reading
                         <button class="cta-new__btn cta-new__btn--right">
                             <i class="i i-arrow-blue-down cta-new__icn"></i>

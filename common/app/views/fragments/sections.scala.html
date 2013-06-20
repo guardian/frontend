@@ -20,7 +20,7 @@
         }{
             @Edition(request).navigation(page).map{ section =>
                 <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
-                    <a href="@InBodyLink{@section.name.href}"
+                    <a href="@LinkTo{@section.name.href}"
                         data-link-name="@section.name.linkName"
                         class="nav__link@if("/" + page.id == section.name.href) { is-active}"
                         @if(section.name.newWindow){ target="_blank" }>
@@ -49,7 +49,7 @@
             <li class="nav__item"><a class="nav__link edition edition-au" data-link-name="switch to au edition" href="http://@site.ukHost/australia@if(site.isUsEdition){#gu.prefs.switchOn=australia-edition}">Australia edition</a></li>
         }{
             @Edition.others(request).map{ edition =>
-                <li class="nav__item"><a class="nav__link edition" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="@InBodyLink{/}(edition)">@edition.displayName</a></li>
+                <li class="nav__item"><a class="nav__link edition" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="@LinkTo{/}(edition)">@edition.displayName</a></li>
             }
         }
     </ul>

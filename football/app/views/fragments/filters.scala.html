@@ -5,7 +5,7 @@
         <li class="cf">
             <h2>@name</h2>
             <ul class="nav nav--columns nav--columns-football nav--top-border-off sections">
-                @filters.map{ filter => <li class="nav__item"><a class="nav__link" href="@InBodyLink{@filter.url}" data-link-name="@filter.name">@filter.name</a></li> }
+                @filters.map{ filter => <li class="nav__item"><a class="nav__link" href="@LinkTo{@filter.url}" data-link-name="@filter.name">@filter.name</a></li> }
             </ul>
         </li>
     }
@@ -21,7 +21,7 @@
         @renderFilter("Rest of world")
 
         <li class="cf">
-            <a href="@InBodyLink{/@page.id}" class="cta type-8" data-link-name="@page.webTitle.toLowerCase">View all @pageTitle</a>
+            <a href="@LinkTo{/@page.id}" class="cta type-8" data-link-name="@page.webTitle.toLowerCase">View all @pageTitle</a>
         </li>
     </ol>
 }

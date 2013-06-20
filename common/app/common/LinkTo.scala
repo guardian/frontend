@@ -2,7 +2,7 @@ package common
 
 import play.api.templates.Html
 
-object InBodyLink extends Logging {
+object LinkTo extends Logging {
 
   //all content types except article (they do not have the word "article" in the url)
   val supportedContentTypes = Seq("gallery", "video")

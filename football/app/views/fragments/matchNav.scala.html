@@ -6,7 +6,7 @@
     @if(component.currentPage.exists(_.url == trail.url)){
         <li class="tabs-selected"><a href="#">@text</a></li>
     } else {
-        <li><a href="@InBodyLink{@trail.url}" data-link-name="@text">@text</a></li>
+        <li><a href="@LinkTo{@trail.url}" data-link-name="@text">@text</a></li>
     }
 }
 

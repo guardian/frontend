@@ -7,7 +7,7 @@
     <div class="media">
         @if(showThumbnail) {
             @trail.thumbnailPath.map{ thumbnailPath =>
-                <a href="@InBodyLink{@trail.url}" class="media__img" data-link-name="@rowNum | image">
+                <a href="@LinkTo{@trail.url}" class="media__img" data-link-name="@rowNum | image">
                     <img class="maxed" src="@thumbnailPath"
                         data-thumb-width="140"
                         @trail.mainPicture(width=220).map { largeCrop =>
@@ -23,7 +23,7 @@
         }
 
         <h@headingLevel class="media__body trail__headline type-5">
-            <a href="@InBodyLink{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+            <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
                 @RemoveOuterParaHtml(trail.headline)
             </a>
         </h@headingLevel>

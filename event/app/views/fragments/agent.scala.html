@@ -3,7 +3,7 @@
     @if(agent.hasLink) {
         @agent.url.map{ url =>
             @agent.picture.map{ pic =>
-                <a href="@InBodyLink{@url}" target="_blank" data-link-name="img"><img class="js-swipe__img agent__img" src="@pic" /></a>
+                <a href="@LinkTo{@url}" target="_blank" data-link-name="img"><img class="js-swipe__img agent__img" src="@pic" /></a>
             }
         }
     } else {
@@ -14,7 +14,7 @@
         @if(agent.hasLink) {
             @agent.url.map{ url =>
                 @agent.name.map{ name =>
-                    <h3 class="agent__name"><a href="@InBodyLink{@url}" target="_blank" data-link-name="agent name">@name</a></h3>
+                    <h3 class="agent__name"><a href="@LinkTo{@url}" target="_blank" data-link-name="agent name">@name</a></h3>
                 }
             }
         } else {

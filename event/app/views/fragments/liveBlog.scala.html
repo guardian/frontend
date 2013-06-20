@@ -1,7 +1,7 @@
 @(article: Article)(implicit request: RequestHeader)
 
 <h2 class="article-zone type-1">
-    <a class="zone-color" data-link-name="article section" href="@InBodyLink{/@article.section}">@Html(article.sectionName)</a>
+    <a class="zone-color" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
 </h2>
 
 <article id="article" class="article @if(article.isLive){is-live}"

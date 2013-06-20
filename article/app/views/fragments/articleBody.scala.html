@@ -4,7 +4,7 @@
 <div class="monocolumn-wrapper">
     
     <h2 class="article-zone type-1">
-        <a class="zone-color" data-link-name="article section" href="@InBodyLink{/@article.section}">@Html(article.sectionName)</a>
+        <a class="zone-color" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
     </h2>
 
     <article id="article" class="article @if(article.isLive){is-live}"
@@ -61,7 +61,7 @@
     @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
         <div class="article__discussion article-body"></div>
         <div class="d-show-cta-wrapper">    
-            <a class="d-show-cta js-show-discussion js-top" href="@InBodyLink{/discussion/@article.shortUrlId}"
+            <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion/@article.shortUrlId}"
                data-is-ajax data-link-name="View all comments">
                 View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
             </a>
