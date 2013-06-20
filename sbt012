@@ -34,8 +34,9 @@ if [ -n "$BUILD_VCS_NUMBER" ]; then
 fi 
 
 
-# Ivy configuration
+# Ivy configuration params and debug option
 IVY_PARAMS=""
+DEBUG_PARAMS=""
 for arg in "$@"
 do
     if [ "$arg" == "--directory-ivy-cache" ]; then
@@ -43,6 +44,13 @@ do
       IVY_PARAMS="-Dsbt.ivy.home=.ivy -Divy.home=.ivy"
       shift
     fi
+
+    if [ "$arg" == "--debug" ]; then
+      echo "setting java process as debuggable"
+      DEBUG_PARAMS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044"
+      shift
+    fi
+
 done
 
 # Grunt configuration
@@ -55,6 +63,8 @@ java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
   -Djava.awt.headless=true \
+  $DEBUG_PARAMS \
+  -DAPP_SECRET="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS" \
   $BUILD_PARAMS \
   $IVY_PARAMS \
   $SBT_EXTRA_PARAMS \
