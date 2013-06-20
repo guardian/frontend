@@ -86,7 +86,7 @@ define([
                 ['control', 'no-spacing-indents', 'more-spacing'].some(function(test) {
                     if (userPrefs.isOn('paragraph-spacing.' + test)) {
                         // remove any existing 'test-paragpraph-spacing--' classes (from the ab test)
-                        document.body.className = document.body.className.replace(/\btest-paragraph-spacing--[^\b]*/g, '')
+                        document.body.className = document.body.className.replace(/(\s|^)test-paragraph-spacing--[^\s]*/g, '')
                             + ' test-paragraph-spacing--' + test;
                         // force ab test off, in case it happens after this
                         config.switches.abParagraphSpacing = false;
