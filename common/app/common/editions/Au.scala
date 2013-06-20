@@ -14,8 +14,8 @@ import contentapi.QueryDefaults
 //All that is really being used is Edition.id, which is AU
 //It is not included in the Edition.all sequence
 object Au extends Edition(
-  "AU",
-  "Australia edition",
+  id = "AU",
+  displayName = "Australia edition",
   DateTimeZone.forID("Australia/Sydney"),
   hreflang = "en-au") with Sections with Zones with QueryDefaults {
 
