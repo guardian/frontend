@@ -23,7 +23,7 @@ define([
                     sectionId:   'culture',
                     sectionName: 'Culture',
                     zones: {
-                        '/culture'        : 'Culture',
+                        '/culture'     : 'Culture',
                         '/film'        : 'Film',
                         '/music'       : 'Music',
                         '/books'       : 'Books',
@@ -47,7 +47,7 @@ define([
                     sectionId:   'sport',
                     sectionName: 'Sport',
                     zones: {
-                        '/sport'          : 'Sport',
+                        '/sport'             : 'Sport',
                         '/football'          : 'Football',
                         '/sport/cricket'     : 'Cricket',
                         '/sport/tennis'      : 'Tennis',
@@ -136,15 +136,17 @@ define([
                 if (currentSection) {
                     var localNavItems = '';
 
-                    for (var zonePath in currentSection.zones) {
+                    Object.keys(currentSection.zones).forEach(function(zonePath, i) {
                         var zoneName = currentSection.zones[zonePath],
-                            className = (zonePath == '/'+config.page.section) ? 'nav__item is-active' : 'nav__item';
+                            isActive = (zonePath == '/'+config.page.section),
+                            className = isActive ? 'nav__item is-active' : 'nav__item',
+                            linkClass = isActive ? 'nav__link zone-color' : 'nav__link';
 
                         localNavItems += '<li class="' + className + '">' +
-                                           '<a href="'+zonePath+'" class="nav__link" data-link-name="'+zoneName+'">'+zoneName+'</a>' +
+                                           '<a href="'+zonePath+'" class="'+linkClass+'" data-link-name="'+zoneName+'">'+zoneName+'</a>' +
                                          '</li>';
 
-                    }
+                    });
 
                     // Insert the desktop local nav
                     var localNavHtml = '<ul class="nav nav--local" data-link-name="Local Navigation">' + localNavItems + '</ul>';
@@ -178,6 +180,13 @@ define([
                     common.$g('.section-head, .article-zone', context).remove();
 
                     common.$g('#preloads').addClass('has-localnav');
+
+                    // Hack to remove the double highlighting in the nav of Sport+Football
+                    if (currentSection.sectionId == 'football') {
+                        var sportNode = common.$g('.is-active .nav__link[data-link-name="Sport"]');
+                        sportNode.removeClass('zone-color');
+                        sportNode.parent().removeClass('is-active');
+                    }
                 }
 
             }

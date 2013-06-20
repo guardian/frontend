@@ -10,7 +10,7 @@
             <ul class="nav nav--global" data-link-name="Sections">
                 @Edition(request).navigation(page).map{ nav =>
                     <li class="nav__item @if(nav.currentFor(page)){is-active}">
-                        <a href="@LinkTo{@nav.name.href}" class="nav__link" data-link-name="@nav.name.linkName">@nav.name.title</a>
+                        <a href="@LinkTo{@nav.name.href}" class="nav__link @if(nav.currentFor(page)){zone-color}" data-link-name="@nav.name.linkName">@nav.name.title</a>
                     </li>
                 }
             </ul>

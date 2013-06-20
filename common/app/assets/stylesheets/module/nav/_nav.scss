@@ -63,7 +63,7 @@
             display: block;
             height: auto;
             background-color: transparent;
-            color: #333;
+
         }
 
         li:nth-child(even) {
@@ -147,7 +147,7 @@
     width: 100%;
     padding: 0 $gutter;
     background-color: $mushroom;
-    border-bottom: 2px solid $darkMushroom;
+    border-bottom: 1px solid $darkMushroom;
 
     @media (min-width: $tablet) { display: block; }
 }
@@ -158,20 +158,15 @@
     float: left;
     clear: left;
     width: 100%;
-    height: 44px;
+    height: 40px;
     overflow: hidden;
-    padding: 0 90px 0 0;
+    padding: 0 50px 0 0;
 
     @media (min-width: $tablet) { display: block; }
-
 
     .nav__item {
         position: relative;
         float: left;
-
-        &.is-active .nav__link {
-            color: #009697;
-        }
 
         &.is-active:after {
             content: " ";
@@ -179,10 +174,14 @@
             border-right: 10px solid transparent;
             border-bottom: 10px solid #333333;
             position: absolute;
-            bottom: -6px;
+            bottom: -2px;
             margin-left: -10px;
             left:50%;
         }
+    }
+
+    .nav__link {
+        color: #333333; // This is here because the below selectors are too specific for zone-color to work
     }
 
     .nav__link,
@@ -192,11 +191,17 @@
     .nav__link:visited {
         display: block;
         margin: 10px 0 $baseline*3 0;
-        padding: 2px $baseline*3 0 $baseline*3;
+        padding: 2px $baseline*1.5 0 $baseline*1.5;
         font-family: $serif !important;
         font-size: 14px;
         text-decoration: none;
-        color: #444444;
+
+    }
+
+    .is-active .nav__link {
+        font-family: $serifheadline !important;
+        line-height: 18px !important;
+        font-weight: 600;
     }
 
         .nav__item:first-child .nav__link { padding-left: 0; }
@@ -223,21 +228,20 @@
     float: left;
     clear: left;
     width: 100%;
-    height: 44px;
+    height: 52px;
     overflow: hidden;
-    padding: 0 90px 0 0;
+    padding: 0;
     background-color: #ffffff;
 
 
     @media only screen and (min-width: $tablet) { display: block; }
 
-
     .nav__item {
         float: left;
+    }
 
-        &.is-active .nav__link {
-            color: #009697;
-        }
+    .nav__link {
+        color: #333333; // This is here because the below selectors are too specific for zone-color to work
     }
 
     .nav__link,
@@ -246,15 +250,19 @@
     .nav__link:hover,
     .nav__link:visited {
         display: block;
-        margin: 10px 0 $baseline*3 0;
-        padding: 2px $baseline*3 0 $baseline*3;
+        margin: 16px 0 $baseline*3 0;
+        padding: 2px $baseline*1.5 0 $baseline*1.5;
         font-family: $serif !important;
         font-size: 14px;
         font-weight: 500;
         text-decoration: none;
-        color: #333333;
     }
 
+    .is-active .nav__link {
+        font-family: $serifheadline !important;
+        line-height: 18px !important;
+        font-weight: 600;
+    }
 
     .nav__item:first-child .nav__link { padding-left: 0; }
     .nav__item:last-child .nav__link { border-right: none; }

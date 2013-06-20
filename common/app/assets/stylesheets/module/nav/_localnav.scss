@@ -1,14 +1,15 @@
 /* Local navigation - Global container overrides
 ========================================================================== */
-#preloads.has-localnav {
+.has-localnav {
+
+    @media (min-width: $tablet) {
+        margin-top: 156px;
+    }
+
     @media (max-width: $tablet) {
          .parts__body {
             margin-top: 60px;
         }
-    }
-
-    @media (min-width: $tablet) {
-        margin-top: 156px;
     }
 
     .ad-slot-top-banner-ad {
@@ -25,4 +26,8 @@
 .nav-popup-localnav {
     top: 170px;
     border-color: $darkMushroom;
+
+    .nav__link {
+        color: #333333;
+    }
 }
