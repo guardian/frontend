@@ -45,12 +45,6 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
                expect(AB.getTest()).toBe(false);
             });
 
-            it('Can store user participation', function(){
-               AB.setParticipation("DummyTest");
-               expect(AB.hasParticipated("DummyTest")).toBe(true);
-
-            });
-
         });
         
     });

@@ -3,8 +3,8 @@ package common
 import model._
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
-import conf.CommonSwitches.AutoRefreshSwitch
-import play.api.mvc.{PlainResult, SimpleResult, RequestHeader, Results}
+import conf.Switches.AutoRefreshSwitch
+import play.api.mvc.{PlainResult, RequestHeader, Results}
 import play.api.templates.Html
 import com.gu.management.Switchable
 import conf.Configuration

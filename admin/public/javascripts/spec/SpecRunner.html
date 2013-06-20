@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="shortcut icon" type="image/png" href="../vendor/jasmine-1.2.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="../vendor/jasmine-1.2.0/jasmine.css">
+  <script type="text/javascript" src="../vendor/jasmine-1.2.0/jasmine.js"></script>
+  <script type="text/javascript" src="../vendor/jasmine-1.2.0/jasmine-html.js"></script>
+
+  <!-- include source files here... -->
+  <script>
+            var curl = {
+                paths: {
+                    EventEmitter: '../vendor/EventEmitter',
+                    Common:       '../common',
+                    Reqwest:      '../vendor/reqwest',
+                    TagSearch:    '../modules/TagSearch',
+                    AutoComplete: '../modules/AutoComplete',
+                    tagEntry:     '../modules/tagEntry',
+                    ItemSearch:   '../modules/ItemSearch',
+                    Knockout:     '../vendor/knockout-2.1.0.debug',
+                    models:       '../models'
+                }
+            }
+        </script>
+
+  <!-- supporting libraries -->
+  <script type="text/javascript" src="../vendor/curl.js"></script>
+  <script  type="text/javascript" src="../vendor/underscore.js"></script>
+  <script  type="text/javascript" src="../vendor/jquery-ui-1.8.23.custom/js/jquery-1.7.2.min.js"></script>
+  <script  type="text/javascript" src="../vendor/humanized_time_span.js"></script>
+  
+  <script>
+    define('Config', function() {
+        return {
+            identity: { 'email': 'foor@example.com', 'openid' : 'http://google-id', 'firstName': 'Foo', 'lastName': 'Bar' },
+            apiKey: '55kszyb2sy6d48bjue95n778' // Content API calls
+      }
+    });
+  </script>
+
+  <!-- model specs -->
+  <script type="text/javascript" src="./modules/ItemSearchSpec.js"></script>
+  <script type="text/javascript" src="./models/EditionSpec.js"></script>
+  <script type="text/javascript" src="./models/TrailblockSpec.js"></script>
+  <script type="text/javascript" src="./models/NetworkFrontSpec.js"></script>
+  <script type="text/javascript" src="./models/EventSpec.js"></script>
+  <script type="text/javascript" src="./models/EventsSpec.js"></script>
+  <script type="text/javascript" src="./models/ArticleSpec.js"></script>
+  <script type="text/javascript" src="./models/ArticlesSpec.js"></script>
+  <script type="text/javascript" src="./models/AgentSpec.js"></script>
+  <script type="text/javascript" src="./models/PlaceSpec.js"></script>
+
+  <!-- modules specs -->
+  <script type="text/javascript" src="./modules/TagSearchSpec.js"></script>
+  <script type="text/javascript" src="./modules/TagEntrySpec.js"></script>
+  <script type="text/javascript" src="./modules/AutoCompleteSpec.js"></script>
+  
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var htmlReporter = new jasmine.HtmlReporter();
+
+      jasmineEnv.addReporter(htmlReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+
+</head>
+
+<body>
+    <div id="autocomplete">autocomplete</div>
+    <div id="autocomplete-after">autocomplete-after</div>
+    <input id="i" />
+</body>
+</html>

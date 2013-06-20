@@ -1,6 +1,5 @@
 package controllers
 
-import scala.language.implicitConversions
 import implicits._
 import java.awt.image.BufferedImage
 import org.imgscalr.Scalr
@@ -10,7 +9,7 @@ trait Implicits extends Numbers
     with Strings
     with WSResponse {
 
-  implicit def image2Resize(image: BufferedImage) = new {
+  implicit class image2Resize(image: BufferedImage) {
     def resize(width: Int, height: Int) = Scalr.resize(image,
       Scalr.Method.SPEED,
       width, height,

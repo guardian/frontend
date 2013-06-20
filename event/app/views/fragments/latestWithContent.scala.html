@@ -9,7 +9,7 @@
 
                 <div class="media">
                     @trail.thumbnail.map{ thumbnailUrl =>
-                        <a href="/stories/@story.id" class="media-img" data-link-name="story | image">
+                        <a href="/stories/@story.id" class="media__img" data-link-name="story | image">
                             <img class="maxed" src="@thumbnailUrl"
                                 data-thumb-width="140"
                                 @trail.mainPicture(width=220).map { largeCrop =>
@@ -25,7 +25,7 @@
 
                     <a href="/stories/@story.id" class="type-7 trail__story-title" data-link-name="story | title">@story.title</a>
 
-                    <h2 class="media-body trail__headline type-5">
+                    <h2 class="media__body trail__headline type-5">
                         <a href="/stories/@story.id" data-link-name="story | text" data-article-url="@trail.url">
                             @RemoveOuterParaHtml(trail.headlineOverride)
                         </a>

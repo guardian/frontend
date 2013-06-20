@@ -4,60 +4,50 @@
 
 .nav-popup {
     position: absolute;
+    top: 58px;
     clear: both;
     z-index: 100;
     padding: $baseline*2 0;
     list-style: none;
     margin-bottom: -4px;
     border-bottom: $baseline solid $blue;
-    @include transform(translateZ(0));
-    background: #ffffff;
+    background: #fff;
     width: 100%;
-
-    @media only screen and (min-width: $tablet) {
-        top: 118px;
-    }
-
-    @media only screen and (min-width: $desktopAd) {
-        top: 155px;
-    }
+    @include transform(translateZ(0)); // Hotfix to make popups stay on top 
+                                       // of .preload elements in Chrome Android
 }
 
 .nav-popup .nav--section-divider {
     padding-bottom: $baseline*4;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         margin: 0;
         border-top: none;
     }
 }
 
-
 /* Small
    ========================================================================== */
+
 .nav-popup--small {
     padding-bottom: 0;
 
-    @media only screen and (min-width: $tablet) {
+    @media (min-width: $tablet) {
         position: absolute;
-        top: 174px;
+        top: 102px;
         right: 0;
         width: auto;
         padding: 0;
         min-width: 160px;
-        background-color: #ffffff;
+        background-color: #fff;
         border-bottom: 2px solid $darkMushroom;
         border-left: 2px solid $darkMushroom;
     }
 
-    @media only screen and (min-width: $desktopAd) {
-        top: 200px;
-    }
-
     .nav__item {
-        @media only screen and (min-width: $tablet) {
+        @media (min-width: $tablet) {
             margin: 0 $gutter;
-            border-bottom: 1px solid #C3C3C3;
+            border-bottom: 1px solid $darkMushroom;
             text-align: right;
 
             &:last-child {
@@ -70,8 +60,8 @@
     .nav--columns .nav__link {
         @extend %type-7;
 
-        @media only screen and (min-width: $tablet) {
-            color: #444444;
+        @media (min-width: $tablet) {
+            color: #444;
             padding: $baseline*3 0 $baseline*3 0;
             @include font($serifheadline, 200, 14, 14);
         }

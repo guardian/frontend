@@ -1,5 +1,8 @@
+/*jshint multistr: true */
+
 define([
     'common',
+    'modules/storage',
     'modules/userPrefs',
     'modules/pageconfig',
     'swipeview',
@@ -9,6 +12,7 @@ define([
     'modules/url'
 ], function(
     common,
+    storage,
     userPrefs,
     pageConfig,
     SwipeView,
@@ -21,12 +25,11 @@ define([
         body,
         bodyPartSelector = '.parts__body',
         canonicalLink,
-        clickSelector,
-        contentAreaTop,
-        height,
+        header,
         hiddenPaneMargin = 0,
         initiatedBy = 'initial',
         initialUrl,
+        linkContext,
         noHistoryPush = false,
         panes,
         paneNow = 1,
@@ -38,8 +41,11 @@ define([
         sequence = [],
         sequenceCache,
         sequenceLen = 0,
+        storePrefix = 'gu.swipe.',
         swipeContainer = '#preloads',
         swipeContainerEl = document.querySelector(swipeContainer),
+        swipeNavOnClick,
+        swipeContainerHeight,
         throttle,
         visiblePane,
         visiblePaneMargin = 0;
@@ -56,7 +62,7 @@ define([
     function urlAbsPath(url) {
         var a = document.createElement('a');
         a.href = url;
-        a = a.pathname + a.search;
+        a = a.pathname + a.search + a.hash;
         a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
         return a;
     }
@@ -77,11 +83,6 @@ define([
             head  = page1.querySelector('.parts__head'),
             foot  = page1.querySelector('.parts__foot'),
             initialBodyHtml = '<div class="parts__body">' + pendingHTML + '</div>';
-
-        var css = document.createElement("style");
-        css.type = "text/css";
-        css.innerHTML = "#preload-0{left: -100%} #preload-1{left:0%} #preload-2{left: 100%}";
-        document.body.appendChild(css);
 
         bonzo(page0).append(head.cloneNode(true));
         bonzo(page0).append(bonzo.create(initialBodyHtml));
@@ -120,9 +121,8 @@ define([
                 el.pending = true;
                 ajax({
                     url: url,
-                    method: 'get',
-                    type: 'jsonp',
-                    jsonpCallbackName: 'swipePreload',
+                    type: 'json',
+                    crossOrigin: true,
                     success: function (frag) {
                         var html;
 
@@ -150,11 +150,18 @@ define([
     }
 
     // Make the swipeContainer height equal to the visiblePane height. (We view the latter through the former.)
-    function updateHeight() {
-        var h = $('*:first-child', visiblePane).offset().height; // NB visiblePane has height:100% set by swipeview, so we look within it
-        if (height !== h) {
-            height = h;
-            $(swipeContainer).css('height', height + visiblePaneMargin + 'px');
+    function recalcHeight(pinHeader) {
+        var contentOffset = $('*:first-child', visiblePane).offset(),
+            contentHeight = contentOffset.height;
+
+        if (pinHeader) {
+            header = header || $('#header');
+            header.css('top', contentOffset.top - header.offset().height + 'px');
+        }
+
+        if (swipeContainerHeight !== contentHeight) {
+            swipeContainerHeight = contentHeight;
+            $(swipeContainer).css('height', contentHeight + visiblePaneMargin + 'px');
         }
     }
 
@@ -171,6 +178,8 @@ define([
             urls.pushUrl({}, document.title, window.location.href);
             return;
         }
+
+        recalcHeight(true);
 
         url = context.dataset.url;
         setSequencePos(url);
@@ -202,9 +211,8 @@ define([
         referrer = window.location.href;
         referrerPageName = config.page.analyticsName;
 
-        if(clickSelector && initiatedBy === 'click') {
-            loadSequence(function(sequence){
-                setSequence(sequence);
+        if(initiatedBy === 'click') {
+            loadSequence(function(){
                 loadSidePanes();
             });
         } else {
@@ -227,54 +235,67 @@ define([
     }
 
     function loadSequence(callback) {
-        var section = window.location.pathname.match(/^\/[^\/]+/);
+        var sequenceUrl = linkContext;
+
+        if (sequenceUrl) {
+            // data-link-context was from a click within this app
+            sequenceUrl = '/' + sequenceUrl;
+            linkContext = undefined;
+        } else {
+            sequenceUrl = storage.get(storePrefix + 'linkContext');
+            if (sequenceUrl) {
+                // data-link-context was set by a click on a previous page
+                sequenceUrl = '/' + sequenceUrl;
+                storage.remove(storePrefix + 'linkContext');
+            } else {
+                // No data-link-context, so infer the section from current url
+                sequenceUrl = window.location.pathname.match(/^\/([^\/]+)/);
+                sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl[1] : '');
+            }
+        }
+
+        // 'news' should return top stories, i.e. the default response
+        sequenceUrl = (sequenceUrl === '/front-trails/news' ? '/front-trails' : sequenceUrl);
+
         ajax({
-            url: '/front-trails' + (section ? section[0] : ''),
-            type: 'jsonp',
+            url: sequenceUrl,
+            type: 'json',
+            crossOrigin: true,
             success: function (json) {
-                if (json.stories && json.stories.length >= 3) {
-                    callback(json.stories);
+                var stories = json.stories,
+                    len = stories.length,
+                    url = window.location.pathname,
+                    s,
+                    i;
+
+                if (len >= 3) {
+                    // Make sure url is the first in the sequence
+                    if (stories[0].url !== url) {
+                        stories.unshift({url: url});
+                        len += 1;
+                    }
+
+                    sequence = [];
+                    sequenceLen = 0;
+                    sequenceCache = {};
+
+                    for (i = 0; i < len; i += 1) {
+                        s = stories[i];
+                        // dedupe, while also creating a lookup obj
+                        if(!sequenceCache[s.url]) {
+                            s.pos = sequenceLen;
+                            sequenceCache[s.url] = s;
+                            sequence.push(s);
+                            sequenceLen += 1;
+                            //window.console.log(i + " " + s.url);
+                        }
+                    }
+                    setSequencePos(window.location.pathname);
                 }
+
+                callback();
             }
         });
-    }
-
-    function setSequence(arr) {
-        var len = arr.length,
-            url = window.location.pathname,
-            sectionUrl = url.match(/^\/[^\/]*/)[0],
-            s,
-            i;
-
-        if (len) {
-
-            // Make sure url is the first in the sequence
-            if(arr[0].url !== url) {
-                arr.unshift({url: url});
-                len += 1;
-            }
-
-            // Add the "section" page as the last position in the sequence
-            arr.push({url: sectionUrl});
-            len += 1;
-
-            sequence = [];
-            sequenceLen = 0;
-            sequenceCache = {};
-
-            for (i = 0; i < len; i += 1) {
-                s = arr[i];
-                // dedupe, while also creating a lookup obj
-                if(!sequenceCache[s.url]) {
-                    s.pos = sequenceLen;
-                    sequenceCache[s.url] = s;
-                    sequence.push(s);
-                    sequenceLen += 1;
-                    //window.console.log(i + " " + s.url);
-                }
-            }
-            setSequencePos(window.location.pathname);
-        }
     }
 
     function gotoUrl(url, dir) {
@@ -311,21 +332,6 @@ define([
         }
     }
 
-    function validateClick(event) {
-        var link = event.currentTarget;
-
-        // Middle click, cmd click, and ctrl click should open links in a new tab as normal.
-        if (event.which > 1 || event.metaKey || event.ctrlKey) { return; }
-
-        // Ignore cross origin links
-        if (location.protocol !== link.protocol || location.host !== link.host) { return; }
-
-        // Ignore anchors on the same page
-        if (link.hash && link.href.replace(link.hash, '') === location.href.replace(location.hash, '')) { return; }
-
-        return true;
-    }
-
     function gotoSequencePage(pos) {
         var dir;
         if (pos !== sequencePos && pos < sequenceLen) {
@@ -345,8 +351,6 @@ define([
         if (!url) {
             url = getAdjacentUrl(dir);
         }
-
-        url = urlAbsPath(url);
 
         el = panes.masterPages[mod3(paneNow + dir)];
         
@@ -391,15 +395,17 @@ define([
     }
 
     var pushDownSidepanes = common.debounce(function(){
-        hiddenPaneMargin = Math.max( 0, body.scrollTop() - contentAreaTop );
+        hiddenPaneMargin = Math.max( 0, body.scrollTop());
 
-        if( hiddenPaneMargin < visiblePaneMargin ) {
+        if( hiddenPaneMargin < visiblePaneMargin) {
             // We've scrolled up over the offset; reset all margins and jump to topmost scroll
             $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
             $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
             $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
             // And reset the scroll
-            body.scrollTop( contentAreaTop );
+            body.scrollTop(0);
+            recalcHeight(true);
+
             visiblePaneMargin = 0;
             hiddenPaneMargin = 0;
         }
@@ -412,14 +418,6 @@ define([
 
     // This'll be the public api
     var api = {
-        setSequence: setSequence,
-
-        loadSidePanes: loadSidePanes,
-
-        getSequence: function(){
-            return sequence;
-        },
-
         gotoSequencePage: function(pos, type){
             initiatedBy = type ? type.toString() : 'position';
             gotoSequencePage(pos, type);
@@ -446,8 +444,6 @@ define([
         // SwipeView
         panes = new SwipeView(swipeContainer, {});
 
-        updateHeight();
-
         panes.onFlip(function () {
             paneNow = mod3(panes.pageIndex+1);
             if (paneThen !== paneNow) {
@@ -470,9 +466,6 @@ define([
         visiblePane = panes.masterPages[1];
         visiblePane.dataset.url = initialUrl;
 
-        // Set a body class. Might be useful.
-        body.addClass('has-swipe');
-
         // Render panes that come into view, and that are not still loading
         common.mediator.on('module:swipenav:pane:loaded', function(el){
             if(el === visiblePane && !el.pending) {
@@ -485,27 +478,32 @@ define([
 
         // BINDINGS
 
-        // Bind clicks to cause swipe-in transitions
-        if (clickSelector){
-            bean.on(document, 'click', clickSelector, function (e) {
-                var url;
+        common.mediator.on('module:clickstream:click', function(clickSpec){
+            var url;
 
-                if (!validateClick(e)) { return true; }
+            if (clickSpec.sameHost && !clickSpec.samePage) {
+                if (swipeNavOnClick) {
+                    url = urlAbsPath(clickSpec.target.href);
+                    if (!url) {
+                        return;
+                    } else if (url === urlAbsPath(window.location.href)) {
+                        // Force a complete reload if the link is for the current page
+                        window.location.reload(true);
+                    }
+                    else {
+                        clickSpec.event.preventDefault();
+                        linkContext = clickSpec.linkContext;
+                        initiatedBy = 'click';
+                        gotoUrl(url);
+                    }
 
-                e.preventDefault();
-
-                url = urlAbsPath($(this).attr('href'));
-
-                if (url === urlAbsPath(window.location.href)) {
-                    // Force a complete reload if the link is for the current page
-                    window.location.reload(true);
+                } else if (clickSpec.linkContext) {
+                    storage.set(storePrefix + 'linkContext', clickSpec.linkContext, {
+                        expires: 10000 + (new Date()).getTime()
+                    });
                 }
-                else {
-                    initiatedBy = 'click';
-                    gotoUrl(url);
-                }
-            });
-        }
+            }
+        });
 
         // Fix pane margins, so sidepanes come in at their top
         bean.on(window, 'scroll', function () {
@@ -545,12 +543,12 @@ define([
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
         setInterval(function(){
-            updateHeight();
+            recalcHeight();
         }, 1009); // Prime number, for good luck
     }
 
     var initialise = function(config) {
-        loadSequence(function(sequence){
+        loadSequence(function(){
             var loc = window.location.href;
 
             initialUrl       = urlAbsPath(loc);
@@ -558,18 +556,18 @@ define([
             referrerPageName = config.page.analyticsName;
             body             = $('body');
             canonicalLink    = $('link[rel=canonical]');
-            contentAreaTop   = $(swipeContainerEl).offset().top;
             visiblePane      = $('#preloads-inner > #preload-1', swipeContainerEl)[0];
 
-            if (config.switches.swipeNavOnClick || userPrefs.isOn('swipe-dev-on-click')) {
-                clickSelector = "a:not([data-is-ajax]):not(.control)";
-            }
+            swipeNavOnClick = config.switches.swipeNavOnClick || userPrefs.isOn('swipe-dev-on-click');
 
-            // Set up the DOM structure
+            // Set explicit height on container, because it's about to be absolute-positioned.
+            recalcHeight();
+
+            // Set a body class.
+            body.addClass('has-swipe');
+
+            // Set up the DOM structure, CSS
             prepareDOM();
-
-            // Set the initial sequence
-            setSequence(sequence);
 
             // Cache the config of the initial page, in case the 2nd swipe is backwards to this page.
             if (sequenceCache[initialUrl]) {

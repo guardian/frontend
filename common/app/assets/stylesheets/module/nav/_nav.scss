@@ -27,18 +27,20 @@
     }
 
 /* ==========================================================================
-   Nav modifiers
+   Nav Modifiers
    ========================================================================== */
 
-
 /* Stacked
- ========================================================================== */
+   ========================================================================== */
+
     .nav--stacked > li {
         display: list-item;
     }
 
+
 /* Columns
-========================================================================== */
+   ========================================================================== */
+
     .nav--columns {
         padding: $baseline*2 $gutter $baseline $gutter;
 
@@ -61,7 +63,7 @@
             display: block;
             height: auto;
             background-color: transparent;
-            color: #333333;
+            color: #333;
         }
 
         li:nth-child(even) {
@@ -83,43 +85,45 @@
         padding-top: 0;
     }
 
+
 /* Section divider
-========================================================================== */
+   ========================================================================== */
 
     .nav.nav--section-divider {
         padding: $baseline*2 $gutter;
         margin: 0;
         background-color: $mushroom;
     }
-
+    
         .nav-popup--small .nav--section-divider {
-            @media only screen and (min-width: $tablet) {
+            @media (min-width: $tablet) {
                 margin-top: -5px !important;
+
                 .nav__item { margin: 0; }
             }
 
-            @media only screen and (min-width: 78em) {
+            @media (min-width: 78em) {
                 margin-top: -13px !important;
             }
         }
 
-    .nav--section-divider .nav__link {
-        border-bottom: 1px solid $darkMushroom;
-    }
+        .control--sections .i-nav-divider {
+            @media (min-width: $tablet) {
+                border-left: 0;
+            }
+        }
 
-    .nav--section-divider .nav__item:last-child .nav__link {
-        border-bottom: none;
-    }
 
 /* Footer navigation
-     ========================================================================== */
+   ========================================================================== */
+
 .nav--footer,
 .nav--footer.nav--section-divider {
     background-color: $blue;
 }
 
     .nav--footer .nav__link {
-            color: #ffffff;
+            color: #fff;
             border-top: 1px solid #2B528B;
     }
 
@@ -128,22 +132,23 @@
     }
 
     .nav--footer.nav--section-divider {
-            color: #ffffff !important;
-            border-top: 2px solid #2B528B;
+        color: #fff !important;
+        border-top: 2px solid #2B528B;
     }
 
 
 /* Global navigation
-     ========================================================================== */
+   ========================================================================== */
+
 .nav-container {
     @include box-sizing(border-box);
     display: none;
     overflow: auto;
     width: 100%;
     padding: 0 $gutter;
-    background-color: #ffffff;
+    background-color: #fff;
 
-    @media only screen and (min-width: $tablet) { display: block; }
+    @media (min-width: $tablet) { display: block; }
 }
 
 .nav--global {
@@ -155,10 +160,10 @@
     height: 46px;
     overflow: hidden;
     padding: 0 90px 0 0;
-    background-color: #ffffff;
-    border-bottom: 1px solid $darkMushroom;
+    background-color: #fff;
+    border-bottom: 2px solid $darkMushroom;
 
-    @media only screen and (min-width: $tablet) { display: block; }
+    @media (min-width: $tablet) { display: block; }
 
 
     .nav__item {
@@ -176,27 +181,29 @@
         font-family: $serif !important;
         font-size: 14px;
         text-decoration: none;
-        color: #444444;
-        border-right: 1px solid #BBBBBB;
+        color: #444;
+        border-right: 1px solid $darkMushroom;
     }
 
         .nav__item:first-child .nav__link { padding-left: 0; }
         .nav__item:last-child .nav__link { border-right: none; }
 }
 
+
 /* Toolbar navigation
-     ========================================================================== */
+   ========================================================================== */
+
 .nav--toolbar {
     @extend %type-10;
     display: none;
     margin: 0 $baseline*2 0 $gutter;
-    padding: $baseline*3 0 0 0;
-    @media only screen and (min-width: $tablet) { display: block; }
+    padding: $baseline*3 0 0;
+    @media (min-width: $tablet) { display: block; }
 
     .nav__item {
         margin: $baseline 0 0 0;
         padding: $baseline $baseline*2;
-        color: #ffffff;
+        color: #fff;
         border-right: 1px solid #94B1CA;
 
         &:last-child { border-right: none; }

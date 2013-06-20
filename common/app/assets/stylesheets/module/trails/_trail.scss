@@ -1,54 +1,45 @@
+/* ==========================================================================
+   Trail object
+   ========================================================================== */
+
 .trail {
+    position: relative;
     overflow: hidden;
-    margin: 0 0 $baseline 0;
+    margin: 0 0 $baseline;
     border-bottom: 1px solid #EDEDE7;
-    padding: $baseline*2 0 $baseline*3 0;
+    padding: $baseline*2 0 $baseline*3;
+
+    &:first-child {
+        padding-top: $baseline*3
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
-.trail:first-child {
-    padding-top: $baseline*3
-}
-
-.trailblock ul:last-child .trail:last-child {
-    border-bottom: none;
-}
-
-.trail:first-child h2 {
-    margin-bottom: $baseline;
-}
-
-.trail--has-image img {
-    vertical-align: bottom;
-}
-
-.trail:last-child {
-    margin-bottom: 0;
-}
+    .trailblock ul:last-child .trail:last-child {
+        border-bottom: none;
+    }
 
 .trail__headline {
-    @media screen and (min-width: 25em) { @extend %type-4; }
-    @media screen and (min-width: 64em) { @extend %type-5; }
+    @media (min-width: 25em) { @extend %type-4; }
+    @media (min-width: 64em) { @extend %type-5; }
 }
 
-.media .trail__headline {
-    padding: 0;
-    margin-bottom: $baseline;
-}
+    .trail__headline a,
+    .trail__headline a:hover,
+    .trail__headline a:link,
+    .trail__headline a:active,
+    .trail__headline a:visited,
+    .trail h2 a {
+        color: #333;
+    }
 
-.trail__headline a,
-.trail__headline a:hover,
-.trail__headline a:link,
-.trail__headline a:active,
-.trail__headline a:visited,
-.trail h2 a {
-    color: #333333;
-}
+    .trail__headline a:active {
+        text-decoration: underline;
+    }
 
-.trail h2 a:active, 
-.trail__headline a:active {
-    color:#333333;
-    text-decoration: underline;
-}
 
 .trail__text {
     @extend %type-7;
@@ -56,47 +47,96 @@
     clear: left;
     padding: 0;
     color: #555555;
+    text-rendering: optimizeLegibility;
 
-    @media screen and (min-width: 37.5em) {
+    @media (min-width: 37.5em) {
         clear: none;
     }
 }
+
+.trail__comment-count {
+    position: absolute;
+    top: 8px;
+    right: 0;
+
+    a,
+    a:hover,
+    a:link,
+    a:active,
+    a:visited {
+        @extend %type-11;
+        float: right;
+        display: inline-block;
+        margin: 0 0 0 4px;
+        color: #F6644F;
+    }
+
+    i {
+        float: left;
+        margin: 3px 4px 0 0;
+    }
+}
+
+  .trail:first-child .trail__comment-count { top: 12px; }
+
+@media (min-width: 53.125em) {
+    .trail .img img {
+        width: 160px;
+    }
+}
+
+/* ==========================================================================
+   Trail modifiers
+   ========================================================================== */
+
+.trail--has-image {
+    .trail__text {
+        padding-bottom: $baseline*4;
+    }
+
+    img {
+        vertical-align: bottom;
+    }
+}
+
+.trail--featured {
+    .trail__headline {
+        margin-bottom: $baseline;
+    }
+}
+
+.trail--thumbnail {
+    .trail__headline {
+        padding: 0;
+        margin-bottom: $baseline;
+    }
+
+    .media {
+        padding: 0 0 $baseline*1 0;
+    }
+
+    .media__img { width: 35%; }
+
+    .media__img img {
+        width: $trailblockImgWidth;
+        margin-bottom: 5px;
+        margin-top: 3px;
+    }
+
+    .trail__text {
+        padding: 0;
+    }
+}
+
+/**
+ * @todo: Clean these up into proper modifiers
+ */
 
 .matches-container .trail__text {
     display: none;
 }
 
-.media .trail__text {
-    padding: 0;
-}
-
-.trail--has-image .trail__text {
-    padding-bottom: $baseline*4;
-}
-
-.trail .media {
-    padding: 0 0 $baseline*1 0;
-}
-
-.trail .media-img { width: 35%; }
-
-.trail .media-img img {
-    width: $trailblockImgWidth;
-    margin-bottom: 5px;
-    margin-top: 3px;
-}
-
-.trail .img-large img {
-    width: $trailblockImgWidthLarge;
-}
-
 .competition .trail {
     margin-top: $baseline*3;
     border-bottom: none;
-}
-
-@media screen and (min-width: 53.125em) {
-    .trail .img img {
-        width: 160px;
-    }
 }

@@ -2,7 +2,8 @@
 
 <li class="d-comment
            @if(isResponse){d-comment--response}else{d-comment--top-level}
-           @if(comment.isBlocked){d-comment--blocked}"
+           @if(comment.isBlocked){d-comment--blocked}
+           @if(comment.responses.nonEmpty){d-comment--has-replies}"
     id="comment-@comment.id">
     <div class="d-comment__inner">
         @if(comment.isHighlighted && !comment.isBlocked){
@@ -22,9 +23,9 @@
                 <div>
                     @*********************
                     Responding to...
-                    <a href="#" class="d-comment__meta-item">@@Kaelig</a> <span class="d-meta-separator">&nbsp;|&nbsp;</span>
+                    <a href="#" class="d-meta-item d-comment__meta-item">@@Kaelig</a> <span class="d-meta-separator">&nbsp;|&nbsp;</span>
                     *********************@
-                    <time class="d-comment__meta-item js-timestamp"
+                    <time class="d-meta-item d-comment__meta-item js-timestamp"
                           datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
                         @Format(comment.date, "d MMM y")
                     </time>

@@ -19,7 +19,7 @@ class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with
       Given("I have a custom query through a QueryTrailblockDescription")
       Fake {
         val agent = TrailblockAgent(CustomTrailblockDescription("lifeandstyle", "Life and style", 5){
-          EditorsPicsAndLatest(ContentApi.item("football", Uk).pageSize(7).response)
+          EditorsPicsOrLeadContentAndLatest(ContentApi.item("football", Uk).pageSize(7).response)
         })
 
         agent.refresh()

@@ -1,12 +1,14 @@
 package discussion
 
 import common.{InBodyLink, ExecutionContexts, Logging}
-import play.api.libs.ws.WS
-import play.api.libs.json.{JsValue, JsArray, Json}
+import common.DiscussionMetrics.DiscussionHttpTimingMetric
+import conf.Switches.ShortDiscussionSwitch
 import model._
-import org.joda.time.DateTime
+import play.api.libs.ws.{Response, WS}
+import play.api.libs.json.{JsNumber, JsObject, JsArray, Json}
+import System.currentTimeMillis
+import scala.concurrent.Future
 
-// TODO
 case class CommentPage(
   override val id: String,
   title: String,
@@ -20,11 +22,44 @@ case class CommentPage(
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
+  def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
+
+  def commentCounts(ids: String) = {
+
+    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/getCommentCounts?short-urls=$ids"
+
+    val start = currentTimeMillis
+
+    GET(apiUrl).map{ response =>
+
+      DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
+
+      response.status match {
+
+        case 200 =>
+          val json = Json.parse(response.body).asInstanceOf[JsObject].fieldSet.toSeq
+          json.map{
+            case (id, JsNumber(i)) => CommentCount(id , i.toInt)
+            case bad => throw new RuntimeException(s"never understood $bad")
+          }
+        case other =>
+          log.error(s"Error loading comment counts id: $ids status: $other message: ${response.statusText}")
+          throw new RuntimeException("Error from discussion API")
+      }
+    }
+  }
+
   def commentsFor(id: String, page: String) = {
 
-    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=50&page=$page&orderBy=oldest&showSwitches=true"
+    val size = if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
 
-    WS.url(apiUrl).withTimeout(2000).get().map{ response =>
+    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=$size&page=$page&orderBy=oldest&showSwitches=true"
+
+    val start = currentTimeMillis
+
+    GET(apiUrl).map{ response =>
+
+      DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
 
       response.status match {
 
@@ -33,7 +68,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           val json = Json.parse(response.body)
 
           val comments = (json \\ "comments")(0).asInstanceOf[JsArray].value.map{ commentJson =>
-            val responses = (commentJson \\ "responses")(0).asInstanceOf[JsArray].value.map(responseJson => Comment(responseJson))
+            val responses = (commentJson \\ "responses").headOption.map(_.asInstanceOf[JsArray].value.map(responseJson => Comment(responseJson))).getOrElse(Nil)
             Comment(commentJson, responses)
           }
 
@@ -50,10 +85,17 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           log.error(s"Error loading comments id: $id status: $other message: ${response.statusText}")
           throw new RuntimeException("Error from discussion API")
       }
-
     }
-
   }
+}
+
+object DiscussionApi extends DiscussionApi {
+
+  private var _http: String => Future[Response] = super.GET _
+  def http = _http
+  def http_=(http: String => Future[Response]) { _http = http }
+
+  override def GET(url: String): Future[Response] = _http(url)
 
 }
 

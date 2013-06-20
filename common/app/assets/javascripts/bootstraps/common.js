@@ -28,7 +28,9 @@ define([
     'modules/analytics/omnitureMedia',
     'modules/debug',
     'modules/experiments/ab',
-    "modules/adverts/video"
+    'modules/swipenav',
+    "modules/adverts/video",
+    "modules/discussion/commentCount"
 ], function (
     common,
     ajax,
@@ -58,7 +60,9 @@ define([
     OmnitureMedia,
     Debug,
     AB,
-    VideoAdvert
+    swipeNav,
+    VideoAdvert,
+    CommentCount
 ) {
 
     var modules = {
@@ -74,24 +78,22 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            var navControl = new NavControl();
-            var sections = new Sections();
-            var search = new Search(config);
-            var aus = new Australia(config); // TODO temporary till we have single domain editions
+            var navControl = new NavControl(),
+                topStories = new TopStories(),
+                sections = new Sections(),
+                search = new Search(config),
+                aus = new Australia(config),
+                editions = new EditionSwitch(),
+                header = document.querySelector('body');
 
-            var editions = new EditionSwitch();
-            common.mediator.on('page:common:ready', function(config, context) {
-                navControl.init(context);
-                sections.init(context);
-                search.init(context);
-                aus.init(context);
-            });
-        },
+            navControl.init(header);
+            topStories.load(config, header);
+            sections.init(header);
+            search.init(header);
+            aus.init(header);
 
-        transcludeTopStories: function () {
-            var topStories = new TopStories();
-            common.mediator.on('page:common:ready', function(config, context) {
-                topStories.load(config, context);
+            common.mediator.on('page:common:ready', function(){
+                navControl.reset();
             });
         },
 
@@ -124,9 +126,18 @@ define([
             });
         },
 
+        initClickstream: function () {
+            var cs = new Clickstream({filter: ["a", "button"]});
+        },
+
+        transcludeCommentCounts: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                CommentCount.init(context);
+            });
+        },
+
         loadAnalytics: function () {
-            var cs = new Clickstream({filter: ["a", "button"]}),
-                omniture = new Omniture();
+            var omniture = new Omniture();
 
             common.mediator.on('page:common:deferred:loaded:omniture', function(config, context) {
                 omniture.go(config, function(){
@@ -229,6 +240,25 @@ define([
                     }, config.modules.sharedWisdomToolbar);
                 });
             }
+        },
+
+        initSwipe: function(config) {
+            if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
+                swipeNav(config);
+            }
+            if (config.switches.swipeNav && detect.canSwipe()) {
+                bonzo(document.body).addClass('can-swipe');
+                common.mediator.on('module:clickstream:click', function(clickSpec){
+                    if (clickSpec.tag.indexOf('switch-swipe-on') > -1) {
+                        userPrefs.switchOn('swipe');
+                        window.location.reload();
+                    }
+                    else if (clickSpec.tag.indexOf('switch-swipe-off') > -1) {
+                        userPrefs.switchOff('swipe');
+                        window.location.reload();
+                    }
+                });
+            }
         }
     };
 
@@ -256,9 +286,11 @@ define([
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
-            modules.transcludeTopStories();
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
+            modules.initClickstream();
+            modules.initSwipe(config);
+            modules.transcludeCommentCounts();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

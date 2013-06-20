@@ -1,0 +1,71 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# authentication endpoints
+GET     /login                      controllers.Login.login
+POST    /login                      controllers.Login.loginPost
+GET     /openIDCallback             controllers.Login.openIDCallback
+GET     /logout                     controllers.Login.logout
+
+# static files
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+##################### NOTE ############################
+#all endpoints below this line should be authenticated#
+#######################################################
+
+#Index page
+GET /                                    controllers.IndexController.index()
+GET /admin                               controllers.IndexController.admin()
+
+# Admin endpoints
+GET     /admin/feature-trailblock        controllers.FeatureTrailblockController.edit()
+POST    /admin/feature-trailblock        controllers.FeatureTrailblockController.save()
+
+# API endpoint proxying for https
+GET     /api/proxy/*path                 controllers.Api.proxy(path, callback)
+GET     /api/tag                         controllers.Api.tag(q, callback)
+GET     /api/item/*path                  controllers.Api.item(path, callback)
+GET     /json/proxy/*absUrl              controllers.Api.json(absUrl)
+
+#Development endpoints
+GET     /dev/switchboard                 controllers.SwitchboardController.render()
+POST    /dev/switchboard                 controllers.SwitchboardController.save()
+
+#Events
+GET	    /events                          controllers.event.EventController.render()
+POST    /events                          controllers.event.EventController.create()
+
+GET	    /events/list                     controllers.event.EventController.find()
+
+GET     /events*eventId                  controllers.event.EventController.read(eventId)
+POST    /events*eventId                  controllers.event.EventController.update(eventId)
+DELETE  /events*eventId                  controllers.event.EventController.delete(eventId)
+
+#Stories
+GET     /story*storyId                   controllers.event.StoryController.read(storyId)
+DELETE  /story*storyId                   controllers.event.StoryController.delete(storyId)
+
+GET     /story                           controllers.event.StoryController.find(title: String ?= "")
+POST    /story                           controllers.event.StoryController.create()
+POST    /story*storyId                   controllers.event.StoryController.update(storyId)
+
+#Entities
+GET     /entity*entityId                 controllers.event.EntityController.read(entityId, rdfType: String = "")
+DELETE  /entity*entityId                 controllers.event.EntityController.delete(entityId)
+
+GET     /entity                          controllers.event.EntityController.find(id: String ?= "")
+POST    /entity                          controllers.event.EntityController.create()
+POST    /entity*entityId                 controllers.event.EntityController.update(entityId)
+
+# Public face of typed entities
+GET     /people                          controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Person")
+GET     /people*id                       controllers.event.EntityController.read(id, rdfType = "http://schema.org/Person")
+GET     /places                          controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Place")
+GET     /places*id                       controllers.event.EntityController.read(id, rdfType = "http://schema.org/Place")
+GET     /countries                       controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Country")
+GET     /countries*id                    controllers.event.EntityController.read(id, rdfType = "http://schema.org/Country")
+GET     /organisations                   controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Organization")
+GET     /organisations*id                controllers.event.EntityController.read(id, rdfType = "http://schema.org/Organization")
+

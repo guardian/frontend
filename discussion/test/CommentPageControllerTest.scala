@@ -9,9 +9,8 @@ class CommentPageControllerTest extends FlatSpec with ShouldMatchers {
 
   val callbackName = "foo"
 
-  "Discussion" should "should return 200" in Fake {
+  "Discussion" should "return 200" in Fake {
     val result = controllers.CommentPageController.render("p/3gd58")(TestRequest())
-
     status(result) should be(200)
   }
 

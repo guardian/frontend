@@ -1,8 +1,6 @@
 @(page: MetaData)(implicit request: RequestHeader)
 
-@import CommonSwitches.SocialSwitch
-
-@if(SocialSwitch.isSwitchedOn) {
+@if(Switches.SocialSwitch.isSwitchedOn) {
 
 @defining(page.canonicalUrl.getOrElse(s"http://${request.host}${request.path}")){ url =>
     <ul class="social">
@@ -10,7 +8,7 @@
             <a  class="social-btn"
                 data-link-name="social-fb"
                 href="http://m.facebook.com/dialog/feed?app_id=180444840287&display=touch&redirect_uri=@helper.urlEncode(url)&link=@helper.urlEncode(url)&ref=responsive">
-                Facebook
+                <span class="h">Share on </span>Facebook
                 <span class="fb logo-container">
                     <span class="i-fb i logo"></span>
                 </span>
@@ -20,7 +18,7 @@
             <a  class="social-btn"
                 data-link-name="social-twitter"
                 href="https://twitter.com/intent/tweet?text=@helper.urlEncode(page.webTitle)&url=@helper.urlEncode(url)">
-                Twitter
+                <span class="h">Share on </span>Twitter
                 <span class="twitter logo-container">
                     <span class="i-twitter i logo"></span>
                 </span>
@@ -31,7 +29,7 @@
             class="social-btn"
                 data-link-name="social-gplus" 
                 href="https://plus.google.com/share?url=@helper.urlEncode(url)&hl=en-GB&wwc=1">
-                Google+
+                <span class="h">Share on </span>Google+
                 <span class="gplus logo-container">
                     <span class="i-gplus i logo"></span>
                 </span>

@@ -43,8 +43,13 @@ define(['common', 'modules/detect','modules/adverts/audience-science'], function
         this.el.appendChild(frame);
     };
 
+    function getPageUrl(config) {
+        var id = (config.pageId === '') ? '' : config.pageId + '/';
+        return config.oasSiteIdHost + '/' + id + 'oas.html';
+    }
+
     IframeAdSlot.prototype.generateUrl = function() {
-        var oasUrl = this.config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + this.config.oasSiteId + '/12345@' + '[SLOT_NAME]' + '[QUERY]';
+        var oasUrl = this.config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(this.config) + '/12345@' + '[SLOT_NAME]' + '[QUERY]';
         var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'sx';
         var query = '?';
 

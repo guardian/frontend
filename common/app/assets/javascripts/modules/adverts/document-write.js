@@ -21,8 +21,8 @@ define([
     }
 
     function getPageUrl(config) {
-            var id = (config.pageId === '') ? '' : config.pageId + '/';
-            return 'm.guardian.co.uk/' + id + 'oas.html';
+        var id = (config.pageId === '') ? '' : config.pageId + '/';
+        return config.oasSiteIdHost + '/' + id + 'oas.html';
     }
 
     function getKeywords(config) {
@@ -42,7 +42,7 @@ define([
     }
 
     function generateUrl(config, slots) {
-        var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config)+ '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
+        var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config) + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
         var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'mjx';
         var query = '?';
 
@@ -72,6 +72,18 @@ define([
         return url;
     }
 
+    function handleStateChange(script) {
+        var loaded = false;
+        return function() {
+            if ((script.readyState && script.readyState !== 'complete' && script.readyState !== 'loaded') || loaded) {
+                return false;
+            }
+            script.onload = script.onreadystatechange = null;
+            loaded = true;
+            common.mediator.emit('modules:adverts:docwrite:loaded');
+        };
+    }
+
     function load(options) {
         if(!options.config) {
             return;
@@ -79,16 +91,14 @@ define([
 
         var oasUrl = options.url || generateUrl(options.config.page, options.slots);
 
-        ajax({
-            url: oasUrl,
-            type: 'jsonp',
-            success: function (js) {
-                common.mediator.emit('modules:adverts:docwrite:loaded');
-            },
-            error: function () {
-                common.mediator.emit('module:error', 'Failed to load adverts', 'document-write.js');
-            }
-        });
+        // using this, as request isn't actually jsonp, and borks with latest reqwest (0.8.1)
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = oasUrl;
+        script.async = 'async';
+        script.onload = script.onreadystatechange = handleStateChange(script);
+
+        document.querySelector('head').appendChild(script);
     }
 
     return {

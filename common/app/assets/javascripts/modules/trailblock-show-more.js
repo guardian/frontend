@@ -5,7 +5,7 @@
 define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bonzo, bean, qwery) {
 
     function TrailblockShowMore(options) {
-        
+
         var opts = options || {},
             className = opts.className || 'js-show-more',
             trails = {},
@@ -13,7 +13,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
 
         // code to do with dom manipulation and user interaction goes in here
         this.view = {
-                
+
             render: function($cta, section) {
                 // what's the offset?
                 for (var i = 0; i < trailblockLength; i++) {
@@ -27,7 +27,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                 trails[section] = trails[section].slice(trailblockLength);
                 common.mediator.emit('module:trailblock-show-more:render');
             },
-                
+
            appendCta: function(trailblock) {
                bonzo(trailblock).append('<button class="cta trailblock-show-more" data-link-name="Show more | 1">Show more</button>');
            },
@@ -35,7 +35,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
            removeCta: function($cta) {
                $cta.remove();
            },
-           
+
            updateCta: function($cta) {
                var section = getSection($cta);
                if (trails[section] && trails[section].length === 0) {
@@ -51,7 +51,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
            }
 
         };
-        
+
         function getSection($cta) {
             return bonzo($cta.parent()).attr('data-section-id') || 'top-stories';
         }
@@ -86,7 +86,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                 } else {
                     $cta.attr('disabled', 'disabled');
                     ajax({
-                        url: opts.url || '/' +  section + '/trails',
+                        url: (opts.url || '/' +  section + '/trails') + '.json',
                         type: 'json',
                         crossOrigin: true
                     }).then(
@@ -108,7 +108,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
                                     trails[section].push(trail);
                                 }
                             });
-                            
+
                             that.view.render($cta, section);
                             that.view.updateCta($cta);
 
@@ -132,7 +132,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
             });
         };
     }
-    
+
     return TrailblockShowMore;
 
 });

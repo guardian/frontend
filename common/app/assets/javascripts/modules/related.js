@@ -1,4 +1,4 @@
-define(['common', 'modules/lazyload', 'modules/expandable'], function (common, lazyLoad, Expandable) {
+define(['common', 'modules/lazyload', 'modules/expandable'], function (common, LazyLoad, Expandable) {
 
     function related(config, context, url) {
         var container;
@@ -16,15 +16,17 @@ define(['common', 'modules/lazyload', 'modules/expandable'], function (common, l
 
             container = context.querySelector('.js-related');
             if (container) {
-                lazyLoad({
-                    url: url || '/related/' + config.page.pageId,
+                new LazyLoad({
+                    url: url || '/related/' + config.page.pageId + '.json',
                     container: container,
-                    jsonpCallbackName: 'showRelated',
                     success: function () {
                         new Expandable({dom: container.querySelector('.related-trails'), expanded: false, showCount: false}).init();
                         common.mediator.emit('modules:related:loaded', config, context);
+                    },
+                    error: function(req) {
+                        common.mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'modules/related.js');
                     }
-                });
+                }).load();
             }
         }
 

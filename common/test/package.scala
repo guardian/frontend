@@ -1,15 +1,15 @@
 package test
 
-import conf.{ ContentApi, Configuration }
+import conf.ContentApi
 import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.net.{ HttpURLConnection, URL }
 import java.io.File
 import com.gu.openplatform.contentapi.connection.Http
-import recorder.HttpRecorder
+import recorder.ContentApiHttpRecorder
 import com.gu.management.play.InternalManagementPlugin
-import play.api.{GlobalSettings, Play}
+import play.api.GlobalSettings
 import concurrent.Future
 
 trait TestSettings {
@@ -20,7 +20,7 @@ trait TestSettings {
     "conf.SwitchBoardPlugin"
   )
 
-  val recorder = new HttpRecorder {
+  val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 

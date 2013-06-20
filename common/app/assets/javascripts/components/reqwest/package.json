@@ -1,8 +1,8 @@
 {
     "name": "reqwest"
   , "description": "A wrapper for asynchronous http requests"
-  , "keywords": ["ender", "ajax", "xhr", "connection", "web 2.0", "async"]
-  , "version": "0.6.4"
+  , "keywords": ["ender", "ajax", "xhr", "connection", "web 2.0", "async", "sync"]
+  , "version": "0.8.1"
   , "homepage": "https://github.com/ded/reqwest"
   , "author": "Dustin Diaz <dustin@dustindiaz.com> (http://dustindiaz.com)"
   , "repository": {
@@ -18,6 +18,7 @@
     , "dispatch": "0.x.x"
     , "valentine": ">=1.4.7"
     , "smoosh": "0.4.0"
+    , "delayed-stream" : "0.0.5"
   }
   , "scripts": {
       "boosh": "smoosh make ./build.json"

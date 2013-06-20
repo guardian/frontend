@@ -1,14 +1,16 @@
 .ad-slot {
-    display: block;
+    display: none;
+    .js-on & { display: block; }
+
     width: 100%;
-    padding: 0;
+    padding: 10px 0 0 0;
     text-align: center;
-    height: 60px;
-    background-color: #f8f8f2;
+    height: 54px;
+
     //For expandables
     position: relative;
     z-index: 1000;
-    @media only screen and (min-width: $desktopAd) {
+    @media (min-width: $desktopAd) {
         min-height: 96px;
     }
 
@@ -24,12 +26,12 @@
 }
 
 [data-link-name*="bottom-banner-ad"] {
-	padding: $baseline*2 0;
-    background-color: #ffffff;
+    padding: $baseline*2 0;
+    background-color: #fff;
 }
 
 .ad-slot-middle-banner-ad {
-    background-color: #ffffff;
+    background-color: #fff;
     min-height: 0;
     border-bottom: 1px solid #EDEDE7;
 }

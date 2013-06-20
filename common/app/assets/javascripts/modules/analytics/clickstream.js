@@ -32,7 +32,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
             return !urlHost || (urlHost === host && urlProtocol === protocol);
         };
 
-        var getClickSpec = function (spec) {
+        var getClickSpec = function (spec, forceValid) {
             var el = spec.el,
                 elName = el.tagName.toLowerCase(),
                 dataLinkName = el.getAttribute('data-link-name'),
@@ -59,7 +59,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
             }
 
             if(!spec.validTarget) {
-                spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0;
+                spec.validTarget = filterSource(el.tagName.toLowerCase()).length > 0 || forceValid;
                 if(spec.validTarget) {
                     spec.target = el;
                     href = el.getAttribute('href');
@@ -71,22 +71,38 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
                 }
             }
 
+            // Pick up the nearest data-link-context
+            if(!spec.linkContext && el.getAttribute('data-link-context')) {
+                spec.linkContext =  el.getAttribute('data-link-context');
+            }
+
             // Recurse
             spec.el = el.parentNode;
             return getClickSpec(spec);
         };
 
         // delegate, emit the derived tag
-        bean.add(document.body, 'click', function (event) {
-            var clickSpec = getClickSpec({el: event.target});
-            if (clickSpec) {
-                common.mediator.emit('module:clickstream:click', clickSpec);
-            }
-        });
+        if (opts.addListener !== false) {
+            bean.add(document.body, 'click', function (event) {
+                var clickSpec = {el: event.target};
 
+                if (opts.withEvent !== false) {
+                    clickSpec.event = event;
+                }
+
+                clickSpec = getClickSpec(clickSpec);
+                if (clickSpec) {
+                    common.mediator.emit('module:clickstream:click', clickSpec);
+                }
+            });
+        }
+
+        return {
+            getClickSpec: getClickSpec
+        };
     };
 
-    return (Clickstream);
+    return Clickstream;
 
 });
 

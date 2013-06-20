@@ -7,7 +7,7 @@
     @if(tag.isContributor) {
         <div class="profile media">
             @tag.contributorImagePath.map { url =>
-                <div class="profile-img media-img">
+                <div class="profile-img media__img">
                     <img src="@url" alt="@tag.name" />
                 </div>
             }
@@ -25,13 +25,17 @@
     @if(leadContent.nonEmpty) {
         @leadContent.zipWithRowInfo.map{ case (trail, info) =>
             <div class="box-indent lead-content @if(info.rowNum == 1 && trail.mainPicture) {has-image}" data-link-name="lead content">
-                @fragments.trails.featured(trail, info.rowNum)
+                <ul class="unstyled">
+                    @fragments.trails.featured(trail, info.rowNum)
+                </ul>
             </div>
         }
     }
 
     <div class="trailblock" data-count="@trails.length" data-link-name="Tag:block:@tag.section">
-        @fragments.trailblocks.section(trails, trails.size)
+        <ul class="unstyled">
+            @fragments.trailblocks.section(trails, trails.size)
+        </ul>
     </div>
 
 </section>
