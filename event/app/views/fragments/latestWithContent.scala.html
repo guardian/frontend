@@ -31,7 +31,7 @@
                         </a>
                     </h2>
 
-                    @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
+                    @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
                 </div>
 
             </li>

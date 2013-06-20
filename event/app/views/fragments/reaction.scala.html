@@ -1,4 +1,4 @@
-@(story: Story)
+@(story: Story)(implicit request: RequestHeader)
 
 @if(story.hasReaction) {
 
@@ -16,7 +16,7 @@
                             <img class="story-reaction__img" src="@url" />
                         }
                     }
-                    <a class="cta-new" data-link-name="Continue reading" href="@a.url">
+                    <a class="cta-new" data-link-name="Continue reading" href="@LinkTo{@a.url}">
                         Continue reading
                         <button class="cta-new__btn cta-new__btn--right">
                             <i class="i i-arrow-blue-down cta-new__icn cta-new__icn--right"></i>

@@ -13,7 +13,6 @@
         @extend %type-4;
         color: #333;
         margin-bottom: $baseline;
-        clear: both;
 
         @media (min-width: $tablet) {
             font-size: 22px;
@@ -76,13 +75,6 @@
         line-height: 26px;
         line-height: 2.6rem;
     }
-}
-
-/* Blocks
-   ========================================================================== */
-
-.from-content-api .block {
-    overflow: hidden;
 }
 
 
