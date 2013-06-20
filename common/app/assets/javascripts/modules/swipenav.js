@@ -101,9 +101,6 @@ define([
             frag;
 
         if (url && el) {
-            el.dataset = el.dataset || {};
-            el.dataset.url = url;
-            
             // Associate a contenet area with this pane, if not already done so
             el.bodyPart = el.bodyPart || el.querySelector(bodyPartSelector);
             el.bodyPart.innerHTML = pendingHTML;
@@ -118,27 +115,29 @@ define([
                 callback();
             }
             else {
-                el.pending = true;
+                el.pendingUrl = url;
                 ajax({
                     url: url + '.json',
                     crossOrigin: true,
-                    success: function (frag) {
-                        var html;
+                }).then(function (frag) {
+                    var html;
 
-                        delete el.pending;
-                        frag   = frag || {};
-                        html   = frag.html || '<div class="preload-msg">Oops. This page might be broken?</div>';
+                    frag   = frag || {};
+                    html   = frag.html || '';
 
-                        sequenceCache[url] = sequenceCache[url] || {};
-                        sequenceCache[url].html = html;
-                        sequenceCache[url].config = frag.config || {};
+                    sequenceCache[url] = sequenceCache[url] || {};
+                    sequenceCache[url].html = html;
+                    sequenceCache[url].config = frag.config || {};
 
-                        if (el.dataset.url === url) {
-                            populate(el, html);
-                            common.mediator.emit('module:swipenav:pane:loaded', el);
-                            callback();
-                        }
+                    if (el.pendingUrl === url) {
+                        el.url = url;
+                        populate(el, html);
                     }
+                }).fail(function () {
+                }).always(function () {
+                    delete el.pendingUrl;
+                    callback();
+                    common.mediator.emit('module:swipenav:pane:loaded', el);
                 });
             }
         }
@@ -180,7 +179,7 @@ define([
 
         recalcHeight(true);
 
-        url = context.dataset.url;
+        url = context.url;
         setSequencePos(url);
 
         config = (sequenceCache[url] || {}).config || {};
@@ -237,60 +236,72 @@ define([
 
         if (sequenceUrl) {
             // data-link-context was from a click within this app
-            sequenceUrl = '/' + sequenceUrl;
             linkContext = undefined;
         } else {
             sequenceUrl = storage.get(storePrefix + 'linkContext');
             if (sequenceUrl) {
                 // data-link-context was set by a click on a previous page
-                sequenceUrl = '/' + sequenceUrl;
                 storage.remove(storePrefix + 'linkContext');
             } else {
-                // No data-link-context, so infer the section from current url
-                sequenceUrl = window.location.pathname.match(/^(\/[^0-9]+)/);
-                sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '/');
+                // No data-link-context, so infer the section/tag component from the url,
+                sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
+                sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
             }
         }
 
+        // Strip trailing slash
+        sequenceUrl = sequenceUrl.replace(/\/$/, "");
         // 'news' should return top trails, i.e. the default response
-        sequenceUrl = (sequenceUrl === '/news' ? '/' : sequenceUrl);
+        sequenceUrl = (sequenceUrl === 'news' ? '' : sequenceUrl);
 
         ajax({
-            url: sequenceUrl + '.json',
+            url: '/' + sequenceUrl + '.json',
             crossOrigin: true,
-            success: function (json) {
-                var trails = json.trails,
-                    len = trails ? trails.length : 0,
-                    url = window.location.pathname,
-                    s,
-                    i;
+        }).then(function (json) {
+            var trails = json.trails,
+                len = trails ? trails.length : 0,
+                url = window.location.pathname,
+                s,
+                i;
 
-                if (len >= 3) {
-                    // Make sure url is the first in the sequence
-                    if (trails[0] !== url) {
-                        trails.unshift(url);
-                        len += 1;
-                    }
-
-                    sequence = [];
-                    sequenceLen = 0;
-                    sequenceCache = {};
-
-                    for (i = 0; i < len; i += 1) {
-                        s = trails[i];
-                        // dedupe, while also creating a lookup obj
-                        if(!sequenceCache[s]) {
-                            sequenceCache[s] = {};
-                            sequence.push(s);
-                            sequenceLen += 1;
-                        }
-                    }
-                    setSequencePos(window.location.pathname);
+            if (len >= 3) {
+                // Make sure url is the first in the sequence
+                if (trails[0] !== url) {
+                    trails.unshift(url);
+                    len += 1;
                 }
 
+                sequence = [];
+                sequenceLen = 0;
+                sequenceCache = {};
+
+                for (i = 0; i < len; i += 1) {
+                    s = trails[i];
+                    // dedupe, while also creating a lookup obj
+                    if(!sequenceCache[s]) {
+                        sequenceCache[s] = {};
+                        sequence.push(s);
+                        sequenceLen += 1;
+                    }
+                }
+                setSequencePos(window.location.pathname);
                 callback();
+            } else {
+                loadSequenceRetry (sequenceUrl, callback);
             }
+        }).fail(function () {
+            loadSequenceRetry (sequenceUrl, callback);
         });
+    }
+
+    function loadSequenceRetry (sequenceUrl, callback) {
+        // drop last component of url, then retry
+        sequenceUrl = sequenceUrl.split('/');
+        sequenceUrl.pop();
+        if(sequenceUrl.length > 0) {
+            linkContext = sequenceUrl.join('/');
+            loadSequence(callback);
+        }
     }
 
     function gotoUrl(url, dir) {
@@ -350,13 +361,13 @@ define([
         el = panes.masterPages[mod3(paneNow + dir)];
         
         // Only load if not already loaded into this pane
-        if (el.dataset.url !== url) {
+        if (el.url !== url) {
             load({
                 url: url,
                 container: el,
                 callback: function () {
                     // before slideInPane, confirm that this pane hasn't had its url changed since the request was made
-                    if (doSlideIn && el.dataset.url === url) {
+                    if (doSlideIn && el.url === url) {
                         slideInPane(dir);
                     }
                 }
@@ -459,11 +470,11 @@ define([
 
         // Identify and annotate the initially visible pane
         visiblePane = panes.masterPages[1];
-        visiblePane.dataset.url = initialUrl;
+        visiblePane.url = initialUrl;
 
         // Render panes that come into view, and that are not still loading
         common.mediator.on('module:swipenav:pane:loaded', function(el){
-            if(el === visiblePane && !el.pending) {
+            if(el === visiblePane && !el.pendingUrl) {
                 doAfterShow(el);
             }
         });
