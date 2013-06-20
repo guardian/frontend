@@ -121,6 +121,17 @@ Deploying
 ---------
 Deployment uses the [Magenta][magenta] library.
 
+Debugging
+---------
+You can debug your local Frontend application, by attaching a debugger.
+
+* Start Simple Build Tool in debug mode by typing `./sbt012 --debug`
+* Build and run your application. See "Running" for steps.
+* Use a debugger to attach to the remote Java process, on localhost:1044.
+
+Any IDE debugger should be compatible. In IntelliJ, add a new Debug Configuration, based on the Remote default.
+Ensure the Transport is Socket, the Debugger mode is Attach, and the port is set to 1044.
+Start a new Debug session, and your breakpoints should be active.
 
 Additional Documentation
 ------------------------
