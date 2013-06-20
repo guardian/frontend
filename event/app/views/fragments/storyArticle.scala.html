@@ -19,13 +19,13 @@
         <div class="article-body from-content-api @if(a.isLive) {live-blog}">
             @withJsoup(BulletCleaner(a.body))(
             PictureCleaner(a),
-            InBodyLinkCleaner("in body link"),
+            InBodyLinkCleaner("in body link")(Edition(request)),
             BlockNumberCleaner,
             TweetCleaner,
             WitnessCleaner,
             Summary(2)
             )
-            <p><a href="@a.url">Continue reading...</a></p>
+            <p><a href="@LinkTo{@a.url}">Continue reading...</a></p>
         </div>
     </article>
 </li>

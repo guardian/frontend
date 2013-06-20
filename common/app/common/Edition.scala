@@ -17,7 +17,11 @@ abstract class Edition(
 
 object Edition {
 
+  // gives templates an implicit edition
+  implicit def edition(implicit request: RequestHeader) = this(request)
+
   val defaultEdition = editions.Uk
+
   val all = Seq(
     editions.Uk,
     editions.Us
