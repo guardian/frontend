@@ -7,6 +7,7 @@ import conf._
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
+import play.api.libs.json._
 
 import concurrent.Future
 
@@ -111,7 +112,8 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
               "html" -> views.html.fragments.frontBody(frontPage, trailblocks),
               "trails" -> trailblocks.headOption.map{ trailblock =>
                 trailblock.trails.map(_.url)
-              }.getOrElse(Nil)
+              }.getOrElse(Nil),
+              "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
             )
           else
             Ok(views.html.front(frontPage, trailblocks))

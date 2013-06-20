@@ -7,6 +7,7 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
+import play.api.libs.json._
 
 import contentapi.QueryDefaults
 
@@ -65,7 +66,8 @@ object TagController extends Controller with Logging with JsonTrails with Execut
       if (request.isJson)
         JsonComponent(
           "html" -> views.html.fragments.tagBody(model.tag, model.trails, model.leadContent),
-          "trails" -> (model.leadContent ++ model.trails).map(_.url)
+          "trails" -> (model.leadContent ++ model.trails).map(_.url),
+          "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.tag, Switches.all).body)
         )
       else
         Ok(views.html.tag(model.tag, model.trails, model.leadContent))

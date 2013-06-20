@@ -5,6 +5,7 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.libs.json._
 
 import concurrent.Future
 import play.api.templates.Html
@@ -60,7 +61,8 @@ object SectionController extends Controller with Logging with Paging with JsonTr
       if (request.isJson)
         JsonComponent(
           "html" -> views.html.fragments.sectionBody(model.section, trails),
-          "trails" -> trails.map(_.url)
+          "trails" -> trails.map(_.url),
+          "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.section, Switches.all).body)
         )
       else
         Ok(views.html.section(model.section, trails))
