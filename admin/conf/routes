@@ -71,6 +71,8 @@ GET     /organisations*id                controllers.event.EntityController.read
 
 # Fronts
 GET     /fronts                          controllers.FrontsController.index()
+GET     /fronts/top-stories              controllers.fronts.TopStoriesController.read()
+POST    /fronts/top-stories              controllers.fronts.TopStoriesController.update()
 
 
 #Metrics

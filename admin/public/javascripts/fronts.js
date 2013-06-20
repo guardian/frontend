@@ -1,7 +1,25 @@
 curl(['Reqwest', 'bean', 'bonzo', 'js!html5sortable']).then(function(reqwest, bean, bonzo) {
 
     var doc = document,
-        searchSelector = '.top-stories__search'; 
+        searchSelector = '.top-stories__search',
+        addArticle = function(article) {
+            bonzo(doc.querySelector('.top-stories__articles'))
+                .append('<li>' + article + '<button class="btn btn-danger">X</button></li>');
+            $('.top-stories__articles').sortable();
+        };
+
+    reqwest({
+        url: '/fronts/top-stories',
+        type: 'json'
+    }).then(
+        function(resp) {
+            if (resp.articles) {
+                resp.articles.forEach(function(article) {
+                    addArticle(article.id);
+                });
+            }
+        }
+    );
     
     bean.one(doc.querySelector(searchSelector), 'keydown', function() {
         $(searchSelector).typeahead({
@@ -12,9 +30,7 @@ curl(['Reqwest', 'bean', 'bonzo', 'js!html5sortable']).then(function(reqwest, be
                 return items; 
             },
             updater: function(item) {
-                bonzo(doc.querySelector('.top-stories__articles'))
-                    .append('<li>' + item + '</li>');
-                $('.top-stories__articles').sortable();
+                addArticle(item);
             },
             source: function(query, process) {
                 reqwest({
@@ -23,8 +39,8 @@ curl(['Reqwest', 'bean', 'bonzo', 'js!html5sortable']).then(function(reqwest, be
                     url: 'http://content.guardianapis.com/search?format=json&show-fields=all&pageSize=5&q=' + query,
                     type: 'jsonp',
                     success: function(resp) {
-                        var articles = resp.response.results.map(function(a) {
-                            return a.webTitle;
+                        var articles = resp.response.results.map(function(article) {
+                            return article.webTitle;
                         });
                         process(articles);
                     }
@@ -34,15 +50,20 @@ curl(['Reqwest', 'bean', 'bonzo', 'js!html5sortable']).then(function(reqwest, be
     })
     
     bean.on(doc.querySelector('.top-stories__save'), 'click', function(e) {
-        var topStories = Array.prototype.map.call(doc.querySelectorAll('.top-stories__articles li'), function(li) {
+        var articles = Array.prototype.map.call(doc.querySelectorAll('.top-stories__articles li'), function(li) {
             return li.textContent;
         })
         reqwest({
+            contentType: 'application/json',
             url: '/fronts/top-stories',
             method: 'post',
-            data: {
-                topStories: topStories
-            } 
+            data: JSON.stringify({
+                articles: articles.map(function(article) {
+                    return {
+                        id: article
+                    };
+                })
+            })
         });
     });
     
