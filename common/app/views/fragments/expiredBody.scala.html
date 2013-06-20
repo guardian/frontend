@@ -1,23 +1,27 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-<h2 class="article-zone type-1">
-    <a class="zone-color" data-link-name="article section" href="/@content.section">@Html(content.sectionName)</a>
-</h2>
+<div class="monocolumn-wrapper">
+    <h2 class="article-zone type-1">
+        <a class="zone-color" data-link-name="article section" href="/@content.section">@Html(content.sectionName)</a>
+    </h2>
 
-<article id="article" class="article" itemprop="mainContentOfPage" itemscope itemtype="@content.schemaType">
+    <article id="article" class="article" itemprop="mainContentOfPage" itemscope itemtype="@content.schemaType">
 
-    <header class="article-head">
-        @fragments.dateline(content.webPublicationDate, false)
-        @fragments.headline(content.headline)
-    </header>
+        <header class="article-head">
+            @fragments.dateline(content.webPublicationDate, false)
+            @fragments.headline(content.headline)
+        </header>
 
-    <div class="after-header"></div>
+        <div class="after-header"></div>
 
-    <div class="article-body"
-        itemprop="articleBody">
-        This content has been removed as our copyright has expired.
-    </div>
-</article>
+        <div class="article-body"
+            itemprop="articleBody">
+            <div class="from-content-api">
+                <p>This content has been removed as our copyright has expired.</p>
+            </div>
+        </div>
+    </article>
+</div>
 
 <div id="js-related"></div>
 
