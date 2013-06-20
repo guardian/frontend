@@ -1,10 +1,10 @@
-curl(['Reqwest', 'bean', 'bonzo', 'js!html5sortable']).then(function(reqwest, bean, bonzo) {
+curl(['Reqwest', 'common', 'bean', 'bonzo', 'js!html5sortable']).then(function(reqwest, common, bean, bonzo) {
 
     var doc = document,
         searchSelector = '.top-stories__search',
         addArticle = function(article) {
             bonzo(doc.querySelector('.top-stories__articles'))
-                .append('<li>' + article + '<button class="btn btn-danger">X</button></li>');
+                .append('<li><span>' + article + '</span><button class="btn btn-danger">X</button></li>');
             $('.top-stories__articles').sortable();
         };
 
@@ -20,14 +20,14 @@ curl(['Reqwest', 'bean', 'bonzo', 'js!html5sortable']).then(function(reqwest, be
             }
         }
     );
-    
+
     bean.one(doc.querySelector(searchSelector), 'keydown', function() {
         $(searchSelector).typeahead({
-            matcher: function() { 
-                return true; 
+            matcher: function() {
+                return true;
             },
-            sorter: function(items) { 
-                return items; 
+            sorter: function(items) {
+                return items;
             },
             updater: function(item) {
                 addArticle(item);
@@ -44,18 +44,19 @@ curl(['Reqwest', 'bean', 'bonzo', 'js!html5sortable']).then(function(reqwest, be
                         });
                         process(articles);
                     }
-                })
+                });
             }
         });
-    })
-    
+    });
+
     bean.on(doc.querySelector('.top-stories__save'), 'click', function(e) {
-        var articles = Array.prototype.map.call(doc.querySelectorAll('.top-stories__articles li'), function(li) {
-            return li.textContent;
-        })
+        var articles = Array.prototype.map.call(doc.querySelectorAll('.top-stories__articles li span'), function(article) {
+            return article.textContent;
+        });
         reqwest({
             contentType: 'application/json',
             url: '/fronts/top-stories',
+            type: 'json',
             method: 'post',
             data: JSON.stringify({
                 articles: articles.map(function(article) {
@@ -64,7 +65,20 @@ curl(['Reqwest', 'bean', 'bonzo', 'js!html5sortable']).then(function(reqwest, be
                     };
                 })
             })
-        });
+        }).then(
+            function() {
+                bonzo(doc.querySelector('h1'))
+                    .before('<div class="alert alert-success fade in">Saved</div>');
+                window.setTimeout(function() {
+                    $('.alert').alert('close');
+                }, 2000);
+            },
+            function() {}
+        );
     });
-    
+
+    bean.on(doc.querySelector('.top-stories__articles'), 'click', 'button', function(e) {
+        bonzo(bonzo(this).parent()).remove();
+    });
+
 });

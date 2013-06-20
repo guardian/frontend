@@ -14,6 +14,7 @@ trait S3 extends Logging {
   lazy val bucket = Configuration.aws.bucket
   lazy val configKey = AdminConfiguration.configKey
   lazy val switchesKey = AdminConfiguration.switchesKey
+  lazy val topStoriesKey = AdminConfiguration.topStoriesKey
 
   private def createClient = new AmazonS3Client(Configuration.aws.credentials)
 
@@ -23,8 +24,8 @@ trait S3 extends Logging {
   def getSwitches = get(switchesKey)
   def putSwitches(config: String) { put(switchesKey, config, "text/plain") }
 
-  def getTopStories = get("DEV/config/top-stories.json")
-  def putTopStories(config: String) { put("DEV/config/top-stories.json", config, "application/json") }
+  def getTopStories = get(topStoriesKey)
+  def putTopStories(config: String) { put(topStoriesKey, config, "application/json") }
 
   private def get(key: String): Option[String] = {
     val client = createClient

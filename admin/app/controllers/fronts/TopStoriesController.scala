@@ -4,20 +4,33 @@ import common._
 import play.api.mvc.{Action, Controller}
 import controllers.{AuthAction, AuthLogging}
 import play.api.libs.json.Json.toJson
+import play.api.Play.current
+import play.api.libs.concurrent.Akka
 import tools.S3
 
-object TopStoriesController extends Controller with AuthLogging with Logging  {
+object TopStoriesController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
   def read() = AuthAction{ request =>
-    val topStories = request.body.asJson.map(_.toString)
-    Ok(
-      S3.getTopStories.getOrElse("")
-    ).as("application/json")
+    val promiseOfTopStories = Akka future {
+      S3.getTopStories
+    }
+    Async {
+      promiseOfTopStories.map { topStories =>
+        Ok(topStories.getOrElse("")).as("application/json")
+      }
+    }
   }
   
   def update() = AuthAction{ request =>
-    S3.putTopStories(request.body.asJson.map(_.toString).getOrElse(""))
-    Ok(status("updated")).as("application/json")
+    val promiseOfSavedTopStories = Akka.future {
+      S3.putTopStories(request.body.asJson.map(_.toString).getOrElse(""))
+    }
+    Async {
+      promiseOfSavedTopStories.map { savedTopStories =>
+        Ok(status("updated")).as("application/json")
+      }
+    }
+
   }
 
   def status(msg: String) = toJson(Map("status" -> msg))
