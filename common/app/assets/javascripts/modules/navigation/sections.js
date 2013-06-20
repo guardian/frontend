@@ -2,12 +2,14 @@ define([
     'common',
     'bonzo',
     'bean',
-    'modules/detect'
+    'modules/detect',
+    'modules/userPrefs'
 ], function (
     common,
     bonzo,
     bean,
-    detect
+    detect,
+    userPrefs
 ) {
 
     function Sections(config) {
@@ -171,6 +173,7 @@ define([
 
 
                     common.$g('#header', context).append(localNavCtaHtml + localNavPopupHtml);
+
                     // Remove the other section head from the page
                     common.$g('.section-head, .article-zone', context).remove();
 
@@ -183,8 +186,9 @@ define([
         this.init = function (context) {
             this.view.bindings(context);
 
-            if (config.switches.localNav) {
-                this.view.insertLocalNav(context);
+            if (config.switches.localNav &&
+                (!config.switches.swipeNav || !detect.canSwipe() || userPrefs.isOff('swipe'))) {
+                    this.view.insertLocalNav(context);
             }
         };
      }
