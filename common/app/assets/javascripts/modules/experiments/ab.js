@@ -3,14 +3,14 @@ define([
     'modules/storage',
 
     //Current tests
-    'modules/experiments/tests/story-article-swap'
+    'modules/experiments/tests/paragraph-spacing'
 ], function (
     common,
     store,
-    StoryArticleSwap) {
+    ParagraphSpacing) {
     
     var TESTS = {
-            StoryArticleSwapV2: new StoryArticleSwap()
+            ParagraphSpacing: new ParagraphSpacing()
         };
 
     var testKey = 'gu.ab.current',

@@ -13,6 +13,19 @@
         @extend %type-4;
         color: #333;
         margin-bottom: $baseline;
+
+        @media (min-width: $tablet) {
+            font-size: 22px;
+            font-size: 2.2rem;
+            line-height: 28px;
+            line-height: 2.8rem;
+        }
+        @media (min-width: $desktop) {
+            font-size: 22px;
+            font-size: 2.2rem;
+            line-height: 28px;
+            line-height: 2.8rem;
+        }
     }
 
     h3 {
@@ -33,14 +46,35 @@
         padding: 0;
         color: #333;
     }
+
+
+    h3,
+    > p,
+    .block-elements > p,
+    ul,
+    ol,
+    address,
+    blockquote,
+    blockquote p {
+        @media (min-width: $tablet) {
+            font-size: 18px;
+            font-size: 1.8rem;
+            line-height: 26px;
+            line-height: 2.6rem;
+            margin-bottom: 16px;
+            margin-bottom: 1.6rem;
+        }
+    }
 }
 
 .article blockquote,
 .article blockquote p {
-    @extend %type-6;
-    color: #333;
-    font-weight: normal;
-    border-left: none;
+    @media (min-width: $tablet) {
+        font-size: 18px;
+        font-size: 1.8rem;
+        line-height: 26px;
+        line-height: 2.6rem;
+    }
 }
 
 
