@@ -1,4 +1,4 @@
-@(story: Story)
+@(story: Story)(implicit request: RequestHeader)
 
 @if(story.hasAgents) {
     <section class="story-agents" data-link-name="Agents">

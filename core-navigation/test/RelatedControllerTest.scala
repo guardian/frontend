@@ -13,19 +13,6 @@ class RelatedControllerTest extends FlatSpec with ShouldMatchers {
   val articleWithoutRelated = "uk/2012/aug/29/eva-rausing-information-murder-olaf-palme"
   val callback = "aFunction"
 
-  "Related Controller" should "serve the correct headers when the article exists" in Fake {
-    val fakeRequest = TestRequest()
-      .withHeaders("Accept" -> "text/html")
-
-    Switches.DoubleCacheTimesSwitch.switchOff()
-
-    val result = controllers.RelatedController.render(article)(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("text/html")
-    charset(result).get should be("utf-8")
-    header("Cache-Control", result).get should be("public, max-age=900, stale-while-revalidate=900, stale-if-error=345600")
-  }
-
   it should "serve the correct headers when given a callback parameter" in Fake {
     val fakeRequest = FakeRequest(GET, s"/related/${article}?callback=$callback")
       .withHeaders("host" -> "http://localhost:9000")
