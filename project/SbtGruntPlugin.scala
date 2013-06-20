@@ -58,7 +58,7 @@ object SbtGruntPlugin extends Plugin {
       }
       writeCacheFile(lastUpdated, newestSize, newestSource)
     } else {
-      s.log.info("No need to run grunt task: " + taskName)
+      s.log.debug("No need to run grunt task: " + taskName)
     }
   }
 

@@ -9,7 +9,7 @@
         <i class="chapter__marker chapter__marker--small"></i>
         @fragments.relativeDate(a.webPublicationDate, false, false)
         <h4 class="article-headline">
-            <a href="@a.url">
+            <a href="@LinkTo{@a.url}">
                 @a.headlineOverride
             </a>
         </h4>
@@ -21,12 +21,12 @@
         <i class="chapter__marker chapter__marker--small"></i>
         @fragments.relativeDate(g.webPublicationDate, false, false)
         <h4 class="article-headline">
-            <a href="@g.url">
+            <a href="@LinkTo{@g.url}">
                 @g.headlineOverride
             </a>
         </h4>
         @g.images.take(4).zipWithRowInfo.map{ case(image, info) =>
-            <a href="@g.url?index=@info.rowNum"><img src="@image.url" alt="@Html(image.caption.getOrElse(""))" /></a>
+            <a href="@LinkTo{@g.url?index=@info.rowNum}"><img src="@image.url" alt="@Html(image.caption.getOrElse(""))" /></a>
         }
     </li>
 }
@@ -36,7 +36,7 @@
     <i class="chapter__marker chapter__marker--small"></i>
     @fragments.relativeDate(v.webPublicationDate, false, false)
     <h4 class="article-headline">
-        <a href="@v.url">
+        <a href="@LinkTo{@v.url}">
             @v.headlineOverride
         </a>
     </h4>
