@@ -484,7 +484,7 @@ define([
             if (clickSpec.sameHost && !clickSpec.samePage) {
                 if (swipeNavOnClick) {
                     url = urlAbsPath(clickSpec.target.href);
-                    if (!url) {
+                    if (!url || url.indexOf('mailto:') === 0 ) {
                         return;
                     } else if (url === urlAbsPath(window.location.href)) {
                         // Force a complete reload if the link is for the current page
