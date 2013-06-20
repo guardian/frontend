@@ -277,7 +277,6 @@
 
         &.is-active i {
             @include rotate(180deg);
-            background-position: center left !important;
         }
     }
 
