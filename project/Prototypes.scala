@@ -82,7 +82,9 @@ trait Prototypes {
 
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "1.9.1" % "test"
-    )
+    ),
+
+    (javaOptions in test) += "-DAPP_SECRET=secret"
   )
 
   val frontendAssemblySettings = Seq(
