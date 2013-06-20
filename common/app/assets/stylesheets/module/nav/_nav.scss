@@ -264,6 +264,7 @@
 .localnav--small {
     background-color: #fff;
     display: none;
+    margin-top: 60px;
 
     @media only screen and (max-width: $tablet) { display: block; }
 

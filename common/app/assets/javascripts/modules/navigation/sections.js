@@ -170,9 +170,7 @@ define([
 
 
 
-                    //common.$g('#header', context).append(localNavCtaHtml + localNavPopupHtml);
-                    common.$g('.parts__head').append(localNavCtaHtml + localNavPopupHtml);
-
+                    common.$g('#header', context).append(localNavCtaHtml + localNavPopupHtml);
                     // Remove the other section head from the page
                     common.$g('.section-head, .article-zone', context).remove();
 

@@ -1,0 +1,28 @@
+/* Local navigation - Global container overrides
+========================================================================== */
+#preloads.has-localnav {
+    @media (max-width: $tablet) {
+         .parts__body {
+            margin-top: 60px;
+        }
+    }
+
+    @media (min-width: $tablet) {
+        margin-top: 156px;
+    }
+
+    .ad-slot-top-banner-ad {
+        @media (max-width: $tablet) {
+            padding-top: 5px;
+            background-color: #eee;
+        }
+    }
+}
+
+
+/* Local navigation popup
+   ========================================================================== */
+.nav-popup-localnav {
+    top: 170px;
+    border-color: $darkMushroom;
+}
