@@ -34,14 +34,14 @@
 
     @media (min-width: $tablet) {
         position: absolute;
-        top: 102px;
+        top: 99px;
         right: 0;
         width: auto;
         padding: 0;
         min-width: 160px;
         background-color: #fff;
-        border-bottom: 2px solid $darkMushroom;
-        border-left: 2px solid $darkMushroom;
+        border-bottom: 1px solid $darkMushroom;
+        border-left: 1px solid $darkMushroom;
     }
 
     .nav__item {
