@@ -1,9 +1,10 @@
 define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
 
-    function Images() {
+    function Images(options) {
     
-        var connectionSpeed = detect.getConnectionSpeed(),
-            layoutMode = detect.getLayoutMode(),
+        var opts = options || {},
+            connectionSpeed = detect.getConnectionSpeed(opts.connection),
+            layoutMode = detect.getLayoutMode(opts.viewportWidth),
             self = this;
 
         // View
@@ -27,12 +28,13 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                     var forceUpgrade = image.attr('data-force-upgrade');
 
                     if (fullWidth && fullWidth >= thumbWidth && fullsrc) {
-                        if (forceUpgrade || layoutMode === 'desktop') {
+                        if (forceUpgrade || layoutMode === 'desktop' || layoutMode === 'extended') {
                             image.attr('src', fullsrc);
                             image.addClass('image-high');
                             return;
                         }
                     }
+
                     image.attr('src', lowsrc);
                 });
             }
