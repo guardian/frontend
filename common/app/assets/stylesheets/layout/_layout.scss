@@ -22,6 +22,30 @@
     left: 0;
     right: 0;
     z-index: 99;
+
+    /* These styles extend the top bars to the screen edges */
+    &:before,
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        z-index: -10;
+    }
+
+    &:before {
+        top: 0;
+        height: 58px;
+        background-color: $blue;
+    }
+
+    &:after {
+        top: 58px;
+        height: 40px;
+        background-color: #F5F5F2;
+        border-bottom: 1px solid $darkMushroom;
+    }
+
 }
     .header__inner {
         background-color: $blue;
