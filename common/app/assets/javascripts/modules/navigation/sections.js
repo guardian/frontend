@@ -138,7 +138,7 @@ define([
 
                     Object.keys(currentSection.zones).forEach(function(zonePath, i) {
                         var zoneName = currentSection.zones[zonePath],
-                            isActive = (zonePath == '/'+config.page.section),
+                            isActive = (zonePath == '/'+config.page.section) || (zonePath == '/'+config.page.pageId),
                             className = isActive ? 'nav__item is-active' : 'nav__item',
                             linkClass = isActive ? 'nav__link zone-color' : 'nav__link';
 
@@ -158,17 +158,18 @@ define([
 
                     // Insert the CTA for the popup local nav
                     var sectionHeadNode = common.$g('.section-head', context),
-                        currentZoneName = sectionHeadNode.text() || currentSection.zones['/'+config.page.section] || currentSection.sectionName,
+                        sectionLink     = common.$g('.article-zone [data-link-name="article section"]', context).parent().html(),
+                        localNavTitle   = sectionLink || sectionHeadNode.text() || currentSection.zones['/'+config.page.section] || currentSection.sectionName,
+
                         localNavCtaHtml = '<div class="localnav--small">' +
                                           '  <div class="localnav__inner cf">' +
-                                          '    <h1 class="localnav__title zone-color">'+currentZoneName+'</h1>' +
+                                          '    <h1 class="localnav__title zone-color">'+localNavTitle+'</h1>' +
                                           '      <button class="cta localnav__cta control zone-background" data-link-name="Popup Localnav" data-control-for="nav-popup-localnav">' +
                                           '        <i class="i i-local-nav-arrow"></i>' +
                                           '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
                     common.$g('#header', context).append(localNavCtaHtml + localNavPopupHtml);
-
 
 
                     // Insert the desktop local nav
@@ -180,7 +181,7 @@ define([
 
 
                     // Remove the other section head from the page
-                    common.$g('.section-head, .article-zone, .front-section:first-child .sub-section-head', context).remove();
+                    common.$g('.section-head, .article-zone:first-child, .front-section:first-child .sub-section-head', context).remove();
 
                     common.$g('#preloads').addClass('has-localnav');
 
