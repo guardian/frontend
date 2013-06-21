@@ -30,12 +30,10 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                         if (forceUpgrade || layoutMode === 'desktop') {
                             image.attr('src', fullsrc);
                             image.addClass('image-high');
-                        } else {
-                            image.attr('src', lowsrc);
+                            return;
                         }
-                    } else {
-                        image.attr('src', lowsrc);
                     }
+                    image.attr('src', lowsrc);
                 });
             }
         };
