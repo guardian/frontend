@@ -1,66 +1,49 @@
+.social-wrapper {
+   padding: $baseline*3 0 $baseline*4;
+   overflow: hidden;
+}
+
 .social {
    margin: 0;  
    list-style: none;
-   padding: $baseline*3 0 $baseline*4;
-   min-height: 40px;
-}
- 
-.social-btn,
-a.social-btn {
-    @extend %type-10;
-    text-align: center;
-    display: block;
-    padding: 8px 0;
-    color: #fff;
-    border-bottom: 8px solid #fff;
-    position: relative
 }
 
-.social .social-btn span {
+.social__item--mail    { background-color: #84847E; }
+.social__item--fb      { background-color: #3b5998; }
+.social__item--twitter { background-color: #00aced; }
+.social__item--gplus   { background-color: #dd4b39; }
+
+.social__action {
+    height: 36px;
     display: block;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.social__icon {
     position: absolute;
-}
-.social .social-btn .logo-container {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-.social .social-btn .logo {
     left: 5px;
     bottom: 5px;
 }
 
 @media (min-width: 20em) {
-    .social .social-network {
-        float: left;
-        width: 24%;
-        max-width: 80px;
-        margin-right: 8px;
+    .social-wrapper {
+        margin-right: $gutter/4 * -1;
+        margin-left: $gutter/4 * -1;
     }
-    
-    .social .social-network:last-child {
-        margin-right: 0;
+    .social {
+        display: table;
+        width: 100%;
+        max-width: 80px * 4 + 8px * 3;
     }
-
-    .social-btn,
-    a.social-btn {
-        border-bottom-width: 0;
+    .social__item {
+        display: table-cell;
+        @include box-sizing(border-box);
+        width: 25%;
+        border-right: $gutter/4 solid #ffffff;
+        border-left: $gutter/4 solid #ffffff;
     }
-
-    .social-network:last-child .social-btn {
-        border-right-width: 0;
+    .social__action {
+        margin-bottom: 0;
     }
-}
-
-.fb {
-    background-color: #3b5998;
-}
-
-.twitter {
-    background-color: #00aced;
-}
-
-.gplus {
-    background-color: #dd4b39; 
 }
