@@ -150,7 +150,7 @@ define([
 
                     // Insert the popup local nav
                     var localNavPopupHtml = '<div class="nav-popup-localnav nav-popup nav-popup--small is-off">' +
-                                            '  <ul class="nav nav--columns cf" data-link-name="Sub Sections">' +
+                                            '  <ul class="nav nav--columns nav--top-border-off cf" data-link-name="Sub Sections">' +
                                                  localNavItems.join('') +
                                             '  </ul>' +
                                             '</div>';
