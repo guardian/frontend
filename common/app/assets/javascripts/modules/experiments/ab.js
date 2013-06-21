@@ -8,10 +8,10 @@ define([
     common,
     store,
     ParagraphSpacing) {
-    
+
     var TESTS = {
-            ParagraphSpacing: new ParagraphSpacing()
-        };
+        ParagraphSpacing: new ParagraphSpacing()
+    };
 
     var testKey = 'gu.ab.current',
         participationKey = "gu.ab.participation";
@@ -45,13 +45,6 @@ define([
         return store.remove(testKey);
     }
 
-    function hasParticipated(testName) {
-        // NOTE: allowing user's to participate in the same test more than once - something screwy going on with
-        // switches
-        //return (getParticipation().indexOf(testName) > -1) ? true : false;
-        return false;
-    }
-
     function getParticipation() {
         var tests = (store.get(participationKey)) ? store.get(participationKey).tests : [];
         // handle previous bug when tests was set to length
@@ -62,20 +55,13 @@ define([
     }
 
     function setParticipation(testName) {
-        var data;
-        if(getParticipation().length > 0) {
-            var tests = getParticipation();
-            if(!hasParticipated(testName)) {
-                tests.push(testName);
-                data = {"tests": tests };
-            } else {
-                data = {"tests": tests };
-            }
-        } else {
-            data = {"tests":[testName]};
+        var participatedTests = getParticipation();
+
+        if (participatedTests.indexOf(testName) === -1) {
+            participatedTests.push(testName);
         }
 
-        store.set(participationKey, data);
+        store.set(participationKey, { "tests": participatedTests });
     }
 
     //Finds variant in specific tests and exec's
@@ -92,7 +78,7 @@ define([
         var data = 'AB | ' + id + ' test | ' + variant;
         common.$g(document.body).attr('data-link-test', data);
     }
-        
+
     function start(test) {
         //Only run on test required audience segment
         if (Math.random() < test.audience) {
@@ -114,15 +100,23 @@ define([
         setParticipation(test.id);
     }
 
-    function init(config, context) {
-        var switches = config.switches,
-            isInTest = inTest(switches);
+    function init(config, context, options) {
+        var hash = window.location.hash.substring(1),
+            opts = options || {},
+            switches = config.switches;
+
+        if (hash.indexOf('ab-test') === 0 || opts.test) {
+            var testConfig = hash.replace('ab-test', '').split('='),
+                id = (opts.test) ? opts.test.id : testConfig[0],
+                variant = (opts.test) ? opts.test.variant : testConfig[1];
+            storeTest(id, variant);
+        }
 
         // Clear up legacy storage names. This can be deleted "in the future".
         store.clearByPrefix('gu.prefs.ab');
 
         //Is the user in an active test?
-        if(isInTest) {
+        if (inTest(switches)) {
             var currentTest = getTest();
             if(TESTS[currentTest.id].canRun(config, context)) {
                 runVariant(TESTS[currentTest.id], currentTest.variant);
@@ -139,8 +133,8 @@ define([
 
                var test =  TESTS[testName];
 
-               //Can the test run on this page and user not already participated
-               if(test.canRun(config) && !hasParticipated(test.id) && switches["ab" + test.id]) {
+               //Can the test run on this page and is switch on
+               if(test.canRun(config) && switches["ab" + test.id]) {
                    //Start
                    start(test);
                }
@@ -156,7 +150,6 @@ define([
         storeTest: storeTest,
         clearTest: clearTest,
         runVariant : runVariant,
-        setParticipation: setParticipation,
-        hasParticipated: hasParticipated
+        setParticipation: setParticipation
     };
 });
