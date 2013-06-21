@@ -79,7 +79,7 @@ object FrontPage {
 class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val EditionalisedKey = """(.*\w\w-edition)""".r
-  val FrontKey = """(/\w\w-edition)""".r
+  val FrontKey = """(\w\w-edition)""".r
 
   val front: Front = Front
 
