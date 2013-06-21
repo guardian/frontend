@@ -39,6 +39,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            common.lazyLoadCss('gallery', config);
             modules.augmentGallery();
             modules.initOphanTracking();
         }
