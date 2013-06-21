@@ -146,7 +146,7 @@
     overflow: auto;
     width: 100%;
     padding: 0 $gutter;
-    background-color: $mushroom;
+    background-color: #F5F5F2;
     border-bottom: 1px solid $darkMushroom;
 
     @media (min-width: $tablet) { display: block; }
@@ -172,7 +172,8 @@
             content: " ";
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-bottom: 10px solid #333333;
+            border-bottom: 10px solid;
+            border-bottom-color: inherit;
             position: absolute;
             bottom: -2px;
             margin-left: -10px;
@@ -191,7 +192,7 @@
     .nav__link:visited {
         display: block;
         margin: 10px 0 $baseline*3 0;
-        padding: 2px $baseline*1.5 0 $baseline*1.5;
+        padding: 2px 9px 0 9px;
         font-family: $serif !important;
         font-size: 14px;
         text-decoration: none;
@@ -217,7 +218,7 @@
     width: 100%;
     padding: 0 $gutter;
     background-color: #ffffff;
-    border-bottom: 2px solid $darkMushroom;
+    border-bottom: 1px solid $darkMushroom;
 
     @media only screen and (min-width: $tablet) { display: block; }
 }
@@ -251,7 +252,7 @@
     .nav__link:visited {
         display: block;
         margin: 16px 0 $baseline*3 0;
-        padding: 2px $baseline*1.5 0 $baseline*1.5;
+        padding: 2px 9px 0 9px;
         font-family: $serif !important;
         font-size: 14px;
         font-weight: 500;

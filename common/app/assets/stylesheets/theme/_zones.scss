@@ -33,7 +33,6 @@
     color: $culturePink;
 }
 
-
 .zone-journalismcompetition .zone-color,
 .zone-global-development .zone-color,
 .zone-law .zone-color,
@@ -131,4 +130,61 @@
 
 .zone-money .zone-background {
     background-color: $moneyPurple;
+}
+
+
+
+.zone-childrens-books-site .zone-border,
+.zone-tv-and-radio .zone-border,
+.zone-artanddesign .zone-border,
+.zone-stage .zone-border,
+.zone-culture .zone-border,
+.zone-film .zone-border,
+.zone-books .zone-border,
+.zone-music .zone-border {
+    border-color: $culturePink;
+}
+
+.zone-journalismcompetition .zone-border,
+.zone-global-development .zone-border,
+.zone-law .zone-border,
+.zone-theobserver .zone-border,
+.zone-science .zone-border,
+.zone-theguardian .zone-border,
+.zone-education .zone-border,
+.zone-technology .zone-border,
+.zone-society .zone-border,
+.zone-politics .zone-border,
+.zone-uk .zone-border,
+.zone-media .zone-border,
+.zone-world .zone-border {
+    border-color: $newsRed;
+}
+
+.zone-fashion .zone-border,
+.zone-lifeandstyle .zone-border {
+    border-color: $lifeandstyleOrange;
+}
+
+.zone-sport .zone-border,
+.zone-football .zone-border {
+    border-color: $sportBright;
+}
+
+.zone-travel .zone-border {
+    border-color: $travelBlue;
+}
+
+.zone-business .zone-border {
+    border-color: $businessBlue;
+}
+
+.zone-commentisfree .zone-border,
+.zone-tone .zone-border,
+.zone-global .zone-border {
+    border-color: $commentBlue;
+}
+
+.zone-money .zone-border {
+    border-color: $moneyPurple;
 }
