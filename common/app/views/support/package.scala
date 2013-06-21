@@ -334,7 +334,7 @@ object StripHtmlTags {
   def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
 }
 
-object StripAndEscapeHtmlTags{
+object StripHtmlTagsAndUnescapeEntities{
   def apply( html: String) : String = {
   val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
   val stripped = doc.body.html

@@ -14,7 +14,7 @@
                             data-fullsrc="@largeCrop.path"
                             data-full-width="@largeCrop.width"
                             alt="@Html(largeCrop.altText.getOrElse(""))"
-                            title="@StripAndEscapeHtmlTags(largeCrop.caption.getOrElse(""))"
+                            title="@StripHtmlTagsAndUnescapeEntities(largeCrop.caption.getOrElse(""))"
                         }
                         itemprop="contentURL"
                     />
