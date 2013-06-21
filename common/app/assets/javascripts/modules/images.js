@@ -19,19 +19,22 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                 //upgrade other images;
                 Array.prototype.forEach.call(context.getElementsByTagName('img'), function(image) {
                     image = bonzo(image);
-                    if (!image.attr('data-fullsrc')) {
-                        return;
-                    }
+
                     var thumbWidth = parseFloat(image.attr('data-thumb-width'));
                     var fullWidth = parseFloat(image.attr('data-full-width'));
+                    var lowsrc = image.attr('data-lowsrc');
                     var fullsrc = image.attr('data-fullsrc');
                     var forceUpgrade = image.attr('data-force-upgrade');
 
                     if (fullWidth && fullWidth >= thumbWidth && fullsrc) {
-                        if(forceUpgrade || layoutMode === 'desktop') {
+                        if (forceUpgrade || layoutMode === 'desktop') {
                             image.attr('src', fullsrc);
                             image.addClass('image-high');
+                        } else {
+                            image.attr('src', lowsrc);
                         }
+                    } else {
+                        image.attr('src', lowsrc);
                     }
                 });
             }
