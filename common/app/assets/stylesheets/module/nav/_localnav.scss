@@ -6,16 +6,22 @@
         margin-top: 156px;
     }
 
-    @media (max-width: $tablet) {
-         .parts__body {
-            margin-top: 60px;
+    .parts__body {
+        margin-top: 60px;
+
+        @media (min-width: $tablet) {
+            margin-top: 0;
         }
     }
 
+
     .ad-slot-top-banner-ad {
-        @media (max-width: $tablet) {
-            padding-top: 5px;
-            background-color: #eee;
+        padding-top: 5px;
+        background-color: #eee;
+
+        @media (min-width: $tablet) {
+            padding-top: 10px;
+            background-color: #ffffff;
         }
     }
 }
