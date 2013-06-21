@@ -35,6 +35,7 @@ $keylineSize: 1px;
     border-bottom: $keylineSize solid $keylineColor;
     display: table-cell;
     cursor: pointer;
+    @include box-sizing(border-box);
 }
 .d-tabs__item--byline {
     @extend %type-7;
