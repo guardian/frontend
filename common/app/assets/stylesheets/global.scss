@@ -14,62 +14,30 @@
    Base
    ========================================================================== */
 
-@import "normalize";
 @import "base/base";
-@import "base/type";
-@import "extends-only";
-@import "base/links";
-@import "base/helpers";
-@import "base/lists";
 @import "base/tables";
-
-
-/* ==========================================================================
-   Layout
-   ========================================================================== */
-
-@import "layout/grid-system";
-    @include grid-system;
-@import "layout/layout";
 
 
 /* ==========================================================================
    Global modules
    ========================================================================== */
 
-@import "module/nav/nav";
-@import "module/nav/pop-up";
-@import "module/nav/localnav";
-@import "module/nav/control";
-@import "module/adslot";
-@import "module/trails/trailblock";
-@import "module/trails/trail";
-@import "module/media";
-@import "module/article";
-@import "module/discussion";
-@import "module/headers";
-@import "module/tabs";
-@import "module/headline-list";
-@import "module/tag";
-@import "module/cta";
-@import "module/site-message";
-@import "module/footer";
-@import "module/stars";
-@import "module/social";
-@import "module/search";
-@import "module/homescreen";
-@import "module/debug";
-@import "module/live-blog";
-
-@import "module/football/stats";
-@import "module/football/tables";
-@import "module/football/matches";
-@import "module/football/match-stat";
-@import "module/football/match-summary";
-
-@import "module/gallery";
-
-@import "module/_video";
+@import "module/_tabs";
+@import "module/_headline-list";
+@import "module/_tag";
+@import "module/_cta";
+@import "module/_site-message";
+@import "module/_footer";
+@import "module/_stars";
+@import "module/_social";
+@import "module/_search";
+@import "module/_homescreen";
+@import "module/_debug";
+@import "module/nav/_pop-up";
+@import "module/nav/_localnav";
+@import "module/_live-blog";
+@import "module/football/_matches";
+@import "module/_discussion";
 
 
 /* ==========================================================================
@@ -79,14 +47,7 @@
 //These are for styling HTML that we get from external sources
 //and may contain more specific selectors than we would usually like
 
-@import "module/external/from-content-api";
 @import "module/external/witness";
-
-
-/* State
-   ========================================================================== */
-
-@import "state/state";
 
 
 /* Zone colours
@@ -104,17 +65,6 @@
 /* ==========================================================================
    Experiments
    ========================================================================== */
-
-/* Article breakpoints
-   ========================================================================== */
-
-@import "module/experiments/article-breakpoints";
-
-
-/* Paragraph Spacing
-   ========================================================================== */
-
-@import "module/experiments/_ab-paragraph-spacing";
 
 
 /* Story telling
