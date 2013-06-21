@@ -5,14 +5,14 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
-    "modules/userPrefs"
+    "modules/storage"
 ], function (
     common,
     AutoUpdate,
     MatchNav,
     Reading,
     Discussion,
-    userPrefs
+    storage
 ) {
 
     var modules = {
@@ -77,30 +77,12 @@ define([
                     reader.init();
                 }
             });
-        },
-
-        paragraphSpacing: function(config) {
-            // NOTE: force user's to view particular paragraph spacing - can be deleted
-            // TODO: ability to force user in particular ab test
-            if (config.page.contentType === 'Article') {
-                ['control', 'no-spacing-indents', 'more-spacing'].some(function(test) {
-                    if (userPrefs.isOn('paragraph-spacing.' + test)) {
-                        // remove any existing 'test-paragpraph-spacing--' classes (from the ab test)
-                        document.body.className = document.body.className.replace(/(\s|^)test-paragraph-spacing--[^\s]*/g, '')
-                            + ' test-paragraph-spacing--' + test;
-                        // force ab test off, in case it happens after this
-                        config.switches.abParagraphSpacing = false;
-                        return true;
-                    }
-                });
-            }
         }
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.paragraphSpacing(config);
             modules.matchNav();
             modules.initLiveBlogging();
             modules.logReading(context);

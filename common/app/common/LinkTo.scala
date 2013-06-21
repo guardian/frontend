@@ -1,6 +1,7 @@
 package common
 
 import play.api.templates.Html
+import play.api.mvc.RequestHeader
 
 object LinkTo extends Logging {
 
@@ -43,16 +44,19 @@ object LinkTo extends Logging {
     def unapply(s: String): Option[String] = if (unSupportedContentTypes.exists(_ == s.drop(1))) Some(s) else None
   }
 
-  def apply(html: Html)(implicit edition: Edition): String = this(html.toString())
+
+  // TODO the Some(request) stuff is a bit ugly, but is needed till we are on single domain
+  def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request), Some(request))
+  def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Some(request))
 
   // see http://www.scala-lang.org/node/7290
   // partial functions with Regex grow exponentially and the JVM has a max size for a method
-  def apply(url: String)(implicit edition: Edition): String = {
+  def apply(url: String, edition: Edition, request: Option[RequestHeader] = None): String = {
     val queryParams = url.dropWhile(_ != '?')
     val urlWithoutParams: String = url.takeWhile(_ != '?')
     val hash = urlWithoutParams.dropWhile(_ != '#')
     val urlWithoutHash: String = urlWithoutParams.takeWhile(_ != '#')
-    val reslovedUrl = pageTypes(urlWithoutHash)
+    val reslovedUrl = pageTypes(urlWithoutHash, request)(edition)
       .orElse(contentTypes(urlWithoutHash))
       .orElse(unknownUrl(urlWithoutHash))(urlWithoutHash)
 
@@ -77,11 +81,12 @@ object LinkTo extends Logging {
       unknown
   }
 
-  private def pageTypes(url: String)(implicit edition: Edition): PartialFunction[String, String] = {
+  // TODO the Option[RequestHeader]) stuff is a bit ugly, but is needed till we are on single domain
+  private def pageTypes(url: String, request: Option[RequestHeader])(implicit edition: Edition): PartialFunction[String, String] = {
 
     case Front(_) | "/" =>
       log.debug(s"supported: resolved $url as a front")
-      s"/${Editionalise("", edition)}"
+      s"/${Editionalise("", edition, request)}"
 
     case FeedArticle(_) =>
       log.debug("unsupported: resolved %s as a feed article" format (url))
@@ -93,11 +98,11 @@ object LinkTo extends Logging {
 
     case SectionUrl(_, section) =>
       log.debug("supported: resolved %s as a section" format (url))
-      s"/${Editionalise(section.drop(1), edition)}"
+      s"/${Editionalise(section.drop(1), edition, request)}"
 
     case SectionPath(_) =>
       log.debug(s"supported: resolved $url as a section path")
-      s"/${Editionalise(url.drop(1), edition)}"
+      s"/${Editionalise(url.drop(1), edition, request)}"
 
     case TagUrl(_, section, wordsForUrl) =>
       log.debug("supported: resolved %s as a tag" format (url))

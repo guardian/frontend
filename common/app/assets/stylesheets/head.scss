@@ -29,13 +29,15 @@
 @import "module/trails/_trail";
 @import "module/media";
 @import "module/_article";
-@import "module/experiments/_article-breakpoints";
 @import "module/_headers";
 
 //External modules
 //These are for styling HTML that we get from external sources
 //and may contain more specific selectors than we would usually like
 @import "module/external/_from-content-api";
+
+@import "module/experiments/_ab-paragraph-spacing";
+@import "module/experiments/_article-breakpoints";
 
 //State
 @import "state/_state";

@@ -1,20 +1,27 @@
 @charset "UTF-8";
 
-//Variables and mixins
-@import "_vars";
-@import "_mixins";
-@import "module/_discussion-mixins";
-@import "_extends-only";
-@import "layout/_grid-system";
+/* ==========================================================================
+   Variables and mixins
+   ========================================================================== */
 
-//External components
-@import "responsive-grid";
+@import "vars";
+@import "mixins";
+@import "module/discussion-mixins";
+@import "extends-only";
 
-//Base
-@import "base/_base";
-@import "base/_tables";
 
-//Modules
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@import "base/base";
+@import "base/tables";
+
+
+/* ==========================================================================
+   Global modules
+   ========================================================================== */
+
 @import "module/_tabs";
 @import "module/_headline-list";
 @import "module/_tag";
@@ -31,20 +38,48 @@
 @import "module/football/_matches";
 @import "module/_discussion";
 
-@import "module/external/_witness";
 
-//Story telling
-@import "module/experiments/_story";
-@import "module/experiments/_timeline";
-@import "module/experiments/_accordion";
-@import "module/experiments/_reaction";
-@import "module/experiments/_trail";
+/* ==========================================================================
+   External modules
+   ========================================================================== */
 
-//Paragraph Spacing
-@import "module/experiments/_ab-paragraph-spacing";
+//These are for styling HTML that we get from external sources
+//and may contain more specific selectors than we would usually like
 
-//State
-@import "theme/_global-icons-sprite";
-@import "theme/_global-icons-svg";
-@import "theme/_icons";
-@import "theme/_zones";
+@import "module/external/witness";
+
+
+/* Zone colours
+   ========================================================================== */
+
+@import "theme/zones";
+
+
+/* External components
+   ========================================================================== */
+
+// @import "responsive-grid";
+
+
+/* ==========================================================================
+   Experiments
+   ========================================================================== */
+
+
+/* Story telling
+   ========================================================================== */
+
+@import "module/experiments/story";
+@import "module/experiments/timeline";
+@import "module/experiments/accordion";
+@import "module/experiments/reaction";
+@import "module/experiments/trail";
+
+
+/* ==========================================================================
+   Icons
+   ========================================================================== */
+
+@import "theme/global-icons-sprite";
+@import "theme/global-icons-svg";
+@import "theme/icons";

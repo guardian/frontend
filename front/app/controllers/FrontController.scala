@@ -23,7 +23,8 @@ object FrontPage {
       override lazy val analyticsName = "GFE:Network Front"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "content-type" -> "Network Front"
+        "content-type" -> "Network Front",
+        "is-front" -> true
       )
     },
 
@@ -36,7 +37,8 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Sport",
-        "content-type" -> "Section"
+        "content-type" -> "Section",
+        "is-front" -> true
       )
     },
 
@@ -49,7 +51,8 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Culture",
-        "content-type" -> "Section"
+        "content-type" -> "Section",
+        "is-front" -> true
       )
     },
 
@@ -62,7 +65,8 @@ object FrontPage {
       override lazy val analyticsName = "GFE:Network Front"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "content-type" -> "Network Front"
+        "content-type" -> "Network Front",
+        "is-front" -> true
       )
     }
   )
@@ -75,6 +79,7 @@ object FrontPage {
 class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val EditionalisedKey = """(.*\w\w-edition)""".r
+  val FrontKey = """(\w\w-edition)""".r
 
   val front: Front = Front
 
@@ -97,6 +102,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
         // filter out configured trailblocks if not on the network front
         path match {
+          case FrontKey(_) => false
           case "front" => false
           case _ => trailblock.description.isConfigured
         }

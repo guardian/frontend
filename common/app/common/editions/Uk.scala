@@ -8,7 +8,11 @@ import scala.Some
 import common.NavItem
 
 
-object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London")) with Sections with Zones {
+object Uk extends Edition(
+  id = "UK",
+  displayName = "UK edition",
+  timezone = DateTimeZone.forID("Europe/London"),
+  hreflang = "en-gb") with Sections with Zones {
 
   implicit val UK = Uk
   val zones = Seq(

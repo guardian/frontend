@@ -100,7 +100,7 @@ class LinkToTest extends FlatSpec with ShouldMatchers {
 
   "LinkTo" should "understand which urls we support" in {
     realUrls foreach {
-      case (originalUrl, expectedUrl) => LinkTo(originalUrl) should be(expectedUrl)
+      case (originalUrl, expectedUrl) => LinkTo(originalUrl, edition) should be(expectedUrl)
 
     }
   }
@@ -116,23 +116,23 @@ class LinkToTest extends FlatSpec with ShouldMatchers {
         s"http://www.theguardian.com/section/blog/$contentType/2011/jan/01/words-for-url"
       )
     }
-    urls foreach { url => LinkTo(url) should be(url) }
+    urls foreach { url => LinkTo(url, edition) should be(url) }
   }
 
   it should "not resolve direct comment links" in {
 
-    LinkTo("http://www.guardian.co.uk/discussion/comment-permalink/19452022") should
+    LinkTo("http://www.guardian.co.uk/discussion/comment-permalink/19452022", edition) should
       be("http://www.guardian.co.uk/discussion/comment-permalink/19452022")
 
   }
 
   it should "not resolve feed articles" in {
-    LinkTo("http://www.guardian.co.uk/football/feedarticle/10541078") should
+    LinkTo("http://www.guardian.co.uk/football/feedarticle/10541078", edition) should
       be("http://www.guardian.co.uk/football/feedarticle/10541078")
   }
 
   it should "not resolve comment links" in {
-    LinkTo("http://www.guardian.co.uk/commentisfree/2013/jan/13/obama-foreign-policy-lessons-iraq?mobile-redirect=false#comment-20590999") should
+    LinkTo("http://www.guardian.co.uk/commentisfree/2013/jan/13/obama-foreign-policy-lessons-iraq?mobile-redirect=false#comment-20590999", edition) should
       be("http://www.guardian.co.uk/commentisfree/2013/jan/13/obama-foreign-policy-lessons-iraq?mobile-redirect=false#comment-20590999")
   }
 }
