@@ -190,7 +190,8 @@ object Switches extends Collections {
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
-    IntegrationTestSwitch
+    IntegrationTestSwitch,
+    iPhoneAppSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
