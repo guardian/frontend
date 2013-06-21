@@ -77,36 +77,12 @@ define([
                     reader.init();
                 }
             });
-        },
-
-        paragraphSpacing: function(config) {
-            // NOTE: force user's to view particular paragraph spacing - can be deleted
-            // TODO: ability to force user in particular ab test
-            var hash = window.location.hash,
-                storageKey = 'gu.test.paragraph-spacing',
-                test = (hash.indexOf('#paragraph-spacing=') === 0) ? hash.split('=')[1] : storage.get(storageKey);
-            if (test) {
-                ['control', 'no-spacing-indents', 'more-spacing'].some(function(validTest) {
-                    if (test === validTest) {
-                        if (config.page.contentType === 'Article') {
-                            // remove any existing 'test-paragraph-spacing--' classes (added by the ab test)
-                            document.body.className = document.body.className.replace(/(\s|^)test-paragraph-spacing--[^\s]*/g, '')
-                                + ' test-paragraph-spacing--' + test;
-                            // force ab test off, in case it runs later
-                            config.switches.abParagraphSpacing = false;
-                        }
-                        storage.set(storageKey, test);
-                        return true;
-                    }
-                });
-            }
         }
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.paragraphSpacing(config);
             modules.matchNav();
             modules.initLiveBlogging();
             modules.logReading(context);
