@@ -1,10 +1,18 @@
 @(item: MetaData)(implicit request: RequestHeader)
+@import common.editions.EditionalisedSections
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
 
     @*<!-- TODO EDITIONS -->*@
-    @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
+    @SiteOr{ site =>
+        @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
+    }{
+        @if(EditionalisedSections.isEditionalised(item.id)){
+            @Edition.others.map{ ed => <link rel="alternate" hreflang="@ed.hreflang" href="/@Editionalise(item.id, ed)" /> }
+        }
+    }
 
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
 
