@@ -23,7 +23,8 @@ object FrontPage {
       override lazy val analyticsName = "GFE:Network Front"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "content-type" -> "Network Front"
+        "content-type" -> "Network Front",
+        "is-front" -> true
       )
     },
 
@@ -36,7 +37,8 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Sport",
-        "content-type" -> "Section"
+        "content-type" -> "Section",
+        "is-front" -> true
       )
     },
 
@@ -49,7 +51,8 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Culture",
-        "content-type" -> "Section"
+        "content-type" -> "Section",
+        "is-front" -> true
       )
     },
 
@@ -62,7 +65,8 @@ object FrontPage {
       override lazy val analyticsName = "GFE:Network Front"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "content-type" -> "Network Front"
+        "content-type" -> "Network Front",
+        "is-front" -> true
       )
     }
   )
