@@ -20,6 +20,7 @@ import conf.Configuration
 import com.gu.openplatform.contentapi.model.MediaAsset
 import play.Play
 import org.jsoup.nodes.Entities.EscapeMode
+import org.apache.commons.lang.StringEscapeUtils
 
 sealed trait Style {
   val className: String
@@ -336,9 +337,10 @@ object StripHtmlTags {
 object StripAndEscapeHtmlTags{
   def apply( html: String) : String = {
   val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
-  doc.outputSettings().escapeMode(EscapeMode.xhtml).charset("UTF-8")
-  doc.body.html
-   }
+  val stripped = doc.body.html
+  val unescaped = StringEscapeUtils.unescapeHtml(stripped)
+  unescaped.replace("\"","&#34;")   //double quotes will break HTML attributes
+      }
 }
 
 object Head {
