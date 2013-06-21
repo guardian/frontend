@@ -5,10 +5,11 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
         var conf = {
                     id: 'images',
                     fixtures: [
-                        '<div id="insert"><img data-upgrade="true" data-lowsrc="http://placekitten.com/2/2" id="upgradeImagesLowOnly" class="visible" /></div>',
-                        '<div id="upgrade"><img data-upgrade="true" data-fullsrc="http://placekitten.com/1/1" data-lowsrc="http://placekitten.com/2/2" data-thumb-width="5" data-full-width="100" id="upgradeImages" class="visible" /></div>',
-                        '<div id="force-upgrade"><img data-upgrade="true" data-fullsrc="http://placekitten.com/3/3" data-lowsrc="http://placekitten.com/2/2" data-force-upgrade="1" data-thumb-width="5" data-full-width="100" id="upgradeImagesForce" class="visible" /></div>',
-                        '<div id="upgrade-svg"><img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" class="visible" data-lowsrc="http://x.y.z/c.svg"/></div>'
+                        '<div id="insert"><img data-lowsrc="http://placekitten.com/2/2" id="upgradeImagesLowOnly" /></div>',
+                        '<div id="alwaysLow"><img data-fullsrc="http://placekitten.com/1/1" data-lowsrc="http://placekitten.com/2/2" data-thumb-width="5" data-full-width="100" id="alwaysLowImg" /></div>',
+                        '<div id="upgrade"><img data-fullsrc="http://placekitten.com/1/1" data-lowsrc="http://placekitten.com/2/2" data-thumb-width="5" data-full-width="100" id="upgradeImages" class="visible" /></div>',
+                        '<div id="force-upgrade"><img data-upgrade="true" data-fullsrc="http://placekitten.com/3/3" data-lowsrc="http://placekitten.com/2/2" data-force-upgrade="1" data-thumb-width="5" data-full-width="100" id="upgradeImagesForce" /></div>',
+                        '<div id="upgrade-svg"><img data-svgsrc="http://x.y.z/b.svg" id="upgradeSvgImages" data-lowsrc="http://x.y.z/c.svg"/></div>'
                     ]
                    }
 
@@ -23,8 +24,25 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
             window.performance = { timing: { requestStart: 1, responseEnd: 10 } };
 
             var i = new Images().upgrade(document.getElementById('insert'));
-            
+
             var img = document.getElementById('upgradeImagesLowOnly');
+            expect(img.src).toContain('http://placekitten.com/2/2');
+
+        });
+
+        // it("should not load high res images on low bandwidths", function(){
+
+        // });
+
+        it("should not load high res images on low resolution screens", function(){
+            
+            document.body.clientWidth = 100; // small viewport
+            window.innerWidth = 100; // small viewport
+            window.performance = { timing: { requestStart: 1, responseEnd: 10 } };
+
+            var i = new Images().upgrade(document.getElementById('alwaysLow'));
+
+            var img = document.getElementById('alwaysLowImg');
             expect(img.src).toContain('http://placekitten.com/2/2');
 
         });
@@ -35,7 +53,7 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
             window.performance = { timing: { requestStart: 1, responseEnd: 10 } };
 
             var i = new Images().upgrade(document.getElementById('upgrade'));
-            
+
             var img = document.getElementById('upgradeImages');
             expect(img.src).toContain('http://placekitten.com/1/1');
             expect(img.className).toContain('image-high');
@@ -46,7 +64,7 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
             
             window.innerWidth = 100; // small viewport
             window.performance = { timing: { requestStart: 1, responseStart: 10 } };
-            
+
             var i = new Images().upgrade(document.getElementById('force-upgrade'));
             expect(document.getElementById('upgradeImagesForce').src).toContain('http://placekitten.com/3/3');
         })
@@ -55,7 +73,7 @@ define(['modules/images', 'fixtures'], function(Images, fixtures) {
 
             window.innerWidth = 1024;
             window.performance = { timing: { requestStart: 1, responseStart: 10 } };
-            
+
             new Images().upgrade(document.getElementById('upgrade-svg'));
             expect(document.getElementsByTagName('body')[0].className).toContain('svg');
         });
