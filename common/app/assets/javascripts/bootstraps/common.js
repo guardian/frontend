@@ -80,15 +80,16 @@ define([
         initialiseNavigation: function (config) {
             var navControl = new NavControl(),
                 topStories = new TopStories(),
-                sections = new Sections(),
+                sections = new Sections(config),
                 search = new Search(config),
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
                 header = document.querySelector('body');
 
+
+            sections.init(header);
             navControl.init(header);
             topStories.load(config, header);
-            sections.init(header);
             search.init(header);
             aus.init(header);
 
@@ -291,7 +292,9 @@ define([
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.loadAdverts();
-                modules.loadAnalytics();
+                if (!config.switches.analyticsOnDomReady) {
+                    modules.loadAnalytics();
+                }
 
                 // TODO: make these run in event 'page:common:deferred:loaded'
                 modules.cleanupCookies(context);
@@ -313,6 +316,9 @@ define([
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initClickstream();
+            if (config.switches.analyticsOnDomReady) {
+                modules.loadAnalytics();
+            }
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
         }
