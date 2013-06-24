@@ -336,10 +336,10 @@ object StripHtmlTags {
 
 object StripHtmlTagsAndUnescapeEntities{
   def apply( html: String) : String = {
-  val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
-  val stripped = doc.body.html
-  val unescaped = StringEscapeUtils.unescapeHtml(stripped)
-  unescaped.replace("\"","&#34;")   //double quotes will break HTML attributes
+    val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
+    val stripped = doc.body.html
+    val unescaped = StringEscapeUtils.unescapeHtml(stripped)
+    unescaped.replace("\"","&#34;")   //double quotes will break HTML attributes
   }
 }
 
