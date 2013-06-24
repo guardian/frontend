@@ -11,7 +11,11 @@ define([ 'common',
                     fixtures: [
                                 '<div id="preloads"></div>',
                                 '<div id="header"><div class="control--topstories"></div></div>',
-                                '<div class="nav-popup-sections">foo</div>'
+                                '<div class="nav-popup-sections">foo</div>',
+                                '<h1 class="section-head zone-color">World news</h1>',
+                                '<h2 class="article-zone type-1"><a href="/test">Test Section</a></h2>',
+                                '<h3 id="related-content-head" class="type-2 article-zone">Related content</h3>',
+                                '<h3 id="related-content-head" class="type-2 article-zone">More on this story</h3>'
                               ]
             };
 
@@ -91,6 +95,16 @@ define([ 'common',
 
               expect(document.querySelectorAll('.nav-popup-localnav .nav__link')[0].href).toContain('/culture');
               expect(document.querySelectorAll('.nav--local .nav__link')[0].href).not.toContain('/culture');
+            });
+
+            it("Should only remove the topmost section header, when the localnav is active", function() {
+              config.page.section = 'books';
+              config.page.pageId = 'books';
+              sections = new Sections(config);
+              sections.view.insertLocalNav(document);
+
+              expect(document.querySelectorAll('.article-zone').length).toBe(2);
+              expect(document.querySelectorAll('.article-zone--top').length).toBe(0);
             });
 
         });
