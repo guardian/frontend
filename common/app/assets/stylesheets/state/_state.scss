@@ -36,7 +36,7 @@
     &:before {
         position: relative;
         top: -1px;
-        content: '− ';
+        content: '- ';
     }
     .shut &:before {
         content: '+ ';
