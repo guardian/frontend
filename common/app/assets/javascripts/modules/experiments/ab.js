@@ -54,7 +54,7 @@ define([
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
                     variant.test();
-                    initTracking(test.id, variantId);
+                    initTracking(test, variantId);
                     return true;
                 }
             });
@@ -62,7 +62,7 @@ define([
     }
 
     function bucket(test) {
-        // always place in control
+        // always at least place in control
         var testVariantId = 'control';
 
         //Only run on test required audience segment
@@ -94,6 +94,7 @@ define([
             var hash = window.location.hash.substring(1),
                 opts = options || {};
 
+            // allow setting of test with url hash
             if (hash.indexOf('ab-test') === 0 || opts.test) {
                 var testConfig = hash.replace('ab-test', '').split('='),
                     testId = (opts.test) ? opts.test.id : testConfig[0],
@@ -112,8 +113,8 @@ define([
             store.remove('gu.ab.current');
             store.remove('gu.ab.participation');
 
-            // if user not in a test, bucket them
             TESTS.forEach(function(test) {
+                // if user not in a test, bucket them
                 if (!isParticipating(test)) {
                     bucket(test);
                 }

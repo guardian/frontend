@@ -83,6 +83,15 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
             expect(controlSpy.called || variantSpy.called).toBeFalsy();
         });
 
+        it('should add "data-link-test" tracking to body', function() {
+            AB.init({
+                switches: {
+                    abDummyTest: true,
+                }
+            });
+            expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide)$/);
+        });
+
     });
 
 });
