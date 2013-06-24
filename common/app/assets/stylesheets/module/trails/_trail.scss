@@ -40,6 +40,9 @@
         text-decoration: underline;
     }
 
+.js-off .trail__img {
+    display: none;
+}
 
 .trail__text {
     @extend %type-7;
