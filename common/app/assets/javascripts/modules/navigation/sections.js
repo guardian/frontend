@@ -122,8 +122,8 @@ define([
                 for(var i=0; i < sections.length; i++) {
                     var zones = Object.keys(sections[i].zones);
 
-                    if (zones.indexOf('/' + config.page.section) != -1 ||
-                        sections[i].sectionId == config.page.section) {
+                    if (zones.indexOf('/' + config.page.section) !== -1 ||
+                        sections[i].sectionId === config.page.section) {
                         return sections[i];
                     }
                 }
@@ -141,7 +141,7 @@ define([
 
                     Object.keys(currentSection.zones).forEach(function(zonePath, i) {
                         var zoneName = currentSection.zones[zonePath],
-                            isActive = (zonePath == '/'+config.page.section) || (zonePath == '/'+config.page.pageId),
+                            isActive = (zonePath === '/'+config.page.section) || (zonePath === '/'+config.page.pageId),
                             className = isActive ? 'nav__item is-active' : 'nav__item',
                             linkClass = isActive ? 'nav__link zone-color' : 'nav__link';
 
@@ -191,7 +191,7 @@ define([
                     common.$g('#preloads').addClass('has-localnav');
 
                     // Hack to remove the double highlighting in the nav of Sport+Football
-                    if (currentSection.sectionId == 'football') {
+                    if (currentSection.sectionId === 'football') {
                         var sportNode = common.$g('.is-active .nav__link[data-link-name="Sport"]');
                         sportNode.removeClass('zone-color');
                         sportNode.parent().removeClass('is-active');
