@@ -79,6 +79,7 @@ object FrontPage {
 class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val EditionalisedKey = """(.*\w\w-edition)""".r
+  val FrontPath = """(\w\w-edition)?""".r
 
   val front: Front = Front
 
@@ -101,7 +102,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
         // filter out configured trailblocks if not on the network front
         path match {
-          case "front" => false
+          case FrontPath(_) => false
           case _ => trailblock.description.isConfigured
         }
       }

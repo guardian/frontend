@@ -7,8 +7,8 @@
         data-fullsrc="@mainPicture.path"
         data-full-width="@mainPicture.width"
         itemprop="contentURL"
-        alt="@StripHtmlTags(mainPicture.altText.getOrElse(""))"
-        title="@StripHtmlTags(mainPicture.caption.getOrElse(""))" />
+        alt="@Html(mainPicture.altText.getOrElse(""))"
+        title="@StripHtmlTagsAndUnescapeEntities(mainPicture.caption.getOrElse(""))" />
     @if(smallCrop.caption.headOption.getOrElse("").trim != "") {
     <figcaption class="main-caption" itemprop="description">@Html(smallCrop.caption.getOrElse(""))</figcaption>
     }

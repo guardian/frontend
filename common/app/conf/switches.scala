@@ -68,6 +68,10 @@ object Switches extends Collections {
     "Enable the Quantcast audience segment tracking.",
     safeState = Off)
 
+  val OmnitureDomReadySwitch = Switch("Analytics", "omniture-dom-ready",
+    "Initialise Omniture on dom-ready, rather than on page-load.",
+    safeState = Off)
+
 
   // Discussion Switches
 
@@ -144,6 +148,10 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
+  val LocalNavSwitch = Switch("Feature Switches", "local-nav",
+    "If this switch is on, a secondary local nav is shown.",
+    safeState = Off)
+
 
   // A/B Test Switches
 
@@ -162,7 +170,6 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -171,6 +178,7 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     QuantcastSwitch,
+    OmnitureDomReadySwitch,
     DiscussionSwitch,
     ShortDiscussionSwitch,
     ExperimentStoryModule01Switch,
@@ -191,7 +199,8 @@ object Switches extends Collections {
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
     IntegrationTestSwitch,
-    iPhoneAppSwitch
+    iPhoneAppSwitch,
+    LocalNavSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

@@ -23,8 +23,8 @@
                     data-full-width="@largeCrop.width"
                 }
                 itemprop="contentURL"
-                alt="@StripHtmlTags(smallCrop.altText.getOrElse(""))"
-                title="@StripHtmlTags(smallCrop.caption.getOrElse(""))"
+                alt="@Html(smallCrop.altText.getOrElse(""))"
+                title="@StripHtmlTagsAndUnescapeEntities(smallCrop.caption.getOrElse(""))"
             />
         </a>
     }

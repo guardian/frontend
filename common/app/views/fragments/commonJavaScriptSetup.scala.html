@@ -16,7 +16,13 @@
                     ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
                     || 'XDomainRequest' in window
                 )
-            )
+            ),
+            css: {
+                football: '@Static("stylesheets/football.min.css")',
+                gallery: '@Static("stylesheets/gallery.min.css")',
+                story: '@Static("stylesheets/story.min.css")',
+                video: '@Static("stylesheets/video.min.css")'
+            }
         },
         curl = {
             baseUrl: '@{Configuration.assets.path}javascripts',
