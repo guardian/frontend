@@ -164,7 +164,9 @@ define([
                         localNavCtaHtml = '<div class="localnav--small">' +
                                           '  <div class="localnav__inner cf">' +
                                           '    <h1 class="localnav__title zone-color">'+localNavTitle+'</h1>' +
-                                          '      <button class="cta localnav__cta control zone-background" data-link-name="Popup Localnav" data-control-for="nav-popup-localnav">' +
+                                          '      <button class="cta localnav__cta control zone-background" ' +
+                                          '          data-link-name="Popup Localnav" ' +
+                                          '          data-control-for="nav-popup-localnav">' +
                                           '        <i class="i i-local-nav-arrow"></i>' +
                                           '      </button></div>' +
                                           '  </div>' +
@@ -174,8 +176,8 @@ define([
 
                     // Insert the desktop local nav
                     var localNavHtml = '<ul class="nav nav--local" data-link-name="Local Navigation">' +
-                                        localNavItems.splice(1).join('') + // Skip the first link to the top section for desktop
-                                        '</ul>';
+                                         localNavItems.splice(1).join('') + // Skip the first link to the top section for desktop
+                                       '</ul>';
                     common.$g('#header .control--topstories', context).after('<div class="localnav-container">' + localNavHtml + '</div>');
 
 
