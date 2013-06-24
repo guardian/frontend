@@ -1,0 +1,3222 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":5756,
+    "startIndex":1,
+    "pageSize":20,
+    "currentPage":1,
+    "pages":288,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/rugbyleague",
+      "type":"keyword",
+      "webTitle":"Rugby league",
+      "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+      "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/2013/jun/24/gold-coast-titans-melbourne-storm-nrl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-24T11:15:47Z",
+      "webTitle":"Gold Coast Titans 18-12 Melbourne Storm | NRL match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/24/gold-coast-titans-melbourne-storm-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/24/gold-coast-titans-melbourne-storm-nrl",
+      "fields":{
+        "trailText":"<p>Gold Coast secured a win over Melbourne with Storm star Gareth Widdop suffering a suspected dislocated hip</p>",
+        "headline":"Gareth Widdop injured as Melbourne Storm lose to Titans",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gz4x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/24/1372072250779/Titans-v-Storm-001.jpg",
+        "wordcount":"293",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.guardian.co.uk/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/24/1372072257442/Titans-v-Storm-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/24/1372072257442/Titans-v-Storm-003.jpg",
+          "source":"AAP",
+          "photographer":"Colin Whelan",
+          "altText":"Titans v Storm",
+          "height":"276",
+          "credit":"Colin Whelan/AAP",
+          "caption":"Mark Minichiello (right) breaks away from Gareth Widdop during the Titans' victory over Melbourne Storm.  Photograph: Colin Whelan/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jun/23/nrl-five-things-we-learned-this-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-23T22:31:00Z",
+      "webTitle":"NRL: five things we learned this weekend",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/jun/23/nrl-five-things-we-learned-this-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jun/23/nrl-five-things-we-learned-this-weekend",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly: </strong>The Wallabies could do with some help from NRL; Kiwis continue to impress; and other talking points</p>",
+        "headline":"NRL: five things we learned this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gnhg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371851193123/Sonny-Bill-Williams-001.jpg",
+        "wordcount":"1036",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nrl-what-we-learned-this-weekend",
+        "type":"series",
+        "webTitle":"NRL: what we learned this weekend",
+        "webUrl":"http://www.guardian.co.uk/sport/series/nrl-what-we-learned-this-weekend",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nrl-what-we-learned-this-weekend",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.guardian.co.uk/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371851124855/Sonny-Bill-Williams-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371851124855/Sonny-Bill-Williams-001.jpg",
+          "source":"AAP",
+          "photographer":"Renee McKay",
+          "altText":"Sonny Bill Williams",
+          "height":"276",
+          "credit":"Renee McKay/AAP",
+          "caption":"Sonny Bill Williams makes a break during the Roosters' NRL victory over the Bulldogs.  Photograph: Renee McKay/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/23/rugby-league-roundup-danny-brough-leeds",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-23T18:59:02Z",
+      "webTitle":"Rugby league roundup: Danny Brough beats Leeds into submission",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/23/rugby-league-roundup-danny-brough-leeds",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/23/rugby-league-roundup-danny-brough-leeds",
+      "fields":{
+        "trailText":"Danny Brough kicked Huddersfield to a 40-18 victory over Leeds to delight his coach, Paul Anderson",
+        "headline":"Rugby league roundup: Danny Brough beats Leeds into submission",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gnme",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013071640/Huddersfield-Giants-v-Lee-003.jpg",
+        "wordcount":"357",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/huddersfieldgiants",
+        "type":"keyword",
+        "webTitle":"Huddersfield Giants",
+        "webUrl":"http://www.guardian.co.uk/sport/huddersfieldgiants",
+        "apiUrl":"http://content.guardianapis.com/sport/huddersfieldgiants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/leedsrhinos",
+        "type":"keyword",
+        "webTitle":"Leeds Rhinos",
+        "webUrl":"http://www.guardian.co.uk/sport/leedsrhinos",
+        "apiUrl":"http://content.guardianapis.com/sport/leedsrhinos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/widnes-vikings",
+        "type":"keyword",
+        "webTitle":"Widnes Vikings",
+        "webUrl":"http://www.guardian.co.uk/sport/widnes-vikings",
+        "apiUrl":"http://content.guardianapis.com/sport/widnes-vikings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/bradfordbulls",
+        "type":"keyword",
+        "webTitle":"Bradford Bulls",
+        "webUrl":"http://www.guardian.co.uk/sport/bradfordbulls",
+        "apiUrl":"http://content.guardianapis.com/sport/bradfordbulls",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wakefieldtrinity",
+        "type":"keyword",
+        "webTitle":"Wakefield Trinity",
+        "webUrl":"http://www.guardian.co.uk/sport/wakefieldtrinity",
+        "apiUrl":"http://content.guardianapis.com/sport/wakefieldtrinity",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/london-broncos",
+        "type":"keyword",
+        "webTitle":"London Broncos",
+        "webUrl":"http://www.guardian.co.uk/sport/london-broncos",
+        "apiUrl":"http://content.guardianapis.com/sport/london-broncos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013068331/Huddersfield-Giants-v-Lee-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013068331/Huddersfield-Giants-v-Lee-001.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Huddersfield Giants v Leeds Rhinos - Super League",
+          "height":"54",
+          "credit":"John Clifton/Action Images",
+          "caption":"Danny Brough, right, tackles Carl Ablett of Leeds during an all-action display from the Huddesfield captain. Photograph: John Clifton/Action Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013069849/Huddersfield-Giants-v-Lee-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013069849/Huddersfield-Giants-v-Lee-002.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Huddersfield Giants v Leeds Rhinos - Super League",
+          "height":"130",
+          "credit":"John Clifton/Action Images",
+          "caption":"Danny Brough, right, tackles Carl Ablett of Leeds during an all-action display from the Huddesfield captain. Photograph: John Clifton/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013071640/Huddersfield-Giants-v-Lee-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013071640/Huddersfield-Giants-v-Lee-003.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Huddersfield Giants v Leeds Rhinos - Super League",
+          "height":"84",
+          "credit":"John Clifton/Action Images",
+          "caption":"Danny Brough, right, tackles Carl Ablett of Leeds during an all-action display from the Huddesfield captain. Photograph: John Clifton/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013072899/Huddersfield-Giants-v-Lee-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013072899/Huddersfield-Giants-v-Lee-004.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Huddersfield Giants v Leeds Rhinos - Super League",
+          "height":"132",
+          "credit":"John Clifton/Action Images",
+          "caption":"Danny Brough, right, tackles Carl Ablett of Leeds during an all-action display from the Huddesfield captain. Photograph: John Clifton/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013074162/Huddersfield-Giants-v-Lee-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013074162/Huddersfield-Giants-v-Lee-005.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Huddersfield Giants v Leeds Rhinos - Super League",
+          "height":"168",
+          "credit":"John Clifton/Action Images",
+          "caption":"Danny Brough, right, tackles Carl Ablett of Leeds during an all-action display from the Huddesfield captain. Photograph: John Clifton/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013075560/Huddersfield-Giants-v-Lee-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013075560/Huddersfield-Giants-v-Lee-006.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Huddersfield Giants v Leeds Rhinos - Super League",
+          "height":"180",
+          "credit":"John Clifton/Action Images",
+          "caption":"Danny Brough, right, tackles Carl Ablett of Leeds during an all-action display from the Huddesfield captain. Photograph: John Clifton/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013076947/Huddersfield-Giants-v-Lee-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013076947/Huddersfield-Giants-v-Lee-007.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Huddersfield Giants v Leeds Rhinos - Super League",
+          "height":"228",
+          "credit":"John Clifton/Action Images",
+          "caption":"Danny Brough, right, tackles Carl Ablett of Leeds during an all-action display from the Huddesfield captain. Photograph: John Clifton/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013078217/Huddersfield-Giants-v-Lee-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013078217/Huddersfield-Giants-v-Lee-008.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Huddersfield Giants v Leeds Rhinos - Super League",
+          "height":"276",
+          "credit":"John Clifton/Action Images",
+          "caption":"Danny Brough, right, tackles Carl Ablett of Leeds during an all-action display from the Huddesfield captain. Photograph: John Clifton/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013078217/Huddersfield-Giants-v-Lee-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/23/1372013078217/Huddersfield-Giants-v-Lee-008.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Huddersfield Giants v Leeds Rhinos - Super League",
+          "height":"276",
+          "credit":"John Clifton/Action Images",
+          "caption":"Danny Brough, right, tackles Carl Ablett of Leeds during an all-action display from the Huddesfield captain. Photograph: John Clifton/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/23/parramatta-eels-south-sydney-rabbitohs-nrl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-23T07:30:12Z",
+      "webTitle":"Parramatta Eels 10-30 South Sydney Rabbitohs | NRL match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/23/parramatta-eels-south-sydney-rabbitohs-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/23/parramatta-eels-south-sydney-rabbitohs-nrl",
+      "fields":{
+        "trailText":"<p>Adam Reynolds and John Sutton starred, as South Sydney moved three points clear at the top of the NRL </p>",
+        "headline":"Rabbitohs march on with easy victory over Eels",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gnha",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/23/1371970041502/d2d78f97-6cf9-45e1-9bf5-98aec889299e-140x84.jpeg",
+        "wordcount":"256",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/23/1371970040401/9c284242-7f42-4082-b445-9a02dd3ea6f9-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/23/1371970040401/9c284242-7f42-4082-b445-9a02dd3ea6f9-460x276.jpeg",
+          "source":"AAP",
+          "photographer":"Colin Whelan",
+          "altText":"Dylan Walker in action for the Rabbitohs against the Eels",
+          "height":"276",
+          "credit":"Colin Whelan/AAP",
+          "caption":"Dylan Walker in action for the Rabbitohs against the Eels. Photograph: Colin Whelan/AAP",
+          "width":"460",
+          "comments":"uploaded by live blogging"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/22/catalan-dragons-hull-kr-super-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-22T20:46:08Z",
+      "webTitle":"Catalan Dragons 21-22 Hull KR | Super League match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/22/catalan-dragons-hull-kr-super-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/22/catalan-dragons-hull-kr-super-league",
+      "fields":{
+        "trailText":"Greg Eden ran in three tries in Hull KR's narrow victory at Catalan Dragons in the Super League",
+        "headline":"Greg Eden proves the catalyst in Hull KR's win over Catalan Dragons",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gng5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930613165/Greg-Eden-scored-three-tr-003.jpg",
+        "wordcount":"480",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/catalans",
+        "type":"keyword",
+        "webTitle":"Catalan Dragons",
+        "webUrl":"http://www.guardian.co.uk/sport/catalans",
+        "apiUrl":"http://content.guardianapis.com/sport/catalans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hullkr",
+        "type":"keyword",
+        "webTitle":"Hull KR",
+        "webUrl":"http://www.guardian.co.uk/sport/hullkr",
+        "apiUrl":"http://content.guardianapis.com/sport/hullkr",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930609888/Greg-Eden-scored-three-tr-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930609888/Greg-Eden-scored-three-tr-001.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons",
+          "height":"54",
+          "credit":"John Clifton/Action Images",
+          "caption":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons in Super League. Photograph: John Clifton/Action Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930611439/Greg-Eden-scored-three-tr-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930611439/Greg-Eden-scored-three-tr-002.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons",
+          "height":"130",
+          "credit":"John Clifton/Action Images",
+          "caption":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons in Super League. Photograph: John Clifton/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930613165/Greg-Eden-scored-three-tr-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930613165/Greg-Eden-scored-three-tr-003.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons",
+          "height":"84",
+          "credit":"John Clifton/Action Images",
+          "caption":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons in Super League. Photograph: John Clifton/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930614279/Greg-Eden-scored-three-tr-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930614279/Greg-Eden-scored-three-tr-004.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons",
+          "height":"132",
+          "credit":"John Clifton/Action Images",
+          "caption":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons in Super League. Photograph: John Clifton/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930615535/Greg-Eden-scored-three-tr-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930615535/Greg-Eden-scored-three-tr-005.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons",
+          "height":"168",
+          "credit":"John Clifton/Action Images",
+          "caption":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons in Super League. Photograph: John Clifton/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930616764/Greg-Eden-scored-three-tr-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930616764/Greg-Eden-scored-three-tr-006.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons",
+          "height":"180",
+          "credit":"John Clifton/Action Images",
+          "caption":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons in Super League. Photograph: John Clifton/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930617996/Greg-Eden-scored-three-tr-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930617996/Greg-Eden-scored-three-tr-007.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons",
+          "height":"228",
+          "credit":"John Clifton/Action Images",
+          "caption":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons in Super League. Photograph: John Clifton/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930619220/Greg-Eden-scored-three-tr-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930619220/Greg-Eden-scored-three-tr-008.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons",
+          "height":"276",
+          "credit":"John Clifton/Action Images",
+          "caption":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons in Super League. Photograph: John Clifton/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930619220/Greg-Eden-scored-three-tr-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/6/22/1371930619220/Greg-Eden-scored-three-tr-008.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons",
+          "height":"276",
+          "credit":"John Clifton/Action Images",
+          "caption":"Greg Eden scored three tries as Hull KR secured an important win at Catalan Dragons in Super League. Photograph: John Clifton/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/22/leeds-rhinos-brian-mcdermott-youngsters",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-22T15:18:19Z",
+      "webTitle":"Leeds Rhinos have to write their own script, says coach Brian McDermott",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/22/leeds-rhinos-brian-mcdermott-youngsters",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/22/leeds-rhinos-brian-mcdermott-youngsters",
+      "fields":{
+        "trailText":"Brian McDermott, the Leeds Rhinos coach, is ready to field two more teenagers against Hudersfield Giants as the injury list at Headingley grows",
+        "headline":"Leeds Rhinos have to write their own script, says coach Brian McDermott",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gne6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/22/1371911166614/Brad-Singleton-of-Leeds-R-003.jpg",
+        "wordcount":"466",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/leedsrhinos",
+        "type":"keyword",
+        "webTitle":"Leeds Rhinos",
+        "webUrl":"http://www.guardian.co.uk/sport/leedsrhinos",
+        "apiUrl":"http://content.guardianapis.com/sport/leedsrhinos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/huddersfieldgiants",
+        "type":"keyword",
+        "webTitle":"Huddersfield Giants",
+        "webUrl":"http://www.guardian.co.uk/sport/huddersfieldgiants",
+        "apiUrl":"http://content.guardianapis.com/sport/huddersfieldgiants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/brian-mcdermott",
+        "type":"keyword",
+        "webTitle":"Brian McDermott",
+        "webUrl":"http://www.guardian.co.uk/sport/brian-mcdermott",
+        "apiUrl":"http://content.guardianapis.com/sport/brian-mcdermott",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/london-broncos",
+        "type":"keyword",
+        "webTitle":"London Broncos",
+        "webUrl":"http://www.guardian.co.uk/sport/london-broncos",
+        "apiUrl":"http://content.guardianapis.com/sport/london-broncos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/bradfordbulls",
+        "type":"keyword",
+        "webTitle":"Bradford Bulls",
+        "webUrl":"http://www.guardian.co.uk/sport/bradfordbulls",
+        "apiUrl":"http://content.guardianapis.com/sport/bradfordbulls",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theobserver/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theobserver/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theobserver/sport",
+        "type":"newspaper-book",
+        "webTitle":"Observer Sport",
+        "webUrl":"http://www.guardian.co.uk/theobserver/sport",
+        "apiUrl":"http://content.guardianapis.com/theobserver/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.guardian.co.uk/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/22/1371911173050/Brad-Singleton-of-Leeds-R-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/22/1371911173050/Brad-Singleton-of-Leeds-R-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Brad Singleton of Leeds Rhinos",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Brad Singleton is one Leeds Rhinos youngster who has been given a chance due to injuries. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/22/wests-tigers-canberra-raiders-match-report",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-22T12:13:08Z",
+      "webTitle":"Wests Tigers 17-12 Canberra Raiders | NRL match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/22/wests-tigers-canberra-raiders-match-report",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/22/wests-tigers-canberra-raiders-match-report",
+      "fields":{
+        "trailText":"<p>Benji Marshall delivered a couple of big plays as his eventful week ended with a win over travel-sick Canberra</p>",
+        "headline":"Wests Tigers add to Canberra Raiders' travel blues",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gnd7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/22/1371900663032/Benji-Marshall-003.jpg",
+        "wordcount":"373",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/22/1371900679376/Benji-Marshall-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/22/1371900679376/Benji-Marshall-008.jpg",
+          "source":"AAP",
+          "photographer":"Robb Cox",
+          "altText":"Benji Marshall",
+          "height":"276",
+          "credit":"Robb Cox/AAP",
+          "caption":"Benji Marshall in action during Wests Tigers' victory over Canberra Raiders.  Photograph: Robb Cox/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/21/wigan-sean-oloughlin-injury",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-21T23:48:00Z",
+      "webTitle":"Castleford pick up much-needed win after Clare classic sinks Hull FC",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/21/wigan-sean-oloughlin-injury",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/21/wigan-sean-oloughlin-injury",
+      "fields":{
+        "trailText":"<p>There were wins for Castleford and St Helens in Friday's two Super League clashes</p>",
+        "headline":"Castleford pick up much-needed win after Clare classic sinks Hull FC",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gn9p",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854756651/Jonny-Lomax-003.jpg",
+        "wordcount":"311",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/castleford",
+        "type":"keyword",
+        "webTitle":"Castleford",
+        "webUrl":"http://www.guardian.co.uk/sport/castleford",
+        "apiUrl":"http://content.guardianapis.com/sport/castleford",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hull-fc",
+        "type":"keyword",
+        "webTitle":"Hull FC",
+        "webUrl":"http://www.guardian.co.uk/sport/hull-fc",
+        "apiUrl":"http://content.guardianapis.com/sport/hull-fc",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/salford-city-reds",
+        "type":"keyword",
+        "webTitle":"Salford City Reds",
+        "webUrl":"http://www.guardian.co.uk/sport/salford-city-reds",
+        "apiUrl":"http://content.guardianapis.com/sport/salford-city-reds",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sthelens",
+        "type":"keyword",
+        "webTitle":"St Helens",
+        "webUrl":"http://www.guardian.co.uk/sport/sthelens",
+        "apiUrl":"http://content.guardianapis.com/sport/sthelens",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854753723/Jonny-Lomax-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854753723/Jonny-Lomax-001.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Jonny Lomax",
+          "height":"54",
+          "credit":"John Clifton/Action Images",
+          "caption":" Jonny Lomax was among the try-scorers for St Helens in their comfortable win over Salford. Photograph: John Clifton/Action Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854755373/Jonny-Lomax-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854755373/Jonny-Lomax-002.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Jonny Lomax",
+          "height":"130",
+          "credit":"John Clifton/Action Images",
+          "caption":" Jonny Lomax was among the try-scorers for St Helens in their comfortable win over Salford. Photograph: John Clifton/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854756651/Jonny-Lomax-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854756651/Jonny-Lomax-003.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Jonny Lomax",
+          "height":"84",
+          "credit":"John Clifton/Action Images",
+          "caption":" Jonny Lomax was among the try-scorers for St Helens in their comfortable win over Salford. Photograph: John Clifton/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854757868/Jonny-Lomax-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854757868/Jonny-Lomax-004.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Jonny Lomax",
+          "height":"132",
+          "credit":"John Clifton/Action Images",
+          "caption":" Jonny Lomax was among the try-scorers for St Helens in their comfortable win over Salford. Photograph: John Clifton/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854759049/Jonny-Lomax-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854759049/Jonny-Lomax-005.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Jonny Lomax",
+          "height":"168",
+          "credit":"John Clifton/Action Images",
+          "caption":" Jonny Lomax was among the try-scorers for St Helens in their comfortable win over Salford. Photograph: John Clifton/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854760290/Jonny-Lomax-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854760290/Jonny-Lomax-006.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Jonny Lomax",
+          "height":"180",
+          "credit":"John Clifton/Action Images",
+          "caption":" Jonny Lomax was among the try-scorers for St Helens in their comfortable win over Salford. Photograph: John Clifton/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854761464/Jonny-Lomax-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854761464/Jonny-Lomax-007.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Jonny Lomax",
+          "height":"228",
+          "credit":"John Clifton/Action Images",
+          "caption":" Jonny Lomax was among the try-scorers for St Helens in their comfortable win over Salford. Photograph: John Clifton/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854762754/Jonny-Lomax-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854762754/Jonny-Lomax-008.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Jonny Lomax",
+          "height":"276",
+          "credit":"John Clifton/Action Images",
+          "caption":" Jonny Lomax was among the try-scorers for St Helens in their comfortable win over Salford. Photograph: John Clifton/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854762754/Jonny-Lomax-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371854762754/Jonny-Lomax-008.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Jonny Lomax",
+          "height":"276",
+          "credit":"John Clifton/Action Images",
+          "caption":" Jonny Lomax was among the try-scorers for St Helens in their comfortable win over Salford. Photograph: John Clifton/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/21/sydney-roosters-canterbury-bulldogs-match-report",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-21T21:53:34Z",
+      "webTitle":"Canterbury Bulldogs 18-20 Sydney Roosters | NRL match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/21/sydney-roosters-canterbury-bulldogs-match-report",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/21/sydney-roosters-canterbury-bulldogs-match-report",
+      "fields":{
+        "trailText":"<p>Sonny Bill Williams enjoyed a triumphant return to Canterbury, as the Roosters survived a late surge to beat the Bulldogs</p>",
+        "headline":"Sydney Roosters win as Sonny Bill Williams returns to Canterbury",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gncv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371851193123/Sonny-Bill-Williams-001.jpg",
+        "wordcount":"649",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371851124855/Sonny-Bill-Williams-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/21/1371851124855/Sonny-Bill-Williams-001.jpg",
+          "source":"AAP",
+          "photographer":"Renee McKay",
+          "altText":"Sonny Bill Williams",
+          "height":"276",
+          "credit":"Renee McKay/AAP",
+          "caption":"Sonny Bill Williams makes a break during the Roosters' NRL victory over the Bulldogs.  Photograph: Renee McKay/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jun/20/nrl-five-things-to-look-out-for",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-20T22:54:00Z",
+      "webTitle":"NRL: five things to look out for",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/jun/20/nrl-five-things-to-look-out-for",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jun/20/nrl-five-things-to-look-out-for",
+      "fields":{
+        "trailText":"<p><strong>Matt Cleary: </strong>Eels and Rabbitohs to shine in the sun; Storm at risk on trip to the Titans; and other talking points</p>",
+        "headline":"NRL: five things to look out for",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gmtb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/20/1371768607764/Josh-Papalii-003.jpg",
+        "wordcount":"601",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/matt-cleary",
+        "type":"contributor",
+        "webTitle":"Matt Cleary",
+        "webUrl":"http://www.guardian.co.uk/profile/matt-cleary",
+        "apiUrl":"http://content.guardianapis.com/profile/matt-cleary",
+        "bio":"<p>Matt Cleary is a freelance sports journalist from Sydney who contributes to Inside Sport, Inside Cricket, Inside Rugby and several golf and travel magazines who pay him to play golf on holidays. The Australian Golf Writers Association once gave him an award for playing golf in Ireland. Australian Golf Digest paid him to spend four months playing golf on a full lap of Australia. Each week Rugby League Week pays him to drink beer and watch rugby league. Chances are he has a better job than you</p>",
+        "r2ContributorId":"56746",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/20/1371768623841/Josh-Papalii-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/20/1371768623841/Josh-Papalii-008.jpg",
+          "source":"AAP",
+          "altText":"Josh Papalii",
+          "height":"276",
+          "credit":"AAP",
+          "caption":"Josh Papalii has a big week coming up. Photograph: AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/20/nrl-players-minders-off-pitch-incidents",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-20T06:35:00Z",
+      "webTitle":"Minders for NRL players may be 'good idea,' says Ryan Hoffman",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/20/nrl-players-minders-off-pitch-incidents",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/20/nrl-players-minders-off-pitch-incidents",
+      "fields":{
+        "trailText":"<p>NSW's Ryan Hoffman admits employing minders could help some players from getting into trouble off the pitch</p>",
+        "headline":"Minders for NRL players may be 'good idea,' says Ryan Hoffman",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gyn3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/20/1371710051677/Ryan-Hoffman-001.jpg",
+        "wordcount":"381",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/20/1371709985109/Ryan-Hoffman-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/20/1371709985109/Ryan-Hoffman-001.jpg",
+          "source":"AAP",
+          "photographer":"Brett Crockford",
+          "altText":"Ryan Hoffman",
+          "height":"276",
+          "credit":"Brett Crockford/AAP",
+          "caption":"Ryan Hoffman says security guards could be overkill but may help some players stay out of trouble. Photograph: Brett Crockford/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/20/mal-meninga-backpacker-bar-incident",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-19T23:49:47Z",
+      "webTitle":"Mal Meninga says bar incident is 'storm in a teacup'",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/20/mal-meninga-backpacker-bar-incident",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/20/mal-meninga-backpacker-bar-incident",
+      "fields":{
+        "trailText":"<p>Queensland coach Mal Meninga has criticised media coverage of an incident in which he was asked to leave a bar</p>",
+        "headline":"Mal Meninga says bar incident is 'storm in a teacup'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gyyy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/28/1369698191992/Mal-Meninga-003.jpg",
+        "wordcount":"172",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/28/1369698097353/Mal-Meninga-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/28/1369698097353/Mal-Meninga-001.jpg",
+          "source":"AAP",
+          "photographer":"John Pryke",
+          "altText":"Mal Meninga",
+          "height":"276",
+          "credit":"John Pryke/AAP",
+          "caption":"Mal Meninga said the incident was 'very, very minor'.  Photograph: John Pryke/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jun/18/set-of-six-steve-mcnamara-australia",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-18T12:44:23Z",
+      "webTitle":"Super League set of six: Steve McNamara's ideas take shape for World Cup",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/jun/18/set-of-six-steve-mcnamara-australia",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jun/18/set-of-six-steve-mcnamara-australia",
+      "fields":{
+        "trailText":"<strong>Andy Wilson</strong>: Anthony Minichiello wants the best of both worlds, a glimmer of hope for Leigh and New Zealand Warriors make it four in a row",
+        "headline":"Super League set of six: McNamara's ideas taking shape for World Cup",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gk8k",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559114457/Steve-McNamara-005.jpg",
+        "wordcount":"1336",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/super-league-set-of-six",
+        "type":"series",
+        "webTitle":"Set of Six",
+        "webUrl":"http://www.guardian.co.uk/sport/series/super-league-set-of-six",
+        "apiUrl":"http://content.guardianapis.com/sport/series/super-league-set-of-six",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/steve-mcnamara",
+        "type":"keyword",
+        "webTitle":"Steve McNamara",
+        "webUrl":"http://www.guardian.co.uk/sport/steve-mcnamara",
+        "apiUrl":"http://content.guardianapis.com/sport/steve-mcnamara",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.guardian.co.uk/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559110657/Steve-McNamara-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559110657/Steve-McNamara-002.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"54",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559111899/Steve-McNamara-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559111899/Steve-McNamara-003.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"340",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559113218/Steve-McNamara-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559113218/Steve-McNamara-004.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"130",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559114457/Steve-McNamara-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559114457/Steve-McNamara-005.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"84",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559115649/Steve-McNamara-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559115649/Steve-McNamara-006.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"132",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559116826/Steve-McNamara-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559116826/Steve-McNamara-007.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"168",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559118032/Steve-McNamara-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559118032/Steve-McNamara-008.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"180",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559119247/Steve-McNamara-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559119247/Steve-McNamara-009.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"228",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559120565/Steve-McNamara-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559120565/Steve-McNamara-010.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"276",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559121812/Steve-McNamara-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559121812/Steve-McNamara-011.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"372",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559120565/Steve-McNamara-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/18/1371559120565/Steve-McNamara-010.jpg",
+          "source":"Getty Images",
+          "photographer":"Matthew Lewis",
+          "altText":"Steve McNamara",
+          "height":"276",
+          "credit":"Matthew Lewis/Getty Images",
+          "caption":"Steve McNamara is fine-tuning his World Cup preparations. Photograph: Matthew Lewis/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/video/2013/jun/18/nrl-round-14-highlights-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-18T04:36:36Z",
+      "webTitle":"NRL round 14 highlights – video ",
+      "webUrl":"http://www.guardian.co.uk/sport/video/2013/jun/18/nrl-round-14-highlights-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/jun/18/nrl-round-14-highlights-video",
+      "fields":{
+        "trailText":"<p>All the action from Round 14 of the NRL season. Brisbane get their first win in four games against the Wests Tigers</p>",
+        "headline":"NRL round 14 highlights – video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3gkv6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528391960/Video-highlights-of-the-N-005.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/18/180613NRL_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"APP",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528610909/Video-highlights-of-the-N-001.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528610909/Video-highlights-of-the-N-001.jpg",
+          "durationMinutes":"3",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528615942/Video-highlights-of-the-N-003.jpg",
+          "width":"480",
+          "durationSeconds":"52"
+        },
+        "encodings":[{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/18/180613NRL_FromGAus-16x9.mp4"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/6/18/180613NRL_FromGAus/180613NRL_FromGAus.m3u8"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/6/18/180613NRL_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/6/18/180613NRL_FromGAus_3gpLg16x9.3gp"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528391960/Video-highlights-of-the-N-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528391960/Video-highlights-of-the-N-005.jpg",
+          "source":"AAP",
+          "altText":"Video highlights of the NRL",
+          "height":"84",
+          "credit":"AAP",
+          "caption":"Video highlights of the NRL Photograph: AAP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528494890/Video-highlights-of-the-N-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528494890/Video-highlights-of-the-N-001.jpg",
+          "source":"AAP",
+          "altText":"Video highlights of the NRL",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Video highlights of the NRL Photograph: AAP",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528610909/Video-highlights-of-the-N-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528610909/Video-highlights-of-the-N-001.jpg",
+          "source":"AAP",
+          "altText":"Video highlights of the NRL",
+          "height":"90",
+          "credit":"AAP",
+          "caption":"Video highlights of the NRL Photograph: AAP",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528613204/Video-highlights-of-the-N-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528613204/Video-highlights-of-the-N-002.jpg",
+          "source":"AAP",
+          "altText":"Video highlights of the NRL",
+          "height":"225",
+          "credit":"AAP",
+          "caption":"Video highlights of the NRL Photograph: AAP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528615942/Video-highlights-of-the-N-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371528615942/Video-highlights-of-the-N-003.jpg",
+          "source":"AAP",
+          "altText":"Video highlights of the NRL",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Video highlights of the NRL Photograph: AAP",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/18/george-burgess-stood-down-rabbitohs",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-17T23:57:38Z",
+      "webTitle":"George Burgess stood down by the Rabbitohs after wilful damage charge",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/18/george-burgess-stood-down-rabbitohs",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/18/george-burgess-stood-down-rabbitohs",
+      "fields":{
+        "trailText":"<p>South Sydney forward stood down after being charged with two counts of wilful damage to a car in Cairns</p>",
+        "headline":"George Burgess stood down by the Rabbitohs after wilful damage charge",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3gjqe",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371512702780/George-Burgess-003.jpg",
+        "wordcount":"180",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371512716407/George-Burgess-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/18/1371512716407/George-Burgess-007.jpg",
+          "source":"Wayne Drought/Action Photographi",
+          "photographer":"W Drought",
+          "altText":"George Burgess",
+          "height":"276",
+          "credit":"W Drought/Wayne Drought/Action Photographi",
+          "caption":"George Burgess during a Warriors v Rabbitohs match at Mt Smart Stadium, Auckland, Sunday April 7th 2013 Photograph: W Drought/Wayne Drought/Action Photographi",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/17/leeds-widnes-super-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-17T22:58:00Z",
+      "webTitle":"Leeds 38-28 Widnes | Super League match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/17/leeds-widnes-super-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/17/leeds-widnes-super-league",
+      "fields":{
+        "trailText":"Leeds beat Widnes 38-28 at Headingley despite the rare absence of their captain, Kevin Sinfield",
+        "headline":"Ben Jones-Bishop returns with a try as Leeds hold off Widnes fightback",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gjq4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509095555/Ben-Jones-Bishop-003.jpg",
+        "wordcount":"156",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/leedsrhinos",
+        "type":"keyword",
+        "webTitle":"Leeds Rhinos",
+        "webUrl":"http://www.guardian.co.uk/sport/leedsrhinos",
+        "apiUrl":"http://content.guardianapis.com/sport/leedsrhinos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/widnes-vikings",
+        "type":"keyword",
+        "webTitle":"Widnes Vikings",
+        "webUrl":"http://www.guardian.co.uk/sport/widnes-vikings",
+        "apiUrl":"http://content.guardianapis.com/sport/widnes-vikings",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509092038/Ben-Jones-Bishop-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509092038/Ben-Jones-Bishop-001.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ben Jones-Bishop",
+          "height":"54",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ben Jones-Bishop scores for Leeds on his return from serious illness. Photograph: Ed Sykes/Action Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509094317/Ben-Jones-Bishop-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509094317/Ben-Jones-Bishop-002.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ben Jones-Bishop",
+          "height":"130",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ben Jones-Bishop scores for Leeds on his return from serious illness. Photograph: Ed Sykes/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509095555/Ben-Jones-Bishop-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509095555/Ben-Jones-Bishop-003.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ben Jones-Bishop",
+          "height":"84",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ben Jones-Bishop scores for Leeds on his return from serious illness. Photograph: Ed Sykes/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509096837/Ben-Jones-Bishop-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509096837/Ben-Jones-Bishop-004.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ben Jones-Bishop",
+          "height":"132",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ben Jones-Bishop scores for Leeds on his return from serious illness. Photograph: Ed Sykes/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509098291/Ben-Jones-Bishop-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509098291/Ben-Jones-Bishop-005.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ben Jones-Bishop",
+          "height":"168",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ben Jones-Bishop scores for Leeds on his return from serious illness. Photograph: Ed Sykes/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509099543/Ben-Jones-Bishop-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509099543/Ben-Jones-Bishop-006.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ben Jones-Bishop",
+          "height":"180",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ben Jones-Bishop scores for Leeds on his return from serious illness. Photograph: Ed Sykes/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509100704/Ben-Jones-Bishop-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509100704/Ben-Jones-Bishop-007.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ben Jones-Bishop",
+          "height":"228",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ben Jones-Bishop scores for Leeds on his return from serious illness. Photograph: Ed Sykes/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509102046/Ben-Jones-Bishop-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509102046/Ben-Jones-Bishop-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ben Jones-Bishop",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ben Jones-Bishop scores for Leeds on his return from serious illness. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509102046/Ben-Jones-Bishop-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371509102046/Ben-Jones-Bishop-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ben Jones-Bishop",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ben Jones-Bishop scores for Leeds on his return from serious illness. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/17/blake-ferguson-charged-cronulla-nightclub",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-17T22:22:20Z",
+      "webTitle":"Blake Ferguson charged over Cronulla nightclub incident",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/17/blake-ferguson-charged-cronulla-nightclub",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/17/blake-ferguson-charged-cronulla-nightclub",
+      "fields":{
+        "trailText":"<p>NSW Origin winger charged with indecent assault prompting a suspension from rugby league and removal from Blues Squad</p>",
+        "headline":"Blake Ferguson charged over Cronulla nightclub incident",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3gjqx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371435771593/Blake-Ferguson-001.jpg",
+        "wordcount":"377",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/bridie-jabour",
+        "type":"contributor",
+        "webTitle":"Bridie Jabour",
+        "webUrl":"http://www.guardian.co.uk/profile/bridie-jabour",
+        "apiUrl":"http://content.guardianapis.com/profile/bridie-jabour",
+        "bio":"<p>Bridie Jabour is a reporter for Guardian Australia</p>",
+        "r2ContributorId":"56485",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/27/1369625233941/Bridie-Jabour.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371435701232/Blake-Ferguson-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371435701232/Blake-Ferguson-001.jpg",
+          "source":"AAP",
+          "photographer":"Lukas Coch",
+          "altText":"Blake Ferguson",
+          "height":"276",
+          "credit":"Lukas Coch/AAP",
+          "caption":"Blake Ferguson is being investigated over an incident at a Cronulla nightclub.  Photograph: Lukas Coch/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/17/blake-ferguson-police-investigation-cronulla-nightclub",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-17T02:28:09Z",
+      "webTitle":"Blake Ferguson investigated over nightclub incident",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/17/blake-ferguson-police-investigation-cronulla-nightclub",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/17/blake-ferguson-police-investigation-cronulla-nightclub",
+      "fields":{
+        "trailText":"<p>Police are investigating an alleged incident involving NSW winger Blake Ferguson at a Cronulla nightclub on Sunday night</p>",
+        "headline":"Blake Ferguson investigated over nightclub incident",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gj62",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371435771593/Blake-Ferguson-001.jpg",
+        "wordcount":"199",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371435701232/Blake-Ferguson-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/17/1371435701232/Blake-Ferguson-001.jpg",
+          "source":"AAP",
+          "photographer":"Lukas Coch",
+          "altText":"Blake Ferguson",
+          "height":"276",
+          "credit":"Lukas Coch/AAP",
+          "caption":"Blake Ferguson is being investigated over an incident at a Cronulla nightclub.  Photograph: Lukas Coch/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jun/16/nrl-five-things-we-learned-this-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-16T21:54:00Z",
+      "webTitle":"NRL: five things we learned this weekend",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/jun/16/nrl-five-things-we-learned-this-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jun/16/nrl-five-things-we-learned-this-weekend",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly: </strong>Manly's stats don't convert to results; Canberra need to learn to win away; Gareth Widdop shines again</p>",
+        "headline":"NRL: five things we learned this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gjv7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/16/1371365105128/Rabbitohs-v-Titans-001.jpg",
+        "wordcount":"1112",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nrl-what-we-learned-this-weekend",
+        "type":"series",
+        "webTitle":"NRL: what we learned this weekend",
+        "webUrl":"http://www.guardian.co.uk/sport/series/nrl-what-we-learned-this-weekend",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nrl-what-we-learned-this-weekend",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.guardian.co.uk/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/16/1371365115858/Rabbitohs-v-Titans-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/16/1371365115858/Rabbitohs-v-Titans-006.jpg",
+          "source":"AAP",
+          "photographer":"Colin Whelan",
+          "altText":"Rabbitohs v Titans",
+          "height":"276",
+          "credit":"Colin Whelan/AAP",
+          "caption":"Greg Inglis is grabbed by Jamal Idris during the South Sydney Rabbitohs victory over the Gold Coast Titans Photograph: Colin Whelan/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jun/16/england-rugby-league-australia-ashes",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-06-16T14:28:51Z",
+      "webTitle":"England's coach Steve McNamara to run rule over exiles ahead of World Cup",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jun/16/england-rugby-league-australia-ashes",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jun/16/england-rugby-league-australia-ashes",
+      "fields":{
+        "trailText":"<p>Steve McNamara, the England coach, has said he will head Down Under to gauge the form of his Australian-based players ahead of this year's World Cup</p>",
+        "headline":"England's coach Steve McNamara to run rule over exiles ahead of World Cup",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gjxt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/16/1371393236641/England-head-coach-Steve--003.jpg",
+        "wordcount":"438",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.guardian.co.uk/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.guardian.co.uk/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australiarugbyleague",
+        "type":"keyword",
+        "webTitle":"Australia rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/australiarugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/australiarugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.guardian.co.uk/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/16/1371393245067/England-head-coach-Steve--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/16/1371393245067/England-head-coach-Steve--009.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"England head coach Steve McNamara\nEngland head coach Steve McNamara",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"England's head coach Steve McNamara will fly to Sydney to watch players who have impressed in the National Rugby League. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    }],
+    "editorsPicks":[],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-12T12:28:37Z",
+      "webTitle":"Australian doping investigators look at six rugby league clubs - video",
+      "webUrl":"http://www.guardian.co.uk/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "fields":{
+        "trailText":"<p>National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting</p>",
+        "headline":"Australian doping investigators look at six rugby league clubs - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3dm52",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.guardian.co.uk/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.guardian.co.uk/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/12/130212Ausdope-16x9.mp4",
+        "fields":{
+          "source":"Reuters",
+          "embeddable":"true",
+          "blockAds":"false",
+          "height":"360",
+          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+          "durationMinutes":"1",
+          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+          "width":"480",
+          "durationSeconds":"5"
+        },
+        "encodings":[{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/130212Ausdope/130212Ausdope.m3u8"
+        },{
+          "format":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/2/12/130212Ausdope-720.mp4"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/12/130212Ausdope-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/2/12/130212Ausdope_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/2/12/130212Ausdope_3gpLg16x9.3gp"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670916587/Australian-doping-probe-s-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670916587/Australian-doping-probe-s-001.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"230",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670918097/Australian-doping-probe-s-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670918097/Australian-doping-probe-s-002.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"90",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670919487/Australian-doping-probe-s-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670919487/Australian-doping-probe-s-003.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"225",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670920754/Australian-doping-probe-s-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670920754/Australian-doping-probe-s-004.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"360",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670922419/Australian-doping-probe-s-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670922419/Australian-doping-probe-s-005.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"360",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670925668/Australian-doping-probe-s-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670925668/Australian-doping-probe-s-007.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"54",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670927255/Australian-doping-probe-s-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670927255/Australian-doping-probe-s-008.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"340",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670928656/Australian-doping-probe-s-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670928656/Australian-doping-probe-s-009.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"130",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"84",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670931876/Australian-doping-probe-s-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670931876/Australian-doping-probe-s-011.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"132",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":11,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670933195/Australian-doping-probe-s-012.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670933195/Australian-doping-probe-s-012.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"168",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":12,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670934454/Australian-doping-probe-s-013.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670934454/Australian-doping-probe-s-013.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"180",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":13,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670935828/Australian-doping-probe-s-014.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670935828/Australian-doping-probe-s-014.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"228",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":14,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670937108/Australian-doping-probe-s-015.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670937108/Australian-doping-probe-s-015.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"276",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":15,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670938599/Australian-doping-probe-s-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670938599/Australian-doping-probe-s-016.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"372",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"620"
+        }
+      }],
+      "references":[]
+    }]
+  }
+}
