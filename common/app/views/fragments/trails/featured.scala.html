@@ -14,7 +14,7 @@
     @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
 
     @trail.mainPicture(width=220).map{ smallCrop =>
-        <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
+        <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image" role="presentation">
             <img class="maxed" src="@smallCrop.path"
                 data-force-upgrade="true"
                 data-thumb-width="@smallCrop.width"
@@ -23,8 +23,7 @@
                     data-full-width="@largeCrop.width"
                 }
                 itemprop="contentURL"
-                alt="@Html(smallCrop.altText.getOrElse(""))"
-                title="@StripHtmlTagsAndUnescapeEntities(smallCrop.caption.getOrElse(""))"
+                alt=""
             />
         </a>
     }
