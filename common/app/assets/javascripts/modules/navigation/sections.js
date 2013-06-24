@@ -142,7 +142,7 @@ define([
                     Object.keys(currentSection.zones).forEach(function(zonePath, i) {
 
                         var zoneName  = currentSection.zones[zonePath],
-                            isActive  = zonePath === '/'+config.page.section || zonePath === '/'+config.page.pageId,
+                            isActive  = (zonePath === '/'+config.page.section) || (zonePath === '/'+config.page.pageId),
                             className = isActive ? 'nav__item is-active' : 'nav__item',
                             linkClass = isActive ? 'nav__link zone-color' : 'nav__link';
 
@@ -205,7 +205,7 @@ define([
                         sportNode.parent().removeClass('is-active');
                     }
 
-                    if (currentSection.sectionId == 'sport' && config.page.pageId != 'sport') {
+                    if (currentSection.sectionId === 'sport' && config.page.pageId !== 'sport') {
                         var activeNodes = common.$g('.nav-popup-localnav .is-active .nav__link', context);
                         if (activeNodes.length > 1) {
                             var firstNode = activeNodes.first();
