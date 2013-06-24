@@ -140,14 +140,10 @@ define([
                     var localNavItems = [];
 
                     Object.keys(currentSection.zones).forEach(function(zonePath, i) {
-                        var zoneName = currentSection.zones[zonePath],
-                            isActive = (zonePath === '/'+config.page.section) || (zonePath === '/'+config.page.pageId),
-                            className = isActive ? 'nav__item is-active' : 'nav__item',
-                            linkClass = isActive ? 'nav__link zone-color' : 'nav__link';
-
-                        localNavItems.push('<li class="' + className + '">' +
-                                           '<a href="'+zonePath+'" class="'+linkClass+'" data-link-name="'+zoneName+'">'+zoneName+'</a>' +
-                                         '</li>');
+                        var zoneName  = currentSection.zones[zonePath];
+                        localNavItems.push('<li class="nav__item">' +
+                                           '  <a href="'+zonePath+'" class="nav__link" data-link-name="'+zoneName+'">'+zoneName+'</a>' +
+                                           '</li>');
 
                     });
 
@@ -162,15 +158,19 @@ define([
                     // Insert the CTA for the popup local nav
                     var sectionHeadNode = common.$g('.section-head', context),
                         sectionLink     = common.$g('.article-zone [data-link-name="article section"]', context).parent().html(),
-                        localNavTitle   = sectionLink || sectionHeadNode.text() || currentSection.zones['/'+config.page.section] || currentSection.sectionName,
+                        localNavTitle   = sectionLink ||
+                                          sectionHeadNode.text() ||
+                                          currentSection.zones['/'+config.page.section] ||
+                                          currentSection.sectionName,
 
                         localNavCtaHtml = '<div class="localnav--small">' +
                                           '  <div class="localnav__inner cf">' +
                                           '    <h1 class="localnav__title zone-color">'+localNavTitle+'</h1>' +
-                                          '      <button class="cta localnav__cta control zone-background" ' +
+                                          '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +
                                           '          data-control-for="nav-popup-localnav">' +
-                                          '        <i class="i i-local-nav-arrow"></i>' +
+                                          '        <i class="i i-nav-divider zone-background"></i>' +
+                                          '        <i class="i i-local-nav-arrow zone-background"></i>' +
                                           '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
@@ -183,12 +183,25 @@ define([
                                        '</ul>';
                     common.$g('#header .control--topstories', context).after('<div class="localnav-container">' + localNavHtml + '</div>');
 
-
-
                     // Remove the other section head from the page
-                    common.$g('.section-head, .article-zone:first-child, .front-section:first-child .sub-section-head', context).remove();
+                    common.$g('.section-head, h2.article-zone, .front-section:first-child .sub-section-head', context).remove();
 
                     common.$g('#preloads').addClass('has-localnav');
+
+
+                    // Highlight the section that we're in
+                    // Try to match the against pageId first (covers sport pseudo-sections, eg Cricket, Rugby...)
+                    var activeNodes = common.$g('.nav__link[href="/'+config.page.pageId+'"]')
+                                            .addClass('zone-color')
+                                            .parent().addClass('is-active');
+
+                    // ...otherwise fallback to matching real sections (eg Books, Arts)
+                    if (activeNodes.length === 0) {
+                        common.$g('.nav__link[href="/'+config.page.section+'"]')
+                              .addClass('zone-color')
+                              .parent().addClass('is-active');
+                    }
+
 
                     // Hack to remove the double highlighting in the nav of Sport+Football
                     if (currentSection.sectionId === 'football') {
@@ -196,6 +209,7 @@ define([
                         sportNode.removeClass('zone-color');
                         sportNode.parent().removeClass('is-active');
                     }
+
                 }
 
             }
