@@ -167,10 +167,11 @@ define([
                         localNavCtaHtml = '<div class="localnav--small">' +
                                           '  <div class="localnav__inner cf">' +
                                           '    <h1 class="localnav__title zone-color">'+localNavTitle+'</h1>' +
-                                          '      <button class="cta localnav__cta control zone-background" ' +
+                                          '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +
                                           '          data-control-for="nav-popup-localnav">' +
-                                          '        <i class="i i-local-nav-arrow"></i>' +
+                                          '        <i class="i i-nav-divider zone-background"></i>' +
+                                          '        <i class="i i-local-nav-arrow zone-background"></i>' +
                                           '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
