@@ -34,8 +34,9 @@ define(['common', 'modules/detect', 'bonzo'], function (common, detect, bonzo) {
                             return;
                         }
                     }
-
-                    image.attr('src', lowsrc);
+                    if (lowsrc) {
+                        image.attr('src', lowsrc);
+                    }
                 });
             }
         };
