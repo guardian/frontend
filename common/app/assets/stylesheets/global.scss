@@ -14,7 +14,6 @@
    Base
    ========================================================================== */
 
-@import "base/base";
 @import "base/tables";
 
 
@@ -44,8 +43,8 @@
    External modules
    ========================================================================== */
 
-//These are for styling HTML that we get from external sources
-//and may contain more specific selectors than we would usually like
+// These are for styling HTML that we get from external sources
+// and may contain more specific selectors than we would usually like
 
 @import "module/external/witness";
 
@@ -54,12 +53,6 @@
    ========================================================================== */
 
 @import "theme/zones";
-
-
-/* External components
-   ========================================================================== */
-
-// @import "responsive-grid";
 
 
 /* ==========================================================================
@@ -81,6 +74,6 @@
    Icons
    ========================================================================== */
 
-@import "theme/global-icons-sprite";
+@import "theme/_global-icons-sprite";
 @import "theme/global-icons-svg";
 @import "theme/icons";

@@ -9,6 +9,25 @@
    ========================================================================== */
 
 .from-content-api {
+
+    @extend %type-6;
+    margin: 0 0 $baseline*2 0;
+    padding: 0;
+    color: #333;
+
+    @media (min-width: $tablet) {
+        font-size: 18px;
+        font-size: 1.8rem;
+        line-height: 26px;
+        line-height: 2.6rem;
+        margin-bottom: 16px;
+        margin-bottom: 1.6rem;
+    }
+
+    b,
+    strong {
+        font-weight: 500;
+    }
     h2 {
         @extend %type-4;
         color: #333;
@@ -34,37 +53,6 @@
         font-family: georgia, serif;
     }
 
-    > p,
-    .block-elements > p,
-    ul,
-    ol,
-    address,
-    blockquote,
-    blockquote p {
-        @extend %type-6;
-        margin: 0 0 $baseline*2 0;
-        padding: 0;
-        color: #333;
-    }
-
-
-    h3,
-    > p,
-    .block-elements > p,
-    ul,
-    ol,
-    address,
-    blockquote,
-    blockquote p {
-        @media (min-width: $tablet) {
-            font-size: 18px;
-            font-size: 1.8rem;
-            line-height: 26px;
-            line-height: 2.6rem;
-            margin-bottom: 16px;
-            margin-bottom: 1.6rem;
-        }
-    }
 }
 
 .article blockquote,
