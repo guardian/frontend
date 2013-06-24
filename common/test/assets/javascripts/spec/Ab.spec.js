@@ -4,7 +4,8 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
 
         var test,
             controlSpy,
-            variantSpy;
+            variantSpy,
+            participationsKey = 'gu.ab.participations';
 
         beforeEach(function() {
             AB.clearTests();
@@ -17,7 +18,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
 
         afterEach(function() {
             AB.clearTests();
-            AB.clearParticipations();
+            localStorage.removeItem(participationsKey);
         });
 
         it('should exist', function() {
@@ -68,12 +69,12 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
                     abDummyTest2: true,
                 }
             });
-            var storedParticipated = JSON.parse(localStorage.getItem('gu.ab.participations')).value;
+            var storedParticipated = JSON.parse(localStorage.getItem(participationsKey)).value;
             expect(storedParticipated.DummyTest.variant).not.toBeUndefined();
             expect(storedParticipated.DummyTest2.variant).not.toBeUndefined();
         });
 
-        it('should not run if switch off', function() {
+        it('should not run if switch is off', function() {
             AB.init({
                 switches: {
                     abDummyTest: false,

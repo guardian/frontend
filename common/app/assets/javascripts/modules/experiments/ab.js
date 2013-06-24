@@ -37,6 +37,10 @@ define([
         store.set(participationsKey, participations);
     }
 
+    function clearParticipations() {
+        return store.remove(participationsKey);
+    }
+
     function initTracking(test, variantId) {
         var data = 'AB | ' + test.id + ' test | ' + variantId;
         common.$g(document.body).attr('data-link-test', data);
@@ -82,21 +86,8 @@ define([
             TESTS.push(test);
         },
 
-        removeTest: function(test) {
-            TESTS.some(function(runningTest, i) {
-                if (runningTest === test) {
-                    TESTS.splice(i, 1);
-                    return true;
-                }
-            });
-        },
-
         clearTests: function() {
             TESTS = [];
-        },
-
-        clearParticipations: function() {
-            return store.remove(participationsKey);
         },
 
         init: function(config, context, options) {
