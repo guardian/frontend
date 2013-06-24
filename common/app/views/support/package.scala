@@ -340,7 +340,7 @@ object StripHtmlTagsAndUnescapeEntities{
   val stripped = doc.body.html
   val unescaped = StringEscapeUtils.unescapeHtml(stripped)
   unescaped.replace("\"","&#34;")   //double quotes will break HTML attributes
-      }
+  }
 }
 
 object Head {
