@@ -140,6 +140,10 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
+  val LocalNavSwitch = Switch("Feature Switches", "local-nav",
+    "If this switch is on, a secondary local nav is shown.",
+    safeState = Off)
+
 
   // A/B Test Switches
 
@@ -157,7 +161,6 @@ object Switches extends Collections {
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
-
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -186,7 +189,8 @@ object Switches extends Collections {
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
-    IntegrationTestSwitch
+    IntegrationTestSwitch,
+    LocalNavSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

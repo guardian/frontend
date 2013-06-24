@@ -248,7 +248,7 @@ a.competition-title {
     color: #064951;
 
     a {
-        color: #064951;
+        color: #333333;
     }
 
     .nav {
@@ -323,7 +323,7 @@ a.competition-title {
 .football-filter {
     background: $sportBright;
     margin: 0 $gutter $baseline*2 $gutter;
-    color: #fff; 
+    color: #fff;
     border-bottom: none;
 
     > a {
@@ -351,4 +351,13 @@ a.competition-title {
 .live-matches-dateline {
     display: block;
     margin-bottom: $baseline*3;
+
+    .has-localnav & {
+        padding-top: 12px;
+    }
 }
+
+
+
+
+
