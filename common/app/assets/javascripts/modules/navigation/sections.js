@@ -80,6 +80,9 @@ define([
 
                         if(layoutMode !== 'mobile') {
                             that.view.hideColumns(sectionsHeader, sectionsNav);
+
+                            // Hide popup localnav if visible
+                            common.$g('.nav-popup-localnav').addClass('is-off');
                         } else {
                             that.view.showColumns(sectionsHeader, sectionsNav);
                         }
