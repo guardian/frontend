@@ -62,6 +62,15 @@ define([ 'common',
               expect(document.querySelector('#preloads').className).not.toContain('has-localnav');
             });
 
+            it("Should only have a single active highlighted section", function() {
+              config.page.section = 'sport';
+              config.page.pageId = 'sport/cricket';
+              sections = new Sections(config);
+              sections.view.insertLocalNav(document);
+
+              expect(document.querySelectorAll('.nav-popup-localnav .is-active').length).toBe(1);
+            });
+
 
             it("Should highlight Books section when inside it", function() {
               config.page.section = 'books';
