@@ -53,6 +53,10 @@ object Switches extends Collections {
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
     safeState = Off)
 
+  val iPhoneAppSwitch = Switch("Advertising", "iphone-app",
+    "If this switch is on then the iPhone app upsell will be enabled.",
+    safeState = Off)
+
 
   // Analytics Switches
 
@@ -195,6 +199,7 @@ object Switches extends Collections {
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
     IntegrationTestSwitch,
+    iPhoneAppSwitch,
     LocalNavSwitch
   )
 
