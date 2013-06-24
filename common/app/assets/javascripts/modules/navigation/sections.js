@@ -184,7 +184,7 @@ define([
                     common.$g('#header .control--topstories', context).after('<div class="localnav-container">' + localNavHtml + '</div>');
 
                     // Remove the other section head from the page
-                    common.$g('.section-head, h2.article-zone.type-1, .front-section:first-child .sub-section-head', context).remove();
+                    common.$g('.section-head, h2.article-zone, .front-section:first-child .sub-section-head', context).remove();
 
                     common.$g('#preloads').addClass('has-localnav');
 

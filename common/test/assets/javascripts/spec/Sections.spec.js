@@ -104,7 +104,7 @@ define([ 'common',
               sections.view.insertLocalNav(document);
 
               expect(document.querySelectorAll('.article-zone').length).toBe(2);
-              expect(document.querySelectorAll('.article-zone--top').length).toBe(0);
+              expect(document.querySelectorAll('h2.article-zone').length).toBe(0);
             });
 
         });
