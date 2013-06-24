@@ -4,17 +4,17 @@
    Variables and mixins
    ========================================================================== */
 
-@import "vars";
-@import "mixins";
-@import "module/discussion-mixins";
-@import "extends-only";
+@import "_vars";
+@import "_mixins";
+@import "module/_discussion-mixins";
+@import "_extends-only";
 
 
 /* ==========================================================================
    Base
    ========================================================================== */
 
-@import "base/tables";
+@import "base/_tables";
 
 
 /* ==========================================================================
@@ -46,28 +46,27 @@
 // These are for styling HTML that we get from external sources
 // and may contain more specific selectors than we would usually like
 
-@import "module/external/witness";
+@import "module/external/_witness";
 
 
 /* Zone colours
    ========================================================================== */
 
-@import "theme/zones";
+@import "theme/_zones";
 
 
 /* ==========================================================================
    Experiments
    ========================================================================== */
 
-
 /* Story telling
    ========================================================================== */
 
-@import "module/experiments/story";
-@import "module/experiments/timeline";
-@import "module/experiments/accordion";
-@import "module/experiments/reaction";
-@import "module/experiments/trail";
+@import "module/experiments/_story";
+@import "module/experiments/_timeline";
+@import "module/experiments/_accordion";
+@import "module/experiments/_reaction";
+@import "module/experiments/_trail";
 
 
 /* ==========================================================================
@@ -75,5 +74,5 @@
    ========================================================================== */
 
 @import "theme/_global-icons-sprite";
-@import "theme/global-icons-svg";
-@import "theme/icons";
+@import "theme/_global-icons-svg";
+@import "theme/_icons";
