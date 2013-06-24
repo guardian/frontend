@@ -65,6 +65,10 @@ h1, h2, h3, h4, h5, h6 {
 .type-11 { @extend %type-11; }
 .type-12 { @extend %type-12; }
 
+blockquote {
+    margin: 0;
+}
+
 //Default type elements
 p {
     margin-top: 0;
