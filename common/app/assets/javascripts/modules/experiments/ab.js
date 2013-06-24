@@ -9,147 +9,129 @@ define([
     store,
     ParagraphSpacing) {
 
-    var TESTS = {
-        ParagraphSpacing: new ParagraphSpacing()
-    };
+    var TESTS = [
+            new ParagraphSpacing()
+        ],
+        participationsKey = 'gu.ab.participations';
 
-    var testKey = 'gu.ab.current',
-        participationKey = "gu.ab.participation";
-
-    //For testing purposes
-    function addTest(Test) {
-        var test = new Test();
-        TESTS[test.id] = test;
-        return TESTS[test.id];
+    function getParticipations() {
+        return store.get(participationsKey) || {};
     }
 
-    function storeTest(test, variant) {
-        var data = {id: test, variant: variant};
-        store.set(testKey, data);
+    function isParticipating(test) {
+        var participations = getParticipations();
+        return participations[test.id];
     }
 
-    function getTest() {
-        return (store.get(testKey)) ? store.get(testKey) : false;
+    function addParticipation(test, variantId) {
+        var participations = getParticipations();
+        participations[test.id] = {
+            variant: variantId
+        };
+        store.set(participationsKey, participations);
     }
 
-    // Checks if:
-    // local storage is set, is an active test & switch is on
-    function inTest(switches) {
-        var test = getTest(),
-            switchedOn = switches ? switches["ab" + test.id] : false;
-
-        return (test && TESTS[test.id] && switchedOn) ? true : false;
+    function removeParticipation(test) {
+        var participations = getParticipations();
+        delete participations[test.id];
+        store.set(participationsKey, participations);
     }
 
-    function clearTest() {
-        return store.remove(testKey);
-    }
-
-    function getParticipation() {
-        var tests = (store.get(participationKey)) ? store.get(participationKey).tests : [];
-        // handle previous bug when tests was set to length
-        if (typeof tests === "number") {
-            tests = [];
-        }
-        return tests;
-    }
-
-    function setParticipation(testName) {
-        var participatedTests = getParticipation();
-
-        if (participatedTests.indexOf(testName) === -1) {
-            participatedTests.push(testName);
-        }
-
-        store.set(participationKey, { "tests": participatedTests });
-    }
-
-    //Finds variant in specific tests and exec's
-    function runVariant(test, variant) {
-        for(var i= 0, l = test.variants.length;  i < l; i++) {
-            if(test.variants[i].id === variant) {
-                test.variants[i].test();
-                initTracking(test.id, variant);
-            }
-        }
-    }
-
-    function initTracking(id, variant) {
-        var data = 'AB | ' + id + ' test | ' + variant;
+    function initTracking(test, variantId) {
+        var data = 'AB | ' + test.id + ' test | ' + variantId;
         common.$g(document.body).attr('data-link-test', data);
     }
 
-    function start(test) {
+    //Finds variant in specific tests and exec's
+    function run(test, config, context) {
+        if (test.canRun(config, context) && config.switches['ab' + test.id]) {
+            var participations = getParticipations(),
+                variantId = participations[test.id].variant;
+            test.variants.some(function(variant) {
+                if (variant.id === variantId) {
+                    variant.test();
+                    initTracking(test.id, variantId);
+                    return true;
+                }
+            });
+        }
+    }
+
+    function bucket(test) {
+        // always place in control
+        var testVariantId = 'control';
+
         //Only run on test required audience segment
         if (Math.random() < test.audience) {
-            var variantNames = [];
-
-            //Get all variants in test
-            for(var i= 0, l = test.variants.length;  i < l; i++) {
-                variantNames.push(test.variants[i].id);
-            }
+            var variantIds = test.variants.map(function(variant) {
+                return variant.id;
+            });
 
             //Place user in variant pool
-            var testVariant = variantNames[Math.floor(Math.random() * variantNames.length)];
-
-            //Run and store
-            runVariant(test, testVariant);
-            storeTest(test.id, testVariant);
+            testVariantId = variantIds[Math.floor(Math.random() * variantIds.length)];
         }
 
-        setParticipation(test.id);
+        // store
+        addParticipation(test, testVariantId);
     }
 
-    function init(config, context, options) {
-        var hash = window.location.hash.substring(1),
-            opts = options || {},
-            switches = config.switches;
+    var ab = {
 
-        if (hash.indexOf('ab-test') === 0 || opts.test) {
-            var testConfig = hash.replace('ab-test', '').split('='),
-                id = (opts.test) ? opts.test.id : testConfig[0],
-                variant = (opts.test) ? opts.test.variant : testConfig[1];
-            storeTest(id, variant);
+        //For testing purposes
+        addTest: function(test) {
+            TESTS.push(test);
+        },
+
+        removeTest: function(test) {
+            TESTS.some(function(runningTest, i) {
+                if (runningTest === test) {
+                    TESTS.splice(i, 1);
+                    return true;
+                }
+            });
+        },
+
+        clearTests: function() {
+            TESTS = [];
+        },
+
+        clearParticipations: function() {
+            return store.remove(participationsKey);
+        },
+
+        init: function(config, context, options) {
+            var hash = window.location.hash.substring(1),
+                opts = options || {};
+
+            if (hash.indexOf('ab-test') === 0 || opts.test) {
+                var testConfig = hash.replace('ab-test', '').split('='),
+                    testId = (opts.test) ? opts.test.id : testConfig[0],
+                    variantId = (opts.test) ? opts.test.variant : testConfig[1];
+                // get the test
+                TESTS.some(function(test) {
+                    if (test.id === testId) {
+                        addParticipation(test, variantId);
+                        return true;
+                    }
+                });
+            }
+
+            // Clear up legacy storage names. This can be deleted "in the future".
+            store.clearByPrefix('gu.prefs.ab');
+            store.remove('gu.ab.current');
+            store.remove('gu.ab.participation');
+
+            // if user not in a test, bucket them
+            TESTS.forEach(function(test) {
+                if (!isParticipating(test)) {
+                    bucket(test);
+                }
+                run(test, config, context);
+            });
         }
 
-        // Clear up legacy storage names. This can be deleted "in the future".
-        store.clearByPrefix('gu.prefs.ab');
-
-        //Is the user in an active test?
-        if (inTest(switches)) {
-            var currentTest = getTest();
-            if(TESTS[currentTest.id].canRun(config, context)) {
-                runVariant(TESTS[currentTest.id], currentTest.variant);
-            }
-        } else {
-            //First clear out any old test data
-            clearTest();
-
-            //Loop over active tests
-            for(var testName in TESTS) {
-
-               //If previous iteration worked break;
-               if(inTest(switches)) { break; }
-
-               var test =  TESTS[testName];
-
-               //Can the test run on this page and is switch on
-               if(test.canRun(config) && switches["ab" + test.id]) {
-                   //Start
-                   start(test);
-               }
-            }
-        }
-    }
-
-    return {
-        init: init,
-        inTest : inTest,
-        addTest: addTest,
-        getTest : getTest,
-        storeTest: storeTest,
-        clearTest: clearTest,
-        runVariant : runVariant,
-        setParticipation: setParticipation
     };
+
+    return ab;
+
 });
