@@ -64,6 +64,10 @@ object Switches extends Collections {
     "Enable the Quantcast audience segment tracking.",
     safeState = Off)
 
+  val OmnitureDomReadySwitch = Switch("Analytics", "omniture-dom-ready",
+    "Initialise Omniture on dom-ready, rather than on page-load.",
+    safeState = Off)
+
 
   // Discussion Switches
 
@@ -170,6 +174,7 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     QuantcastSwitch,
+    OmnitureDomReadySwitch,
     DiscussionSwitch,
     ShortDiscussionSwitch,
     ExperimentStoryModule01Switch,
