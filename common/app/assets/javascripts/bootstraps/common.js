@@ -235,17 +235,6 @@ define([
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
         },
 
-        showSharedWisdomToolbar: function(config) {
-            // only display if switched on
-            if (userPrefs.isOn('shared-wisdom-toolbar')) {
-                require('modules/shared-wisdom-toolbar', function(sharedWisdomToolbar) {
-                    sharedWisdomToolbar.init(function() {
-                        sharedWisdomToolbar.show();
-                    }, config.modules.sharedWisdomToolbar);
-                });
-            }
-        },
-
         initSwipe: function(config) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
                 swipeNav(config);
@@ -301,7 +290,6 @@ define([
 
                 // TODO: make these run in event 'page:common:deferred:loaded'
                 modules.cleanupCookies(context);
-                modules.showSharedWisdomToolbar(config);
             }
             common.mediator.emit("page:common:deferred:loaded", config, context);
         });

@@ -1,3 +1,5 @@
+@charset 'utf-8';
+
 .js-on .js-hidden,
 .js-off .js-visible {
     display: none;
@@ -36,7 +38,7 @@
     &:before {
         position: relative;
         top: -1px;
-        content: '− ';
+        content: '\2212  ';
     }
     .shut &:before {
         content: '+ ';

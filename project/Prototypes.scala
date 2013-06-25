@@ -39,9 +39,7 @@ trait Prototypes {
       Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
       "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
       "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-      "Akka" at "http://repo.akka.io/releases",
-      // No released version of Salat for 2.10.0
-      "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+      "Akka" at "http://repo.akka.io/releases"
     )
   )
 
