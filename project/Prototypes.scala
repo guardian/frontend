@@ -135,8 +135,6 @@ trait Prototypes {
     .settings(frontendClientSideSettings:_*)
     .settings(frontendAssemblySettings:_*)
 
-  def grunt(name: String) = base(name)
-    .settings(playAssetHashDistSettings: _*)
-    .settings(frontendClientSideSettings:_*)
+  def grunt(name: String) = application(name)
     .settings(frontendGruntSettings:_*)
 }
