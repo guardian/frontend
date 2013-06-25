@@ -73,6 +73,23 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
             expect(storedParticipated.DummyTest.variant).not.toBeUndefined();
             expect(storedParticipated.DummyTest2.variant).not.toBeUndefined();
         });
+        
+        it('should get all the tests user is in', function() {
+            var otherTest = new Test();
+            otherTest.id = 'DummyTest2';
+            AB.addTest(otherTest);
+
+            AB.init({
+                switches: {
+                    abDummyTest: true,
+                    abDummyTest2: true,
+                }
+            });
+        
+            var tests = Object.keys(AB.getParticipations()).map(function(k){ return k; }).toString()
+            expect(tests).toBe('DummyTest,DummyTest2');
+            
+        });
 
         it('should not run if switch is off', function() {
             AB.init({
