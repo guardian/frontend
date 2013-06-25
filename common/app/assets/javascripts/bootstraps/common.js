@@ -59,7 +59,7 @@ define([
     Cookies,
     OmnitureMedia,
     Debug,
-    AB,
+    ab,
     swipeNav,
     VideoAdvert,
     CommentCount
@@ -162,7 +162,7 @@ define([
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
                 // AB must execute before Omniture
-                AB.init(config, context);
+                ab.init(config, context);
 
                 common.mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
@@ -181,14 +181,18 @@ define([
                         if (audsci) {
                             viewData.audsci_json = JSON.stringify(audsci);
                         }
+                        
+                        var participations = ab.getParticipations(),
+                            participationsKeys = Object.keys(participations);
 
-                        if(AB.inTest(config.switches)) {
-                            var test = AB.getTest();
-                            viewData.experiments_json = JSON.stringify([{
-                                id: test.id,
-                                variant: test.variant
-                            }]);
+                        if (participationsKeys.length > 0) {
+                            var testData = participationsKeys.map(function(k) {
+                                return { id: k, variant: participations[k].variant };
+                            });
+                            viewData.experiments_json = JSON.stringify(testData);
                         }
+                            
+
 
                         return viewData;
                     });
