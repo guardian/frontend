@@ -185,11 +185,7 @@ define([
                                        '</ul>';
                     common.$g('.control--topstories', headerNode).after('<div class="localnav-container">' + localNavHtml + '</div>');
 
-                    // Remove the other section head from the page
-                    common.$g('.section-head, h2.article-zone, .front-section:first-child .sub-section-head', context).remove();
-
                     common.$g('#preloads').addClass('has-localnav');
-
 
                     // Highlight the section that we're in
                     // Try to match the against pageId first (covers sport pseudo-sections, eg Cricket, Rugby...)

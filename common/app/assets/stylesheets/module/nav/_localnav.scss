@@ -24,6 +24,17 @@
             background-color: #ffffff;
         }
     }
+
+    h2.article-zone,
+    .section-head,
+    .front-section:first-child .sub-section-head {
+        display: none;
+
+        @media (min-width: $desktop) {
+            display: block;
+        }
+    }
+
 }
 
 

@@ -103,16 +103,6 @@ define([ 'common',
               expect(document.querySelectorAll('.nav--local .nav__link')[0].href).not.toContain('/culture');
             });
 
-            it("Should only remove the topmost section header, when the localnav is active", function() {
-              config.page.section = 'books';
-              config.page.pageId = 'books';
-              sections = new Sections(config);
-              sections.view.insertLocalNav(document);
-
-              expect(document.querySelectorAll('.article-zone').length).toBe(2);
-              expect(document.querySelectorAll('h2.article-zone').length).toBe(0);
-            });
-
 
             it("Should only colour highlight the top navs, not the footer", function() {
               config.page.section = 'culture';
