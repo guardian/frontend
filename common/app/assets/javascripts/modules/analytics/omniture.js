@@ -111,17 +111,23 @@ define([
             s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
+    
+            var participations = AB.getParticipations()),
+                participationsKeys = Object.keys(participations);
 
-            if (ab.inTest(config.switches)) {
-                var test = ab.getTest(),
-                    testData = 'AB | ' + test.id + ' | ' + test.variant;
+            if (participationsKeys.length > 0) {
+                
+                var testData = participationsKeys.map(function(k){
+                    return ['AB', k, participations[k].variant].join('|')
+                }).join(',');
 
                 s.prop51  = testData;
                 s.eVar51  = testData;
                 s.events = s.apl(s.events,'event58',',');
+
             } else if (detect.canSwipe()) {
                 s.prop51  = 'can swipe';
-                s.eVar51  = 'can swipe';
+                s.eVar51  = 'can swipe'
             }
 
             s.prop56    = 'Javascript';
