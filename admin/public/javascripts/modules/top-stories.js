@@ -9,10 +9,55 @@ define(['Reqwest', 'common', 'bean', 'bonzo', 'js!html5sortable'], function(reqw
         function addArticle(article) {
 
             bonzo(doc.querySelector(articlesSelector))
-                .append('<li><span>' + article + '</span><button class="btn btn-danger">X</button></li>');
-            $(articlesSelector).sortable();
+                .append('<li data-url="' + article + '"><span>' + article + '</span><button class="btn btn-danger">X</button></li>');
 
+            $(articlesSelector).sortable('destroy').unbind();
+            $(articlesSelector).sortable().bind('sortupdate', function(event, params) {
+                saveDelta(getDelta(params.item.context.dataset.url));
+            });
         };
+
+        function getDelta(url) {
+            var item = url ? $("[data-url='" + url + "']")[0] : undefined,
+                sibling,
+                delta = {
+                    add: url
+                };
+
+            if (!item) { return; }
+
+            sibling = $(item).next()[0];
+
+            if (sibling && sibling.dataset.url) {
+                delta.before = sibling.dataset.url;
+            } else {
+                sibling = $(item).prev()[0];
+                if (sibling && sibling.dataset.url) {
+                    delta.after = sibling.dataset.url;
+                }
+            } 
+
+            return delta;
+        };
+
+        function saveDelta(delta) {
+            if (!delta) { return; }
+
+            delta.list = selector.replace(/[^\w]/, '');
+            console.log(delta);
+            /*
+            reqwest({
+                url: '/fronts/add',
+                type: 'json',
+                method: 'post',
+                data: delta
+            }).then(
+                function(resp) {
+                    // update the view
+                }
+            );
+            */
+        }
 
         function searchInit() {
 
@@ -26,6 +71,7 @@ define(['Reqwest', 'common', 'bean', 'bonzo', 'js!html5sortable'], function(reqw
                     },
                     updater: function(item) {
                         addArticle(item);
+                        saveDelta(getDelta(item));
                     },
                     source: function(query, process) {
                         reqwest({
@@ -35,7 +81,7 @@ define(['Reqwest', 'common', 'bean', 'bonzo', 'js!html5sortable'], function(reqw
                             type: 'jsonp',
                             success: function(resp) {
                                 var articles = resp.response.results.map(function(article) {
-                                    return article.webTitle;
+                                    return article.id;
                                 });
                                 process(articles);
                             }
