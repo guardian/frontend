@@ -189,7 +189,6 @@ object Switches extends Collections {
     WitnessVideoSwitch,
     SocialSwitch,
     SearchSwitch,
-    HomescreenSwitch,
     ImageServerSwitch,
     AustraliaFrontSwitch,
     FontDelaySwitch,
