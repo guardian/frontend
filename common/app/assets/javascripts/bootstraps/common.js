@@ -78,6 +78,9 @@ define([
             common.mediator.on('modules:related:loaded', function(config, context) {
                 images.upgrade(context);
             });
+            common.mediator.on('modules:images:upgrade', function() {
+                common.$g('body').addClass('images-upgraded');
+            });
         },
 
         initialiseNavigation: function (config) {
