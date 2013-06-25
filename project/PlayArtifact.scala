@@ -60,8 +60,8 @@ object PlayArtifact extends Plugin {
     }
   )
 
-  private def buildDeployArtifact = (streams, assembly, target, playArtifactResources, playArtifactFile) map {
-    (s, assembly, target, resources, artifactFileName) =>
+  private def buildDeployArtifact = (streams, target, playArtifactResources, playArtifactFile, executableName) map {
+    (s, target, resources, artifactFileName, executableName) =>
       val distFile = target / artifactFileName
       s.log.info("Disting " + distFile)
 
@@ -71,9 +71,9 @@ object PlayArtifact extends Plugin {
       IO.zip(resources, distFile)
 
       // Tells TeamCity to publish the artifact => leave this println in here
-      println("##teamcity[publishArtifacts '%s => .']" format distFile)
+      println("##teamcity[publishArtifacts '%s => %s']".format(distFile, executableName))
 
       s.log.info("Done disting.")
-      assembly
+      distFile
   }
 }
