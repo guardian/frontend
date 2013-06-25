@@ -4,40 +4,37 @@
 @import conf.Switches.SearchSwitch
 
 <script id="gu">
-    
-
     var guardian = {
-            isModernBrowser: (
-                'querySelector' in document
-                &&  'addEventListener' in window
-                && 'localStorage' in window
-                && (
-                    ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
-                    || 'XDomainRequest' in window
-                )
-            ),
-            css: {
-                football: '@Static("stylesheets/football.min.css")',
-                gallery: '@Static("stylesheets/gallery.min.css")',
-                story: '@Static("stylesheets/story.min.css")',
-                video: '@Static("stylesheets/video.min.css")'
-            }
-        },
-        curl = {
-            baseUrl: '@{Configuration.assets.path}javascripts',
-            apiName: 'require',
-            paths: {
-                omniture                        : '@Static("javascripts/vendor/omniture.js")',
-                swipe                           : '@Static("javascripts/vendor/swipe.js")'
-            }
-        };
-    (function(isModern) {
+        isModernBrowser: (
+            'querySelector' in document
+            && 'addEventListener' in window
+            && 'localStorage' in window
+            && (
+                ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
+                || 'XDomainRequest' in window
+            )
+        ),
+        css: {
+            football: '@Static("stylesheets/football.min.css")',
+            gallery: '@Static("stylesheets/gallery.min.css")',
+            story: '@Static("stylesheets/story.min.css")',
+            video: '@Static("stylesheets/video.min.css")'
+        }
+    },
+    curl = {
+        baseUrl: '@{Configuration.assets.path}javascripts',
+        apiName: 'require',
+        paths: {
+            omniture: '@Static("javascripts/vendor/omniture.js")',
+            swipe: '@Static("javascripts/vendor/swipe.js")'
+        }
+    };
 
+    (function(isModern) {
         if (!isModern) { return false; }
 
-        // we want this to happen ASAP to avoid FOUC
+        @* we want this to happen ASAP to avoid FOUC *@
         document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
-    
     })(guardian.isModernBrowser);
 
     function loadFontsFromStorage(prefs, key) {
@@ -57,13 +54,12 @@
         }
 
         if (showFonts) {
-
             var styleNodes = document.querySelectorAll('[data-cache-name]');
             for (var i = 0, j = styleNodes.length; i<j; ++i) {
                 var style = styleNodes[i],
                     nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff\.(.*)\.js$/),
                     cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
-                    // try to parse it (should really use the storage module)
+                    @* try to parse it (should really use the storage module) *@
                     try {
                         cachedCss = JSON.parse(cachedCss).value;
                     } catch(e) {}
@@ -74,14 +70,13 @@
                 }
             }
 
-            // This cleans up legacy webfontdelay tests. Remove these at some point.
+            @* This cleans up legacy webfontdelay tests. Remove these at some point. *@
             localStorage.removeItem('gu.webfontrendertest');
             localStorage.removeItem('gu.fontdelaytest');
         }
     }
 
     (function(isModern) {
-
         if (!isModern) { return false; }
 
         loadFontsFromStorage();
@@ -93,7 +88,5 @@
         script.src = '@Static("javascripts/bootstraps/app.js")';
 
         document.getElementsByTagName("head")[0].appendChild(script);
-    
     })(guardian.isModernBrowser);
-
 </script>
