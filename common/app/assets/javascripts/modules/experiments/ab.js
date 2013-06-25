@@ -86,7 +86,7 @@ define([
             TESTS.push(test);
         },
 
-        getParticipations: getParticipations, 
+        getParticipations: getParticipations,
         
         clearTests: function() {
             TESTS = [];
