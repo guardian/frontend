@@ -10,21 +10,8 @@
     margin-left: $baseline*2;
 }
 
-.i-arrow-small-down {
-    margin-left: $baseline;
-}
-
 .i-sport-arrow-small {
     margin: 0 0 -1px $baseline*2;
-}
-
-.is-active .i-arrow-small-down {
-    @extend .i-arrow-small-up;
-    border-color: transparent !important;
-
-    .svg & {
-        @extend .svg-i-arrow-small-up;
-    }
 }
 
 .is-active .i-menu {
