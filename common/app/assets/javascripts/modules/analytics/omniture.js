@@ -112,13 +112,13 @@ define([
 
             s.prop47    = config.page.edition || '';
     
-            var participations = AB.getParticipations()),
+            var participations = ab.getParticipations(),
                 participationsKeys = Object.keys(participations);
 
             if (participationsKeys.length > 0) {
                 
                 var testData = participationsKeys.map(function(k){
-                    return ['AB', k, participations[k].variant].join('|')
+                    return ['AB', k, participations[k].variant].join('|');
                 }).join(',');
 
                 s.prop51  = testData;
@@ -127,7 +127,7 @@ define([
 
             } else if (detect.canSwipe()) {
                 s.prop51  = 'can swipe';
-                s.eVar51  = 'can swipe'
+                s.eVar51  = 'can swipe';
             }
 
             s.prop56    = 'Javascript';
