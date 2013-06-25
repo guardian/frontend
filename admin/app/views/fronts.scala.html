@@ -6,7 +6,11 @@
     <div class="top-stories">
         <h2>Top Stories</h2>
         <input class="top-stories__search search-query input-xxlarge" type="text" placeholder="Search for an article" autocomplete="off">
-        <ol class="top-stories__articles"></ol>
+        <ol class="top-stories__articles" data-bind='foreach: list'>
+             <li data-bind="attr: {'data-url': url}">
+                <span data-bind="text: url"></span>
+            </li>
+        </ol>
         <button type="button" class="btn btn-success top-stories__save">Save</button>
     </div>
     

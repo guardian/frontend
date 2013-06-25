@@ -1,16 +1,29 @@
-define(['Reqwest', 'common', 'bean', 'bonzo', 'js!html5sortable'], function(reqwest, common, bean, bonzo) {
+define([
+    'Reqwest',
+    'common',
+    'bean',
+    'bonzo',
+    'Knockout',
+    'js!html5sortable'
+], function(
+    reqwest,
+    common,
+    bean,
+    bonzo,
+    knockout
+) {
 
     return function(selector) {
 
-        var doc = document,
+        var self = this,
+            doc = document,
             searchSelector = selector + '__search',
-            articlesSelector = selector + '__articles';
+            articlesSelector = selector + '__articles',
+            viewModel = {};
 
-        function addArticle(article) {
+        viewModel.list = knockout.observableArray();
 
-            bonzo(doc.querySelector(articlesSelector))
-                .append('<li data-url="' + article + '"><span>' + article + '</span><button class="btn btn-danger">X</button></li>');
-
+        function makeSortable() {
             $(articlesSelector).sortable('destroy').unbind();
             $(articlesSelector).sortable().bind('sortupdate', function(event, params) {
                 saveDelta(getDelta(params.item.context.dataset.url));
@@ -43,17 +56,17 @@ define(['Reqwest', 'common', 'bean', 'bonzo', 'js!html5sortable'], function(reqw
         function saveDelta(delta) {
             if (!delta) { return; }
 
-            delta.list = selector.replace(/[^\w]/, '');
             console.log(delta);
+
             /*
             reqwest({
-                url: '/fronts/add',
+                url: '/fronts/list/' + selector.replace(/[^\w]/, ''),
                 type: 'json',
                 method: 'post',
                 data: delta
             }).then(
                 function(resp) {
-                    // update the view
+                    // update the viewModel
                 }
             );
             */
@@ -70,8 +83,9 @@ define(['Reqwest', 'common', 'bean', 'bonzo', 'js!html5sortable'], function(reqw
                         return items;
                     },
                     updater: function(item) {
-                        addArticle(item);
+                        self.addItem(item);
                         saveDelta(getDelta(item));
+                        makeSortable();
                     },
                     source: function(query, process) {
                         reqwest({
@@ -92,69 +106,54 @@ define(['Reqwest', 'common', 'bean', 'bonzo', 'js!html5sortable'], function(reqw
 
         }
 
-        function saveInit() {
-
-            bean.on(doc.querySelector(selector + '__save'), 'click', function(e) {
-                var articles = Array.prototype.map.call(doc.querySelectorAll('.top-stories__articles li span'), function(article) {
-                    return article.textContent;
-                });
-                reqwest({
-                    contentType: 'application/json',
-                    url: '/fronts/top-stories',
-                    type: 'json',
-                    method: 'post',
-                    data: JSON.stringify({
-                        articles: articles.map(function(article) {
-                            return {
-                                id: article
-                            };
-                        })
-                    })
-                }).then(
-                    function() {
-                        bonzo(doc.querySelector('h1'))
-                            .before('<div class="alert alert-success fade in">Saved</div>');
-                        window.setTimeout(function() {
-                            $('.alert').alert('close');
-                        }, 2000);
-                    },
-                    function() {}
-                );
+        this.addItem = function(item) {
+            if (!item) { return; }
+            viewModel.list.push({
+                url: item
             });
+        };
 
-        }
-
-        function deleteInit() {
-
-            bean.on(doc.querySelector(selector + '__articles'), 'click', 'button', function(e) {
-                bonzo(bonzo(this).parent()).remove();
+        this.loadList = function(list) {
+            if (!list || !list.length) { return; }
+            viewModel.list.removeAll();
+            list.forEach(function(item){
+                self.addItem(item);
             });
-
-        }
+        };
 
         this.init = function(callback) {
 
+            searchInit();
+
+            /*
             reqwest({
                 url: '/fronts/top-stories',
                 type: 'json'
             }).then(
                 function(resp) {
-                    if (resp.articles) {
-                        resp.articles.forEach(function(article) {
-                            addArticle(article.id);
-                        });
-                    }
-                    searchInit();
-                    saveInit();
-                    deleteInit();
-
-                    if (typeof callback === 'function') {
-                        callback(this);
-                    }
+                    this.loadList(resp.articles);
                 }
             );
+            */
+            // Load a dummy list instead
+            this.loadList([
+                "society/2013/jun/25/society-daily-email",
+                "environment/2013/jun/25/obama-unveil-first-us-climate-strategy",
+                "sport/2013/jun/25/lions-melbourne-rebels-live-report",
+                "tv-and-radio/video/2013/jun/25/question-time-russell-brand-video-review",
+                "sport/that-1980s-sports-blog/2013/jun/25/lions-battled-bollymore-test-australia-1989",
+                "uk/2013/jun/25/ian-brady-tells-tribunal-not-psychotic",
+                "business/2013/jun/25/eurozone-crisis-greece-reshuffle-cabinet",
+                "politics/blog/2013/jun/25/mervyn-king-treasury-committee-live-blog",
+                "business/2013/jun/24/eurozone-crisis-bond-yields-spain-greece",
+                "global-development/2013/jun/25/central-american-farmers-coyotes"
+            ]); 
 
+            knockout.applyBindings(viewModel);
+
+            makeSortable();
         };
+
 
     };
 
