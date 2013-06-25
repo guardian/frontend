@@ -15,7 +15,7 @@ public class TypographySteps {
 
 	@Then("^the body typeface should be rendered as \"([^\"]*)\"$")
 	public void the_typeface_should_be_rendered_as(String fontName) {
-		//check the font family for header contains the fontName
+		//check the font family contains the fontName
 		 assertTrue("was "+webDriver.getElementCssValue(By.className("article-body"), "font-family"),webDriver.getElementCssValue(By.className("article-body"), "font-family").contains(fontName));
 	}
 
