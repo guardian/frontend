@@ -118,6 +118,28 @@ figure {
 }
 
 
+/* Video embeds
+   ========================================================================== */
+
+.element-video {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+    margin-bottom: $baseline*2;
+    background-color: #000;
+
+    iframe,
+    object,
+    embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
 /* Citations
    ========================================================================== */
 .from-content-api {
