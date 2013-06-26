@@ -1,0 +1,15 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+
+# For dev machines
+GET     /assets/*file                                                    controllers.Assets.at(path="/public", file)
+
+GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
+GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
+
+GET     /$path<(culture|sport|australia)(/\w\w-edition)?>                     controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia)(/\w\w-edition)?>.json                controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
+GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
