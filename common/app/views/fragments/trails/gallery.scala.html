@@ -1,0 +1,30 @@
+@(trail: Gallery, rowNum: Int, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
+
+<@element class="trail trail--gallery t@rowNum" data-link-name="gallery trail">
+
+    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
+    <h@headingLevel class="trail__headline type-5">
+        <a href="@LinkTo{@trail.url}" data-link-name="@rowNum | text">
+            @RemoveOuterParaHtml(trail.headline)
+        </a>
+    </h@headingLevel>
+
+    <ul class="unstyled cf">
+        @if(trail.landscapes.length >= 3) {
+            @trail.landscapes.take(3).zipWithRowInfo.map{ case(image, info) =>
+            <li class="gallery__item @if(image.width >= image.height){landscape} else {portrait}">
+                <a href="@LinkTo{@trail.url?index=@info.rowNum}" data-link-name="@info.rowNum | gallery thumb">
+                    <img class="gallery__img" src="@image.url.map(ImgSrc(_, GalleryTrail))" alt="@Html(image.caption.getOrElse(""))" />
+                </a>
+            </li>
+            }
+        }
+    </ul>
+
+    <span class="trail__count trail__count--imagecount">
+        <i class="i i-gallery"></i>
+        <a href="@trail.url" data-link-name="Gallery image count">@trail.images.length <span class="h">images</span></a>
+    </span>
+
+</@element>

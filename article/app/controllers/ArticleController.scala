@@ -31,7 +31,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
       .response.map{ response =>
 
       val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
-      val storyPackage = response.storyPackage map { new Content(_) }
+      val storyPackage = response.storyPackage map { Content(_, None) }
 
       val model = articleOption.map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id)) }
       ModelOrResult(model, response)
@@ -52,5 +52,5 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     val jsonResponse = () => views.html.fragments.articleBody(model.article, model.storyPackage)
     renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
   }
-  
+
 }
