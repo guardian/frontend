@@ -10,8 +10,14 @@ define([ 'common',
                     id: 'sections',
                     fixtures: [
                                 '<div id="preloads"></div>',
-                                '<div id="header"><div class="control--topstories"></div></div>',
-                                '<div class="nav-popup-sections">foo</div>',
+                                '<div id="header">' +
+                                '  <div class="control--topstories"></div>' +
+                                '  <div class="nav-container"><ul class="nav nav--global"><li class="nav__item"><a href="/culture" class="nav__link">Culture</a></li></ul></div>' +
+                                '  <div class="nav-popup-sections">foo</div>' +
+                                '</div>',
+                                '<div id="footer-nav">' +
+                                  '<ul class="nav nav--footer"><li class="nav__item"><a href="/culture" class="nav__link">Culture</a></li></ul>' +
+                                '</div>',
                                 '<h1 class="section-head zone-color">World news</h1>',
                                 '<h2 class="article-zone type-1"><a href="/test">Test Section</a></h2>',
                                 '<h3 id="related-content-head" class="type-2 article-zone">Related content</h3>',
@@ -97,15 +103,15 @@ define([ 'common',
               expect(document.querySelectorAll('.nav--local .nav__link')[0].href).not.toContain('/culture');
             });
 
-            it("Should only remove the topmost section header, when the localnav is active", function() {
-              config.page.section = 'books';
-              config.page.pageId = 'books';
+
+            it("Should only colour highlight the top navs, not the footer", function() {
+              config.page.section = 'culture';
+              config.page.pageId = 'culture';
               sections = new Sections(config);
               sections.view.insertLocalNav(document);
 
-              expect(document.querySelectorAll('.article-zone').length).toBe(2);
-              expect(document.querySelectorAll('h2.article-zone').length).toBe(0);
+              expect(document.querySelectorAll('.is-active .zone-color[href="/culture"]').length).not.toBe(0);
+              expect(document.querySelectorAll('.nav--footer .is-active .zone-color[href="/culture"]').length).toBe(0);
             });
-
         });
     });

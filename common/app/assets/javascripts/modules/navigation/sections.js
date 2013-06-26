@@ -137,7 +137,8 @@ define([
                 var currentSection = this.getCurrentSection();
 
                 if (currentSection) {
-                    var localNavItems = [];
+                    var localNavItems = [],
+                        headerNode = document.getElementById('header');
 
                     Object.keys(currentSection.zones).forEach(function(zonePath, i) {
                         var zoneName  = currentSection.zones[zonePath];
@@ -174,30 +175,27 @@ define([
                                           '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
-                    common.$g('#header', context).append(localNavCtaHtml + localNavPopupHtml);
+
+                    bonzo(headerNode).append(localNavCtaHtml + localNavPopupHtml);
 
 
                     // Insert the desktop local nav
                     var localNavHtml = '<ul class="nav nav--local" data-link-name="Local Navigation">' +
                                          localNavItems.splice(1).join('') + // Skip the first link to the top section for desktop
                                        '</ul>';
-                    common.$g('#header .control--topstories', context).after('<div class="localnav-container">' + localNavHtml + '</div>');
-
-                    // Remove the other section head from the page
-                    common.$g('.section-head, h2.article-zone, .front-section:first-child .sub-section-head', context).remove();
+                    common.$g('.control--topstories', headerNode).after('<div class="localnav-container">' + localNavHtml + '</div>');
 
                     common.$g('#preloads').addClass('has-localnav');
 
-
                     // Highlight the section that we're in
                     // Try to match the against pageId first (covers sport pseudo-sections, eg Cricket, Rugby...)
-                    var activeNodes = common.$g('.nav__link[href="/'+config.page.pageId+'"]')
+                    var activeNodes = common.$g('.nav__link[href="/'+config.page.pageId+'"]', headerNode)
                                             .addClass('zone-color')
                                             .parent().addClass('is-active');
 
                     // ...otherwise fallback to matching real sections (eg Books, Arts)
                     if (activeNodes.length === 0) {
-                        common.$g('.nav__link[href="/'+config.page.section+'"]')
+                        common.$g('.nav__link[href="/'+config.page.section+'"]', headerNode)
                               .addClass('zone-color')
                               .parent().addClass('is-active');
                     }
@@ -205,7 +203,7 @@ define([
 
                     // Hack to remove the double highlighting in the nav of Sport+Football
                     if (currentSection.sectionId === 'football') {
-                        var sportNode = common.$g('.is-active .nav__link[data-link-name="Sport"]');
+                        var sportNode = common.$g('.is-active .nav__link[data-link-name="Sport"]', headerNode);
                         sportNode.removeClass('zone-color');
                         sportNode.parent().removeClass('is-active');
                     }
