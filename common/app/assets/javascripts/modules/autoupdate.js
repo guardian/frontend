@@ -22,9 +22,9 @@ define([
             path             : {String}              Endpoint path to ajax request,
             delay            : {Number}              Timeout in milliseconds to query endpoint,
             attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
-            switches         : {Object}              Global swicthes object
+            switches         : {Object}              Global switches object
             loadOnInitialise : {Number}              Make the first request when the module is created
-            manipulationType : {String}              Which manipulation method to insert content into DOM
+            manipulationType : {String}              Which manipulation method used to insert content into DOM
     */
     function Autoupdate(config) {
 
@@ -100,9 +100,7 @@ define([
         // Model
         this.load = function (url) {
             var that = this,
-                path;
-
-            path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
+                path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
 
             return ajax({
                 url: path,
