@@ -2,18 +2,33 @@
 
 @admin_main("Fronts editor", env, isAuthed = true) {
 
-    <h1>Fronts</h1>
-    <div class="top-stories">
-        <h2>Top Stories</h2>
-        <input class="top-stories__search search-query input-xxlarge" type="text" placeholder="Search for an article" autocomplete="off">
-        <ol class="top-stories__articles" data-bind='foreach: list'>
-             <li data-bind="attr: {'data-url': url}">
-                <span data-bind="text: url"></span>
-            </li>
-        </ol>
-        <button type="button" class="btn btn-success top-stories__save">Save</button>
+    <div class="fronts">
+
+        <div class="finder">
+            <h3>Find
+            <input type="text" placeholder="url or keyword" 
+                data-bind='event: {keyup: latest.search, mousedown: latest.articleSearch, afterpaste: latest.articleSearch}, value:
+                latest.term, valueUpdate: ["afterkeydown", "afterpaste"]'/>
+            </h3>
+
+            <div class="connectedSortable throwAway" data-bind='foreach: latest.articles()'>
+                <div class="article" data-bind="attr: {'data-url': id}">
+                    <a class="article-title" target="_blank" data-bind="html: webTitle, attr: {href: _absUrl}"></a>
+                    <div class="meta"  data-bind="text: _humanDate"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="list">
+            <h3>List</h3>
+            <div class="connectedSortable" data-bind='foreach: list'>
+                 <div class="article" data-bind="attr: {'data-url': url}">
+                    <a class="article-title" target="_blank" data-bind="text: url"></a>
+                </div>
+            </div>
+        </div>
+
     </div>
     
     <script src="@routes.Assets.at("javascripts/fronts.js")"></script>
-
 }

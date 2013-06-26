@@ -1,5 +1,5 @@
-curl(['modules/top-stories']).then(function(TopStories) {
+curl(['modules/fronts/listManager']).then(function(ListManager) {
 
-    new TopStories('.top-stories').init();
+    new ListManager('.top-stories').init();
 
 });
