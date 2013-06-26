@@ -42,6 +42,7 @@ define([
     }
 
     function initTracking(test, variantId) {
+        var dataLinkTest = common.$g(document.body).attr('data-link-test');
         var data = 'AB | ' + test.id + ' test | ' + variantId;
         common.$g(document.body).attr('data-link-test', data);
     }
@@ -49,6 +50,10 @@ define([
     //Finds variant in specific tests and exec's
     function run(test, config, context) {
         if (test.canRun(config, context) && config.switches['ab' + test.id]) {
+            // if user not in test, bucket them
+            if (!isParticipating(test)) {
+                bucket(test);
+            }
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
@@ -116,10 +121,6 @@ define([
             store.remove('gu.ab.participation');
 
             TESTS.forEach(function(test) {
-                // if user not in a test, bucket them
-                if (!isParticipating(test)) {
-                    bucket(test);
-                }
                 run(test, config, context);
             });
         }

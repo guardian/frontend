@@ -1,4 +1,4 @@
-define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
+define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
 
     describe('AB Testing', function() {
 
@@ -8,31 +8,31 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
             participationsKey = 'gu.ab.participations';
 
         beforeEach(function() {
-            AB.clearTests();
-            test = new Test(),
+            ab.clearTests();
+            test = new ABTest(),
             controlSpy = sinon.spy(test.variants[0], 'test'),
             variantSpy = sinon.spy(test.variants[1], 'test');
             // add a test
-            AB.addTest(test);
+            ab.addTest(test);
         });
 
         afterEach(function() {
-            AB.clearTests();
+            ab.clearTests();
             localStorage.removeItem(participationsKey);
         });
 
         it('should exist', function() {
             // basic, check it exists
-            expect(AB).toBeDefined();
+            expect(ab).toBeDefined();
         });
 
         it('should be able to start test', function() {
-            AB.init({ switches: {'abDummyTest': true} }, document);
+            ab.init({ switches: {'abDummyTest': true} }, document);
             expect(controlSpy.called || variantSpy.called).toBeTruthy();
         });
 
         it('should allow forcing of test via url', function() {
-            AB.init({
+            ab.init({
                 switches: {
                     abDummyTest: true
                 }
@@ -50,7 +50,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
         it('should put all non-participating users in control group', function() {
             test.audience = 0;
 
-            AB.init({
+            ab.init({
                 switches: {
                     abDummyTest: true
                 }
@@ -59,11 +59,11 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
         });
 
         it('should store all the tests user is in', function() {
-            var otherTest = new Test();
+            var otherTest = new ABTest();
             otherTest.id = 'DummyTest2';
-            AB.addTest(otherTest);
+            ab.addTest(otherTest);
 
-            AB.init({
+            ab.init({
                 switches: {
                     abDummyTest: true,
                     abDummyTest2: true,
@@ -75,24 +75,24 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
         });
         
         it('should get all the tests user is in', function() {
-            var otherTest = new Test();
+            var otherTest = new ABTest();
             otherTest.id = 'DummyTest2';
-            AB.addTest(otherTest);
+            ab.addTest(otherTest);
 
-            AB.init({
+            ab.init({
                 switches: {
                     abDummyTest: true,
                     abDummyTest2: true,
                 }
             });
         
-            var tests = Object.keys(AB.getParticipations()).map(function(k){ return k; }).toString()
+            var tests = Object.keys(ab.getParticipations()).map(function(k){ return k; }).toString()
             expect(tests).toBe('DummyTest,DummyTest2');
             
         });
 
         it('should not run if switch is off', function() {
-            AB.init({
+            ab.init({
                 switches: {
                     abDummyTest: false,
                 }
@@ -101,12 +101,24 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(AB, Test) {
         });
 
         it('should add "data-link-test" tracking to body', function() {
-            AB.init({
+            ab.init({
                 switches: {
-                    abDummyTest: true,
+                    abDummyTest: true
                 }
             });
             expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide)$/);
+        });
+
+        it('should not bucket user if test can\'t be run', function() {
+            test.canRun = function() { return false; }
+
+            ab.init({
+                switches: {
+                    abDummyTest: true
+                }
+            });
+            expect(controlSpy.called || variantSpy.called).toBeFalsy();
+            expect(ab.getParticipations()).toEqual([]);
         });
 
     });
