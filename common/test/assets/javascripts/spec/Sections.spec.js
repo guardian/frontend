@@ -11,7 +11,7 @@ define([ 'common',
                     fixtures: [
                                 '<div id="preloads"></div>',
                                 '<div id="header">' +
-                                '  <div class="control--topstories"></div></div>' +
+                                '  <div class="control--topstories"></div>' +
                                 '  <div class="nav-container"><ul class="nav nav--global"><li class="nav__item"><a href="/culture" class="nav__link">Culture</a></li></ul></div>' +
                                 '  <div class="nav-popup-sections">foo</div>' +
                                 '</div>',
