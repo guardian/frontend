@@ -10,21 +10,8 @@
     margin-left: $baseline*2;
 }
 
-.i-arrow-small-down {
-    margin-left: $baseline;
-}
-
 .i-sport-arrow-small {
     margin: 0 0 -1px $baseline*2;
-}
-
-.is-active .i-arrow-small-down {
-    @extend .i-arrow-small-up;
-    border-color: transparent !important;
-
-    .svg & {
-        @extend .svg-i-arrow-small-up;
-    }
 }
 
 .is-active .i-menu {
@@ -48,6 +35,38 @@
 
     .svg & {
         @extend .svg-i-top-stories-active;
+    }
+}
+
+.i-date {
+    margin-right: 5px;
+    margin-bottom: -1px;
+}
+
+.svg .i-date {
+    background-size: 100%;
+    width: 10px;
+    height: 10px;
+}
+
+.caption:before,
+figcaption:before {
+    @extend .i;
+    @extend .i-image;
+    display: inline-block;
+    content: '';
+    margin-right: 4px;
+
+    .svg & {
+        @extend .svg-i-image;
+    }
+}
+
+.story-picture__caption:before {
+    @extend .i-image-white;
+
+    .svg & {
+        @extend .svg-i-image-white;
     }
 }
 

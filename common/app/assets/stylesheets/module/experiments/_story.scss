@@ -397,6 +397,10 @@ $orange: #FF7F00;
     vertical-align: top;
     padding-left: 2px;
     border-top: 1px dotted rgb(103,103,103);
+
+    .cta-new__btn--left {
+        margin-left: -2px;
+    }
 }
 
 .cta-new--dark {
