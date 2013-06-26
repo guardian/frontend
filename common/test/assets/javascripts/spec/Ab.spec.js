@@ -19,6 +19,8 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
         afterEach(function() {
             ab.clearTests();
             localStorage.removeItem(participationsKey);
+            // remove tracking from body
+            document.body.removeAttribute('data-link-test');
         });
 
         it('should exist', function() {
@@ -82,7 +84,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             ab.init({
                 switches: {
                     abDummyTest: true,
-                    abDummyTest2: true,
+                    abDummyTest2: true
                 }
             });
         
@@ -107,6 +109,20 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
                 }
             });
             expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide)$/);
+        });
+
+        it('should concat "data-link-test" tracking when more than one test', function() {
+            var otherTest = new ABTest();
+            otherTest.id = 'DummyTest2';
+            ab.addTest(otherTest);
+
+            ab.init({
+                switches: {
+                    abDummyTest: true,
+                    abDummyTest2: true,
+                }
+            });
+            expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide), AB \| DummyTest2 test \| (control|hide)$/);
         });
 
         it('should not bucket user if test can\'t be run', function() {

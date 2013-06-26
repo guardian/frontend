@@ -42,9 +42,13 @@ define([
     }
 
     function initTracking(test, variantId) {
-        var dataLinkTest = common.$g(document.body).attr('data-link-test');
-        var data = 'AB | ' + test.id + ' test | ' + variantId;
-        common.$g(document.body).attr('data-link-test', data);
+        var dataLinkTest = [],
+            currentDataLinkTest = common.$g(document.body).attr('data-link-test');
+        if (currentDataLinkTest) {
+            dataLinkTest.push(currentDataLinkTest);
+        }
+        dataLinkTest.push('AB | ' + test.id + ' test | ' + variantId);
+        common.$g(document.body).attr('data-link-test', dataLinkTest.join(', '));
     }
 
     //Finds variant in specific tests and exec's
