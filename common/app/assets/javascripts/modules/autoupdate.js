@@ -105,7 +105,7 @@ define([
             path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
 
             return ajax({
-                url: path + '.json',
+                url: path,
                 type: 'json',
                 crossOrigin: true
             }).then(

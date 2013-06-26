@@ -39,13 +39,14 @@ define([
                 if (config.page.isLive) {
                     var a = new AutoUpdate({
                         path: function() {
-                           //return window.location.pathname + '.json' + '?lastUpdate=' + context.querySelector('.article-body .block').id;
-                           return window.location.pathname + '.json' + '?lastUpdate=block-51cb0653e4b01966cb19cc3c';
+                            var id = context.querySelector('.article-body .block').id,
+                                path = window.location.pathname;
+                           return path + '.json' + '?lastUpdate=' + id;
                         },
                         delay: 60000,
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
-                        responseSelector: '.article-body .block'
+                        manipulationType: 'prepend'
                     }).init();
                 }
             });
