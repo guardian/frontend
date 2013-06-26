@@ -39,15 +39,7 @@
 
              <div class="article-body from-content-api @if(article.isLive) {live-blog}"
              itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-                 @withJsoup(BulletCleaner(article.body))(
-                    InBodyElementCleaner,
-                    PictureCleaner(article),
-                    InBodyLinkCleaner("in body link")(Edition(request)),
-                    BlockNumberCleaner,
-                    TweetCleaner,
-                    WitnessCleaner,
-                    VideoPosterCleaner(article.videoAssets)
-                 )
+                 @BodyCleaner(article)
             </div>
         </div>
 

@@ -148,5 +148,6 @@ GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails                 controllers.Ta
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails.json            controllers.TagController.renderTrails(path)
 
 #Articles
-GET     /*path.json                 controllers.ArticleController.render(path)
+GET     /*path.json                 controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
 GET     /*path                      controllers.ArticleController.render(path)
+
