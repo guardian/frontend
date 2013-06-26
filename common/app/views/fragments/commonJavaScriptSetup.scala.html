@@ -69,10 +69,6 @@
                     document.querySelector('html').className += ' font-' + nameAndCacheKey[1] + '-loaded';
                 }
             }
-
-            @* This cleans up legacy webfontdelay tests. Remove these at some point. *@
-            localStorage.removeItem('gu.webfontrendertest');
-            localStorage.removeItem('gu.fontdelaytest');
         }
     }
 

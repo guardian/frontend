@@ -7,14 +7,13 @@
     <div class="media">
         @if(showThumbnail) {
             @trail.thumbnailPath.map{ thumbnailPath =>
-                <a href="@LinkTo{@trail.url}" class="media__img trail__img" data-link-name="@rowNum | image">
+                <a href="@LinkTo{@trail.url}" class="media__img trail__img" data-link-name="@rowNum | image" role="presentation">
                     <img class="maxed" data-lowsrc="@thumbnailPath"
                         data-thumb-width="140"
                         @trail.mainPicture(width=220).map { largeCrop =>
                             data-fullsrc="@largeCrop.path"
                             data-full-width="@largeCrop.width"
-                            alt="@Html(largeCrop.altText.getOrElse(""))"
-                            title="@StripHtmlTagsAndUnescapeEntities(largeCrop.caption.getOrElse(""))"
+                            alt=""
                         }
                         itemprop="contentURL"
                     />

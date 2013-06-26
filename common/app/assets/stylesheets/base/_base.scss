@@ -8,7 +8,7 @@ body {
 
 .dateline {
     font-family: $sans-serif;
-    margin: 0 0 $baseline*2 0;
+    margin: 0 0 $baseline*2;
     color: #666;
     @extend %type-11;
 }
@@ -18,11 +18,16 @@ body {
     height: 10px;
     color: #777;
     margin: 0;
-    padding:0 0 $baseline*3 0;
+    padding: 0 0 $baseline*3;
 }
 
 .relative-timestamp span {
     display: inline-block;
+}
+
+.relative-timestamp__icon {
+    margin-right: 5px;
+    margin-bottom: -1px;
 }
 
 ol,
