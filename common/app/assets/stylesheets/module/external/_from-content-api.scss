@@ -92,20 +92,6 @@ figcaption,
     padding: $baseline*2 $gutter $baseline*4;
 }
 
-.caption:before,
-figcaption:before {
-    @extend .i;
-    @extend .i-image;
-    display: inline-block;
-    content: '';
-    margin-right: 4px;
-}
-
-.svg .caption:before,
-.svg figcaption:before {
-    @extend .svg-i-image;
-}
-
 
 /* Figures
    ========================================================================== */

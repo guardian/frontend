@@ -49,6 +49,26 @@
     height: 10px;
 }
 
+.caption:before,
+figcaption:before {
+    @extend .i;
+    @extend .i-image;
+    display: inline-block;
+    content: '';
+    margin-right: 4px;
+
+    .svg & {
+        @extend .svg-i-image;
+    }
+}
+
+.story-picture__caption:before {
+    @extend .i-image-white;
+
+    .svg & {
+        @extend .svg-i-image-white;
+    }
+}
 
 //Quotes
 .from-content-api blockquote:before,
