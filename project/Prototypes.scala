@@ -121,7 +121,7 @@ trait Prototypes {
   def root() = Project("root", base = file("."))
     .settings(
       scalaVersion := "2.10.0", //TODO why does root not get auto 2.10.0?
-      parallelExecution in ThisBuild := false
+      parallelExecution in Test := true
     )
 
   def base(name: String) = play.Project(name, version, path = file(name))
