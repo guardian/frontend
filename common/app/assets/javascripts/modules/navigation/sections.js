@@ -138,7 +138,7 @@ define([
 
                 if (currentSection) {
                     var localNavItems = [],
-                        headerNode = context.querySelector('#header');
+                        headerNode = document.getElementById('header');
 
                     Object.keys(currentSection.zones).forEach(function(zonePath, i) {
                         var zoneName  = currentSection.zones[zonePath];
