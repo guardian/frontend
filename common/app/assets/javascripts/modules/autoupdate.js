@@ -24,6 +24,7 @@ define([
             attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
             switches         : {Object}              Global swicthes object
             loadOnInitialise : {Number}              Make the first request when the module is created
+            manipulationType : {String}              Which manipulation method to insert content into DOM
     */
     function Autoupdate(config) {
 
@@ -31,7 +32,8 @@ define([
             'activeClass': 'is-active',
             'btnClass' : '.update-btn',
             'prefName': 'auto-update',
-            'iconClass' : 'is-updating'
+            'iconClass' : 'is-updating',
+            'manipulationType' : 'html'
         }, config);
 
         this.template =
@@ -44,6 +46,7 @@ define([
         this.view = {
             render: function (res) {
                 var attachTo = options.attachTo,
+                    manipulation = options.manipulationType,
                     date = new Date().toString();
 
                 //Check if we are handling single fragment
@@ -51,9 +54,9 @@ define([
                     var $attachTo = bonzo(attachTo);
                     // in case we don't want to show the full response
                     if (options.responseSelector) {
-                        $attachTo.html(common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
+                        $attachTo[manipulation](common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
                     } else {
-                        $attachTo.html(res.html);
+                        $attachTo[manipulation](res.html);
                     }
                     // add a timestamp to the attacher
                     $attachTo.attr('data-last-updated', date);
@@ -63,7 +66,7 @@ define([
                     for (var view in attachTo) {
                         if(attachTo.hasOwnProperty(view)) {
                             var html = common.$g(options.responseSelector[view], response[0]);
-                            bonzo(attachTo[view]).html(html)
+                            bonzo(attachTo[view])[manipulation](html)
                                 .attr('data-last-updated', date);
                         }
                     }
@@ -96,8 +99,10 @@ define([
 
         // Model
         this.load = function (url) {
-            var path = options.path,
-                that = this;
+            var that = this,
+                path;
+
+            path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
 
             return ajax({
                 url: path + '.json',
