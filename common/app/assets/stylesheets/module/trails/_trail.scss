@@ -40,6 +40,13 @@
         text-decoration: underline;
     }
 
+.trail__img {
+    display: none;
+
+    .images-upgraded & {
+        display: block;
+    }
+}
 
 .trail__text {
     @extend %type-7;
