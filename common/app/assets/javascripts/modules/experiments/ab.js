@@ -47,7 +47,7 @@ define([
         if (currentDataLinkTest) {
             dataLinkTest.push(currentDataLinkTest);
         }
-        dataLinkTest.push('AB | ' + test.id + ' test | ' + variantId);
+        dataLinkTest.push(['AB', test.id + ' test', variantId]. join(' | '));
         common.$g(document.body).attr('data-link-test', dataLinkTest.join(', '));
     }
 
