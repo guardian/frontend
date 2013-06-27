@@ -1,10 +1,10 @@
 @media (min-width: $tablet) {
-    .front-new-container .front-section:nth-child(odd) {
+    .front-container--new .front-section:nth-child(odd) {
         float: left;
         clear: left;
         width: 50%;
     }
-    .front-new-container .front-section:nth-child(even) {
+    .front-container--new .front-section:nth-child(even) {
         float: right;
         clear: right;
         width: 50%;
@@ -12,13 +12,13 @@
 }
 
 @media (min-width: $desktop) {
-    .front-new-container .front-section:nth-child(odd) {
+    .front-container--new .front-section:nth-child(odd) {
         width: 63.5%;
     }
-    .front-new-container .front-section:nth-child(even) {
+    .front-container--new .front-section:nth-child(even) {
         width: 35.5%;
     }
-    .front-new-container .front-trailblock-top-stories .t1 h2 {
+    .front-container--new .front-trailblock-top-stories .t1 h2 {
         font-size: 32px;
         font-size: 3.2rem;
         line-height: 40px;
