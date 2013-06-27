@@ -35,7 +35,7 @@ case class LatencyGraph(name: String, private val metrics: Future[GetMetricStati
 
   override lazy val yAxis = Some("latency (ms)")
 
-  private lazy val datapoints = metrics.get().getDatapoints.toSeq
+  private lazy val datapoints = metrics.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
 
   lazy val dataset = datapoints.map(d => DataPoint(
     new DateTime(d.getTimestamp.getTime).toString("HH:mm"),
@@ -51,7 +51,7 @@ case class Request2xxGraph(name: String, private val metrics: Future[GetMetricSt
 
   override lazy val yAxis = Some("2xx requests/min")
 
-  private lazy val datapoints = metrics.get().getDatapoints.toSeq
+  private lazy val datapoints = metrics.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
 
   lazy val dataset = datapoints.map(d => DataPoint(
     new DateTime(d.getTimestamp.getTime).toString("HH:mm"),
