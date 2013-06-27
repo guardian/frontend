@@ -85,6 +85,15 @@ object Frontend extends Build with Prototypes {
     .dependsOn(diagnostics)
     .dependsOn(styleGuide)
 
+  val faciaDev = application("facia-dev-build")
+    .dependsOn(facia)
+    .dependsOn(article)
+    .dependsOn(applications)
+    .dependsOn(football)
+    .dependsOn(coreNavigation)
+    .dependsOn(image)
+    .dependsOn(discussion)
+
   val main = root().aggregate(
     common,
     front,
