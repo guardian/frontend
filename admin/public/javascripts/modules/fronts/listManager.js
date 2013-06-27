@@ -1,21 +1,22 @@
 define([
     'Reqwest',
     'Knockout',
+    'models/fronts/article',
     'models/fronts/latestArticles'
 ], function(
     reqwest,
     knockout,
-    latestArticles
+    Article,
+    LatestArticles
 ) {
 
     return function(selector) {
 
         var self = this,
-            doc = document,
             viewModel = {
                 listA: knockout.observableArray(),
                 listB: knockout.observableArray(),
-                latest: new latestArticles()
+                latest: new LatestArticles()
             };
 
         function connectSortableLists(selector) {
@@ -58,7 +59,7 @@ define([
                 lists.push(toList);
             }
 
-            lists = lists.map(function(list){
+            lists.map(function(list){
                 var inList = $("[data-url='" + item + "']", list),
                     delta = {
                         list: list.id,
@@ -80,9 +81,9 @@ define([
 
         this.addItem = function(list, item) {
             if (!item || !list) { return; }
-            list.push({
+            list.push(new Article({
                 id: item
-            });
+            }));
         };
 
         this.loadList = function(list, items) {
@@ -125,7 +126,7 @@ define([
 
             knockout.applyBindings(viewModel);
 
-            connectSortableLists('.connectedSortable');
+            connectSortableLists('.connectedList');
         };
 
 
