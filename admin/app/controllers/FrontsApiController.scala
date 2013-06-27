@@ -2,11 +2,13 @@ package controllers
 
 import play.api.mvc.{Action, Controller}
 import frontsapi.FrontsApi
-import common.JsonComponent
+import common.{ExecutionContexts, JsonComponent}
 import play.api.libs.json._
 import play.api.libs.json.Json._
+import play.api.libs.concurrent.Akka
+import play.api.Play.current
 
-object FrontsApiController extends Controller {
+object FrontsApiController extends Controller with ExecutionContexts {
   implicit val updateListReads = Json.reads[UpdateList]
   implicit val jsonResponseWrites = Json.writes[JsonResponse]
 
@@ -15,19 +17,32 @@ object FrontsApiController extends Controller {
   lazy val databaseError = JsonResponse("Database Error")
 
   def getList(listName: String) = Action{ implicit request =>
-    JsonComponent(listName -> toJson(FrontsApi.getList(listName)))
+    val result = Akka.future (FrontsApi.getList(listName))
+    Async {
+      result map {l => JsonComponent(listName -> l) }
+    }
   }
 
-  def updateList(listName: String) = Action { implicit request =>
-    request.body.asJson map { json =>
-      json.asOpt[UpdateList] map { ul =>
-        FrontsApi.addBefore(listName, ul.position, ul.item) match {
-          case Some(v) if v >= 0 => Ok
-          case Some(v) => BadRequest(toJson(positionNotFound))
-          case None  => BadRequest(toJson(databaseError))
-        }
-      } getOrElse BadRequest(toJson(invalidJson))
-    } getOrElse BadRequest
+  def updateList(listName: String) = Action {
+    implicit request =>
+      request.body.asJson map {
+        json =>
+          json.asOpt[UpdateList] map {
+            ul =>
+              val promiseOfOption = Akka.future {
+                FrontsApi.addBefore(listName, ul.position, ul.item)
+              }
+              Async {
+                promiseOfOption map {
+                  o => o match {
+                    case Some(v) if v >= 0 => Ok
+                    case Some(v) => BadRequest(toJson(positionNotFound))
+                    case None => BadRequest(toJson(databaseError))
+                  }
+                }
+              }
+          } getOrElse BadRequest(toJson(invalidJson))
+      } getOrElse BadRequest
   }
 
   def bootStrap = Action {
