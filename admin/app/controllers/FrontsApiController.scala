@@ -12,6 +12,7 @@ object FrontsApiController extends Controller {
 
   lazy val positionNotFound = JsonResponse("Position Not Found")
   lazy val invalidJson = JsonResponse("Invalid Json")
+  lazy val databaseError = JsonResponse("Database Error")
 
   def getList(listName: String) = Action{ implicit request =>
     JsonComponent(listName -> toJson(FrontsApi.getList(listName)))
@@ -21,8 +22,9 @@ object FrontsApiController extends Controller {
     request.body.asJson map { json =>
       json.asOpt[UpdateList] map { ul =>
         FrontsApi.addBefore(listName, ul.position, ul.item) match {
-          case l: Long if l > 0 => Ok
-          case _  => BadRequest(toJson(positionNotFound))
+          case Some(v) if v >= 0 => Ok
+          case Some(v) => BadRequest(toJson(positionNotFound))
+          case None  => BadRequest(toJson(databaseError))
         }
       } getOrElse BadRequest(toJson(invalidJson))
     } getOrElse BadRequest
