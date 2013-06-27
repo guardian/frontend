@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-admin":{
+        "frontend-fronts-api":{
             "type":"asg-elb",
             "apps":[ "frontend::fronts-api" ],
             "data":{
@@ -18,10 +18,10 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["fronts-api.deploy"]
+            "actionsBeforeApp": ["frontend-fronts-api.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["fronts-api.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-fronts-api.uploadArtifacts"]
         }
     }
 }
