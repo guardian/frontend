@@ -35,7 +35,7 @@ define([
 
         promoteMostPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                if(window.location.pathname === '/') {
+                if(query.selector('.front-new-container') && window.location.pathname === '/') {
                     bonzo(context.querySelector('.js-popular'))
                         .appendTo(bonzo.create('<section class="front-section">'))
                         .insertAfter(context.querySelector('section.front-section'));
