@@ -282,7 +282,7 @@ $orange: #FF7F00;
 }
 
 .js-swipe {
-    margin: 0 10px;
+    margin: 0;
     overflow: hidden;
 }
 
@@ -397,6 +397,10 @@ $orange: #FF7F00;
     vertical-align: top;
     padding-left: 2px;
     border-top: 1px dotted rgb(103,103,103);
+
+    .cta-new__btn--left {
+        margin-left: -2px;
+    }
 }
 
 .cta-new--dark {

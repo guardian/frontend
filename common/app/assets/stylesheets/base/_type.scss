@@ -26,6 +26,7 @@ html {
 
 //Bump font-size back upto 16px
 body {
+    color: #545454;
     font-size: 100%;
     font-size: 1.6em;
     line-height: 1.4;
@@ -33,6 +34,7 @@ body {
 
 // Base headings
 h1, h2, h3, h4, h5, h6 {
+    color: #333333;
     font-family: $serif;
     margin: 0;
     text-rendering: optimizeLegibility;
@@ -64,10 +66,14 @@ h1, h2, h3, h4, h5, h6 {
 .type-11 { @extend %type-11; }
 .type-12 { @extend %type-12; }
 
+blockquote {
+    margin: 0;
+}
+
 //Default type elements
 p {
-    color: #545454;
-    margin: 0 0 $baseline*2;
+    margin-top: 0;
+    margin-bottom: $baseline*2;
 }
 
 h1 {
@@ -75,16 +81,16 @@ h1 {
 }
 
 h3 {
-    margin: 0 0 7px;
+    margin-bottom: 7px;
     @extend %type-6;
 }
 
 h4 {
+    @extend %type-6;
     margin: 0;
     padding: 8px 10px 7px;
     background-color: #ededed;
     border-top: 1px solid #cccccc;
-    @extend %type-6;
 }
 
 th,

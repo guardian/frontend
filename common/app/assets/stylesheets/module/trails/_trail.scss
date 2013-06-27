@@ -40,8 +40,12 @@
         text-decoration: underline;
     }
 
-.js-off .trail__img {
+.trail__img {
     display: none;
+
+    .images-upgraded & {
+        display: block;
+    }
 }
 
 .trail__text {

@@ -53,7 +53,7 @@ public class FootballSteps {
 	
 	@When("^I click the competition filter expander$")
 	public void I_click_the_competition_filter_expander() throws Throwable {
-	    By competitionExpander=(By.xpath("//*/h1/a"));
+	    By competitionExpander=(By.className("football-filter-arrow"));
 	    webDriver.waitForVisible(competitionExpander);
         webDriver.jsClick(webDriver.findElement(competitionExpander));
 	}

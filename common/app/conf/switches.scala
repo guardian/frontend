@@ -140,10 +140,6 @@ object Switches extends Collections {
     "If this switch is turned on then Google search is added to the sections nav.",
     safeState = Off)
 
-  val HomescreenSwitch = Switch("Feature Switches", "homescreen",
-    "If this switch is enabled the add-to-homescreen popup will plague iOS users.",
-    safeState = Off)
-
   val AustraliaFrontSwitch = Switch("Feature Switches", "australia-front",
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
@@ -193,7 +189,6 @@ object Switches extends Collections {
     WitnessVideoSwitch,
     SocialSwitch,
     SearchSwitch,
-    HomescreenSwitch,
     ImageServerSwitch,
     AustraliaFrontSwitch,
     FontDelaySwitch,
