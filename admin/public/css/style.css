@@ -456,7 +456,7 @@ a.cta, .cta a {
 /* FRONTS MANAGER */
 
 .fronts .finder,
-.fronts .list {
+.fronts .lists {
     width: 45%;
     float: left;
     padding: 8px;

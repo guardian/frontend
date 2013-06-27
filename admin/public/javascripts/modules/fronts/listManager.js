@@ -13,7 +13,8 @@ define([
         var self = this,
             doc = document,
             viewModel = {
-                list: knockout.observableArray(),
+                listA: knockout.observableArray(),
+                listB: knockout.observableArray(),
                 latest: new latestArticles()
             };
 
@@ -45,7 +46,7 @@ define([
             var lists = [];
 
             item = $(item).data('url');
-            if (!item) {
+            if (!item || !fromList || !toList) {
                 return;
             }
 
@@ -60,6 +61,7 @@ define([
             lists = lists.map(function(list){
                 var inList = $("[data-url='" + item + "']", list),
                     delta = {
+                        list: list.id,
                         item: item,
                         verb: 'add'
                     };
@@ -76,18 +78,18 @@ define([
             });
         };
 
-        this.addItem = function(item) {
-            if (!item) { return; }
-            viewModel.list.push({
-                url: item
+        this.addItem = function(list, item) {
+            if (!item || !list) { return; }
+            list.push({
+                id: item
             });
         };
 
-        this.loadList = function(list) {
-            if (!list || !list.length) { return; }
-            viewModel.list.removeAll();
-            list.forEach(function(item){
-                self.addItem(item);
+        this.loadList = function(list, items) {
+            if (!items || !items.length || !list) { return; }
+            list.removeAll();
+            items.forEach(function(item){
+                self.addItem(list, item);
             });
         };
 
@@ -95,18 +97,8 @@ define([
 
             viewModel.latest.search();
 
-            /*
-            reqwest({
-                url: '/fronts/top-stories',
-                type: 'json'
-            }).then(
-                function(resp) {
-                    this.loadList(resp.articles);
-                }
-            );
-            */
-            // Load a dummy list instead
-            this.loadList([
+            // Load dummy lists
+            this.loadList(viewModel.listA, [
                 "society/2013/jun/25/society-daily-email",
                 "environment/2013/jun/25/obama-unveil-first-us-climate-strategy",
                 "sport/2013/jun/25/lions-melbourne-rebels-live-report",
@@ -117,6 +109,18 @@ define([
                 "politics/blog/2013/jun/25/mervyn-king-treasury-committee-live-blog",
                 "business/2013/jun/24/eurozone-crisis-bond-yields-spain-greece",
                 "global-development/2013/jun/25/central-american-farmers-coyotes"
+            ]); 
+            this.loadList(viewModel.listB, [
+                "news/2013/jun/27/glastonbury-mandela-obama-robson-wimbledon-news-photographs",
+                "uk/2013/jun/27/doreen-lawrence-met-chief-police",
+                "money/blog/2013/jun/27/payday-loans-industry-law-unto-itself",
+                "business/2013/jun/27/eurozone-crisis-bank-bailout-rules-summit",
+                "business/2013/jun/27/rural-broadband-target-postponed",
+                "housing-network/2013/jun/27/direct-payment-guarantee-landlords",
+                "commentisfree/2013/jun/27/supreme-court-gay-marriage-battle-almost-done",
+                "sport/picture/2013/jun/27/sport-picture-of-the-day-horsing-around",
+                "world/2013/jun/27/uk-road-deaths",
+                "world/2013/jun/27/turkey-protests-hundreds-barricades-ankara"
             ]); 
 
             knockout.applyBindings(viewModel);

@@ -5,7 +5,7 @@
     <div class="fronts">
 
         <div class="finder">
-            <h3>Find
+            <h3>Latest
             <input type="text" placeholder="url or keyword" 
                 data-bind='event: {keyup: latest.search, mousedown: latest.articleSearch, afterpaste: latest.articleSearch}, value:
                 latest.term, valueUpdate: ["afterkeydown", "afterpaste"]'/>
@@ -13,17 +13,22 @@
 
             <div class="connectedSortable throwAway" data-bind='foreach: latest.articles()'>
                 <div class="article" data-bind="attr: {'data-url': id}">
-                    <a class="article-title" target="_blank" data-bind="html: webTitle, attr: {href: _absUrl}"></a>
-                    <div class="meta"  data-bind="text: _humanDate"></div>
+                    <a class="article-title" data-bind="text: id, attr: {href: _absUrl}"></a>
                 </div>
             </div>
         </div>
 
-        <div class="list">
-            <h3>List</h3>
-            <div class="connectedSortable" data-bind='foreach: list'>
-                 <div class="article" data-bind="attr: {'data-url': url}">
-                    <a class="article-title" target="_blank" data-bind="text: url"></a>
+        <div class="lists">
+            <h3>List A</h3>
+            <div id="listA" class="connectedSortable" data-bind='foreach: listA'>
+                 <div class="article" data-bind="attr: {'data-url': id}">
+                    <a class="article-title" data-bind="text: id"></a>
+                </div>
+            </div>
+            <h3>List B</h3>
+            <div id="listB" class="connectedSortable" data-bind='foreach: listB'>
+                 <div class="article" data-bind="attr: {'data-url': id}">
+                    <a class="article-title" data-bind="text: id"></a>
                 </div>
             </div>
         </div>
