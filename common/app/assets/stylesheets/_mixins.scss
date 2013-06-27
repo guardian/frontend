@@ -51,3 +51,10 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+@mixin fixed-aspect($width, $height, $startingWidth: 100%) {
+    $height: ($height / $width) * $startingWidth;
+    width: $startingWidth;
+    padding-bottom: $height;
+    position: relative;
+}

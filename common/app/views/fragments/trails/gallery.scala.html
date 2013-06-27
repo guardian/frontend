@@ -13,9 +13,9 @@
     <ul class="unstyled cf">
         @if(trail.landscapes.length >= 3) {
             @trail.landscapes.take(3).zipWithRowInfo.map{ case(image, info) =>
-            <li class="gallery__item @if(image.width >= image.height){landscape} else {portrait}">
+            <li class="trail__item @if(image.width >= image.height){landscape} else {portrait}">
                 <a href="@LinkTo{@trail.url?index=@info.rowNum}" data-link-name="@info.rowNum | gallery thumb">
-                    <img class="gallery__img" src="@image.url.map(ImgSrc(_, GalleryTrail))" alt="@Html(image.caption.getOrElse(""))" />
+                    <img class="media_img" src="@image.url.map(ImgSrc(_, GalleryTrail))" alt="@Html(image.caption.getOrElse(""))" />
                 </a>
             </li>
             }
