@@ -11,7 +11,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
-  val supportedTypes = "type/gallery|type/article|type/video"
+  val supportedTypes = "type/gallery|type/article|type/video|type/interactive"
 
   //NOTE - do NOT add body to this list
   val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl"
