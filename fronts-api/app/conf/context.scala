@@ -6,7 +6,7 @@ import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 
 object Management extends GuManagement {
-  val applicationName = "frontend-admin"
+  val applicationName = "frontend-fronts-api"
   val metrics = Metrics.admin
 
   lazy val pages = List(
