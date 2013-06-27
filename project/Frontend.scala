@@ -29,7 +29,7 @@ object Frontend extends Build with Prototypes {
   val commonWithTests = common % "test->test;compile->compile"
 
   val front = application("front").dependsOn(commonWithTests)
-  val frontNew = application("front-new").dependsOn(commonWithTests)
+  val facia = application("facia").dependsOn(commonWithTests)
   val article = application("article").dependsOn(commonWithTests)
   val applications = application("applications").dependsOn(commonWithTests)
   val event = application("event").dependsOn(commonWithTests).settings(
@@ -88,7 +88,7 @@ object Frontend extends Build with Prototypes {
   val main = root().aggregate(
     common,
     front,
-    frontNew,
+    facia,
     article,
     applications,
     event,
