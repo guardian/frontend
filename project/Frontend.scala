@@ -72,7 +72,7 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val dev = application("dev-build")
+  val dev = base("dev-build")
     .dependsOn(front)
     .dependsOn(article)
     .dependsOn(applications)
@@ -99,7 +99,6 @@ object Frontend extends Build with Prototypes {
     router,
     diagnostics,
     styleGuide,
-    dev,
     admin
   )
 }
