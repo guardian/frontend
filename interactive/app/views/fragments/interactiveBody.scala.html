@@ -1,4 +1,61 @@
 @(interactive: Interactive, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+@import conf.Switches.DiscussionSwitch
 
-@interactive.headline
+<div class="monocolumn-wrapper">
+    
+    <h2 class="article-zone type-1">
+        <a class="zone-color" data-link-name="article section" href="@LinkTo{/@interactive.section}">@Html(interactive.sectionName)</a>
+    </h2>
 
+    <article id="article" class="article"
+        itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
+
+        <header class="article-head">
+            @fragments.dateline(interactive.webPublicationDate, interactive.isLive)
+
+            @fragments.headline(interactive.headline)
+
+            @fragments.standfirst(interactive)
+        </header>
+
+        <div class="after-header"></div>
+
+         <div class="article__container">
+             
+            <div class="article-body from-content-api" style="background:#ffc;margin:1em 0;padding:1em;">
+
+                <figure id="abcde">
+                    This is an interactive.
+                </figure>
+
+            </div>
+        </div>
+
+        @if(DiscussionSwitch.isSwitchedOn && interactive.isCommentable) {
+            <div class="article__discussion article-body"></div>
+        }
+
+    </article>
+
+    @fragments.social(interactive)
+
+    @if(DiscussionSwitch.isSwitchedOn && interactive.isCommentable) {
+        <div class="article__discussion article-body"></div>
+        <div class="d-show-cta-wrapper">    
+            <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion/@interactive.shortUrlId}"
+               data-is-ajax data-link-name="View all comments">
+                View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
+            </a>
+        </div>
+    }
+</div>
+
+@if(storyPackage.nonEmpty) {
+    <aside role="complementary">
+        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+    </aside>
+} else {
+    <aside class="js-related" role="complementary"></aside>
+}
+
+<div   class="js-popular" role="complementary"></div>
