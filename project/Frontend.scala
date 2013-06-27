@@ -72,7 +72,7 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val frontsapi = application("fronts-api").dependsOn(commonWithTests).settings(
+  val frontsApi = application("fronts-api").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
       "net.debasishg" %% "redisclient" % "2.9"
     )
@@ -114,6 +114,7 @@ object Frontend extends Build with Prototypes {
     router,
     diagnostics,
     styleGuide,
-    admin
+    admin,
+    frontsApi
   )
 }
