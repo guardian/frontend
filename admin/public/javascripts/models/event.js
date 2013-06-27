@@ -53,10 +53,13 @@ define(['models/editable', 'models/article', 'models/agent', 'models/place', 'Kn
                 return this._prettyDate() + 'T' + this._prettyTime() + ':00.000Z';
             },
             write: function(value) {
-                var d = new Date(value);
-                this._prettyDate(d.toISOString().match(/^\d{4}-\d{2}-\d{2}/)[0]);
-                this._prettyTime(d.getHoursPadded() +':'+ d.getMinutesPadded());
-                this._humanDate(humanized_time_span(d));
+                try {
+                    var d = new Date(value);
+                    this._prettyDate(d.toISOString().match(/^\d{4}-\d{2}-\d{2}/)[0]);
+                    this._prettyTime(d.getHoursPadded() +':'+ d.getMinutesPadded());
+                    this._humanDate(humanized_time_span(d));
+                    
+                } catch(e) {}
             },
             owner: this
         });
