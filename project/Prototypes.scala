@@ -125,16 +125,16 @@ trait Prototypes {
     )
 
   def base(name: String) = play.Project(name, version, path = file(name))
-    .settings(playAssetHashDistSettings: _*)
     .settings(VersionInfo.settings:_*)
     .settings(frontendCompilationSettings:_*)
     .settings(frontendDependencyManagementSettings:_*)
-    .settings(frontendClientSideSettings:_*)
     .settings(frontendTestSettings:_*)
 
   def application(name: String) = base(name)
+    .settings(playAssetHashDistSettings: _*)
+    .settings(frontendClientSideSettings:_*)
     .settings(frontendAssemblySettings:_*)
 
-  def grunt(name: String) = base(name)
+  def grunt(name: String) = application(name)
     .settings(frontendGruntSettings:_*)
 }
