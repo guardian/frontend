@@ -5,17 +5,20 @@
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
     <h@headingLevel class="trail__headline type-5">
+        @if(trail.isInPicturesSeries) {
+            <div class="trail__headline__kicker">In Pictures:</div>
+        }
         <a href="@LinkTo{@trail.url}" data-link-name="@rowNum | text">
-            @RemoveOuterParaHtml(trail.headline)
+            @RemoveOuterParaHtml(trail.trailHeadline)
         </a>
     </h@headingLevel>
 
-    <ul class="unstyled cf">
+    <ul class="gallerythumbs unstyled cf">
         @if(trail.landscapes.length >= 3) {
             @trail.landscapes.take(3).zipWithRowInfo.map{ case(image, info) =>
-            <li class="trail__item @if(image.width >= image.height){landscape} else {portrait}">
-                <a href="@LinkTo{@trail.url?index=@info.rowNum}" data-link-name="@info.rowNum | gallery thumb">
-                    <img class="media_img" src="@image.url.map(ImgSrc(_, GalleryTrail))" alt="@Html(image.caption.getOrElse(""))" />
+            <li class="gallerythumbs__item @if(image.width >= image.height){gallerythumbs__item--landscape} else {gallerythumbs__item--portrait}">
+                <a href="@LinkTo{@trail.url?index=@image.index}" data-link-name="@info.rowNum | gallery thumb">
+                    <img class="gallerythumbs__img" src="@image.url.map(ImgSrc(_, GalleryTrail))" alt="@Html(image.caption.getOrElse(""))" />
                 </a>
             </li>
             }
@@ -23,8 +26,10 @@
     </ul>
 
     <span class="trail__count trail__count--imagecount">
-        <i class="i i-gallery"></i>
-        <a href="@trail.url" data-link-name="Gallery image count">@trail.images.length <span class="h">images</span></a>
+        <a href="@trail.url" data-link-name="Gallery image count">
+            <i class="i i-gallery"></i>
+            @trail.images.length <span class="h">images</span>
+        </a>
     </span>
 
 </@element>

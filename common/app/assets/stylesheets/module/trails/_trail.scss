@@ -40,6 +40,10 @@
         text-decoration: underline;
     }
 
+    .trail__headline__kicker {
+        color: #F9AF41;
+    }
+
 .trail__img {
     display: none;
 
@@ -61,32 +65,12 @@
     }
 }
 
-/*.trail__comment-count {
-    position: absolute;
-    top: 8px;
-    right: 0;
 
-    a,
-    a:hover,
-    a:link,
-    a:active,
-    a:visited {
-        @extend %type-11;
-        float: right;
-        display: inline-block;
-        margin: 0 0 0 4px;
-        color: #F6644F;
-    }
 
-    i {
-        float: left;
-        margin: 3px 4px 0 0;
-    }
-}
+/* ==========================================================================
+   Trail counters
+   ========================================================================== */
 
-  .trail:first-child .trail__comment-count { top: 12px; }*/
-
-.trail__comment-count,
 .trail__count {
     position: absolute;
     top: 8px;
@@ -110,8 +94,7 @@
     }
 }
 
-.trail:first-child .trail__count,
-.trail:first-child .trail__comment-count { top: 12px; }
+.trail:first-child .trail__count { top: 12px; }
 
 .trail__count--commentcount {
     a,
@@ -189,13 +172,17 @@
 
 .trail--gallery {
 
-    background-color: #EEEEEE;
-    padding-bottom: 0;
-    margin-top: -4px; // O_o !!!!!!!!
+    background-color: #F9F9F6;
+    padding-bottom: 3px;
+    margin-top: -6px; // O_o !!!!!!!!
     border-bottom: 0;
 
+    &:first-child {
+        margin-top: -8px;
+    }
+
     .i-gallery {
-        margin: 0;
+        margin-top: 0;
     }
 
     ul {
@@ -204,15 +191,16 @@
 
     .relative-timestamp,
     .trail__headline {
-        margin-left: 8px;
+        margin: 0 8px;
     }
 
     .trail__headline {
         margin-bottom: 8px;
     }
 
-    .trail__item {
-        @include fixed-aspect(5, 3, 49.6%); // 5:3 aspect - works around thumbs being slightly different in size
+    .gallerythumbs__item {
+        @include fixed-aspect(5, 3, 50%); // 5:3 aspect - works around thumbs being slightly different in size
+        @include box-sizing(border-box);
         margin-bottom: 3px;
         float: left;
         line-height: 0;
@@ -221,35 +209,39 @@
 
     }
 
-    .trail__item:nth-child(odd) {
+    .gallerythumbs__item:nth-child(odd) {
         float: right; // this aligns right edge correctly
+        border-left: 3px solid transparent;
     }
 
-    .trail__item:first-child {
-        width: 100%;
-        padding-bottom: 0;
+    .gallerythumbs__item:first-child {
+        @include fixed-aspect(5, 3);
         float: left;
-
-        .media_img {
-            position: static;
-        }
+        border-left: 0;
     }
 
-    .media_img {
+    .gallerythumbs__item:last-child {
+        margin-bottom: 0;
+    }
+
+    .gallerythumbs__img {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
     }
 
-    @media (min-width: $tablet) {
-        .trail__item:first-child {
-            width: 66.3%;
+    @media (min-width: 480px) {
+        .gallerythumbs__item:first-child {
+            @include fixed-aspect(5, 3, 67%);
             float: left;
+            border-left: 0;
+            margin-bottom: 0;
         }
-        .trail__item {
+        .gallerythumbs__item {
             @include fixed-aspect(5, 3, 33%);
             float: right;
+            border-left: 3px solid transparent;
         }
     }
 }
