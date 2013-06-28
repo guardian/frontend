@@ -7,6 +7,7 @@ trait FrontsApi {
   def getList(listName: String): List[String]
 
   def add(listName: String, pivot: String, value: String, after: Option[Boolean] = None): Option[_]
+  def add(listName: String, value: String) = addAtPosition(listName, 0, value)
   def addAtPosition(listName: String, position: Int, value: String): Option[_]
 
   def removeItem(listName: String, value: String): Option[_]
