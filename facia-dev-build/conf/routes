@@ -8,6 +8,11 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 #Note the order of these is important
 
+# Fronts Api
+GET     /frontsapi/list/:listName                           controllers.FrontsApiController.getList(listName)
+POST    /frontsapi/listitem/:listName                       controllers.FrontsApiController.updateList(listName)
+GET     /frontsapi/bootstrap                                controllers.FrontsApiController.bootStrap
+
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)
 GET     /discussion/comment-counts.json                     controllers.CommentCountController.render(shortUrls: String)
