@@ -77,6 +77,7 @@
 .inline-image {
     width: $inArticleInlineImgWidth;
     float: left;
+    clear: left;
     margin: 3px 0 0 0;
     padding-right: 10px;
     padding-bottom: 15px;
