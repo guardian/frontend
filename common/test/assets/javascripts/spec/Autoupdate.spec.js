@@ -43,11 +43,14 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
             common.mediator.on('modules:autoupdate:loaded', callback);
 
+            attachTo.innerHTML = '<span>bar</span>';
+
             var a = new Autoupdate({
                     path: path,
                     delay: delay,
                     attachTo: attachTo,
-                    switches: {autoRefresh: true}
+                    switches: {autoRefresh: true},
+                    manipulationType: 'prepend'
                 });
                 a.init();
 
@@ -55,7 +58,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
 
             runs(function(){
                 expect(callback).toHaveBeenCalled();
-                expect(attachTo.innerHTML).toBe('<span>foo</span>');
+                expect(attachTo.innerHTML).toBe('<span>foo</span><span>bar</span>');
                 a.off();
             });
         });
