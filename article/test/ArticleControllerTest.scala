@@ -66,4 +66,25 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""") // the callback
   }
+
+  it should "return the latest blocks of a live blog" in Fake {
+    val fakeRequest = FakeRequest(GET, "environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
+      .withHeaders("host" -> "localhost:9000")
+
+    val result = controllers.ArticleController.renderLatest("environment/blog/2013/jun/26/barack-obama-climate-action-plan.json", Some("block-51cae3aee4b02dad15c7494e"))(fakeRequest)
+    status(result) should be(200)
+
+    val content = contentAsString(result)
+
+    // newer blocks
+    content should include("block-51cb058fe4b0a53e53280c8d")
+    content should include("block-51cafaa9e4b0e2a9937599df")
+
+    //this block
+    content should not include("block-51cae3aee4b02dad15c7494e")
+
+    //older block
+    content should not include("block-51caab7be4b08c78ea33d49d")
+
+  }
 }
