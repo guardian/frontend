@@ -17,6 +17,7 @@ object BodyCleaner {
     BlockNumberCleaner,
     TweetCleaner,
     WitnessCleaner,
+    VideoEmbedCleaner,
     VideoPosterCleaner(article.videoAssets)
   )
 }
