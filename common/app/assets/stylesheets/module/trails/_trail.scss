@@ -197,7 +197,7 @@
     }
 
     .gallerythumbs__item {
-        @include fixed-aspect(5, 3, 50%); // 5:3 aspect - works around thumbs being slightly different in size
+        @include fix-aspect-ratio(5, 3, 50%); // 5:3 aspect - works around thumbs being slightly different in size
         @include box-sizing(border-box);
         margin-bottom: 3px;
         float: left;
@@ -211,7 +211,7 @@
     }
 
     .gallerythumbs__item:first-child {
-        @include fixed-aspect(5, 3);
+        @include fix-aspect-ratio(5, 3);
         float: left;
         border-left: 0;
     }
@@ -229,13 +229,13 @@
 
     @media (min-width: 480px) {
         .gallerythumbs__item:first-child {
-            @include fixed-aspect(5, 3, 67%);
+            @include fix-aspect-ratio(5, 3, 67%);
             float: left;
             border-left: 0;
             margin-bottom: 0;
         }
         .gallerythumbs__item {
-            @include fixed-aspect(5, 3, 33%);
+            @include fix-aspect-ratio(5, 3, 33%);
             float: right;
             border-left: 3px solid transparent;
         }
