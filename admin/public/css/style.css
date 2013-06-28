@@ -466,3 +466,7 @@ a.cta, .cta a {
 .fronts .finder {
     background-color: #f4f4ee;
 }
+
+.fronts .lists .connectedList {
+    min-height:50px;
+}

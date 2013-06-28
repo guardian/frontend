@@ -68,14 +68,33 @@ define([
                     };
 
                 if (inList.length) {
-                    delta.position = inList.next().data('url');
-                    if(!delta.position) {
-                        delta.after = true
+                    delta.position = inList.next().data('url') || '';
+                    // if there is a list and this is the last item
+                    var numOfItems = $("[data-url]", list).length;
+                    if (!delta.position && numOfItems > 1) {
+                        delta.after = true;
+                        console.log($("[data-url]", list));
+                        delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
                     } 
                 } else {
                     delta.verb = 'remove';
                 }
                 console.log(JSON.stringify(delta));
+                reqwest({
+                    url: '/frontsapi/listitem/' + delta.list,
+                    contentType: 'application/json',
+                    type: 'json',
+                    method: 'post',
+                    data: JSON.stringify(delta)
+                }).then(
+                    function(resp) {
+                        console.log(resp);
+                    },
+                    // error
+                    function(xhr) {
+                        console.log(xhr);
+                    }
+                );
             });
         };
 
@@ -95,34 +114,25 @@ define([
         };
 
         this.init = function(callback) {
+            var that = this;
 
             viewModel.latest.search();
 
             // Load dummy lists
-            this.loadList(viewModel.listA, [
-                "society/2013/jun/25/society-daily-email",
-                "environment/2013/jun/25/obama-unveil-first-us-climate-strategy",
-                "sport/2013/jun/25/lions-melbourne-rebels-live-report",
-                "tv-and-radio/video/2013/jun/25/question-time-russell-brand-video-review",
-                "sport/that-1980s-sports-blog/2013/jun/25/lions-battled-bollymore-test-australia-1989",
-                "uk/2013/jun/25/ian-brady-tells-tribunal-not-psychotic",
-                "business/2013/jun/25/eurozone-crisis-greece-reshuffle-cabinet",
-                "politics/blog/2013/jun/25/mervyn-king-treasury-committee-live-blog",
-                "business/2013/jun/24/eurozone-crisis-bond-yields-spain-greece",
-                "global-development/2013/jun/25/central-american-farmers-coyotes"
-            ]); 
-            this.loadList(viewModel.listB, [
-                "news/2013/jun/27/glastonbury-mandela-obama-robson-wimbledon-news-photographs",
-                "uk/2013/jun/27/doreen-lawrence-met-chief-police",
-                "money/blog/2013/jun/27/payday-loans-industry-law-unto-itself",
-                "business/2013/jun/27/eurozone-crisis-bank-bailout-rules-summit",
-                "business/2013/jun/27/rural-broadband-target-postponed",
-                "housing-network/2013/jun/27/direct-payment-guarantee-landlords",
-                "commentisfree/2013/jun/27/supreme-court-gay-marriage-battle-almost-done",
-                "sport/picture/2013/jun/27/sport-picture-of-the-day-horsing-around",
-                "world/2013/jun/27/uk-road-deaths",
-                "world/2013/jun/27/turkey-protests-hundreds-barricades-ankara"
-            ]); 
+            ['listA', 'listB'].forEach(function(list) {
+                reqwest({
+                    url: '/frontsapi/list/' + list,
+                    type: 'json'
+                }).then(
+                    function(resp) {
+                        that.loadList(viewModel[list], resp[list]); 
+                    },
+                    // error
+                    function(xhr) {
+                        console.log(xhr);
+                    }
+                );
+            })
 
             knockout.applyBindings(viewModel);
 
