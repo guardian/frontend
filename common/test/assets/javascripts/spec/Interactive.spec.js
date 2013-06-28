@@ -4,12 +4,13 @@ define([ 'common',
          'fixtures'], function(common, bean, Interactive, fixtures) {
 
         describe("Interactive", function() {
-            var conf = {
+            
+            var i, conf = {
                     id: 'interactive',
                     fixtures: [
                                 '<figure class="interactive" data-interactive="path/to/interactive">' +
-                                '  <p>.</p>' +
-                                '</div>'
+                                '  <caption>Description of the interactive</caption>' +
+                                '</figure>'
                               ]
             };
 
@@ -21,15 +22,16 @@ define([ 'common',
 
             beforeEach(function() {
                 fixtures.render(conf);
-                require = jasmine.createSpy();
+                i = new Interactive(document.querySelector('figure.interactive'), document, config);
             });
 
             it("Should exist", function() {
-                expect(new Interactive(document.querySelector('figure.interactive'), document, config)).toBeDefined();
+                expect(i).toBeDefined();
             });
             
             it("Should load the interactive resource defined in the data-attribute", function() {
-                new Interactive(document.querySelector('figure.interactive'), document, config).init();
+                require = jasmine.createSpy();
+                i.init();
                 expect(require.mostRecentCall.args[0]).toBe('http://foo/path/to/interactive/boot.js');
             });
 
