@@ -1,4 +1,4 @@
-define(['models/article', 'Knockout', 'Common', 'Reqwest'], function (Article, ko, Common, Reqwest) {
+define(['models/article', 'knockout', 'Common', 'Reqwest'], function (Article, ko, Common, Reqwest) {
 
     return function(opts) {
 

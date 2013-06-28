@@ -1,4 +1,4 @@
-define(['Knockout'], function (Knockout) {
+define(['knockout'], function (Knockout) {
 
     return function() {
         this.id    = '';

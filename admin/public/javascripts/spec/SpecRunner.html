@@ -4,18 +4,18 @@
 <head>
   <title>Jasmine Spec Runner</title>
 
-  <link rel="shortcut icon" type="image/png" href="../vendor/jasmine-1.2.0/jasmine_favicon.png">
-  <link rel="stylesheet" type="text/css" href="../vendor/jasmine-1.2.0/jasmine.css">
-  <script type="text/javascript" src="../vendor/jasmine-1.2.0/jasmine.js"></script>
-  <script type="text/javascript" src="../vendor/jasmine-1.2.0/jasmine-html.js"></script>
+  <link rel="shortcut icon" type="image/png" href="../components/jasmine/images/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="../components/jasmine/lib/jasmine-core/jasmine.css">
+  <script type="text/javascript" src="../components/jasmine/lib/jasmine-core/jasmine.js"></script>
+  <script type="text/javascript" src="../components/jasmine/lib/jasmine-core/jasmine-html.js"></script>
 
   <!-- include source files here... -->
   <script>
             var curl = {
                 paths: {
-                    EventEmitter: '../vendor/EventEmitter',
+                    EventEmitter: '../components/eventEmitter/EventEmitter',
                     Common:       '../common',
-                    Reqwest:      '../vendor/reqwest',
+                    Reqwest:      '../components/reqwest/reqwest',
                     TagSearch:    '../modules/TagSearch',
                     AutoComplete: '../modules/AutoComplete',
                     tagEntry:     '../modules/tagEntry',
@@ -27,10 +27,10 @@
         </script>
 
   <!-- supporting libraries -->
-  <script type="text/javascript" src="../vendor/curl.js"></script>
-  <script  type="text/javascript" src="../vendor/underscore.js"></script>
-  <script  type="text/javascript" src="../vendor/jquery-ui-1.8.23.custom/js/jquery-1.7.2.min.js"></script>
-  <script  type="text/javascript" src="../vendor/humanized_time_span.js"></script>
+  <script type="text/javascript" src="../components/curl/src/curl.js"></script>
+  <script type="text/javascript" src="../components/underscore/underscore.js"></script>
+  <script type="text/javascript" src="../vendor/jquery-ui-1.8.23.custom/js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="../vendor/humanized_time_span.js"></script>
   
   <script>
     define('Config', function() {

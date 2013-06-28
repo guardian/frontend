@@ -1,4 +1,4 @@
-define(['models/editable', 'Knockout', 'Common'], function (Editable,  ko, Common) {
+define(['models/editable', 'knockout', 'Common'], function (Editable,  ko, Common) {
 
     var Place = function(opts) {
 
