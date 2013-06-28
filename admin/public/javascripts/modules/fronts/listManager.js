@@ -85,9 +85,7 @@ define([
                     method: 'post',
                     data: JSON.stringify(delta)
                 }).then(
-                    function(resp) {
-                        console.log(resp);
-                    },
+                    function(resp) { },
                     // error
                     function(xhr) {
                         console.log(xhr);
