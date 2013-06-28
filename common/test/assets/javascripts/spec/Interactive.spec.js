@@ -7,7 +7,7 @@ define([ 'common',
             var conf = {
                     id: 'interactive',
                     fixtures: [
-                                '<figure id="abcde" class="interactive">' +
+                                '<figure id="abcde" class="interactive" data-interactive="path/to/interactive">' +
                                 '  <p>foo</p>' +
                                 '</div>'
                               ]
