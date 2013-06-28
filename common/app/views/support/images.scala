@@ -17,6 +17,14 @@ object Naked extends ImageType {
   val prefix = "n"
 }
 
+object GalleryLargeTrail extends ImageType {
+  val prefix = "glt"
+}
+
+object GallerySmallTrail extends ImageType {
+  val prefix = "gst"
+}
+
 object ImgSrc {
 
   val imageHost = Configuration.images.path

@@ -2,6 +2,11 @@
 
 <ul class="unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        @fragments.trails.thumbnail(trail, info.rowNum, related, showThumbnail = (info.rowNum <= numThumbnails), headingLevel = headingLevel)
+
+        @trail match {
+            case g: Gallery => { @fragments.trails.gallery(g, info.rowNum) }
+            case other => { @fragments.trails.thumbnail(other, info.rowNum, related, showThumbnail = (info.rowNum <= numThumbnails), headingLevel = headingLevel) }
+        }
+
     }
 </ul>
