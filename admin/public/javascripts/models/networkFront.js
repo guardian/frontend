@@ -1,4 +1,4 @@
-define(['models/edition', 'models/trailblock', 'Knockout', 'Common'], function (Edition, Trailblock, Knockout, Common) {
+define(['models/edition', 'models/trailblock', 'knockout', 'Common'], function (Edition, Trailblock, Knockout, Common) {
 
 	return function(data) {
 

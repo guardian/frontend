@@ -2,7 +2,7 @@ define([
     'models/editable',
     'models/event',
     'Config',
-    'Knockout',
+    'knockout',
     'Common',
     'Reqwest'],
 function (

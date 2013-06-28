@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Packages test</title>
+
+<script>
+
+	curl = {
+		paths: {
+			curl: '../src/curl'
+		}
+	};
+
+</script>
+<script src="../src/curl.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+(function () {
+"use strict";
+
+	var cfg, tests, privateCfg, domReady;
+
+	cfg = {
+		baseUrl: 'support',
+		paths: { curl: '../../src/curl' },
+		packages: [
+			{ name: 'pkg', location: 'commonjs' },
+			{ name: 'pkg2', location: 'commonjs', main: 'main2' },
+			{ name: 'foo', location: 'commonjs', main: 'foo' },
+			{ name: 'rel', location: 'commonjs', main: 'main-with-relative-dep' },
+			{ name: 'named', location: 'commonjs', main: 'named-main' },
+			{ name: 'app', location: '', main: '../commonjs/main' },
+			{ name: 'plugin', location: '', main: '../main-plugin', config: { pkgValue: 27 } }
+		],
+		plugins: {
+			'plugin': { testValue: 42 }
+		}
+	};
+
+	tests = {
+		'curl should infer location/main.js as main module when not specified': function (cb, assert, require, done) {
+			function checkMain (main) {
+				assert.equal('pkg/main', main.id, 'main module should be "pkg/main"');
+			}
+			curl(['pkg'])
+				.then(checkMain, cb.failure)
+				.then(done, done);
+		},
+		'curl should find explicit main module': function (cb, assert, require, done) {
+			function checkMain (main) {
+				assert.equal('pkg2/main2', main.id, 'main2 module should be "pkg2/main2"');
+			}
+			curl(['pkg2'])
+				.then(checkMain, cb.failure)
+				.then(done, done);
+		},
+		'curl should find explicit main module even when named the same as its package': function (cb, assert, require, done) {
+			function checkMain (main) {
+				assert.equal('foo', main.id, 'main module should be "foo"');
+			}
+			curl(['foo'])
+				.then(checkMain, cb.failure)
+				.then(done, done);
+		},
+		'curl should find main module using ".." module id': function (cb, assert, require, done) {
+			function checkMain (rm) {
+				assert(!!rm, 'main module should be loaded');
+			}
+			curl(['foo/folder/returnMain'])
+				.then(checkMain, cb.failure)
+				.then(done, done);
+		},
+		'curl should find main module using "../.." module id': function (cb, assert, require, done) {
+			function checkMain (rm) {
+				// either pkg/main or main/main is acceptable since there's a
+				// race condition to this edge case. (note that pkg and main
+				// packages point to same code.)
+				assert(!!rm, 'main module should be loaded');
+			}
+			curl(['foo/folder/deep/returnMain'])
+				.then(checkMain, cb.failure)
+				.then(done, done);
+		},
+		'curl should find relative dep from main module': function (cb, assert, require, done) {
+			function checkMain (main) {
+				assert.equal('dep', main, 'main module should return "dep" (exported string)');
+			}
+			curl(['rel'])
+				.then(checkMain, cb.failure)
+				.then(done, done);
+		},
+		'curl should load a named main module': function (cb, assert, require, done) {
+			function checkMain (main) {
+				assert.equal('named', main.name, 'named main module should have loaded');
+			}
+			curl(['named'])
+				.then(checkMain, cb.failure)
+				.then(done, done);
+		},
+		'curl should allow blank location (baseUrl)': function (cb, assert, require, done) {
+			function checkMain (main) {
+				assert(!!main, 'main module should be "commonjs/main"');
+			}
+			curl(['app'])
+				.then(checkMain, cb.failure)
+				.then(done, done);
+		},
+		'curl should allow a package main to be a plugin': function (cb, assert, require, done) {
+			function checkValue (value) {
+				assert.equal(42, value.testValue, 'plugin value');
+			}
+			curl(['plugin!foo'])
+				.then(checkValue, cb.failure)
+				.then(done, done);
+		}
+	};
+
+	curl(
+		cfg,
+		['curl/_privileged', 'curl/tdd/runner', 'curl/domReady', '../tdd/configureAsserts']
+	).then(
+		function (priv, runner, ready, asserts) {
+			var testRunner, assertions;
+
+			privateCfg = priv.cfg;
+			testRunner = runner;
+			assertions = asserts;
+			domReady = ready;
+
+			for (var name in tests) (function (name) {
+				var cb, assert;
+				cb = configureCallbacks(success, failure, name);
+				assert = assertions(success, failure, name);
+				testRunner().run(function (require, done) {
+					tests[name](cb, assert, require, done);
+				});
+			}(name));
+		}
+	);
+
+	function configureSetup (config) {
+		return function setup () {
+			resetCurl();
+			curl(config);
+		};
+	}
+
+	function configureCallbacks (success, failure, msg) {
+		return {
+			success: function () { success(msg); },
+			failure: function (ex) { failure(msg + (ex ? ' - ' + ex.message : '')); }
+		};
+	}
+
+	function write (msg) {
+		domReady(function () {
+			document.body.appendChild(document.createElement('div')).innerHTML = msg;
+		})
+	}
+
+	function failure (msg) { write('FAILED: ' + msg); }
+	function success (msg) { write('SUCCESS: ' + msg); }
+
+	function resetCurl () {
+		for (var name in privateCfg) {
+			delete privateCfg[name];
+		}
+	}
+
+}());
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

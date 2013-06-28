@@ -1,6 +1,6 @@
 curl([
 	'models/networkFront',
-	'Knockout',
+	'knockout',
 	'Config',
     'Common',
     'TagEntry',

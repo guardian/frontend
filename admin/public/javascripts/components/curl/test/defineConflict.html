@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>noConflict define test</title>
+
+<script>
+var define = function () {}, orig = define;
+</script>
+<script src="../src/curl.js" type="text/javascript"></script>
+</head>
+<body>
+</body>
+
+<script type="text/javascript">
+
+/*
+
+scenarios:
+
+1. dev wants to load curl as a third-party tool (inside a widget, for instance)
+	- namespace curl/require
+	- namespace define
+	- if either already exists, do nothing since widget may have just been
+	  loaded twice
+	- if conflict and cfg.overwriteApi is:
+		- missing, ignore conflict  <-- ***** special case *****
+		- falsey, throw,
+		- truthy, ignore conflict
+
+2. dev wants to rename curl to something "standardized"
+	- rename curl to require
+	- if require() or define() already exist, throw unless dev meant to overwrite
+	- if conflict and cfg.overwriteApi is:
+	 	- missing, throw
+	 	- falsey, throw
+	 	- truthy, ignore conflict
+
+3. dev wants to load curl async alongside modules
+	- don't throw if standard (or namespaced) api functions are overwritten
+	- if conflict and cfg.overwriteApi is:
+		- missing, throw
+		- falsey, throw
+		- truthy, ignore conflict
+
+4. dev wants to adapt curl to her/his proprietary module system (actual use case)
+	- namespace curl/require
+	- namespace define
+	- if either already exists, fail loudly
+	- if conflict and cfg.overwriteApi is:
+		- missing, throw
+		- falsey, throw
+		- truthy, ignore conflict
+
+ */
+try {
+	curl({ paths: { curl: '../src/curl/' } });
+	write('FAILED: curl overwrote global define (plz ignore this in IE6. feature works, test doesn\'t');
+}
+catch (ex) {
+	if (/define.*exists/.test(ex.message)) {
+		write('SUCCESS: curl threw when it conflicted with no recourse: ' + ex.message);
+	}
+	else {
+		write('FAILED: something happened: ' + ex.message + ' (plz ignore in IE)');
+	}
+}
+
+function write (msg) {
+	document.body.appendChild(document.createElement('div')).innerHTML = msg;
+}
+
+</script>
+</html>
