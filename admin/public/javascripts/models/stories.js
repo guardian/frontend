@@ -1,4 +1,4 @@
-define(['models/story', 'Config', 'Knockout', 'Common', 'Reqwest'], function (Story, Config, ko, Common, Reqwest) {
+define(['models/story', 'Config', 'knockout', 'Common', 'Reqwest'], function (Story, Config, ko, Common, Reqwest) {
 
     var Stories = function(opts) {
         var endpoint = '/story',

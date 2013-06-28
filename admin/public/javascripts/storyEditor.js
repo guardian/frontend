@@ -1,8 +1,8 @@
 curl([
     'models/stories',
     'models/articles',
-    'Knockout',
-    'KnockoutSortable',
+    'knockout',
+    'knockoutSortable',
     'Reqwest',
     'Config',
     'Common'

@@ -4,15 +4,13 @@ define([
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/discussion/discussion",
-    "modules/storage"
+    "modules/discussion/discussion"
 ], function (
     common,
     AutoUpdate,
     MatchNav,
     Reading,
-    Discussion,
-    storage
+    Discussion
 ) {
 
     var modules = {
@@ -40,11 +38,15 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
                     var a = new AutoUpdate({
-                        path: window.location.pathname,
+                        path: function() {
+                            var id = context.querySelector('.article-body .block').id,
+                                path = window.location.pathname;
+                           return path + '.json' + '?lastUpdate=' + id;
+                        },
                         delay: 60000,
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
-                        responseSelector: '.article-body .block'
+                        manipulationType: 'prepend'
                     }).init();
                 }
             });

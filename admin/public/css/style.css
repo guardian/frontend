@@ -143,7 +143,7 @@ textarea.event-explainer {
 .article {
     display: block;
     overflow: hidden;
-    padding: 2px 2px 6px 2px;
+    padding: 2px;
     margin-bottom: 4px;
     -webkit-transition: opacity 0.2s;
        -moz-transition: opacity 0.2s;
@@ -154,7 +154,6 @@ textarea.event-explainer {
 
 .article:hover {
     background-color: #fff;
-    box-shadow: 0px 5px 10px rgba(0,0,0,.2);
 }
 
 .article a {
@@ -165,10 +164,20 @@ textarea.event-explainer {
 
 .icon-star:hover, .icon-star-empty:hover { cursor: pointer; }
 
-.article-title { font-size: 12px; color: #005689; display: inline-block; }
+.article-title {
+    font-size: 12px;
+    line-height: 14px;
+    color: #005689;
+    display: inline-block;
+}
+
 .article-id { font-size: 1em; color: #999; margin-bottom: 0; font-size: 0.9em; }
 
-.meta { color: #BFBF9F; margin: 0 0 4px 0; font-size: 11px; line-height: 1.2em; }
+.meta {
+    color: #BFBF9F;
+    font-size: 11px;
+    line-height: 1.2em;
+}
 
 .event-articles {margin: 0 0 0 2px;}
 
@@ -443,3 +452,17 @@ a.cta, .cta a {
     color: #E0AF1B;
 }
 
+
+/* FRONTS MANAGER */
+
+.fronts .finder,
+.fronts .lists {
+    width: 45%;
+    float: left;
+    padding: 8px;
+}
+
+
+.fronts .finder {
+    background-color: #f4f4ee;
+}

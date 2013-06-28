@@ -18,7 +18,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
   val references = "pa-football-competition,pa-football-team,witness-assignment"
 
-  val inlineElements = "picture,witness,video"
+  val inlineElements = "picture,witness,video,embed"
 
   val leadContentMaxAge = 2.days
 

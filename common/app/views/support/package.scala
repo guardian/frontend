@@ -136,6 +136,16 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
+object VideoEmbedCleaner extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    document.getElementsByClass("element-video").foreach { element: Element =>
+      element.child(0).wrap("<div class=\"element-video__wrap\"></div>")
+    }
+    document
+  }
+}
+
 case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
@@ -150,7 +160,7 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
           val src = img.attr("src")
           img.attr("src", ImgSrc(src, Naked))
           Option(img.attr("width")).filter(_.isInt) foreach { width =>
-            fig.attr("class", width.toInt match {
+            fig.addClass(width.toInt match {
               case width if width <= 220 => "img-base inline-image"
               case width if width < 460 => "img-median inline-image"
               case width => "img-extended"
@@ -213,6 +223,22 @@ object TweetCleaner extends HtmlCleaner {
         element.appendChild(userEl).appendChild(date).appendChild(body)
       }
     }
+    document
+  }
+}
+
+object InBodyElementCleaner extends HtmlCleaner {
+
+  private val supportedElements = Seq(
+    "element-tweet",
+    "element-video",
+    "element-image"
+  )
+
+  override def clean(document: Document): Document = {
+    val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+    val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
+    unsupportedElements.foreach(_.remove())
     document
   }
 }

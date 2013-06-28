@@ -8,26 +8,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8"/>
 
-        <link href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")" rel="stylesheet">
+        <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet">
         <link href="@routes.Assets.at("css/style.css")" rel="stylesheet">
         <script>
             var curl = {
+                baseUrl: '@{Configuration.assets.path}javascripts',
                 paths: {
-                    EventEmitter: '@routes.Assets.at("javascripts/vendor/EventEmitter")',
-                    Common: '@routes.Assets.at("javascripts/common")',
-                    Reqwest: '@routes.Assets.at("javascripts/vendor/reqwest")',
-                    TagSearch: '@routes.Assets.at("javascripts/modules/TagSearch")',
-                    TagEntry: '@routes.Assets.at("javascripts/modules/tagEntry")',
-                    ItemSearch: '@routes.Assets.at("javascripts/modules/ItemSearch")',
-                    Knockout: '@routes.Assets.at("javascripts/vendor/knockout-2.1.0.debug")',
-                    KnockoutSortable: '@routes.Assets.at("javascripts/vendor/knockout-sortable")',
-                    AutoComplete: '@routes.Assets.at("javascripts/modules/AutoComplete")',
-                    models: '@routes.Assets.at("javascripts/models")'
+                    Common: 'common',
+                    models: 'models',
+                    TagSearch: 'modules/TagSearch',
+                    TagEntry: 'modules/tagEntry',
+                    ItemSearch: 'modules/ItemSearch',
+                    AutoComplete: 'modules/AutoComplete',
+                    knockout: 'components/knockout/build/output/knockout-latest.js',
+                    knockoutSortable: 'components/knockout-sortable/src/knockout-sortable.js',
+                    Reqwest: 'components/reqwest/reqwest',
+                    EventEmitter: 'components/eventEmitter/EventEmitter',
+                    bean: 'components/bean/bean',
+                    bonzo: 'components/bonzo/bonzo'
                 }
             }
         </script>
-        <script src="@routes.Assets.at("javascripts/vendor/curl.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.at("javascripts/vendor/underscore.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/components/underscore/underscore.js")" type="text/javascript"></script>
 
         <script>
             define('Config', function() {
@@ -36,6 +39,9 @@
                     identity: @{Html(identity)},
                     preview: '@conf.AdminConfiguration.stories.preview'
                 }
+            });
+            define('jquery.ui.sortable', function() {
+                require(['js!components/jquery-ui/ui/jquery.ui.sortable.js'], function() {});
             });
         </script>
 
@@ -61,9 +67,9 @@
     
     @content
 
-    <script src="@routes.Assets.at("javascripts/vendor/jquery-ui-1.8.23.custom/js/jquery-1.7.2.min.js")"></script>
-    <script src="@routes.Assets.at("javascripts/vendor/jquery-ui-1.8.23.custom/js/jquery-ui-1.8.23.custom.min.js")"></script>
-    <script src="@routes.Assets.at("bootstrap/js/bootstrap.js")"></script>
+    <script src="@routes.Assets.at("javascripts/components/jquery/jquery.js")"></script>
+    <script src="@routes.Assets.at("javascripts/components/jquery-ui/ui/jquery-ui.js")"></script>
+    <script src="@routes.Assets.at("javascripts/components/bootstrap.css/js/bootstrap.js")"></script>
     <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
 

@@ -51,3 +51,12 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+@mixin fix-aspect-ratio($width, $height, $startingWidth: 100%) {
+    // To get this working, position the child element
+    // to 'absolute' in the top left corner
+    $height: ($height / $width) * $startingWidth;
+    width: $startingWidth;
+    padding-bottom: $height;
+    position: relative;
+}

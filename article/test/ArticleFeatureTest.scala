@@ -159,7 +159,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
 
         ImageServerSwitch.switchOn
-        inBodyImage.getAttribute("class") should be("img-extended")
+        inBodyImage.getAttribute("class") should include("img-extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
@@ -321,6 +321,25 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       }
     }
 
+    scenario("Show embedded video in live blogs"){
+      Given("I am on a live blog with an embedded video")
+      HtmlUnit("/world/2013/jun/24/kevin-rudd-labour-politics-live"){ browser =>
+        import browser._
+        Then("I should see the embedded video")
+        $(".element-video").size should be (4)
+      }
+    }
+
+    scenario("Show embedded tweets in live blogs"){
+      Given("I am on a live blog with an embedded tweet")
+      HtmlUnit("/world/2013/jun/24/kevin-rudd-labour-politics-live"){ browser =>
+        import browser._
+
+        Then("I should see the embedded video")
+        $(".element-tweet").size should be (12)
+      }
+    }
+
     scenario("Show primary picture on composer articles") {
       Given("I am on an article created in composer tools")
       HtmlUnit("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { broswer =>
@@ -390,6 +409,32 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst(".trailblock").getAttribute("role") should be("complementary")
         findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
         
+      }
+    }
+
+
+    scenario("Story package with a gallery trail") {
+
+      Given("I'm on an article that has a gallery in its story package")
+      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+        import browser._
+
+        Then("I should see a fancy gallery trail")
+        $(".trail--gallery") should have size (1)
+
+        And("it should have 3 thumbnails")
+        $(".gallerythumbs__item") should have size (3)
+
+        And("should show a total image count of 12")
+        $(".trail__count--imagecount").getText should be("12 images")
+      }
+
+      Given("I'm on an article that links to an In Pictures Series gallery")
+      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+        import browser._
+
+        Then("The gallery trail should have an 'In Pictures' kicker title")
+        $(".trail__headline-kicker").getText should be ("In Pictures:")
       }
     }
 
