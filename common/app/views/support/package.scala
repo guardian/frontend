@@ -136,6 +136,16 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
+object VideoEmbedCleaner extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    document.getElementsByClass("element-video").foreach { element: Element =>
+      element.child(0).wrap("<div class=\"element-video__wrap\"></div>")
+    }
+    document
+  }
+}
+
 case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
