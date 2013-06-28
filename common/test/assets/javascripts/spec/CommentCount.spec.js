@@ -2,7 +2,7 @@ define([
     'common',
     'ajax',
     'modules/discussion/commentCount',
-    '../fixtures/commentCounts'], function(
+    '../fixtures/commentcounts'], function(
     common,
     ajax,
     commentCount,
@@ -64,7 +64,7 @@ define([
 
         it("should append comment counts to DOM", function(){
             waits(function() {
-                expect(query.selectorAll('.trail__comment-count').length).toBe(3)
+                expect(query.selectorAll('.trail__count--commentcount').length).toBe(3)
             });
         });
 
