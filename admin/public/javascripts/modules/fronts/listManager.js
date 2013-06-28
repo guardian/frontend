@@ -69,17 +69,15 @@ define([
 
                 if (inList.length) {
                     delta.position = inList.next().data('url') || '';
-                    // if there is a list and this is the last item
+                    // if this is adding after the last item
                     var numOfItems = $("[data-url]", list).length;
                     if (!delta.position && numOfItems > 1) {
                         delta.after = true;
-                        console.log($("[data-url]", list));
                         delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
                     } 
                 } else {
                     delta.verb = 'remove';
                 }
-                console.log(JSON.stringify(delta));
                 reqwest({
                     url: '/frontsapi/listitem/' + delta.list,
                     contentType: 'application/json',
