@@ -397,7 +397,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     scenario("Story package with a gallery trail") {
 
       Given("I'm on an article that has a gallery in its story package")
-
       HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
         import browser._
 
@@ -409,6 +408,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
         And("should show a total image count of 12")
         $(".trail__count--imagecount").getText should be("12 images")
+      }
+
+      Given("I'm on an article that links to an In Pictures Series gallery")
+      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+        import browser._
+
+        Then("The gallery trail should have an 'In Pictures' kicker title")
+        $(".trail__headline__kicker").getText should be ("In Pictures:")
       }
     }
 
