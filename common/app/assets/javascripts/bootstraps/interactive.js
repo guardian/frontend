@@ -9,7 +9,8 @@ define([
     var modules = {
         augmentInteractive: function () {
             common.mediator.on('page:interactive:ready', function(config, context) {
-                new Interactive(context, config).init();
+                var interactiveNodeList = context.querySelectorAll('figure.interactive');
+                new Interactive(interactiveNodeList, context, config, common.mediator).init();
             });
         }
     };
