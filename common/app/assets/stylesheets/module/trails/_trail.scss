@@ -5,22 +5,17 @@
 .trail {
     position: relative;
     overflow: hidden;
-    margin: 0 0 $baseline;
-    border-bottom: 1px solid #EDEDE7;
-    padding: $baseline*2 0 $baseline*3;
+    margin: 0;
+    padding: $baseline*3 0 $baseline*3;
 
-    &:first-child {
-        padding-top: $baseline*3
-    }
-
-    &:last-child {
-        margin-bottom: 0;
-    }
 }
 
-    .trailblock ul:last-child .trail:last-child {
-        border-bottom: none;
-    }
+
+.trail--thumbnail + .trail--thumbnail {
+    border-top: 1px solid #EDEDE7;
+}
+
+
 
 .trail__headline {
     @media (min-width: 25em) { @extend %type-4; }
@@ -77,7 +72,7 @@
 
 .trail__count {
     position: absolute;
-    top: 8px;
+    top: $baseline*3;
     right: 0;
 
     a,
@@ -172,7 +167,6 @@
 
     background-color: #F9F9F6;
     padding-bottom: 3px;
-    margin-top: -6px; // O_o !!!!!!!!
     border-bottom: 0;
 
     &:first-child {
@@ -189,11 +183,12 @@
 
     .relative-timestamp,
     .trail__headline {
-        margin: 0 8px;
+        margin-left: $baseline*2;
+        margin-right: $baseline*2;
     }
 
-    .trail__headline {
-        margin-bottom: 8px;
+    .gallerythumbs {
+        margin-top: $baseline;
     }
 
     .gallerythumbs__item {
@@ -225,7 +220,7 @@
         width: 100%;
     }
 
-    @media (min-width: 480px) {
+    @media (min-width: $mobileLandscape) {
         .gallerythumbs__item:first-child {
             @include fix-aspect-ratio(5, 3, 67%);
             float: left;
