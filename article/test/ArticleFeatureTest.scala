@@ -415,7 +415,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("The gallery trail should have an 'In Pictures' kicker title")
-        $(".trail__headline__kicker").getText should be ("In Pictures:")
+        $(".trail__headline-kicker").getText should be ("In Pictures:")
       }
     }
 
