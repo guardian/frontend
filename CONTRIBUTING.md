@@ -14,7 +14,7 @@ We welcome code submissions from other teams. Here's the rules of engagement.
 
 This is applicable to [GMG employees](http://www.gmgplc.co.uk/).
 
-- Understand what you are trying to achieve with the change (what does success look like)
+- Understand what you are trying to achieve with the change (what does success look like?)
 - Fork the code and make your changes.
 - Ensure your branch is built succesfully by TeamCity, both [builds](http://teamcity.gudev.gnl:8111/project.html?projectId=project35&tab=projectOverview) and [intergration tests](http://teamcity.gudev.gnl:8111/project.html?projectId=project41&tab=projectOverview).
 - Open a pull request.
