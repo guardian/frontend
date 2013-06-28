@@ -17,8 +17,12 @@ object Naked extends ImageType {
   val prefix = "n"
 }
 
-object GalleryTrail extends ImageType {
-  val prefix = "gt"
+object GalleryLargeTrail extends ImageType {
+  val prefix = "glt"
+}
+
+object GallerySmallTrail extends ImageType {
+  val prefix = "gst"
 }
 
 object ImgSrc {

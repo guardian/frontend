@@ -10,7 +10,8 @@ case class Profile(width: Option[Int] = None, height: Option[Int] = None, compre
 // Configuration of our different image profiles
 object Contributor extends Profile(Some(140), Some(140), 70) {}
 object Gallery extends Profile(Some(750), Some(480), 90) {}
-object GalleryTrail extends Profile(Some(320), Some(205), 80) {}
+object GalleryLargeTrail extends Profile(Some(480), Some(288), 70) {}
+object GallerySmallTrail extends Profile(Some(280), Some(168), 70) {}
 
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile(None, None, 70) {}
