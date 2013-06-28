@@ -69,3 +69,7 @@ GET     /countries*id                    controllers.event.EntityController.read
 GET     /organisations                   controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Organization")
 GET     /organisations*id                controllers.event.EntityController.read(id, rdfType = "http://schema.org/Organization")
 
+
+#Metrics
+
+GET /metrics/loadbalancers               controllers.metrics.DashboardController.render()
