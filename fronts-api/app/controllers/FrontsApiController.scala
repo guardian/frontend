@@ -17,7 +17,10 @@ object FrontsApiController extends Controller with ExecutionContexts {
   lazy val databaseError = JsonResponse("Database Error")
 
   def getList(listName: String) = Action { implicit request =>
-    JsonComponent(listName -> toJson(TestData.top10list))
+    val result = Akka.future { FrontsApi.getList(listName) }
+    Async {
+      result map {l => JsonComponent(listName -> toJson(l)) }
+    }
   }
 
   def updateList(listName: String) = Action {
@@ -27,7 +30,7 @@ object FrontsApiController extends Controller with ExecutionContexts {
           json.asOpt[UpdateList] map {
             ul =>
               val promiseOfOption = Akka.future {
-                FrontsApi.addBefore(listName, ul.position, ul.item)
+                FrontsApi.add(listName, ul.position, ul.item, ul.after)
               }
               Async {
                 promiseOfOption map {
