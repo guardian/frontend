@@ -51,14 +51,19 @@ object PlayAssetHash extends Plugin {
     }
   }
 
-  def deleteAssetMaps = (streams, resourceManaged, target) map { (s, resources, target) =>
-    val log = s.log
-    val assetMapDir = target / "dist" / "assetmaps"
-    if (assetMapDir.exists()) {
-      FileUtils.deleteDirectory(assetMapDir)
-      log.info("Deleted assetmap dir " + assetMapDir)
-    }
+  def deleteAssetMaps = (streams, resourceManaged, target, assemblyDirectory in assembly, name) map {
+    (s, resources, target, assemblyDirectory, name) =>
+        val log = s.log
+        val assetMapDir = target / "dist" / "assetmaps"
+        if (assetMapDir.exists()) {
+          FileUtils.deleteDirectory(assetMapDir)
+          log.info("Deleted assetmap dir " + assetMapDir)
+        }
+
+        println("Delete cached *_dir files and folders from: %s. Cache may contain invalid hash maps".format(name))
+        IO.delete((assemblyDirectory * "*dir").get)
   }
+
   def generatorTransform(sourceDirectory: File, resourceManaged: File, assetFinder: PathFinder, assetRoots: Seq[File]) = {
     val copies = assetFinder.get.filterNot(_.isDirectory) map {
       asset => {
