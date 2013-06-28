@@ -13,7 +13,7 @@
         </a>
     </h@headingLevel>
 
-    <ul class="gallerythumbs unstyled cf">
+    <ul class="gallerythumbs js-visible unstyled cf">
         @if(trail.landscapes.length >= 3) {
             @trail.landscapes.take(3).zipWithRowInfo.map{ case(image, info) =>
             <li class="gallerythumbs__item @if(image.width >= image.height){gallerythumbs__item--landscape} else {gallerythumbs__item--portrait}">
