@@ -1,4 +1,4 @@
-define(['models/editable', 'models/article', 'models/agent', 'models/place', 'Knockout', 'Config', 'Common', 'Reqwest'], 
+define(['models/editable', 'models/article', 'models/agent', 'models/place', 'knockout', 'Config', 'Common', 'Reqwest'], 
         function (Editable, Article, Agent, Place, ko, Config, Common, Reqwest) {
 
     // zero pad the date getters

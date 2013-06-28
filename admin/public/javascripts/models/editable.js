@@ -1,4 +1,4 @@
-define(['Knockout', 'Common'], function (ko, Common) {
+define(['knockout', 'Common'], function (ko, Common) {
 
     var Editable = function() {};
 

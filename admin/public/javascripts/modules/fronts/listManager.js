@@ -1,6 +1,6 @@
 define([
     'Reqwest',
-    'Knockout',
+    'knockout',
     'models/fronts/article',
     'models/fronts/latestArticles'
 ], function(

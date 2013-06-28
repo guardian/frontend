@@ -1,7 +1,7 @@
 define([
     'models/editable',
     'models/quote',
-    'Knockout',
+    'knockout',
     'Common',
     'Reqwest'
 ], 

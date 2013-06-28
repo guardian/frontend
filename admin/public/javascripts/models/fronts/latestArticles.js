@@ -1,6 +1,6 @@
 define([
     'models/fronts/article',
-    'Knockout',
+    'knockout',
     'Common',
     'Reqwest'
 ], function (

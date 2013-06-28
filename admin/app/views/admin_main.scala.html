@@ -21,13 +21,11 @@
                     ItemSearch: 'modules/ItemSearch',
                     AutoComplete: 'modules/AutoComplete',
                     knockout: 'components/knockout/build/output/knockout-latest.js',
-                    Knockout: 'components/knockout/build/output/knockout-latest.js',
-                    KnockoutSortable: 'components/knockout-sortable/src/knockout-sortable.js',
+                    knockoutSortable: 'components/knockout-sortable/src/knockout-sortable.js',
                     Reqwest: 'components/reqwest/reqwest',
                     EventEmitter: 'components/eventEmitter/EventEmitter',
                     bean: 'components/bean/bean',
-                    bonzo: 'components/bonzo/bonzo',
-                    'jquery.ui.sortable': 'components/jquery-ui/ui/jquery.ui.sortable.js'
+                    bonzo: 'components/bonzo/bonzo'
                 }
             }
         </script>
@@ -41,6 +39,9 @@
                     identity: @{Html(identity)},
                     preview: '@conf.AdminConfiguration.stories.preview'
                 }
+            });
+            define('jquery.ui.sortable', function() {
+                require(['js!components/jquery-ui/ui/jquery.ui.sortable.js'], function() {});
             });
         </script>
 

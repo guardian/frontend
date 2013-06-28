@@ -1,6 +1,6 @@
 define([
     'models/editable',
-    'Knockout',
+    'knockout',
     'Common',
     'Reqwest'
 ], 

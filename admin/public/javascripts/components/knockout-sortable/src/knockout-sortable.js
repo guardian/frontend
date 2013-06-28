@@ -1,7 +1,7 @@
 (function(factory) {
     if (typeof define === "function" && define.amd) {
         // AMD anonymous module
-        define(["knockout", "jquery", "js!jquery.ui.sortable"], factory);
+        define(["knockout", "jquery", "jquery.ui.sortable"], factory);
     } else {
         // No module loader (plain <script> tag) - put directly in global namespace
         factory(window.ko, jQuery);
