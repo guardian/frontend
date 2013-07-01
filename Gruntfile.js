@@ -77,6 +77,23 @@ module.exports = function (grunt) {
             }
         },
 
+        casper: {
+            common : {
+                options : {
+                    test : true,
+                    direct : true,
+                    'log-level' : 'info'
+                },
+                src: ['integration-tests/casper/tests/*.spec.js'],
+                dest : function(input) {
+                   var i = input.replace('/casper/tests/', '/target/casper-xunit-reports/');
+                       i = i.replace(/\.js$/,'.xml');
+                    console.log(i);
+                    return i;
+                }
+            }
+        },
+
         // Lint Javascript sources
         jshint: {
             options: require('./resources/jshint_conf'),
@@ -208,9 +225,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-webfontjson');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-casper');
 
     // Standard tasks
-    grunt.registerTask('test:common', ['jshint:common']);
+    grunt.registerTask('test:integration', ['casper:common']);
+    grunt.registerTask('test:common', ['jshint:common', 'casper:common']);
     grunt.registerTask('test', ['test:common']);
 
     grunt.registerTask('compile:common:css', ['sass:common']);
