@@ -2,7 +2,8 @@ define([
     'models/editable',
     'knockout',
     'Common',
-    'Reqwest'
+    'Reqwest',
+    'js!humanizedTimeSpan'
 ], 
 function (
     Editable,
@@ -29,8 +30,7 @@ function (
 
         // Computeds
         this._humanDate = ko.computed(function(){
-            return this.webPublicationDate() || '-';
-            //return this.webPublicationDate() ? humanized_time_span(this.webPublicationDate()) : '-';
+            return this.webPublicationDate() ? humanized_time_span(this.webPublicationDate()) : '&nbsp;';
         }, this);
 
         // Track for editability / saving

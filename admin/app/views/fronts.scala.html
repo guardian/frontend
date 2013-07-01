@@ -26,6 +26,7 @@
 
     <script type="text/html" id="template_article">
         <div class="trail cf" data-bind="attr: {'data-url': id}">
+            <div class="date" data-bind="html: _humanDate"></div>
             <img data-bind="attr: {src: thumbnail}" />
             <h2 data-bind="html: webTitle() !== '' ? webTitle() : id()"></h2>
             <div class="trailText" data-bind="html: trailText"></div>
