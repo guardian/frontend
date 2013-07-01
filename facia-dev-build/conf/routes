@@ -82,6 +82,7 @@ GET     /fronts                          controllers.FrontsController.index()
 GET /metrics/loadbalancers               controllers.metrics.DashboardController.render()
 
 # Fronts Api
+GET     /frontsapi/lists                                    controllers.FrontsApiController.getLists
 GET     /frontsapi/list/:listName                           controllers.FrontsApiController.getList(listName)
 POST    /frontsapi/listitem/:listName                       controllers.FrontsApiController.updateList(listName)
 GET     /frontsapi/bootstrap                                controllers.FrontsApiController.bootStrap
