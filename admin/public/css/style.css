@@ -455,6 +455,11 @@ a.cta, .cta a {
 
 /* FRONTS MANAGER */
 
+.cf:before,
+.cf:after{content:"";display:table}
+.cf:after{clear:both}
+.cf{zoom:1}
+
 .fronts .finder,
 .fronts .lists {
     width: 45%;
@@ -462,11 +467,34 @@ a.cta, .cta a {
     padding: 8px;
 }
 
-
 .fronts .finder {
     background-color: #f4f4ee;
 }
 
 .fronts .lists .connectedList {
     min-height:50px;
+}
+
+.fronts .trail {
+    clear: both;
+}
+
+.fronts .trail img {
+    float: left;
+    margin: 0 10px 10px 0;
+    width: 140px;
+    height: 84px;
+}
+
+.fronts .trail h2 {
+    font-family: georgia,serif;
+    font-size: 18px;
+    line-height: 21px;
+    weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.fronts a {
+    color: #000;
 }

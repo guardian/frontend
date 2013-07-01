@@ -38,8 +38,7 @@ function (
     };
 
     var decorateItem = function(fromObj, toKoObj) {
-        toKoObj.webTitle(fromObj.webTitle);
-        toKoObj.webPublicationDate(fromObj.webPublicationDate);
+        toKoObj.init(fromObj);
     }
 
     var fetchArticles = function(ids, callback) {
