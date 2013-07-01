@@ -1,12 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    casperjs (1.0.0)
     sass (3.2.9)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  casperjs (= 1.0.0)
   sass (= 3.2.9)
