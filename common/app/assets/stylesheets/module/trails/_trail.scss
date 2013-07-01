@@ -235,6 +235,9 @@
     }
 }
 
+.trail--gallery + .trail--gallery {
+    margin: $baseline * 4 0;
+}
 
 /**
  * @todo: Clean these up into proper modifiers
