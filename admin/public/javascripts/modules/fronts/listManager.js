@@ -2,12 +2,14 @@ define([
     'Reqwest',
     'knockout',
     'models/fronts/article',
-    'models/fronts/latestArticles'
+    'models/fronts/latestArticles',
+    'models/fronts/contentApi'
 ], function(
     reqwest,
     knockout,
     Article,
-    LatestArticles
+    LatestArticles,
+    ContentApi
 ) {
 
     return function(selector) {
@@ -107,6 +109,7 @@ define([
             items.forEach(function(item){
                 self.addItem(list, item);
             });
+            ContentApi.decorateItems(list());
         };
 
         this.init = function(callback) {

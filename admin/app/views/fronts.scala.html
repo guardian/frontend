@@ -26,6 +26,7 @@
 
     <script type="text/html" id="template_article">
         <div class="article" data-bind="attr: {'data-url': id}">
+            <div data-bind="text: webTitle"></div>
             <a class="article-title" data-bind="text: id, attr: {href: _absUrl}"></a>
         </div>
     </script>
