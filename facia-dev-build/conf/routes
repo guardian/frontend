@@ -9,6 +9,7 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 #Note the order of these is important
 
 # Fronts Api
+GET     /frontsapi/lists                                    controllers.FrontsApiController.getLists
 GET     /frontsapi/list/:listName                           controllers.FrontsApiController.getList(listName)
 POST    /frontsapi/listitem/:listName                       controllers.FrontsApiController.updateList(listName)
 GET     /frontsapi/bootstrap                                controllers.FrontsApiController.bootStrap

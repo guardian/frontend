@@ -4,6 +4,7 @@ import com.redis.RedisClient
 import com.redis.serialization.{Format, Parse}
 
 trait FrontsApi {
+  def getLists: List[String]
   def getList(listName: String): List[String]
 
   def add(listName: String, pivot: String, value: String, after: Option[Boolean] = None): Option[_]
@@ -16,6 +17,7 @@ trait FrontsApi {
 
 class FrontsApiRedis(redisClient: CustomRedisClient) extends FrontsApi {
 
+  def getLists = redisClient.keys("*") map {_.flatten} getOrElse Nil
   def getList(listName: String) = redisClient.lrange(listName, 0 ,-1) map {_.flatten} getOrElse Nil
 
   def addAtPosition(listName: String, position: Int, value: String): Option[Boolean] = Option(redisClient.lset(listName, position, value))
@@ -39,6 +41,7 @@ class CustomRedisClient(address: String, port: Int) extends RedisClient(address,
 class FrontsApiMap extends FrontsApi {
   val db: scala.collection.mutable.Map[String, List[String]] = scala.collection.mutable.Map[String, List[String]]()
 
+  def getLists = db.keys.toList
   def getList(listName: String) = db.get(listName) getOrElse Nil
 
   def addAtPosition(listName: String, position: Int, value: String): Option[Boolean] = {
