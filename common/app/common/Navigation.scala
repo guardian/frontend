@@ -20,7 +20,7 @@ trait Sections  {
   val home = SectionLink("news", "News", "/", "Home")
   val news  = SectionLink("news", "News", "/", "News")
   val world = SectionLink("world", "World", "/world", "World")
-  val uk    = SectionLink("uk", "UK", "/uk", "UK")
+  val uk    = SectionLink("uk", "UK", "/uk-news", "UK")
   val us    = SectionLink("us", "US", "/world/usa", "US")
   val politics = SectionLink("politics", "Politics", "/politics", "Politics")
   val technology = SectionLink("technology", "Technology", "/technology", "Technology")
