@@ -73,11 +73,7 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val frontsApi = application("fronts-api").dependsOn(commonWithTests).settings(
-    libraryDependencies ++= Seq(
-      "net.debasishg" %% "redisclient" % "2.9"
-    )
-  )
+  val frontsApi = application("fronts-api").dependsOn(commonWithTests)
 
   val dev = base("dev-build")
     .dependsOn(front)
