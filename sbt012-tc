@@ -14,15 +14,15 @@ if [ $NPM_EXIT == "1" ]; then
 fi
 
 #Install casperjs to target
-if hash casperjs 2>/dev/null; then
+if [ -f dev/casperjs ]; then
     echo "CasperJS installed"
 else
     git clone git://github.com/n1k0/casperjs.git dev/casperjs
     cd dev/casperjs
     git checkout tags/1.0.2
-    ln -sf `pwd`/bin/casperjs /usr/local/bin/casperjs
     cd ../..
 fi
+export PATH=$PATH:$(pwd)/dev/casperjs/bin
 
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
