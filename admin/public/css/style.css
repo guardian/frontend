@@ -467,16 +467,15 @@ a.cta, .cta a {
     padding: 8px;
 }
 
-.fronts .finder {
-    background-color: #f4f4ee;
-}
-
 .fronts .lists .connectedList {
     min-height:50px;
 }
 
 .fronts .trail {
-    clear: both;
+    cursor: move;
+    background-color: #fff;
+    margin:  0 0 10px 0;
+    border-bottom: 1px dotted #ccc;
 }
 
 .fronts .trail img {
@@ -487,14 +486,19 @@ a.cta, .cta a {
 }
 
 .fronts .trail h2 {
-    font-family: georgia,serif;
-    font-size: 18px;
-    line-height: 21px;
+    font-family: EgyptianText, georgia, serif;
+    font-size: 17px;
+    line-height: 20px;
     weight: normal;
     margin: 0;
     padding: 0;
 }
 
-.fronts a {
-    color: #000;
+.fronts .trail .trailText {
+    color: rgb(85, 85, 85);
+    font-family: EgyptianText, georgia, serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+    padding: 0 0 10px 0;
 }

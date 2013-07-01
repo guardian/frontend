@@ -27,9 +27,8 @@
     <script type="text/html" id="template_article">
         <div class="trail cf" data-bind="attr: {'data-url': id}">
             <img data-bind="attr: {src: thumbnail}" />
-            <h2>
-                <a data-bind="text: webTitle() !== '' ? webTitle() : id(), attr: {href: _absUrl}"></a>
-            </h2>
+            <h2 data-bind="html: webTitle() !== '' ? webTitle() : id()"></h2>
+            <div class="trailText" data-bind="html: trailText"></div>
         </div>
     </script>
     
