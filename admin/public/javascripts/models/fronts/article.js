@@ -34,7 +34,7 @@ function (
         }, this);
 
         // Track for editability / saving
-        this._makeEditable(['headlineOverride', 'trailText']);
+        this._makeEditable(['webTitle', 'trailText']);
 
         this.init(opts);
     };

@@ -28,8 +28,29 @@
         <div class="trail cf" data-bind="attr: {'data-url': id}">
             <div class="date" data-bind="html: _humanDate"></div>
             <img data-bind="attr: {src: thumbnail}" />
-            <h2 data-bind="html: webTitle() !== '' ? webTitle() : id()"></h2>
-            <div class="trailText" data-bind="html: trailText"></div>
+
+            <h2 class="webTitle" data-edit="webTitle" data-bind="
+                visible: !_editing_webTitle(),
+                text: webTitle() ? webTitle : '[webTitle]',
+                click: _edit
+                "></h2>
+            <input type="text" placeholder="webTitle" data-bind="
+                visible: _editing_webTitle,
+                value: webTitle,
+                hasfocus: _editing_webTitle
+                "/>
+
+            <h2 class="trailText" data-edit="trailText" data-bind="
+                visible: !_editing_trailText(),
+                html: trailText() ? trailText : '[trailText]',
+                click: _edit
+                "></h2>
+            <textarea type="text" placeholder="trailText" data-bind="
+                visible: _editing_trailText,
+                value: trailText,
+                hasfocus: _editing_trailText
+                "/></textarea>
+
         </div>
     </script>
     
