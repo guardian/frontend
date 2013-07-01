@@ -487,6 +487,7 @@ a.cta, .cta a {
     margin: 2px 10px 10px 0;
     width: 140px;
     height: 84px;
+    background-color: #eee;
 }
 
 .fronts .trail p {
