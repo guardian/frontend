@@ -12,7 +12,7 @@ object Management extends GuManagement {
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      "/login"
+      "/frontsapi/list/anylistexists"
     ),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
