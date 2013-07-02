@@ -2772,6 +2772,21 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372686425839/The-Rolling-Stones-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372686425839/The-Rolling-Stones-010.jpg",
+          "source":"Getty Images",
+          "photographer":"Ian Gavan",
+          "altText":"The Rolling Stones",
+          "height":"276",
+          "credit":"Ian Gavan/Getty Images",
+          "caption":"The Rolling Stones performed a version of Factory Girl, dubbed 'Glastonbury Girl', during their headlining set on the Pyramid stage on Saturday evening. Photograph: Ian Gavan/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372686412160/The-Rolling-Stones-002.jpg",
@@ -2919,21 +2934,6 @@
           "credit":"Ian Gavan/Getty Images",
           "caption":"The Rolling Stones performed a version of Factory Girl, dubbed \"Glastonbury Girl\", during their headlining set on the Pyramid stage on Saturday evening. Photograph: Ian Gavan/Getty Images",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372686425839/The-Rolling-Stones-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372686425839/The-Rolling-Stones-010.jpg",
-          "source":"Getty Images",
-          "photographer":"Ian Gavan",
-          "altText":"The Rolling Stones",
-          "height":"276",
-          "credit":"Ian Gavan/Getty Images",
-          "caption":"The Rolling Stones performed a version of Factory Girl, dubbed 'Glastonbury Girl', during their headlining set on the Pyramid stage on Saturday evening. Photograph: Ian Gavan/Getty Images",
-          "width":"460"
         }
       }],
       "references":[]

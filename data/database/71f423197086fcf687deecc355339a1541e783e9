@@ -143,12 +143,12 @@
       "webUrl":"http://www.guardian.co.uk/technology/2013/jul/02/google-glass-review-augmented-reality",
       "apiUrl":"http://content.guardianapis.com/technology/2013/jul/02/google-glass-review-augmented-reality",
       "fields":{
-        "trailText":"<p><strong>Charles Arthur:</strong> The augmented reality device will have uses for some people, but do we really need to see the world through Google's eyes?</p>",
+        "trailText":"<strong>Charles Arthur:</strong> The augmented reality device will have uses for some people, but do we really need to see the world through Google's eyes?",
         "headline":"Google Glass – hands-on review",
         "hasStoryPackage":"true",
         "shortUrl":"http://gu.com/p/3h2e7",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/2/1372762684761/Google-Glass-003.jpg",
-        "wordcount":"1194",
+        "wordcount":"1171",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -3689,12 +3689,12 @@
       "webUrl":"http://www.guardian.co.uk/technology/2013/jul/02/google-glass-review-augmented-reality",
       "apiUrl":"http://content.guardianapis.com/technology/2013/jul/02/google-glass-review-augmented-reality",
       "fields":{
-        "trailText":"<p><strong>Charles Arthur:</strong> The augmented reality device will have uses for some people, but do we really need to see the world through Google's eyes?</p>",
+        "trailText":"<strong>Charles Arthur:</strong> The augmented reality device will have uses for some people, but do we really need to see the world through Google's eyes?",
         "headline":"Google Glass – hands-on review",
         "hasStoryPackage":"true",
         "shortUrl":"http://gu.com/p/3h2e7",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/2/1372762684761/Google-Glass-003.jpg",
-        "wordcount":"1194",
+        "wordcount":"1171",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -5408,6 +5408,21 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/6/30/1372583114553/Woman-holding-a-phone-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/6/30/1372583114553/Woman-holding-a-phone-010.jpg",
+          "source":"AP",
+          "photographer":"Emilio Morenatti",
+          "altText":"Woman holding a phone",
+          "height":"276",
+          "credit":"Emilio Morenatti/AP",
+          "caption":"The cost to travellers for browsing the internet will be capped at 38p a megabyte under new EU rules. Photograph: Emilio Morenatti/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/6/30/1372583094847/Woman-holding-a-phone-002.jpg",
@@ -5555,21 +5570,6 @@
           "credit":"Emilio Morenatti/AP",
           "caption":"The cost to travellers for browsing the internet will be capped at 38p a megabyte under new EU rules Photograph: Emilio Morenatti/AP",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/6/30/1372583114553/Woman-holding-a-phone-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/6/30/1372583114553/Woman-holding-a-phone-010.jpg",
-          "source":"AP",
-          "photographer":"Emilio Morenatti",
-          "altText":"Woman holding a phone",
-          "height":"276",
-          "credit":"Emilio Morenatti/AP",
-          "caption":"The cost to travellers for browsing the internet will be capped at 38p a megabyte under new EU rules. Photograph: Emilio Morenatti/AP",
-          "width":"460"
         }
       }],
       "references":[]

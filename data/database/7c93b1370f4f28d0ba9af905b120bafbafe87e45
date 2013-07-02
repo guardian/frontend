@@ -2603,21 +2603,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372356644638/Edward-Snowden-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372356644638/Edward-Snowden-010.jpg",
-          "source":"REUTERS",
-          "photographer":"The Guardian",
-          "altText":"Edward Snowden",
-          "height":"276",
-          "credit":"The Guardian/REUTERS",
-          "caption":"Edward Snowden's revelations show that the existing UK regulatory framework was completely ineffective, the MPs said.\n Photograph: The Guardian/REUTERS",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372356635225/Edward-Snowden-002.jpg",
@@ -2765,6 +2750,21 @@
           "credit":"The Guardian/REUTERS",
           "caption":"Edward Snowden's revelations show that the existing UK regulatory framework was completely ineffective, the MPs said.\n Photograph: The Guardian/REUTERS",
           "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372356644638/Edward-Snowden-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372356644638/Edward-Snowden-010.jpg",
+          "source":"REUTERS",
+          "photographer":"The Guardian",
+          "altText":"Edward Snowden",
+          "height":"276",
+          "credit":"The Guardian/REUTERS",
+          "caption":"Edward Snowden's revelations show that the existing UK regulatory framework was completely ineffective, the MPs said.\n Photograph: The Guardian/REUTERS",
+          "width":"460"
         }
       }],
       "references":[]
@@ -5012,20 +5012,20 @@
       }],
       "references":[]
     },{
-      "id":"uk/2013/jul/02/murder-woman-boy-skate-park",
+      "id":"uk-news/2013/jul/02/police-murder-woman-stabbing-girl",
       "sectionId":"uk-news",
       "sectionName":"UK news",
-      "webPublicationDate":"2013-07-02T07:41:00Z",
-      "webTitle":"Five held in investigation into murder of woman, 84, and attack on boy",
-      "webUrl":"http://www.guardian.co.uk/uk/2013/jul/02/murder-woman-boy-skate-park",
-      "apiUrl":"http://content.guardianapis.com/uk/2013/jul/02/murder-woman-boy-skate-park",
+      "webPublicationDate":"2013-07-02T12:51:19Z",
+      "webTitle":"Police link Shipley murder and stabbing with third incident involving young girl",
+      "webUrl":"http://www.guardian.co.uk/uk-news/2013/jul/02/police-murder-woman-stabbing-girl",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/jul/02/police-murder-woman-stabbing-girl",
       "fields":{
-        "trailText":"26-year-old is arrested on suspicion of murder and attempted murder in Shipley, West Yorkshire",
-        "headline":"Five held in investigation into murder of woman, 84, and attack on boy",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3h2a8",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748671167/Leeds-General-Infirmary-005.jpg",
-        "wordcount":"404",
+        "trailText":"Police investigating death of 84-year-old Louisa Denby and stabbing of Jason Darcey say girl was chased in linked incident",
+        "headline":"Police link Shipley murder and stabbing with third incident involving young girl",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h2ha",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769440694/Police-officers-outside-P-005.jpg",
+        "wordcount":"943",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -5047,11 +5047,13 @@
         "sectionName":"UK news",
         "references":[]
       },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "id":"uk/knifecrime",
+        "type":"keyword",
+        "webTitle":"Knife crime",
+        "webUrl":"http://www.guardian.co.uk/uk/knifecrime",
+        "apiUrl":"http://content.guardianapis.com/uk/knifecrime",
+        "sectionId":"uk",
+        "sectionName":"UK news",
         "references":[]
       },{
         "id":"profile/jamesmeikle",
@@ -5065,6 +5067,13 @@
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/james_meikle_140x140.jpg",
         "references":[]
       },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -5076,165 +5085,165 @@
         "type":"picture",
         "rel":"alt-size",
         "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748666598/Leeds-General-Infirmary-002.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769435886/Police-officers-outside-P-002.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748666598/Leeds-General-Infirmary-002.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769435886/Police-officers-outside-P-002.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"54",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"54"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748668191/Leeds-General-Infirmary-003.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769437382/Police-officers-outside-P-003.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748668191/Leeds-General-Infirmary-003.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769437382/Police-officers-outside-P-003.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"340",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"480"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748669739/Leeds-General-Infirmary-004.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769439016/Police-officers-outside-P-004.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748669739/Leeds-General-Infirmary-004.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769439016/Police-officers-outside-P-004.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"130",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"140"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748671167/Leeds-General-Infirmary-005.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769440694/Police-officers-outside-P-005.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748671167/Leeds-General-Infirmary-005.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769440694/Police-officers-outside-P-005.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"84",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"140"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748672666/Leeds-General-Infirmary-006.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769442430/Police-officers-outside-P-006.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748672666/Leeds-General-Infirmary-006.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769442430/Police-officers-outside-P-006.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"132",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"220"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748674304/Leeds-General-Infirmary-007.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769443988/Police-officers-outside-P-007.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748674304/Leeds-General-Infirmary-007.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769443988/Police-officers-outside-P-007.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"168",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"280"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748675721/Leeds-General-Infirmary-008.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769445601/Police-officers-outside-P-008.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748675721/Leeds-General-Infirmary-008.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769445601/Police-officers-outside-P-008.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"180",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"300"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748679789/Leeds-General-Infirmary-009.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769447333/Police-officers-outside-P-009.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748679789/Leeds-General-Infirmary-009.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769447333/Police-officers-outside-P-009.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"228",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"380"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":9,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748681293/Leeds-General-Infirmary-010.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769449289/Police-officers-outside-P-010.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748681293/Leeds-General-Infirmary-010.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769449289/Police-officers-outside-P-010.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"276",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"460"
         }
       },{
         "type":"picture",
         "rel":"alt-size",
         "index":10,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748682747/Leeds-General-Infirmary-011.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769450864/Police-officers-outside-P-011.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748682747/Leeds-General-Infirmary-011.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769450864/Police-officers-outside-P-011.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"372",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is said to be in a stable condition after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"620"
         }
       },{
         "type":"picture",
         "rel":"body",
         "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748681293/Leeds-General-Infirmary-010.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769449289/Police-officers-outside-P-010.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372748681293/Leeds-General-Infirmary-010.jpg",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372769449289/Police-officers-outside-P-010.jpg",
           "source":"PA",
-          "photographer":"Anna Gowthorpe",
-          "altText":"Leeds General Infirmary",
+          "photographer":"Sam Beattie",
+          "altText":"Police officers outside Prospect Mount, Shipley",
           "height":"276",
-          "credit":"Anna Gowthorpe/PA",
-          "caption":"Leeds General Infirmary, where a nine-year-old boy is expected to undergo surgery after being stabbed in a skate park in Shipley. Photograph: Anna Gowthorpe/PA",
+          "credit":"Sam Beattie/PA",
+          "caption":"Police officers outside Prospect Mount, Shipley, where Louisa Denby was found dead.   Photograph: Sam Beattie/PA",
           "width":"460"
         }
       }],

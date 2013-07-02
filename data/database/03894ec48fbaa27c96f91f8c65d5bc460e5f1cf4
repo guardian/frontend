@@ -716,6 +716,241 @@
       }],
       "references":[]
     },{
+      "id":"world/2013/jul/02/china-russia-joint-naval-drills",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-02T09:06:52Z",
+      "webTitle":"China to join Russia for largest naval drills with foreign partner",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/02/china-russia-joint-naval-drills",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/02/china-russia-joint-naval-drills",
+      "fields":{
+        "trailText":"Exercises are intended to deepen co-operation between militaries, says Chinese army chief",
+        "headline":"China to join Russia for largest naval drills with foreign partner",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h2b5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755810603/Chinese-sailor-004.jpg",
+        "wordcount":"349",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/china",
+        "type":"keyword",
+        "webTitle":"China",
+        "webUrl":"http://www.guardian.co.uk/world/china",
+        "apiUrl":"http://content.guardianapis.com/world/china",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/russia",
+        "type":"keyword",
+        "webTitle":"Russia",
+        "webUrl":"http://www.guardian.co.uk/world/russia",
+        "apiUrl":"http://content.guardianapis.com/world/russia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.guardian.co.uk/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755817455/Chinese-sailor-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755817455/Chinese-sailor-009.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"276",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755806110/Chinese-sailor-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755806110/Chinese-sailor-001.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"130",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755807717/Chinese-sailor-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755807717/Chinese-sailor-002.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"54",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755809137/Chinese-sailor-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755809137/Chinese-sailor-003.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"340",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755810603/Chinese-sailor-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755810603/Chinese-sailor-004.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"84",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755811978/Chinese-sailor-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755811978/Chinese-sailor-005.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"132",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755813331/Chinese-sailor-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755813331/Chinese-sailor-006.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"168",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755814690/Chinese-sailor-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755814690/Chinese-sailor-007.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"180",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755816061/Chinese-sailor-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755816061/Chinese-sailor-008.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"228",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755817455/Chinese-sailor-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755817455/Chinese-sailor-009.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"276",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755818955/Chinese-sailor-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372755818955/Chinese-sailor-010.jpg",
+          "source":"EPA",
+          "photographer":"Jerome Favre",
+          "altText":"Chinese sailor",
+          "height":"372",
+          "credit":"Jerome Favre/EPA",
+          "caption":"A People's Liberation Army sailor. The Chinese and Russian militaries have begun taking part in joint exercises in the past decade. Photograph: Jerome Favre/EPA",
+          "width":"620"
+        }
+      }],
+      "references":[]
+    },{
       "id":"world/2013/jul/02/wikileaks-party-registered-australian-election",
       "sectionId":"world",
       "sectionName":"World news",

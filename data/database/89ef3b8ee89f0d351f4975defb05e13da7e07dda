@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":21152,
+    "total":21144,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -1403,6 +1403,21 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/7/1/1372676378647/-Basienka-Blake-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/7/1/1372676378647/-Basienka-Blake-010.jpg",
+          "source":"PR",
+          "photographer":"Douglas Mcbride",
+          "altText":" Basienka Blake",
+          "height":"276",
+          "credit":"Douglas Mcbride/PR",
+          "caption":"Patter with poise … Basienka Blake in Hello, Dolly! Photograph: Douglas Mcbride",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/7/1/1372676367095/-Basienka-Blake-002.jpg",
@@ -1550,21 +1565,6 @@
           "credit":"Douglas Mcbride/PR",
           "caption":"Patter with poise … Basienka Blake in Hello, Dolly! Photograph: Douglas Mcbride",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/7/1/1372676378647/-Basienka-Blake-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/7/1/1372676378647/-Basienka-Blake-010.jpg",
-          "source":"PR",
-          "photographer":"Douglas Mcbride",
-          "altText":" Basienka Blake",
-          "height":"276",
-          "credit":"Douglas Mcbride/PR",
-          "caption":"Patter with poise … Basienka Blake in Hello, Dolly! Photograph: Douglas Mcbride",
-          "width":"460"
         }
       }],
       "references":[]

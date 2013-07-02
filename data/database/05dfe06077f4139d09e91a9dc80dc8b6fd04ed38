@@ -182,20 +182,6 @@
         }
       },{
         "type":"picture",
-        "rel":"body",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371802706517/TrekDomane52roadbike.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371802706517/TrekDomane52roadbike.jpg",
-          "source":"PR",
-          "altText":"Trek Domane 5.2 road bike",
-          "height":"276",
-          "credit":"PR",
-          "caption":"The Trek Domane 5.2. Photograph: PR",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372756194417/1f4e61cf-ad3c-4a82-ab48-d554e25e6348-2060x1236.jpeg",
@@ -358,6 +344,20 @@
           "credit":"Imago / Barcroft Media/Imago / Barcroft Media",
           "caption":"Chris Froome of Team Sky. Photograph: Imago/Barcroft Media",
           "width":"1024"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371802706517/TrekDomane52roadbike.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/21/1371802706517/TrekDomane52roadbike.jpg",
+          "source":"PR",
+          "altText":"Trek Domane 5.2 road bike",
+          "height":"276",
+          "credit":"PR",
+          "caption":"The Trek Domane 5.2. Photograph: PR",
+          "width":"460"
         }
       },{
         "type":"picture",
@@ -1808,6 +1808,21 @@
         }]
       },{
         "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372704804022/Le-Tour-de-France-2013----008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372704804022/Le-Tour-de-France-2013----008.jpg",
+          "source":"Getty Images",
+          "photographer":"Bryn Lennon",
+          "altText":"Le Tour de France 2013 - Stage Three",
+          "height":"276",
+          "credit":"Bryn Lennon/Getty Images",
+          "caption":"Geraint Thomas of Team Sky, right, talks to coach Rod Ellingworth ahead of stage three of the 2013 Tour de France. Photograph: Bryn Lennon/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372704793452/Le-Tour-de-France-2013----001.jpg",
@@ -1915,21 +1930,6 @@
         "type":"picture",
         "rel":"alt-size",
         "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372704804022/Le-Tour-de-France-2013----008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372704804022/Le-Tour-de-France-2013----008.jpg",
-          "source":"Getty Images",
-          "photographer":"Bryn Lennon",
-          "altText":"Le Tour de France 2013 - Stage Three",
-          "height":"276",
-          "credit":"Bryn Lennon/Getty Images",
-          "caption":"Geraint Thomas of Team Sky, right, talks to coach Rod Ellingworth ahead of stage three of the 2013 Tour de France. Photograph: Bryn Lennon/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":3,
         "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372704804022/Le-Tour-de-France-2013----008.jpg",
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372704804022/Le-Tour-de-France-2013----008.jpg",

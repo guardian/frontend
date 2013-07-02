@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":13629,
+    "total":13622,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -121,6 +121,20 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/1/1372691995276/Undercover-boss-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/1/1372691995276/Undercover-boss-010.jpg",
+          "source":"Channel 4",
+          "altText":"Undercover boss",
+          "height":"276",
+          "credit":"Channel 4",
+          "caption":"Phil Couchman, boss of DHL, dons the overalls but gets rumbled early on in Channel 4's Undercover Boss. Photograph: Channel 4",
+          "width":"460"
+        }
+      },{
         "type":"picture",
         "rel":"alt-size",
         "index":1,
@@ -259,20 +273,6 @@
           "credit":"Channel 4",
           "caption":"Phil Couchman, boss of DHL, dons the overalls but gets rumbled early on in Channel 4's Undercover Boss Photograph: Channel 4",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/1/1372691995276/Undercover-boss-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/1/1372691995276/Undercover-boss-010.jpg",
-          "source":"Channel 4",
-          "altText":"Undercover boss",
-          "height":"276",
-          "credit":"Channel 4",
-          "caption":"Phil Couchman, boss of DHL, dons the overalls but gets rumbled early on in Channel 4's Undercover Boss. Photograph: Channel 4",
-          "width":"460"
         }
       }],
       "references":[]
@@ -5210,6 +5210,20 @@
       }],
       "mediaAssets":[{
         "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/1/1372691995276/Undercover-boss-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/1/1372691995276/Undercover-boss-010.jpg",
+          "source":"Channel 4",
+          "altText":"Undercover boss",
+          "height":"276",
+          "credit":"Channel 4",
+          "caption":"Phil Couchman, boss of DHL, dons the overalls but gets rumbled early on in Channel 4's Undercover Boss. Photograph: Channel 4",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/1/1372691982845/Undercover-boss-002.jpg",
@@ -5347,20 +5361,6 @@
           "credit":"Channel 4",
           "caption":"Phil Couchman, boss of DHL, dons the overalls but gets rumbled early on in Channel 4's Undercover Boss Photograph: Channel 4",
           "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/1/1372691995276/Undercover-boss-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/1/1372691995276/Undercover-boss-010.jpg",
-          "source":"Channel 4",
-          "altText":"Undercover boss",
-          "height":"276",
-          "credit":"Channel 4",
-          "caption":"Phil Couchman, boss of DHL, dons the overalls but gets rumbled early on in Channel 4's Undercover Boss. Photograph: Channel 4",
-          "width":"460"
         }
       }],
       "references":[]

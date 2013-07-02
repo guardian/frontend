@@ -3487,20 +3487,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/20/1371752643262/Chiang-Kai-shek-making-a--010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/20/1371752643262/Chiang-Kai-shek-making-a--010.jpg",
-          "source":"  Bettmann/CORBIS",
-          "altText":"Chiang Kai-shek making a speech",
-          "height":"276",
-          "credit":"  Bettmann/CORBIS",
-          "caption":"Chiang Kai-shek's attempts to stop the Japanese advance by breaching the Yellow River's dykes caused the death of half a million peasants. Photograph:   Bettmann/Corbis",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/20/1371752634033/Chiang-Kai-shek-making-a--002.jpg",
@@ -3638,6 +3624,20 @@
           "credit":"  Bettmann/CORBIS",
           "caption":"Chiang Kai-shek's attempts to stop the Japanese advance by breaching the Yellow River's dykes caused the death of half a million peasants. Photograph:   Bettmann/CORBIS",
           "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/20/1371752643262/Chiang-Kai-shek-making-a--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/20/1371752643262/Chiang-Kai-shek-making-a--010.jpg",
+          "source":"  Bettmann/CORBIS",
+          "altText":"Chiang Kai-shek making a speech",
+          "height":"276",
+          "credit":"  Bettmann/CORBIS",
+          "caption":"Chiang Kai-shek's attempts to stop the Japanese advance by breaching the Yellow River's dykes caused the death of half a million peasants. Photograph:   Bettmann/Corbis",
+          "width":"460"
         }
       }],
       "references":[]
@@ -5760,72 +5760,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/6/27/1372348590244/Pietari-Posti-Debut-Art-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/6/27/1372348590244/Pietari-Posti-Debut-Art-008.jpg",
-          "source":"Pietari Posti/Debut Art",
-          "altText":"Pietari Posti Debut Art",
-          "height":"276",
-          "credit":"Pietari Posti/Debut Art",
-          "caption":"Illustration by Pietari Posti/Debut Art",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372351754767/Summer-Read-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372351754767/Summer-Read-008.jpg",
-          "source":"pr",
-          "altText":"Summer Read",
-          "height":"276",
-          "credit":"pr",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372351384709/Summer-Read-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372351384709/Summer-Read-008.jpg",
-          "source":"pt",
-          "altText":"Summer Read",
-          "height":"276",
-          "credit":"pt",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372354100816/Summer-Read-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372354100816/Summer-Read-008.jpg",
-          "source":"guardian.co.uk",
-          "altText":"Summer Read",
-          "height":"276",
-          "credit":"guardian.co.uk",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372341830567/Summer-read-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372341830567/Summer-read-008.jpg",
-          "source":"pr",
-          "altText":"Summer read",
-          "height":"276",
-          "credit":"pr",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/6/27/1372348581319/Pietari-Posti-Debut-Art-001.jpg",
@@ -5934,6 +5868,72 @@
           "height":"276",
           "credit":"Pietari Posti/Debut Art",
           "caption":"Illustration by Pietari Posti/Debut Art",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/6/27/1372348590244/Pietari-Posti-Debut-Art-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/GUARDIAN/Pix/pictures/2013/6/27/1372348590244/Pietari-Posti-Debut-Art-008.jpg",
+          "source":"Pietari Posti/Debut Art",
+          "altText":"Pietari Posti Debut Art",
+          "height":"276",
+          "credit":"Pietari Posti/Debut Art",
+          "caption":"Illustration by Pietari Posti/Debut Art",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372351754767/Summer-Read-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372351754767/Summer-Read-008.jpg",
+          "source":"pr",
+          "altText":"Summer Read",
+          "height":"276",
+          "credit":"pr",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372351384709/Summer-Read-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372351384709/Summer-Read-008.jpg",
+          "source":"pt",
+          "altText":"Summer Read",
+          "height":"276",
+          "credit":"pt",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372354100816/Summer-Read-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372354100816/Summer-Read-008.jpg",
+          "source":"guardian.co.uk",
+          "altText":"Summer Read",
+          "height":"276",
+          "credit":"guardian.co.uk",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372341830567/Summer-read-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372341830567/Summer-read-008.jpg",
+          "source":"pr",
+          "altText":"Summer read",
+          "height":"276",
+          "credit":"pr",
           "width":"460"
         }
       }],

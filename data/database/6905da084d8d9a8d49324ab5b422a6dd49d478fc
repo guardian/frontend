@@ -1026,35 +1026,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687324179/Consumer-minister-Jo-Swin-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687324179/Consumer-minister-Jo-Swin-008.jpg",
-          "source":"Guardian",
-          "photographer":"Linda Nylind",
-          "altText":"Consumer minister Jo Swinson",
-          "height":"276",
-          "credit":"Linda Nylind/Guardian",
-          "caption":"Consumer minister Jo Swinson co-ordinated a meeting of payday lenders and industry regulators, and said there was a 'recognition that behaviour needed to change'. Photograph: Linda Nylind for the Guardian",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/6/4/1370348926758/The-Wonga-puppets-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/6/4/1370348926758/The-Wonga-puppets-008.jpg",
-          "source":"PR",
-          "altText":"The Wonga puppets",
-          "height":"276",
-          "credit":"PR",
-          "caption":"The Wonga puppets, and characters created by other payday lenders, have come under fire",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687313005/Consumer-minister-Jo-Swin-001.jpg",
@@ -1171,6 +1142,35 @@
           "height":"276",
           "credit":"Linda Nylind/Guardian",
           "caption":"Consumer minister Jo Swinson co-ordinated a meeting of payday loan firms and industry regulators, and said there was a 'recognition that behaviour needed to change'. Photograph: Linda Nylind for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687324179/Consumer-minister-Jo-Swin-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687324179/Consumer-minister-Jo-Swin-008.jpg",
+          "source":"Guardian",
+          "photographer":"Linda Nylind",
+          "altText":"Consumer minister Jo Swinson",
+          "height":"276",
+          "credit":"Linda Nylind/Guardian",
+          "caption":"Consumer minister Jo Swinson co-ordinated a meeting of payday lenders and industry regulators, and said there was a 'recognition that behaviour needed to change'. Photograph: Linda Nylind for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/6/4/1370348926758/The-Wonga-puppets-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/6/4/1370348926758/The-Wonga-puppets-008.jpg",
+          "source":"PR",
+          "altText":"The Wonga puppets",
+          "height":"276",
+          "credit":"PR",
+          "caption":"The Wonga puppets, and characters created by other payday lenders, have come under fire",
           "width":"460"
         }
       }],
@@ -5152,21 +5152,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372702079473/TUC-general-secretary-Fra-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372702079473/TUC-general-secretary-Fra-010.jpg",
-          "source":"Rex Features",
-          "photographer":"Jason Alden",
-          "altText":"TUC general secretary Frances O'Grady",
-          "height":"276",
-          "credit":"Jason Alden/Rex Features",
-          "caption":"The TUC general secretary, Frances O'Grady, said: 'Women are bearing the brunt of the cuts through reduced pay, job losses and cutbacks in the services they run and use.' Photograph: Jason Alden/Rex Features",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372702068191/TUC-general-secretary-Fra-002.jpg",
@@ -5314,6 +5299,21 @@
           "credit":"Jason Alden/Rex Features",
           "caption":"The TUC general secretary, Frances O'Grady, said: 'Women are bearing the brunt of the cuts through reduced pay, job losses and cutbacks in the services they run and use.' Photograph: Jason Alden/Rex Features",
           "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372702079473/TUC-general-secretary-Fra-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372702079473/TUC-general-secretary-Fra-010.jpg",
+          "source":"Rex Features",
+          "photographer":"Jason Alden",
+          "altText":"TUC general secretary Frances O'Grady",
+          "height":"276",
+          "credit":"Jason Alden/Rex Features",
+          "caption":"The TUC general secretary, Frances O'Grady, said: 'Women are bearing the brunt of the cuts through reduced pay, job losses and cutbacks in the services they run and use.' Photograph: Jason Alden/Rex Features",
+          "width":"460"
         }
       }],
       "references":[]
@@ -6364,35 +6364,6 @@
       }],
       "mediaAssets":[{
         "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687324179/Consumer-minister-Jo-Swin-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687324179/Consumer-minister-Jo-Swin-008.jpg",
-          "source":"Guardian",
-          "photographer":"Linda Nylind",
-          "altText":"Consumer minister Jo Swinson",
-          "height":"276",
-          "credit":"Linda Nylind/Guardian",
-          "caption":"Consumer minister Jo Swinson co-ordinated a meeting of payday lenders and industry regulators, and said there was a 'recognition that behaviour needed to change'. Photograph: Linda Nylind for the Guardian",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/6/4/1370348926758/The-Wonga-puppets-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/6/4/1370348926758/The-Wonga-puppets-008.jpg",
-          "source":"PR",
-          "altText":"The Wonga puppets",
-          "height":"276",
-          "credit":"PR",
-          "caption":"The Wonga puppets, and characters created by other payday lenders, have come under fire",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
         "rel":"alt-size",
         "index":1,
         "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687313005/Consumer-minister-Jo-Swin-001.jpg",
@@ -6509,6 +6480,35 @@
           "height":"276",
           "credit":"Linda Nylind/Guardian",
           "caption":"Consumer minister Jo Swinson co-ordinated a meeting of payday loan firms and industry regulators, and said there was a 'recognition that behaviour needed to change'. Photograph: Linda Nylind for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687324179/Consumer-minister-Jo-Swin-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/7/1/1372687324179/Consumer-minister-Jo-Swin-008.jpg",
+          "source":"Guardian",
+          "photographer":"Linda Nylind",
+          "altText":"Consumer minister Jo Swinson",
+          "height":"276",
+          "credit":"Linda Nylind/Guardian",
+          "caption":"Consumer minister Jo Swinson co-ordinated a meeting of payday lenders and industry regulators, and said there was a 'recognition that behaviour needed to change'. Photograph: Linda Nylind for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/6/4/1370348926758/The-Wonga-puppets-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/6/4/1370348926758/The-Wonga-puppets-008.jpg",
+          "source":"PR",
+          "altText":"The Wonga puppets",
+          "height":"276",
+          "credit":"PR",
+          "caption":"The Wonga puppets, and characters created by other payday lenders, have come under fire",
           "width":"460"
         }
       }],
