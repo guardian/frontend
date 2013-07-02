@@ -5,41 +5,36 @@
     <div class="fronts">
 
         <div class="finder">
-            <h4>Latest
+            <div class="finder__title">Latest Articles</div>
             <input type="text" placeholder="url or keyword" 
                 data-bind='event: {keyup: latestArticles.search, mousedown: latestArticles.articleSearch, afterpaste: latestArticles.articleSearch}, value:
                 latestArticles.term, valueUpdate: ["afterkeydown", "afterpaste"]'/>
-            </h4>
 
             <div class="connectedList throwAway" data-bind="template: {name: 'template_article', foreach: latestArticles.articles()}"></div>
         </div>
 
-        <div class="listsPicker">            
-            <h4>Trail Blocks</h4>
+        <div class="list-picker">            
+            <div class="list-picker__title">Trail Blocks</div>
             <div data-bind="foreach: listsAvailable">
-                <div><button data-bind="text: $data, click: $parent.displayList"></button></div>
+                <div class="list-picker__item" data-bind="text: $data, click: $parent.displayList"></div>
             </div>
-            <hr />
-            <div>Create a new trailblock</div>
-            <input type="text" data-bind="value: newListName"/>
-            <button data-bind="click: createList">OK</button>
+            <div class="list-picker__new">
+                <div>Create a new trailblock</div>
+                <input type="text" data-bind="value: newListName"/>
+                <span data-bind="click: createList">OK</span>
+            </div>
         </div>
 
-        <div class="lists" data-bind="foreach: listsDisplayed">            
-            <h4 data-bind="text: name"></h4>
+        <div class="lists" data-bind="foreach: listsDisplayed">
+            <div class="list-header">
+                <a class="list-header__control" data-bind="click: $parent.hideList">HIDE</a>
+                <span class="list-header__title" data-bind="text: name"></span>
+            </div>
             <div class="connectedList" data-bind="
                 attr: {id: name}, 
                 template: {name: 'template_article', foreach: list
             }"></div>
         </div>
-
-        <!--div class="lists">            
-            <h4>List A</h4>
-            <div id="listA" class="connectedList" data-bind="template: {name: 'template_article', foreach: listA}"></div>
-
-            <h4>List B</h4>
-            <div id="listB" class="connectedList" data-bind="template: {name: 'template_article', foreach: listB}"></div>
-        </div-->
 
     </div>
 

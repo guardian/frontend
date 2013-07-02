@@ -26,10 +26,11 @@ object RelatedController extends Controller with Logging with ExecutionContexts 
     log.info(s"Fetching related content for : $path for edition ${edition.id}")
     ContentApi.item(path, edition)
       .tag(None)
+      .showFields("all")
       .showRelated(true)
       .response.map {response =>
       val heading = "Related content"
-      val related = SupportedContentFilter(response.relatedContent map { new Content(_) })
+      val related = SupportedContentFilter(response.relatedContent map { Content(_,None) })
 
       Some(Related(heading, related))
     }.recover{ case ApiError(404, message) =>
