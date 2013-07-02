@@ -78,21 +78,29 @@ module.exports = function (grunt) {
         },
 
         casper: {
-            common : {
-                options : {
-                    test : true,
-                    direct : true,
-                    'log-level' : 'info'
-                },
-                src: ['integration-tests/casper/tests/*.spec.js'],
-                dest : function(input) {
-                   var i = input.replace('/casper/tests/', '/target/casper-xunit-reports/');
-                       i = i.replace(/\.js$/,'.xml');
-                    console.log(i);
-                    return i;
-                }
+          options : {
+            test : true,
+            direct : true,
+            'log-level' : 'info'
+          },           
+          common : {
+            src: ['integration-tests/casper/tests/*.spec.js'],
+            dest : function(input) {
+              var i = input.replace('/casper/tests/', '/target/casper-xunit-reports/');
+              i = i.replace(/\.js$/,'.xml');
+              console.log(i);
+              return i;
             }
-        },
+          },
+          discussion: {
+            src: ['integration-tests/casper/tests/discussion.spec.js'],
+            dest: 'integration-tests/casper/tests/target/casper-xunit-reports/discussion.spec.xml'
+          },
+          networkfront: {
+            src: ['integration-tests/casper/tests/network-front.spec.js'],
+            dest: 'integration-tests/casper/tests/target/casper-xunit-reports/network-front.spec.xml'
+          }
+        },        
 
         // Lint Javascript sources
         jshint: {
