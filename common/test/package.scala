@@ -11,7 +11,6 @@ import recorder.ContentApiHttpRecorder
 import com.gu.management.play.InternalManagementPlugin
 import play.api.GlobalSettings
 import concurrent.Future
-import play.api.mvc.Codec
 import org.apache.commons.codec.digest.DigestUtils
 
 trait TestSettings {
