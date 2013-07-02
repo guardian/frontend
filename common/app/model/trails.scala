@@ -99,3 +99,23 @@ object CustomTrailblockDescription {
            (query: => Future[Seq[Trail]]): TrailblockDescription =
     CustomQueryTrailblockDescription(id, name, numItemsVisible, style, () => query, isConfigured)
 }
+
+class RunningOrderDescription(
+  val id: String,
+  val name: String,
+  val numItemsVisible: Int,
+  val style: Option[Style],
+  val showMore: Boolean,
+  val edition: Edition,
+  val isConfigured: Boolean,
+  var articles: Seq[String] = Nil) extends TrailblockDescription with QueryDefaults
+{
+
+  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+
+  def query() = ContentApi.search(edition)
+    .ids(articles.mkString(","))
+    .response map { r =>
+      r.results.map(new Content(_))
+    }
+}
