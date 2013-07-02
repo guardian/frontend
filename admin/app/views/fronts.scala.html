@@ -5,22 +5,41 @@
     <div class="fronts">
 
         <div class="finder">
-            <h3>Latest
+            <h4>Latest
             <input type="text" placeholder="url or keyword" 
-                data-bind='event: {keyup: latest.search, mousedown: latest.articleSearch, afterpaste: latest.articleSearch}, value:
-                latest.term, valueUpdate: ["afterkeydown", "afterpaste"]'/>
-            </h3>
+                data-bind='event: {keyup: latestArticles.search, mousedown: latestArticles.articleSearch, afterpaste: latestArticles.articleSearch}, value:
+                latestArticles.term, valueUpdate: ["afterkeydown", "afterpaste"]'/>
+            </h4>
 
-            <div class="connectedList throwAway" data-bind="template: {name: 'template_article', foreach: latest.articles()}"></div>
+            <div class="connectedList throwAway" data-bind="template: {name: 'template_article', foreach: latestArticles.articles()}"></div>
         </div>
 
-        <div class="lists">
-            <h3>List A</h3>
+        <div class="listsPicker">            
+            <h4>Trail Blocks</h4>
+            <div data-bind="foreach: listsAvailable">
+                <div><button data-bind="text: $data, click: $parent.displayList"></button></div>
+            </div>
+            <hr />
+            <div>Create a new trailblock</div>
+            <input type="text" data-bind="value: newListName"/>
+            <button data-bind="click: createList">OK</button>
+        </div>
+
+        <div class="lists" data-bind="foreach: listsDisplayed">            
+            <h4 data-bind="text: name"></h4>
+            <div class="connectedList" data-bind="
+                attr: {id: name}, 
+                template: {name: 'template_article', foreach: list
+            }"></div>
+        </div>
+
+        <!--div class="lists">            
+            <h4>List A</h4>
             <div id="listA" class="connectedList" data-bind="template: {name: 'template_article', foreach: listA}"></div>
 
-            <h3>List B</h3>
+            <h4>List B</h4>
             <div id="listB" class="connectedList" data-bind="template: {name: 'template_article', foreach: listB}"></div>
-        </div>
+        </div-->
 
     </div>
 

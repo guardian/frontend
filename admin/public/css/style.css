@@ -462,9 +462,21 @@ a.cta, .cta a {
 
 .fronts .finder,
 .fronts .lists {
-    width: 45%;
     float: left;
-    padding: 8px;
+    margin: 0 10px 0 0;
+    width: 40%;
+}
+
+.fronts .listsPicker {
+    float: left;
+    width: 15%;
+    margin: 0 10px 0 0;
+    padding: 5px;
+    background-color: #eee;
+}
+
+.fronts .listsPicker button {
+    margin: 0 0 5px 0;
 }
 
 .fronts .lists .connectedList {
@@ -519,3 +531,8 @@ a.cta, .cta a {
     font-weight: normal;
     line-height: 16px;
 }
+
+.fronts input[type="text"] {
+    width: 75%;
+}
+

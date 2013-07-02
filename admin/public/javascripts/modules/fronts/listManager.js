@@ -16,13 +16,45 @@ define([
 
         var self = this,
             viewModel = {
-                listA: knockout.observableArray(),
-                listB: knockout.observableArray(),
-                latest: new LatestArticles()
+                latestArticles: new LatestArticles(),
+                listsDisplayed: knockout.observableArray(),
+                listsAvailable: knockout.observableArray(),
+                newListName:    knockout.observable()
             };
 
-        function connectSortableLists(selector) {
-            var item,
+        viewModel.displayList = function(listName) {
+            var list = knockout.observableArray();
+
+            reqwest({
+                url: '/frontsapi/list/' + listName,
+                type: 'json'
+            }).then(
+                function(resp) {
+                    console.log(resp);
+                    self.loadList(list, resp[list]); 
+                    viewModel.listsDisplayed.unshift({
+                        name: listName,
+                        list: list
+                    });
+                    connectSortableLists();
+                },
+                function(xhr) { console.log(xhr); } // error
+            );
+        }
+
+        viewModel.createList = function() {
+            var listName = viewModel.newListName();
+
+            if (viewModel.listsAvailable().indexOf(listName) === -1) {
+                viewModel.listsAvailable.push(listName);
+                viewModel.displayList(listName);
+                viewModel.newListName('');
+            }
+        }
+
+        function connectSortableLists() {
+            var selector = '.connectedList',
+                item,
                 fromList,
                 toList;
 
@@ -112,30 +144,30 @@ define([
             ContentApi.decorateItems(list());
         };
 
+        this.loadListIDs = function() {
+            reqwest({
+                url: '/frontsapi/lists',
+                type: 'json'
+            }).then(
+                function(resp) {
+                    if (resp.lists) {
+                        viewModel.listsAvailable(resp.lists);
+                    }
+                },
+                function(xhr) { console.log(xhr); } // error
+            );
+        };
+
         this.init = function(callback) {
             var that = this;
 
-            viewModel.latest.search();
-
-            // Load dummy lists
-            ['listA', 'listB'].forEach(function(list) {
-                reqwest({
-                    url: '/frontsapi/list/' + list,
-                    type: 'json'
-                }).then(
-                    function(resp) {
-                        that.loadList(viewModel[list], resp[list]); 
-                    },
-                    // error
-                    function(xhr) {
-                        console.log(xhr);
-                    }
-                );
-            })
+            viewModel.latestArticles.search();
 
             knockout.applyBindings(viewModel);
 
-            connectSortableLists('.connectedList');
+            connectSortableLists();
+
+            this.loadListIDs();
         };
 
 

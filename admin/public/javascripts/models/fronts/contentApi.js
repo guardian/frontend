@@ -50,13 +50,15 @@ function (
             }).join(',');
             new Reqwest({
                 url: apiUrl,
-                type: 'jsonp',
-                success: function(results) {
+                type: 'jsonp'
+            }).then(
+                function(results) {
                     if (results.response && results.response.results) {
                         callback(results.response.results);
                     }
-                }
-            });
+                },
+                function(xhr) { console.log(xhr); } // error
+            );
         }
     }
 
