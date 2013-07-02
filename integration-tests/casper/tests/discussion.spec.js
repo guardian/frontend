@@ -9,7 +9,9 @@
 
 var casper = require('casper').create();
 
-casper.start('http://m.gucode.co.uk/world/2013/jun/06/obama-administration-nsa-verizon-records');
+casper.start('http://m.gucode.co.uk/world/2013/jun/06/obama-administration-nsa-verizon-records'), function(){
+     this.die("Fail.", 1);
+};
 
 /**
  *   Scenario: Read top level comments
