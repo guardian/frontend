@@ -9,7 +9,7 @@
         "edition": "@Edition(request).id",
         "ajaxUrl": "@Configuration.ajax.url",
         "isDev": @play.Play.isDev(),
-        "isDotcom": @{!Site(request).isDefined}, @* //TODO temporary till after dotcom switch *@
+        "isDotcom": @{!Site(request).isDefined} @* //TODO temporary till after dotcom switch *@
 
     },
     "switches" : { @{Html(switches.map{ switch =>
