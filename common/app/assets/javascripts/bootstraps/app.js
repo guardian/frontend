@@ -13,6 +13,7 @@ define('bootstraps/app', [
     "bootstraps/article",
     "bootstraps/video",
     "bootstraps/gallery",
+    "bootstraps/interactive",
     "bootstraps/story",
     "modules/pageconfig"
 ], function (
@@ -30,6 +31,7 @@ define('bootstraps/app', [
     Article,
     Video,
     Gallery,
+    Interactive,
     Story,
     pageConfig
 ) {
@@ -106,6 +108,10 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "Gallery") {
                     Gallery.init(config, context);
+                }
+
+                if (config.page.contentType === "Interactive") {
+                    Interactive.init(config, context);
                 }
 
                 //Kick it all off

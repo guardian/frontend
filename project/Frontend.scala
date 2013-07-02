@@ -31,6 +31,7 @@ object Frontend extends Build with Prototypes {
   val front = application("front").dependsOn(commonWithTests)
   val facia = application("facia").dependsOn(commonWithTests)
   val article = application("article").dependsOn(commonWithTests)
+  val interactive = application("interactive").dependsOn(commonWithTests)
   val applications = application("applications").dependsOn(commonWithTests)
   val event = application("event").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
@@ -72,17 +73,14 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val frontsApi = application("fronts-api").dependsOn(commonWithTests).settings(
-    libraryDependencies ++= Seq(
-      "net.debasishg" %% "redisclient" % "2.9"
-    )
-  )
+  val frontsApi = application("fronts-api").dependsOn(commonWithTests)
 
   val dev = base("dev-build")
     .dependsOn(front)
     .dependsOn(article)
     .dependsOn(applications)
     .dependsOn(event)
+    .dependsOn(interactive)
     .dependsOn(football)
     .dependsOn(coreNavigation)
     .dependsOn(image)
@@ -108,6 +106,7 @@ object Frontend extends Build with Prototypes {
     article,
     applications,
     event,
+    interactive,
     football,
     coreNavigation,
     image,
