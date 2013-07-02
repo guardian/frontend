@@ -2,7 +2,7 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{MetaData, ItemTrailblockDescription}
+import model.MetaData
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
@@ -84,4 +84,5 @@ object Us extends Edition(
       Au.videoCustomBlock
     )
   )
+
 }

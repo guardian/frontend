@@ -71,7 +71,6 @@ object Au extends Edition(
   }
 
 
-<<<<<<< HEAD
   val zones = Seq(
     newsZone,
     sportZone,

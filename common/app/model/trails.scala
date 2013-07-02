@@ -5,10 +5,12 @@ import views.support.Style
 import scala.math
 import scala.concurrent.Future
 import conf.ContentApi
-import common.{Logging, AkkaSupport, ExecutionContexts, Edition}
+import common.{ExecutionContexts, AkkaSupport, Edition, Logging}
 import contentapi.QueryDefaults
 import play.api.libs.ws.WS
 import play.api.libs.json.Json._
+import conf.Configuration
+
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
   def linkText: String
@@ -52,14 +54,14 @@ trait TrailblockDescription extends ExecutionContexts {
 }
 
 class ItemTrailblockDescription(
-    val id: String, val name: String,
-    val numItemsVisible: Int,
-    val style: Option[Style],
-    val showMore: Boolean,
-    val edition: Edition,
-    val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults
-  {
-    lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+                                 val id: String, val name: String,
+                                 val numItemsVisible: Int,
+                                 val style: Option[Style],
+                                 val showMore: Boolean,
+                                 val edition: Edition,
+                                 val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults
+{
+  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
   def query() = EditorsPicsOrLeadContentAndLatest(
     ContentApi.item(id, edition)
@@ -75,13 +77,13 @@ object ItemTrailblockDescription {
 }
 
 private case class CustomQueryTrailblockDescription(
-            id: String,
-            name: String,
-            numItemsVisible: Int,
-            style: Option[Style],
-            customQuery: () => Future[Seq[Trail]],
-            isConfigured: Boolean)
-    extends TrailblockDescription {
+                                                     id: String,
+                                                     name: String,
+                                                     numItemsVisible: Int,
+                                                     style: Option[Style],
+                                                     customQuery: () => Future[Seq[Trail]],
+                                                     isConfigured: Boolean)
+  extends TrailblockDescription {
 
   // show more will not (currently) work with custom queries
   val showMore = false
@@ -101,6 +103,15 @@ object CustomTrailblockDescription {
     CustomQueryTrailblockDescription(id, name, numItemsVisible, style, () => query, isConfigured)
 }
 
+trait TrailblockNew {
+  val id: String
+  val name: String
+  val edition: Edition
+
+  def trails: Seq[Trail]
+  def refresh
+  def close
+}
 
 /**
  * Trailblock defined from the fronts api
@@ -110,23 +121,23 @@ object CustomTrailblockDescription {
  * @param edition
  */
 class RunningOrderTrailblock(
-                              val id: String,
-                              val name: String,
-                              val edition: Edition) extends AkkaSupport with Logging
+  val id: String,
+  val name: String,
+  val edition: Edition) extends TrailblockNew with AkkaSupport with Logging
 {
 
   private lazy val agent = play_akka.agent[Seq[Trail]](Nil)
 
   def trails: Seq[Trail] = agent()
 
-  def refresh() = {
+  def refresh = {
     // get the running order from the api
-    WS.url(s"http://frontend-frontsap-1cb58typd06bp-1433204139.eu-west-1.elb.amazonaws.com//frontsapi/list/$id").get() foreach { response =>
+    WS.url(s"${Configuration.frontsApi.host}/frontsapi/list/$id").get() foreach { response =>
       response.status match {
         case 200 =>
           val articles = (parse(response.body) \ id).asOpt[List[String]].getOrElse(Nil)
           retrieveArticles(articles)
-        case _ => log.warn(s"Could not load running order config ${response.status} ${response.statusText}")
+        case _ => log.warn(s"Could not load running order: ${response.status} ${response.statusText}")
       }
     }
   }
@@ -135,13 +146,13 @@ class RunningOrderTrailblock(
     ContentApi.search(edition)
       .ids(articles.mkString(","))
       .response map { r =>
-        agent.send{ old =>
-          r.results.map(new Content(_))
-        }
+      agent.send{ old =>
+        r.results.map(new Content(_))
       }
     }
+  }
 
-  def close() = agent.close()
+  def close = agent.close()
 
 }
 

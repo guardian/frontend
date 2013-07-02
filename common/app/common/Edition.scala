@@ -2,7 +2,7 @@ package common
 
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTimeZone
-import model.{RunningOrderTrailblock, MetaData, TrailblockDescription}
+import model.{TrailblockNew, Trailblock, MetaData}
 
 // describes the ways in which editions differ from each other
 abstract class Edition(
@@ -11,7 +11,7 @@ abstract class Edition(
     val timezone: DateTimeZone,
     val hreflang: String // see http://support.google.com/webmasters/bin/answer.py?hl=en&answer=189077
   ) {
-  def configuredFronts: Map[String, Seq[RunningOrderTrailblock]]
+  def configuredFronts: Map[String, Seq[TrailblockNew]]
   def zones: Seq[Zone]
   def navigation(metadata: MetaData): Seq[NavItem]
 }

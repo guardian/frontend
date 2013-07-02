@@ -1,6 +1,6 @@
 package controllers.front
 
-import model.{RunningOrderTrailblock, Trailblock}
+import model.{TrailblockNew, Trailblock}
 import common.{Edition, Logging, AkkaSupport}
 import scala.concurrent.duration._
 
@@ -37,7 +37,7 @@ class Front extends AkkaSupport with Logging {
     refreshSchedule
   }
 
-  def apply(path: String): Seq[RunningOrderTrailblock] = fronts(path)()
+  def apply(path: String): Seq[TrailblockNew] = fronts(path)()
 
 }
 

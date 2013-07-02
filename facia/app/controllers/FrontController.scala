@@ -97,7 +97,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     FrontPage(realPath).map { frontPage =>
 
       // get the trailblocks
-      val trailblocks: Seq[RunningOrderTrailblock] = front(realPath)
+      val trailblocks: Seq[TrailblockNew] = front(realPath)
 
       if (trailblocks.isEmpty) {
         InternalServerError
@@ -115,7 +115,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
 
     FrontPage(realPath).map{ frontPage =>
       // get the first trailblock
-      val trailblock: Option[RunningOrderTrailblock] = front(realPath).headOption
+      val trailblock: Option[TrailblockNew] = front(realPath).headOption
 
       if (trailblock.isEmpty) {
         InternalServerError

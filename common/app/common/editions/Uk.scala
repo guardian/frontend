@@ -3,11 +3,6 @@ package common.editions
 import common._
 import org.joda.time.DateTimeZone
 import model._
-import views.support.{Headline, Thumbnail, Featured}
-import scala.Some
-import common.NavItem
-import conf.ContentApi
-import scala.Some
 import common.NavItem
 
 
