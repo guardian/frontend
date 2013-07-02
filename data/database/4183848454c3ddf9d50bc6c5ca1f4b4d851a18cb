@@ -1,0 +1,1891 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":347,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":35,
+    "orderBy":"newest",
+    "tag":{
+      "id":"type/video",
+      "type":"type",
+      "webTitle":"Video",
+      "webUrl":"http://www.guardian.co.uk/video",
+      "apiUrl":"http://content.guardianapis.com/video",
+      "references":[]
+    },
+    "results":[{
+      "id":"world/video/2013/jul/02/ed-husic-first-muslim-front-bench",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-02T06:39:27Z",
+      "webTitle":"Ed Husic becomes Australia's first Muslim frontbencher - video",
+      "webUrl":"http://www.guardian.co.uk/world/video/2013/jul/02/ed-husic-first-muslim-front-bench",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/jul/02/ed-husic-first-muslim-front-bench",
+      "fields":{
+        "trailText":"<p>Ed Husic has become the first Muslim to sit on the front bench of an Australian government. He was sworn in as parliamentary secretary to the prime minister at government house. Husic said he had made a 'straightforward decision as someone of the Muslim faith' to take the oath on the Qur'an</p>",
+        "headline":"Ed Husic becomes Australia's first Muslim frontbencher - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h2ax",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372724135913/Ed-Husic-sworn-in--003.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/labor-party",
+        "type":"keyword",
+        "webTitle":"Labor party",
+        "webUrl":"http://www.guardian.co.uk/world/labor-party",
+        "apiUrl":"http://content.guardianapis.com/world/labor-party",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.guardian.co.uk/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.guardian.co.uk/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/2/130602EdHusic960x540_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"AAP",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372745978623/Ed-Husic-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372745978623/Ed-Husic-002.jpg",
+          "durationMinutes":"2",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372745983063/Ed-Husic-004.jpg",
+          "width":"480",
+          "durationSeconds":"36"
+        },
+        "encodings":[{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/2/130602EdHusic960x540_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/2/130602EdHusic960x540_FromGAus-16x9.mp4"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/2/130602EdHusic960x540_FromGAus/130602EdHusic960x540_FromGAus.m3u8"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/2/130602EdHusic960x540_FromGAus_3gpSml16x9.3gp"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372724274399/Ed-Husic-being-sworn-in--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372724274399/Ed-Husic-being-sworn-in--003.jpg",
+          "source":"AAPIMAGE",
+          "photographer":"LUKAS COCH",
+          "altText":"Ed Husic being sworn in ",
+          "height":"84",
+          "credit":"LUKAS COCH/AAPIMAGE",
+          "caption":"Parliamentary Secretary to the prime minister Ed Husic (left) is sworn in by Governor General Quentin Bryce at Government House in Canberra Photograph: LUKAS COCH/AAPIMAGE",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372746008991/Ed-Husic-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372746008991/Ed-Husic-016.jpg",
+          "source":"AAP",
+          "altText":"Ed Husic",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Ed Husic Photograph: AAP",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372745978623/Ed-Husic-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372745978623/Ed-Husic-002.jpg",
+          "source":"AAP",
+          "altText":"Ed Husic",
+          "height":"90",
+          "credit":"AAP",
+          "caption":"Ed Husic Photograph: AAP",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372745980612/Ed-Husic-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372745980612/Ed-Husic-003.jpg",
+          "source":"AAP",
+          "altText":"Ed Husic",
+          "height":"225",
+          "credit":"AAP",
+          "caption":"Ed Husic Photograph: AAP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372745983063/Ed-Husic-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372745983063/Ed-Husic-004.jpg",
+          "source":"AAP",
+          "altText":"Ed Husic",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Ed Husic Photograph: AAP",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"tv-and-radio/video/2013/jul/02/kevin-rudd-polls-tour-de-france",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2013-07-02T03:06:00Z",
+      "webTitle":"Kevin Rudd and the Tour de France: The Mini Roast - video",
+      "webUrl":"http://www.guardian.co.uk/tv-and-radio/video/2013/jul/02/kevin-rudd-polls-tour-de-france",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/video/2013/jul/02/kevin-rudd-polls-tour-de-france",
+      "fields":{
+        "trailText":"<p>On the Mini Roast: Rudd's popularity goes up in the polls and disaster at the Tour de France as no one is on drugs and they take a normal-human amount of time to finish the race</p>",
+        "headline":"Kevin Rudd and the Tour de France: The Mini Roast - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h29a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733150668/The-Roast-tour-de-france-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"tv-and-radio/series/the-roast",
+        "type":"series",
+        "webTitle":"The Roast",
+        "webUrl":"http://www.guardian.co.uk/tv-and-radio/series/the-roast",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/series/the-roast",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.guardian.co.uk/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tv-and-radio/tv-and-radio",
+        "type":"keyword",
+        "webTitle":"Television & radio",
+        "webUrl":"http://www.guardian.co.uk/tv-and-radio/tv-and-radio",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/tv-and-radio",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.guardian.co.uk/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/2/130702MiniRoastEp60_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"ABC",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733136462/The-Roast-tour-de-france-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733136462/The-Roast-tour-de-france-002.jpg",
+          "durationMinutes":"6",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733141124/The-Roast-tour-de-france-004.jpg",
+          "width":"480",
+          "durationSeconds":"36"
+        },
+        "encodings":[{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/2/130702MiniRoastEp60_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/2/130702MiniRoastEp60_FromGAus/130702MiniRoastEp60_FromGAus.m3u8"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/2/130702MiniRoastEp60_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/2/130702MiniRoastEp60_FromGAus-16x9.mp4"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733150668/The-Roast-tour-de-france-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733150668/The-Roast-tour-de-france-009.jpg",
+          "source":"ABC",
+          "altText":"The Roast tour de france",
+          "height":"84",
+          "credit":"ABC",
+          "caption":"The Roast tour de france Photograph: ABC",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733166818/The-Roast-tour-de-france-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733166818/The-Roast-tour-de-france-016.jpg",
+          "source":"ABC",
+          "altText":"The Roast tour de france",
+          "height":"360",
+          "credit":"ABC",
+          "caption":"The Roast tour de france Photograph: ABC",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733136462/The-Roast-tour-de-france-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733136462/The-Roast-tour-de-france-002.jpg",
+          "source":"ABC",
+          "altText":"The Roast tour de france",
+          "height":"90",
+          "credit":"ABC",
+          "caption":"The Roast tour de france Photograph: ABC",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733138594/The-Roast-tour-de-france-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733138594/The-Roast-tour-de-france-003.jpg",
+          "source":"ABC",
+          "altText":"The Roast tour de france",
+          "height":"225",
+          "credit":"ABC",
+          "caption":"The Roast tour de france Photograph: ABC",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733141124/The-Roast-tour-de-france-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/2/1372733141124/The-Roast-tour-de-france-004.jpg",
+          "source":"ABC",
+          "altText":"The Roast tour de france",
+          "height":"360",
+          "credit":"ABC",
+          "caption":"The Roast tour de france Photograph: ABC",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/jul/01/michaelia-cash-labor-sisterhood-penny-wong",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-01T05:06:00Z",
+      "webTitle":"Michaelia Cash launches a vicious rant against the Labor 'sisterhood' - video",
+      "webUrl":"http://www.guardian.co.uk/world/video/2013/jul/01/michaelia-cash-labor-sisterhood-penny-wong",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/jul/01/michaelia-cash-labor-sisterhood-penny-wong",
+      "fields":{
+        "trailText":"<p>Liberal senator Michaelia Cash voices a scathing tirade on Penny Wong during the Senate's debate on 457 visas</p>",
+        "headline":"Michaelia Cash launches a vicious rant against the Labor 'sisterhood' - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hxg2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653151910/Michaelia-Cash-launches-a-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/liberal-party",
+        "type":"keyword",
+        "webTitle":"Liberal party",
+        "webUrl":"http://www.guardian.co.uk/world/liberal-party",
+        "apiUrl":"http://content.guardianapis.com/world/liberal-party",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/1/130601MichaeliaCash_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"AAP",
+          "embeddable":"false",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653137613/Michaelia-Cash-launches-a-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653137613/Michaelia-Cash-launches-a-002.jpg",
+          "durationMinutes":"1",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653142008/Michaelia-Cash-launches-a-004.jpg",
+          "width":"480",
+          "durationSeconds":"21"
+        },
+        "encodings":[{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/1/130601MichaeliaCash_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/1/130601MichaeliaCash_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/1/130601MichaeliaCash_FromGAus-16x9.mp4"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/1/130601MichaeliaCash_FromGAus/130601MichaeliaCash_FromGAus.m3u8"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653151910/Michaelia-Cash-launches-a-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653151910/Michaelia-Cash-launches-a-009.jpg",
+          "source":"AAP",
+          "altText":"Michaelia Cash launches a vicious rant against the Labor sisterhood",
+          "height":"84",
+          "credit":"AAP",
+          "caption":"Michaelia Cash launches a vicious rant against the Labor sisterhood Photograph: AAP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653167381/Michaelia-Cash-launches-a-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653167381/Michaelia-Cash-launches-a-016.jpg",
+          "source":"AAP",
+          "altText":"Michaelia Cash launches a vicious rant against the Labor sisterhood",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Michaelia Cash launches a vicious rant against the Labor sisterhood Photograph: AAP",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653137613/Michaelia-Cash-launches-a-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653137613/Michaelia-Cash-launches-a-002.jpg",
+          "source":"AAP",
+          "altText":"Michaelia Cash launches a vicious rant against the Labor sisterhood",
+          "height":"90",
+          "credit":"AAP",
+          "caption":"Michaelia Cash launches a vicious rant against the Labor sisterhood Photograph: AAP",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653139728/Michaelia-Cash-launches-a-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653139728/Michaelia-Cash-launches-a-003.jpg",
+          "source":"AAP",
+          "altText":"Michaelia Cash launches a vicious rant against the Labor sisterhood",
+          "height":"225",
+          "credit":"AAP",
+          "caption":"Michaelia Cash launches a vicious rant against the Labor sisterhood Photograph: AAP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653142008/Michaelia-Cash-launches-a-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372653142008/Michaelia-Cash-launches-a-004.jpg",
+          "source":"AAP",
+          "altText":"Michaelia Cash launches a vicious rant against the Labor sisterhood",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Michaelia Cash launches a vicious rant against the Labor sisterhood Photograph: AAP",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/jun/28/kevin-rudd-press-conference-prime-minister",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-06-28T07:04:00Z",
+      "webTitle":"Kevin Rudd gives first press conference as prime minister - video",
+      "webUrl":"http://www.guardian.co.uk/world/video/2013/jun/28/kevin-rudd-press-conference-prime-minister",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/jun/28/kevin-rudd-press-conference-prime-minister",
+      "fields":{
+        "trailText":"<p>In his first policy orientated press conference in Canberra since the leadership spill, Kevin Rudd announces that he is going to continue to support the national improvement plan for Australian schools, but will change the name from the Gonski reforms</p>",
+        "headline":"Kevin Rudd gives first press conference as prime minister - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hv8a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398236398/Kevin-Rudd-talks-on-educa-010.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/kevin-rudd",
+        "type":"keyword",
+        "webTitle":"Kevin Rudd",
+        "webUrl":"http://www.guardian.co.uk/world/kevin-rudd",
+        "apiUrl":"http://content.guardianapis.com/world/kevin-rudd",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.guardian.co.uk/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/labor-party",
+        "type":"keyword",
+        "webTitle":"Labor party",
+        "webUrl":"http://www.guardian.co.uk/world/labor-party",
+        "apiUrl":"http://content.guardianapis.com/world/labor-party",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/28/280613rudd_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"Guardian Australia",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398214533/Kevin-Rudd-talks-on-educa-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398214533/Kevin-Rudd-talks-on-educa-002.jpg",
+          "durationMinutes":"4",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398220612/Kevin-Rudd-talks-on-educa-004.jpg",
+          "width":"480",
+          "durationSeconds":"36"
+        },
+        "encodings":[{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/6/28/280613rudd_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/6/28/280613rudd_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/6/28/280613rudd_FromGAus/280613rudd_FromGAus.m3u8"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/28/280613rudd_FromGAus-16x9.mp4"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398236398/Kevin-Rudd-talks-on-educa-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398236398/Kevin-Rudd-talks-on-educa-010.jpg",
+          "source":"Guardian",
+          "altText":"Kevin Rudd talks on education reform",
+          "height":"84",
+          "credit":"Guardian",
+          "caption":"Kevin Rudd talks on education reform Photograph: Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398225067/Kevin-Rudd-talks-on-educa-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398225067/Kevin-Rudd-talks-on-educa-005.jpg",
+          "source":"Guardian",
+          "altText":"Kevin Rudd talks on education reform",
+          "height":"360",
+          "credit":"Guardian",
+          "caption":"Kevin Rudd talks on education reform Photograph: Guardian",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398214533/Kevin-Rudd-talks-on-educa-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398214533/Kevin-Rudd-talks-on-educa-002.jpg",
+          "source":"Guardian",
+          "altText":"Kevin Rudd talks on education reform",
+          "height":"90",
+          "credit":"Guardian",
+          "caption":"Kevin Rudd talks on education reform Photograph: Guardian",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398217294/Kevin-Rudd-talks-on-educa-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398217294/Kevin-Rudd-talks-on-educa-003.jpg",
+          "source":"Guardian",
+          "altText":"Kevin Rudd talks on education reform",
+          "height":"225",
+          "credit":"Guardian",
+          "caption":"Kevin Rudd talks on education reform Photograph: Guardian",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398220612/Kevin-Rudd-talks-on-educa-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/28/1372398220612/Kevin-Rudd-talks-on-educa-004.jpg",
+          "source":"Guardian",
+          "altText":"Kevin Rudd talks on education reform",
+          "height":"360",
+          "credit":"Guardian",
+          "caption":"Kevin Rudd talks on education reform Photograph: Guardian",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"tv-and-radio/video/2013/jun/27/toast-gillard-knitting-obama-climate",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2013-06-27T06:15:07Z",
+      "webTitle":"Science, climate change and knitting: The Mini Roast - video",
+      "webUrl":"http://www.guardian.co.uk/tv-and-radio/video/2013/jun/27/toast-gillard-knitting-obama-climate",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/video/2013/jun/27/toast-gillard-knitting-obama-climate",
+      "fields":{
+        "trailText":"<p>On the Mini Roast, Prime Minister Gillard's knitting photo is apparently controversial, and Obama uses his executive power to tackle climate change - like a dictator, only he listens to science.</p>",
+        "headline":"Science, climate change and knitting: The Mini Roast - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gqbd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309508304/The-Mini-Roast-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"tv-and-radio/series/the-roast",
+        "type":"series",
+        "webTitle":"The Roast",
+        "webUrl":"http://www.guardian.co.uk/tv-and-radio/series/the-roast",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/series/the-roast",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.guardian.co.uk/culture/comedy",
+        "apiUrl":"http://content.guardianapis.com/culture/comedy",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.guardian.co.uk/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/130627MiniRoastEp57_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"ABC",
+          "embeddable":"false",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309530583/The-Mini-Roast-016.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309530583/The-Mini-Roast-016.jpg",
+          "durationMinutes":"5",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309496267/The-Mini-Roast-004.jpg",
+          "width":"480",
+          "durationSeconds":"40"
+        },
+        "encodings":[{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/6/27/130627MiniRoastEp57_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/130627MiniRoastEp57_FromGAus-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/6/27/130627MiniRoastEp57_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/6/27/130627MiniRoastEp57_FromGAus/130627MiniRoastEp57_FromGAus.m3u8"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309508304/The-Mini-Roast-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309508304/The-Mini-Roast-009.jpg",
+          "source":"ABC",
+          "altText":"The Mini Roast",
+          "height":"84",
+          "credit":"ABC",
+          "caption":"The Mini Roast Photograph: ABC",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309528680/The-Mini-Roast-015.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309528680/The-Mini-Roast-015.jpg",
+          "source":"ABC",
+          "altText":"The Mini Roast",
+          "height":"372",
+          "credit":"ABC",
+          "caption":"The Mini Roast Photograph: ABC",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309530583/The-Mini-Roast-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309530583/The-Mini-Roast-016.jpg",
+          "source":"ABC",
+          "altText":"The Mini Roast",
+          "height":"90",
+          "credit":"ABC",
+          "caption":"The Mini Roast Photograph: ABC",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309492416/The-Mini-Roast-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309492416/The-Mini-Roast-003.jpg",
+          "source":"ABC",
+          "altText":"The Mini Roast",
+          "height":"225",
+          "credit":"ABC",
+          "caption":"The Mini Roast Photograph: ABC",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309496267/The-Mini-Roast-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372309496267/The-Mini-Roast-004.jpg",
+          "source":"ABC",
+          "altText":"The Mini Roast",
+          "height":"360",
+          "credit":"ABC",
+          "caption":"The Mini Roast Photograph: ABC",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/jun/27/julia-gillard-significant-moments-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-06-27T06:07:00Z",
+      "webTitle":"Julia Gillard's significant moments - video",
+      "webUrl":"http://www.guardian.co.uk/world/video/2013/jun/27/julia-gillard-significant-moments-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/jun/27/julia-gillard-significant-moments-video",
+      "fields":{
+        "trailText":"<p>Guardian Australia takes a look back at the three years and four days in the life of Julia Gillard, Australia's first female prime minister, including her apology to the victims of forced adoption, the introduction of the National Disability Insurance Scheme and her now famous misogyny speech</p>",
+        "headline":"Julia Gillard's significant moments - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gqby",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307324017/Julia-Gillard-photographe-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/julia-gillard",
+        "type":"keyword",
+        "webTitle":"Julia Gillard",
+        "webUrl":"http://www.guardian.co.uk/world/julia-gillard",
+        "apiUrl":"http://content.guardianapis.com/world/julia-gillard",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.guardian.co.uk/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/labor-party",
+        "type":"keyword",
+        "webTitle":"Labor party",
+        "webUrl":"http://www.guardian.co.uk/world/labor-party",
+        "apiUrl":"http://content.guardianapis.com/world/labor-party",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/260613gillard_FromGAus-2-16x9.mp4",
+        "fields":{
+          "source":"Guardian Australia",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307300615/Julia-Gillard-photographe-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307300615/Julia-Gillard-photographe-002.jpg",
+          "durationMinutes":"5",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307307736/Julia-Gillard-photographe-004.jpg",
+          "width":"480",
+          "durationSeconds":"26"
+        },
+        "encodings":[{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/6/27/260613gillard_FromGAus-2_3gpSml16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/6/27/260613gillard_FromGAus-2/260613gillard_FromGAus-2.m3u8"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/260613gillard_FromGAus-2-16x9.mp4"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/6/27/260613gillard_FromGAus-2_3gpLg16x9.3gp"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307324017/Julia-Gillard-photographe-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307324017/Julia-Gillard-photographe-009.jpg",
+          "source":"Guardian",
+          "photographer":"Penny Bradfield",
+          "altText":"Julia Gillard photographed for Guardian Australia at Kirribilli House",
+          "height":"84",
+          "credit":"Penny Bradfield/Guardian",
+          "caption":"Julia Gillard photographed for Guardian Australia at Kirribilli House Photograph: Penny Bradfield for the Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307349660/Julia-Gillard-photographe-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307349660/Julia-Gillard-photographe-016.jpg",
+          "source":"Guardian",
+          "photographer":"Penny Bradfield",
+          "altText":"Julia Gillard photographed for Guardian Australia at Kirribilli House",
+          "height":"360",
+          "credit":"Penny Bradfield/Guardian",
+          "caption":"Julia Gillard photographed for Guardian Australia at Kirribilli House Photograph: Penny Bradfield for the Guardian",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307300615/Julia-Gillard-photographe-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307300615/Julia-Gillard-photographe-002.jpg",
+          "source":"Guardian",
+          "photographer":"Penny Bradfield",
+          "altText":"Julia Gillard photographed for Guardian Australia at Kirribilli House",
+          "height":"90",
+          "credit":"Penny Bradfield/Guardian",
+          "caption":"Julia Gillard photographed for Guardian Australia at Kirribilli House Photograph: Penny Bradfield for the Guardian",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307303999/Julia-Gillard-photographe-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307303999/Julia-Gillard-photographe-003.jpg",
+          "source":"Guardian",
+          "photographer":"Penny Bradfield",
+          "altText":"Julia Gillard photographed for Guardian Australia at Kirribilli House",
+          "height":"225",
+          "credit":"Penny Bradfield/Guardian",
+          "caption":"Julia Gillard photographed for Guardian Australia at Kirribilli House Photograph: Penny Bradfield for the Guardian",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307307736/Julia-Gillard-photographe-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372307307736/Julia-Gillard-photographe-004.jpg",
+          "source":"Guardian",
+          "photographer":"Penny Bradfield",
+          "altText":"Julia Gillard photographed for Guardian Australia at Kirribilli House",
+          "height":"360",
+          "credit":"Penny Bradfield/Guardian",
+          "caption":"Julia Gillard photographed for Guardian Australia at Kirribilli House Photograph: Penny Bradfield for the Guardian",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/jun/27/kevin-rudd-sworn-in-prime-minister",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-06-27T03:09:46Z",
+      "webTitle":"Kevin Rudd sworn in as prime minister - video",
+      "webUrl":"http://www.guardian.co.uk/world/video/2013/jun/27/kevin-rudd-sworn-in-prime-minister",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/jun/27/kevin-rudd-sworn-in-prime-minister",
+      "fields":{
+        "trailText":"<p>Kevin Rudd visited Government house in Canberra with his family this morning to be sworn in as a the new prime minister by the Governor General, Quentin Bryce. Anthony Albanese was also sworn in as deputy prime minister and Chris Bowen has been sworn in as Treasurer</p>",
+        "headline":"Kevin Rudd sworn in as prime minister - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3gqb7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372291887703/Kevin-Rudd-sworn-in-as-pr-001.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/kevin-rudd",
+        "type":"keyword",
+        "webTitle":"Kevin Rudd",
+        "webUrl":"http://www.guardian.co.uk/world/kevin-rudd",
+        "apiUrl":"http://content.guardianapis.com/world/kevin-rudd",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.guardian.co.uk/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-election-2013",
+        "type":"keyword",
+        "webTitle":"Australian election 2013",
+        "webUrl":"http://www.guardian.co.uk/world/australian-election-2013",
+        "apiUrl":"http://content.guardianapis.com/world/australian-election-2013",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/130627ruddsworn_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"AAP",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300680726/Kevin-Rudd-sworn-in-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300680726/Kevin-Rudd-sworn-in-002.jpg",
+          "durationMinutes":"1",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300685612/Kevin-Rudd-sworn-in-004.jpg",
+          "width":"480",
+          "durationSeconds":"59"
+        },
+        "encodings":[{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/130627ruddsworn_FromGAus-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/6/27/130627ruddsworn_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/6/27/130627ruddsworn_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/6/27/130627ruddsworn_FromGAus/130627ruddsworn_FromGAus.m3u8"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372291887703/Kevin-Rudd-sworn-in-as-pr-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372291887703/Kevin-Rudd-sworn-in-as-pr-001.jpg",
+          "source":"AAP",
+          "photographer":"ALAN PORRITT",
+          "altText":"Kevin Rudd sworn in as prime minister",
+          "height":"84",
+          "credit":"ALAN PORRITT/AAP",
+          "caption":"Kevin Rudd sworn in as prime minister Photograph: ALAN PORRITT/AAP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300716397/Kevin-Rudd-sworn-in-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300716397/Kevin-Rudd-sworn-in-016.jpg",
+          "source":"APP",
+          "altText":"Kevin Rudd sworn in",
+          "height":"360",
+          "credit":"APP",
+          "caption":"Kevin Rudd sworn in Photograph: APP",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300680726/Kevin-Rudd-sworn-in-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300680726/Kevin-Rudd-sworn-in-002.jpg",
+          "source":"APP",
+          "altText":"Kevin Rudd sworn in",
+          "height":"90",
+          "credit":"APP",
+          "caption":"Kevin Rudd sworn in Photograph: APP",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300682979/Kevin-Rudd-sworn-in-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300682979/Kevin-Rudd-sworn-in-003.jpg",
+          "source":"APP",
+          "altText":"Kevin Rudd sworn in",
+          "height":"225",
+          "credit":"APP",
+          "caption":"Kevin Rudd sworn in Photograph: APP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300685612/Kevin-Rudd-sworn-in-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372300685612/Kevin-Rudd-sworn-in-004.jpg",
+          "source":"APP",
+          "altText":"Kevin Rudd sworn in",
+          "height":"360",
+          "credit":"APP",
+          "caption":"Kevin Rudd sworn in Photograph: APP",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/jun/27/wayne-swan-resigns-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-06-27T02:19:40Z",
+      "webTitle":"Wayne Swan resigns as deputy leader of the Labor Party - video",
+      "webUrl":"http://www.guardian.co.uk/world/video/2013/jun/27/wayne-swan-resigns-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/jun/27/wayne-swan-resigns-video",
+      "fields":{
+        "trailText":"<p>Former treasurer Wayne Swan, who was also Julia Gillard's deputy, has resigned from the ministry following the leadership ballot between Gillard and Kevin Rudd in which Rudd triumphed 57 votes to 45. Swan will stand at the next election. Chris Bowen has been sworn in as treasurer under Rudd</p>",
+        "headline":"Wayne Swan resigns as deputy leader of the Labor Party - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3gqah",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290365990/Wayne-Swan-resigns-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.guardian.co.uk/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/wayne-swan",
+        "type":"keyword",
+        "webTitle":"Wayne Swan",
+        "webUrl":"http://www.guardian.co.uk/world/wayne-swan",
+        "apiUrl":"http://content.guardianapis.com/world/wayne-swan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/130626swan_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"AAP",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290351795/Wayne-Swan-resigns-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290351795/Wayne-Swan-resigns-002.jpg",
+          "durationMinutes":"10",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290356492/Wayne-Swan-resigns-004.jpg",
+          "width":"480",
+          "durationSeconds":"7"
+        },
+        "encodings":[{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/6/27/130626swan_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/130626swan_FromGAus-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/6/27/130626swan_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/6/27/130626swan_FromGAus/130626swan_FromGAus.m3u8"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290365990/Wayne-Swan-resigns-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290365990/Wayne-Swan-resigns-009.jpg",
+          "source":"AAP",
+          "altText":"Wayne Swan resigns",
+          "height":"84",
+          "credit":"AAP",
+          "caption":"Wayne Swan resigns Photograph: AAP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290382760/Wayne-Swan-resigns-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290382760/Wayne-Swan-resigns-016.jpg",
+          "source":"AAP",
+          "altText":"Wayne Swan resigns",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Wayne Swan resigns Photograph: AAP",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290351795/Wayne-Swan-resigns-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290351795/Wayne-Swan-resigns-002.jpg",
+          "source":"AAP",
+          "altText":"Wayne Swan resigns",
+          "height":"90",
+          "credit":"AAP",
+          "caption":"Wayne Swan resigns Photograph: AAP",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290354089/Wayne-Swan-resigns-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290354089/Wayne-Swan-resigns-003.jpg",
+          "source":"AAP",
+          "altText":"Wayne Swan resigns",
+          "height":"225",
+          "credit":"AAP",
+          "caption":"Wayne Swan resigns Photograph: AAP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290356492/Wayne-Swan-resigns-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372290356492/Wayne-Swan-resigns-004.jpg",
+          "source":"AAP",
+          "altText":"Wayne Swan resigns",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Wayne Swan resigns Photograph: AAP",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/jun/27/tony-abbott-kevin-rudd-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-06-27T01:59:47Z",
+      "webTitle":"Tony Abbott speaks after Kevin Rudd wins Labor party leadership - video",
+      "webUrl":"http://www.guardian.co.uk/world/video/2013/jun/27/tony-abbott-kevin-rudd-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/jun/27/tony-abbott-kevin-rudd-video",
+      "fields":{
+        "trailText":"<p>Leader of the opposition Tony Abbott addresses the media after Kevin Rudd returns to the Labor leadership in a dramatic spill which outsted Julia Gillard after three years in power. Abbott calls on Rudd to stick to the 14 September election date, or call it earlier</p>",
+        "headline":"Tony Abbott speaks after Kevin Rudd wins Labor party leadership - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3gqac",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289600094/Tony-Abbott--009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-election-2013",
+        "type":"keyword",
+        "webTitle":"Australian election 2013",
+        "webUrl":"http://www.guardian.co.uk/world/australian-election-2013",
+        "apiUrl":"http://content.guardianapis.com/world/australian-election-2013",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.guardian.co.uk/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/20130627000726575074movmedium1_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"AAP",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289580604/Tony-Abbott--001.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289580604/Tony-Abbott--001.jpg",
+          "durationMinutes":"4",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289586260/Tony-Abbott--003.jpg",
+          "width":"480",
+          "durationSeconds":"59"
+        },
+        "encodings":[{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/6/27/20130627000726575074movmedium1_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/6/27/20130627000726575074movmedium1_FromGAus/20130627000726575074movmedium1_FromGAus.m3u8"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/27/20130627000726575074movmedium1_FromGAus-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/6/27/20130627000726575074movmedium1_FromGAus_3gpSml16x9.3gp"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289600094/Tony-Abbott--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289600094/Tony-Abbott--009.jpg",
+          "source":"AAP",
+          "altText":"Tony Abbott ",
+          "height":"84",
+          "credit":"AAP",
+          "caption":"Tony Abbott  Photograph: AAP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289616271/Tony-Abbott--016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289616271/Tony-Abbott--016.jpg",
+          "source":"AAP",
+          "altText":"Tony Abbott ",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Tony Abbott  Photograph: AAP",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289580604/Tony-Abbott--001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289580604/Tony-Abbott--001.jpg",
+          "source":"AAP",
+          "altText":"Tony Abbott ",
+          "height":"90",
+          "credit":"AAP",
+          "caption":"Tony Abbott  Photograph: AAP",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289583808/Tony-Abbott--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289583808/Tony-Abbott--002.jpg",
+          "source":"AAP",
+          "altText":"Tony Abbott ",
+          "height":"225",
+          "credit":"AAP",
+          "caption":"Tony Abbott  Photograph: AAP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289586260/Tony-Abbott--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372289586260/Tony-Abbott--003.jpg",
+          "source":"AAP",
+          "altText":"Tony Abbott ",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Tony Abbott  Photograph: AAP",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/jun/26/kevin-rudd-australia-prime-minister-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-06-26T15:12:44Z",
+      "webTitle":"Kevin Rudd accepts role as new Australian prime minister - video",
+      "webUrl":"http://www.guardian.co.uk/world/video/2013/jun/26/kevin-rudd-australia-prime-minister-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/jun/26/kevin-rudd-australia-prime-minister-video",
+      "fields":{
+        "trailText":"<p>Kevin Rudd is reinstated as Australia's prime minister on Wednesday after ousting Julia Gillard from the leadership of the country's Federal Parliamentary Labor party</p>",
+        "headline":"Kevin Rudd returns as Australia's prime minister - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gqxf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258008996/Kevin-Rudd-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/kevin-rudd",
+        "type":"keyword",
+        "webTitle":"Kevin Rudd",
+        "webUrl":"http://www.guardian.co.uk/world/kevin-rudd",
+        "apiUrl":"http://content.guardianapis.com/world/kevin-rudd",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.guardian.co.uk/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/julia-gillard",
+        "type":"keyword",
+        "webTitle":"Julia Gillard",
+        "webUrl":"http://www.guardian.co.uk/world/julia-gillard",
+        "apiUrl":"http://content.guardianapis.com/world/julia-gillard",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-election-2013",
+        "type":"keyword",
+        "webTitle":"Australian election 2013",
+        "webUrl":"http://www.guardian.co.uk/world/australian-election-2013",
+        "apiUrl":"http://content.guardianapis.com/world/australian-election-2013",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/26/130626Rudd-16x9.mp4",
+        "fields":{
+          "source":"Reuters",
+          "embeddable":"true",
+          "blockAds":"false",
+          "height":"360",
+          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/6/26/130626Rudd_7767556.jpg",
+          "durationMinutes":"1",
+          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/6/26/130626Rudd_7767556.jpg",
+          "width":"480",
+          "durationSeconds":"5"
+        },
+        "encodings":[{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/6/26/130626Rudd_3gpSml16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/6/26/130626Rudd/130626Rudd.m3u8"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/6/26/130626Rudd-16x9.mp4"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/6/26/130626Rudd_3gpLg16x9.3gp"
+        },{
+          "format":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/6/26/130626Rudd-720.mp4"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372257995262/Kevin-Rudd-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372257995262/Kevin-Rudd-001.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"230",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372257996908/Kevin-Rudd-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372257996908/Kevin-Rudd-002.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"90",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372257999162/Kevin-Rudd-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372257999162/Kevin-Rudd-003.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"225",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258000710/Kevin-Rudd-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258000710/Kevin-Rudd-004.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"360",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258004141/Kevin-Rudd-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258004141/Kevin-Rudd-006.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"54",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258005894/Kevin-Rudd-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258005894/Kevin-Rudd-007.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"340",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258007596/Kevin-Rudd-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258007596/Kevin-Rudd-008.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"130",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258008996/Kevin-Rudd-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258008996/Kevin-Rudd-009.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"84",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258010702/Kevin-Rudd-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258010702/Kevin-Rudd-010.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"132",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258012124/Kevin-Rudd-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258012124/Kevin-Rudd-011.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"168",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":11,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258013671/Kevin-Rudd-012.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258013671/Kevin-Rudd-012.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"180",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":12,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258015135/Kevin-Rudd-013.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258015135/Kevin-Rudd-013.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"228",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":13,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258016859/Kevin-Rudd-014.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258016859/Kevin-Rudd-014.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"276",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":14,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258018635/Kevin-Rudd-015.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258018635/Kevin-Rudd-015.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"372",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":15,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258020250/Kevin-Rudd-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/6/26/1372258020250/Kevin-Rudd-016.jpg",
+          "source":"AP",
+          "photographer":"Rick Rycroft",
+          "altText":"Kevin Rudd",
+          "height":"360",
+          "credit":"Rick Rycroft/AP",
+          "caption":"Kevin Rudd Photograph: Rick Rycroft/AP",
+          "width":"640"
+        }
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[]
+  }
+}
