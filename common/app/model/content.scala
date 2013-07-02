@@ -146,6 +146,13 @@ class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] =
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 }
 
+class Interactive(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+  lazy val contentType = "Interactive"
+  lazy val body: String = delegate.safeFields("body")
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
+}
+
 case class Quote(
   text: Option[String] = None,
   by: Option[String] = None,
