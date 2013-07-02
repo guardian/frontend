@@ -429,13 +429,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         $(".trail__count--imagecount").getText should be("12 images")
       }
 
-      Given("I'm on an article that links to an In Pictures Series gallery")
-      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
-        import browser._
 
-        Then("The gallery trail should have an 'In Pictures' kicker title")
-        $(".trail__headline-kicker").getText should be ("In Pictures:")
-      }
     }
 
   }

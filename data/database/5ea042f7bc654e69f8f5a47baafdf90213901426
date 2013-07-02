@@ -1,0 +1,1648 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":123820,
+    "startIndex":1,
+    "pageSize":7,
+    "currentPage":1,
+    "pages":17689,
+    "orderBy":"newest",
+    "section":{
+      "id":"football",
+      "webTitle":"Football",
+      "webUrl":"http://www.guardian.co.uk/football",
+      "apiUrl":"http://content.guardianapis.com/football"
+    },
+    "results":[{
+      "id":"football/2013/jul/02/football-transfer-rumours-stephan-el-shaarawy",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-07-02T07:48:52Z",
+      "webTitle":"Football transfer rumours: Stephan El Shaarawy to Chelsea?",
+      "webUrl":"http://www.guardian.co.uk/football/2013/jul/02/football-transfer-rumours-stephan-el-shaarawy",
+      "apiUrl":"http://content.guardianapis.com/football/2013/jul/02/football-transfer-rumours-stephan-el-shaarawy",
+      "fields":{
+        "trailText":"Liverpool look to Mamadou Sakho? | Roberto Soldado a target for Spurs? | West Brom eye Nicolas Anelka?",
+        "headline":"Football transfer rumours: Stephan El Shaarawy to Chelsea?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h2af",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751259416/Stephan-El-Shaarawy-headi-003.jpg",
+        "wordcount":"706",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/series/rumourmill",
+        "type":"series",
+        "webTitle":"Rumour Mill",
+        "webUrl":"http://www.guardian.co.uk/football/series/rumourmill",
+        "apiUrl":"http://content.guardianapis.com/football/series/rumourmill",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/transfer-window",
+        "type":"keyword",
+        "webTitle":"Transfer window",
+        "webUrl":"http://www.guardian.co.uk/football/transfer-window",
+        "apiUrl":"http://content.guardianapis.com/football/transfer-window",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/pauldoyle",
+        "type":"contributor",
+        "webTitle":"Paul Doyle",
+        "webUrl":"http://www.guardian.co.uk/profile/pauldoyle",
+        "apiUrl":"http://content.guardianapis.com/profile/pauldoyle",
+        "bio":"<p>Paul Doyle is the  <br /><a href=\"http://www.guardian.co.uk/football\">chief football writer for guardian.co.uk</a></p>",
+        "rcsId":"GNL034658",
+        "r2ContributorId":"16231",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.guardian.co.uk/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751255868/Stephan-El-Shaarawy-headi-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751255868/Stephan-El-Shaarawy-headi-001.jpg",
+          "source":"EPA",
+          "photographer":"Robert Ghement",
+          "altText":"Stephan El Shaarawy: heading to the Premier League?",
+          "height":"54",
+          "credit":"Robert Ghement/EPA",
+          "caption":"Stephan El Shaarawy: heading to the Premier League? Photograph: Robert Ghement/EPA",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751257984/Stephan-El-Shaarawy-headi-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751257984/Stephan-El-Shaarawy-headi-002.jpg",
+          "source":"EPA",
+          "photographer":"Robert Ghement",
+          "altText":"Stephan El Shaarawy: heading to the Premier League?",
+          "height":"130",
+          "credit":"Robert Ghement/EPA",
+          "caption":"Stephan El Shaarawy: heading to the Premier League? Photograph: Robert Ghement/EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751259416/Stephan-El-Shaarawy-headi-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751259416/Stephan-El-Shaarawy-headi-003.jpg",
+          "source":"EPA",
+          "photographer":"Robert Ghement",
+          "altText":"Stephan El Shaarawy: heading to the Premier League?",
+          "height":"84",
+          "credit":"Robert Ghement/EPA",
+          "caption":"Stephan El Shaarawy: heading to the Premier League? Photograph: Robert Ghement/EPA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751260807/Stephan-El-Shaarawy-headi-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751260807/Stephan-El-Shaarawy-headi-004.jpg",
+          "source":"EPA",
+          "photographer":"Robert Ghement",
+          "altText":"Stephan El Shaarawy: heading to the Premier League?",
+          "height":"132",
+          "credit":"Robert Ghement/EPA",
+          "caption":"Stephan El Shaarawy: heading to the Premier League? Photograph: Robert Ghement/EPA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751262250/Stephan-El-Shaarawy-headi-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751262250/Stephan-El-Shaarawy-headi-005.jpg",
+          "source":"EPA",
+          "photographer":"Robert Ghement",
+          "altText":"Stephan El Shaarawy: heading to the Premier League?",
+          "height":"168",
+          "credit":"Robert Ghement/EPA",
+          "caption":"Stephan El Shaarawy: heading to the Premier League? Photograph: Robert Ghement/EPA",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751263709/Stephan-El-Shaarawy-headi-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751263709/Stephan-El-Shaarawy-headi-006.jpg",
+          "source":"EPA",
+          "photographer":"Robert Ghement",
+          "altText":"Stephan El Shaarawy: heading to the Premier League?",
+          "height":"180",
+          "credit":"Robert Ghement/EPA",
+          "caption":"Stephan El Shaarawy: heading to the Premier League? Photograph: Robert Ghement/EPA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751265342/Stephan-El-Shaarawy-headi-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751265342/Stephan-El-Shaarawy-headi-007.jpg",
+          "source":"EPA",
+          "photographer":"Robert Ghement",
+          "altText":"Stephan El Shaarawy: heading to the Premier League?",
+          "height":"228",
+          "credit":"Robert Ghement/EPA",
+          "caption":"Stephan El Shaarawy: heading to the Premier League? Photograph: Robert Ghement/EPA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751266934/Stephan-El-Shaarawy-headi-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751266934/Stephan-El-Shaarawy-headi-008.jpg",
+          "source":"EPA",
+          "photographer":"Robert Ghement",
+          "altText":"Stephan El Shaarawy: heading to the Premier League?",
+          "height":"276",
+          "credit":"Robert Ghement/EPA",
+          "caption":"Stephan El Shaarawy: heading to the Premier League? Photograph: Robert Ghement/EPA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751266934/Stephan-El-Shaarawy-headi-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/2/1372751266934/Stephan-El-Shaarawy-headi-008.jpg",
+          "source":"EPA",
+          "photographer":"Robert Ghement",
+          "altText":"Stephan El Shaarawy: heading to the Premier League?",
+          "height":"276",
+          "credit":"Robert Ghement/EPA",
+          "caption":"Stephan El Shaarawy: heading to the Premier League? Photograph: Robert Ghement/EPA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"football/2013/jul/01/crystal-palace-jonjo-shelvey-liverpool-loan",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-07-01T23:22:00Z",
+      "webTitle":"Crystal Palace hope to sign Liverpool's Jonjo Shelvey on season's loan",
+      "webUrl":"http://www.guardian.co.uk/football/2013/jul/01/crystal-palace-jonjo-shelvey-liverpool-loan",
+      "apiUrl":"http://content.guardianapis.com/football/2013/jul/01/crystal-palace-jonjo-shelvey-liverpool-loan",
+      "fields":{
+        "trailText":"Crystal Palace have contacted Liverpool hoping to secure Jonjo Shelvey on a season's loan",
+        "headline":"Crystal Palace hope to sign Liverpool's Jonjo Shelvey on season's loan",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h28e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717123412/Man-Utd-v-Liverpool-001.jpg",
+        "wordcount":"236",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/crystalpalace",
+        "type":"keyword",
+        "webTitle":"Crystal Palace",
+        "webUrl":"http://www.guardian.co.uk/football/crystalpalace",
+        "apiUrl":"http://content.guardianapis.com/football/crystalpalace",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/5"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/transfer-window",
+        "type":"keyword",
+        "webTitle":"Transfer window",
+        "webUrl":"http://www.guardian.co.uk/football/transfer-window",
+        "apiUrl":"http://content.guardianapis.com/football/transfer-window",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"profile/dominicfifield",
+        "type":"contributor",
+        "webTitle":"Dominic Fifield",
+        "webUrl":"http://www.guardian.co.uk/profile/dominicfifield",
+        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
+        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
+        "rcsId":"GNL004637",
+        "r2ContributorId":"15597",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/01/dominic_fifield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717123412/Man-Utd-v-Liverpool-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717123412/Man-Utd-v-Liverpool-001.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"Man Utd v Liverpool",
+          "height":"84",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"Jonjo Shelvey joined Liverpool from Charlton two years ago. Photograph: Tom Jenkins/The Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717125162/Man-Utd-v-Liverpool-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717125162/Man-Utd-v-Liverpool-002.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"Man Utd v Liverpool",
+          "height":"132",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"Jonjo Shelvey joined Liverpool from Charlton two years ago. Photograph: Tom Jenkins/The Guardian",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717126557/Man-Utd-v-Liverpool-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717126557/Man-Utd-v-Liverpool-003.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"Man Utd v Liverpool",
+          "height":"168",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"Jonjo Shelvey joined Liverpool from Charlton two years ago. Photograph: Tom Jenkins/The Guardian",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717127908/Man-Utd-v-Liverpool-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717127908/Man-Utd-v-Liverpool-004.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"Man Utd v Liverpool",
+          "height":"180",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"Jonjo Shelvey joined Liverpool from Charlton two years ago. Photograph: Tom Jenkins/The Guardian",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717129324/Man-Utd-v-Liverpool-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717129324/Man-Utd-v-Liverpool-005.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"Man Utd v Liverpool",
+          "height":"228",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"Jonjo Shelvey joined Liverpool from Charlton two years ago. Photograph: Tom Jenkins/The Guardian",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717130975/Man-Utd-v-Liverpool-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717130975/Man-Utd-v-Liverpool-006.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"Man Utd v Liverpool",
+          "height":"276",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"Jonjo Shelvey joined Liverpool from Charlton two years ago. Photograph: Tom Jenkins/The Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717130975/Man-Utd-v-Liverpool-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717130975/Man-Utd-v-Liverpool-006.jpg",
+          "source":"The Guardian",
+          "photographer":"Tom Jenkins",
+          "altText":"Man Utd v Liverpool",
+          "height":"276",
+          "credit":"Tom Jenkins/The Guardian",
+          "caption":"Jonjo Shelvey joined Liverpool from Charlton two years ago. Photograph: Tom Jenkins for the Guardian",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/5"
+      }]
+    },{
+      "id":"football/2013/jul/01/brazil-midfielder-paulinho-tottenham",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-07-01T23:15:00Z",
+      "webTitle":"Brazil midfielder Paulinho confirms £17m move to Tottenham",
+      "webUrl":"http://www.guardian.co.uk/football/2013/jul/01/brazil-midfielder-paulinho-tottenham",
+      "apiUrl":"http://content.guardianapis.com/football/2013/jul/01/brazil-midfielder-paulinho-tottenham",
+      "fields":{
+        "trailText":"The Brazil midfielder Paulinho has confirmed he will join Tottenham Hotspur from Corinthians in a £17m deal",
+        "headline":"Brazil midfielder Paulinho confirms £17m move to Tottenham",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h28h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717962836/Paulinho-Corinthians-003.jpg",
+        "wordcount":"298",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/transfer-window",
+        "type":"keyword",
+        "webTitle":"Transfer window",
+        "webUrl":"http://www.guardian.co.uk/football/transfer-window",
+        "apiUrl":"http://content.guardianapis.com/football/transfer-window",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/tottenham-hotspur",
+        "type":"keyword",
+        "webTitle":"Tottenham Hotspur",
+        "webUrl":"http://www.guardian.co.uk/football/tottenham-hotspur",
+        "apiUrl":"http://content.guardianapis.com/football/tottenham-hotspur",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/19"
+        }]
+      },{
+        "id":"football/corinthians",
+        "type":"keyword",
+        "webTitle":"Corinthians",
+        "webUrl":"http://www.guardian.co.uk/football/corinthians",
+        "apiUrl":"http://content.guardianapis.com/football/corinthians",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/gary-payne",
+        "type":"contributor",
+        "webTitle":"Gary Payne",
+        "webUrl":"http://www.guardian.co.uk/profile/gary-payne",
+        "apiUrl":"http://content.guardianapis.com/profile/gary-payne",
+        "bio":"<p>Gary is deputy news editor on the sports desk</p>",
+        "r2ContributorId":"39778",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717960320/Paulinho-Corinthians-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717960320/Paulinho-Corinthians-001.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vanderlei Almeida",
+          "altText":"Paulinho Corinthians",
+          "height":"54",
+          "credit":"Vanderlei Almeida/AFP/Getty Images",
+          "caption":"Paulinho holds the trophy for being voted the third-best player at the Confederations Cup after Brazil's 3-0 win over Spain in the final. Photograph: Vanderlei Almeida/AFP/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717961669/Paulinho-Corinthians-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717961669/Paulinho-Corinthians-002.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vanderlei Almeida",
+          "altText":"Paulinho Corinthians",
+          "height":"130",
+          "credit":"Vanderlei Almeida/AFP/Getty Images",
+          "caption":"Paulinho holds the trophy for being voted the third-best player at the Confederations Cup after Brazil's 3-0 win over Spain in the final. Photograph: Vanderlei Almeida/AFP/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717962836/Paulinho-Corinthians-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717962836/Paulinho-Corinthians-003.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vanderlei Almeida",
+          "altText":"Paulinho Corinthians",
+          "height":"84",
+          "credit":"Vanderlei Almeida/AFP/Getty Images",
+          "caption":"Paulinho holds the trophy for being voted the third-best player at the Confederations Cup after Brazil's 3-0 win over Spain in the final. Photograph: Vanderlei Almeida/AFP/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717964049/Paulinho-Corinthians-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717964049/Paulinho-Corinthians-004.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vanderlei Almeida",
+          "altText":"Paulinho Corinthians",
+          "height":"132",
+          "credit":"Vanderlei Almeida/AFP/Getty Images",
+          "caption":"Paulinho holds the trophy for being voted the third-best player at the Confederations Cup after Brazil's 3-0 win over Spain in the final. Photograph: Vanderlei Almeida/AFP/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717965980/Paulinho-Corinthians-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717965980/Paulinho-Corinthians-005.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vanderlei Almeida",
+          "altText":"Paulinho Corinthians",
+          "height":"168",
+          "credit":"Vanderlei Almeida/AFP/Getty Images",
+          "caption":"Paulinho holds the trophy for being voted the third-best player at the Confederations Cup after Brazil's 3-0 win over Spain in the final. Photograph: Vanderlei Almeida/AFP/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717967181/Paulinho-Corinthians-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717967181/Paulinho-Corinthians-006.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vanderlei Almeida",
+          "altText":"Paulinho Corinthians",
+          "height":"180",
+          "credit":"Vanderlei Almeida/AFP/Getty Images",
+          "caption":"Paulinho holds the trophy for being voted the third-best player at the Confederations Cup after Brazil's 3-0 win over Spain in the final. Photograph: Vanderlei Almeida/AFP/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717968343/Paulinho-Corinthians-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717968343/Paulinho-Corinthians-007.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vanderlei Almeida",
+          "altText":"Paulinho Corinthians",
+          "height":"228",
+          "credit":"Vanderlei Almeida/AFP/Getty Images",
+          "caption":"Paulinho holds the trophy for being voted the third-best player at the Confederations Cup after Brazil's 3-0 win over Spain in the final. Photograph: Vanderlei Almeida/AFP/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717969531/Paulinho-Corinthians-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717969531/Paulinho-Corinthians-008.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vanderlei Almeida",
+          "altText":"Paulinho Corinthians",
+          "height":"276",
+          "credit":"Vanderlei Almeida/AFP/Getty Images",
+          "caption":"Paulinho holds the trophy for being voted the third-best player at the Confederations Cup after Brazil's 3-0 win over Spain in the final. Photograph: Vanderlei Almeida/AFP/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717969531/Paulinho-Corinthians-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372717969531/Paulinho-Corinthians-008.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Vanderlei Almeida",
+          "altText":"Paulinho Corinthians",
+          "height":"276",
+          "credit":"Vanderlei Almeida/AFP/Getty Images",
+          "caption":"Paulinho was voted third-best player at the Confederations Cup after Brazil's 3-0 win over Spain in the final. Photograph: Vanderlei Almeida/AFP/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/19"
+      }]
+    },{
+      "id":"football/2013/jul/01/world-cup-2014-ticket-prices",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-07-01T21:45:00Z",
+      "webTitle":"World Cup 2014: Fifa delays announcement of ticket prices",
+      "webUrl":"http://www.guardian.co.uk/football/2013/jul/01/world-cup-2014-ticket-prices",
+      "apiUrl":"http://content.guardianapis.com/football/2013/jul/01/world-cup-2014-ticket-prices",
+      "fields":{
+        "trailText":"Fifa has shelved plans to announce ticket prices for the 2014 World Cup finals after another night of protests in Brazil before the Confederations Cup final",
+        "headline":"World Cup 2014: Fifa delays announcement of ticket prices",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h284",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714276243/FIFA-President-Sepp-Blatt-003.jpg",
+        "wordcount":"303",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/world-cup-2014",
+        "type":"keyword",
+        "webTitle":"World Cup 2014",
+        "webUrl":"http://www.guardian.co.uk/football/world-cup-2014",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2014",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/confederations-cup",
+        "type":"keyword",
+        "webTitle":"Confederations Cup",
+        "webUrl":"http://www.guardian.co.uk/football/confederations-cup",
+        "apiUrl":"http://content.guardianapis.com/football/confederations-cup",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/sepp-blatter",
+        "type":"keyword",
+        "webTitle":"Sepp Blatter",
+        "webUrl":"http://www.guardian.co.uk/football/sepp-blatter",
+        "apiUrl":"http://content.guardianapis.com/football/sepp-blatter",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/world-cup-football",
+        "type":"keyword",
+        "webTitle":"World Cup",
+        "webUrl":"http://www.guardian.co.uk/football/world-cup-football",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/fifa",
+        "type":"keyword",
+        "webTitle":"Fifa",
+        "webUrl":"http://www.guardian.co.uk/football/fifa",
+        "apiUrl":"http://content.guardianapis.com/football/fifa",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"world/brazil",
+        "type":"keyword",
+        "webTitle":"Brazil",
+        "webUrl":"http://www.guardian.co.uk/world/brazil",
+        "apiUrl":"http://content.guardianapis.com/world/brazil",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/stuartjames",
+        "type":"contributor",
+        "webTitle":"Stuart James",
+        "webUrl":"http://www.guardian.co.uk/profile/stuartjames",
+        "apiUrl":"http://content.guardianapis.com/profile/stuartjames",
+        "bio":"<p>Stuart James is a <a href=\"http://www.guardian.co.uk/football\">football writer</a> who covers the midlands region for the Guardian. He is a former professional footballer</p>",
+        "rcsId":"GNL014001",
+        "r2ContributorId":"16491",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/stuart_james_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714273455/FIFA-President-Sepp-Blatt-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714273455/FIFA-President-Sepp-Blatt-001.jpg",
+          "source":"Reuters",
+          "photographer":"Sergio Moraes",
+          "altText":"FIFA President Sepp Blatter arrives to a media briefing in Rio de Janeiro",
+          "height":"54",
+          "credit":"Sergio Moraes/Reuters",
+          "caption":"The Fifa president, Sepp Blatter, has said that the Confederations Cup in Brazil was 'a success'. Photograph: Sergio Moraes/Reuters",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714275086/FIFA-President-Sepp-Blatt-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714275086/FIFA-President-Sepp-Blatt-002.jpg",
+          "source":"Reuters",
+          "photographer":"Sergio Moraes",
+          "altText":"FIFA President Sepp Blatter arrives to a media briefing in Rio de Janeiro",
+          "height":"130",
+          "credit":"Sergio Moraes/Reuters",
+          "caption":"The Fifa president, Sepp Blatter, has said that the Confederations Cup in Brazil was 'a success'. Photograph: Sergio Moraes/Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714276243/FIFA-President-Sepp-Blatt-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714276243/FIFA-President-Sepp-Blatt-003.jpg",
+          "source":"Reuters",
+          "photographer":"Sergio Moraes",
+          "altText":"FIFA President Sepp Blatter arrives to a media briefing in Rio de Janeiro",
+          "height":"84",
+          "credit":"Sergio Moraes/Reuters",
+          "caption":"The Fifa president, Sepp Blatter, has said that the Confederations Cup in Brazil was 'a success'. Photograph: Sergio Moraes/Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714277343/FIFA-President-Sepp-Blatt-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714277343/FIFA-President-Sepp-Blatt-004.jpg",
+          "source":"Reuters",
+          "photographer":"Sergio Moraes",
+          "altText":"FIFA President Sepp Blatter arrives to a media briefing in Rio de Janeiro",
+          "height":"132",
+          "credit":"Sergio Moraes/Reuters",
+          "caption":"The Fifa president, Sepp Blatter, has said that the Confederations Cup in Brazil was 'a success'. Photograph: Sergio Moraes/Reuters",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714278517/FIFA-President-Sepp-Blatt-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714278517/FIFA-President-Sepp-Blatt-005.jpg",
+          "source":"Reuters",
+          "photographer":"Sergio Moraes",
+          "altText":"FIFA President Sepp Blatter arrives to a media briefing in Rio de Janeiro",
+          "height":"168",
+          "credit":"Sergio Moraes/Reuters",
+          "caption":"The Fifa president, Sepp Blatter, has said that the Confederations Cup in Brazil was 'a success'. Photograph: Sergio Moraes/Reuters",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714279817/FIFA-President-Sepp-Blatt-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714279817/FIFA-President-Sepp-Blatt-006.jpg",
+          "source":"Reuters",
+          "photographer":"Sergio Moraes",
+          "altText":"FIFA President Sepp Blatter arrives to a media briefing in Rio de Janeiro",
+          "height":"180",
+          "credit":"Sergio Moraes/Reuters",
+          "caption":"The Fifa president, Sepp Blatter, has said that the Confederations Cup in Brazil was 'a success'. Photograph: Sergio Moraes/Reuters",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714281009/FIFA-President-Sepp-Blatt-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714281009/FIFA-President-Sepp-Blatt-007.jpg",
+          "source":"Reuters",
+          "photographer":"Sergio Moraes",
+          "altText":"FIFA President Sepp Blatter arrives to a media briefing in Rio de Janeiro",
+          "height":"228",
+          "credit":"Sergio Moraes/Reuters",
+          "caption":"The Fifa president, Sepp Blatter, has said that the Confederations Cup in Brazil was 'a success'. Photograph: Sergio Moraes/Reuters",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714282211/FIFA-President-Sepp-Blatt-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714282211/FIFA-President-Sepp-Blatt-008.jpg",
+          "source":"Reuters",
+          "photographer":"Sergio Moraes",
+          "altText":"FIFA President Sepp Blatter arrives to a media briefing in Rio de Janeiro",
+          "height":"276",
+          "credit":"Sergio Moraes/Reuters",
+          "caption":"The Fifa president, Sepp Blatter, has said that the Confederations Cup in Brazil was 'a success'. Photograph: Sergio Moraes/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714282211/FIFA-President-Sepp-Blatt-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372714282211/FIFA-President-Sepp-Blatt-008.jpg",
+          "source":"Reuters",
+          "photographer":"Sergio Moraes",
+          "altText":"FIFA President Sepp Blatter arrives to a media briefing in Rio de Janeiro",
+          "height":"276",
+          "credit":"Sergio Moraes/Reuters",
+          "caption":"The Fifa president, Sepp Blatter, has said that the Confederations Cup in Brazil was 'a success'. Photograph: Sergio Moraes/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"football/2013/jul/01/arsenal-lars-bender-bayer-leverkusen",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-07-01T21:19:11Z",
+      "webTitle":"Arsenal's £18.5m bid for Lars Bender rejected by Bayer Leverkusen",
+      "webUrl":"http://www.guardian.co.uk/football/2013/jul/01/arsenal-lars-bender-bayer-leverkusen",
+      "apiUrl":"http://content.guardianapis.com/football/2013/jul/01/arsenal-lars-bender-bayer-leverkusen",
+      "fields":{
+        "trailText":"Arsenal's attempt to strengthen their midfield have been frustrated after Bayer Leverkusen knocked back an approach for Lars Bender",
+        "headline":"Arsenal's £18.5m bid for Lars Bender rejected by Bayer Leverkusen",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h27k",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708171957/Lars-Bender-Bayer-Leverku-003.jpg",
+        "wordcount":"308",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/arsenal",
+        "type":"keyword",
+        "webTitle":"Arsenal",
+        "webUrl":"http://www.guardian.co.uk/football/arsenal",
+        "apiUrl":"http://content.guardianapis.com/football/arsenal",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/1006"
+        }]
+      },{
+        "id":"football/bayerleverkusen",
+        "type":"keyword",
+        "webTitle":"Bayer Leverkusen",
+        "webUrl":"http://www.guardian.co.uk/football/bayerleverkusen",
+        "apiUrl":"http://content.guardianapis.com/football/bayerleverkusen",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26256"
+        }]
+      },{
+        "id":"football/transfer-window",
+        "type":"keyword",
+        "webTitle":"Transfer window",
+        "webUrl":"http://www.guardian.co.uk/football/transfer-window",
+        "apiUrl":"http://content.guardianapis.com/football/transfer-window",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/dominicfifield",
+        "type":"contributor",
+        "webTitle":"Dominic Fifield",
+        "webUrl":"http://www.guardian.co.uk/profile/dominicfifield",
+        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
+        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
+        "rcsId":"GNL004637",
+        "r2ContributorId":"15597",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/01/dominic_fifield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708169607/Lars-Bender-Bayer-Leverku-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708169607/Lars-Bender-Bayer-Leverku-001.jpg",
+          "source":"Reuters",
+          "photographer":"Ina Fassbender",
+          "altText":"Lars Bender Bayer Leverkusen",
+          "height":"54",
+          "credit":"Ina Fassbender/Reuters",
+          "caption":"Bayer Leverkusen say Lars Bender, above, is not for sale after turning down Arsenal's bid.  Photograph: Ina Fassbender/Reuters",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708170797/Lars-Bender-Bayer-Leverku-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708170797/Lars-Bender-Bayer-Leverku-002.jpg",
+          "source":"Reuters",
+          "photographer":"Ina Fassbender",
+          "altText":"Lars Bender Bayer Leverkusen",
+          "height":"130",
+          "credit":"Ina Fassbender/Reuters",
+          "caption":"Bayer Leverkusen say Lars Bender, above, is not for sale after turning down Arsenal's bid.  Photograph: Ina Fassbender/Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708171957/Lars-Bender-Bayer-Leverku-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708171957/Lars-Bender-Bayer-Leverku-003.jpg",
+          "source":"Reuters",
+          "photographer":"Ina Fassbender",
+          "altText":"Lars Bender Bayer Leverkusen",
+          "height":"84",
+          "credit":"Ina Fassbender/Reuters",
+          "caption":"Bayer Leverkusen say Lars Bender, above, is not for sale after turning down Arsenal's bid.  Photograph: Ina Fassbender/Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708173111/Lars-Bender-Bayer-Leverku-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708173111/Lars-Bender-Bayer-Leverku-004.jpg",
+          "source":"Reuters",
+          "photographer":"Ina Fassbender",
+          "altText":"Lars Bender Bayer Leverkusen",
+          "height":"132",
+          "credit":"Ina Fassbender/Reuters",
+          "caption":"Bayer Leverkusen say Lars Bender, above, is not for sale after turning down Arsenal's bid.  Photograph: Ina Fassbender/Reuters",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708174212/Lars-Bender-Bayer-Leverku-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708174212/Lars-Bender-Bayer-Leverku-005.jpg",
+          "source":"Reuters",
+          "photographer":"Ina Fassbender",
+          "altText":"Lars Bender Bayer Leverkusen",
+          "height":"168",
+          "credit":"Ina Fassbender/Reuters",
+          "caption":"Bayer Leverkusen say Lars Bender, above, is not for sale after turning down Arsenal's bid.  Photograph: Ina Fassbender/Reuters",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708175442/Lars-Bender-Bayer-Leverku-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708175442/Lars-Bender-Bayer-Leverku-006.jpg",
+          "source":"Reuters",
+          "photographer":"Ina Fassbender",
+          "altText":"Lars Bender Bayer Leverkusen",
+          "height":"180",
+          "credit":"Ina Fassbender/Reuters",
+          "caption":"Bayer Leverkusen say Lars Bender, above, is not for sale after turning down Arsenal's bid.  Photograph: Ina Fassbender/Reuters",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708176756/Lars-Bender-Bayer-Leverku-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708176756/Lars-Bender-Bayer-Leverku-007.jpg",
+          "source":"Reuters",
+          "photographer":"Ina Fassbender",
+          "altText":"Lars Bender Bayer Leverkusen",
+          "height":"228",
+          "credit":"Ina Fassbender/Reuters",
+          "caption":"Bayer Leverkusen say Lars Bender, above, is not for sale after turning down Arsenal's bid.  Photograph: Ina Fassbender/Reuters",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708177967/Lars-Bender-Bayer-Leverku-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708177967/Lars-Bender-Bayer-Leverku-008.jpg",
+          "source":"Reuters",
+          "photographer":"Ina Fassbender",
+          "altText":"Lars Bender Bayer Leverkusen",
+          "height":"276",
+          "credit":"Ina Fassbender/Reuters",
+          "caption":"Bayer Leverkusen say Lars Bender, above, is not for sale after turning down Arsenal's bid.  Photograph: Ina Fassbender/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708177967/Lars-Bender-Bayer-Leverku-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372708177967/Lars-Bender-Bayer-Leverku-008.jpg",
+          "source":"Reuters",
+          "photographer":"Ina Fassbender",
+          "altText":"Lars Bender Bayer Leverkusen",
+          "height":"276",
+          "credit":"Ina Fassbender/Reuters",
+          "caption":"Bayer Leverkusen say Lars Bender, above, is not for sale after turning down Arsenal's bid.  Photograph: Ina Fassbender/Reuters",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1006"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26256"
+      }]
+    },{
+      "id":"football/2013/jul/01/jack-wilshere-arsenal-wayne-rooney",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-07-01T16:32:33Z",
+      "webTitle":"Jack Wilshere: If Arsenal sign Wayne Rooney then teams would fear us",
+      "webUrl":"http://www.guardian.co.uk/football/2013/jul/01/jack-wilshere-arsenal-wayne-rooney",
+      "apiUrl":"http://content.guardianapis.com/football/2013/jul/01/jack-wilshere-arsenal-wayne-rooney",
+      "fields":{
+        "trailText":"Arsenal's Jack Wilshere has said he wants the Gunners to sign Wayne Rooney",
+        "headline":"Jack Wilshere: If Arsenal sign Wayne Rooney then teams would fear us",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h23n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696200496/Jack-Wilshere-003.jpg",
+        "wordcount":"323",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/arsenal",
+        "type":"keyword",
+        "webTitle":"Arsenal",
+        "webUrl":"http://www.guardian.co.uk/football/arsenal",
+        "apiUrl":"http://content.guardianapis.com/football/arsenal",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/1006"
+        }]
+      },{
+        "id":"football/jack-wilshere",
+        "type":"keyword",
+        "webTitle":"Jack Wilshere",
+        "webUrl":"http://www.guardian.co.uk/football/jack-wilshere",
+        "apiUrl":"http://content.guardianapis.com/football/jack-wilshere",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/transfer-window",
+        "type":"keyword",
+        "webTitle":"Transfer window",
+        "webUrl":"http://www.guardian.co.uk/football/transfer-window",
+        "apiUrl":"http://content.guardianapis.com/football/transfer-window",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696196947/Jack-Wilshere-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696196947/Jack-Wilshere-001.jpg",
+          "source":"AP",
+          "photographer":"Alastair Grant",
+          "altText":"Jack Wilshere",
+          "height":"54",
+          "credit":"Alastair Grant/AP",
+          "caption":"Jack Wilshere believes Arsenal can compete for trophies next season if they make the right signings this summer. Photograph: Alastair Grant/AP",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696198897/Jack-Wilshere-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696198897/Jack-Wilshere-002.jpg",
+          "source":"AP",
+          "photographer":"Alastair Grant",
+          "altText":"Jack Wilshere",
+          "height":"130",
+          "credit":"Alastair Grant/AP",
+          "caption":"Jack Wilshere believes Arsenal can compete for trophies next season if they make the right signings this summer. Photograph: Alastair Grant/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696200496/Jack-Wilshere-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696200496/Jack-Wilshere-003.jpg",
+          "source":"AP",
+          "photographer":"Alastair Grant",
+          "altText":"Jack Wilshere",
+          "height":"84",
+          "credit":"Alastair Grant/AP",
+          "caption":"Jack Wilshere believes Arsenal can compete for trophies next season if they make the right signings this summer. Photograph: Alastair Grant/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696201995/Jack-Wilshere-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696201995/Jack-Wilshere-004.jpg",
+          "source":"AP",
+          "photographer":"Alastair Grant",
+          "altText":"Jack Wilshere",
+          "height":"132",
+          "credit":"Alastair Grant/AP",
+          "caption":"Jack Wilshere believes Arsenal can compete for trophies next season if they make the right signings this summer. Photograph: Alastair Grant/AP",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696203449/Jack-Wilshere-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696203449/Jack-Wilshere-005.jpg",
+          "source":"AP",
+          "photographer":"Alastair Grant",
+          "altText":"Jack Wilshere",
+          "height":"168",
+          "credit":"Alastair Grant/AP",
+          "caption":"Jack Wilshere believes Arsenal can compete for trophies next season if they make the right signings this summer. Photograph: Alastair Grant/AP",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696204913/Jack-Wilshere-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696204913/Jack-Wilshere-006.jpg",
+          "source":"AP",
+          "photographer":"Alastair Grant",
+          "altText":"Jack Wilshere",
+          "height":"180",
+          "credit":"Alastair Grant/AP",
+          "caption":"Jack Wilshere believes Arsenal can compete for trophies next season if they make the right signings this summer. Photograph: Alastair Grant/AP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696206466/Jack-Wilshere-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696206466/Jack-Wilshere-007.jpg",
+          "source":"AP",
+          "photographer":"Alastair Grant",
+          "altText":"Jack Wilshere",
+          "height":"228",
+          "credit":"Alastair Grant/AP",
+          "caption":"Jack Wilshere believes Arsenal can compete for trophies next season if they make the right signings this summer. Photograph: Alastair Grant/AP",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696208090/Jack-Wilshere-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696208090/Jack-Wilshere-008.jpg",
+          "source":"AP",
+          "photographer":"Alastair Grant",
+          "altText":"Jack Wilshere",
+          "height":"276",
+          "credit":"Alastair Grant/AP",
+          "caption":"Jack Wilshere believes Arsenal can compete for trophies next season if they make the right signings this summer. Photograph: Alastair Grant/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696208090/Jack-Wilshere-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/7/1/1372696208090/Jack-Wilshere-008.jpg",
+          "source":"AP",
+          "photographer":"Alastair Grant",
+          "altText":"Jack Wilshere",
+          "height":"276",
+          "credit":"Alastair Grant/AP",
+          "caption":"Jack Wilshere believes Arsenal can compete for trophies next season if they make the right signings this summer. Photograph: Alastair Grant/AP",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1006"
+      }]
+    },{
+      "id":"football/2013/jul/01/titus-bramble-training-with-west-ham",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-07-01T15:58:50Z",
+      "webTitle":"Titus Bramble training with West Ham after Sunderland release",
+      "webUrl":"http://www.guardian.co.uk/football/2013/jul/01/titus-bramble-training-with-west-ham",
+      "apiUrl":"http://content.guardianapis.com/football/2013/jul/01/titus-bramble-training-with-west-ham",
+      "fields":{
+        "trailText":"Titus Bramble is training with West Ham after being released by Sunderland",
+        "headline":"Titus Bramble training with West Ham after Sunderland release",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h237",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694249538/Soccer---Titus-Bramble-Fi-003.jpg",
+        "wordcount":"137",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/westhamunited",
+        "type":"keyword",
+        "webTitle":"West Ham United",
+        "webUrl":"http://www.guardian.co.uk/football/westhamunited",
+        "apiUrl":"http://content.guardianapis.com/football/westhamunited",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/43"
+        }]
+      },{
+        "id":"football/transfer-window",
+        "type":"keyword",
+        "webTitle":"Transfer window",
+        "webUrl":"http://www.guardian.co.uk/football/transfer-window",
+        "apiUrl":"http://content.guardianapis.com/football/transfer-window",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.guardian.co.uk/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694246348/Soccer---Titus-Bramble-Fi-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694246348/Soccer---Titus-Bramble-Fi-001.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "altText":"Soccer - Titus Bramble Filer",
+          "height":"54",
+          "credit":"Owen Humphreys/PA",
+          "caption":"Titus Bramble is training with West Ham after being released by Sunderland. Photograph: Owen Humphreys/PA",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694248260/Soccer---Titus-Bramble-Fi-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694248260/Soccer---Titus-Bramble-Fi-002.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "altText":"Soccer - Titus Bramble Filer",
+          "height":"130",
+          "credit":"Owen Humphreys/PA",
+          "caption":"Titus Bramble is training with West Ham after being released by Sunderland. Photograph: Owen Humphreys/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694249538/Soccer---Titus-Bramble-Fi-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694249538/Soccer---Titus-Bramble-Fi-003.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "altText":"Soccer - Titus Bramble Filer",
+          "height":"84",
+          "credit":"Owen Humphreys/PA",
+          "caption":"Titus Bramble is training with West Ham after being released by Sunderland. Photograph: Owen Humphreys/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694250833/Soccer---Titus-Bramble-Fi-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694250833/Soccer---Titus-Bramble-Fi-004.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "altText":"Soccer - Titus Bramble Filer",
+          "height":"132",
+          "credit":"Owen Humphreys/PA",
+          "caption":"Titus Bramble is training with West Ham after being released by Sunderland. Photograph: Owen Humphreys/PA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694252147/Soccer---Titus-Bramble-Fi-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694252147/Soccer---Titus-Bramble-Fi-005.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "altText":"Soccer - Titus Bramble Filer",
+          "height":"168",
+          "credit":"Owen Humphreys/PA",
+          "caption":"Titus Bramble is training with West Ham after being released by Sunderland. Photograph: Owen Humphreys/PA",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694253380/Soccer---Titus-Bramble-Fi-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694253380/Soccer---Titus-Bramble-Fi-006.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "altText":"Soccer - Titus Bramble Filer",
+          "height":"180",
+          "credit":"Owen Humphreys/PA",
+          "caption":"Titus Bramble is training with West Ham after being released by Sunderland. Photograph: Owen Humphreys/PA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694254666/Soccer---Titus-Bramble-Fi-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694254666/Soccer---Titus-Bramble-Fi-007.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "altText":"Soccer - Titus Bramble Filer",
+          "height":"228",
+          "credit":"Owen Humphreys/PA",
+          "caption":"Titus Bramble is training with West Ham after being released by Sunderland. Photograph: Owen Humphreys/PA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694256051/Soccer---Titus-Bramble-Fi-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694256051/Soccer---Titus-Bramble-Fi-008.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "altText":"Soccer - Titus Bramble Filer",
+          "height":"276",
+          "credit":"Owen Humphreys/PA",
+          "caption":"Titus Bramble is training with West Ham after being released by Sunderland. Photograph: Owen Humphreys/PA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694256051/Soccer---Titus-Bramble-Fi-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/1/1372694256051/Soccer---Titus-Bramble-Fi-008.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "altText":"Soccer - Titus Bramble Filer",
+          "height":"276",
+          "credit":"Owen Humphreys/PA",
+          "caption":"Titus Bramble is training with West Ham after being released by Sunderland. Photograph: Owen Humphreys/PA",
+          "width":"460"
+        }
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/43"
+      }]
+    }],
+    "storyPackage":[]
+  }
+}
