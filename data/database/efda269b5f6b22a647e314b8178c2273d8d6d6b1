@@ -27,7 +27,7 @@
       "webUrl":"http://www.guardian.co.uk/sport/2013/jun/30/paul-casey-irish-open",
       "apiUrl":"http://content.guardianapis.com/sport/2013/jun/30/paul-casey-irish-open",
       "fields":{
-        "trailText":"Paul Casey won the Irish Open by three shots from Joost Luiten and Robert Rock to return to the world's top 100",
+        "trailText":"<p>Paul Casey won the Irish Open by three shots from Joost Luiten and Robert Rock to return to the world's top 100</p>",
         "headline":"Paul Casey on road to recovery after winning Irish Open",
         "hasStoryPackage":"false",
         "shortUrl":"http://gu.com/p/3hxck",
@@ -222,21 +222,6 @@
         "type":"picture",
         "rel":"alt-size",
         "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/30/1372614769077/Paul-Casey-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/30/1372614769077/Paul-Casey-008.jpg",
-          "source":"Getty Images",
-          "photographer":"Andrew Redington",
-          "altText":"Paul Casey",
-          "height":"276",
-          "credit":"Andrew Redington/Getty Images",
-          "caption":"Paul Casey's three-shot victory in the Irish Open was his first title since 2011, a year when he suffered serious injury while snowboarding. Photograph: Andrew Redington/Getty Images",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
         "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/30/1372614769077/Paul-Casey-008.jpg",
         "fields":{
           "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/30/1372614769077/Paul-Casey-008.jpg",
@@ -809,7 +794,7 @@
         "webTitle":"UK news",
         "webUrl":"http://www.guardian.co.uk/uk/uk",
         "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk",
+        "sectionId":"uk-news",
         "sectionName":"UK news",
         "references":[]
       },{
@@ -7322,7 +7307,7 @@
         "webTitle":"UK news",
         "webUrl":"http://www.guardian.co.uk/uk/uk",
         "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk",
+        "sectionId":"uk-news",
         "sectionName":"UK news",
         "references":[]
       },{

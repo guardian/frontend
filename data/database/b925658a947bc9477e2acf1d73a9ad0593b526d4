@@ -207,8 +207,9 @@
         "webTitle":"Martin Pengelly",
         "webUrl":"http://www.guardian.co.uk/profile/martin-pengelly",
         "apiUrl":"http://content.guardianapis.com/profile/martin-pengelly",
-        "bio":"<p>Martin is a copy editor for The Guardian. He is also a writer for <a href=\"http://www.fitzroviaradio.co.uk/\">The Fitzrovia Radio Hour</a> Follow him on Twitter <a https://twitter.com/MartinPengelly> @MartinPengelly</a></p>",
+        "bio":"<p>Martin is a copy editor for the Guardian, and a writer for <a href=\"http://www.fitzroviaradio.co.uk/\">The Fitzrovia Radio Hour</a>. Follow him on Twitter <a https://twitter.com/MartinPengelly> @MartinPengelly</a></p>",
         "r2ContributorId":"36464",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359392068140/Martin_Pengelly.jpg",
         "references":[]
       },{
         "id":"sport/us-sport",
@@ -1096,8 +1097,9 @@
         "webTitle":"Martin Pengelly",
         "webUrl":"http://www.guardian.co.uk/profile/martin-pengelly",
         "apiUrl":"http://content.guardianapis.com/profile/martin-pengelly",
-        "bio":"<p>Martin is a copy editor for The Guardian. He is also a writer for <a href=\"http://www.fitzroviaradio.co.uk/\">The Fitzrovia Radio Hour</a> Follow him on Twitter <a https://twitter.com/MartinPengelly> @MartinPengelly</a></p>",
+        "bio":"<p>Martin is a copy editor for the Guardian, and a writer for <a href=\"http://www.fitzroviaradio.co.uk/\">The Fitzrovia Radio Hour</a>. Follow him on Twitter <a https://twitter.com/MartinPengelly> @MartinPengelly</a></p>",
         "r2ContributorId":"36464",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359392068140/Martin_Pengelly.jpg",
         "references":[]
       },{
         "id":"type/article",
@@ -1232,8 +1234,9 @@
         "webTitle":"Martin Pengelly",
         "webUrl":"http://www.guardian.co.uk/profile/martin-pengelly",
         "apiUrl":"http://content.guardianapis.com/profile/martin-pengelly",
-        "bio":"<p>Martin is a copy editor for The Guardian. He is also a writer for <a href=\"http://www.fitzroviaradio.co.uk/\">The Fitzrovia Radio Hour</a> Follow him on Twitter <a https://twitter.com/MartinPengelly> @MartinPengelly</a></p>",
+        "bio":"<p>Martin is a copy editor for the Guardian, and a writer for <a href=\"http://www.fitzroviaradio.co.uk/\">The Fitzrovia Radio Hour</a>. Follow him on Twitter <a https://twitter.com/MartinPengelly> @MartinPengelly</a></p>",
         "r2ContributorId":"36464",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359392068140/Martin_Pengelly.jpg",
         "references":[]
       },{
         "id":"type/article",

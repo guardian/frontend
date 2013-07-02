@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":19515,
+    "total":19517,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
@@ -15,10 +15,305 @@
       "apiUrl":"http://content.guardianapis.com/culture"
     },
     "results":[{
+      "id":"culture/2013/jul/02/michael-palin-tv-wipers-times",
+      "sectionId":"culture",
+      "sectionName":"Culture",
+      "webPublicationDate":"2013-07-01T23:00:02Z",
+      "webTitle":"Michael Palin returns to TV drama in The Wipers Times",
+      "webUrl":"http://www.guardian.co.uk/culture/2013/jul/02/michael-palin-tv-wipers-times",
+      "apiUrl":"http://content.guardianapis.com/culture/2013/jul/02/michael-palin-tv-wipers-times",
+      "fields":{
+        "trailText":"Monty Python actor to star in BBC2 show charting how first world war soldiers published a newspaper from Ypres battlefield",
+        "headline":"Michael Palin returns to TV drama in The Wipers Times",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h262",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700372911/Michael-Palin-003.jpg",
+        "wordcount":"154",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"culture/michael-palin",
+        "type":"keyword",
+        "webTitle":"Michael Palin",
+        "webUrl":"http://www.guardian.co.uk/culture/michael-palin",
+        "apiUrl":"http://content.guardianapis.com/culture/michael-palin",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"media/ian-hislop",
+        "type":"keyword",
+        "webTitle":"Ian Hislop",
+        "webUrl":"http://www.guardian.co.uk/media/ian-hislop",
+        "apiUrl":"http://content.guardianapis.com/media/ian-hislop",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/bbc2",
+        "type":"keyword",
+        "webTitle":"BBC2",
+        "webUrl":"http://www.guardian.co.uk/media/bbc2",
+        "apiUrl":"http://content.guardianapis.com/media/bbc2",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/bbc",
+        "type":"keyword",
+        "webTitle":"BBC",
+        "webUrl":"http://www.guardian.co.uk/media/bbc",
+        "apiUrl":"http://content.guardianapis.com/media/bbc",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/television",
+        "type":"keyword",
+        "webTitle":"Television industry",
+        "webUrl":"http://www.guardian.co.uk/media/television",
+        "apiUrl":"http://content.guardianapis.com/media/television",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/firstworldwar",
+        "type":"keyword",
+        "webTitle":"First world war",
+        "webUrl":"http://www.guardian.co.uk/world/firstworldwar",
+        "apiUrl":"http://content.guardianapis.com/world/firstworldwar",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.guardian.co.uk/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"tv-and-radio/drama",
+        "type":"keyword",
+        "webTitle":"Drama",
+        "webUrl":"http://www.guardian.co.uk/tv-and-radio/drama",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/drama",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.guardian.co.uk/culture/television",
+        "apiUrl":"http://content.guardianapis.com/culture/television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"tv-and-radio/tv-and-radio",
+        "type":"keyword",
+        "webTitle":"Television & radio",
+        "webUrl":"http://www.guardian.co.uk/tv-and-radio/tv-and-radio",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/tv-and-radio",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.guardian.co.uk/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700369768/Michael-Palin-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700369768/Michael-Palin-001.jpg",
+          "source":"Guardian",
+          "photographer":"Murdo Macleod",
+          "altText":"Michael Palin",
+          "height":"54",
+          "credit":"Murdo Macleod/Guardian",
+          "caption":"Michael Palin will star in The Wipers Times alongside Ben Chaplin, Julian Rhind-Tutt and Emilia Fox. Photograph: Murdo Macleod for the Guardian",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700371545/Michael-Palin-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700371545/Michael-Palin-002.jpg",
+          "source":"Guardian",
+          "photographer":"Murdo Macleod",
+          "altText":"Michael Palin",
+          "height":"130",
+          "credit":"Murdo Macleod/Guardian",
+          "caption":"Michael Palin will star in The Wipers Times alongside Ben Chaplin, Julian Rhind-Tutt and Emilia Fox. Photograph: Murdo Macleod for the Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700372911/Michael-Palin-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700372911/Michael-Palin-003.jpg",
+          "source":"Guardian",
+          "photographer":"Murdo Macleod",
+          "altText":"Michael Palin",
+          "height":"84",
+          "credit":"Murdo Macleod/Guardian",
+          "caption":"Michael Palin will star in The Wipers Times alongside Ben Chaplin, Julian Rhind-Tutt and Emilia Fox. Photograph: Murdo Macleod for the Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700375563/Michael-Palin-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700375563/Michael-Palin-004.jpg",
+          "source":"Guardian",
+          "photographer":"Murdo Macleod",
+          "altText":"Michael Palin",
+          "height":"132",
+          "credit":"Murdo Macleod/Guardian",
+          "caption":"Michael Palin will star in The Wipers Times alongside Ben Chaplin, Julian Rhind-Tutt and Emilia Fox. Photograph: Murdo Macleod for the Guardian",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700376995/Michael-Palin-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700376995/Michael-Palin-005.jpg",
+          "source":"Guardian",
+          "photographer":"Murdo Macleod",
+          "altText":"Michael Palin",
+          "height":"168",
+          "credit":"Murdo Macleod/Guardian",
+          "caption":"Michael Palin will star in The Wipers Times alongside Ben Chaplin, Julian Rhind-Tutt and Emilia Fox. Photograph: Murdo Macleod for the Guardian",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700378535/Michael-Palin-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700378535/Michael-Palin-006.jpg",
+          "source":"Guardian",
+          "photographer":"Murdo Macleod",
+          "altText":"Michael Palin",
+          "height":"180",
+          "credit":"Murdo Macleod/Guardian",
+          "caption":"Michael Palin will star in The Wipers Times alongside Ben Chaplin, Julian Rhind-Tutt and Emilia Fox. Photograph: Murdo Macleod for the Guardian",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700379978/Michael-Palin-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700379978/Michael-Palin-007.jpg",
+          "source":"Guardian",
+          "photographer":"Murdo Macleod",
+          "altText":"Michael Palin",
+          "height":"228",
+          "credit":"Murdo Macleod/Guardian",
+          "caption":"Michael Palin will star in The Wipers Times alongside Ben Chaplin, Julian Rhind-Tutt and Emilia Fox. Photograph: Murdo Macleod for the Guardian",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700381571/Michael-Palin-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700381571/Michael-Palin-008.jpg",
+          "source":"Guardian",
+          "photographer":"Murdo Macleod",
+          "altText":"Michael Palin",
+          "height":"276",
+          "credit":"Murdo Macleod/Guardian",
+          "caption":"Michael Palin will star in The Wipers Times alongside Ben Chaplin, Julian Rhind-Tutt and Emilia Fox. Photograph: Murdo Macleod for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700381571/Michael-Palin-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/1/1372700381571/Michael-Palin-008.jpg",
+          "source":"Guardian",
+          "photographer":"Murdo Macleod",
+          "altText":"Michael Palin",
+          "height":"276",
+          "credit":"Murdo Macleod/Guardian",
+          "caption":"Michael Palin will star in The Wipers Times alongside Ben Chaplin, Julian Rhind-Tutt and Emilia Fox. Photograph: Murdo Macleod for the Guardian",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"culture/2013/jun/30/rising-star-katie-chang-bling-ring",
       "sectionId":"culture",
       "sectionName":"Culture",
-      "webPublicationDate":"2013-06-30T07:00:01Z",
+      "webPublicationDate":"2013-06-30T07:00:00Z",
       "webTitle":"Why we're watching… Katie Chang",
       "webUrl":"http://www.guardian.co.uk/culture/2013/jun/30/rising-star-katie-chang-bling-ring",
       "apiUrl":"http://content.guardianapis.com/culture/2013/jun/30/rising-star-katie-chang-bling-ring",
@@ -28,7 +323,7 @@
         "hasStoryPackage":"true",
         "shortUrl":"http://gu.com/p/3gqve",
         "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/6/26/1372257073599/Katie-Change-003.jpg",
-        "wordcount":"212",
+        "wordcount":"213",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -111,6 +406,38 @@
         "references":[]
       }],
       "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":2,
+        "file":"http://cdn.theguardian.tv/truemainwebsite/2013/4/17mainwebsite/2013/4/17/130417BlingRing-16x9.mp4",
+        "fields":{
+          "source":"guardian.co.uk",
+          "embeddable":"false",
+          "blockAds":"false",
+          "height":"360",
+          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/4/17/130417BlingRing_7492035.jpg",
+          "durationMinutes":"0",
+          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/4/17/130417BlingRing_7492035.jpg",
+          "width":"480",
+          "durationSeconds":"49"
+        },
+        "encodings":[{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/4/17/130417BlingRing/130417BlingRing.m3u8"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/truemainwebsite/2013/4/17mainwebsite/2013/4/17/130417BlingRing-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/4/17/130417BlingRing_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/4/17/130417BlingRing_3gpLg16x9.3gp"
+        },{
+          "format":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/4/17/130417BlingRing-720.mp4"
+        }]
+      },{
         "type":"picture",
         "rel":"big-picture",
         "index":1,
@@ -1879,7 +2206,7 @@
         "webTitle":"UK news",
         "webUrl":"http://www.guardian.co.uk/uk/uk",
         "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk",
+        "sectionId":"uk-news",
         "sectionName":"UK news",
         "references":[]
       },{
@@ -2388,286 +2715,6 @@
           "height":"276",
           "credit":"Julio Cortez/AP",
           "caption":"Sopranos cast member Joe Pantoliano arrives at Cathedral Church of Saint John the Divine. Photograph: Julio Cortez/AP",
-          "width":"460"
-        }
-      }],
-      "references":[]
-    },{
-      "id":"culture/2013/jun/27/dennis-potter-archive-celebrated-writer",
-      "sectionId":"culture",
-      "sectionName":"Culture",
-      "webPublicationDate":"2013-06-27T16:06:08Z",
-      "webTitle":"Dennis Potter archive offers glimpse into mind of celebrated writer",
-      "webUrl":"http://www.guardian.co.uk/culture/2013/jun/27/dennis-potter-archive-celebrated-writer",
-      "apiUrl":"http://content.guardianapis.com/culture/2013/jun/27/dennis-potter-archive-celebrated-writer",
-      "fields":{
-        "trailText":"<p>Archive containing unpublished works and fragments opens to the public for the first time this weekend in the Forest of Dean</p>",
-        "headline":"Dennis Potter archive offers glimpse into mind of celebrated writer",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3gqm2",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349116424/Dennis-Potter-writing-005.jpg",
-        "wordcount":"958",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"culture/dennis-potter",
-        "type":"keyword",
-        "webTitle":"Dennis Potter",
-        "webUrl":"http://www.guardian.co.uk/culture/dennis-potter",
-        "apiUrl":"http://content.guardianapis.com/culture/dennis-potter",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.guardian.co.uk/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"artanddesign/exhibition",
-        "type":"keyword",
-        "webTitle":"Exhibitions",
-        "webUrl":"http://www.guardian.co.uk/artanddesign/exhibition",
-        "apiUrl":"http://content.guardianapis.com/artanddesign/exhibition",
-        "sectionId":"artanddesign",
-        "sectionName":"Art and design",
-        "references":[]
-      },{
-        "id":"artanddesign/artanddesign",
-        "type":"keyword",
-        "webTitle":"Art and design",
-        "webUrl":"http://www.guardian.co.uk/artanddesign/artanddesign",
-        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
-        "sectionId":"artanddesign",
-        "sectionName":"Art and design",
-        "references":[]
-      },{
-        "id":"profile/stevenmorris",
-        "type":"contributor",
-        "webTitle":"Steven Morris",
-        "webUrl":"http://www.guardian.co.uk/profile/stevenmorris",
-        "apiUrl":"http://content.guardianapis.com/profile/stevenmorris",
-        "bio":"<p>Steven Morris is a reporter for the <a href=\"http://www.guardian.co.uk/\">Guardian</a></p>",
-        "rcsId":"GNL004769",
-        "r2ContributorId":"16487",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/steven_morris_140x140.jpg",
-        "references":[]
-      },{
-        "id":"uk/uk",
-        "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.guardian.co.uk/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.guardian.co.uk/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"media/media",
-        "type":"keyword",
-        "webTitle":"Media",
-        "webUrl":"http://www.guardian.co.uk/media/media",
-        "apiUrl":"http://content.guardianapis.com/media/media",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.guardian.co.uk/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.guardian.co.uk/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/topstories",
-        "type":"newspaper-book-section",
-        "webTitle":"Top stories",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/topstories",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      }],
-      "mediaAssets":[{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349112010/Dennis-Potter-writing-002.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349112010/Dennis-Potter-writing-002.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"54",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"54"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":2,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349113414/Dennis-Potter-writing-003.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349113414/Dennis-Potter-writing-003.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"340",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"480"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":3,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349114964/Dennis-Potter-writing-004.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349114964/Dennis-Potter-writing-004.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"130",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":4,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349116424/Dennis-Potter-writing-005.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349116424/Dennis-Potter-writing-005.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"84",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"140"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":5,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349117845/Dennis-Potter-writing-006.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349117845/Dennis-Potter-writing-006.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"132",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"220"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":6,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349119247/Dennis-Potter-writing-007.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349119247/Dennis-Potter-writing-007.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"168",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"280"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":7,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349120841/Dennis-Potter-writing-008.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349120841/Dennis-Potter-writing-008.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"180",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"300"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":8,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349122339/Dennis-Potter-writing-009.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349122339/Dennis-Potter-writing-009.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"228",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"380"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":9,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349123821/Dennis-Potter-writing-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349123821/Dennis-Potter-writing-010.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"276",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"460"
-        }
-      },{
-        "type":"picture",
-        "rel":"alt-size",
-        "index":10,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349125513/Dennis-Potter-writing-011.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349125513/Dennis-Potter-writing-011.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"372",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
-          "width":"620"
-        }
-      },{
-        "type":"picture",
-        "rel":"body",
-        "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349123821/Dennis-Potter-writing-010.jpg",
-        "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/27/1372349123821/Dennis-Potter-writing-010.jpg",
-          "source":"Dean Heritage Centre",
-          "altText":"Dennis Potter writing",
-          "height":"276",
-          "credit":"Dean Heritage Centre",
-          "caption":"The handwritten text of an unproduced Dennis Potter television play called Mushroom on Toast from the early 1970s. Photograph: Dean Heritage Centre",
           "width":"460"
         }
       }],
