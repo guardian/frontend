@@ -16,7 +16,7 @@
         <div class="list-picker">            
             <div class="list-picker__title">Trail Blocks</div>
             <div data-bind="foreach: listsAvailable">
-                <div class="list-picker__item" data-bind="text: $data, click: $parent.displayList"></div>
+                <div class="list-picker__item" data-bind="text: name, click: $parent.displayList"></div>
             </div>
             <div class="list-picker__new">
                 <div>Create a new trailblock</div>

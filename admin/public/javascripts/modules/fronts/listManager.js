@@ -22,26 +22,15 @@ define([
                 newListName:    knockout.observable()
             };
 
-        viewModel.displayList = function(listName) {
-            var list = knockout.observableArray(),
-                listLen = viewModel.listsDisplayed().length;
-
-            viewModel.hideList(listName);
-
-            // Do no more if we've just removed the list (i.e. toggled it off)
-            if (listLen !== viewModel.listsDisplayed().length) { return; };
-
-            // Load the list
+        viewModel.displayList = function(item) {
             reqwest({
-                url: '/frontsapi/list/' + listName,
+                url: '/frontsapi/list/' + item.name,
                 type: 'json'
             }).then(
                 function(resp) {
-                    populateList(list, resp.list); 
-                    viewModel.listsDisplayed.unshift({
-                        name: listName,
-                        list: list
-                    });
+                    viewModel.hideList(item);
+                    populateList(item.list, resp.list); 
+                    viewModel.listsDisplayed.unshift(item);
                     connectSortableLists();
                 },
                 function(xhr) { console.log(xhr); } // error
@@ -49,21 +38,24 @@ define([
         }
 
         viewModel.hideList = function(list) {
-            var name = (typeof list === 'string' ? list : list.name);
-            viewModel.listsDisplayed.remove(function(item){
-                return item.name === name;
-            });
+            viewModel.listsDisplayed.remove(list);
         }
 
         viewModel.createList = function() {
-            var listName = viewModel.newListName();
+            var name = viewModel.newListName(),
+                alreadyAvailable = !!withKeyValue(viewModel.listsAvailable(), 'name', name).length;
 
-            if (viewModel.listsAvailable().indexOf(listName) === -1) {
-                viewModel.listsAvailable.push(listName);
-                viewModel.displayList(listName);
+            if (!alreadyAvailable) {
+                viewModel.displayList(newAvailableList(name));
                 viewModel.newListName('');
             }
         }
+
+        function withKeyValue(arr, prop, val) {
+            return arr.filter(function(obj){
+                return obj[prop] === val;
+            });
+        }        
 
         function connectSortableLists() {
             var selector = '.connectedList',
@@ -154,13 +146,25 @@ define([
             ContentApi.decorateItems(list());
         };
 
+        function newAvailableList(name) {
+            var item = {
+                name: name,
+                list: knockout.observableArray()
+            }
+
+            viewModel.listsAvailable.push(item);
+            return item;
+        }
+
         function fetchAvailableLists() {
             reqwest({
                 url: '/frontsapi/lists',
                 type: 'json'
             }).then(
                 function(resp) {
-                    viewModel.listsAvailable(resp.lists);
+                    resp.lists.forEach(function(name){
+                        newAvailableList(name);
+                    });
                 },
                 function(xhr) { console.log(xhr); } // error
             );
