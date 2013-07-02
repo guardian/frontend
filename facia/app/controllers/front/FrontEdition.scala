@@ -1,6 +1,6 @@
 package controllers.front
 
-import model.{RunningOrder, ItemTrailblockDescription, TrailblockDescription, Trailblock}
+import model.{RunningOrderTrailblock, TrailblockDescription, Trailblock}
 import scala.Some
 import common.Edition
 
@@ -8,41 +8,12 @@ import common.Edition
   Responsible for handling the blocks of the front for an edition
   Responsibilites include de-duping
  */
-class FrontEdition(val edition: Edition, val descriptions: Seq[TrailblockDescription]) {
+class FrontEdition(val edition: Edition, val trailblocks: Seq[RunningOrderTrailblock]) {
 
-  val manualAgents = descriptions.map( desc =>
-    desc match {
-      case desc: ItemTrailblockDescription => TrailblockAgent(desc)
-      case desc: RunningOrder => RunningOrderAgent(desc)
-    }
-  )
+  def apply(): Seq[RunningOrderTrailblock] = trailblocks
 
-  def apply(): Seq[Trailblock] = dedupe(manualAgents.flatMap(_.trailblock))
+  def refresh() = trailblocks.foreach(_.refresh())
 
-  protected def dedupe(trailblocks: Seq[Trailblock]): Seq[Trailblock] = {
-
-    var usedTrails = List.empty[String]
-
-    trailblocks.map {
-      trailblock =>
-        val deDupedTrails = trailblock.trails.flatMap {
-          trail =>
-            if (usedTrails.contains(trail.url)) {
-              None
-            } else {
-              Some(trail)
-            }
-        }
-
-        //only dedupe on visible trails
-        usedTrails = usedTrails ++ deDupedTrails.take(trailblock.description.numItemsVisible).map(_.url)
-
-        Trailblock(trailblock.description, deDupedTrails)
-    }
-  }
-
-  def refresh() = manualAgents.foreach(_.refresh())
-
-  def shutDown() = manualAgents.foreach(_.close())
+  def shutDown() = trailblocks.foreach(_.close())
 
 }

@@ -97,15 +97,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     FrontPage(realPath).map { frontPage =>
 
       // get the trailblocks
-      val trailblocks: Seq[Trailblock] = front(realPath).filterNot { trailblock =>
-
-        // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
-        // filter out configured trailblocks if not on the network front
-        path match {
-          case FrontPath(_) => false
-          case _ => trailblock.description.isConfigured
-        }
-      }
+      val trailblocks: Seq[RunningOrderTrailblock] = front(realPath)
 
       if (trailblocks.isEmpty) {
         InternalServerError
@@ -123,12 +115,12 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
 
     FrontPage(realPath).map{ frontPage =>
       // get the first trailblock
-      val trailblock: Option[Trailblock] = front(realPath).headOption
+      val trailblock: Option[RunningOrderTrailblock] = front(realPath).headOption
 
       if (trailblock.isEmpty) {
         InternalServerError
       } else {
-        val trails: Seq[Trail] = trailblock.get.trails
+        val trails: Seq[Trail] = trailblock.map(_.trails).getOrElse(Nil)
         val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
         renderFormat(response, response, frontPage)
       }

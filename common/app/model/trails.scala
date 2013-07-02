@@ -5,9 +5,10 @@ import views.support.Style
 import scala.math
 import scala.concurrent.Future
 import conf.ContentApi
-import common.{ExecutionContexts, Edition}
+import common.{Logging, AkkaSupport, ExecutionContexts, Edition}
 import contentapi.QueryDefaults
-
+import play.api.libs.ws.WS
+import play.api.libs.json.Json._
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
   def linkText: String
@@ -100,22 +101,52 @@ object CustomTrailblockDescription {
     CustomQueryTrailblockDescription(id, name, numItemsVisible, style, () => query, isConfigured)
 }
 
-class RunningOrderDescription(
-  val id: String,
-  val name: String,
-  val numItemsVisible: Int,
-  val style: Option[Style],
-  val showMore: Boolean,
-  val edition: Edition,
-  val isConfigured: Boolean,
-  var articles: Seq[String] = Nil) extends TrailblockDescription with QueryDefaults
+
+/**
+ * Trailblock defined from the fronts api
+ *
+ * @param id
+ * @param name
+ * @param edition
+ */
+class RunningOrderTrailblock(
+                              val id: String,
+                              val name: String,
+                              val edition: Edition) extends AkkaSupport with Logging
 {
 
-  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+  private lazy val agent = play_akka.agent[Seq[Trail]](Nil)
 
-  def query() = ContentApi.search(edition)
-    .ids(articles.mkString(","))
-    .response map { r =>
-      r.results.map(new Content(_))
+  def trails: Seq[Trail] = agent()
+
+  def refresh() = {
+    // get the running order from the api
+    WS.url(s"http://frontend-frontsap-1cb58typd06bp-1433204139.eu-west-1.elb.amazonaws.com//frontsapi/list/$id").get() foreach { response =>
+      response.status match {
+        case 200 =>
+          val articles = (parse(response.body) \ id).asOpt[List[String]].getOrElse(Nil)
+          retrieveArticles(articles)
+        case _ => log.warn(s"Could not load running order config ${response.status} ${response.statusText}")
+      }
     }
+  }
+
+  private def retrieveArticles(articles: Seq[String]) = {
+    ContentApi.search(edition)
+      .ids(articles.mkString(","))
+      .response map { r =>
+        agent.send{ old =>
+          r.results.map(new Content(_))
+        }
+      }
+    }
+
+  def close() = agent.close()
+
+}
+
+object RunningOrderTrailblock {
+
+  def apply(id: String, name: String)(implicit edition: Edition) = new RunningOrderTrailblock(id, name, edition)
+
 }

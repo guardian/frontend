@@ -1,6 +1,6 @@
 package controllers.front
 
-import model.Trailblock
+import model.{RunningOrderTrailblock, Trailblock}
 import common.{Edition, Logging, AkkaSupport}
 import scala.concurrent.duration._
 
@@ -16,9 +16,9 @@ class Front extends AkkaSupport with Logging {
     Front.refresh()
   }
 
-  lazy val fronts: Map[String, ConfiguredEdition] = Edition.all.flatMap{ edition =>
+  lazy val fronts: Map[String, FrontEdition] = Edition.all.flatMap{ edition =>
     edition.configuredFronts.map{
-      case (name, blocks) => name ->  new ConfiguredEdition(edition, blocks)
+      case (name, trailblocks) => name ->  new FrontEdition(edition, trailblocks)
     }.toMap
   }.toMap
 
@@ -37,7 +37,7 @@ class Front extends AkkaSupport with Logging {
     refreshSchedule
   }
 
-  def apply(path: String): Seq[Trailblock] = fronts(path)()
+  def apply(path: String): Seq[RunningOrderTrailblock] = fronts(path)()
 
 }
 
