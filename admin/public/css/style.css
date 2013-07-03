@@ -504,6 +504,7 @@ a.cta, .cta a {
 }
 
 .fronts .list-picker__item {
+    color: #214583;
     font-weight: bold;
     display: inline-block;
     padding-right: 5px;
