@@ -75,7 +75,9 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val frontsApi = application("fronts-api").dependsOn(commonWithTests)
+  val frontsApi = application("fronts-api")
+    .dependsOn(commonWithTests)
+    .dependsOn(admin)
 
   val dev = base("dev-build")
     .dependsOn(front)
