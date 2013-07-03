@@ -53,14 +53,14 @@ trait TrailblockDescription extends ExecutionContexts {
 }
 
 class ItemTrailblockDescription(
-                                 val id: String, val name: String,
-                                 val numItemsVisible: Int,
-                                 val style: Option[Style],
-                                 val showMore: Boolean,
-                                 val edition: Edition,
-                                 val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults
-{
-  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+    val id: String, val name: String,
+    val numItemsVisible: Int,
+    val style: Option[Style],
+    val showMore: Boolean,
+    val edition: Edition,
+    val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults
+  {
+    lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
   def query() = EditorsPicsOrLeadContentAndLatest(
     ContentApi.item(id, edition)
@@ -76,13 +76,13 @@ object ItemTrailblockDescription {
 }
 
 private case class CustomQueryTrailblockDescription(
-                                                     id: String,
-                                                     name: String,
-                                                     numItemsVisible: Int,
-                                                     style: Option[Style],
-                                                     customQuery: () => Future[Seq[Trail]],
-                                                     isConfigured: Boolean)
-  extends TrailblockDescription {
+            id: String,
+            name: String,
+            numItemsVisible: Int,
+            style: Option[Style],
+            customQuery: () => Future[Seq[Trail]],
+            isConfigured: Boolean)
+    extends TrailblockDescription {
 
   // show more will not (currently) work with custom queries
   val showMore = false
