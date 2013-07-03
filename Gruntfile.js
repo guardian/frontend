@@ -95,11 +95,11 @@ module.exports = function (grunt) {
           },
           discussion: {
             src: ['integration-tests/casper/tests/discussion.spec.js'],
-            dest: 'integration-tests/casper/tests/target/casper-xunit-reports/discussion.spec.xml'
+            dest: 'integration-tests/target/casper-xunit-reports/discussion.spec.xml'
           },
           networkfront: {
             src: ['integration-tests/casper/tests/network-front.spec.js'],
-            dest: 'integration-tests/casper/tests/target/casper-xunit-reports/network-front.spec.xml'
+            dest: 'integration-tests/target/casper-xunit-reports/network-front.spec.xml'
           }
         },        
 
