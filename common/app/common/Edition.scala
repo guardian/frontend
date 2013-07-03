@@ -2,16 +2,16 @@ package common
 
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTimeZone
-import model.{TrailblockNew, Trailblock, MetaData}
+import model.{MetaData, TrailblockDescription}
 
-// describes the ways in which editions differ from each other
+// describes the ways in which facia.editions differ from each other
 abstract class Edition(
-    val id: String,
-    val displayName: String,
-    val timezone: DateTimeZone,
-    val hreflang: String // see http://support.google.com/webmasters/bin/answer.py?hl=en&answer=189077
-  ) {
-  def configuredFronts: Map[String, Seq[TrailblockNew]]
+                        val id: String,
+                        val displayName: String,
+                        val timezone: DateTimeZone,
+                        val hreflang: String // see http://support.google.com/webmasters/bin/answer.py?hl=en&answer=189077
+                        ) {
+  def configuredFronts: Map[String, Seq[TrailblockDescription]]
   def zones: Seq[Zone]
   def navigation(metadata: MetaData): Seq[NavItem]
 }

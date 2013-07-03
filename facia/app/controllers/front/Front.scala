@@ -1,6 +1,6 @@
 package controllers.front
 
-import model.{TrailblockNew, Trailblock}
+import model.TrailblockNew
 import common.{Edition, Logging, AkkaSupport}
 import scala.concurrent.duration._
 

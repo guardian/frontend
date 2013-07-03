@@ -1,6 +1,6 @@
 package controllers.front
 
-import common.Edition
+import facia.Edition
 import model.{TrailblockNew}
 
 /*
