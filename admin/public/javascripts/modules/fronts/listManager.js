@@ -171,7 +171,10 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    resp.lists.forEach(function(name, index){
+                    []
+                    .concat(resp.lists)
+                    .sort(function (a, b) {return a > b ? 1 : -1;})
+                    .map(function(name, index){
                         var list = newAvailableList(name);
                         if (index <= maxDisplayedLists) {
                             viewModel.displayList(list);
