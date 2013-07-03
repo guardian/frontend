@@ -1,6 +1,7 @@
 /* global module: false */
 module.exports = function (grunt) {
-
+    process.env['PATH'] = '$PATH:$(pwd)/dev/casperjs/bin';
+    process.env['PATH'] = '$PATH:$(pwd)/node_modules/phantomjs/bin';
     var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1';
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
