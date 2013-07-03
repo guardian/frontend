@@ -40,4 +40,4 @@ style-guide/app/assets/stylesheets/styleguide.min.css
 
 dev/gems
 dev/casperjs
-integration-tests/casper/tests/target/*
+integration-tests/target/*
