@@ -9,9 +9,7 @@
 
 var casper = require('casper').create();
 
-casper.start('http://m.gucode.co.uk/'), function(){
-     this.die("Fail.", 1);
-};
+casper.start('http://m.gucode.co.uk/');
 
 var clearLocalStorage = function() {
     casper.evaluate(function() { window.localStorage.clear(); });
