@@ -19,6 +19,7 @@ if [ ! -d dev/casperjs ]; then
     cd ../..
 fi
 export PATH=$PATH:$(pwd)/dev/casperjs/bin
+export PATH=$PATH:$(pwd)/node_modules/phantomjs/bin
 
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig

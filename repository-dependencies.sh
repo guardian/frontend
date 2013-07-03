@@ -1,9 +1,7 @@
 #!/bin/bash
 
 #Install casperjs to target
-if [ -f dev/casperjs ]; then
-    echo "CasperJS installed"
-else
+if [ ! -d dev/casperjs ]; then
     git clone git://github.com/n1k0/casperjs.git dev/casperjs
     cd dev/casperjs
     git checkout tags/1.0.2
