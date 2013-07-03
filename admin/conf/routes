@@ -34,10 +34,10 @@ GET     /dev/switchboard                 controllers.SwitchboardController.rende
 POST    /dev/switchboard                 controllers.SwitchboardController.save()
 
 #Events
-GET	    /events                          controllers.event.EventController.render()
+GET     /events                          controllers.event.EventController.render()
 POST    /events                          controllers.event.EventController.create()
 
-GET	    /events/list                     controllers.event.EventController.find()
+GET     /events/list                     controllers.event.EventController.find()
 
 GET     /events*eventId                  controllers.event.EventController.read(eventId)
 POST    /events*eventId                  controllers.event.EventController.update(eventId)
@@ -73,6 +73,8 @@ GET     /organisations*id                controllers.event.EntityController.read
 GET     /fronts                          controllers.FrontsController.index()
 
 
-#Metrics
+# Analytics
+GET     /analytics                       controllers.AnalyticsController.render()
 
-GET /metrics/loadbalancers               controllers.metrics.DashboardController.render()
+# Metrics
+GET     /metrics/loadbalancers           controllers.metrics.DashboardController.render()

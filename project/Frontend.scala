@@ -31,6 +31,7 @@ object Frontend extends Build with Prototypes {
   val front = application("front").dependsOn(commonWithTests)
   val facia = application("facia").dependsOn(commonWithTests)
   val article = application("article").dependsOn(commonWithTests)
+  val interactive = application("interactive").dependsOn(commonWithTests)
   val applications = application("applications").dependsOn(commonWithTests)
   val event = application("event").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
@@ -68,21 +69,20 @@ object Frontend extends Build with Prototypes {
 
   val admin = application("admin").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
+      "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624",
+      "com.typesafe.slick" %% "slick" % "1.0.0",
+      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
     )
   )
 
-  val frontsApi = application("fronts-api").dependsOn(commonWithTests).settings(
-    libraryDependencies ++= Seq(
-      "net.debasishg" %% "redisclient" % "2.9"
-    )
-  )
+  val frontsApi = application("fronts-api").dependsOn(commonWithTests)
 
   val dev = base("dev-build")
     .dependsOn(front)
     .dependsOn(article)
     .dependsOn(applications)
     .dependsOn(event)
+    .dependsOn(interactive)
     .dependsOn(football)
     .dependsOn(coreNavigation)
     .dependsOn(image)
@@ -108,6 +108,7 @@ object Frontend extends Build with Prototypes {
     article,
     applications,
     event,
+    interactive,
     football,
     coreNavigation,
     image,

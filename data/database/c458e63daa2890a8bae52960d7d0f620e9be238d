@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":1545,
+    "total":1546,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -19,6 +19,146 @@
       "references":[]
     },
     "results":[{
+      "id":"technology/askjack/2013/jun/27/google-reader-whats-best-replacement",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-06-27T11:13:00Z",
+      "webTitle":"Google Reader alternatives: what's the best replacement? | Ask Jack",
+      "webUrl":"http://www.guardian.co.uk/technology/askjack/2013/jun/27/google-reader-whats-best-replacement",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/jun/27/google-reader-whats-best-replacement",
+      "fields":{
+        "trailText":"<p>With Google Reader closing on July 1, Dave Null is looking for a \"seamless replacement\". By <strong>Jack Schofield</strong> </p>",
+        "headline":"Google Reader alternatives: what's the best replacement?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3gqgt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/6/27/1372330474386/Google-reader-003.jpg",
+        "wordcount":"969",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.guardian.co.uk/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.guardian.co.uk/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.guardian.co.uk/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.guardian.co.uk/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.guardian.co.uk/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.guardian.co.uk/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/facebook",
+        "type":"keyword",
+        "webTitle":"Facebook",
+        "webUrl":"http://www.guardian.co.uk/technology/facebook",
+        "apiUrl":"http://content.guardianapis.com/technology/facebook",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.guardian.co.uk/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/digital-media",
+        "type":"keyword",
+        "webTitle":"Digital media",
+        "webUrl":"http://www.guardian.co.uk/media/digital-media",
+        "apiUrl":"http://content.guardianapis.com/media/digital-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.guardian.co.uk/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/6/27/1372330480481/Google-reader-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/6/27/1372330480481/Google-reader-008.jpg",
+          "source":"Screenshot",
+          "altText":"Google reader",
+          "height":"276",
+          "credit":"Screenshot",
+          "caption":"Google reader: is due to close on July 1",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
       "id":"technology/askjack/2013/jun/20/using-laptops-tablets-physical-pains",
       "sectionId":"technology",
       "sectionName":"Technology",
@@ -2283,21 +2423,24 @@
         }
       }],
       "references":[]
-    },{
-      "id":"technology/askjack/2013/feb/08/java-remove-ask-jack-technology",
+    }],
+    "editorsPicks":[],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"technology/askjack/2013/jun/27/google-reader-whats-best-replacement",
       "sectionId":"technology",
       "sectionName":"Technology",
-      "webPublicationDate":"2013-02-08T11:56:00Z",
-      "webTitle":"Java: should you remove it?",
-      "webUrl":"http://www.guardian.co.uk/technology/askjack/2013/feb/08/java-remove-ask-jack-technology",
-      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/feb/08/java-remove-ask-jack-technology",
+      "webPublicationDate":"2013-06-27T11:13:00Z",
+      "webTitle":"Google Reader alternatives: what's the best replacement? | Ask Jack",
+      "webUrl":"http://www.guardian.co.uk/technology/askjack/2013/jun/27/google-reader-whats-best-replacement",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/jun/27/google-reader-whats-best-replacement",
       "fields":{
-        "trailText":"<p><strong>Ask Jack:</strong> Following what Oracle called \"a veritable media firestorm\" about dangerous vulnerabilities in its Java software, Richard wonders if he should uninstall it.</p>",
-        "headline":"Java: should you remove it?",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3dkxj",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/1/10/1326190162267/Java-script-code-003.jpg",
-        "wordcount":"1144",
+        "trailText":"<p>With Google Reader closing on July 1, Dave Null is looking for a \"seamless replacement\". By <strong>Jack Schofield</strong> </p>",
+        "headline":"Google Reader alternatives: what's the best replacement?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3gqgt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/6/27/1372330474386/Google-reader-003.jpg",
+        "wordcount":"969",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2319,56 +2462,15 @@
         "sectionName":"Technology",
         "references":[]
       },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.guardian.co.uk/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"technology/apple",
-        "type":"keyword",
-        "webTitle":"Apple",
-        "webUrl":"http://www.guardian.co.uk/technology/apple",
-        "apiUrl":"http://content.guardianapis.com/technology/apple",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/computing",
-        "type":"keyword",
-        "webTitle":"Computing",
-        "webUrl":"http://www.guardian.co.uk/technology/computing",
-        "apiUrl":"http://content.guardianapis.com/technology/computing",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/malware",
-        "type":"keyword",
-        "webTitle":"Malware",
-        "webUrl":"http://www.guardian.co.uk/technology/malware",
-        "apiUrl":"http://content.guardianapis.com/technology/malware",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/viruses",
-        "type":"keyword",
-        "webTitle":"Viruses",
-        "webUrl":"http://www.guardian.co.uk/technology/viruses",
-        "apiUrl":"http://content.guardianapis.com/technology/viruses",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/windows",
-        "type":"keyword",
-        "webTitle":"Windows",
-        "webUrl":"http://www.guardian.co.uk/technology/windows",
-        "apiUrl":"http://content.guardianapis.com/technology/windows",
-        "sectionId":"technology",
-        "sectionName":"Technology",
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.guardian.co.uk/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
         "references":[]
       },{
         "id":"technology/google",
@@ -2389,22 +2491,56 @@
         "sectionName":"Technology",
         "references":[]
       },{
-        "id":"technology/internet-explorer",
+        "id":"technology/computing",
         "type":"keyword",
-        "webTitle":"Internet Explorer",
-        "webUrl":"http://www.guardian.co.uk/technology/internet-explorer",
-        "apiUrl":"http://content.guardianapis.com/technology/internet-explorer",
+        "webTitle":"Computing",
+        "webUrl":"http://www.guardian.co.uk/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
         "sectionId":"technology",
         "sectionName":"Technology",
         "references":[]
       },{
-        "id":"technology/firefox",
+        "id":"technology/facebook",
         "type":"keyword",
-        "webTitle":"Firefox",
-        "webUrl":"http://www.guardian.co.uk/technology/firefox",
-        "apiUrl":"http://content.guardianapis.com/technology/firefox",
+        "webTitle":"Facebook",
+        "webUrl":"http://www.guardian.co.uk/technology/facebook",
+        "apiUrl":"http://content.guardianapis.com/technology/facebook",
         "sectionId":"technology",
         "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.guardian.co.uk/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/digital-media",
+        "type":"keyword",
+        "webTitle":"Digital media",
+        "webUrl":"http://www.guardian.co.uk/media/digital-media",
+        "apiUrl":"http://content.guardianapis.com/media/digital-media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.guardian.co.uk/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
         "references":[]
       },{
         "id":"type/article",
@@ -2418,22 +2554,19 @@
         "type":"picture",
         "rel":"body",
         "index":1,
-        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/1/14/1358150745448/Java-logo-008.jpg",
+        "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/6/27/1372330480481/Google-reader-008.jpg",
         "fields":{
-          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/1/14/1358150745448/Java-logo-008.jpg",
-          "source":"Public Domain",
-          "altText":"Java logo",
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2013/6/27/1372330480481/Google-reader-008.jpg",
+          "source":"Screenshot",
+          "altText":"Google reader",
           "height":"276",
-          "credit":"Public Domain",
-          "caption":"Oracle described \"a veritable media firestorm\" about dangerous vulnerabilities in its Java software. Photograph: www.alamy.com",
+          "credit":"Screenshot",
+          "caption":"Google reader: is due to close on July 1",
           "width":"460"
         }
       }],
       "references":[]
-    }],
-    "editorsPicks":[],
-    "storyPackage":[],
-    "leadContent":[{
+    },{
       "id":"technology/askjack/2013/apr/11/photography-discs-importing-televisions-pc-tv",
       "sectionId":"technology",
       "sectionName":"Technology",

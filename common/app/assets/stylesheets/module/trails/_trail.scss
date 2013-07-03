@@ -11,6 +11,7 @@
 }
 
 
+.trail--featured + .trail--thumbnail,
 .trail--thumbnail + .trail--thumbnail {
     border-top: 1px solid #EDEDE7;
 }
@@ -234,6 +235,9 @@
     }
 }
 
+.trail--gallery + .trail--gallery {
+    margin: $baseline * 4 0;
+}
 
 /**
  * @todo: Clean these up into proper modifiers

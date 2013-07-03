@@ -56,7 +56,7 @@
         "webTitle":"UK news",
         "webUrl":"http://www.guardian.co.uk/uk/uk",
         "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk",
+        "sectionId":"uk-news",
         "sectionName":"UK news",
         "references":[]
       },{
