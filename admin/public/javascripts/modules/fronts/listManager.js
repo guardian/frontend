@@ -2,25 +2,64 @@ define([
     'Reqwest',
     'knockout',
     'models/fronts/article',
-    'models/fronts/latestArticles'
+    'models/fronts/latestArticles',
+    'models/fronts/contentApi'
 ], function(
     reqwest,
     knockout,
     Article,
-    LatestArticles
+    LatestArticles,
+    ContentApi
 ) {
 
     return function(selector) {
 
         var self = this,
             viewModel = {
-                listA: knockout.observableArray(),
-                listB: knockout.observableArray(),
-                latest: new LatestArticles()
+                latestArticles: new LatestArticles(),
+                listsDisplayed: knockout.observableArray(),
+                listsAvailable: knockout.observableArray(),
+                newListName:    knockout.observable()
             };
 
-        function connectSortableLists(selector) {
-            var item,
+        viewModel.displayList = function(item) {
+            reqwest({
+                url: '/frontsapi/list/' + item.name,
+                type: 'json'
+            }).then(
+                function(resp) {
+                    viewModel.hideList(item);
+                    populateList(item.list, resp.list); 
+                    viewModel.listsDisplayed.unshift(item);
+                    connectSortableLists();
+                },
+                function(xhr) { console.log(xhr); } // error
+            );
+        }
+
+        viewModel.hideList = function(list) {
+            viewModel.listsDisplayed.remove(list);
+        }
+
+        viewModel.createList = function() {
+            var name = viewModel.newListName(),
+                alreadyAvailable = !!withKeyValue(viewModel.listsAvailable(), 'name', name).length;
+
+            if (!alreadyAvailable) {
+                viewModel.displayList(newAvailableList(name));
+                viewModel.newListName('');
+            }
+        }
+
+        function withKeyValue(arr, prop, val) {
+            return arr.filter(function(obj){
+                return obj[prop] === val;
+            });
+        }        
+
+        function connectSortableLists() {
+            var selector = '.connectedList',
+                item,
                 fromList,
                 toList;
 
@@ -68,67 +107,75 @@ define([
                     };
 
                 if (inList.length) {
-                    delta.position = inList.next().data('url');
-                    if(!delta.position) {
-                        delta.after = true
+                    delta.position = inList.next().data('url') || '';
+                    // if this is adding after the last item
+                    var numOfItems = $("[data-url]", list).length;
+                    if (!delta.position && numOfItems > 1) {
+                        delta.after = true;
+                        delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
                     } 
                 } else {
                     delta.verb = 'remove';
                 }
-                console.log(JSON.stringify(delta));
+                reqwest({
+                    url: '/frontsapi/listitem/' + delta.list,
+                    contentType: 'application/json',
+                    type: 'json',
+                    method: 'post',
+                    data: JSON.stringify(delta)
+                }).then(
+                    function(resp) { },
+                    function(xhr) { console.log(xhr); } // error
+                );
             });
         };
 
-        this.addItem = function(list, item) {
+        function addItem(list, item) {
             if (!item || !list) { return; }
             list.push(new Article({
                 id: item
             }));
         };
 
-        this.loadList = function(list, items) {
+        function populateList(list, items) {
             if (!items || !items.length || !list) { return; }
             list.removeAll();
             items.forEach(function(item){
-                self.addItem(list, item);
+                addItem(list, item);
             });
+            ContentApi.decorateItems(list());
+        };
+
+        function newAvailableList(name) {
+            var item = {
+                name: name,
+                list: knockout.observableArray()
+            }
+
+            viewModel.listsAvailable.push(item);
+            return item;
+        }
+
+        function fetchAvailableLists() {
+            reqwest({
+                url: '/frontsapi/lists',
+                type: 'json'
+            }).then(
+                function(resp) {
+                    resp.lists.forEach(function(name){
+                        newAvailableList(name);
+                    });
+                },
+                function(xhr) { console.log(xhr); } // error
+            );
         };
 
         this.init = function(callback) {
-
-            viewModel.latest.search();
-
-            // Load dummy lists
-            this.loadList(viewModel.listA, [
-                "society/2013/jun/25/society-daily-email",
-                "environment/2013/jun/25/obama-unveil-first-us-climate-strategy",
-                "sport/2013/jun/25/lions-melbourne-rebels-live-report",
-                "tv-and-radio/video/2013/jun/25/question-time-russell-brand-video-review",
-                "sport/that-1980s-sports-blog/2013/jun/25/lions-battled-bollymore-test-australia-1989",
-                "uk/2013/jun/25/ian-brady-tells-tribunal-not-psychotic",
-                "business/2013/jun/25/eurozone-crisis-greece-reshuffle-cabinet",
-                "politics/blog/2013/jun/25/mervyn-king-treasury-committee-live-blog",
-                "business/2013/jun/24/eurozone-crisis-bond-yields-spain-greece",
-                "global-development/2013/jun/25/central-american-farmers-coyotes"
-            ]); 
-            this.loadList(viewModel.listB, [
-                "news/2013/jun/27/glastonbury-mandela-obama-robson-wimbledon-news-photographs",
-                "uk/2013/jun/27/doreen-lawrence-met-chief-police",
-                "money/blog/2013/jun/27/payday-loans-industry-law-unto-itself",
-                "business/2013/jun/27/eurozone-crisis-bank-bailout-rules-summit",
-                "business/2013/jun/27/rural-broadband-target-postponed",
-                "housing-network/2013/jun/27/direct-payment-guarantee-landlords",
-                "commentisfree/2013/jun/27/supreme-court-gay-marriage-battle-almost-done",
-                "sport/picture/2013/jun/27/sport-picture-of-the-day-horsing-around",
-                "world/2013/jun/27/uk-road-deaths",
-                "world/2013/jun/27/turkey-protests-hundreds-barricades-ankara"
-            ]); 
-
+            viewModel.latestArticles.search();
+            fetchAvailableLists();
+            connectSortableLists();
             knockout.applyBindings(viewModel);
-
-            connectSortableLists('.connectedList');
         };
-
 
     };
 

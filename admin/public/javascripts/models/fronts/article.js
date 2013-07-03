@@ -2,7 +2,8 @@ define([
     'models/editable',
     'knockout',
     'Common',
-    'Reqwest'
+    'Reqwest',
+    'js!humanizedTimeSpan'
 ], 
 function (
     Editable,
@@ -10,40 +11,55 @@ function (
     Common,
     Reqwest
 ){
-
     var absUrlHost = 'http://m.guardian.co.uk/';
 
     var Article = function(opts) {
-
-        var opts = opts || {},
-            self = this;
-
-        this.id         = ko.observable(opts.id || '');
-        this.shortId    = ko.observable(opts.shortId || '');
-        this.webTitle   = ko.observable(opts.webTitle || '');
-        this.webPublicationDate = ko.observable(opts.webPublicationDate);
-        this.headlineOverride   = ko.observable(opts.headline);
-
-        if (opts.fields) {
-            this.trailText  = ko.observable(opts.fields.trailText || '');
-        }
+        this.id                 = ko.observable();
+        this.webTitle           = ko.observable();
+        this.webPublicationDate = ko.observable();
+        this.headlineOverride   = ko.observable();
+        this.thumbnail          = ko.observable();
+        this.trailText          = ko.observable();
 
         // Performance stats
-        this.shares          = ko.observable(opts.shares);
-        this.comments        = ko.observable(opts.comments);
+        this.shares             = ko.observable();
+        this.comments           = ko.observable();
 
         // Temp vars
-        this._absUrl      = ko.observable(absUrlHost + opts.id || '');    
+        this._absUrl            = ko.observable();
+
+        // Computeds
         this._humanDate = ko.computed(function(){
-            return this.webPublicationDate() || '-';
-            //return this.webPublicationDate() ? humanized_time_span(this.webPublicationDate()) : '-';
+            return this.webPublicationDate() ? humanized_time_span(this.webPublicationDate()) : '&nbsp;';
         }, this);
 
         // Track for editability / saving
-        this._makeEditable(['headlineOverride']);
+        this._makeEditable(['webTitle', 'trailText']);
+
+        this.init(opts);
     };
 
     Article.prototype = new Editable();
+
+    Article.prototype.init = function(opts) {
+        var opts = opts || {},
+            self = this;            
+
+        this.id(opts.id || '');
+        this.webTitle(opts.webTitle || '');
+        this.webPublicationDate(opts.webPublicationDate);
+        this.headlineOverride(opts.headline);
+
+        if (opts.fields) {
+            this.thumbnail(opts.fields.thumbnail);
+            this.trailText(opts.fields.trailText);
+        }
+
+        this.shares(opts.shares);
+        this.comments(opts.comments);
+
+        this._absUrl(absUrlHost + opts.id);    
+    }
 
     Article.prototype.addPerformanceCounts = function() {
         this.addSharedCount();

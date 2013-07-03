@@ -61,3 +61,22 @@ case class Request2xxGraph(name: String, private val metrics: Future[GetMetricSt
 }
 
 
+object PageviewsGraph extends Chart {
+  val name = "Pageviews"
+  lazy val labels = Seq("Date", "pageviews")
+
+  def dataset = Pageviews() map { d => DataPoint(
+    d.date.toString("dd/MM"),
+    Seq(d.total)
+  )}
+}
+
+object NewPageviewsGraph extends Chart {
+  val name = "Pageviews (new users)"
+  lazy val labels = Seq("Date", "pageviews")
+
+  def dataset = Pageviews.newCookies() map { d => DataPoint(
+    d.date.toString("dd/MM"),
+    Seq(d.total)
+  )}
+}
