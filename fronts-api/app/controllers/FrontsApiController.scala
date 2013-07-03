@@ -16,10 +16,16 @@ object FrontsApiController extends Controller with ExecutionContexts {
   lazy val invalidJson = JsonResponse("Invalid Json")
   lazy val databaseError = JsonResponse("Database Error")
 
+  def getLists = Action { implicit request =>
+    val result = Akka.future { FrontsApi.getLists }
+    Async {
+      result map {l => JsonComponent("lists" -> toJson(l))}
+    }
+  }
   def getList(listName: String) = Action { implicit request =>
     val result = Akka.future { FrontsApi.getList(listName) }
     Async {
-      result map {l => JsonComponent(listName -> toJson(l)) }
+      result map {l => JsonComponent("list" -> toJson(l)) }
     }
   }
 

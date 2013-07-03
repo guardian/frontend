@@ -1,6 +1,7 @@
 package frontsapi
 
 trait FrontsApi {
+  def getLists: List[String]
   def getList(listName: String): List[String]
 
   def add(listName: String, pivot: String, value: String, after: Option[Boolean] = None): Option[_]
@@ -14,6 +15,7 @@ trait FrontsApi {
 class FrontsApiMap extends FrontsApi {
   val db: scala.collection.mutable.Map[String, List[String]] = scala.collection.mutable.Map[String, List[String]]()
 
+  def getLists = db.keys.toList
   def getList(listName: String) = db.get(listName) getOrElse Nil
 
   def addAtPosition(listName: String, position: Int, value: String): Option[Boolean] = {
