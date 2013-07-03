@@ -19,6 +19,8 @@ trait Chart {
   def labels: Seq[String]
   def dataset: Seq[DataPoint]
 
+  def form: String = "LineChart"
+
   def asDataset = s"[[$labelString], $dataString]"
 
   private def labelString = labels.map(l => s"'$l'").mkString(",")
@@ -79,4 +81,13 @@ object NewPageviewsGraph extends Chart {
     d.date.toString("dd/MM"),
     Seq(d.total)
   )}
+}
+
+object PageviewsGeoGraph extends Chart {
+  val name = "Pageviews"
+  lazy val labels = Seq("Country", "pageviews")
+
+  override lazy val form: String = "GeoChart"
+
+  def dataset = Pageviews.countries() map { d => DataPoint(d.country, Seq(d.total) )}
 }

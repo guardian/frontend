@@ -25,8 +25,12 @@ case class PageviewsData(year: Int, month: Int, day: Int, existing: Option[Boole
   lazy val date: DateTime = new DateTime(year, month, day, 0, 0, 0, 0)
 }
 
+case class CountriesData(country: String, total: Long)
+
 object Pageviews extends AkkaSupport with Logging {
-  private lazy val agent = play_akka.agent[List[PageviewsData]](Nil)
+  private lazy val pageviewsAgent = play_akka.agent[List[PageviewsData]](Nil)
+  private lazy val countriesAgent = play_akka.agent[List[CountriesData]](Nil)
+
   private lazy val refreshSchedule = play_akka.scheduler.every(4.hours) {
     log.info("Refreshing pageview count data")
     refresh()
@@ -34,7 +38,7 @@ object Pageviews extends AkkaSupport with Logging {
   }
 
   def refresh() {
-    agent.send(AdminConfiguration.analytics.db withSession { implicit session: Session =>
+    pageviewsAgent.send(AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val results = StaticQuery.queryNA[(Int, Int, Int, String, Long)]("""
         select year, month, day_of_month, new_or_existing, count(*) as total
         from pageviews
@@ -46,6 +50,22 @@ object Pageviews extends AkkaSupport with Logging {
         case (year, month, day, newOrExisting, total) => PageviewsData(year, month, day, Option(newOrExisting == "E"), total)
       }
     })
+
+    countriesAgent.send(AdminConfiguration.analytics.db withSession { implicit session: Session =>
+      // TODO: Remove ORDER and LIMIT below after Redshift fix
+      val results = StaticQuery.queryNA[(String, Long)]("""
+        select country, count(*) as total
+        from pageviews
+        where host = 'm.guardian.co.uk' or host = 'm.guardiannews.com'
+        group by country
+        order by total desc
+        limit 64;
+      """).list()
+
+      results map {
+        case (country, total) => CountriesData(country, total)
+      }
+    })
   }
 
   def start() {
@@ -54,12 +74,13 @@ object Pageviews extends AkkaSupport with Logging {
 
   def stop() {
     refreshSchedule.cancel()
-    agent.close()
+    pageviewsAgent.close()
+    countriesAgent.close()
   }
 
   def apply(): List[PageviewsData] = {
     // sum out the new/existing split
-    val groups: Map[(Int, Int, Int), List[PageviewsData]] = agent() groupBy { _.key }
+    val groups: Map[(Int, Int, Int), List[PageviewsData]] = pageviewsAgent() groupBy { _.key }
     val groupedTotals: Map[(Int, Int, Int), Long] = groups mapValues { data => (data map { _.total }).sum }
 
     val summed = groupedTotals.toList map {
@@ -70,10 +91,12 @@ object Pageviews extends AkkaSupport with Logging {
   }
 
   def newCookies(): List[PageviewsData] = {
-    val newCookies = agent() collect {
+    val newCookies = pageviewsAgent() collect {
       case data @ PageviewsData(_, _, _, Some(false), _) => data
     }
 
     newCookies sortBy { _.key }
   }
+
+  def countries(): List[CountriesData] = countriesAgent()
 }

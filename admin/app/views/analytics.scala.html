@@ -1,15 +1,15 @@
-@(env: String, charts: Seq[tools.Chart] = Seq())
+@(env: String, charts: Seq[tools.Chart])
 
 @admin_main("Pageviews", env, isAuthed = true) {
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
+        google.load("visualization", "1", {packages:["corechart", "geochart"]});
         google.setOnLoadCallback(drawCharts);
 
         function drawCharts() {
             @charts.map{ chart =>
-                new google.visualization.LineChart(document.getElementById('@chart.id'))
+                new google.visualization.@{chart.form}(document.getElementById('@chart.id'))
                     .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
                     title: '@chart.name',
                     legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
