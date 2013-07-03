@@ -77,7 +77,6 @@ object RemoveOuterParaHtml {
 
 object SafeName {
   def apply(desc: TrailblockDescription) = if (desc.id == "") "top-stories" else desc.id.replace("/", "-")
-  def apply(trailblock: TrailblockNew) = if (trailblock.id == "") "top-stories" else trailblock.id.replace("/", "-")
 }
 
 object JavaScriptValue {

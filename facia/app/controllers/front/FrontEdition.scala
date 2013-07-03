@@ -1,7 +1,7 @@
 package controllers.front
 
-import facia.Edition
-import model.{TrailblockNew}
+import model.TrailblockNew
+import common.Edition
 
 /*
   Responsible for handling the blocks of the front for an edition

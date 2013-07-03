@@ -2,7 +2,7 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{MetaData, ItemTrailblockDescription}
+import model.{TrailblockNew, MetaData, ItemTrailblockDescription}
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
@@ -99,5 +99,15 @@ object Us extends Edition(
       ItemTrailblockDescription("environment", "Environment", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
       Au.videoCustomBlock
     )
+  )
+
+  val configuredFrontsFacia: Map[String, Seq[TrailblockNew]] = Map(
+    Editionalise("", Us) -> Seq(),
+
+    Editionalise("sport", Us) -> Seq(),
+
+    Editionalise("culture", Us) -> Seq(),
+
+    Editionalise("australia", Us)  -> Seq()
   )
 }
