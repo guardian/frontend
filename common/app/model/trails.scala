@@ -136,8 +136,8 @@ class RunningOrderTrailblock(
     WS.url(s"${Configuration.frontsApi.host}/frontsapi/list/$id").get() foreach { response =>
       response.status match {
         case 200 =>
-          val articles = (parse(response.body) \ id).asOpt[List[String]].getOrElse(Nil)
-          retrieveArticles(articles)
+          val articles = (parse(response.body) \ "list").asOpt[List[String]].getOrElse(Nil)
+          if (articles.nonEmpty) retrieveArticles(articles)
         case _ => log.warn(s"Could not load running order: ${response.status} ${response.statusText}")
       }
     }

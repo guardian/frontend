@@ -109,17 +109,21 @@ object Uk extends Edition(
     )
   )
 
-  val configuredFrontsFacia: Map[String, Seq[TrailblockNew]] = Map(
-    Editionalise("", Uk) -> Seq(
+  val configuredFrontsFacia = Map(
+    (Editionalise("", Uk), Seq(
       RunningOrderTrailblock("test", "News")
-    ),
+    )),
 
-    Editionalise("sport", Uk) -> Seq(
+    (Editionalise("sport", Uk), Seq(
       RunningOrderTrailblock("test", "News")
-    ),
+    )),
 
-    Editionalise("culture", Uk) -> Seq(
+    (Editionalise("culture", Uk), Seq(
       RunningOrderTrailblock("test", "News")
-    )
+    )),
+
+    (Editionalise("australia", Uk), Seq(
+      RunningOrderTrailblock("test", "News")
+    ))
   )
 }

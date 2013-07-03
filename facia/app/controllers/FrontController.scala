@@ -7,8 +7,6 @@ import conf._
 import play.api.mvc._
 import scala.Some
 
-import concurrent.Future
-
 // TODO, this needs a rethink, does not seem elegant
 object FrontPage {
 
