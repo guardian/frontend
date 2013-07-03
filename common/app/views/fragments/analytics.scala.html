@@ -1,35 +1,39 @@
 @(page: MetaData)( implicit request:RequestHeader)
 
-@defining(request.host + request.path) { path =>
+@*<!-- TODO temporary till after dotcom switch -->*@
+@defining(if (Site(request).isDefined) "hits.guardian.co.uk" else "hits.theguardian.com"){ analyticsHost =>
 
-    @defining(
-    (s"http://hits.guardian.co.uk/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "No Javascript", path)}",
-    Configuration.javascript.pageData("guardian.page.omnitureAccount"))
-    ){ case (omnitureCall, omnitureAccount) =>
-            <noscript id="omnitureNoScript">
-                <div>
-                    <img id="omnitureNoScriptImage" alt=""
-                         src="@omnitureCall" width="1" height="1" class="h" />
-                </div>
-            </noscript>
-    }
+    @defining(request.host + request.path) { path =>
 
-    @defining(
-        s"http://hits.guardian.co.uk/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
-    ){ omnitureCall =>
-            <script>
-                @*
-                //    we do not run our javascript on some browsers, hence analytics will not run.
-                //    this does a minimal tracking for those devices
-                 *@
-                if (!guardian.isModernBrowser) {
-                    var analyticsImage = document.createElement("img");
-                    analyticsImage.src = "@omnitureCall";
-                    analyticsImage.width = "1";
-                    analyticsImage.height = "1";
-                    document.body.appendChild(analyticsImage);
-                }
-            </script>
+        @defining(
+        (s"http://$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "No Javascript", path)}",
+        Configuration.javascript.pageData("guardian.page.omnitureAccount"))
+        ){ case (omnitureCall, omnitureAccount) =>
+                <noscript id="omnitureNoScript">
+                    <div>
+                        <img id="omnitureNoScriptImage" alt=""
+                             src="@omnitureCall" width="1" height="1" class="h" />
+                    </div>
+                </noscript>
+        }
+
+        @defining(
+            s"http://$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
+        ){ omnitureCall =>
+                <script>
+                    @*
+                    //    we do not run our javascript on some browsers, hence analytics will not run.
+                    //    this does a minimal tracking for those devices
+                     *@
+                    if (!guardian.isModernBrowser) {
+                        var analyticsImage = document.createElement("img");
+                        analyticsImage.src = "@omnitureCall";
+                        analyticsImage.width = "1";
+                        analyticsImage.height = "1";
+                        document.body.appendChild(analyticsImage);
+                    }
+                </script>
+        }
     }
 }
 

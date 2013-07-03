@@ -1623,11 +1623,11 @@
         }
       }],
       "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/123"
-      },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/320"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/123"
       }]
     },{
       "id":"football/2012/mar/19/kilmarnock-cis-insurance-cup",
@@ -3081,11 +3081,11 @@
         "type":"pa-football-team",
         "id":"pa-football-team/94"
       },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/320"
-      },{
         "type":"pa-football-team",
         "id":"pa-football-team/99"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/320"
       }]
     },{
       "id":"football/blog/2011/sep/23/rangers-ally-mccoist-league-cup",
