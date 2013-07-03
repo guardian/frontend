@@ -92,6 +92,7 @@ object Frontend extends Build with Prototypes {
     .dependsOn(styleGuide)
 
   val faciaDev = application("facia-dev-build")
+    .dependsOn(admin)
     .dependsOn(facia)
     .dependsOn(frontsApi)
     .dependsOn(article)
