@@ -489,9 +489,14 @@ a.cta, .cta a {
     margin: 0 0 10px 0;
 }
 
-.fronts .list-picker__title,
+.fronts .list-picker__title {
+    color: #666;
+    margin: 0 0 20px 0;
+}
+
 .fronts .finder__title {
     color: #666;
+    margin: 0 0 5px 0;
 }
 
 .fronts .finder__title {
@@ -501,17 +506,17 @@ a.cta, .cta a {
 .fronts .list-picker__item {
     font-weight: bold;
     display: inline-block;
-    padding-left: 5px;
-    margin-left:  5px;
-    border-left:  1px solid #ccc;
+    padding-right: 5px;
+    margin-right:  5px;
+    border-right:  1px solid #ccc;
 }
 
-.fronts .list-picker__item:first-child {
+.fronts .list-picker__item:last-child {
     font-weight: bold;
     display: inline-block;
-    padding-left: 0;
-    margin-left:  0;
-    border-left:  0;
+    padding-right: 0;
+    margin-right:  0;
+    border-right:  0;
 }
 
 .fronts .list-picker__new {
@@ -566,8 +571,9 @@ a.cta, .cta a {
 .fronts .trail img {
     float: left;
     margin: 2px 10px 10px 0;
-    width: 140px;
-    height: 84px;
+    width: 42%;
+    max-width: 140px;
+    max-height: 84px;    
     background-color: #eee;
 }
 
