@@ -5,28 +5,65 @@
     <div class="fronts">
 
         <div class="finder">
-            <h3>Latest
+            <div class="finder__title">Latest Articles</div>
             <input type="text" placeholder="url or keyword" 
-                data-bind='event: {keyup: latest.search, mousedown: latest.articleSearch, afterpaste: latest.articleSearch}, value:
-                latest.term, valueUpdate: ["afterkeydown", "afterpaste"]'/>
-            </h3>
+                data-bind='event: {keyup: latestArticles.search, mousedown: latestArticles.articleSearch, afterpaste: latestArticles.articleSearch}, value:
+                latestArticles.term, valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
-            <div class="connectedList throwAway" data-bind="template: {name: 'template_article', foreach: latest.articles()}"></div>
+            <div class="connectedList throwAway" data-bind="template: {name: 'template_article', foreach: latestArticles.articles()}"></div>
         </div>
 
-        <div class="lists">
-            <h3>List A</h3>
-            <div id="listA" class="connectedList" data-bind="template: {name: 'template_article', foreach: listA}"></div>
+        <div class="list-picker">            
+            <div class="list-picker__title">Trail Blocks</div>
+            <div data-bind="foreach: listsAvailable">
+                <div class="list-picker__item" data-bind="text: name, click: $parent.displayList"></div>
+            </div>
+            <div class="list-picker__new">
+                <div>Create a new trailblock</div>
+                <input type="text" data-bind="value: newListName"/>
+                <span data-bind="click: createList">OK</span>
+            </div>
+        </div>
 
-            <h3>List B</h3>
-            <div id="listB" class="connectedList" data-bind="template: {name: 'template_article', foreach: listB}"></div>
+        <div class="lists" data-bind="foreach: listsDisplayed">
+            <div class="list-header">
+                <a class="list-header__control" data-bind="click: $parent.hideList">HIDE</a>
+                <span class="list-header__title" data-bind="text: name"></span>
+            </div>
+            <div class="connectedList" data-bind="
+                attr: {id: name}, 
+                template: {name: 'template_article', foreach: list
+            }"></div>
         </div>
 
     </div>
 
     <script type="text/html" id="template_article">
-        <div class="article" data-bind="attr: {'data-url': id}">
-            <a class="article-title" data-bind="text: id, attr: {href: _absUrl}"></a>
+        <div class="trail cf" data-bind="attr: {'data-url': id}">
+            <div class="date" data-bind="html: _humanDate"></div>
+            <img data-bind="attr: {src: thumbnail}" />
+
+            <h2 class="webTitle" data-edit="webTitle" data-bind="
+                visible: !_editing_webTitle(),
+                text: webTitle() ? webTitle : '[webTitle]',
+                click: _edit
+                "></h2>
+            <input type="text" placeholder="webTitle" data-bind="
+                visible: _editing_webTitle,
+                value: webTitle,
+                hasfocus: _editing_webTitle
+                "/>
+
+            <h2 class="trailText" data-edit="trailText" data-bind="
+                visible: !_editing_trailText(),
+                html: trailText() ? trailText : '[trailText]',
+                click: _edit
+                "></h2>
+            <textarea type="text" placeholder="trailText" data-bind="
+                visible: _editing_trailText,
+                value: trailText,
+                hasfocus: _editing_trailText
+                "/></textarea>
         </div>
     </script>
     

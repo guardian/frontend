@@ -26,7 +26,7 @@ object FrontsApiController extends Controller with ExecutionContexts with Loggin
   def getList(listName: String) = Action { implicit request =>
     val result = Akka.future { FrontsApi.getList(listName) }
     Async {
-      result map {l => JsonComponent(listName -> toJson(l)) }
+      result map {l => JsonComponent("list" -> toJson(l)) }
     }
   }
 
