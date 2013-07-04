@@ -2,7 +2,7 @@
 *Headless functional tests using [Casper JS](http://casperjs.org/testing.html)*
 
 To run all tests
-``grunt integration:tests``
+``grunt test:integration``
 
 To run individual specs
 ``grunt casper:discussion``
