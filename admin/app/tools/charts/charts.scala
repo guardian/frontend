@@ -19,6 +19,8 @@ trait Chart {
   def labels: Seq[String]
   def dataset: Seq[DataPoint]
 
+  def form: String = "LineChart"
+
   def asDataset = s"[[$labelString], $dataString]"
 
   private def labelString = labels.map(l => s"'$l'").mkString(",")
@@ -61,3 +63,73 @@ case class Request2xxGraph(name: String, private val metrics: Future[GetMetricSt
 }
 
 
+object PageviewsGraph extends Chart {
+  val name = "Pageviews"
+  lazy val labels = Seq("Date", "pageviews")
+
+  def dataset = Analytics.pageviews() map {
+    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
+  }
+}
+
+object NewPageviewsGraph extends Chart {
+  val name = "Pageviews (new users)"
+  lazy val labels = Seq("Date", "pageviews")
+
+  def dataset = Analytics.newCookies() map {
+    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
+  }
+}
+
+object PageviewsGeoGraph extends Chart {
+  val name = "Pageviews"
+  lazy val labels = Seq("Country", "pageviews")
+
+  override lazy val form: String = "GeoChart"
+
+  def dataset = Analytics.countries() map {
+    case (country, total) => DataPoint(country, Seq(total))
+  }
+}
+
+object PageviewsOSTreeMapGraph extends Chart {
+  val name = ""
+
+  override lazy val form: String = "TreeMap"
+
+  lazy val labels = Seq("OS", "pageviews")
+  def dataset = Analytics.operatingSystems() map {
+    case (os, total) => DataPoint(os, Seq(total))
+  }
+
+  override def asDataset = s"[[$labelString], [$rootElement], $dataString]"
+  private def labelString = "'OS','parent','pageviews'"
+  private def rootElement = "'Operating System', null, 0"
+
+  private def dataString = dataset.map(datapointString).mkString(",")
+  private def datapointString(point: DataPoint) = {
+    val data = point.values.mkString(",")
+    s"['${point.name}', 'Operating System', $data]"
+  }
+}
+
+object PageviewsBrowsersTreeMapGraph extends Chart {
+  val name = ""
+
+  override lazy val form: String = "TreeMap"
+
+  lazy val labels = Seq("Browsers", "pageviews")
+  def dataset = Analytics.browsers() map {
+    case (browser, total) => DataPoint(browser, Seq(total))
+  }
+
+  override def asDataset = s"[[$labelString], [$rootElement], $dataString]"
+  private def labelString = "'Browser','parent','pageviews'"
+  private def rootElement = "'Browser', null, 0"
+
+  private def dataString = dataset.map(datapointString).mkString(",")
+  private def datapointString(point: DataPoint) = {
+    val data = point.values.mkString(",")
+    s"['${point.name}', 'Browser', $data]"
+  }
+}

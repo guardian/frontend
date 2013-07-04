@@ -69,7 +69,9 @@ object Frontend extends Build with Prototypes {
 
   val admin = application("admin").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
+      "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624",
+      "com.typesafe.slick" %% "slick" % "1.0.0",
+      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
     )
   )
 
@@ -90,6 +92,7 @@ object Frontend extends Build with Prototypes {
     .dependsOn(styleGuide)
 
   val faciaDev = application("facia-dev-build")
+    .dependsOn(admin)
     .dependsOn(facia)
     .dependsOn(frontsApi)
     .dependsOn(article)
