@@ -9,7 +9,15 @@
 
 var casper = require('casper').create();
 
-casper.start('http://m.gucode.co.uk/world/2013/jun/06/obama-administration-nsa-verizon-records');
+var host = casper.cli.get('host');
+
+
+if (host===undefined) {
+  host="http://localhost:9000/"
+} 
+casper.echo("host is "+host);
+
+casper.start(host+'world/2013/jun/06/obama-administration-nsa-verizon-records');
 
 /**
  *   Scenario: Read top level comments
