@@ -84,7 +84,7 @@ module.exports = function (grunt) {
             direct : true,
             includes : 'integration-tests/casper/tests/shared.js',
             'log-level' : 'info',
-            host: 'http://m.gucode.co.uk/'
+            host: 'http://localhost:9000/'
           },           
           common : {
             src: ['integration-tests/casper/tests/*.spec.js'],
