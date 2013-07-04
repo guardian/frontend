@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+.gallery {
+    position: relative;
+}
+
+.gallery__watermark {
+    position: absolute;
+    top: $baseline * 2;
+    left: $gutter;
+}
+
+/* ==========================================================================
+   Thumbnail/Single Full image modes
+   ========================================================================== */
+.gallery--grid {
+
+    .gallery__watermark,
+    .gallery__caption {
+        display: none;
+    }
+
+    .gallery-item {
+        @include fix-aspect-ratio(5, 3, 140px);
+        float: left;
+        margin: $gutter $gutter / 2;
+    }
+
+    .gallery__img {
+        position: absolute;
+    }
+
+}
+
+
+.gallery--full {
+    .gallery-item {
+        display: none;
+    }
+}
+
+
+
+/* ==========================================================================
+   Image container
+   ========================================================================== */
+.gallery__img {
+    width: 100%
+}
+
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+.gallery__nav {
+    width: 50%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+}
+
+.gallery__nav--prev {
+    left: 0;
+}
+
+.gallery__nav--next {
+    right: 0;
+}
+
+
+/* ==========================================================================
+   Captions
+   ========================================================================== */
+.gallery__caption {
+    color: #aaaaaa;
+
+    a {
+        color: #aaaaaa;
+        font-weight: bold;
+    }
+
+    @media (orientation:landscape) {
+        @include box-sizing(box-model);
+        position: absolute;
+        bottom: 0;
+        background: rgba(0,0,0,0.85);
+        padding: $baseline * 3 $gutter;
+    }
+}
+
+.gallery__caption--text {
+    padding-bottom: $baseline * 4;
+    border-bottom: 1px solid #676767;
+    margin-bottom: $baseline;
+}
+
+
+
+/* ==========================================================================
+   Image counter
+   ========================================================================== */
+
+.gallery__counter {
+    @extend %type-10;
+    letter-spacing: -1px;
+    line-height: 44px;
+    color: #AAAAAA;
+}
+
+.gallery__counter--current-image {
+    color: #FFFFFF;
+}
+
