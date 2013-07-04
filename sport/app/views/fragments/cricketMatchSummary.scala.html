@@ -9,44 +9,42 @@
     <div class="sport-summary__body">
         <table class="sport-summary__score">
             <thead class="h">
-            <tr>
-                <td>Team name</td>
-                <td>Score</td>
-            </tr>
+                <tr>
+                    <td>Team name</td>
+                    <td>Score</td>
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>@theMatch.homeTeam.name</td>
-                <td>@theMatch.homeTeamInnings match {
-
-                    case firstInnings :: Nil => {
-                    @score(firstInnings) (@firstInnings.overs overs)
-                    }
-                    case firstInnings :: secondInnings :: Nil => {
-                    @miniScore(firstInnings) & @score(secondInnings) (@secondInnings.overs overs)
-                    }
-                    case _ => {
-                    Yet to bat
-                    }
-                    }
-                </td>
-            </tr>
-            <tr>
-                <td>@theMatch.awayTeam.name</td>
-                <td>@theMatch.awayTeamInnings match {
-
-                    case firstInnings :: Nil => {
-                    @score(firstInnings) (@firstInnings.overs overs)
-                    }
-                    case firstInnings :: secondInnings :: Nil => {
-                    @miniScore(firstInnings) & @score(secondInnings) (@secondInnings.overs overs)
-                    }
-                    case _ => {
-                    Yet to bat
-                    }
-                    }
-                </td>
-            </tr>
+                <tr>
+                    <td>@theMatch.homeTeam.name</td>
+                    <td>@theMatch.homeTeamInnings match {
+                            case firstInnings :: Nil => {
+                                @score(firstInnings) (@firstInnings.overs overs)
+                            }
+                            case firstInnings :: secondInnings :: Nil => {
+                                @miniScore(firstInnings) & @score(secondInnings) (@secondInnings.overs overs)
+                            }
+                            case _ => {
+                                Yet to bat
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>@theMatch.awayTeam.name</td>
+                    <td>@theMatch.awayTeamInnings match {
+                            case firstInnings :: Nil => {
+                                @score(firstInnings) (@firstInnings.overs overs)
+                            }
+                            case firstInnings :: secondInnings :: Nil => {
+                                @miniScore(firstInnings) & @score(secondInnings) (@secondInnings.overs overs)
+                            }
+                            case _ => {
+                                Yet to bat
+                            }
+                        }
+                    </td>
+                </tr>
             </tbody>
         </table>
         <p class="sport-summary__description">@theMatch.result</p>
