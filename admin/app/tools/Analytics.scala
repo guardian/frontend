@@ -20,6 +20,14 @@ trait AnalyticsLifecycle extends GlobalSettings {
   }
 }
 
+case class AveragePageviewsByDayData(year: Int, month: Int, day: Int, average: Double) {
+  lazy val key: (Int, Int, Int) = (year, month, day)
+  lazy val date: DateTime = new DateTime(year, month, day, 0, 0, 0, 0)
+}
+case class ReturnUsersByDayData(year: Int, month: Int, day: Int, total: Long) {
+  lazy val key: (Int, Int, Int) = (year, month, day)
+  lazy val date: DateTime = new DateTime(year, month, day, 0, 0, 0, 0)
+}
 case class PageviewsData(year: Int, month: Int, day: Int, existing: Boolean, total: Long) {
   lazy val key: (Int, Int, Int) = (year, month, day)
   lazy val date: DateTime = new DateTime(year, month, day, 0, 0, 0, 0)
@@ -30,11 +38,22 @@ case class AgentData(operatingSystem: String, operatingSystemVersion: Option[Str
   lazy val browserAndVersion: String = s"$browser ${browserVersion.getOrElse("(unknown)")}".trim
 }
 
-
 object Analytics {
+  var averagePageviewsByDayTable: List[AveragePageviewsByDayData] = Nil
+  var returnUsersByDayTable: List[ReturnUsersByDayData] = Nil
   var pageviewsTable: List[PageviewsData] = Nil
   var countriesTable: List[CountriesData] = Nil
   var agentsTable: List[AgentData] = Nil
+
+  def averagePageviewsByDay(): List[(DateTime, Double)] = {
+    val sorted = averagePageviewsByDayTable sortBy { _.key }
+    sorted map { data => (data.date, data.average) }
+  }
+
+  def returnUsersByDay(): List[(DateTime, Long)] = {
+    val sorted = returnUsersByDayTable sortBy { _.key }
+    sorted map { data => (data.date, data.total) }
+  }
 
   def pageviews(): List[(DateTime, Long)] = {
     // sum out the new/existing split
@@ -74,7 +93,7 @@ object Analytics {
 }
 
 object AnalyticsService extends AkkaSupport with Logging {
-  private lazy val refreshSchedule = play_akka.scheduler.every(4.hours) {
+  private lazy val refreshSchedule = play_akka.scheduler.every(6.hours) {
     log.info("Refreshing analytics data")
     refresh()
     log.info("Finished refreshing analytics data")
@@ -115,14 +134,13 @@ object AnalyticsService extends AkkaSupport with Logging {
     }
 
     AdminConfiguration.analytics.db withSession { implicit session: Session =>
-      // TODO: Remove ORDER and LIMIT below after Redshift fix
       val results = StaticQuery.queryNA[(String, String, String, String, Long)]("""
         select os_family, os_version_major, browser_family, browser_version, count(*) as total
         from pageviews
         where host = 'm.guardian.co.uk' or host = 'm.guardiannews.com'
         group by os_family, os_version_major, browser_family, browser_version
         order by total desc
-        limit 128;
+        limit 64;
       """).list()
 
       val agents = results map {
@@ -131,6 +149,47 @@ object AnalyticsService extends AkkaSupport with Logging {
       }
 
       Analytics.agentsTable = agents
+    }
+
+    AdminConfiguration.analytics.db withSession { implicit session: Session =>
+      val results = StaticQuery.queryNA[(Int, Int, Int, Double)]("""
+        select year, month, day_of_month, avg(user_pageviews_for_day) from
+        (
+          select year, month, day_of_month, count(*)::float as user_pageviews_for_day from pageviews
+          where host = 'm.guardian.co.uk' or host = 'm.guardiannews.com'
+          group by year, month, day_of_month, ophan
+        )
+        group by year, month, day_of_month;
+      """).list()
+
+      val averagePageviewsByDay = results map {
+        case (year, month, day, average) => AveragePageviewsByDayData(year, month, day, average)
+      }
+
+      Analytics.averagePageviewsByDayTable = averagePageviewsByDay
+    }
+
+    AdminConfiguration.analytics.db withSession { implicit session: Session =>
+      val results = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
+        select year, month, day_of_month, count(return_user_for_day) as return_users_for_day from
+        (
+          select p.year, p.month, p.day_of_month, p.ophan as return_user_for_day
+          from pageviews p
+          inner join users u
+          on p.ophan = u.ophan
+          where (p.host = 'm.guardian.co.uk' or p.host = 'm.guardiannews.com')
+          and u.total_page_views > 1
+          and u.first_seen_days_since_epoch < p.days_since_epoch
+          group by p.year, p.month, p.day_of_month, p.ophan
+        )
+        group by year, month, day_of_month;
+      """).list()
+
+      val returnUsersByDay = results map {
+        case (year, month, day, total) => ReturnUsersByDayData(year, month, day, total)
+      }
+
+      Analytics.returnUsersByDayTable = returnUsersByDay
     }
   }
 
