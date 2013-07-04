@@ -1,0 +1,3025 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "editorsPicks":[{
+      "id":"world/2013/jul/04/egypt-military-arrest-warrants-muslim-brotherhood",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-04T09:21:56Z",
+      "webTitle":"Egypt's military issues arrest warrants for Muslim Brotherhood",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/04/egypt-military-arrest-warrants-muslim-brotherhood",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/04/egypt-military-arrest-warrants-muslim-brotherhood",
+      "fields":{
+        "trailText":"Up to 300 members sought as Adli Mansour is sworn in as interim of head of state",
+        "headline":"Egypt's military issues arrest warrants for Muslim Brotherhood",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h4xt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929230739/Pro-Morsi-Supporters-Prot-003.jpg",
+        "wordcount":"651",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/egypt",
+        "type":"keyword",
+        "webTitle":"Egypt",
+        "webUrl":"http://www.guardian.co.uk/world/egypt",
+        "apiUrl":"http://content.guardianapis.com/world/egypt",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.guardian.co.uk/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/mohamed-morsi",
+        "type":"keyword",
+        "webTitle":"Mohamed Morsi",
+        "webUrl":"http://www.guardian.co.uk/world/mohamed-morsi",
+        "apiUrl":"http://content.guardianapis.com/world/mohamed-morsi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/martin-chulov",
+        "type":"contributor",
+        "webTitle":"Martin Chulov",
+        "webUrl":"http://www.guardian.co.uk/profile/martin-chulov",
+        "apiUrl":"http://content.guardianapis.com/profile/martin-chulov",
+        "bio":"<p>Martin Chulov covers the Middle East for the Guardian. He has reported from the region since 2005</p>",
+        "r2ContributorId":"29038",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/11/26/1290791972910/martin-chulov.jpg",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/patrick-kingsley",
+        "type":"contributor",
+        "webTitle":"Patrick Kingsley",
+        "webUrl":"http://www.guardian.co.uk/profile/patrick-kingsley",
+        "apiUrl":"http://content.guardianapis.com/profile/patrick-kingsley",
+        "bio":"<p>Patrick Kingsley is the Guardian's Egypt correspondent. From 2010-13 he was a Guardian feature writer. His book about contemporary Denmark – How to be Danish – <a href=\"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781780721330\" title=\"\">is available from the Guardian bookshop</a>. His website is <a href=\"http://www.patrickkingsley.co.uk/\" title=\"\">here</a>, and you can follow him on Twitter <a href=\"https://twitter.com/patrickkingsley\" title=\"\">here</a></p>",
+        "r2ContributorId":"39083",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/7/21/1279720834731/PatrickKingsley.jpg",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.guardian.co.uk/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":2,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/4/130704Morsistatement-16x9.mp4",
+        "fields":{
+          "source":"Reuters",
+          "embeddable":"true",
+          "blockAds":"false",
+          "height":"360",
+          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/7/4/130704Morsistatement_7798315.jpg",
+          "durationMinutes":"2",
+          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/7/4/130704Morsistatement_7798315.jpg",
+          "width":"480",
+          "durationSeconds":"10"
+        },
+        "encodings":[{
+          "format":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/7/4/130704Morsistatement-720.mp4"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/4/130704Morsistatement_3gpLg16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/4/130704Morsistatement-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/4/130704Morsistatement_3gpSml16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/4/130704Morsistatement/130704Morsistatement.m3u8"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929226308/Pro-Morsi-Supporters-Prot-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929226308/Pro-Morsi-Supporters-Prot-001.jpg",
+          "source":"Xinhua /Landov",
+          "photographer":"Barcroft Media",
+          "altText":"Pro-Morsi Supporters Protest In Cairo",
+          "height":"54",
+          "credit":"Barcroft Media/Xinhua /Landov",
+          "caption":"Mohamed Morsi protesters take part in a protest in Nasr City. Photograph: Barcroft Media/Xinhua /Landov",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929229653/Pro-Morsi-Supporters-Prot-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929229653/Pro-Morsi-Supporters-Prot-002.jpg",
+          "source":"Xinhua /Landov",
+          "photographer":"Barcroft Media",
+          "altText":"Pro-Morsi Supporters Protest In Cairo",
+          "height":"130",
+          "credit":"Barcroft Media/Xinhua /Landov",
+          "caption":"Mohamed Morsi protesters take part in a protest in Nasr City. Photograph: Barcroft Media/Xinhua /Landov",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929230739/Pro-Morsi-Supporters-Prot-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929230739/Pro-Morsi-Supporters-Prot-003.jpg",
+          "source":"Xinhua /Landov",
+          "photographer":"Barcroft Media",
+          "altText":"Pro-Morsi Supporters Protest In Cairo",
+          "height":"84",
+          "credit":"Barcroft Media/Xinhua /Landov",
+          "caption":"Mohamed Morsi protesters take part in a protest in Nasr City. Photograph: Barcroft Media/Xinhua /Landov",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929231970/Pro-Morsi-Supporters-Prot-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929231970/Pro-Morsi-Supporters-Prot-004.jpg",
+          "source":"Xinhua /Landov",
+          "photographer":"Barcroft Media",
+          "altText":"Pro-Morsi Supporters Protest In Cairo",
+          "height":"132",
+          "credit":"Barcroft Media/Xinhua /Landov",
+          "caption":"Mohamed Morsi protesters take part in a protest in Nasr City. Photograph: Barcroft Media/Xinhua /Landov",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929233063/Pro-Morsi-Supporters-Prot-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929233063/Pro-Morsi-Supporters-Prot-005.jpg",
+          "source":"Xinhua /Landov",
+          "photographer":"Barcroft Media",
+          "altText":"Pro-Morsi Supporters Protest In Cairo",
+          "height":"168",
+          "credit":"Barcroft Media/Xinhua /Landov",
+          "caption":"Mohamed Morsi protesters take part in a protest in Nasr City. Photograph: Barcroft Media/Xinhua /Landov",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929234204/Pro-Morsi-Supporters-Prot-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929234204/Pro-Morsi-Supporters-Prot-006.jpg",
+          "source":"Xinhua /Landov",
+          "photographer":"Barcroft Media",
+          "altText":"Pro-Morsi Supporters Protest In Cairo",
+          "height":"180",
+          "credit":"Barcroft Media/Xinhua /Landov",
+          "caption":"Mohamed Morsi protesters take part in a protest in Nasr City. Photograph: Barcroft Media/Xinhua /Landov",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929235482/Pro-Morsi-Supporters-Prot-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929235482/Pro-Morsi-Supporters-Prot-007.jpg",
+          "source":"Xinhua /Landov",
+          "photographer":"Barcroft Media",
+          "altText":"Pro-Morsi Supporters Protest In Cairo",
+          "height":"228",
+          "credit":"Barcroft Media/Xinhua /Landov",
+          "caption":"Mohamed Morsi protesters take part in a protest in Nasr City. Photograph: Barcroft Media/Xinhua /Landov",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929236662/Pro-Morsi-Supporters-Prot-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372929236662/Pro-Morsi-Supporters-Prot-008.jpg",
+          "source":"Xinhua /Landov",
+          "photographer":"Barcroft Media",
+          "altText":"Pro-Morsi Supporters Protest In Cairo",
+          "height":"276",
+          "credit":"Barcroft Media/Xinhua /Landov",
+          "caption":"Mohamed Morsi protesters take part in a protest in Nasr City. Photograph: Barcroft Media/Xinhua /Landov",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/04/evo-morales-bolivia",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-04T07:08:00Z",
+      "webTitle":"Evo Morales: plane rerouting over Edward Snowden 'a provocation'",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/04/evo-morales-bolivia",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/04/evo-morales-bolivia",
+      "fields":{
+        "trailText":"<p>Bolivian president says he regrets offering NSA whistleblower asylum, but Europe should free itself from US imperialism</p>",
+        "headline":"Evo Morales: plane rerouting over Edward Snowden 'a provocation'",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h4v8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372916478810/Evo-Morales-right-and-vic-002.jpg",
+        "wordcount":"344",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/evo-morales",
+        "type":"keyword",
+        "webTitle":"Evo Morales",
+        "webUrl":"http://www.guardian.co.uk/world/evo-morales",
+        "apiUrl":"http://content.guardianapis.com/world/evo-morales",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/bolivia",
+        "type":"keyword",
+        "webTitle":"Bolivia",
+        "webUrl":"http://www.guardian.co.uk/world/bolivia",
+        "apiUrl":"http://content.guardianapis.com/world/bolivia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.guardian.co.uk/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.guardian.co.uk/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.guardian.co.uk/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/americas",
+        "type":"keyword",
+        "webTitle":"Americas",
+        "webUrl":"http://www.guardian.co.uk/world/americas",
+        "apiUrl":"http://content.guardianapis.com/world/americas",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":2,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/4/130703moralesreturns-16x9.mp4",
+        "fields":{
+          "source":"Reuters",
+          "embeddable":"true",
+          "blockAds":"false",
+          "height":"360",
+          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/7/4/130703moralesreturns_7798151.jpg",
+          "durationMinutes":"1",
+          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/7/4/130703moralesreturns_7798151.jpg",
+          "width":"480",
+          "durationSeconds":"47"
+        },
+        "encodings":[{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/4/130703moralesreturns-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/4/130703moralesreturns_3gpSml16x9.3gp"
+        },{
+          "format":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/7/4/130703moralesreturns-720.mp4"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/4/130703moralesreturns_3gpLg16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/4/130703moralesreturns/130703moralesreturns.m3u8"
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/04/restore-the-fourth-protesters-nsa-surveillance",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-04T12:55:22Z",
+      "webTitle":"Restore the Fourth protesters stage rallies against NSA surveillance",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/04/restore-the-fourth-protesters-nsa-surveillance",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/04/restore-the-fourth-protesters-nsa-surveillance",
+      "fields":{
+        "trailText":"<p>San Francisco protest to target Senator Dianne Feinstein as part of demands for reform of Patriot Act across the US</p>",
+        "headline":"Restore the Fourth protesters stage rallies against NSA surveillance",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h487",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/10/1370901867913/Feinstein-nsa-005.jpg",
+        "wordcount":"546",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.guardian.co.uk/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/the-nsa-files",
+        "type":"keyword",
+        "webTitle":"The NSA files",
+        "webUrl":"http://www.guardian.co.uk/world/the-nsa-files",
+        "apiUrl":"http://content.guardianapis.com/world/the-nsa-files",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.guardian.co.uk/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/privacy",
+        "type":"keyword",
+        "webTitle":"Privacy",
+        "webUrl":"http://www.guardian.co.uk/world/privacy",
+        "apiUrl":"http://content.guardianapis.com/world/privacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.guardian.co.uk/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.guardian.co.uk/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usdomesticpolicy",
+        "type":"keyword",
+        "webTitle":"US domestic policy",
+        "webUrl":"http://www.guardian.co.uk/world/usdomesticpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usdomesticpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/congress",
+        "type":"keyword",
+        "webTitle":"US Congress",
+        "webUrl":"http://www.guardian.co.uk/world/congress",
+        "apiUrl":"http://content.guardianapis.com/world/congress",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/dianne-feinstein",
+        "type":"keyword",
+        "webTitle":"Dianne Feinstein",
+        "webUrl":"http://www.guardian.co.uk/world/dianne-feinstein",
+        "apiUrl":"http://content.guardianapis.com/world/dianne-feinstein",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/san-francisco",
+        "type":"keyword",
+        "webTitle":"San Francisco",
+        "webUrl":"http://www.guardian.co.uk/world/san-francisco",
+        "apiUrl":"http://content.guardianapis.com/world/san-francisco",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/california",
+        "type":"keyword",
+        "webTitle":"California",
+        "webUrl":"http://www.guardian.co.uk/world/california",
+        "apiUrl":"http://content.guardianapis.com/world/california",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/10/1370901880491/Feinstein-nsa-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/10/1370901880491/Feinstein-nsa-010.jpg",
+          "source":"Getty Images",
+          "photographer":"Alex Wong",
+          "altText":"Feinstein nsa",
+          "height":"276",
+          "credit":"Alex Wong/Getty Images",
+          "caption":"Restore the Fourth protesters in San Francisco plan to target the office of Senator Dianne Feinstein, chair of the intelligence committee. <br>Photograph: Alex Wong/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"media/2013/jul/03/rupert-murdoch-secret-tape-mp",
+      "sectionId":"media",
+      "sectionName":"Media",
+      "webPublicationDate":"2013-07-03T23:14:00Z",
+      "webTitle":"Question Rupert Murdoch over secret tape, urges MP",
+      "webUrl":"http://www.guardian.co.uk/media/2013/jul/03/rupert-murdoch-secret-tape-mp",
+      "apiUrl":"http://content.guardianapis.com/media/2013/jul/03/rupert-murdoch-secret-tape-mp",
+      "fields":{
+        "trailText":"<p>Recording of News Corp boss during meeting with staff from Sun in March suggests regret at helping with police inquiry</p>",
+        "headline":"Question Rupert Murdoch over secret tape, urges MP",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h3p4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884977161/Rupert-Murdoch-005.jpg",
+        "wordcount":"715",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"media/rupert-murdoch",
+        "type":"keyword",
+        "webTitle":"Rupert Murdoch",
+        "webUrl":"http://www.guardian.co.uk/media/rupert-murdoch",
+        "apiUrl":"http://content.guardianapis.com/media/rupert-murdoch",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.guardian.co.uk/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/news-corporation",
+        "type":"keyword",
+        "webTitle":"News Corporation",
+        "webUrl":"http://www.guardian.co.uk/media/news-corporation",
+        "apiUrl":"http://content.guardianapis.com/media/news-corporation",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/mediabusiness",
+        "type":"keyword",
+        "webTitle":"Media business",
+        "webUrl":"http://www.guardian.co.uk/media/mediabusiness",
+        "apiUrl":"http://content.guardianapis.com/media/mediabusiness",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/sun",
+        "type":"keyword",
+        "webTitle":"The Sun",
+        "webUrl":"http://www.guardian.co.uk/media/sun",
+        "apiUrl":"http://content.guardianapis.com/media/sun",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/pressandpublishing",
+        "type":"keyword",
+        "webTitle":"Newspapers & magazines",
+        "webUrl":"http://www.guardian.co.uk/media/pressandpublishing",
+        "apiUrl":"http://content.guardianapis.com/media/pressandpublishing",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/national-newspapers",
+        "type":"keyword",
+        "webTitle":"National newspapers",
+        "webUrl":"http://www.guardian.co.uk/media/national-newspapers",
+        "apiUrl":"http://content.guardianapis.com/media/national-newspapers",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/newspapers",
+        "type":"keyword",
+        "webTitle":"Newspapers",
+        "webUrl":"http://www.guardian.co.uk/media/newspapers",
+        "apiUrl":"http://content.guardianapis.com/media/newspapers",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.guardian.co.uk/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/metropolitan-police",
+        "type":"keyword",
+        "webTitle":"Metropolitan police",
+        "webUrl":"http://www.guardian.co.uk/uk/metropolitan-police",
+        "apiUrl":"http://content.guardianapis.com/uk/metropolitan-police",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/police",
+        "type":"keyword",
+        "webTitle":"Police",
+        "webUrl":"http://www.guardian.co.uk/uk/police",
+        "apiUrl":"http://content.guardianapis.com/uk/police",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/josh-halliday",
+        "type":"contributor",
+        "webTitle":"Josh Halliday",
+        "webUrl":"http://www.guardian.co.uk/profile/josh-halliday",
+        "apiUrl":"http://content.guardianapis.com/profile/josh-halliday",
+        "bio":"<p><a href=\"http://twitter.com/JoshHalliday\">Josh Halliday</a> is a media and technology reporter. Josh has a keen interest in digital media and privacy. Dislikes insufferable enthusiasm. Bradfordian via Wearside</p>",
+        "r2ContributorId":"38624",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/7/14/1279118930047/Josh-Halliday.jpg",
+        "references":[]
+      },{
+        "id":"profile/patrickwintour",
+        "type":"contributor",
+        "webTitle":"Patrick Wintour",
+        "webUrl":"http://www.guardian.co.uk/profile/patrickwintour",
+        "apiUrl":"http://content.guardianapis.com/profile/patrickwintour",
+        "bio":"<p>Patrick Wintour is <a href=\"http://www.guardian.co.uk/politics\">political</a> editor for the Guardian</p>",
+        "rcsId":"GNL004731",
+        "r2ContributorId":"16227",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/02/10/PatrickWintour140x140.gif",
+        "references":[]
+      },{
+        "id":"profile/lisaocarroll",
+        "type":"contributor",
+        "webTitle":"Lisa O'Carroll",
+        "webUrl":"http://www.guardian.co.uk/profile/lisaocarroll",
+        "apiUrl":"http://content.guardianapis.com/profile/lisaocarroll",
+        "rcsId":"GNL004691",
+        "r2ContributorId":"15275",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/11/23/1290506292406/Lisa-OCarroll-byline-004.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884983939/Rupert-Murdoch-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884983939/Rupert-Murdoch-010.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"276",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884972611/Rupert-Murdoch-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884972611/Rupert-Murdoch-002.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"54",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884974066/Rupert-Murdoch-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884974066/Rupert-Murdoch-003.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"340",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884975480/Rupert-Murdoch-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884975480/Rupert-Murdoch-004.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"130",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884977161/Rupert-Murdoch-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884977161/Rupert-Murdoch-005.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"84",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884978469/Rupert-Murdoch-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884978469/Rupert-Murdoch-006.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"132",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884979762/Rupert-Murdoch-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884979762/Rupert-Murdoch-007.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"168",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884981332/Rupert-Murdoch-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884981332/Rupert-Murdoch-008.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"180",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884982674/Rupert-Murdoch-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884982674/Rupert-Murdoch-009.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"228",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884983939/Rupert-Murdoch-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884983939/Rupert-Murdoch-010.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"276",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884985175/Rupert-Murdoch-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372884985175/Rupert-Murdoch-011.jpg",
+          "source":"Reuters",
+          "photographer":"Gus Ruelas",
+          "altText":"Rupert Murdoch",
+          "height":"372",
+          "credit":"Gus Ruelas/Reuters",
+          "caption":"A secret recording of News Corp boss Rupert Murdoch has emerged in which he describes payments to police as 'the culture of Fleet Street'. Photograph: Gus Ruelas/Reuters",
+          "width":"620"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/03/guantanamo-bay-hunger-strike-detainees-ramadan",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-03T21:18:00Z",
+      "webTitle":"Guantánamo hunger strike: US to force-feed detainees during Ramadan",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/03/guantanamo-bay-hunger-strike-detainees-ramadan",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/03/guantanamo-bay-hunger-strike-detainees-ramadan",
+      "fields":{
+        "trailText":"<p>Government says feedings provide 'essential nutritional and medical care' and will not interfere with religious observance</p>",
+        "headline":"Guantánamo hunger strike: US to force-feed detainees during Ramadan",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h3p9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/30/1367351203123/Guantanamo-006.jpg",
+        "wordcount":"642",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/guantanamo-bay",
+        "type":"keyword",
+        "webTitle":"Guantánamo Bay",
+        "webUrl":"http://www.guardian.co.uk/world/guantanamo-bay",
+        "apiUrl":"http://content.guardianapis.com/world/guantanamo-bay",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/karenmcveigh",
+        "type":"contributor",
+        "webTitle":"Karen McVeigh",
+        "webUrl":"http://www.guardian.co.uk/profile/karenmcveigh",
+        "apiUrl":"http://content.guardianapis.com/profile/karenmcveigh",
+        "bio":"<p>Karen McVeigh has been a senior news reporter for the Guardian since December 2006. Before that, she freelanced for the Times following a five-year stint as The Scotsman's London Correspondent</p>",
+        "r2ContributorId":"19143",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/karen_mcveigh_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/us-national-security",
+        "type":"keyword",
+        "webTitle":"US national security",
+        "webUrl":"http://www.guardian.co.uk/world/us-national-security",
+        "apiUrl":"http://content.guardianapis.com/world/us-national-security",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.guardian.co.uk/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/cuba",
+        "type":"keyword",
+        "webTitle":"Cuba",
+        "webUrl":"http://www.guardian.co.uk/world/cuba",
+        "apiUrl":"http://content.guardianapis.com/world/cuba",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/islam",
+        "type":"keyword",
+        "webTitle":"Islam",
+        "webUrl":"http://www.guardian.co.uk/world/islam",
+        "apiUrl":"http://content.guardianapis.com/world/islam",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.guardian.co.uk/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/30/1367351209962/Guantanamo-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/4/30/1367351209962/Guantanamo-011.jpg",
+          "source":"EPA",
+          "photographer":"Shawn Thew",
+          "altText":"Guantanamo",
+          "height":"276",
+          "credit":"Shawn Thew/EPA",
+          "caption":"Government lawyers said that enteral or force feeding is authorised by federal regulations. Photograph: Shawn Thew/EPA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/04/helmand-female-police-officer-dead-islam-bibi",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-04T11:11:51Z",
+      "webTitle":"Helmand's top female police officer shot dead",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/04/helmand-female-police-officer-dead-islam-bibi",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/04/helmand-female-police-officer-dead-islam-bibi",
+      "fields":{
+        "trailText":"Islam Bibi, who was killed on her way to work in southern Afghanistan, had received death threats from her family",
+        "headline":"Helmand's top female police officer shot dead",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h44j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936226999/Trainee-female-police-off-003.jpg",
+        "wordcount":"485",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.guardian.co.uk/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/emma-graham-harrison",
+        "type":"contributor",
+        "webTitle":"Emma Graham-Harrison",
+        "webUrl":"http://www.guardian.co.uk/profile/emma-graham-harrison",
+        "apiUrl":"http://content.guardianapis.com/profile/emma-graham-harrison",
+        "r2ContributorId":"49577",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936222904/Trainee-female-police-off-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936222904/Trainee-female-police-off-001.jpg",
+          "source":"Guardian",
+          "photographer":"Sean Smith",
+          "altText":"Trainee female police officers in Helmand",
+          "height":"54",
+          "credit":"Sean Smith/Guardian",
+          "caption":"Female police officers training in Afghanistan. Photograph: Sean Smith for the Guardian",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936225448/Trainee-female-police-off-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936225448/Trainee-female-police-off-002.jpg",
+          "source":"Guardian",
+          "photographer":"Sean Smith",
+          "altText":"Trainee female police officers in Helmand",
+          "height":"130",
+          "credit":"Sean Smith/Guardian",
+          "caption":"Female police officers training in Afghanistan. Photograph: Sean Smith for the Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936226999/Trainee-female-police-off-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936226999/Trainee-female-police-off-003.jpg",
+          "source":"Guardian",
+          "photographer":"Sean Smith",
+          "altText":"Trainee female police officers in Helmand",
+          "height":"84",
+          "credit":"Sean Smith/Guardian",
+          "caption":"Female police officers training in Afghanistan. Photograph: Sean Smith for the Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936228776/Trainee-female-police-off-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936228776/Trainee-female-police-off-004.jpg",
+          "source":"Guardian",
+          "photographer":"Sean Smith",
+          "altText":"Trainee female police officers in Helmand",
+          "height":"132",
+          "credit":"Sean Smith/Guardian",
+          "caption":"Female police officers training in Afghanistan. Photograph: Sean Smith for the Guardian",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936230359/Trainee-female-police-off-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936230359/Trainee-female-police-off-005.jpg",
+          "source":"Guardian",
+          "photographer":"Sean Smith",
+          "altText":"Trainee female police officers in Helmand",
+          "height":"168",
+          "credit":"Sean Smith/Guardian",
+          "caption":"Female police officers training in Afghanistan. Photograph: Sean Smith for the Guardian",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936231841/Trainee-female-police-off-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936231841/Trainee-female-police-off-006.jpg",
+          "source":"Guardian",
+          "photographer":"Sean Smith",
+          "altText":"Trainee female police officers in Helmand",
+          "height":"180",
+          "credit":"Sean Smith/Guardian",
+          "caption":"Female police officers training in Afghanistan. Photograph: Sean Smith for the Guardian",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936233573/Trainee-female-police-off-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936233573/Trainee-female-police-off-007.jpg",
+          "source":"Guardian",
+          "photographer":"Sean Smith",
+          "altText":"Trainee female police officers in Helmand",
+          "height":"228",
+          "credit":"Sean Smith/Guardian",
+          "caption":"Female police officers training in Afghanistan. Photograph: Sean Smith for the Guardian",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936235129/Trainee-female-police-off-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936235129/Trainee-female-police-off-008.jpg",
+          "source":"Guardian",
+          "photographer":"Sean Smith",
+          "altText":"Trainee female police officers in Helmand",
+          "height":"276",
+          "credit":"Sean Smith/Guardian",
+          "caption":"Female police officers training in Afghanistan. Photograph: Sean Smith for the Guardian",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936235129/Trainee-female-police-off-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/4/1372936235129/Trainee-female-police-off-008.jpg",
+          "source":"Guardian",
+          "photographer":"Sean Smith",
+          "altText":"Trainee female police officers in Helmand",
+          "height":"276",
+          "credit":"Sean Smith/Guardian",
+          "caption":"Female police officers training in Afghanistan. Photograph: Sean Smith for the Guardian",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/03/belgium-king-albert-ii-abdicate",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-04T07:16:00Z",
+      "webTitle":"Belgium's King Albert II to abdicate in favour of son",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/03/belgium-king-albert-ii-abdicate",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/03/belgium-king-albert-ii-abdicate",
+      "fields":{
+        "trailText":"<p>79-year-old monarch, who ascended to throne in 1993, says he feels too old to carry out duties properly</p>",
+        "headline":"Belgium's King Albert II to abdicate in favour of son",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h3mt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872622937/Belgiums-King-Albert-II-005.jpg",
+        "wordcount":"735",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/belgium",
+        "type":"keyword",
+        "webTitle":"Belgium",
+        "webUrl":"http://www.guardian.co.uk/world/belgium",
+        "apiUrl":"http://content.guardianapis.com/world/belgium",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.guardian.co.uk/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/angeliquechrisafis",
+        "type":"contributor",
+        "webTitle":"Angelique Chrisafis",
+        "webUrl":"http://www.guardian.co.uk/profile/angeliquechrisafis",
+        "apiUrl":"http://content.guardianapis.com/profile/angeliquechrisafis",
+        "bio":"<p>Angelique Chrisafis is the Guardian's Paris correspondent</p>",
+        "rcsId":"GNL004603",
+        "r2ContributorId":"15382",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/angelique_chrisafis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872629474/Belgiums-King-Albert-II-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872629474/Belgiums-King-Albert-II-010.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"276",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872618926/Belgiums-King-Albert-II-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872618926/Belgiums-King-Albert-II-002.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"54",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872620557/Belgiums-King-Albert-II-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872620557/Belgiums-King-Albert-II-003.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"340",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872621788/Belgiums-King-Albert-II-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872621788/Belgiums-King-Albert-II-004.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"130",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872622937/Belgiums-King-Albert-II-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872622937/Belgiums-King-Albert-II-005.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"84",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872624308/Belgiums-King-Albert-II-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872624308/Belgiums-King-Albert-II-006.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"132",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872625562/Belgiums-King-Albert-II-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872625562/Belgiums-King-Albert-II-007.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"168",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872626840/Belgiums-King-Albert-II-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872626840/Belgiums-King-Albert-II-008.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"180",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872628166/Belgiums-King-Albert-II-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872628166/Belgiums-King-Albert-II-009.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"228",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872629474/Belgiums-King-Albert-II-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872629474/Belgiums-King-Albert-II-010.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"276",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872630775/Belgiums-King-Albert-II-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372872630775/Belgiums-King-Albert-II-011.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Benoit Doppagne",
+          "altText":"Belgium's King Albert II",
+          "height":"372",
+          "credit":"Benoit Doppagne/AFP/Getty Images",
+          "caption":"Belgium's King Albert II salutes during a military parade in Brussels. The 79-year-old says he will abdicate on 21 July. Photograph: Benoit Doppagne/AFP/Getty Images",
+          "width":"620"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"music/2013/jul/04/50-cent-charged-attacking-ex-girlfriend",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-07-04T11:45:51Z",
+      "webTitle":"50 Cent charged with attacking his ex-girlfriend",
+      "webUrl":"http://www.guardian.co.uk/music/2013/jul/04/50-cent-charged-attacking-ex-girlfriend",
+      "apiUrl":"http://content.guardianapis.com/music/2013/jul/04/50-cent-charged-attacking-ex-girlfriend",
+      "fields":{
+        "trailText":"<p>Rapper could face up to five years in prison, if tried and convicted of domestic violence and vandalism</p>",
+        "headline":"50 Cent charged with attacking his ex-girlfriend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h46a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Music/Pix/pictures/2012/7/17/1342517360176/50-Cent-in-2012-004.jpg",
+        "wordcount":"197",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"music/50cent",
+        "type":"keyword",
+        "webTitle":"50 Cent",
+        "webUrl":"http://www.guardian.co.uk/music/50cent",
+        "apiUrl":"http://content.guardianapis.com/music/50cent",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.guardian.co.uk/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"music/hip-hop",
+        "type":"keyword",
+        "webTitle":"Hip-hop",
+        "webUrl":"http://www.guardian.co.uk/music/hip-hop",
+        "apiUrl":"http://content.guardianapis.com/music/hip-hop",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/rap",
+        "type":"keyword",
+        "webTitle":"Rap",
+        "webUrl":"http://www.guardian.co.uk/music/rap",
+        "apiUrl":"http://content.guardianapis.com/music/rap",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/urban",
+        "type":"keyword",
+        "webTitle":"Urban music",
+        "webUrl":"http://www.guardian.co.uk/music/urban",
+        "apiUrl":"http://content.guardianapis.com/music/urban",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"society/domestic-violence",
+        "type":"keyword",
+        "webTitle":"Domestic violence",
+        "webUrl":"http://www.guardian.co.uk/society/domestic-violence",
+        "apiUrl":"http://content.guardianapis.com/society/domestic-violence",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.guardian.co.uk/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"profile/guardianmusic",
+        "type":"contributor",
+        "webTitle":"Guardian music",
+        "webUrl":"http://www.guardian.co.uk/profile/guardianmusic",
+        "apiUrl":"http://content.guardianapis.com/profile/guardianmusic",
+        "r2ContributorId":"26441",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Music/Pix/pictures/2012/7/17/1342517365733/50-Cent-in-2012-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Music/Pix/pictures/2012/7/17/1342517365733/50-Cent-in-2012-009.jpg",
+          "source":"AP",
+          "photographer":"Ennio Leanza",
+          "altText":"50 Cent in 2012",
+          "height":"276",
+          "credit":"Ennio Leanza/AP",
+          "caption":"50 Cent … Accused of assaulting the mother of his child. Photograph: Ennio Leanza/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/03/occupy-oakland-protesters-1m-police",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-03T18:03:00Z",
+      "webTitle":"Occupy Oakland protesters awarded $1m over police violence during arrests",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/03/occupy-oakland-protesters-1m-police",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/03/occupy-oakland-protesters-1m-police",
+      "fields":{
+        "trailText":"<p>12 activists to split compensation, including $500,000 for one woman who suffered permanent hearing loss during protests</p>",
+        "headline":"Occupy Oakland protesters awarded $1m over police violence during arrests",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h3mh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/15/1321355962720/An-Occupy-Oakland-protest-003.jpg",
+        "wordcount":"879",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/occupy-oakland",
+        "type":"keyword",
+        "webTitle":"Occupy Oakland",
+        "webUrl":"http://www.guardian.co.uk/world/occupy-oakland",
+        "apiUrl":"http://content.guardianapis.com/world/occupy-oakland",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/occupy-movement",
+        "type":"keyword",
+        "webTitle":"Occupy movement",
+        "webUrl":"http://www.guardian.co.uk/world/occupy-movement",
+        "apiUrl":"http://content.guardianapis.com/world/occupy-movement",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/california",
+        "type":"keyword",
+        "webTitle":"California",
+        "webUrl":"http://www.guardian.co.uk/world/california",
+        "apiUrl":"http://content.guardianapis.com/world/california",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/san-francisco",
+        "type":"keyword",
+        "webTitle":"San Francisco",
+        "webUrl":"http://www.guardian.co.uk/world/san-francisco",
+        "apiUrl":"http://content.guardianapis.com/world/san-francisco",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/protest",
+        "type":"keyword",
+        "webTitle":"Protest",
+        "webUrl":"http://www.guardian.co.uk/world/protest",
+        "apiUrl":"http://content.guardianapis.com/world/protest",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/eoin-reynolds",
+        "type":"contributor",
+        "webTitle":"Eoin Reynolds",
+        "webUrl":"http://www.guardian.co.uk/profile/eoin-reynolds",
+        "apiUrl":"http://content.guardianapis.com/profile/eoin-reynolds",
+        "bio":"<p>Eoin Reynolds is a freelance reporter based in San Francisco</p>",
+        "r2ContributorId":"50737",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/15/1321355966359/An-Occupy-Oakland-protest-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2011/11/15/1321355966359/An-Occupy-Oakland-protest-007.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Kimihiro Hoshino",
+          "altText":"An Occupy Oakland protester is handcuffed by the police",
+          "height":"276",
+          "credit":"Kimihiro Hoshino/AFP/Getty Images",
+          "caption":"An Occupy Oakland protester is handcuffed by the police in November 2011. Photograph: Kimihiro Hoshino/AFP/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"society/2013/jul/03/hiv-bone-marrow-transplant",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-07-03T08:30:00Z",
+      "webTitle":"No sign of HIV return in bone marrow transplant patients, say scientists",
+      "webUrl":"http://www.guardian.co.uk/society/2013/jul/03/hiv-bone-marrow-transplant",
+      "apiUrl":"http://content.guardianapis.com/society/2013/jul/03/hiv-bone-marrow-transplant",
+      "fields":{
+        "trailText":"<p>Two men who had longstanding HIV infections have stopped taking Aids drugs  and have no detectable HIV in their blood</p>",
+        "headline":"No sign of HIV return in bone marrow transplant patients, say scientists",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3h3v9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/3/1372841103046/HIV-virus-AIDS-virus-as-s-003.jpg",
+        "wordcount":"653",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"society/aids-and-hiv",
+        "type":"keyword",
+        "webTitle":"Aids and HIV",
+        "webUrl":"http://www.guardian.co.uk/society/aids-and-hiv",
+        "apiUrl":"http://content.guardianapis.com/society/aids-and-hiv",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.guardian.co.uk/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.guardian.co.uk/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"science/medical-research",
+        "type":"keyword",
+        "webTitle":"Medical research",
+        "webUrl":"http://www.guardian.co.uk/science/medical-research",
+        "apiUrl":"http://content.guardianapis.com/science/medical-research",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.guardian.co.uk/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/sarahboseley",
+        "type":"contributor",
+        "webTitle":"Sarah Boseley",
+        "webUrl":"http://www.guardian.co.uk/profile/sarahboseley",
+        "apiUrl":"http://content.guardianapis.com/profile/sarahboseley",
+        "bio":"<p>Sarah Boseley is the <a href=\"http://www.guardian.co.uk/society/health\">health editor of the Guardian</a> . She has won a number of awards for her work on HIV/Aids in Africa, including the One World Media Award (twice) and the European section of the Lorenzo Natali prize, awarded by the European Commission</p>",
+        "rcsId":"GNL004752",
+        "r2ContributorId":"16411",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/sarah_boseley_140x140.jpg",
+        "references":[]
+      },{
+        "id":"science/infectiousdiseases",
+        "type":"keyword",
+        "webTitle":"Infectious diseases",
+        "webUrl":"http://www.guardian.co.uk/science/infectiousdiseases",
+        "apiUrl":"http://content.guardianapis.com/science/infectiousdiseases",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/microbiology",
+        "type":"keyword",
+        "webTitle":"Microbiology",
+        "webUrl":"http://www.guardian.co.uk/science/microbiology",
+        "apiUrl":"http://content.guardianapis.com/science/microbiology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/human-biology",
+        "type":"keyword",
+        "webTitle":"Human biology",
+        "webUrl":"http://www.guardian.co.uk/science/human-biology",
+        "apiUrl":"http://content.guardianapis.com/science/human-biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/3/1372855163773/f7e2277e-f7e3-483a-ab60-1d1bf14db50b-460x276.jpeg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/3/1372855163773/f7e2277e-f7e3-483a-ab60-1d1bf14db50b-460x276.jpeg",
+          "source":"AP",
+          "photographer":"Lai Seng Sin",
+          "altText":"Timothy Henrich of the Harvard-affiliated Brigham and Women's Hospital in Boston speaks at the International Aids Society Conference in Kuala Lumpur.",
+          "height":"276",
+          "credit":"Lai Seng Sin/AP",
+          "caption":"Timothy Henrich of the Harvard-affiliated Brigham and Women's Hospital in Boston speaks at the International Aids Society Conference in Kuala Lumpur. Photograph: Lai Seng Sin/AP",
+          "width":"460",
+          "comments":"uploaded by live blogging"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/03/obama-healthcare-reform-delay-obamacare",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-03T08:32:02Z",
+      "webTitle":"Obama delays healthcare insurance requirement on employers till 2015",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/03/obama-healthcare-reform-delay-obamacare",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/03/obama-healthcare-reform-delay-obamacare",
+      "fields":{
+        "trailText":"Businesses welcome announcement that key Obamacare provision will not be implemented until after next election",
+        "headline":"Obama delays healthcare insurance requirement on employers till 2015",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h338",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839365347/Obamacare-supports-in-Was-005.jpg",
+        "wordcount":"847",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/healthcare",
+        "type":"keyword",
+        "webTitle":"US healthcare",
+        "webUrl":"http://www.guardian.co.uk/world/healthcare",
+        "apiUrl":"http://content.guardianapis.com/world/healthcare",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.guardian.co.uk/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.guardian.co.uk/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.guardian.co.uk/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839360561/Obamacare-supports-in-Was-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839360561/Obamacare-supports-in-Was-002.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"54",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839362164/Obamacare-supports-in-Was-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839362164/Obamacare-supports-in-Was-003.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"340",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839363881/Obamacare-supports-in-Was-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839363881/Obamacare-supports-in-Was-004.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"130",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839365347/Obamacare-supports-in-Was-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839365347/Obamacare-supports-in-Was-005.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"84",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839366833/Obamacare-supports-in-Was-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839366833/Obamacare-supports-in-Was-006.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"132",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839368346/Obamacare-supports-in-Was-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839368346/Obamacare-supports-in-Was-007.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"168",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839369796/Obamacare-supports-in-Was-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839369796/Obamacare-supports-in-Was-008.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"180",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839371241/Obamacare-supports-in-Was-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839371241/Obamacare-supports-in-Was-009.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"228",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839372807/Obamacare-supports-in-Was-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839372807/Obamacare-supports-in-Was-010.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"276",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839374519/Obamacare-supports-in-Was-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839374519/Obamacare-supports-in-Was-011.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"372",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters…  but business were unhappy about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839372807/Obamacare-supports-in-Was-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372839372807/Obamacare-supports-in-Was-010.jpg",
+          "source":"Getty",
+          "photographer":"Mark Wilson",
+          "altText":"Obamacare supports in Washington DC",
+          "height":"276",
+          "credit":"Mark Wilson/Getty",
+          "caption":"Obamacare supporters … but businesses complained about having to pay $2,000 for each full-time employee who did not get health cover. Photograph: Mark Wilson/Getty",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/03/san-francisco-bart-rail-strike",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-03T13:44:11Z",
+      "webTitle":"San Francisco rail strike continues as commuters face third day without trains",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/03/san-francisco-bart-rail-strike",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/03/san-francisco-bart-rail-strike",
+      "fields":{
+        "trailText":"<p>Transit agency Bart and two of its unions fail to reach agreement despite renewed talks and amid chaotic commutes</p>",
+        "headline":"San Francisco rail strike continues as commuters face third day of chaos",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h3b8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/3/1372857470872/San-Francisco-Bart-strike-003.jpg",
+        "wordcount":"393",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/san-francisco",
+        "type":"keyword",
+        "webTitle":"San Francisco",
+        "webUrl":"http://www.guardian.co.uk/world/san-francisco",
+        "apiUrl":"http://content.guardianapis.com/world/san-francisco",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/california",
+        "type":"keyword",
+        "webTitle":"California",
+        "webUrl":"http://www.guardian.co.uk/world/california",
+        "apiUrl":"http://content.guardianapis.com/world/california",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/rail-transport",
+        "type":"keyword",
+        "webTitle":"Rail transport",
+        "webUrl":"http://www.guardian.co.uk/world/rail-transport",
+        "apiUrl":"http://content.guardianapis.com/world/rail-transport",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/3/1372857485721/San-Francisco-Bart-strike-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/3/1372857485721/San-Francisco-Bart-strike-008.jpg",
+          "source":"AP",
+          "photographer":"Dan Rosenstrauch",
+          "altText":"San Francisco Bart strike",
+          "height":"276",
+          "credit":"Dan Rosenstrauch/AP",
+          "caption":"Commuters walk to a line of buses waiting to take them to San Francisco on the second day of the Bart strike. Photograph: Dan Rosenstrauch/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/03/killed-pakistan-cia-drone-strike",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-03T07:01:15Z",
+      "webTitle":"CIA drone strike in Pakistan kills suspected militants",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/03/killed-pakistan-cia-drone-strike",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/03/killed-pakistan-cia-drone-strike",
+      "fields":{
+        "trailText":"Government condemns missile attack on building near Afghan border said to have been used as unofficial sharia court",
+        "headline":"CIA drone strike in Pakistan kills suspected militants",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h32z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834012883/An-US-Air-Force-drone-is--005.jpg",
+        "wordcount":"509",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.guardian.co.uk/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/drones",
+        "type":"keyword",
+        "webTitle":"Drones",
+        "webUrl":"http://www.guardian.co.uk/world/drones",
+        "apiUrl":"http://content.guardianapis.com/world/drones",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/cia",
+        "type":"keyword",
+        "webTitle":"CIA",
+        "webUrl":"http://www.guardian.co.uk/world/cia",
+        "apiUrl":"http://content.guardianapis.com/world/cia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.guardian.co.uk/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/taliban",
+        "type":"keyword",
+        "webTitle":"Taliban",
+        "webUrl":"http://www.guardian.co.uk/world/taliban",
+        "apiUrl":"http://content.guardianapis.com/world/taliban",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.guardian.co.uk/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/jon-boone",
+        "type":"contributor",
+        "webTitle":"Jon Boone",
+        "webUrl":"http://www.guardian.co.uk/profile/jon-boone",
+        "apiUrl":"http://content.guardianapis.com/profile/jon-boone",
+        "r2ContributorId":"31929",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834008801/An-US-Air-Force-drone-is--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834008801/An-US-Air-Force-drone-is--002.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"54",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834009909/An-US-Air-Force-drone-is--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834009909/An-US-Air-Force-drone-is--003.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"340",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834011319/An-US-Air-Force-drone-is--004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834011319/An-US-Air-Force-drone-is--004.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"130",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834012883/An-US-Air-Force-drone-is--005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834012883/An-US-Air-Force-drone-is--005.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"84",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834014080/An-US-Air-Force-drone-is--006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834014080/An-US-Air-Force-drone-is--006.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"132",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834015223/An-US-Air-Force-drone-is--007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834015223/An-US-Air-Force-drone-is--007.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"168",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834016433/An-US-Air-Force-drone-is--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834016433/An-US-Air-Force-drone-is--008.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"180",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834017554/An-US-Air-Force-drone-is--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834017554/An-US-Air-Force-drone-is--009.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"228",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834018740/An-US-Air-Force-drone-is--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834018740/An-US-Air-Force-drone-is--010.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"276",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834020104/An-US-Air-Force-drone-is--011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834020104/An-US-Air-Force-drone-is--011.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"372",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"620"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834018740/An-US-Air-Force-drone-is--010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372834018740/An-US-Air-Force-drone-is--010.jpg",
+          "source":"Alamy",
+          "photographer":"US Air Force",
+          "altText":"An US Air Force drone is prepared for a mission - MQ-9 Reaper unmanned aerial vehicle for a mission",
+          "height":"276",
+          "credit":"US Air Force/Alamy",
+          "caption":"An American MQ-9 Reaper unmanned aircraft, able to carry precision-guided bombs and air-to-ground missiles. Photograph: US Air Force/Alamy",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/jul/03/south-african-courts-mandela-burial",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-07-03T16:31:07Z",
+      "webTitle":"South African courts step in over Mandela family burial row",
+      "webUrl":"http://www.guardian.co.uk/world/2013/jul/03/south-african-courts-mandela-burial",
+      "apiUrl":"http://content.guardianapis.com/world/2013/jul/03/south-african-courts-mandela-burial",
+      "fields":{
+        "trailText":"<p>Exhumation and reburial of former leader's three late children under way following unseemly family feud</p>",
+        "headline":"South African courts step in over Mandela family burial row",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h3tz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868971777/Worker-breaks-lock-on-gat-003.jpg",
+        "wordcount":"779",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/nelsonmandela",
+        "type":"keyword",
+        "webTitle":"Nelson Mandela",
+        "webUrl":"http://www.guardian.co.uk/world/nelsonmandela",
+        "apiUrl":"http://content.guardianapis.com/world/nelsonmandela",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/southafrica",
+        "type":"keyword",
+        "webTitle":"South Africa",
+        "webUrl":"http://www.guardian.co.uk/world/southafrica",
+        "apiUrl":"http://content.guardianapis.com/world/southafrica",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.guardian.co.uk/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/davidsmith",
+        "type":"contributor",
+        "webTitle":"David Smith",
+        "webUrl":"http://www.guardian.co.uk/profile/davidsmith",
+        "apiUrl":"http://content.guardianapis.com/profile/davidsmith",
+        "bio":"<p>David Smith is the Guardian's Africa correspondent</p>",
+        "rcsId":"GNL508721",
+        "r2ContributorId":"15571",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/3/6/1331034359272/David_Smith.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868979184/Worker-breaks-lock-on-gat-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868979184/Worker-breaks-lock-on-gat-008.jpg",
+          "source":"AP",
+          "photographer":"Schalk Van Zuydam",
+          "altText":"Worker breaks lock on gate at home of Mandla Mandela",
+          "height":"276",
+          "credit":"Schalk Van Zuydam/AP",
+          "caption":"A worker breaks the lock of the gate at the home of Mandla Mandela, grandson of Nelson Mandela. Photograph: Schalk Van Zuydam/AP",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868968147/Worker-breaks-lock-on-gat-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868968147/Worker-breaks-lock-on-gat-001.jpg",
+          "source":"AP",
+          "photographer":"Schalk Van Zuydam",
+          "altText":"Worker breaks lock on gate at home of Mandla Mandela",
+          "height":"54",
+          "credit":"Schalk Van Zuydam/AP",
+          "caption":"A worker breaks the lock of the gate at the home of  Mandla Mandela, grandson of Nelson Mandela. Photograph: Schalk Van Zuydam/AP",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868970577/Worker-breaks-lock-on-gat-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868970577/Worker-breaks-lock-on-gat-002.jpg",
+          "source":"AP",
+          "photographer":"Schalk Van Zuydam",
+          "altText":"Worker breaks lock on gate at home of Mandla Mandela",
+          "height":"130",
+          "credit":"Schalk Van Zuydam/AP",
+          "caption":"A worker breaks the lock of the gate at the home of  Mandla Mandela, grandson of Nelson Mandela. Photograph: Schalk Van Zuydam/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868971777/Worker-breaks-lock-on-gat-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868971777/Worker-breaks-lock-on-gat-003.jpg",
+          "source":"AP",
+          "photographer":"Schalk Van Zuydam",
+          "altText":"Worker breaks lock on gate at home of Mandla Mandela",
+          "height":"84",
+          "credit":"Schalk Van Zuydam/AP",
+          "caption":"A worker breaks the lock of the gate at the home of  Mandla Mandela, grandson of Nelson Mandela. Photograph: Schalk Van Zuydam/AP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868973198/Worker-breaks-lock-on-gat-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868973198/Worker-breaks-lock-on-gat-004.jpg",
+          "source":"AP",
+          "photographer":"Schalk Van Zuydam",
+          "altText":"Worker breaks lock on gate at home of Mandla Mandela",
+          "height":"132",
+          "credit":"Schalk Van Zuydam/AP",
+          "caption":"A worker breaks the lock of the gate at the home of  Mandla Mandela, grandson of Nelson Mandela. Photograph: Schalk Van Zuydam/AP",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868974472/Worker-breaks-lock-on-gat-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868974472/Worker-breaks-lock-on-gat-005.jpg",
+          "source":"AP",
+          "photographer":"Schalk Van Zuydam",
+          "altText":"Worker breaks lock on gate at home of Mandla Mandela",
+          "height":"168",
+          "credit":"Schalk Van Zuydam/AP",
+          "caption":"A worker breaks the lock of the gate at the home of  Mandla Mandela, grandson of Nelson Mandela. Photograph: Schalk Van Zuydam/AP",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868975742/Worker-breaks-lock-on-gat-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868975742/Worker-breaks-lock-on-gat-006.jpg",
+          "source":"AP",
+          "photographer":"Schalk Van Zuydam",
+          "altText":"Worker breaks lock on gate at home of Mandla Mandela",
+          "height":"180",
+          "credit":"Schalk Van Zuydam/AP",
+          "caption":"A worker breaks the lock of the gate at the home of  Mandla Mandela, grandson of Nelson Mandela. Photograph: Schalk Van Zuydam/AP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868977227/Worker-breaks-lock-on-gat-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868977227/Worker-breaks-lock-on-gat-007.jpg",
+          "source":"AP",
+          "photographer":"Schalk Van Zuydam",
+          "altText":"Worker breaks lock on gate at home of Mandla Mandela",
+          "height":"228",
+          "credit":"Schalk Van Zuydam/AP",
+          "caption":"A worker breaks the lock of the gate at the home of  Mandla Mandela, grandson of Nelson Mandela. Photograph: Schalk Van Zuydam/AP",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868979184/Worker-breaks-lock-on-gat-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/7/3/1372868979184/Worker-breaks-lock-on-gat-008.jpg",
+          "source":"AP",
+          "photographer":"Schalk Van Zuydam",
+          "altText":"Worker breaks lock on gate at home of Mandla Mandela",
+          "height":"276",
+          "credit":"Schalk Van Zuydam/AP",
+          "caption":"A worker breaks the lock of the gate at the home of  Mandla Mandela, grandson of Nelson Mandela. Photograph: Schalk Van Zuydam/AP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/jul/03/climate-aid-climate-change-fund",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-07-03T10:11:33Z",
+      "webTitle":"Rich countries' proposal to bypass governments on climate aid rejected",
+      "webUrl":"http://www.guardian.co.uk/environment/2013/jul/03/climate-aid-climate-change-fund",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/jul/03/climate-aid-climate-change-fund",
+      "fields":{
+        "trailText":"US-led group wanted to give $100bn a year directly to MNCs for projects to tackle climate change in developing countries",
+        "headline":"Rich countries' proposal to bypass governments on climate aid rejected",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3h342",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845591800/Africa--003.jpg",
+        "wordcount":"598",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/climate-change",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.guardian.co.uk/environment/climate-change",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/green-politics",
+        "type":"keyword",
+        "webTitle":"Green politics",
+        "webUrl":"http://www.guardian.co.uk/environment/green-politics",
+        "apiUrl":"http://content.guardianapis.com/environment/green-politics",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.guardian.co.uk/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.guardian.co.uk/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.guardian.co.uk/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/johnvidal",
+        "type":"contributor",
+        "webTitle":"John Vidal",
+        "webUrl":"http://www.guardian.co.uk/profile/johnvidal",
+        "apiUrl":"http://content.guardianapis.com/profile/johnvidal",
+        "bio":"<p>John Vidal is the Guardian's <a href=\"http://www.guardian.co.uk/environment\">environment</a> editor. He joined the paper in 1995 after working for Agence France Presse, North Wales Newspapers and the Cumberland News. He is the author of McLibel: Burger Culture on Trial (1998) and has contributed chapters to books on topics such as the Gulf war, new Europe and development</p>",
+        "rcsId":"GNL001546",
+        "r2ContributorId":"15886",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/john_vidal_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"global-development/aid",
+        "type":"keyword",
+        "webTitle":"Aid",
+        "webUrl":"http://www.guardian.co.uk/global-development/aid",
+        "apiUrl":"http://content.guardianapis.com/global-development/aid",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"environment/carbon-emissions",
+        "type":"keyword",
+        "webTitle":"Carbon emissions",
+        "webUrl":"http://www.guardian.co.uk/environment/carbon-emissions",
+        "apiUrl":"http://content.guardianapis.com/environment/carbon-emissions",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.guardian.co.uk/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.guardian.co.uk/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845589280/Africa--001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845589280/Africa--001.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Rajesh Jantilal",
+          "altText":"Africa ",
+          "height":"54",
+          "credit":"Rajesh Jantilal/AFP/Getty Images",
+          "caption":"Many groups and activists in Africa and Asia are opposing foreign private firms-led development and climate change mitigation plans.  Photograph: Rajesh Jantilal/AFP/Getty Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845590581/Africa--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845590581/Africa--002.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Rajesh Jantilal",
+          "altText":"Africa ",
+          "height":"130",
+          "credit":"Rajesh Jantilal/AFP/Getty Images",
+          "caption":"Many groups and activists in Africa and Asia are opposing foreign private firms-led development and climate change mitigation plans.  Photograph: Rajesh Jantilal/AFP/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845591800/Africa--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845591800/Africa--003.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Rajesh Jantilal",
+          "altText":"Africa ",
+          "height":"84",
+          "credit":"Rajesh Jantilal/AFP/Getty Images",
+          "caption":"Many groups and activists in Africa and Asia are opposing foreign private firms-led development and climate change mitigation plans.  Photograph: Rajesh Jantilal/AFP/Getty Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845593021/Africa--004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845593021/Africa--004.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Rajesh Jantilal",
+          "altText":"Africa ",
+          "height":"132",
+          "credit":"Rajesh Jantilal/AFP/Getty Images",
+          "caption":"Many groups and activists in Africa and Asia are opposing foreign private firms-led development and climate change mitigation plans.  Photograph: Rajesh Jantilal/AFP/Getty Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845594177/Africa--005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845594177/Africa--005.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Rajesh Jantilal",
+          "altText":"Africa ",
+          "height":"168",
+          "credit":"Rajesh Jantilal/AFP/Getty Images",
+          "caption":"Many groups and activists in Africa and Asia are opposing foreign private firms-led development and climate change mitigation plans.  Photograph: Rajesh Jantilal/AFP/Getty Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845595366/Africa--006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845595366/Africa--006.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Rajesh Jantilal",
+          "altText":"Africa ",
+          "height":"180",
+          "credit":"Rajesh Jantilal/AFP/Getty Images",
+          "caption":"Many groups and activists in Africa and Asia are opposing foreign private firms-led development and climate change mitigation plans.  Photograph: Rajesh Jantilal/AFP/Getty Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845596470/Africa--007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845596470/Africa--007.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Rajesh Jantilal",
+          "altText":"Africa ",
+          "height":"228",
+          "credit":"Rajesh Jantilal/AFP/Getty Images",
+          "caption":"Many groups and activists in Africa and Asia are opposing foreign private firms-led development and climate change mitigation plans.  Photograph: Rajesh Jantilal/AFP/Getty Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845597691/Africa--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845597691/Africa--008.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Rajesh Jantilal",
+          "altText":"Africa ",
+          "height":"276",
+          "credit":"Rajesh Jantilal/AFP/Getty Images",
+          "caption":"Many groups and activists in Africa and Asia are opposing foreign private firms-led development and climate change mitigation plans.  Photograph: Rajesh Jantilal/AFP/Getty Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845597691/Africa--008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/7/3/1372845597691/Africa--008.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Rajesh Jantilal",
+          "altText":"Africa ",
+          "height":"276",
+          "credit":"Rajesh Jantilal/AFP/Getty Images",
+          "caption":"Many groups and activists in Africa and Asia are opposing foreign private firms-led development and climate change mitigation plans.  Photograph: Rajesh Jantilal/AFP/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

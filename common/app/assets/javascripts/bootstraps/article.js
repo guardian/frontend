@@ -11,7 +11,7 @@ define([
     MatchNav,
     Reading,
     Discussion,
-    CricketSummary
+    cricketSummary
 ) {
 
     var modules = {
@@ -89,7 +89,7 @@ define([
 
                 if(cricketMatch[0]) {
 
-                    CricketSummary(config, context, cricketMatch[0]);
+                    cricketSummary(config, context, cricketMatch[0]);
                 }
             });
         }
