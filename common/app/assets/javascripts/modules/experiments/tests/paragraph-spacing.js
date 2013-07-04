@@ -3,10 +3,10 @@ define(['common'], function (common) {
     var ParagraphSpacing = function () {
 
         this.id = 'ParagraphSpacing';
+        this.expiry = '2013-07-05';
         this.audience = 0.1;
         this.description = 'Impact of macro typography on readability';
         this.canRun = function(config) {
-            // only run on article pages
             return config.page.contentType === 'Article';
         };
         this.variants = [

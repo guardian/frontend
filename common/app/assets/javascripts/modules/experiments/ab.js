@@ -53,7 +53,8 @@ define([
 
     //Finds variant in specific tests and exec's
     function run(test, config, context) {
-        if (test.canRun(config, context) && config.switches['ab' + test.id]) {
+        var expired = (new Date() - new Date(test.expiry)) > 0;
+        if (test.canRun(config, context) && !expired && config.switches['ab' + test.id]) {
             // if user not in test, bucket them
             if (!isParticipating(test)) {
                 bucket(test);
