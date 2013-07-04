@@ -3,6 +3,7 @@
 @admin_main("Pageviews", env, isAuthed = true) {
 
     <h1>Longitudinal Pageview Analytics</h1>
+    <p>Collected from Ophan data covering March 1, 2013 to present.</p>
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -11,8 +12,10 @@
 
         function drawCharts() {
             @charts.map{ chart =>
-                new google.visualization.@{chart.form}(document.getElementById('@chart.id'))
-                    .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                var data = google.visualization.arrayToDataTable(@Html(chart.asDataset));
+                new google.visualization.NumberFormat({pattern: '#,###'}).format(data, 1);
+
+                new google.visualization.@{chart.form}(document.getElementById('@chart.id')).draw(data, {
                     title: '@chart.name',
                     legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
                 });
