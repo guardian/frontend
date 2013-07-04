@@ -57,6 +57,13 @@ define(['common', 'modules/overlay', 'bean'], function(common, Overlay, bean) {
             expect(document.querySelector('.overlay').style.display).toBe('none');
         });
 
+        it("should return window to previous scroll pos after close", function() {
+            window.scrollTo(0,100);
+            overlay.show();
+            bean.fire(document.querySelector('.js-overlay-close'), 'click');
+            expect(window.pageYOffset).toBe(100);
+        });
+
         it("should fire the appropriate mediator events (show/hide/close)", function() {
             sinon.spy(common.mediator, 'emit');
 

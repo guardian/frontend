@@ -10,8 +10,6 @@ define(["bean",
         content = content || '<div class="preload-msg"><div class="is-updating"></div></div>';
 
         var self     = this,
-            savedPos = 0,
-            bodyNode = common.$g('body'),
             template = '<div class="overlay">' +
                        '  <div class="overlay__header cf">' +
                        '    <div class="overlay__toolbar cf"></div>' +
@@ -22,9 +20,10 @@ define(["bean",
                        '  <div class="overlay__body">' + content + '</div>' +
                        '</div>';
 
-        bodyNode.append(template);
+        bonzo(document.body).append(template);
 
-        this.node        = bodyNode[0].querySelector('.overlay');
+        this._savedPos   = 0,
+        this.node        = document.body.querySelector('.overlay');
         this.headerNode  = this.node.querySelector('.overlay__header');
         this.toolbarNode = this.node.querySelector('.overlay__toolbar');
         this.bodyNode    = this.node.querySelector('.overlay__body');
@@ -39,32 +38,32 @@ define(["bean",
             common.mediator.emit('modules:overlay:close', self);
         });
 
-
-        this.show = function() {
-            self.node.style.display = 'block';
-
-            // Can't reliably use position:fixed on mobile. This works around it (well, it tries)
-            savedPos = window.pageYOffset;
-            window.scrollTo(window.pageXOffset, 0);
-
-            common.mediator.emit('modules:overlay:show', self);
-        };
-
-        this.hide = function() {
-            window.scrollTo(window.pageXOffset, savedPos); // Restore previous scroll pos
-
-            self.node.style.display = 'none';
-            common.mediator.emit('modules:overlay:hide', self);
-        };
-
-        this.setBody = function(content) {
-            self.bodyNode.innerHTML = content;
-        };
-
-        this.remove = function() {
-            self.node.parentNode.removeChild(self.node);
-        };
     }
+
+    Overlay.prototype.show = function() {
+        this.node.style.display = 'block';
+
+        // Can't reliably use position:fixed on mobile. This works around it (well, it tries)
+        this._savedPos = window.pageYOffset;
+        window.scrollTo(window.pageXOffset, 0);
+
+        common.mediator.emit('modules:overlay:show', this);
+    };
+
+    Overlay.prototype.hide = function() {
+        window.scrollTo(window.pageXOffset, this._savedPos); // Restore previous scroll pos
+
+        this.node.style.display = 'none';
+        common.mediator.emit('modules:overlay:hide', this);
+    };
+
+    Overlay.prototype.setBody = function(content) {
+        this.bodyNode.innerHTML = content;
+    };
+
+    Overlay.prototype.remove = function() {
+        this.node.parentNode.removeChild(this.node);
+    };
 
     return Overlay;
 });
