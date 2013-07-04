@@ -127,7 +127,6 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
 
         it('should not bucket user if test can\'t be run', function() {
             test.canRun = function() { return false; }
-
             ab.init({
                 switches: {
                     abDummyTest: true
@@ -136,6 +135,30 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(controlSpy.called || variantSpy.called).toBeFalsy();
             expect(ab.getParticipations()).toEqual([]);
         });
+
+        it('should refuse to run the after the expiry date', function () {
+            test.expiry = "2012-01-01";
+            ab.init({
+                switches: {
+                    abDummyTest: true
+                }
+            });
+            expect(controlSpy.called || variantSpy.called).toBeFalsy();
+            expect(ab.getParticipations()).toEqual([]);
+        });
+        
+        it('should run the test if it has not expired', function () {
+            var futureDate = new Date();
+            futureDate.setHours(futureDate.getHours() + 10);
+            test.expiry = futureDate;
+            ab.init({
+                switches: {
+                    abDummyTest: true
+                }
+            });
+            expect(controlSpy.called || variantSpy.called).toBeTruthy();
+        });
+
 
     });
 
