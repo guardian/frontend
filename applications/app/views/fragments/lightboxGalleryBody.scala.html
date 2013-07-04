@@ -1,0 +1,40 @@
+@(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+
+
+<div class="gallery gallery--lightbox gallery--grid" data-total="@gallery.size">
+    <i class="gallery__watermark i i-guardian-logo"></i>
+    <ul class="unstyled">
+        @gallery.images.zipWithRowInfo.map{ case(image, row) =>
+            <li class="js-gallery-item-@row.rowNum gallery-item @if(image.width >= image.height){landscape} else {portrait}"
+                data-index="@row.rowNum">
+                    <img class="gallery__img"
+                         src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
+                         data-src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
+                         data-fullsrc="@image.path"
+                         data-width="@image.width"
+                         data-height="@image.height"
+                    />
+                    <div class="gallery__caption">
+                        <p class="gallery__caption--text type-10">@Html(image.caption.getOrElse(""))</p>
+                        <p class="gallery__caption--credit type-11">@image.credit</p>
+                    </div>
+
+            </li>
+        }
+    </ul>
+
+    <a class="gallery__nav gallery__nav--prev js-gallery-prev"
+       data-link-name="Gallery Previous"
+       data-is-ajax="true"
+       href="?index=@(index - 1)">
+         <span class="h">Previous</span>
+    </a>
+
+    <a class="gallery__nav gallery__nav--next js-gallery-next"
+       data-link-name="Gallery Next"
+       data-is-ajax="true"
+       href="?index=@(index - 1)">
+          <span class="h">Next</span>
+    </a>
+
+</div>
