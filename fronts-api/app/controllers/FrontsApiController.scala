@@ -2,13 +2,13 @@ package controllers
 
 import play.api.mvc.{Action, Controller}
 import frontsapi.FrontsApi
-import common.{ExecutionContexts, JsonComponent}
+import common.{Logging, ExecutionContexts, JsonComponent}
 import play.api.libs.json._
 import play.api.libs.json.Json._
 import play.api.libs.concurrent.Akka
 import play.api.Play.current
 
-object FrontsApiController extends Controller with ExecutionContexts {
+object FrontsApiController extends Controller with ExecutionContexts with Logging with AuthLogging {
   implicit val updateListReads = Json.reads[UpdateList]
   implicit val jsonResponseWrites = Json.writes[JsonResponse]
 
@@ -22,6 +22,7 @@ object FrontsApiController extends Controller with ExecutionContexts {
       result map {l => JsonComponent("lists" -> toJson(l))}
     }
   }
+
   def getList(listName: String) = Action { implicit request =>
     val result = Akka.future { FrontsApi.getList(listName) }
     Async {
@@ -29,7 +30,7 @@ object FrontsApiController extends Controller with ExecutionContexts {
     }
   }
 
-  def updateList(listName: String) = Action {
+  def updateList(listName: String) = AuthAction.withRedirect (Some(Unauthorized)) {
     implicit request =>
       request.body.asJson map {
         json =>

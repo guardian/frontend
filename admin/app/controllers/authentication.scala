@@ -73,15 +73,22 @@ object AuthAction {
 
   import Play.current
 
-  def apply(f: Request[AnyContent] => Result): Action[AnyContent] = Action { request =>
+  def apply(f: Request[AnyContent] => Result) = withRedirect(None)(f)
+
+  def withRedirect(redirectResult: Option[SimpleResult[Results.EmptyContent]] = None)(f: Request[AnyContent] => Result): Action[AnyContent] = Action { request =>
     request match {
       case auth: AuthenticatedRequest[_] => f(auth)
       case req if Play.isTest => f(new AuthenticatedRequest(Some(Identity("1234", "foo@bar.com", "John", "Smith")), req))
       case req => Identity(request).map { identity =>
           f(new AuthenticatedRequest(Some(identity), request))
-      }.getOrElse(Redirect(routes.Login.login).withSession(request.session +("loginFromUrl", request.uri)))
+      }.getOrElse(redirect(request, redirectResult))
     }
   }
+
+  def defaultRedirect(request: Request[AnyContent]) = Redirect(routes.Login.login).withSession(request.session +("loginFromUrl", request.uri))
+
+  private def redirect(request: Request[AnyContent], redirectResult: Option[SimpleResult[Results.EmptyContent]]): PlainResult =
+    redirectResult getOrElse defaultRedirect(request)
 }
 
 object Login extends Controller with ExecutionContexts {
