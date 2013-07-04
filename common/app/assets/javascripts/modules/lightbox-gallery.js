@@ -21,6 +21,7 @@ define(["bean",
             galleryNode,
             currentImage = 1,
             totalImages = 0,
+            mode = 'fullimage',
             overlay;
 
         this.selector = '.trail--gallery';
@@ -41,8 +42,12 @@ define(["bean",
             bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-prev', this.prev);
             bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.gallery-item', function(el) {
-                var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
-                self.goTo(index);
+                if (mode == 'grid') {
+                    var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
+                    self.goTo(index);
+                } else {
+                    self.toggleCaption();
+                }
             });
             common.mediator.on('modules:overlay:close', function() {
                 overlay.remove();
@@ -114,6 +119,7 @@ define(["bean",
         };
 
         this.switchToGrid = function() {
+            mode = 'grid';
             bonzo(galleryNode).removeClass('gallery--full').addClass('gallery--grid');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
@@ -126,6 +132,7 @@ define(["bean",
         };
 
         this.switchToFullImage = function() {
+            mode = 'fullimage';
             bonzo(galleryNode).removeClass('gallery--grid').addClass('gallery--full');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
@@ -135,6 +142,10 @@ define(["bean",
             // Update CTAs
             self.gridModeCta.style.display = 'block';
             self.fullModeCta.style.display = 'none';
+        };
+
+        this.toggleCaption = function() {
+            bonzo(galleryNode).toggleClass('gallery--showcaptions');
         };
     }
 

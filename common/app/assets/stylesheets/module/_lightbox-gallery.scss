@@ -53,14 +53,22 @@
    Navigation
    ========================================================================== */
 .gallery__nav {
-    width: 50%;
-    height: 100%;
+    width: 80px;
+    height: 200px;
     display: block;
     position: absolute;
     top: 0;
+
+    .i {
+        position: absolute;
+        right: $gutter;
+        top: 50%;
+        margin-top: -16px;
+    }
 }
 
 .gallery__nav--prev {
+    @include rotate(180deg);
     left: 0;
 }
 
@@ -72,8 +80,23 @@
 /* ==========================================================================
    Captions
    ========================================================================== */
+.gallery__caption-handle {
+    @include rotate(-90deg);
+    position: absolute;
+    bottom: -4px; // Needed because the rotation the positioning off
+    left: 50%;
+    margin-left: -16px;
+
+    .gallery--showcaptions & {
+        display: none;
+    }
+}
+
+
 .gallery__caption {
+    display: none;
     color: #aaaaaa;
+    padding: 0 $gutter;
 
     a {
         color: #aaaaaa;
@@ -86,6 +109,10 @@
         bottom: 0;
         background: rgba(0,0,0,0.85);
         padding: $baseline * 3 $gutter;
+    }
+
+    .gallery--showcaptions & {
+        display: block;
     }
 }
 
