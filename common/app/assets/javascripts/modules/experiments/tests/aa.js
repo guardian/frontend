@@ -1,13 +1,15 @@
 define(['common'], function (common) {
 
-    var AATest = function () {
+    // An AA test is like an AB test but with no difference between the A & B variants. It is useful to prove
+    // that the bucketing of users is fair.
+    var Aa = function () {
 
-        this.id = 'AA-test';
+        this.id = 'Aa';
         this.expiry = '2013-07-12';
-        this.audience = 0.3;
-        this.description = 'This is an AA test to prove the test framework segments the users fairly';
+        this.audience = 0.1;
+        this.description = 'A/A test to prove we bucket users evenly';
         this.canRun = function(config) {
-            return config.page.contentType === 'Article';
+            return true;
         };
         this.variants = [
             {
@@ -17,14 +19,14 @@ define(['common'], function (common) {
                 }
             },
             {
-                id: 'aa',
+                id: 'bucketa',
                 test: function () {
                     return true;
                 }
             }
         ];
     };
-
-    return AATest;
+    
+    return Aa;
 
 });
