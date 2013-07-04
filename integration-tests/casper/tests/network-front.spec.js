@@ -7,9 +7,12 @@
  *
  **/
 
-var casper = require('casper').create();
+var casper = require('casper').create(),
+    host = casper.cli.get('host') || "http://localhost:9000/";
 
-casper.start('http://m.gucode.co.uk/');
+casper.echo("Host is " + host);
+
+casper.start(host);
 
 var clearLocalStorage = function() {
     casper.evaluate(function() { window.localStorage.clear(); });

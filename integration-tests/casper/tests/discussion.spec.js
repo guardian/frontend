@@ -7,17 +7,12 @@
  *
  **/
 
-var casper = require('casper').create();
+var casper = require('casper').create(),
+    host = casper.cli.get('host') || "http://localhost:9000/";
 
-var host = casper.cli.get('host');
+casper.echo("Host is " + host);
 
-
-if (host===undefined) {
-  host="http://localhost:9000/"
-} 
-casper.echo("host is "+host);
-
-casper.start(host+'world/2013/jun/06/obama-administration-nsa-verizon-records');
+casper.start(host + 'world/2013/jun/06/obama-administration-nsa-verizon-records');
 
 /**
  *   Scenario: Read top level comments
