@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Summary object
+   ========================================================================== */
+
+.sport-summary {
+    width: 100%;
+    margin-bottom: $baseline*4;
+}
+
+.sport-summary__head {
+    display: block;
+    background-color: $sportBright;
+    color: #fff;
+    margin-top: $baseline*2;
+    margin-bottom: $baseline;
+    padding: 9px $baseline*2;
+}
+
+.sport-summary__body {
+    background-color: $mushroom;
+}
+
+.sport-summary__score {
+    td {
+        @extend %type-10;
+        display: block;
+        padding: 0 $baseline*3;
+    }
+
+    td:first-child {
+        font-weight: bold;
+        padding-top: $baseline*2;
+    }
+
+    td:last-child {
+        padding-bottom: $baseline*2;
+        border-bottom: 1px solid #DEDEDD;
+    }
+}
+
+@media (min-width: $tablet) {
+    .sport-summary__score {
+        td {
+            display: table-cell;
+            border-bottom: 1px solid #DEDEDD;
+            padding: $baseline*2 $baseline*3;
+        }
+    }
+}
+
+.sport-summary__description {
+    @extend %type-10;
+    font-weight: bold;
+    padding: $baseline*2 $baseline*3;
+}
