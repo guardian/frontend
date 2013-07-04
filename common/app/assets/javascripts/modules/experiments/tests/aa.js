@@ -9,7 +9,7 @@ define(['common'], function (common) {
         this.audience = 0.1;
         this.description = 'AA test to prove we bucket users evenly';
         this.canRun = function(config) {
-            return true; 
+            return true;
         };
         this.variants = [
             {
@@ -23,7 +23,7 @@ define(['common'], function (common) {
                 test: function () {
                     return true;
                 }
-            } 
+            }
         ];
     };
 
