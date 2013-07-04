@@ -26,7 +26,7 @@ define(['common'], function (common) {
             }
         ];
     };
-
+    
     return Aa;
 
 });

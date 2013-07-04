@@ -1,3 +1,20 @@
+## Raising an issue
+
+Here is a template for raising an issue, copy and paste it into the text field and fill it:
+
+```
+## How to reproduce
+
+
+
+## Environment
+
+Device: 
+Browser: 
+OS: 
+URL: 
+```
+
 We welcome code submissions from other teams. Here's the rules of engagement.
 
 ## General 

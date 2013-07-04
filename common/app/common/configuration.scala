@@ -104,7 +104,7 @@ class GuardianConfiguration(
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
       "discussionApiUrl" -> "http://discussion.guardianapis.com/discussion-api",
-      "interactiveUrl" -> "https://s3-eu-west-1.amazonaws.com/aws-frontend-interactives/"
+      "interactiveUrl" -> "http://interactive.guim.co.uk/"
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))

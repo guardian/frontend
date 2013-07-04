@@ -137,7 +137,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(ab.getParticipations()).toEqual([]);
         });
 
-        it('should expire the test after the expiry date', function () {
+        it('should refuse to run the after the expiry date', function () {
             test.expiry = "2012-01-01";
             ab.init({
                 switches: {
@@ -149,9 +149,9 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
         });
         
         it('should run the test if it has not expired', function () {
-            var f = new Date();
-            f.setHours(f.getHours() + 10);
-            test.expiry;
+            var futureDate = new Date();
+            futureDate.setHours(futureDate.getHours() + 10);
+            test.expiry = futureDate;
             ab.init({
                 switches: {
                     abDummyTest: true
