@@ -4,6 +4,9 @@
 To run all tests
 ``grunt test:integration``
 
+To override default host (`http://localhost:9000/`)
+``grunt test:integration --host=http://m.gucode.co.uk/``
+
 To run individual specs
 ``grunt casper:discussion``
 
