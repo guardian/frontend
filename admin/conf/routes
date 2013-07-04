@@ -74,7 +74,8 @@ GET     /fronts                          controllers.FrontsController.index()
 
 
 # Analytics
-GET     /analytics                       controllers.AnalyticsController.render()
+GET     /analytics/kpis                  controllers.AnalyticsController.kpis()
+GET     /analytics/pageviews             controllers.AnalyticsController.pageviews()
 
 # Metrics
 GET     /metrics/loadbalancers           controllers.metrics.DashboardController.render()
