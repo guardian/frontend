@@ -44,6 +44,7 @@ object Frontend extends Build with Prototypes {
     )
   )
 
+  val sport = application("sport").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val image = application("image").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
@@ -84,6 +85,7 @@ object Frontend extends Build with Prototypes {
     .dependsOn(event)
     .dependsOn(interactive)
     .dependsOn(football)
+    .dependsOn(sport)
     .dependsOn(coreNavigation)
     .dependsOn(image)
     .dependsOn(discussion)
@@ -111,6 +113,7 @@ object Frontend extends Build with Prototypes {
     event,
     interactive,
     football,
+    sport,
     coreNavigation,
     image,
     discussion,
