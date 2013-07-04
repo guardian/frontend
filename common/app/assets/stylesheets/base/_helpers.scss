@@ -45,6 +45,14 @@
     }
 }
 
+.tablet-only {
+    display: none !important;
+
+    @media (min-width: $tablet) {
+        display: block !important;
+    }
+}
+
 // Micro clearfix
 // http://nicolasgallagher.com/micro-clearfix-hack/
 

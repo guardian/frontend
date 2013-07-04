@@ -44,6 +44,11 @@
         border-left: 1px solid $darkMushroom;
     }
 
+    // Popup is not sticking to the edge of screen
+    @media (min-width: 59.75em) {
+        border-right: 1px solid $darkMushroom;
+    }
+
     .nav__item {
         @media (min-width: $tablet) {
             margin: 0 $gutter;
