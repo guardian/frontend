@@ -109,7 +109,7 @@
         @include box-sizing(box-model);
         position: absolute;
         bottom: 0;
-        background: rgba(0,0,0,0.85);
+        background: rgba(34, 34, 34, 0.90);
         padding: $baseline * 3 $gutter;
     }
 
