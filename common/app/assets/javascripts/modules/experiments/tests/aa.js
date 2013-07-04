@@ -4,10 +4,10 @@ define(['common'], function (common) {
     // that the bucketing of users is fair.
     var Aa = function () {
 
-        this.id = 'AA';
+        this.id = 'aa';
         this.expiry = '2013-07-12';
         this.audience = 0.1;
-        this.description = 'AA test to prove we bucket users evenly';
+        this.description = 'A/A test to prove we bucket users evenly';
         this.canRun = function(config) {
             return true;
         };
