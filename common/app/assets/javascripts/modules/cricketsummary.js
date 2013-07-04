@@ -1,7 +1,8 @@
-define(['common', 'modules/lazyload'], function (common, LazyLoad) {
+define(['common', 'bonzo', 'modules/lazyload'], function (common, bonzo, LazyLoad) {
 
     function cricketsummary(config, context, url) {
-        var container = context.querySelector('.after-headline');
+        var container = document.createElement("div"); //context.querySelector('.after-headline');
+        container.className = "after-headline";
 
         if (container) {
 
@@ -9,6 +10,7 @@ define(['common', 'modules/lazyload'], function (common, LazyLoad) {
                 url: url,
                 container: container,
                 success: function () {
+                    bonzo(context.querySelector('.article-headline')).after(container);
                     common.mediator.emit('modules:cricketsummary:loaded', config, context);
                 },
                 error: function(req) {
