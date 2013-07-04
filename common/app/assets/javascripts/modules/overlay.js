@@ -39,32 +39,32 @@ define(["bean",
             common.mediator.emit('modules:overlay:close', self);
         });
 
-
-        this.show = function() {
-            self.node.style.display = 'block';
-
-            // Can't reliably use position:fixed on mobile. This works around it (well, it tries)
-            savedPos = window.pageYOffset;
-            window.scrollTo(window.pageXOffset, 0);
-
-            common.mediator.emit('modules:overlay:show', self);
-        };
-
-        this.hide = function() {
-            window.scrollTo(window.pageXOffset, savedPos); // Restore previous scroll pos
-
-            self.node.style.display = 'none';
-            common.mediator.emit('modules:overlay:hide', self);
-        };
-
-        this.setBody = function(content) {
-            self.bodyNode.innerHTML = content;
-        };
-
-        this.remove = function() {
-            self.node.parentNode.removeChild(self.node);
-        };
     }
+
+    Overlay.prototype.show = function() {
+        this.node.style.display = 'block';
+
+        // Can't reliably use position:fixed on mobile. This works around it (well, it tries)
+        savedPos = window.pageYOffset;
+        window.scrollTo(window.pageXOffset, 0);
+
+        common.mediator.emit('modules:overlay:show', this);
+    };
+
+    Overlay.prototype.hide = function() {
+        window.scrollTo(window.pageXOffset, savedPos); // Restore previous scroll pos
+
+        this.node.style.display = 'none';
+        common.mediator.emit('modules:overlay:hide', this);
+    };
+
+    Overlay.prototype.setBody = function(content) {
+        this.bodyNode.innerHTML = content;
+    };
+
+    Overlay.prototype.remove = function() {
+        this.node.parentNode.removeChild(this.node);
+    };
 
     return Overlay;
 });
