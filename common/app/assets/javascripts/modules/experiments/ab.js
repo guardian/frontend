@@ -3,14 +3,18 @@ define([
     'modules/storage',
 
     //Current tests
-    'modules/experiments/tests/paragraph-spacing'
+    'modules/experiments/tests/paragraph-spacing',
+    'modules/experiments/tests/aa'
 ], function (
     common,
     store,
-    ParagraphSpacing) {
+    ParagraphSpacing,
+    Aa
+    ) {
 
     var TESTS = [
-            new ParagraphSpacing()
+            new ParagraphSpacing(),
+            new Aa()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -55,6 +59,7 @@ define([
     function run(test, config, context) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
         if (test.canRun(config, context) && !expired && config.switches['ab' + test.id]) {
+        
             // if user not in test, bucket them
             if (!isParticipating(test)) {
                 bucket(test);
@@ -73,7 +78,7 @@ define([
 
     function bucket(test) {
         // always at least place in control
-        var testVariantId = 'control';
+        var testVariantId = 'null';
 
         //Only run on test required audience segment
         if (Math.random() < test.audience) {
