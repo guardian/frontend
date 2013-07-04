@@ -6,10 +6,6 @@
  * Discussion feature tests 
  *
  **/
-
-var casper = require('casper').create(),
-    host = casper.cli.get('host') || "http://localhost:9000/";
-
 casper.echo("Host is " + host);
 
 casper.start(host + 'world/2013/jun/06/obama-administration-nsa-verizon-records');
