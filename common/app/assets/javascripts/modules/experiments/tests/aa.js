@@ -19,7 +19,7 @@ define(['common'], function (common) {
                 }
             },
             {
-                id: 'bucket-a',
+                id: 'bucketa',
                 test: function () {
                     return true;
                 }
