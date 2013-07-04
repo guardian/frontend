@@ -1,8 +1,8 @@
-@(front: MetaData, trailblocks: Seq[TrailblockNew])(implicit request: RequestHeader)
+@(front: MetaData, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
 
-<div class="front-container front-container--new cf" data-link-name="Front" role="main">
+<div class="front-container cf" data-link-name="Front" role="main">
     @trailblocks.map{ block =>
-        @fragments.frontBlock(block)
+    @fragments.frontBlock(block)
     }
 </div>
 

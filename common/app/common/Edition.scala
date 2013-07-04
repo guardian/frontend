@@ -2,7 +2,7 @@ package common
 
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTimeZone
-import model.{TrailblockNew, MetaData, TrailblockDescription}
+import model.{MetaData, TrailblockDescription}
 
 // describes the ways in which editions differ from each other
 abstract class Edition(
@@ -12,7 +12,7 @@ abstract class Edition(
     val hreflang: String // see http://support.google.com/webmasters/bin/answer.py?hl=en&answer=189077
   ) {
   def configuredFronts: Map[String, Seq[TrailblockDescription]]
-  def configuredFrontsFacia: Map[String, Seq[TrailblockNew]]
+  def configuredFrontsFacia: Map[String, Seq[TrailblockDescription]]
   def zones: Seq[Zone]
   def navigation(metadata: MetaData): Seq[NavItem]
 }

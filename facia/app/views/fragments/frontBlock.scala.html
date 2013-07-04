@@ -1,19 +1,27 @@
-@(block: TrailblockNew)(implicit request: RequestHeader)
+@(block: Trailblock)(implicit request: RequestHeader)
 
-<section 
-    class="front-section zone-@block.id"
-    data-link-name="block | @block.name"
-    data-link-context="front-trails/@block.name">
+<section
+        class="front-section zone-@block.description.section"
+        data-link-name="block | @block.description.name"
+        data-link-context="front-trails/@block.description.section">
 
-    @if(block.id != "") {
-	    @if("/" + block.id == request.path) {
-            @fragments.headers.sectionHead(block.name)
-	    }
-	}
+    @if(block.description.id != "") {
+    @if("/" + block.description.id == request.path) {
+    @fragments.headers.sectionHead(block.description.name)
+    } else {
+    @fragments.headers.frontSectionHead(block.description, Some(Edition(request)))
+    }
+    }
 
-    <div class="trailblock front-trailblock-block.id"
-        data-section-id="@block.id">
-            @trailblocks.thumbnail(block.trails, 5)
+    <div class="trailblock front-trailblock-@SafeName(block.description) @if(block.description.showMore){ js-show-more}"
+         data-count="@block.description.numItemsVisible"
+         data-section-id="@block.description.id">
+
+        @block.description.style match {
+        case Some(Thumbnail) => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }
+        case Some(Headline)  => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
+        case _               => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
+        }
     </div>
 
 </section>

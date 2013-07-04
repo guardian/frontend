@@ -7,7 +7,7 @@ import scala.concurrent.Future
 import conf.{Configuration, ContentApi}
 import common.{Logging, AkkaSupport, ExecutionContexts, Edition}
 import contentapi.QueryDefaults
-import play.api.libs.ws.WS
+import play.api.libs.ws.{Response, WS}
 import play.api.libs.json.Json._
 
 trait Trail extends Images with Tags {
@@ -103,62 +103,54 @@ object CustomTrailblockDescription {
 }
 
 
+trait ConfiguredTrailblockDescription extends TrailblockDescription {
+  def query() = scala.concurrent.future {
+    Nil
+  }
 
-trait TrailblockNew {
-  val id: String
-  val name: String
-  val edition: Edition
-
-  def trails: Seq[Trail]
-  def refresh
-  def close
+  def configuredQuery(): Future[TrailblockDescription]
 }
 
-/**
- * Trailblock defined from the fronts api
- *
- * @param id
- * @param name
- * @param edition
- */
-class RunningOrderTrailblock(
-                              val id: String,
-                              val name: String,
-                              val edition: Edition) extends TrailblockNew with AkkaSupport with Logging
-{
+class RunningOrderTrailblockDescription(
+  val id: String,
+  val name: String,
+  val numItemsVisible: Int,
+  val style: Option[Style],
+  val showMore: Boolean,
+  val edition: Edition,
+  val isConfigured: Boolean
+) extends ConfiguredTrailblockDescription with AkkaSupport with Logging {
 
-  private lazy val agent = play_akka.agent[Seq[Trail]](Nil)
+  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def trails: Seq[Trail] = agent()
-
-  def refresh = {
+  def configuredQuery() = {
     // get the running order from the api
-    WS.url(s"${Configuration.frontsApi.host}/frontsapi/list/$id").get() foreach { response =>
-      response.status match {
+    parseResponse(WS.url(s"${Configuration.frontsApi.host}/frontsapi/list/$id").get())
+  }
+
+  private def parseResponse(response: Future[Response]) = {
+    response.map{ r =>
+      r.status match {
         case 200 =>
-          val articles = (parse(response.body) \ "list").asOpt[List[String]].getOrElse(Nil)
-          if (articles.nonEmpty) retrieveArticles(articles)
-        case _ => log.warn(s"Could not load running order: ${response.status} ${response.statusText}")
+          var articles = (parse(r.body) \ "list").asOpt[List[String]].getOrElse(Nil)
+          CustomTrailblockDescription(id, name, numItemsVisible){
+            ContentApi.search(edition)
+              .ids(articles.mkString(","))
+              .response map { r =>
+              r.results.map(new Content(_))
+            }
+          }
+        case _ =>
+          log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
+          ItemTrailblockDescription("", "News", 5)(edition)
       }
     }
-  }
 
-  private def retrieveArticles(articles: Seq[String]) = {
-    ContentApi.search(edition)
-      .ids(articles.mkString(","))
-      .response map { r =>
-      agent.send{ old =>
-        r.results.map(new Content(_))
-      }
-    }
   }
-
-  def close = agent.close()
 
 }
 
-object RunningOrderTrailblock {
-
-  def apply(id: String, name: String)(implicit edition: Edition) = new RunningOrderTrailblock(id, name, edition)
-
+object RunningOrderTrailblockDescription {
+  def apply(id: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false, isConfigured: Boolean = false)(implicit edition: Edition) =
+    new RunningOrderTrailblockDescription(id, name, numItemsVisible, style, showMore, edition, isConfigured)
 }
