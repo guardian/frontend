@@ -3,14 +3,18 @@ define([
     'modules/storage',
 
     //Current tests
-    'modules/experiments/tests/paragraph-spacing'
+    'modules/experiments/tests/paragraph-spacing',
+    'modules/experiments/tests/aa'
 ], function (
     common,
     store,
-    ParagraphSpacing) {
+    ParagraphSpacing,
+    Aa
+    ) {
 
     var TESTS = [
-            new ParagraphSpacing()
+            new ParagraphSpacing(),
+            new Aa()
         ],
         participationsKey = 'gu.ab.participations';
 
