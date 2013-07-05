@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "devDependencies": {
+    "phantomjs": "~1.9.1",
     "grunt": "~0.4.0",
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-requirejs": "~0.3.4",
@@ -10,7 +11,8 @@
     "svgo": "~0.2.3",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-shell": "~0.2.1",
-    "grunt-css-metrics": "~0.1.1"
+    "grunt-css-metrics": "~0.1.1",
+    "grunt-casper": "https://github.com/phamann/grunt-casper/archive/v0.0.2.tar.gz"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
