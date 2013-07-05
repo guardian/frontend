@@ -1,7 +1,7 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
 
-<div class="gallery gallery--lightbox gallery--grid" data-total="@gallery.size">
+<div class="gallery gallery--lightbox" data-total="@gallery.size">
     <i class="gallery__watermark i i-guardian-logo"></i>
     <ul class="unstyled">
         @gallery.images.zipWithRowInfo.map{ case(image, row) =>
