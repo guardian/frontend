@@ -39,8 +39,8 @@ class FrontEdition(val edition: Edition, val descriptions: Seq[TrailblockDescrip
     }
   }
 
-  def refresh() = manualAgents.map(_.refresh())
+  def refresh() = manualAgents.foreach(_.refresh())
 
-  def shutDown() = manualAgents.map(_.close())
+  def shutDown() = manualAgents.foreach(_.close())
 
 }

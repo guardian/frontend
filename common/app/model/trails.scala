@@ -9,7 +9,7 @@ import common.{Logging, AkkaSupport, ExecutionContexts, Edition}
 import contentapi.QueryDefaults
 import play.api.libs.ws.{Response, WS}
 import play.api.libs.json.Json._
-import play.api.libs.json.{Json, JsValue}
+import play.api.libs.json.JsValue
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -114,6 +114,7 @@ trait ConfiguredTrailblockDescription extends TrailblockDescription {
 
 class RunningOrderTrailblockDescription(
   val id: String,
+  val blockId: String,
   val name: String,
   val numItemsVisible: Int,
   val style: Option[Style],
@@ -123,11 +124,9 @@ class RunningOrderTrailblockDescription(
 ) extends ConfiguredTrailblockDescription with AkkaSupport with Logging {
 
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("culture")
-  lazy val blockId = id.split("/").lastOption.filterNot(_ == "").getOrElse("top-stories")
 
   def configuredQuery() = {
     // get the running order from the api
-    log.info(s"*************************** GETTING ${Configuration.frontsApi.base}/$section/latest/latest.json")
     parseResponse(WS.url(s"${Configuration.frontsApi.base}/$section/latest/latest.json").get())
   }
 
@@ -139,7 +138,9 @@ class RunningOrderTrailblockDescription(
             (block \ "id").as[String].equals(blockId)
           } flatMap { block =>
             (block \ "trails").as[Seq[JsValue]] map { trail =>
-              (trail \ "id").as[String]
+              (trail \ "id").asOpt[String] map { id: String =>
+                id
+              } getOrElse("")
             }
           }
           CustomTrailblockDescription(id, name, numItemsVisible){
@@ -160,6 +161,6 @@ class RunningOrderTrailblockDescription(
 }
 
 object RunningOrderTrailblockDescription {
-  def apply(id: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false, isConfigured: Boolean = false)(implicit edition: Edition) =
-    new RunningOrderTrailblockDescription(id, name, numItemsVisible, style, showMore, edition, isConfigured)
+  def apply(id: String, blockId: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false, isConfigured: Boolean = false)(implicit edition: Edition) =
+    new RunningOrderTrailblockDescription(id, blockId, name, numItemsVisible, style, showMore, edition, isConfigured)
 }

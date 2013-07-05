@@ -1,9 +1,8 @@
 package controllers.front
 
-import model._
+import model.{ConfiguredTrailblockDescription, Trail, Trailblock, TrailblockDescription}
 import common._
 import scala.Some
-import akka.agent.Agent
 
 trait TrailblockAgent {
   def refresh()
