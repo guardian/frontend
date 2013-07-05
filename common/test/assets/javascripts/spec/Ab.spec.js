@@ -138,20 +138,30 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
         });
 
         it('should refuse to run the after the expiry date', function () {
+            
             test.expiry = "2012-01-01";
             ab.init({
                 switches: {
                     abDummyTest: true
                 }
             });
-            expect(controlSpy.called || variantSpy.called).toBeFalsy();
-            expect(ab.getParticipations()).toEqual([]);
+        });
+
+        it('should remove expired tests from being logged', function () {
+            localStorage.setItem(participationsKey, '{"value":{"DummyTest":{"variant":"null"}}}');
+            test.expiry = "2012-01-01";
+            ab.init({
+                switches: {
+                    abDummyTest: true
+                }
+            });
+            expect(localStorage.getItem(participationsKey)).toBe('{"value":{}}');
         });
         
         it('should run the test if it has not expired', function () {
             var futureDate = new Date();
             futureDate.setHours(futureDate.getHours() + 10);
-            test.expiry = futureDate;
+            test.expiry = futureDate.toString();
             ab.init({
                 switches: {
                     abDummyTest: true
