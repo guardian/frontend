@@ -33,7 +33,12 @@ object ImgSrc {
 
   def apply(url: String, imageType: ImageType): String = {
     val uri = new URI(url.trim)
-    if (ImageServerSwitch.isSwitchedOn && uri.getHost == "static.guim.co.uk") {
+
+    val isSupportedImage =
+      uri.getHost == "static.guim.co.uk" &&
+      !uri.getPath.toLowerCase().endsWith(".gif")
+
+    if (ImageServerSwitch.isSwitchedOn && isSupportedImage) {
       s"$imageHost/${imageType.prefix}${uri.getPath}"
     } else s"${url}"
   }
