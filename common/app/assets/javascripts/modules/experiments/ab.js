@@ -78,7 +78,7 @@ define([
 
     function bucket(test) {
         // always at least place in control
-        var testVariantId = 'null';
+        var testVariantId = 'notintest';
 
         //Only run on test required audience segment
         if (Math.random() < test.audience) {

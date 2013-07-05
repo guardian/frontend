@@ -49,7 +49,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(variantSpy).toHaveBeenCalled();
         });
 
-        it('should put all non-participating users in a null group', function() {
+        it('should put all non-participating users in a "not in test" group', function() {
             test.audience = 0;
             ab.init({
                 switches: {
@@ -58,7 +58,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             });
             expect(controlSpy).not.toHaveBeenCalled();
             var storedParticipated = JSON.parse(localStorage.getItem(participationsKey)).value;
-            expect(storedParticipated.DummyTest.variant).toBe("null");
+            expect(storedParticipated.DummyTest.variant).toBe("notintest");
         });
 
         it('should store all the tests user is in', function() {
