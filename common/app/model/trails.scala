@@ -109,7 +109,7 @@ trait ConfiguredTrailblockDescription extends TrailblockDescription {
     Nil
   }
 
-  def configuredQuery(): Future[TrailblockDescription]
+  def configuredQuery(): Future[Option[TrailblockDescription]]
 }
 
 class RunningOrderTrailblockDescription(
@@ -123,7 +123,7 @@ class RunningOrderTrailblockDescription(
   val isConfigured: Boolean
 ) extends ConfiguredTrailblockDescription with AkkaSupport with Logging {
 
-  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("culture")
+  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
   def configuredQuery() = {
     // get the running order from the api
@@ -134,25 +134,32 @@ class RunningOrderTrailblockDescription(
     response.map{ r =>
       r.status match {
         case 200 =>
-          val articles: Seq[String] = (parse(r.body) \ "editions" \ edition.id.toLowerCase \ "blocks").as[Seq[JsValue]] filter { block =>
-            (block \ "id").as[String].equals(blockId)
-          } flatMap { block =>
+          // get the block
+          val block: Option[JsValue] = (parse(r.body) \ "editions" \ edition.id.toLowerCase \ "blocks").asOpt[Seq[JsValue]] map { blocks =>
+            blocks find  { block =>
+              (block \ "id").as[String].equals(blockId)
+            }
+          } getOrElse(None)
+          // extract the articles
+          val articles: Seq[String] = block.map { block =>
             (block \ "trails").as[Seq[JsValue]] map { trail =>
-              (trail \ "id").asOpt[String] map { id: String =>
-                id
-              } getOrElse("")
+              (trail \ "id").as[String]
             }
-          }
-          CustomTrailblockDescription(id, name, numItemsVisible){
-            ContentApi.search(edition)
-              .ids(articles.mkString(","))
-              .response map { r =>
-              r.results.map(new Content(_))
-            }
-          }
+          } getOrElse(Nil)
+          // only make content api request if we have articles
+          if (articles.nonEmpty)
+            Some(CustomTrailblockDescription(id, name, numItemsVisible){
+              ContentApi.search(edition)
+                .ids(articles.mkString(","))
+                .response map { r =>
+                  r.results.map(new Content(_)).sortBy(t => articles.indexWhere(_.equals(t.id)))
+                }
+            })
+          else
+            None
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
-          ItemTrailblockDescription("", "News", 5)(edition)
+          None
       }
     }
 

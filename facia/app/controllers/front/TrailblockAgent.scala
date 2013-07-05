@@ -56,7 +56,9 @@ class ConfiguredTrailblockAgent(val description: ConfiguredTrailblockDescription
     agent.close()
   }
 
-  def refresh() = description.configuredQuery map refreshTrailblock
+  def refresh() = description.configuredQuery map { query =>
+    query map refreshTrailblock
+  }
 
   private def refreshTrailblock(trailblockDescription: TrailblockDescription) = {
     agent.send { old =>
