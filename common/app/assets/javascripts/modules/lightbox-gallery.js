@@ -5,7 +5,8 @@ define(["bean",
         "bonzo",
         "modules/detect",
         "modules/url",
-        "modules/overlay"],
+        "modules/overlay"
+        ],
     function (
         bean,
         Swipe,
@@ -22,7 +23,8 @@ define(["bean",
             currentImage = 1,
             totalImages = 0,
             mode = 'fullimage',
-            overlay;
+            overlay,
+            layout = detect.getLayoutMode();
 
         this.selector = '.trail--gallery';
 
@@ -37,20 +39,24 @@ define(["bean",
         };
 
         this.bindEvents = function() {
-            bean.on(overlay.toolbarNode, 'click', '.js-gallery-grid', this.switchToGrid);
-            bean.on(overlay.toolbarNode, 'click', '.js-gallery-full', this.switchToFullImage);
+            bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-grid', this.switchToGrid);
+            bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-full', this.switchToFullImage);
             bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-prev', this.prev);
             bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.gallery-item', function(el) {
-                if (mode == 'grid') {
+                if (mode === 'grid') {
                     var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
                     self.goTo(index);
                 } else {
-                    self.toggleCaption();
+                    self.toggleFurniture();
                 }
             });
             common.mediator.on('modules:overlay:close', function() {
                 overlay.remove();
+            });
+
+            bean.on(window, 'orientationchange', function() {
+                //self.mobileJumpToContent();
             });
         };
 
@@ -65,8 +71,10 @@ define(["bean",
                 success: function(response) {
                     overlay.setBody(response.html);
 
-                    galleryNode = overlay.bodyNode.querySelector('.gallery--lightbox');
-                    totalImages = parseInt(galleryNode.getAttribute('data-total'), 10);
+                    galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
+                    self.$galleryNavs = bonzo(galleryNode.querySelectorAll('.gallery__nav'));
+
+                    totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
@@ -87,6 +95,13 @@ define(["bean",
             self.imageIndexNode = overlay.toolbarNode.querySelector('.js-image-index');
             self.gridModeCta    = overlay.headerNode.querySelector('.js-gallery-grid');
             self.fullModeCta    = overlay.headerNode.querySelector('.js-gallery-full');
+        };
+
+        this.mobileJumpToContent = function() {
+            // Hide browser chrome on mobile
+            if (layout === 'mobile') {
+                window.scrollTo(0, galleryNode.offsetTop);
+            }
         };
 
         this.prev = function(e) {
@@ -111,14 +126,23 @@ define(["bean",
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery-item'), function(el) {
                 var itemIndex = parseInt(el.getAttribute('data-index'), 10);
-                el.style.display = (itemIndex === index) ? 'block' : '';
+
+                if (itemIndex === index) {
+                    el.style.display = 'block';
+
+                    // Match height of navs to that of current image
+                    var currentImageHeight = el.querySelector('.gallery__img').offsetHeight;
+                    self.$galleryNavs.css('height', currentImageHeight+'px');
+                } else {
+                    el.style.display = '';
+                }
             });
 
             currentImage = index;
             self.imageIndexNode.innerText = currentImage;
         };
 
-        this.switchToGrid = function() {
+        this.switchToGrid = function(e) {
             mode = 'grid';
             bonzo(galleryNode).removeClass('gallery--full').addClass('gallery--grid');
 
@@ -129,9 +153,11 @@ define(["bean",
             // Update CTAs
             self.gridModeCta.style.display = 'none';
             self.fullModeCta.style.display = 'block';
+
+            if (e) { e.preventDefault(); }
         };
 
-        this.switchToFullImage = function() {
+        this.switchToFullImage = function(e) {
             mode = 'fullimage';
             bonzo(galleryNode).removeClass('gallery--grid').addClass('gallery--full');
 
@@ -142,10 +168,12 @@ define(["bean",
             // Update CTAs
             self.gridModeCta.style.display = 'block';
             self.fullModeCta.style.display = 'none';
+
+            if (e) { e.preventDefault(); }
         };
 
-        this.toggleCaption = function() {
-            bonzo(galleryNode).toggleClass('gallery--showcaptions');
+        this.toggleFurniture = function() {
+            bonzo(galleryNode).toggleClass('gallery--hide-furniture');
         };
     }
 
