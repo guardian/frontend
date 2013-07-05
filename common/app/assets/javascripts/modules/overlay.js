@@ -40,11 +40,12 @@ define(["bean",
     }
 
     Overlay.prototype.show = function() {
+        // Can't reliably use position:fixed on mobile. This works around it (well, it tries)
+        this._savedPos = window.pageYOffset;
+
         bonzo(document.body).addClass('has-overlay');
         this.node.style.display = 'block';
 
-        // Can't reliably use position:fixed on mobile. This works around it (well, it tries)
-        this._savedPos = window.pageYOffset;
         window.scrollTo(window.pageXOffset, 0);
 
         common.mediator.emit('modules:overlay:show', this);
