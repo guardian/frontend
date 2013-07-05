@@ -1,5 +1,5 @@
 define([
-    'models/editable',
+    'models/fronts/editable',
     'knockout',
     'Common',
     'Reqwest',
