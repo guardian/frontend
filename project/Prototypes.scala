@@ -112,7 +112,7 @@ trait Prototypes {
     javascriptFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.js" },
     cssFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.scss" },
 
-    (test in Test) <<= (test in Test) dependsOn (gruntTask("test")),
+    (test in Test) <<= (test in Test) dependsOn (gruntTask("jshint:common")),
 
     resources in Compile <<= (resources in Compile) dependsOn (gruntTask("compile:common:js", javascriptFiles)),
     resources in Compile <<= (resources in Compile) dependsOn (gruntTask("compile:common:css", cssFiles))
