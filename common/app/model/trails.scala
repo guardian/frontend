@@ -9,6 +9,7 @@ import common.{Logging, AkkaSupport, ExecutionContexts, Edition}
 import contentapi.QueryDefaults
 import play.api.libs.ws.{Response, WS}
 import play.api.libs.json.Json._
+import play.api.libs.json.{Json, JsValue}
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -121,18 +122,26 @@ class RunningOrderTrailblockDescription(
   val isConfigured: Boolean
 ) extends ConfiguredTrailblockDescription with AkkaSupport with Logging {
 
-  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
+  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("culture")
+  lazy val blockId = id.split("/").lastOption.filterNot(_ == "").getOrElse("top-stories")
 
   def configuredQuery() = {
     // get the running order from the api
-    parseResponse(WS.url(s"${Configuration.frontsApi.host}/frontsapi/list/$id").get())
+    log.info(s"*************************** GETTING ${Configuration.frontsApi.base}/$section/latest/latest.json")
+    parseResponse(WS.url(s"${Configuration.frontsApi.base}/$section/latest/latest.json").get())
   }
 
   private def parseResponse(response: Future[Response]) = {
     response.map{ r =>
       r.status match {
         case 200 =>
-          var articles = (parse(r.body) \ "list").asOpt[List[String]].getOrElse(Nil)
+          val articles: Seq[String] = (parse(r.body) \ "editions" \ edition.id.toLowerCase \ "blocks").as[Seq[JsValue]] filter { block =>
+            (block \ "id").as[String].equals(blockId)
+          } flatMap { block =>
+            (block \ "trails").as[Seq[JsValue]] map { trail =>
+              (trail \ "id").as[String]
+            }
+          }
           CustomTrailblockDescription(id, name, numItemsVisible){
             ContentApi.search(edition)
               .ids(articles.mkString(","))

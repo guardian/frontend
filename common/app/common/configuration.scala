@@ -65,8 +65,8 @@ class GuardianConfiguration(
   }
 
   object frontsApi {
-    lazy val host = configuration.getStringProperty("fronts.api.host") getOrElse {
-      throw new IllegalStateException("Fronts Api Host not configured")
+    lazy val base = configuration.getStringProperty("fronts.api") getOrElse {
+      throw new IllegalStateException("Fronts Api not configured")
     }
   }
 
