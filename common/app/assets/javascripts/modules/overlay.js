@@ -29,7 +29,6 @@ define(["bean",
         this.bodyNode    = this.node.querySelector('.overlay__body');
 
         this.node.style.display = 'none';
-        this.node.style.minHeight = document.height+'px';
 
         // Setup events
         bean.on(this.node, 'click', '.js-overlay-close', function(e) {
@@ -41,6 +40,7 @@ define(["bean",
     }
 
     Overlay.prototype.show = function() {
+        bonzo(document.body).addClass('has-overlay');
         this.node.style.display = 'block';
 
         // Can't reliably use position:fixed on mobile. This works around it (well, it tries)
@@ -51,6 +51,7 @@ define(["bean",
     };
 
     Overlay.prototype.hide = function() {
+        bonzo(document.body).removeClass('has-overlay');
         window.scrollTo(window.pageXOffset, this._savedPos); // Restore previous scroll pos
 
         this.node.style.display = 'none';
