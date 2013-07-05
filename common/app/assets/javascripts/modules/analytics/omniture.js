@@ -125,7 +125,7 @@ define([
             if (participationsKeys.length > 0) {
                 
                 var testData = participationsKeys.map(function(k){
-                    return ['AB', k, participations[k].variant].join('|');
+                    return ['AB', k, participations[k].variant].join(' | ');
                 }).join(',');
 
                 s.prop51  = testData;
