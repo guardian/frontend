@@ -13,7 +13,7 @@
 .gallery--hide-furniture {
     .gallery__watermark,
     .gallery__caption,
-    .gallery__nav {
+    .gallery-arrow-cta  {
         display: none;
     }
 
@@ -65,12 +65,15 @@
    Navigation
    ========================================================================== */
 .gallery__nav {
-    width: 50px;
-    height: 36px;
+    width: 70px;
+    height: 100%;
     display: block;
     position: absolute;
     top: 0;
-    margin-top: 30%; // This roughly vertical aligns arrows for 5:3 images
+
+    .gallery-arrow-cta {
+        top: 25%;
+    }
 }
 
 .gallery__nav--prev .gallery-arrow-cta {

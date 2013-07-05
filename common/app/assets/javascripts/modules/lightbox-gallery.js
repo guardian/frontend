@@ -58,6 +58,8 @@ define(["bean",
             bean.on(window, 'orientationchange', function() {
                 //self.mobileJumpToContent();
             });
+
+            bean.on(window, 'resize', common.debounce(this.layout));
         };
 
         this.loadGallery = function(url) {
@@ -72,10 +74,12 @@ define(["bean",
                     overlay.setBody(response.html);
 
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
+                    $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav .gallery-arrow-cta'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
+                    self.layout();
                 }
             });
         };
@@ -172,6 +176,12 @@ define(["bean",
         this.toggleFurniture = function() {
             bonzo(galleryNode).toggleClass('gallery--hide-furniture');
         };
+
+        this.layout = function() {
+            // Recalculates the position of assets
+            var navHeight = document.width / (5/3) / 2;
+            $navArrows.css('top', navHeight+'px');
+        }
     }
 
     return LightboxGallery;
