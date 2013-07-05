@@ -15,7 +15,9 @@
                          data-height="@image.height"
                     />
 
-                    <i class="i i-gallery-arrow gallery__caption-handle"></i>
+                    <span class="gallery-arrow-cta gallery__caption-handle">
+                        <i class="i i-gallery-arrow"></i>
+                    </span>
                     <div class="gallery__caption">
                         <p class="gallery__caption--text type-10">@Html(image.caption.getOrElse(""))</p>
                         <p class="gallery__caption--credit type-11">@image.credit</p>
@@ -29,16 +31,20 @@
        data-link-name="Gallery Previous"
        data-is-ajax="true"
        href="?index=@(index - 1)">
-         <i class="i i-gallery-arrow"></i>
-         <span class="h">Previous</span>
+          <span class="gallery-arrow-cta">
+             <i class="i i-gallery-arrow"></i>
+             <span class="h">Previous</span>
+          </span>
     </a>
 
     <a class="gallery__nav gallery__nav--next js-gallery-next"
        data-link-name="Gallery Next"
        data-is-ajax="true"
        href="?index=@(index - 1)">
-          <i class="i i-gallery-arrow"></i>
-          <span class="h">Next</span>
+          <span class="gallery-arrow-cta">
+             <i class="i i-gallery-arrow"></i>
+             <span class="h">Next</span>
+          </span>
     </a>
 
 </div>

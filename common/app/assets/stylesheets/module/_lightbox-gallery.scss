@@ -10,6 +10,15 @@
     left: $gutter;
 }
 
+.gallery--hide-furniture {
+    .gallery__watermark,
+    .gallery__caption,
+    .gallery__nav {
+        display: none;
+    }
+
+}
+
 /* ==========================================================================
    Thumbnail/Single Full image modes
    ========================================================================== */
@@ -38,6 +47,7 @@
 .gallery--full {
     .gallery-item {
         display: none;
+        text-align: center;
     }
 }
 
@@ -55,27 +65,35 @@
    Navigation
    ========================================================================== */
 .gallery__nav {
-    width: 80px;
-    height: 200px;
+    width: 50px;
+    height: 36px;
     display: block;
     position: absolute;
     top: 0;
-
-    .i {
-        position: absolute;
-        right: $gutter;
-        top: 50%;
-        margin-top: -16px;
-    }
 }
 
-.gallery__nav--prev {
+.gallery__nav--prev .gallery-arrow-cta {
     @include rotate(180deg);
-    left: 0;
+    left: $gutter;
 }
 
 .gallery__nav--next {
     right: 0;
+}
+
+
+.gallery-arrow-cta {
+    display: block;
+    position: absolute;
+    right: $gutter;
+    top: 50%;
+    width: 22px;
+    height: 36px;
+    background-color: rgba(0,0,0,0.9);
+
+    .i {
+        margin: 10px 8px;
+    }
 }
 
 
@@ -85,24 +103,28 @@
 .gallery__caption-handle {
     @include rotate(-90deg);
     position: absolute;
-    bottom: -4px; // Needed because the rotation the positioning off
     left: 50%;
-    margin-left: -16px;
+    top: auto;
+    right: auto;
+    margin-top: -35px;
+    display: none;
 
-    .gallery--showcaptions & {
-        display: none;
+
+    .gallery--hide-furniture & {
+        display: block;
     }
 }
 
 
 .gallery__caption {
-    display: none;
+    line-height: 18px;
     color: #aaaaaa;
     padding: 0 $gutter;
+    text-align: left;
+    bottom: 0;
 
     a {
-        color: #aaaaaa;
-        font-weight: bold;
+        color: #ffffff;
     }
 
     @media (orientation:landscape) {
@@ -111,10 +133,6 @@
         bottom: 0;
         background: rgba(34, 34, 34, 0.90);
         padding: $baseline * 3 $gutter;
-    }
-
-    .gallery--showcaptions & {
-        display: block;
     }
 }
 
