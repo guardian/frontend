@@ -70,6 +70,7 @@
     display: block;
     position: absolute;
     top: 0;
+    margin-top: 30%; // This roughly vertical aligns arrows for 5:3 images
 }
 
 .gallery__nav--prev .gallery-arrow-cta {
@@ -117,7 +118,6 @@
 
 
 .gallery__caption {
-    line-height: 18px;
     color: #aaaaaa;
     padding: 0 $gutter;
     text-align: left;
@@ -137,9 +137,15 @@
 }
 
 .gallery__caption--text {
+    @extend %type-10;
+    line-height: 18px;
     padding-bottom: $baseline * 4;
     border-bottom: 1px solid #676767;
     margin-bottom: $baseline;
+}
+
+.gallery__caption--credit {
+    @extend %type-11;
 }
 
 

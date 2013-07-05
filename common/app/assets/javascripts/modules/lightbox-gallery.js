@@ -72,8 +72,6 @@ define(["bean",
                     overlay.setBody(response.html);
 
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
-                    self.$galleryNavs = bonzo(galleryNode.querySelectorAll('.gallery__nav'));
-
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
                     self.setupOverlayHeader();
@@ -132,7 +130,6 @@ define(["bean",
 
                     // Match height of navs to that of current image
                     var currentImageHeight = el.querySelector('.gallery__img').offsetHeight;
-                    self.$galleryNavs.css('height', currentImageHeight+'px');
                 } else {
                     el.style.display = '';
                 }
