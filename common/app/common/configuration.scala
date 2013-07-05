@@ -49,6 +49,12 @@ class GuardianConfiguration(
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
+  object frontsApi {
+    lazy val base = configuration.getStringProperty("fronts.api") getOrElse {
+      throw new IllegalStateException("Fronts Api not configured")
+    }
+  }
+
   object mongo {
     lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
   }
@@ -138,6 +144,7 @@ class GuardianConfiguration(
     lazy val region = configuration.getStringProperty("aws.region").getOrElse(throw new RuntimeException("AWS region is not setup"))
 
     lazy val bucket = configuration.getStringProperty("aws.bucket").getOrElse(throw new RuntimeException("AWS bucket is not setup"))
+    lazy val frontsApiBucket = configuration.getStringProperty("frontsApi.aws.bucket").getOrElse(throw new RuntimeException("Fronts API AWS bucket is not setup"))
     lazy val sns: String = configuration.getStringProperty("sns.notification.topic.arn").getOrElse {
       throw new IllegalStateException("Cannot send SNS notifications without topic ARN property (sns.notification.topic.arn).")
     }

@@ -14,7 +14,6 @@ trait S3 extends Logging {
   lazy val bucket = Configuration.aws.bucket
   lazy val configKey = AdminConfiguration.configKey
   lazy val switchesKey = AdminConfiguration.switchesKey
-  lazy val topStoriesKey = AdminConfiguration.topStoriesKey
 
   private def createClient = new AmazonS3Client(Configuration.aws.credentials)
 
@@ -24,10 +23,7 @@ trait S3 extends Logging {
   def getSwitches = get(switchesKey)
   def putSwitches(config: String) { put(switchesKey, config, "text/plain") }
 
-  def getTopStories = get(topStoriesKey)
-  def putTopStories(config: String) { put(topStoriesKey, config, "application/json") }
-
-  private def get(key: String): Option[String] = {
+  protected def get(key: String): Option[String] = {
     val client = createClient
     val request = new GetObjectRequest(bucket, key)
     try{
@@ -41,7 +37,7 @@ trait S3 extends Logging {
     }
   }
 
-  private def put(key: String, value: String, contentType: String) {
+  protected def put(key: String, value: String, contentType: String) {
     val metadata = new ObjectMetadata()
     metadata.setCacheControl("no-cache,no-store")
     metadata.setContentType(contentType)
@@ -54,3 +50,12 @@ trait S3 extends Logging {
 }
 
 object S3 extends S3
+
+object S3FrontsApi extends S3 {
+
+  override lazy val bucket = Configuration.aws.frontsApiBucket
+  lazy val frontsKey = AdminConfiguration.frontsKey
+
+  def getFront(section: String) = get(s"${frontsKey}/${section}/latest/latest.json")
+
+}
