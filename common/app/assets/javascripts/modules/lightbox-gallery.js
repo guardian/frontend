@@ -24,7 +24,8 @@ define(["bean",
             totalImages = 0,
             mode = 'fullimage',
             overlay,
-            layout = detect.getLayoutMode();
+            layout = detect.getLayoutMode(),
+            $navArrows;
 
         this.selector = '.trail--gallery';
 
@@ -179,9 +180,11 @@ define(["bean",
 
         this.layout = function() {
             // Recalculates the position of assets
-            var navHeight = document.width / (5/3) / 2;
+            var navHeight = (document.width / (5/3)) / 2;
             $navArrows.css('top', navHeight+'px');
-        }
+
+            galleryNode.style.height = (window.innerHeight - 48) + 'px';
+        };
     }
 
     return LightboxGallery;
