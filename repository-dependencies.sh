@@ -1,5 +1,5 @@
 #!/bin/bash
-npm install
+npm install --force
 #Install casperjs to target
 if [ ! -d dev/casperjs ]; then
     git clone git://github.com/n1k0/casperjs.git dev/casperjs
