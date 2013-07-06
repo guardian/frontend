@@ -3,13 +3,15 @@ define([
     'modules/detect',
     'modules/experiments/ab',
     'modules/storage',
-    'components/gu-id/id'
+    'components/gu-id/id',
+    'modules/errors'
 ], function(
     common,
     detect,
     ab,
     storage,
-    id
+    id,
+    Errors
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -26,6 +28,15 @@ define([
         w = w || {};
 
         this.logView = function() {
+
+            // temporary test of the diagnostics box - @commuterjoy
+            var oneInOneThousand = (Math.random() < 0.001);
+            if (oneInOneThousand) {
+                var e = new Errors({ window: window, isDev: config.page.isDev });
+                e.init();
+                e.log('ab/' + document.body.className + '|' + s.prop51 + '|' + s.eVar51, 'modules/analytics/omniture', 0, false);
+            }
+
             s.t();
         };
 
