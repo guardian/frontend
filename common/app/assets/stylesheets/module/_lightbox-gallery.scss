@@ -148,7 +148,8 @@ i.gallery__watermark {
     }
 
     @media (orientation:landscape) {
-        @include box-sizing(box-model);
+        @include box-sizing(border-box);
+        width: 100%;
         position: absolute;
         bottom: 0;
         background: rgba(34, 34, 34, 0.90);
