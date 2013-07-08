@@ -9,6 +9,7 @@
                 data-index="@row.rowNum">
                     <img class="gallery__img"
                          src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
+                         alt="@image.altText"
                          data-src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
                          data-fullsrc="@image.path"
                          data-width="@image.width"
