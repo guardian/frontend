@@ -60,5 +60,7 @@ object S3FrontsApi extends S3 {
 
   def getSchema() = get(s"${frontsKey}/schema.json")
   def getFront(edition: String, section: String) = get(s"${frontsKey}/${edition}/${section}/latest/latest.json")
+  def putFront(edition: String, section: String, json: String) =
+    put(s"${frontsKey}/${edition}/${section}/latest/latest.json", json, "application/json")
 
 }

@@ -3,7 +3,7 @@ package controllers
 import play.api.mvc.Controller
 import conf.AdminConfiguration
 import tools.S3FrontsApi
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json._
 import common.Logging
 
 object FrontsController extends Controller with Logging {
@@ -25,45 +25,59 @@ object FrontsController extends Controller with Logging {
   }
 
   def readBlock(edition: String, section: String, blockId: String) = AuthAction{ request =>
-    S3FrontsApi.getFront(edition, section).map { r =>
-      (Json.parse(r) \ "blocks").asOpt[Seq[JsValue]].map { blocks =>
-        blocks.find { block =>
-          (block \ "id").as[String].equals(blockId)
-        }.map { json =>
-          Ok(Json.prettyPrint(json)).as("application/json")
+    getBlock(edition, section, blockId).map { block =>
+      Ok(Json.prettyPrint(block)).as("application/json")
+    }.getOrElse(NotFound)
+  }
+
+  /**
+   * @todo
+   */
+  def updateBlock(edition: String, section: String, blockId: String) = AuthAction{ request =>
+    request.body.asJson.map{ json =>
+    }
+    Ok
+  }
+
+  /**
+   * @todo
+   */
+  def updateTrail(edition: String, section: String, blockId: String, trailId: String) = AuthAction{ request =>
+    request.body.asJson.map{ json =>
+    }
+    Ok
+  }
+
+  /**
+   * @todo
+   */
+  def deleteTrail(edition: String, section: String, blockId: String, trailId: String) = AuthAction{ request =>
+    var front = Json.parse(S3FrontsApi.getFront(edition, section).get)
+    val block = (front \ "blocks").as[Seq[JsObject]].find { block =>
+      (block \ "id").as[String].equals(blockId)
+    }
+    val blockIndex = (front \ "blocks").as[Seq[JsObject]].indexWhere { block =>
+      (block \ "id").as[String].equals(blockId)
+    }
+    block.map { block =>
+      val newTrails = (block \ "trails").as[Seq[JsObject]].filterNot { trail =>
+        (trail \ "id").as[String].equals(trailId)
+      }
+      block.transform((__ \ 'trails).json.put(Json.arr(newTrails))).map { json =>
+        // NOTE: indexed path broke for some reason
+        front.transform((__ \ 'blocks)(blockIndex).json.put(Json.arr(json))).map { foo =>
+          Ok(Json.prettyPrint(foo))
         }.getOrElse(NotFound)
       }.getOrElse(NotFound)
     }.getOrElse(NotFound)
   }
 
-  def updateBlock(section: String, edition: String, blockId: String) = AuthAction{ request =>
-    request.body.asJson.map{ json =>
-      json \ ""
-    }
-    Ok
-  }
-
-  def deleteTrail(section: String, edition: String, blockId: String, trail: String) = AuthAction{ request =>
-    S3FrontsApi.getFront(edition, section).map { r =>
-      (Json.parse(r) \ "blocks").asOpt[Seq[JsValue]].map { blocks =>
-        blocks.find { block =>
-          (block \ "id").as[String].equals(blockId)
-        }.map { json =>
-          Ok(Json.prettyPrint(json)).as("application/json")
-        }
+  private def getBlock(edition: String, section: String, blockId: String): Option[JsObject] = {
+    S3FrontsApi.getFront(edition, section).flatMap { r =>
+      (Json.parse(r) \ "blocks").as[Seq[JsObject]].find { block =>
+        (block \ "id").as[String].equals(blockId)
       }
     }
-    Ok
   }
-
-//  private def getBlock(section: String, edition: String, block: String): Option[JsValue] = {
-//    S3FrontsApi.getFront(section).flatMap { r =>
-//      (Json.parse(r) \ "editions" \ edition \ "blocks").asOpt[Seq[JsValue]].flatMap { blocks =>
-//        blocks.find { block =>
-//          (block \ "id").as[String].equals(block)
-//        }
-//      }
-//    }
-//  }
 
 }
