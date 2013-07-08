@@ -12,6 +12,7 @@ define(['modules/cookies', 'modules/storage'], function(Cookies, storage) {
         window.DM_prepClient = function(csid, client) {
             client.DM_addEncToLoc('siteName', "");
             client.DM_addEncToLoc('comFolder', "");
+            client.DM_addEncToLoc('mobile',true);
 
             if(config.audienceScienceData) {
                 for(var i = 0, j = config.audienceScienceData.length; i<j; ++i) {
