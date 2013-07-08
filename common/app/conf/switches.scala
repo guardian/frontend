@@ -199,7 +199,8 @@ object Switches extends Collections {
     ABParagraphSpacingSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
-    LocalNavSwitch
+    LocalNavSwitch,
+    LightboxGalleriesSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
