@@ -7,23 +7,23 @@
         @gallery.images.zipWithRowInfo.map{ case(image, row) =>
             <li class="js-gallery-item-@row.rowNum gallery-item @if(image.width >= image.height){gallery-item--landscape} else {gallery-item--portrait}"
                 data-index="@row.rowNum">
-                    <img class="gallery__img"
-                         src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
-                         alt="@image.altText"
-                         data-src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
-                         data-fullsrc="@image.path"
-                         data-width="@image.width"
-                         data-height="@image.height"
-                    />
-
-                    <span class="gallery-arrow-cta gallery__caption-handle">
-                        <i class="i i-gallery-arrow"></i>
-                    </span>
-                    <div class="gallery__caption">
-                        <p class="gallery__caption--text">@Html(image.caption.getOrElse(""))</p>
-                        <p class="gallery__caption--credit">@image.credit</p>
-                    </div>
-
+                    <figure itemprop="associatedMedia" itemtype="http://schema.org/ImageObject" itemscope>
+                        <img class="gallery__img"
+                             src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
+                             alt="@image.altText"
+                             data-src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
+                             data-fullsrc="@image.path"
+                             data-width="@image.width"
+                             data-height="@image.height"
+                        />
+                        <span class="gallery-arrow-cta gallery-caption-handle">
+                            <i class="i i-gallery-arrow"></i>
+                        </span>
+                        <figcaption class="gallery-caption" itemprop="description">
+                            <p class="gallery-caption__text">@Html(image.caption.getOrElse(""))</p>
+                            <p class="gallery-caption__credit">@image.credit</p>
+                        </figcaption>
+                    </figure>
             </li>
         }
     </ul>

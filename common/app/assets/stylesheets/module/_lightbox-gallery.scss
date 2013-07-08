@@ -17,7 +17,7 @@ i.gallery__watermark {
 
 .gallery--hide-furniture {
     .gallery__watermark,
-    .gallery__caption,
+    .gallery-caption,
     .gallery-arrow-cta  {
         display: none;
     }
@@ -121,7 +121,7 @@ i.gallery__watermark {
 /* ==========================================================================
    Captions
    ========================================================================== */
-.gallery__caption-handle {
+.gallery-caption-handle {
     @include rotate(-90deg);
     position: absolute;
     left: 50%;
@@ -138,13 +138,17 @@ i.gallery__watermark {
 }
 
 
-.gallery__caption {
+.gallery-caption {
     color: #aaaaaa;
     padding: 0 $gutter;
     text-align: left;
 
     a {
         color: #ffffff;
+    }
+
+    &:before {
+        display: none; // Hide the caption icon
     }
 
     @media (orientation:landscape) {
@@ -157,7 +161,7 @@ i.gallery__watermark {
     }
 }
 
-.gallery__caption--text {
+.gallery-caption__text {
     @extend %type-10;
     line-height: 16px;
     padding-bottom: $baseline * 4;
@@ -165,7 +169,7 @@ i.gallery__watermark {
     margin-bottom: $baseline;
 }
 
-.gallery__caption--credit {
+.gallery-caption__credit {
     @extend %type-11;
     margin-bottom: $baseline * 4;
 }
