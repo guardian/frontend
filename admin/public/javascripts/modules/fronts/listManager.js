@@ -20,21 +20,26 @@ define([
             viewModel = {
                 latestArticles: new LatestArticles(),
                 listsDisplayed: knockout.observableArray(),
-                listsAvailable: knockout.observableArray(),
-                newListName:    knockout.observable()
+
+                selectedEdition : knockout.observable(),
+                selectedSection : knockout.observable(),
+                selectedBlock   : knockout.observable()
             };
 
-        viewModel.displayList = function(item) {
+        viewModel.displayList = function(id) {
             reqwest({
-                url: '/frontsapi/list/' + item.name,
+                url: apiBase + id,
                 type: 'json'
             }).then(
                 function(resp) {
+                    console.log(resp);
+                    /*
                     viewModel.hideList(item);
-                    populateList(item.list, resp.list);
+                    populateList(item.list, resp.trails);
                     viewModel.listsDisplayed.unshift(item);
                     limitListsDisplayed(maxDisplayedLists);
                     connectSortableLists();
+                    */
                 },
                 function(xhr) { console.log(xhr); } // error
             );
@@ -42,16 +47,6 @@ define([
 
         viewModel.hideList = function(list) {
             viewModel.listsDisplayed.remove(list);
-        }
-
-        viewModel.createList = function() {
-            var name = viewModel.newListName(),
-                alreadyAvailable = !!withKeyValue(viewModel.listsAvailable(), 'name', name).length;
-
-            if (!alreadyAvailable) {
-                viewModel.displayList(newAvailableList(name));
-                viewModel.newListName('');
-            }
         }
 
         function limitListsDisplayed(max) {
@@ -156,35 +151,13 @@ define([
             ContentApi.decorateItems(list());
         };
 
-        function newAvailableList(name) {
-            var item = {
-                name: name,
-                list: knockout.observableArray()
-            }
+        viewModel.selectedBlock.subscribe(function(newValue) {
+            var list = '/' + viewModel.selectedEdition().id +
+                       '/' + viewModel.selectedSection().id +
+                       '/' + viewModel.selectedBlock().id
 
-            viewModel.listsAvailable.push(item);
-            return item;
-        }
-
-        function nestedIds(arr, recurseOn, depth) {
-            var obsArr = knockout.observableArray(),
-                depth = depth || 0;
-
-            arr.forEach(function(item){
-                var i = { 
-                        id: knockout.observable(item.id)
-                    },
-                    prop;
-
-                if (depth < recurseOn.length) {
-                    prop = recurseOn[depth];
-                    i[prop] = nestedIds(item[prop], recurseOn, depth + 1);
-                }
-                obsArr.push(i);
-            });
-
-            return obsArr;
-        }
+            viewModel.displayList(list);
+        });
 
         function fetchAvailableLists() {
             reqwest({
@@ -192,20 +165,7 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    
-                    /*
-                    []
-                    .concat(resp.lists)
-                    .sort(function (a, b) {return a > b ? 1 : -1;})
-                    .map(function(name, index){
-                        var list = newAvailableList(name);
-                        if (index <= maxDisplayedLists) {
-                            viewModel.displayList(list);
-                        }
-                    });
-                    */
-
-                    viewModel.editions = nestedIds(resp.editions, ['sections', 'blocks']);
+                    viewModel.editions = resp.editions;
                     knockout.applyBindings(viewModel);
                     connectSortableLists();
                 },

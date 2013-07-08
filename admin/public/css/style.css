@@ -491,7 +491,6 @@ a.cta, .cta a {
 
 .fronts .list-picker__title {
     color: #666;
-    margin: 0 0 20px 0;
 }
 
 .fronts .finder__title {
@@ -518,10 +517,6 @@ a.cta, .cta a {
     padding-right: 0;
     margin-right:  0;
     border-right:  0;
-}
-
-.fronts .list-picker__new {
-    float: right;
 }
 
 .fronts .lists .connectedList {
