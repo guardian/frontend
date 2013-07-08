@@ -59,6 +59,6 @@ object S3FrontsApi extends S3 {
   lazy val frontsKey = AdminConfiguration.frontsKey
 
   def getSchema() = get(s"${frontsKey}/schema.json")
-  def getFront(section: String) = get(s"${frontsKey}/${section}/latest/latest.json")
+  def getFront(edition: String, section: String) = get(s"${frontsKey}/${edition}/${section}/latest/latest.json")
 
 }
