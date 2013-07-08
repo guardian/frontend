@@ -11,6 +11,12 @@ object FrontsController extends Controller {
     Ok(views.html.fronts(AdminConfiguration.environment.stage))
   }
 
+  def schema() = AuthAction{ request =>
+    S3FrontsApi.getSchema().map { json: String =>
+      Ok(json).as("application/json")
+    }.getOrElse(NotFound)
+  }
+
   def readSection(section: String) = AuthAction{ request =>
     S3FrontsApi.getFront(section).map { json: String =>
       Ok(json).as("application/json")
@@ -26,6 +32,18 @@ object FrontsController extends Controller {
   }
 
   def readBlock(section: String, edition: String, blockId: String) = AuthAction{ request =>
+    S3FrontsApi.getFront(section).map { r =>
+      (Json.parse(r) \ "editions" \ edition \ "blocks").asOpt[Seq[JsValue]].map { blocks =>
+        blocks.find { block =>
+          (block \ "id").as[String].equals(blockId)
+        }.map { json =>
+          Ok(Json.prettyPrint(json)).as("application/json")
+        }.getOrElse(NotFound)
+      }.getOrElse(NotFound)
+    }.getOrElse(NotFound)
+  }
+
+  def updateBlock(section: String, edition: String, blockId: String) = AuthAction{ request =>
     S3FrontsApi.getFront(section).map { r =>
       (Json.parse(r) \ "editions" \ edition \ "blocks").asOpt[Seq[JsValue]].map { blocks =>
         blocks.find { block =>

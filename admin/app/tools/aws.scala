@@ -58,6 +58,7 @@ object S3FrontsApi extends S3 {
   override lazy val bucket = Configuration.aws.frontsApiBucket
   lazy val frontsKey = AdminConfiguration.frontsKey
 
+  def getSchema() = get(s"${frontsKey}/schema.json")
   def getFront(section: String) = get(s"${frontsKey}/${section}/latest/latest.json")
 
 }
