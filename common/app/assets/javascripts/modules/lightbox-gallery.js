@@ -33,14 +33,14 @@ define(["bean",
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl      = e.currentTarget.href,
-                        galleryEndpoint = galleryUrl.split('?')[0] + '/lightbox.json'
+                        galleryEndpoint = galleryUrl.split('?')[0] + '/lightbox.json';
 
                     // Go to a specific image if it's in the query string. eg: index=3
                     if (galleryUrl.indexOf('index=') !== -1) {
                         var urlParams = url.getUrlVars({
                             query: galleryUrl.split('?')[1]
                         });
-                        currentImage = parseInt(urlParams['index'], 10);
+                        currentImage = parseInt(urlParams.index, 10);
                     }
 
                     e.preventDefault();
@@ -88,7 +88,6 @@ define(["bean",
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
                     $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav .gallery-arrow-cta'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
-                    imagesContainer = galleryNode.querySelector('.gallery__images');
 
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
