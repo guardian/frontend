@@ -4,10 +4,15 @@
     position: relative;
 }
 
-.gallery__watermark {
+i.gallery__watermark {
+    display: none;
     position: absolute;
     top: $baseline * 2;
     left: $gutter;
+
+    @media (min-width: $tablet) {
+        display: block;
+    }
 }
 
 .gallery--hide-furniture {
@@ -150,6 +155,7 @@
 
 .gallery__caption--credit {
     @extend %type-11;
+    margin-bottom: $baseline * 4;
 }
 
 
@@ -167,22 +173,4 @@
 
 .gallery__counter--current-image {
     color: #FFFFFF;
-}
-
-
-
-/* ==========================================================================
-   Landscape mode
-   ========================================================================== */
-@media (orientation:landscape) {
-  .gallery__images,
-  .gallery__img,
-  .gallery-item {
-      height: 100%;
-  }
-  .gallery__img {
-      width: auto;
-  }
-
-
 }
