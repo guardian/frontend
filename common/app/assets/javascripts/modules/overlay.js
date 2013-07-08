@@ -7,7 +7,8 @@ define(["bean",
         bonzo) {
 
     function Overlay(content) {
-        content = content || '<div class="preload-msg"><div class="is-updating"></div></div>';
+        this.loadingHtml = '<div class="preload-msg"><div class="is-updating"></div></div>';
+        content = content || this.loadingHtml;
 
         var self     = this,
             template = '<div class="overlay">' +
@@ -37,6 +38,11 @@ define(["bean",
             common.mediator.emit('modules:overlay:close', self);
         });
 
+    }
+
+    Overlay.prototype.showLoading = function() {
+        this.setBody(this.loadingHtml)
+        this.show();
     }
 
     Overlay.prototype.show = function() {

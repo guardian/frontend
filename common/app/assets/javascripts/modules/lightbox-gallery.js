@@ -27,13 +27,15 @@ define(["bean",
             $navArrows;
 
         this.selector = '.trail--gallery';
+        this.galleryEndpoint = '';
 
 
         this.init = function() {
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
-                    var galleryUrl      = e.currentTarget.href,
-                        galleryEndpoint = galleryUrl.split('?')[0] + '/lightbox.json';
+                    var galleryUrl = e.currentTarget.href;
+
+                    self.galleryEndpoint = galleryUrl.split('?')[0] + '/lightbox.json';
 
                     // Go to a specific image if it's in the query string. eg: index=3
                     if (galleryUrl.indexOf('index=') !== -1) {
@@ -46,7 +48,7 @@ define(["bean",
                     e.preventDefault();
                     overlay = new Overlay();
                     self.bindEvents();
-                    self.loadGallery(galleryEndpoint);
+                    self.loadGallery();
                 });
             }
         };
@@ -56,6 +58,7 @@ define(["bean",
             bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-full', this.switchToFullImage);
             bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-prev', this.prev);
             bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-next', this.next);
+            bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
             bean.on(overlay.bodyNode,    'click', '.gallery-item', function(el) {
                 if (mode === 'grid') {
                     var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
@@ -64,21 +67,23 @@ define(["bean",
                     self.toggleFurniture();
                 }
             });
+
             common.mediator.on('modules:overlay:close', function() {
                 overlay.remove();
             });
 
             bean.on(window, 'orientationchange', function() {
+                self.layout();
                 self.jumpToContent();
             });
 
         };
 
-        this.loadGallery = function(url) {
-            overlay.show();
+        this.loadGallery = function() {
+            overlay.showLoading();
 
             ajax({
-                url: url,
+                url: self.galleryEndpoint,
                 type: 'json',
                 method: 'get',
                 crossOrigin: true,
@@ -89,8 +94,15 @@ define(["bean",
                     $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav .gallery-arrow-cta'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
+                    self.layout();
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
+                },
+                error: function() {
+                    var errorMsg = '<div class="preload-msg">Error loading gallery' +
+                                   '  <button class="cta js-load-gallery" data-link-name="Try loading gallery again" data-is-ajax>Try again</button>' +
+                                   '</div>'
+                    overlay.setBody(errorMsg);
                 }
             });
         };
@@ -138,7 +150,7 @@ define(["bean",
                 if (itemIndex === index) {
                     el.style.display = 'block';
                 } else {
-                    el.style.display = '';
+                    el.style.display = ''; // Not set to 'none' so that it doesn't hide them from the Grid view
                 }
             });
 
@@ -188,6 +200,12 @@ define(["bean",
                 self.jumpToContent();
             }
 
+        };
+
+        this.layout = function() {
+            // Make overlay large enough to allow the browser chrome to be hidden
+            var browserChrome = (window.screen.height - window.innerHeight);
+            overlay.node.style.minHeight = window.screen.height + browserChrome + 'px';
         };
     }
 
