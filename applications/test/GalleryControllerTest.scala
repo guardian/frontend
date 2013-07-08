@@ -49,4 +49,16 @@ class GalleryControllerTest extends FlatSpec with ShouldMatchers {
     contentAsString(result) should include("Wayne Coyne - in pictures")
     contentAsString(result) should include("This content has been removed as our copyright has expired.")
   }
+
+  it should "return the lightbox JSON when /lightbox.json endpoint is hit" in Fake {
+    val fakeRequest = FakeRequest(GET, s"${galleryUrl}/lightbox.json")
+      .withHeaders("host" -> "localhost:9000")
+      .withHeaders("Origin" -> "http://www.theorigin.com")
+
+    val result = controllers.GalleryController.renderLightbox(galleryUrl)(fakeRequest)
+    status(result) should be(200)
+    header("Content-Type", result).get should be("application/json")
+    contentAsString(result) should startWith("{\"config\"")
+    contentAsString(result) should include("gallery--lightbox")
+  }
 }

@@ -17,7 +17,6 @@ case class GalleryPage(
 object GalleryController extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action { implicit request =>
-
     val index = request.getQueryString("index") map (_.toInt) getOrElse 1
     val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
 
@@ -27,6 +26,21 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
       promiseOfGalleryPage.map {
         case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
         case Left(model) => renderGallery(model)
+        case Right(notFound) => notFound
+      }
+    }
+  }
+
+  def renderLightbox(path: String) = Action { implicit request =>
+    val index = request.getQueryString("index") map (_.toInt) getOrElse 1
+    val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
+
+    val promiseOfGalleryPage = lookup(path, index, isTrail)
+
+    Async {
+      promiseOfGalleryPage.map {
+        case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
+        case Left(model) => renderLightboxGallery(model)
         case Right(notFound) => notFound
       }
     }
@@ -51,9 +65,13 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
     val htmlResponse = () => views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)
-    //val jsonResponse = () => views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index, model.trail)
-    val jsonResponse = () => views.html.fragments.lightboxGalleryBody(model.gallery, model.storyPackage, model.index, model.trail)
+    val jsonResponse = () => views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index, model.trail)
     renderFormat(htmlResponse, jsonResponse, model.gallery, Switches.all)
+  }
+
+  private def renderLightboxGallery(model: GalleryPage)(implicit request: RequestHeader) = {
+    val response = () => views.html.fragments.lightboxGalleryBody(model.gallery, model.storyPackage, model.index, model.trail)
+    renderFormat(response, response, model.gallery, Switches.all)
   }
     
 }
