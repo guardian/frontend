@@ -176,7 +176,8 @@ define([
                                           '  </div>' +
                                           '</div>';
 
-                    bonzo(headerNode).append(localNavCtaHtml + localNavPopupHtml);
+                    bonzo(headerNode).append(localNavPopupHtml);
+                    bonzo(context.querySelector('.parts__head')).append(localNavCtaHtml);
 
 
                     // Insert the desktop local nav

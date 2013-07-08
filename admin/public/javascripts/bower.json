@@ -15,7 +15,6 @@
     "sinon": "1.7",
     "underscore": "1.4",
     "bootstrap.css": "2.1",
-    "js_humanized_time_span": "git@github.com:layam/js_humanized_time_span.git",
-    "html5sortable": "git@github.com:farhadi/html5sortable.git"
+    "js_humanized_time_span": "git@github.com:layam/js_humanized_time_span.git"
   }
 }

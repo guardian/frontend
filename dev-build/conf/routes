@@ -105,6 +105,9 @@ GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> 
 GET     /football/match/:matchId.json                                                   controllers.MatchController.renderMatchId(matchId)
 GET     /football/match/:matchId                                                        controllers.MatchController.renderMatchId(matchId)
 
+#Cricket
+GET     /cricket/match/:matchId                                     controllers.CricketMatchController.renderMatchId(matchId)
+
 #Front
 GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
 GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)

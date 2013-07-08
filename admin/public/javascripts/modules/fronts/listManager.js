@@ -11,6 +11,7 @@ define([
     LatestArticles,
     ContentApi
 ) {
+    var maxDisplayedLists = 3;
 
     return function(selector) {
 
@@ -29,8 +30,9 @@ define([
             }).then(
                 function(resp) {
                     viewModel.hideList(item);
-                    populateList(item.list, resp.list); 
+                    populateList(item.list, resp.list);
                     viewModel.listsDisplayed.unshift(item);
+                    limitListsDisplayed(maxDisplayedLists);
                     connectSortableLists();
                 },
                 function(xhr) { console.log(xhr); } // error
@@ -48,6 +50,13 @@ define([
             if (!alreadyAvailable) {
                 viewModel.displayList(newAvailableList(name));
                 viewModel.newListName('');
+            }
+        }
+
+        function limitListsDisplayed(max) {
+            if(viewModel.listsDisplayed().length > max) {
+                viewModel.listsDisplayed.pop();
+                limitListsDisplayed(max);
             }
         }
 
@@ -162,8 +171,14 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    resp.lists.forEach(function(name){
-                        newAvailableList(name);
+                    []
+                    .concat(resp.lists)
+                    .sort(function (a, b) {return a > b ? 1 : -1;})
+                    .map(function(name, index){
+                        var list = newAvailableList(name);
+                        if (index <= maxDisplayedLists) {
+                            viewModel.displayList(list);
+                        }
                     });
                 },
                 function(xhr) { console.log(xhr); } // error

@@ -62,6 +62,23 @@ case class Request2xxGraph(name: String, private val metrics: Future[GetMetricSt
   )
 }
 
+object AveragePageviewsByDayGraph extends Chart {
+  val name = "Average pageviews per user (by day)"
+  lazy val labels = Seq("Date", "pageviews")
+
+  def dataset = Analytics.averagePageviewsByDay() map {
+    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
+  }
+}
+
+object ReturnUsersByDayGraph extends Chart {
+  val name = "Return users (by day)"
+  lazy val labels = Seq("Date", "users")
+
+  def dataset = Analytics.returnUsersByDay() map {
+    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
+  }
+}
 
 object PageviewsGraph extends Chart {
   val name = "Pageviews"

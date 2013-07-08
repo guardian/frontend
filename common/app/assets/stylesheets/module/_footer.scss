@@ -40,6 +40,10 @@
             text-decoration: underline;
         }
     }
+
+    .hide-in-footer {
+        display: none !important;
+    }
 }
 
 /* Uses an id as is used as fragment
@@ -51,7 +55,7 @@
 }
 
 .swipe-switches {
-    display: none; 
+    display: none;
 }
 
 .can-swipe .swipe-switches {
