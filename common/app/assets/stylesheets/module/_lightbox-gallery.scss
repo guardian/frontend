@@ -169,3 +169,20 @@
     color: #FFFFFF;
 }
 
+
+
+/* ==========================================================================
+   Landscape mode
+   ========================================================================== */
+@media (orientation:landscape) {
+  .gallery__images,
+  .gallery__img,
+  .gallery-item {
+      height: 100%;
+  }
+  .gallery__img {
+      width: auto;
+  }
+
+
+}

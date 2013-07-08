@@ -3,9 +3,9 @@
 
 <div class="gallery gallery--lightbox" data-total="@gallery.size">
     <i class="gallery__watermark i i-guardian-logo"></i>
-    <ul class="unstyled">
+    <ul class="gallery__images unstyled">
         @gallery.images.zipWithRowInfo.map{ case(image, row) =>
-            <li class="js-gallery-item-@row.rowNum gallery-item @if(image.width >= image.height){landscape} else {portrait}"
+            <li class="js-gallery-item-@row.rowNum gallery-item @if(image.width >= image.height){gallery-item--landscape} else {gallery-item--portrait}"
                 data-index="@row.rowNum">
                     <img class="gallery__img"
                          src="@image.url.map(ImgSrc(_, GallerySmallTrail))"

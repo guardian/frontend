@@ -179,11 +179,11 @@ define(["bean",
         };
 
         this.layout = function() {
-            // Recalculates the position of assets
+            // Fixes the arrows at half the height of a 5:3 image
             var navHeight = (document.width / (5/3)) / 2;
             $navArrows.css('top', navHeight+'px');
 
-            galleryNode.style.height = (window.innerHeight - 48) + 'px';
+            galleryNode.style.height = (window.innerHeight - overlay.headerNode.offsetHeight) + 'px';
         };
     }
 
