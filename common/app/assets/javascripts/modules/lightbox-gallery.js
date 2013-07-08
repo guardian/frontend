@@ -17,7 +17,7 @@ define(["bean",
         url,
         Overlay) {
 
-    function LightboxGallery(context) {
+    function LightboxGallery(config, context) {
         var self = this,
             galleryNode,
             currentImage = 1,
@@ -31,12 +31,14 @@ define(["bean",
 
 
         this.init = function() {
-            bean.on(context, 'click', self.selector + ' a', function(e) {
-                e.preventDefault();
-                overlay = new Overlay();
-                self.bindEvents();
-                self.loadGallery(e.currentTarget.href);
-            });
+            if (config.switches.lightboxGalleries) {
+                bean.on(context, 'click', self.selector + ' a', function(e) {
+                    e.preventDefault();
+                    overlay = new Overlay();
+                    self.bindEvents();
+                    self.loadGallery(e.currentTarget.href);
+                });
+            }
         };
 
         this.bindEvents = function() {
@@ -118,8 +120,6 @@ define(["bean",
         };
 
         this.goTo = function(index) {
-            self.switchToFullImage();
-
             // Protecting against the boundaries
             if (index > totalImages) {
                 index = 1;
@@ -132,9 +132,6 @@ define(["bean",
 
                 if (itemIndex === index) {
                     el.style.display = 'block';
-
-                    // Match height of navs to that of current image
-                    var currentImageHeight = el.querySelector('.gallery__img').offsetHeight;
                 } else {
                     el.style.display = '';
                 }
@@ -142,6 +139,7 @@ define(["bean",
 
             currentImage = index;
             self.imageIndexNode.innerText = currentImage;
+            self.switchToFullImage();
         };
 
         this.switchToGrid = function(e) {
@@ -163,8 +161,11 @@ define(["bean",
             mode = 'fullimage';
             bonzo(galleryNode).removeClass('gallery--grid').addClass('gallery--full');
 
-            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
-                el.src = el.getAttribute('data-fullsrc');
+            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el, i) {
+                // Switch the current and next image to high quality src
+                if (i === (currentImage - 1) || i === (currentImage)) {
+                    el.src = el.getAttribute('data-fullsrc');
+                }
             });
 
             // Update CTAs
@@ -179,11 +180,11 @@ define(["bean",
         };
 
         this.layout = function() {
-            // Recalculates the position of assets
+            // Fixes the arrows at half the height of a 5:3 image
             var navHeight = (document.width / (5/3)) / 2;
             $navArrows.css('top', navHeight+'px');
 
-            galleryNode.style.height = (window.innerHeight - 48) + 'px';
+            galleryNode.style.height = (window.innerHeight - overlay.headerNode.offsetHeight) + 'px';
         };
     }
 

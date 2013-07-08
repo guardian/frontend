@@ -30,6 +30,13 @@ define(['common',
             edition: "UK"
         }});
 
+        // fake config
+        var config = {
+            switches: {
+                lightboxGalleries: true
+            }
+        };
+
         // setup fake server
         var server = sinon.fakeServer.create();
         server.autoRespond = true;
@@ -39,7 +46,7 @@ define(['common',
             fixtures.render(conf);
 
             common.$g('.overlay').remove();
-            gallery = new LightboxGallery(document.getElementById('lightbox-gallery'));
+            gallery = new LightboxGallery(config, document.getElementById('lightbox-gallery'));
             gallery.init();
 
             bean.fire(document.querySelector('.trail--gallery a'), 'click');
@@ -93,9 +100,9 @@ define(['common',
 
         it("should hide/show the furniture when clicking the image", function() {
             bean.fire(document.querySelector('.gallery-item'), 'click');
-            expect(document.querySelector('.gallery').className).toContain('gallery--showcaptions');
+            expect(document.querySelector('.gallery').className).toContain('gallery--hide-furniture');
             bean.fire(document.querySelector('.gallery-item'), 'click');
-            expect(document.querySelector('.gallery').className).not.toContain('gallery--showcaptions');
+            expect(document.querySelector('.gallery').className).not.toContain('gallery--hide-furniture');
         });
 
         it("should update the image counter on prev/next", function() {
