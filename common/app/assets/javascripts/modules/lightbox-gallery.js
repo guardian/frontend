@@ -180,10 +180,6 @@ define(["bean",
         };
 
         this.layout = function() {
-            // Fixes the arrows at half the height of a 5:3 image
-            var navHeight = (document.width / (5/3)) / 2;
-            $navArrows.css('top', navHeight+'px');
-
             galleryNode.style.height = (window.innerHeight - overlay.headerNode.offsetHeight) + 'px';
         };
     }

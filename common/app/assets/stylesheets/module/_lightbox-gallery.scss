@@ -72,7 +72,7 @@
     top: 0;
 
     .gallery-arrow-cta {
-        top: 25%;
+        top: 40px;
     }
 }
 
@@ -142,7 +142,7 @@
 
 .gallery__caption--text {
     @extend %type-10;
-    line-height: 18px;
+    line-height: 16px;
     padding-bottom: $baseline * 4;
     border-bottom: 1px solid #676767;
     margin-bottom: $baseline;
