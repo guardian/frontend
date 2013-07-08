@@ -3,16 +3,14 @@
 @admin_main("Fronts editor", env, isAuthed = true) {
 
     <div class="fronts">
-
         <div class="list-picker">
             <div class="list-picker__new">
                 <input placeholder="New trailblock" type="text" data-bind="value: newListName"/>
                 <span data-bind="click: createList">OK</span>
             </div>
             <div class="list-picker__title">Trail Blocks</div>
-            <div data-bind="foreach: listsAvailable">
-                <span class="list-picker__item" data-bind="text: name, click: $parent.displayList"></span>
-            </div>
+
+            <ul data-bind="template: {name: 'template_tree_editions', foreach: editions}"></ul>
         </div>
 
         <div class="finder">
@@ -37,6 +35,25 @@
             </div>
         </div>
     </div>
+
+    <script type="text/html" id="template_tree_editions">
+        <li class="list-picker__item">
+            <span  data-bind="text: id"></span>
+            <ul data-bind="template: {name: 'template_tree_sections', foreach: sections}"></ul>
+        </li>
+    </script>
+
+    <script type="text/html" id="template_tree_sections">
+        <li class="list-picker__item">
+            <span  data-bind="text: id"></span>
+            <ul data-bind="template: {name: 'template_tree_blocks', foreach: blocks}"></ul>
+        </li>
+    </script>
+
+    <script type="text/html" id="template_tree_blocks">
+        <li class="list-picker__item" data-bind="text: id"></li>
+    </script>
+
 
     <script type="text/html" id="template_article">
         <div class="trail cf" data-bind="attr: {'data-url': id}">

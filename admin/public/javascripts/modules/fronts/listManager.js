@@ -11,7 +11,8 @@ define([
     LatestArticles,
     ContentApi
 ) {
-    var maxDisplayedLists = 3;
+    var apiBase = '/fronts/api',
+        maxDisplayedLists = 3;
 
     return function(selector) {
 
@@ -165,12 +166,34 @@ define([
             return item;
         }
 
+        function nestedIds(arr, recurseOn, depth) {
+            var obsArr = knockout.observableArray(),
+                depth = depth || 0;
+
+            arr.forEach(function(item){
+                var i = { 
+                        id: knockout.observable(item.id)
+                    },
+                    prop;
+
+                if (depth < recurseOn.length) {
+                    prop = recurseOn[depth];
+                    i[prop] = nestedIds(item[prop], recurseOn, depth + 1);
+                }
+                obsArr.push(i);
+            });
+
+            return obsArr;
+        }
+
         function fetchAvailableLists() {
             reqwest({
-                url: '/frontsapi/lists',
+                url: apiBase,
                 type: 'json'
             }).then(
                 function(resp) {
+                    
+                    /*
                     []
                     .concat(resp.lists)
                     .sort(function (a, b) {return a > b ? 1 : -1;})
@@ -180,6 +203,11 @@ define([
                             viewModel.displayList(list);
                         }
                     });
+                    */
+
+                    viewModel.editions = nestedIds(resp.editions, ['sections', 'blocks']);
+                    knockout.applyBindings(viewModel);
+                    connectSortableLists();
                 },
                 function(xhr) { console.log(xhr); } // error
             );
@@ -188,8 +216,6 @@ define([
         this.init = function(callback) {
             viewModel.latestArticles.search();
             fetchAvailableLists();
-            connectSortableLists();
-            knockout.applyBindings(viewModel);
         };
 
     };
