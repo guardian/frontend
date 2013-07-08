@@ -151,12 +151,15 @@ define([
             ContentApi.decorateItems(list());
         };
 
-        viewModel.selectedBlock.subscribe(function(newValue) {
-            var list = '/' + viewModel.selectedEdition().id +
-                       '/' + viewModel.selectedSection().id +
-                       '/' + viewModel.selectedBlock().id
+        viewModel.selectedBlock.subscribe(function(block) {
+            if(block && block.id) {
+                var list = '/' + viewModel.selectedEdition().id +
+                           '/' + viewModel.selectedSection().id +
+                           '/' + block.id
 
-            viewModel.displayList(list);
+                viewModel.displayList(list);
+                console.log(list);                
+            }
         });
 
         function fetchAvailableLists() {
