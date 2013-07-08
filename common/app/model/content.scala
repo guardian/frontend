@@ -138,7 +138,7 @@ class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] =
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
   lazy val contentType = "Gallery"
-  lazy val landscapes = images.filter(i => i.aspectRatio >= 1.5 && i.aspectRatio <= 1.55)
+  lazy val landscapes = images.filter(i => i.width > i.height)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
