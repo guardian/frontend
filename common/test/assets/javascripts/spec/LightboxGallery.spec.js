@@ -132,5 +132,23 @@ define(['common',
             })
         });
 
+        it("should present error page if the server doesn't respond properly", function() {
+            common.$g('.overlay').remove();
+
+            var server = sinon.fakeServer.create();
+            server.autoRespond = true;
+            server.respondWith([500, { "Content-Type": "text/html"}, "Error"]);
+
+            gallery = new LightboxGallery(config, document.getElementById('lightbox-gallery'));
+            gallery.init();
+
+            bean.fire(document.querySelector('.trail--gallery a'), 'click');
+            waits(100);
+
+            runs(function() {
+                expect(document.querySelector('.overlay .preload-msg').innerText).toContain('Error loading gallery');
+            });
+        });
+
     });
 });
