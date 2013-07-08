@@ -12,27 +12,29 @@ object FrontsController extends Controller {
   }
 
   def readSection(section: String) = AuthAction{ request =>
-    Ok(
-      S3FrontsApi.getFront(section).getOrElse("")
-    ).as("application/json")
+    S3FrontsApi.getFront(section).map { json: String =>
+      Ok(json).as("application/json")
+    }.getOrElse(NotFound)
   }
 
   def readEdition(section: String, edition: String) = AuthAction{ request =>
-    Ok(
-      S3FrontsApi.getFront(section) map { r =>
-        Json.prettyPrint(Json.parse(r) \ "editions" \ edition)
-      } getOrElse("")
-    ).as("application/json")
+    S3FrontsApi.getFront(section).map { r =>
+      (Json.parse(r) \ "editions" \ edition).asOpt[JsValue].map { json =>
+        Ok(json).as("application/json")
+      }.getOrElse(NotFound)
+    }.getOrElse(NotFound)
   }
 
   def readBlock(section: String, edition: String, blockId: String) = AuthAction{ request =>
-    Ok(
-      S3FrontsApi.getFront(section) map { r =>
-        (Json.parse(r) \ "editions" \ edition \ "blocks").as[Seq[JsValue]] find { block =>
+    S3FrontsApi.getFront(section).map { r =>
+      (Json.parse(r) \ "editions" \ edition \ "blocks").asOpt[Seq[JsValue]].map { blocks =>
+        blocks.find { block =>
           (block \ "id").as[String].equals(blockId)
-        } map(Json.prettyPrint(_)) getOrElse("")
-      } getOrElse("")
-    ).as("application/json")
+        }.map { json =>
+          Ok(Json.prettyPrint(json)).as("application/json")
+        }.getOrElse(NotFound)
+      }.getOrElse(NotFound)
+    }.getOrElse(NotFound)
   }
 
 }

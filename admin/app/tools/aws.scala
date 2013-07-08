@@ -29,9 +29,11 @@ trait S3 extends Logging {
     try{
       val s3object = client.getObject(request)
       Some(Source.fromInputStream(s3object.getObjectContent).mkString)
-    } catch { case e: AmazonS3Exception if e.getStatusCode == 404 =>
-      log.warn("not found at %s - %s" format(bucket, key))
-      None
+    } catch {
+      case e: AmazonS3Exception if e.getStatusCode == 404 =>
+        log.warn("not found at %s - %s" format(bucket, key))
+        None
+      case _: Throwable => None
     } finally {
       client.shutdown()
     }
