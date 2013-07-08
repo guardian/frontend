@@ -19,7 +19,8 @@ define(['common',
                 id: 'lightbox-gallery',
                 fixtures: [
                     '<li class="trail trail--gallery">' +
-                    '  <a href="/link/to/gallery">Trail to gallery</a>' +
+                    '  <a href="/link/to/gallery" class="">Trail to gallery</a>' +
+                    '  <a href="/link/to/gallery?index=4" class="link-to-image">Trail to specific gallery image</a>' +
                     '</li>'
                 ]
         };
@@ -121,6 +122,14 @@ define(['common',
             expect(document.querySelector('.js-image-index').innerText).toBe('12');
             bean.fire(document.querySelector('.gallery .js-gallery-next'), 'click');
             expect(document.querySelector('.js-image-index').innerText).toBe('1');
+        });
+
+        it("should go to a particular image if the URL specifies it", function() {
+            bean.fire(document.querySelector('.trail--gallery .link-to-image'), 'click');
+            waits(100);
+            runs(function() {
+                expect(document.querySelector('.js-image-index').innerText).toBe('4');
+            })
         });
 
     });

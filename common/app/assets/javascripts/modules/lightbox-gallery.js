@@ -24,7 +24,6 @@ define(["bean",
             totalImages = 0,
             mode = 'fullimage',
             overlay,
-            layout = detect.getLayoutMode(),
             $navArrows;
 
         this.selector = '.trail--gallery';
@@ -33,10 +32,21 @@ define(["bean",
         this.init = function() {
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
+                    var galleryUrl      = e.currentTarget.href,
+                        galleryEndpoint = galleryUrl.split('?')[0] + '/lightbox.json'
+
+                    // Go to a specific image if it's in the query string. eg: index=3
+                    if (galleryUrl.indexOf('index=') !== -1) {
+                        var urlParams = url.getUrlVars({
+                            query: galleryUrl.split('?')[1]
+                        });
+                        currentImage = parseInt(urlParams['index'], 10);
+                    }
+
                     e.preventDefault();
                     overlay = new Overlay();
                     self.bindEvents();
-                    self.loadGallery(e.currentTarget.href);
+                    self.loadGallery(galleryEndpoint);
                 });
             }
         };
@@ -59,10 +69,9 @@ define(["bean",
             });
 
             bean.on(window, 'orientationchange', function() {
-                //self.mobileJumpToContent();
+                self.jumpToContent();
             });
 
-            bean.on(window, 'resize', common.debounce(this.layout));
         };
 
         this.loadGallery = function(url) {
@@ -79,10 +88,10 @@ define(["bean",
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
                     $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav .gallery-arrow-cta'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
+                    imagesContainer = galleryNode.querySelector('.gallery__images');
 
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
-                    self.layout();
                 }
             });
         };
@@ -102,11 +111,8 @@ define(["bean",
             self.fullModeCta    = overlay.headerNode.querySelector('.js-gallery-full');
         };
 
-        this.mobileJumpToContent = function() {
-            // Hide browser chrome on mobile
-            if (layout === 'mobile') {
-                window.scrollTo(0, galleryNode.offsetTop);
-            }
+        this.jumpToContent = function() {
+            window.scrollTo(0, overlay.headerNode.offsetHeight);
         };
 
         this.prev = function(e) {
@@ -177,10 +183,10 @@ define(["bean",
 
         this.toggleFurniture = function() {
             bonzo(galleryNode).toggleClass('gallery--hide-furniture');
-        };
+            if (galleryNode.className.indexOf('gallery--hide-furniture') !== -1) {
+                self.jumpToContent();
+            }
 
-        this.layout = function() {
-            galleryNode.style.height = (window.innerHeight - overlay.headerNode.offsetHeight) + 'px';
         };
     }
 
