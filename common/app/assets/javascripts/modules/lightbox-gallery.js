@@ -182,6 +182,8 @@ define(["bean",
 
         this.toggleFurniture = function() {
             bonzo(galleryNode).toggleClass('gallery--hide-furniture');
+
+            // When the furniture is hidden, hide the browser chrome by jumping to the content
             if (galleryNode.className.indexOf('gallery--hide-furniture') !== -1) {
                 self.jumpToContent();
             }
