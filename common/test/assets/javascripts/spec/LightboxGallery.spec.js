@@ -74,7 +74,7 @@ define(['common',
 
         it("should switch to thumbnail view and update the CTAs", function() {
             bean.fire(document.querySelector('.js-gallery-grid'), 'click');
-            expect(document.querySelector('.gallery').className).not.toContain('gallery--full');
+            expect(document.querySelector('.gallery').className).not.toContain('gallery--fullimage-mode');
             expect(document.querySelector('.gallery').className).toContain('gallery--grid');
             expect(document.querySelector('.js-gallery-full').style.display).toBe('block');
             expect(document.querySelector('.js-gallery-grid').style.display).toBe('none');
@@ -83,8 +83,8 @@ define(['common',
         it("should switch to full image view and update the CTAs", function() {
             bean.fire(document.querySelector('.js-gallery-grid'), 'click');
             bean.fire(document.querySelector('.js-gallery-full'), 'click');
-            expect(document.querySelector('.gallery').className).toContain('gallery--full');
-            expect(document.querySelector('.gallery').className).not.toContain('gallery--grid');
+            expect(document.querySelector('.gallery').className).toContain('gallery--fullimage-mode');
+            expect(document.querySelector('.gallery').className).not.toContain('gallery--grid-mode');
             expect(document.querySelector('.js-gallery-full').style.display).toBe('none');
             expect(document.querySelector('.js-gallery-grid').style.display).toBe('block');
         });
@@ -94,7 +94,7 @@ define(['common',
             bean.fire(document.querySelector('.gallery .js-gallery-item-5'), 'click');
 
 
-            expect(document.querySelector('.gallery').className).toContain('gallery--full');
+            expect(document.querySelector('.gallery').className).toContain('gallery--fullimage-mode');
             expect(document.querySelector('.gallery .js-gallery-item-5').style.display).toBe('block');
             expect(document.querySelector('.js-image-index').innerText).toBe('5');
         });

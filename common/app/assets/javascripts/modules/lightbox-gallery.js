@@ -161,7 +161,7 @@ define(["bean",
 
         this.switchToGrid = function(e) {
             mode = 'grid';
-            bonzo(galleryNode).removeClass('gallery--full').addClass('gallery--grid');
+            bonzo(galleryNode).removeClass('gallery--fullimage-mode').addClass('gallery--grid-mode');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
                 el.src = el.getAttribute('data-src');
@@ -176,7 +176,7 @@ define(["bean",
 
         this.switchToFullImage = function(e) {
             mode = 'fullimage';
-            bonzo(galleryNode).removeClass('gallery--grid').addClass('gallery--full');
+            bonzo(galleryNode).removeClass('gallery--grid-mode').addClass('gallery--fullimage-mode');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el, i) {
                 // Switch the current and next image to high quality src

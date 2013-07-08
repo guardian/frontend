@@ -27,7 +27,7 @@ i.gallery__watermark {
 /* ==========================================================================
    Thumbnail/Single Full image modes
    ========================================================================== */
-.gallery--grid {
+.gallery--grid-mode {
 
     .gallery__watermark,
     .gallery__caption,
@@ -53,7 +53,7 @@ i.gallery__watermark {
 }
 
 
-.gallery--full {
+.gallery--fullimage-mode {
     .gallery-item {
         display: none;
         text-align: center;
