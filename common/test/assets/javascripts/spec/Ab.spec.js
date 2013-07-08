@@ -49,7 +49,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(variantSpy).toHaveBeenCalled();
         });
 
-        it('should put all non-participating users in a null group', function() {
+        it('should put all non-participating users in a "not in test" group', function() {
             test.audience = 0;
             ab.init({
                 switches: {
@@ -58,7 +58,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             });
             expect(controlSpy).not.toHaveBeenCalled();
             var storedParticipated = JSON.parse(localStorage.getItem(participationsKey)).value;
-            expect(storedParticipated.DummyTest.variant).toBe("null");
+            expect(storedParticipated.DummyTest.variant).toBe("notintest");
         });
 
         it('should store all the tests user is in', function() {
@@ -138,20 +138,30 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
         });
 
         it('should refuse to run the after the expiry date', function () {
+            
             test.expiry = "2012-01-01";
             ab.init({
                 switches: {
                     abDummyTest: true
                 }
             });
-            expect(controlSpy.called || variantSpy.called).toBeFalsy();
-            expect(ab.getParticipations()).toEqual([]);
+        });
+
+        it('should remove expired tests from being logged', function () {
+            localStorage.setItem(participationsKey, '{"value":{"DummyTest":{"variant":"null"}}}');
+            test.expiry = "2012-01-01";
+            ab.init({
+                switches: {
+                    abDummyTest: true
+                }
+            });
+            expect(localStorage.getItem(participationsKey)).toBe('{"value":{}}');
         });
         
         it('should run the test if it has not expired', function () {
             var futureDate = new Date();
             futureDate.setHours(futureDate.getHours() + 10);
-            test.expiry = futureDate;
+            test.expiry = futureDate.toString();
             ab.init({
                 switches: {
                     abDummyTest: true
