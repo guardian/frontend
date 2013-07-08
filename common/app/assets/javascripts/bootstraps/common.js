@@ -147,7 +147,7 @@ define([
 
         initLightboxGalleries: function () {
             common.mediator.on('page:common:ready', function(config, context) {
-                var galleries = new LightboxGallery(context);
+                var galleries = new LightboxGallery(config, context);
                 galleries.init(context);
             });
         },
@@ -193,7 +193,7 @@ define([
                         if (audsci) {
                             viewData.audsci_json = JSON.stringify(audsci);
                         }
-                        
+
                         var participations = ab.getParticipations(),
                             participationsKeys = Object.keys(participations);
 
@@ -203,7 +203,7 @@ define([
                             });
                             viewData.experiments_json = JSON.stringify(testData);
                         }
-                            
+
 
 
                         return viewData;

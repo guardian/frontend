@@ -17,7 +17,7 @@ define(["bean",
         url,
         Overlay) {
 
-    function LightboxGallery(context) {
+    function LightboxGallery(config, context) {
         var self = this,
             galleryNode,
             currentImage = 1,
@@ -31,12 +31,14 @@ define(["bean",
 
 
         this.init = function() {
-            bean.on(context, 'click', self.selector + ' a', function(e) {
-                e.preventDefault();
-                overlay = new Overlay();
-                self.bindEvents();
-                self.loadGallery(e.currentTarget.href);
-            });
+            if (config.switches.lightboxGalleries) {
+                bean.on(context, 'click', self.selector + ' a', function(e) {
+                    e.preventDefault();
+                    overlay = new Overlay();
+                    self.bindEvents();
+                    self.loadGallery(e.currentTarget.href);
+                });
+            }
         };
 
         this.bindEvents = function() {
