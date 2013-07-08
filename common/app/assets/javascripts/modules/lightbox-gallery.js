@@ -118,8 +118,6 @@ define(["bean",
         };
 
         this.goTo = function(index) {
-            self.switchToFullImage();
-
             // Protecting against the boundaries
             if (index > totalImages) {
                 index = 1;
@@ -132,9 +130,6 @@ define(["bean",
 
                 if (itemIndex === index) {
                     el.style.display = 'block';
-
-                    // Match height of navs to that of current image
-                    var currentImageHeight = el.querySelector('.gallery__img').offsetHeight;
                 } else {
                     el.style.display = '';
                 }
@@ -142,6 +137,7 @@ define(["bean",
 
             currentImage = index;
             self.imageIndexNode.innerText = currentImage;
+            self.switchToFullImage();
         };
 
         this.switchToGrid = function(e) {
@@ -163,8 +159,11 @@ define(["bean",
             mode = 'fullimage';
             bonzo(galleryNode).removeClass('gallery--grid').addClass('gallery--full');
 
-            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
-                el.src = el.getAttribute('data-fullsrc');
+            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el, i) {
+                // Switch the current and next image to high quality src
+                if (i === (currentImage - 1) || i === (currentImage)) {
+                    el.src = el.getAttribute('data-fullsrc');
+                }
             });
 
             // Update CTAs
