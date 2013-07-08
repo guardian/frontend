@@ -177,6 +177,7 @@ i.gallery__watermark {
 
 .gallery__counter {
     @extend %type-10;
+    margin-left: 0;
     letter-spacing: -1px;
     line-height: 44px;
     color: #AAAAAA;

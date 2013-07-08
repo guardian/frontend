@@ -16,7 +16,6 @@
 }
 
 .overlay__header {
-    @include box-sizing(border-box);
     height: $baseline * 12;
 }
 
@@ -44,15 +43,11 @@
    ========================================================================== */
 .overlay__cta {
     height: $baseline * 12;
-    padding: 0;
     padding: 0 $gutter / 2;
     color: #FFFFFF;
     float: left;
     border: 0;
     background: transparent;
-}
-
-.overlay__cta:first-child {
     margin-left: $gutter / 2;
 }
 
