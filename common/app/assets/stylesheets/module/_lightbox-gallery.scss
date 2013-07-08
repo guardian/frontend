@@ -39,7 +39,11 @@ i.gallery__watermark {
     .gallery-item {
         @include fix-aspect-ratio(5, 3, 140px);
         float: left;
-        margin: $gutter $gutter / 2;
+        margin: $gutter / 2;
+    }
+
+    .gallery-item--portrait .gallery__img {
+        margin-top: -50%;
     }
 
     .gallery__img {
@@ -75,6 +79,13 @@ i.gallery__watermark {
     display: block;
     position: absolute;
     top: 0;
+
+    &,
+    &:active,
+    &:focus {
+        background: rgba(0,0,0,0); // Makes transparent element clickable in IE9
+        outline: none;
+    }
 
     .gallery-arrow-cta {
         top: 40px;
