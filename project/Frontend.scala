@@ -75,6 +75,14 @@ object Frontend extends Build with Prototypes {
       "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
     )
   )
+  val porter = application("porter").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-camel" % "2.1.0",
+      "org.apache.camel" % "camel-quartz" % "2.11.0",
+      "com.typesafe.slick" %% "slick" % "1.0.0",
+      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
+    )
+  )
 
   val frontsApi = application("fronts-api").dependsOn(commonWithTests)
 
@@ -121,6 +129,7 @@ object Frontend extends Build with Prototypes {
     diagnostics,
     styleGuide,
     admin,
+    porter,
     frontsApi
   )
 }
