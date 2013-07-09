@@ -37,18 +37,24 @@ i.gallery__watermark {
     }
 
     .gallery-item {
-        @include fix-aspect-ratio(5, 3, 140px);
+        @include fix-aspect-ratio(1, 1, 140px);
         float: left;
         margin: $gutter / 2;
         cursor: pointer;
     }
 
     .gallery-item--portrait .gallery__img {
-        margin-top: -50%;
+        position: absolute;
+        width: 100%;
+        height: auto;
+        top: -10%;
     }
 
-    .gallery__img {
+    .gallery-item--landscape .gallery__img {
         position: absolute;
+        width: auto;
+        height: 100%;
+        left: -30%;
     }
 
 }
