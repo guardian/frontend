@@ -52,7 +52,7 @@ object FrontsController extends Controller with Logging {
               case Some(true) => block.trails.indexWhere(_.id == update.position.getOrElse("")) + 1
               case _          => block.trails.indexWhere(_.id == update.position.getOrElse(""))
             }
-            val splitList = block.trails.splitAt(index)
+            val splitList = block.trails.filterNot(_.id == update.item).splitAt(index)
             val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
             val newSection = sec.copy(blocks = sec.blocks.filterNot(_.id == block.id) :+ block.copy(trails = trails))
             S3FrontsApi.putFront(edition, section, Json.prettyPrint(Json.toJson(newSection))) //Don't need pretty, only for us devs
@@ -60,6 +60,7 @@ object FrontsController extends Controller with Logging {
           } getOrElse InternalServerError("Parse Error")
         } getOrElse NotFound("No Edition or Section")
       } getOrElse NotFound("Invalid JSON")
+
     } getOrElse NotFound("Problem parsing json")
   }
 
