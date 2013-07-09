@@ -37,27 +37,26 @@ define([
         }
 
         function addList(id, articles) {
-            var list = knockout.observableArray();
-            hydrateList(list, articles);
             dropList(id);
             viewModel.listsDisplayed.push({
                 id: id,
                 crumbs: id.split(/\//g),
-                list: list
+                list: hydratedList(articles)
             });
             limitListsDisplayed(maxDisplayedLists);
             connectSortableLists();
             startPoller();
         }
 
-        function hydrateList(list, articles) {
-            list.removeAll();
-            [].concat(articles).forEach(function(item){
+        function hydratedList(articles) {
+            var list = knockout.observableArray();
+            articles.forEach(function(item){
                 list.push(new Article({
                     id: item.id
                 }));
             });
             ContentApi.decorateItems(list());
+            return list;
         }
 
         function dropList(id) {
@@ -179,7 +178,7 @@ define([
                 viewModel.listsDisplayed().forEach(function(displayed){
                     loadList(displayed.id, function(id, articles) {
                         if (poller) {
-                            hydrateList(displayed.list, articles);
+                            displayed.list = hydratedList(articles);
                         }
                     });
                 });
