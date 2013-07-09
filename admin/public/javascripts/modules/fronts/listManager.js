@@ -128,23 +128,19 @@ define([
                 var listId = $(list).attr('data-list-id'),
                     inList,
                     position,
-                    endpoint,
-                    method,
-                    delta;
+                    delta,
+                    opts;
 
                 if (!listId) { return; }
 
                 inList = $("[data-url='" + item + "']", list);
 
                 if (inList.length) {
-                    method = 'post',
-                    endpoint = apiBase + '/' + listId;
                     delta = {
                         item: item
                     };
 
                     position = inList.next().data('url');
-
                     if (position) {
                         delta.position = position;
                     } else {
@@ -155,18 +151,22 @@ define([
                         } 
                     }
 
+                    opts = {
+                        method: 'post',
+                        url: apiBase + '/' + listId,
+                        type: 'json',
+                        contentType: 'application/json',
+                        data: JSON.stringify(delta)
+                    };
+
                 } else {
-                    method = 'delete';
-                    endpoint = apiBase + '/' + listId + '/' + item;
+                    opts = {
+                        method: 'delete',
+                        url: apiBase + '/' + listId + '/' + item,
+                    };
                 }
 
-                reqwest({
-                    url: endpoint,
-                    type: 'json',
-                    method: method,
-                    contentType: 'application/json',
-                    data: JSON.stringify(delta)
-                }).then(
+                reqwest(opts).then(
                     function(resp) { },
                     function(xhr) { console.log(xhr); } // error
                 );
