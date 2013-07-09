@@ -16,27 +16,21 @@ define([
 
     return function(selector) {
 
-        var self = this,
-            viewModel = {
-                latestArticles: new LatestArticles(),
-                listsDisplayed: knockout.observableArray(),
+        var viewModel = {},
+            poller,
+            self = this;
 
-                selectedEdition : knockout.observable(),
-                selectedSection : knockout.observable(),
-                selectedBlock   : knockout.observable()
-            };
-
-        function displayList(id) {
+        function loadList(id, callback) {
             reqwest({
                 url: apiBase + '/' + id,
                 type: 'json'
             }).then(
                 function(resp) {
-                    addList(id, resp.trails)
+                    callback(id, resp.trails)
                 },
                 function(xhr) {
                     if(xhr.status === 404) {
-                        addList(id, [])
+                        callback(id, [])
                     }
                 }
             );
@@ -44,11 +38,7 @@ define([
 
         function addList(id, articles) {
             var list = knockout.observableArray();
-            [].concat(articles).forEach(function(item){
-                list.push(new Article({
-                    id: item.id
-                }));
-            });
+            hydrateList(list, articles);
             dropList(id);
             viewModel.listsDisplayed.unshift({
                 id: id,
@@ -56,8 +46,18 @@ define([
                 list: list
             });
             limitListsDisplayed(maxDisplayedLists);
-            ContentApi.decorateItems(list());
             connectSortableLists();
+            startPoller();
+        }
+
+        function hydrateList(list, articles) {
+            list.removeAll();
+            [].concat(articles).forEach(function(item){
+                list.push(new Article({
+                    id: item.id
+                }));
+            });
+            ContentApi.decorateItems(list());
         }
 
         function dropList(id) {
@@ -66,7 +66,6 @@ define([
                 return item.id === id;
             })
         }
-        viewModel.dropList = dropList;
 
         function limitListsDisplayed(max) {
             if(viewModel.listsDisplayed().length > max) {
@@ -91,6 +90,7 @@ define([
                 start: function(event, ui) {
                     item = ui.item;
                     toList = fromList = ui.item.parent();
+                    stopPoller();
                 },
                 stop: function(event, ui) {
                     saveListDeltas(
@@ -98,6 +98,7 @@ define([
                         fromList[0],
                         toList[0]
                     );
+                    startPoller();
                 },
                 change: function(event, ui) {
                     if(ui.sender) toList = ui.placeholder.parent();
@@ -108,7 +109,7 @@ define([
 
         function saveListDeltas(item, fromList, toList) {
             var lists = [];
-
+                    
             item = $(item).data('url');
 
             if (!item || !fromList || !toList) {
@@ -171,23 +172,32 @@ define([
             });
         };
 
-        viewModel.selectedBlock.subscribe(function(block) {
-            if(block && block.id) {
-                var id = viewModel.selectedEdition().id + '/' +
-                         viewModel.selectedSection().id + '/' + 
-                         block.id;
+        function startPoller() {
+            stopPoller();
+            poller = setInterval(function(){
+                viewModel.listsDisplayed().forEach(function(displayed){
+                    loadList(displayed.id, function(id, articles) {
+                        if (poller) {
+                            hydrateList(displayed.list, articles);
+                        }
+                    });
+                });
+            }, 2000);
+        }
 
-                displayList(id);
-            }
-        });
+        function stopPoller() {
+            clearInterval(poller);
+            poller = false;
+        }
 
-        function fetchAvailableLists() {
+        function fetchSchema() {
             reqwest({
                 url: apiBase,
                 type: 'json'
             }).then(
                 function(resp) {
-                    viewModel.editions = resp.editions;
+                    viewModel.editions = resp.editions;                    
+                    // Render the page
                     knockout.applyBindings(viewModel);
                     connectSortableLists();
                 },
@@ -196,8 +206,28 @@ define([
         };
 
         this.init = function(callback) {
+
+            viewModel.latestArticles  = new LatestArticles();
+            viewModel.listsDisplayed  = knockout.observableArray();
+
+            viewModel.selectedEdition = knockout.observable();
+            viewModel.selectedSection = knockout.observable();
+            viewModel.selectedBlock   = knockout.observable();
+            viewModel.dropList        = dropList;
+
+            fetchSchema();
+
+            viewModel.selectedBlock.subscribe(function(block) {
+                if(block && block.id) {
+                    var id = viewModel.selectedEdition().id + '/' +
+                             viewModel.selectedSection().id + '/' + 
+                             block.id;
+
+                    loadList(id, addList);
+                }
+            });
+
             viewModel.latestArticles.search();
-            fetchAvailableLists();
         };
 
     };
