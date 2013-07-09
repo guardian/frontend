@@ -40,7 +40,7 @@ define([
             var list = knockout.observableArray();
             hydrateList(list, articles);
             dropList(id);
-            viewModel.listsDisplayed.unshift({
+            viewModel.listsDisplayed.push({
                 id: id,
                 crumbs: id.split(/\//g),
                 list: list
@@ -69,7 +69,7 @@ define([
 
         function limitListsDisplayed(max) {
             if(viewModel.listsDisplayed().length > max) {
-                viewModel.listsDisplayed.pop();
+                viewModel.listsDisplayed.shift();
                 limitListsDisplayed(max);
             }
         }
@@ -164,7 +164,8 @@ define([
                     url: endpoint,
                     type: 'json',
                     method: method,
-                    data: JSON.stringify(delta)
+                    contentType: 'application/json',
+                    data: delta
                 }).then(
                     function(resp) { },
                     function(xhr) { console.log(xhr); } // error

@@ -473,13 +473,19 @@ a.cta, .cta a {
 }
 
 .fronts .finder {
-    background-color: #ddd;
+    background-color: #ccc;
     padding: 7px 7px 5px 7px;
 }
 
 .fronts .list-picker {
-    background-color: #ddd;
+    background-color: #ccc;
     padding: 7px 7px 5px 7px;
+
+    float: right;
+    text-align: right;
+    width: 75%;
+    border-left: 10px solid #fff;
+    box-sizing: border-box;
 }
 
 .fronts .list-picker__title,
@@ -606,3 +612,7 @@ a.cta, .cta a {
 .fronts input[type="text"] {
 }
 
+.fronts select {
+    width: 15%;
+    margin: -2px 0 0 0;
+}
