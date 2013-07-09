@@ -70,7 +70,9 @@ define(["bean",
     };
 
     Overlay.prototype.remove = function() {
-        this.node.parentNode.removeChild(this.node);
+        if (this.node.parentNode) {
+            this.node.parentNode.removeChild(this.node);
+        }
     };
 
     return Overlay;

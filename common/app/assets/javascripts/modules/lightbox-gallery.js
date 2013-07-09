@@ -69,7 +69,8 @@ define(["bean",
             common.mediator.on('modules:overlay:close', common.debounce(function(e){
                 // Needs a delay to give time for analytics to fire before DOM removal
                 overlay.remove();
-            }, 2000));
+                return true;
+            }, 500));
 
             bean.on(window, 'orientationchange', function() {
                 self.layout();
