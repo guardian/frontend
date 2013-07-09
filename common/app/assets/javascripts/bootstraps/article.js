@@ -93,7 +93,9 @@ define([
                                 loadSummary: true,
                                 loadScorecard: true,
                                 summaryElement: '.article-headline',
-                                scorecardElement: '.article-headline' };
+                                scorecardElement: '.article-headline',
+                                summaryManipulation: 'after',
+                                scorecardManipulation: 'after' };
                     cricket(config, context, options);
                 }
             });

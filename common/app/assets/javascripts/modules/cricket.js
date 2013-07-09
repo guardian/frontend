@@ -5,39 +5,37 @@ define(['common', 'bonzo', 'ajax'], function (common, bonzo, ajax) {
         /*
          Accepts these options:
 
-         url               - string
-         loadSummary       - bool
-         loadScorecard     - bool
-         summaryElement    - the element which the summary will be placed after
-         scorecardElement  - the element which the scorecard will be placed after
+         url                    - string
+         loadSummary            - bool
+         loadScorecard          - bool
+         summaryElement         - the element which the summary will be placed after
+         scorecardElement       - the element which the scorecard will be placed after
+         summaryManipulation    - the manipulation type for the summary DOM injection
+         scorecardManipulation  - the manipulation type for the scorecard DOM injection
          */
 
-        var url = "/sport" + options.url + ".json";
-
-        var summaryContainer = document.createElement("div");
-        summaryContainer.className = "after-headline";
-        var summaryInto = bonzo(summaryContainer);
-
-        var miniScorecardContainer = document.createElement("div");
-        miniScorecardContainer.className = "after-headline";
-        var scorecardInto = bonzo(miniScorecardContainer);
+        if (!config.switches.liveCricket) {
+            return
+        }
 
         ajax({
-            url: url,
+            url: "/sport" + options.url + ".json",
             type: 'json',
             crossOrigin: true
         }).then(
             function(resp) {
-                if (!scorecardInto.hasClass('lazyloaded') && options.loadScorecard) {
-                    scorecardInto.html(resp.scorecard);
-                    scorecardInto.addClass('lazyloaded');
-                    bonzo(context.querySelector('.article-headline')).after(miniScorecardContainer);
+                if (options.loadScorecard) {
+                    var $scorecardInto = bonzo.create('<div>' + resp.scorecard + '</div>');
+                    bonzo($scorecardInto).addClass('after-headline lazyloaded');
+                    common.$g(options.scorecardElement)[options.scorecardManipulation]($scorecardInto);
+
                     common.mediator.emit('modules:cricketscorecard:loaded', config, context);
                 }
-                if (!summaryInto.hasClass('lazyloaded') && options.loadSummary) {
-                    summaryInto.html(resp.summary);
-                    summaryInto.addClass('lazyloaded');
-                    bonzo(context.querySelector('.article-headline')).after(summaryContainer);
+                if (options.loadSummary) {
+                    var $summaryInto = bonzo.create('<div>' + resp.summary + '</div>');
+                    bonzo($summaryInto).addClass('after-headline lazyloaded');
+                    common.$g(options.summaryElement)[options.summaryManipulation]($summaryInto);
+
                     common.mediator.emit('modules:cricketsummary:loaded', config, context);
                 }
             },
