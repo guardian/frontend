@@ -7,6 +7,7 @@ import conf._
 import play.api.mvc._
 import model.Trailblock
 import scala.Some
+import play.api.libs.json._
 
 import concurrent.Future
 
@@ -110,10 +111,20 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
       if (trailblocks.isEmpty) {
         InternalServerError
       } else {
-        val htmlResponse = () => views.html.front(frontPage, trailblocks)
-        val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
-        renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+        Cached(frontPage){
+          if (request.isJson)
+            JsonComponent(
+              "html" -> views.html.fragments.frontBody(frontPage, trailblocks),
+              "trails" -> trailblocks.headOption.map{ trailblock =>
+                trailblock.trails.map(_.url)
+              }.getOrElse(Nil),
+              "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
+            )
+          else
+            Ok(views.html.front(frontPage, trailblocks))
+        }
       }
+
     }.getOrElse(NotFound) //TODO is 404 the right thing here
   }
 
