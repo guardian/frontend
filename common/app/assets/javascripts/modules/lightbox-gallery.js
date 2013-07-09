@@ -163,7 +163,7 @@ define(["bean",
             });
 
             currentImage = index;
-            self.imageIndexNode.innerText = currentImage;
+            self.imageIndexNode.innerHTML = currentImage;
             self.switchToFullImage();
         };
 
