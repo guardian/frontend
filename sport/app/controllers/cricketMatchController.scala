@@ -26,12 +26,13 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
     Async {
       promiseOfCricketMatch.map { matchSummary =>
 
-          val page = CricketMatchPage(new Match(matchSummary))
+          val page = CricketMatchPage(matchSummary)
 
           Cached(60){
             if (request.isJson)
               JsonComponent(
-                "html" -> views.html.fragments.cricketMatchSummary(page.theMatch).toString
+                "summary" -> views.html.fragments.cricketMatchSummary(page.theMatch).toString,
+                "scorecard" -> views.html.fragments.cricketMiniScorecard(page.theMatch).toString
               )
             else
               Ok(views.html.cricketMatch(page))
