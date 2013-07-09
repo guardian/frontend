@@ -1,5 +1,4 @@
 define(["bean",
-        "swipe",
         "common",
         "ajax",
         "bonzo",
@@ -9,7 +8,6 @@ define(["bean",
         ],
     function (
         bean,
-        Swipe,
         common,
         ajax,
         bonzo,
@@ -200,6 +198,7 @@ define(["bean",
                 self.jumpToContent();
             }
 
+            common.mediator.emit('module:clickstream:interaction', 'Toggle gallery furniture');
         };
 
         this.layout = function() {
