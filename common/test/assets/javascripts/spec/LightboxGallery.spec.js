@@ -38,6 +38,13 @@ define(['common',
             }
         };
 
+        // fake window
+        var fakeWindow = {
+            location: {
+                hash: ''
+            }
+        };
+
         // setup fake server
         var server = sinon.fakeServer.create();
         server.autoRespond = true;
@@ -147,6 +154,19 @@ define(['common',
 
             runs(function() {
                 expect(document.querySelector('.overlay .preload-msg').innerText).toContain('Error loading gallery');
+            });
+        });
+
+        it("should put #lg in the url when active, to preserve back button", function() {
+            gallery = new LightboxGallery(config, document.getElementById('lightbox-gallery'));
+            gallery.init({
+                urlHashEnabled: true,
+                window: fakeWindow
+            });
+
+            bean.fire(document.querySelector('.trail--gallery a'), 'click');
+            runs(function() {
+                expect(fakeWindow.location.hash).toContain('lg');
             });
         });
 

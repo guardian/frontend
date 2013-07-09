@@ -27,8 +27,13 @@ define(["bean",
         this.selector = '.trail--gallery';
         this.galleryEndpoint = '';
 
+        this.init = function(opts) {
+            self.opts = common.extend({
+                urlHashEnabled: false,
+                window: window // Hook for testing
+            }, opts);
 
-        this.init = function() {
+
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl = e.currentTarget.href;
@@ -66,21 +71,24 @@ define(["bean",
                 }
             });
 
-            common.mediator.on('modules:overlay:close', common.debounce(function(e){
-                // Needs a delay to give time for analytics to fire before DOM removal
-                overlay.remove();
-                return true;
-            }, 500));
-
-            bean.on(window, 'orientationchange', function() {
+            bean.on(self.opts.window, 'orientationchange', function() {
                 self.layout();
                 self.jumpToContent();
             });
 
+            common.mediator.on('modules:overlay:close', this.removeOverlay);
+
+            bean.on(self.opts.window, 'hashchange', function() {
+                if (self.opts.urlHashEnabled && window.location.hash.indexOf('lg') === -1) {
+                    overlay.hide();
+                    self.removeOverlay();
+                }
+            });
         };
 
         this.loadGallery = function() {
             overlay.showLoading();
+            self.updateHash('lg');
 
             ajax({
                 url: self.galleryEndpoint,
@@ -207,6 +215,19 @@ define(["bean",
             // Make overlay large enough to allow the browser chrome to be hidden
             var browserChrome = (window.screen.height - window.innerHeight);
             overlay.node.style.minHeight = window.screen.height + browserChrome + 'px';
+        };
+
+        this.removeOverlay = common.debounce(function(e){
+            // Needs a delay to give time for analytics to fire before DOM removal
+            overlay.remove();
+            return true;
+        }, 500);
+
+
+        this.updateHash = function(str) {
+            if (self.opts.urlHashEnabled) {
+                self.opts.window.location.hash = str;
+            }
         };
     }
 
