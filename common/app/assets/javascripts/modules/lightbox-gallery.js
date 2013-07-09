@@ -77,7 +77,7 @@ define(["bean",
                 setTimeout(function() {
                     overlay.hide();
                     self.removeOverlay();
-                },10)
+                },10);
             });
         };
 
