@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 .competitions-date,
 .football-table-header {
     padding-top: $baseline*2;
@@ -80,9 +78,6 @@ a.competition-title {
     position: relative;
     margin-bottom: 0;
     border: none;
-    padding: 0;
-    font-weight: normal;
-    font-family: $sans-serif;
     overflow: hidden;
     margin-right: 36px; // offsets the FT/HT box
 }
@@ -356,8 +351,3 @@ a.competition-title {
         padding-top: 12px;
     }
 }
-
-
-
-
-
