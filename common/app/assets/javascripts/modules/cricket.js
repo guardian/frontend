@@ -28,15 +28,13 @@ define(['common', 'bonzo', 'ajax'], function (common, bonzo, ajax) {
             crossOrigin: true
         }).then(
             function(resp) {
-                if (!scorecardInto.hasClass('lazyloaded') && options.loadScorecard)
-                {
+                if (!scorecardInto.hasClass('lazyloaded') && options.loadScorecard) {
                     scorecardInto.html(resp.scorecard);
                     scorecardInto.addClass('lazyloaded');
                     bonzo(context.querySelector('.article-headline')).after(miniScorecardContainer);
                     common.mediator.emit('modules:cricketscorecard:loaded', config, context);
                 }
-                if (!summaryInto.hasClass('lazyloaded') && options.loadSummary)
-                {
+                if (!summaryInto.hasClass('lazyloaded') && options.loadSummary) {
                     summaryInto.html(resp.summary);
                     summaryInto.addClass('lazyloaded');
                     bonzo(context.querySelector('.article-headline')).after(summaryContainer);
