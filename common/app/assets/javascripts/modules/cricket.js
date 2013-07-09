@@ -9,7 +9,7 @@ define(['common', 'bonzo', 'ajax'], function (common, bonzo, ajax) {
          loadSummary       - bool
          loadScorecard     - bool
          summaryElement    - the element which the summary will be placed after
-         scorecardElement  - the element which the summary will be placed after
+         scorecardElement  - the element which the scorecard will be placed after
          */
 
         var url = "/sport" + options.url + ".json";
