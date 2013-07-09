@@ -43,7 +43,7 @@ define(["bean",
     Overlay.prototype.showLoading = function() {
         this.setBody(this.loadingHtml)
         this.show();
-    }
+    };
 
     Overlay.prototype.show = function() {
         // Can't reliably use position:fixed on mobile. This works around it (well, it tries)
