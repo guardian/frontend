@@ -33,7 +33,9 @@ trait S3 extends Logging {
       case e: AmazonS3Exception if e.getStatusCode == 404 =>
         log.warn("not found at %s - %s" format(bucket, key))
         None
-      case _: Throwable => None
+      case e: AmazonS3Exception =>
+        log.warn("S3 Exception: %s".format(e.toString))
+        None
     } finally {
       client.shutdown()
     }
@@ -58,7 +60,7 @@ object S3FrontsApi extends S3 {
   override lazy val bucket = Configuration.aws.frontsApiBucket
   lazy val frontsKey = AdminConfiguration.frontsKey
 
-  def getSchema() = get(s"${frontsKey}/schema.json")
+  def getSchema = get(s"${frontsKey}/schema.json")
   def getFront(edition: String, section: String) = get(s"${frontsKey}/${edition}/${section}/latest/latest.json")
   def putFront(edition: String, section: String, json: String) =
     put(s"${frontsKey}/${edition}/${section}/latest/latest.json", json, "application/json")
