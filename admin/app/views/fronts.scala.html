@@ -31,7 +31,9 @@
             <div class="trailblock">
                 <div class="list-header">
                     <a class="list-header__control" data-bind="click: $parent.dropList">HIDE</a>
-                    <span class="list-header__title" data-bind="text: id"></span>
+                    <span class="list-header__title" data-bind="foreach: crumbs">
+                        <span data-bind="text: $data"></span> | 
+                    </span>
                 </div>
                 <div class="connectedList" data-bind="
                     attr: {'data-list-id': id},

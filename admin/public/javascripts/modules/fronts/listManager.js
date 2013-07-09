@@ -28,7 +28,7 @@ define([
 
         function displayList(id) {
             reqwest({
-                url: apiBase + id,
+                url: apiBase + '/' + id,
                 type: 'json'
             }).then(
                 function(resp) {
@@ -52,6 +52,7 @@ define([
             dropList(id);
             viewModel.listsDisplayed.unshift({
                 id: id,
+                crumbs: id.split(/\//g),
                 list: list
             });
             limitListsDisplayed(maxDisplayedLists);
@@ -136,7 +137,7 @@ define([
 
                 if (inList.length) {
                     method = 'post',
-                    endpoint = apiBase + listId;
+                    endpoint = apiBase + '/' + listId;
                     delta = {
                         item: item
                     };
@@ -155,12 +156,11 @@ define([
 
                 } else {
                     method = 'delete';
-                    endpoint = apiBase + listId + '/' + item 
+                    endpoint = apiBase + '/' + listId + '/' + item;
                 }
 
                 reqwest({
                     url: endpoint,
-                    contentType: 'application/json',
                     type: 'json',
                     method: method,
                     data: JSON.stringify(delta)
@@ -173,9 +173,9 @@ define([
 
         viewModel.selectedBlock.subscribe(function(block) {
             if(block && block.id) {
-                var id = '/' + viewModel.selectedEdition().id +
-                         '/' + viewModel.selectedSection().id +
-                         '/' + block.id
+                var id = viewModel.selectedEdition().id + '/' +
+                         viewModel.selectedSection().id + '/' + 
+                         block.id;
 
                 displayList(id);
             }
