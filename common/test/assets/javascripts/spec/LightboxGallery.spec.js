@@ -96,7 +96,7 @@ define(['common',
 
             expect(document.querySelector('.gallery').className).toContain('gallery--fullimage-mode');
             expect(document.querySelector('.gallery .js-gallery-item-5').style.display).toBe('block');
-            expect(document.querySelector('.js-image-index').innerText).toBe('5');
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('5');
         });
 
         it("should hide/show the furniture when clicking the image", function() {
@@ -108,27 +108,27 @@ define(['common',
 
         it("should update the image counter on prev/next", function() {
             bean.fire(document.querySelector('.gallery .js-gallery-next'), 'click');
-            expect(document.querySelector('.js-image-index').innerText).toBe('2');
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('2');
 
             bean.fire(document.querySelector('.gallery .js-gallery-next'), 'click');
-            expect(document.querySelector('.js-image-index').innerText).toBe('3');
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('3');
 
             bean.fire(document.querySelector('.gallery .js-gallery-prev'), 'click');
-            expect(document.querySelector('.js-image-index').innerText).toBe('2');
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('2');
         });
 
         it("should loop around when going beyond the first/last image", function() {
             bean.fire(document.querySelector('.gallery .js-gallery-prev'), 'click');
-            expect(document.querySelector('.js-image-index').innerText).toBe('12');
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('12');
             bean.fire(document.querySelector('.gallery .js-gallery-next'), 'click');
-            expect(document.querySelector('.js-image-index').innerText).toBe('1');
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('1');
         });
 
         it("should go to a particular image if the URL specifies it", function() {
             bean.fire(document.querySelector('.trail--gallery .link-to-image'), 'click');
             waits(100);
             runs(function() {
-                expect(document.querySelector('.js-image-index').innerText).toBe('4');
+                expect(document.querySelector('.js-image-index').innerHTML).toBe('4');
             })
         });
 
@@ -146,7 +146,7 @@ define(['common',
             waits(100);
 
             runs(function() {
-                expect(document.querySelector('.overlay .preload-msg').innerText).toContain('Error loading gallery');
+                expect(document.querySelector('.overlay .preload-msg').innerHTML).toContain('Error loading gallery');
             });
         });
 
