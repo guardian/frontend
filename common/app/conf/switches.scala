@@ -148,6 +148,10 @@ object Switches extends Collections {
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off)
 
+  val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
+    "If this switch is on, gallery trails are opened in a lightbox.",
+    safeState = Off)
+
 
   // A/B Test Switches
 
@@ -199,7 +203,8 @@ object Switches extends Collections {
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     LocalNavSwitch,
-    ABAa
+    ABAa,
+    LightboxGalleriesSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

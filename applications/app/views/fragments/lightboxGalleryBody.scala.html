@@ -1,0 +1,49 @@
+@(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+
+
+<div class="gallery gallery--lightbox" data-total="@gallery.size">
+    <i class="gallery__watermark i i-guardian-logo"></i>
+    <ul class="gallery__images unstyled">
+        @gallery.images.zipWithRowInfo.map{ case(image, row) =>
+            <li class="js-gallery-item-@row.rowNum gallery-item @if(image.width >= image.height){gallery-item--landscape} else {gallery-item--portrait}"
+                data-index="@row.rowNum">
+                    <figure itemprop="associatedMedia" itemtype="http://schema.org/ImageObject" itemscope>
+                        <img class="gallery__img"
+                             src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
+                             alt="@image.altText"
+                             data-src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
+                             data-fullsrc="@image.path"
+                             data-width="@image.width"
+                             data-height="@image.height"
+                        />
+                        <span class="gallery-arrow-cta gallerycaption-handle">
+                            <i class="i i-gallery-arrow"></i>
+                        </span>
+                        <figcaption class="gallerycaption" itemprop="description">
+                            <p class="gallerycaption__text">@Html(image.caption.getOrElse(""))</p>
+                            <p class="gallerycaption__credit">@image.credit</p>
+                        </figcaption>
+                    </figure>
+            </li>
+        }
+    </ul>
+
+    <button class="gallery__nav gallery__nav--prev js-gallery-prev"
+       data-link-name="Gallery Previous"
+       data-is-ajax="true">
+          <span class="gallery-arrow-cta">
+             <i class="i i-gallery-arrow"></i>
+             <span class="h">Previous</span>
+          </span>
+    </button>
+
+    <button class="gallery__nav gallery__nav--next js-gallery-next"
+       data-link-name="Gallery Next"
+       data-is-ajax="true">
+          <span class="gallery-arrow-cta">
+             <i class="i i-gallery-arrow"></i>
+             <span class="h">Next</span>
+          </span>
+    </button>
+
+</div>
