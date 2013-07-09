@@ -101,7 +101,7 @@ define(["bean",
                 error: function() {
                     var errorMsg = '<div class="preload-msg">Error loading gallery' +
                                    '  <button class="cta js-load-gallery" data-link-name="Try loading gallery again" data-is-ajax>Try again</button>' +
-                                   '</div>'
+                                   '</div>';
                     overlay.setBody(errorMsg);
                 }
             });

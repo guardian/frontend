@@ -41,7 +41,7 @@ define(["bean",
     }
 
     Overlay.prototype.showLoading = function() {
-        this.setBody(this.loadingHtml)
+        this.setBody(this.loadingHtml);
         this.show();
     };
 
