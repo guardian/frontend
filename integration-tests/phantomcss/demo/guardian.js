@@ -5,7 +5,7 @@ host = (system.args[1]) || "http://localhost:9000/"
 
 console.log("host is: "+host);
 // CasperJS library
-phantom.casperPath = 'CasperJs';
+phantom.casperPath = '../../dev/casperjs';
 phantom.injectJs(phantom.casperPath + '/bin/bootstrap.js');
 
 
@@ -36,13 +36,10 @@ casper.
 		casper.waitForSelector('.ad-slot', function() {
 			casper.evaluate(function(){
 				document.querySelector('.js-popular').style.visibility = 'hidden';
-				document.querySelector('.ad-slot').style.visibility = 'hidden';
-				document.querySelector('.ad-slot-bottom-banner-ad').style.visibility = 'hidden';
-
-				// var ads = document.querySelector('.ad-slot');
-				// Array.prototype.forEach.call(ads, function(el) {
-				// 	el.style.visibility = "hidden";
-				// });
+				var ads = document.querySelectorAll('.ad-slot');
+				Array.prototype.forEach.call(ads, function(el) {
+				 	el.style.visibility = "hidden";
+				});
 			})
 		});
 	} ).
