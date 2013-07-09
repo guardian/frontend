@@ -112,10 +112,10 @@ GET     /cricket/match/:matchId                                     controllers.
 GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
 GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
 
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>                     controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>.json                controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)(/\w\w-edition)?>                     controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)(/\w\w-edition)?>.json                controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
 
 #Video
 GET     /$path<[\w\d-]*/video/.*>.json              controllers.VideoController.render(path)

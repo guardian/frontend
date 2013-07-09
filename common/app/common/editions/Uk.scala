@@ -82,6 +82,18 @@ object Uk extends Edition(
       ItemTrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
     ),
 
+    Editionalise("commentisfree", Uk) -> Seq(
+      ItemTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 20, style = Some(Featured))
+    ),
+
+    Editionalise("business", Uk) -> Seq(
+      ItemTrailblockDescription("business", "Business", numItemsVisible = 20, style = Some(Featured))
+    ),
+
+    Editionalise("money", Uk) -> Seq(
+      ItemTrailblockDescription("money", "Money", numItemsVisible = 20, style = Some(Featured))
+    ),
+
     Editionalise("australia", Uk) -> Seq(
       ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = false)(Au),
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = false)(Au),
