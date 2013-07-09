@@ -17,7 +17,7 @@ i.gallery__watermark {
 
 .gallery--hide-furniture {
     .gallery__watermark,
-    .gallery-caption,
+    .gallerycaption,
     .gallery-arrow-cta  {
         display: none;
     }
@@ -30,8 +30,8 @@ i.gallery__watermark {
 .gallery--grid-mode {
 
     .gallery__watermark,
-    .gallery__caption,
-    .gallery__caption-handle,
+    .gallerycaption,
+    .gallerycaption-handle,
     .gallery__nav {
         display: none;
     }
@@ -40,6 +40,7 @@ i.gallery__watermark {
         @include fix-aspect-ratio(5, 3, 140px);
         float: left;
         margin: $gutter / 2;
+        cursor: pointer;
     }
 
     .gallery-item--portrait .gallery__img {
@@ -121,7 +122,7 @@ i.gallery__watermark {
 /* ==========================================================================
    Captions
    ========================================================================== */
-.gallery-caption-handle {
+.gallerycaption-handle {
     @include rotate(-90deg);
     position: absolute;
     left: 50%;
@@ -138,7 +139,7 @@ i.gallery__watermark {
 }
 
 
-.gallery-caption {
+.gallerycaption {
     color: #aaaaaa;
     padding: 0 $gutter;
     text-align: left;
@@ -161,7 +162,7 @@ i.gallery__watermark {
     }
 }
 
-.gallery-caption__text {
+.gallerycaption__text {
     @extend %type-10;
     line-height: 16px;
     padding-bottom: $baseline * 4;
@@ -169,7 +170,7 @@ i.gallery__watermark {
     margin-bottom: $baseline;
 }
 
-.gallery-caption__credit {
+.gallerycaption__credit {
     @extend %type-11;
     margin-bottom: $baseline * 4;
 }
