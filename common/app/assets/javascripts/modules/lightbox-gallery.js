@@ -27,13 +27,7 @@ define(["bean",
         this.selector = '.trail--gallery';
         this.galleryEndpoint = '';
 
-        this.init = function(opts) {
-            self.opts = common.extend({
-                urlHashEnabled: false,
-                window: window // Hook for testing
-            }, opts);
-
-
+        this.init = function() {
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl = e.currentTarget.href;
@@ -71,24 +65,27 @@ define(["bean",
                 }
             });
 
-            bean.on(self.opts.window, 'orientationchange', function() {
+            bean.on(window, 'orientationchange', function() {
                 self.layout();
                 self.jumpToContent();
             });
 
             common.mediator.on('modules:overlay:close', this.removeOverlay);
 
-            bean.on(self.opts.window, 'hashchange', function() {
-                if (self.opts.urlHashEnabled && window.location.hash.indexOf('lg') === -1) {
+            bean.on(window, 'popstate', function(event) {
+                // Slight timeout as browsers reset the scroll position on popstate
+                setTimeout(function() {
                     overlay.hide();
                     self.removeOverlay();
-                }
+                },10)
             });
         };
 
         this.loadGallery = function() {
             overlay.showLoading();
-            self.updateHash('lg');
+
+            // Save state to preserve back button functionality
+            url.pushUrl({ lightbox: true }, document.title, window.location.href);
 
             ajax({
                 url: self.galleryEndpoint,
@@ -222,13 +219,6 @@ define(["bean",
             overlay.remove();
             return true;
         }, 500);
-
-
-        this.updateHash = function(str) {
-            if (self.opts.urlHashEnabled) {
-                self.opts.window.location.hash = str;
-            }
-        };
     }
 
     return LightboxGallery;
