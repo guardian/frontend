@@ -68,7 +68,6 @@ define(["bean",
 
             common.mediator.on('modules:overlay:close', common.debounce(function(e){
                 // Needs a delay to give time for analytics to fire before DOM removal
-                console.log('remove');
                 overlay.remove();
             }, 2000));
 
