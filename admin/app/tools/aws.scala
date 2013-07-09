@@ -33,7 +33,9 @@ trait S3 extends Logging {
       case e: AmazonS3Exception if e.getStatusCode == 404 =>
         log.warn("not found at %s - %s" format(bucket, key))
         None
-      case _: Throwable => None
+      case e: AmazonS3Exception =>
+        log.warn("S3 Exception: %s".format(e.toString))
+        None
     } finally {
       client.shutdown()
     }
