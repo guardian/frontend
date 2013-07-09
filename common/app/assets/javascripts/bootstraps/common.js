@@ -30,7 +30,8 @@ define([
     'modules/experiments/ab',
     'modules/swipenav',
     "modules/adverts/video",
-    "modules/discussion/commentCount"
+    "modules/discussion/commentCount",
+    "modules/lightbox-gallery"
 ], function (
     common,
     ajax,
@@ -62,7 +63,8 @@ define([
     ab,
     swipeNav,
     VideoAdvert,
-    CommentCount
+    CommentCount,
+    LightboxGallery
 ) {
 
     var modules = {
@@ -143,6 +145,13 @@ define([
             });
         },
 
+        initLightboxGalleries: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                var galleries = new LightboxGallery(config, context);
+                galleries.init(context);
+            });
+        },
+
         loadAnalytics: function () {
             var omniture = new Omniture();
 
@@ -184,7 +193,7 @@ define([
                         if (audsci) {
                             viewData.audsci_json = JSON.stringify(audsci);
                         }
-                        
+
                         var participations = ab.getParticipations(),
                             participationsKeys = Object.keys(participations);
 
@@ -194,7 +203,7 @@ define([
                             });
                             viewData.experiments_json = JSON.stringify(testData);
                         }
-                            
+
 
 
                         return viewData;
@@ -319,6 +328,7 @@ define([
             }
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
+            modules.initLightboxGalleries();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

@@ -7,7 +7,8 @@ define(["bean",
         bonzo) {
 
     function Overlay(content) {
-        content = content || '<div class="preload-msg"><div class="is-updating"></div></div>';
+        this.loadingHtml = '<div class="preload-msg"><div class="is-updating"></div></div>';
+        content = content || this.loadingHtml;
 
         var self     = this,
             template = '<div class="overlay">' +
@@ -29,7 +30,6 @@ define(["bean",
         this.bodyNode    = this.node.querySelector('.overlay__body');
 
         this.node.style.display = 'none';
-        this.node.style.minHeight = document.height+'px';
 
         // Setup events
         bean.on(this.node, 'click', '.js-overlay-close', function(e) {
@@ -40,17 +40,25 @@ define(["bean",
 
     }
 
-    Overlay.prototype.show = function() {
-        this.node.style.display = 'block';
+    Overlay.prototype.showLoading = function() {
+        this.setBody(this.loadingHtml)
+        this.show();
+    };
 
+    Overlay.prototype.show = function() {
         // Can't reliably use position:fixed on mobile. This works around it (well, it tries)
         this._savedPos = window.pageYOffset;
+
+        bonzo(document.body).addClass('has-overlay');
+        this.node.style.display = 'block';
+
         window.scrollTo(window.pageXOffset, 0);
 
         common.mediator.emit('modules:overlay:show', this);
     };
 
     Overlay.prototype.hide = function() {
+        bonzo(document.body).removeClass('has-overlay');
         window.scrollTo(window.pageXOffset, this._savedPos); // Restore previous scroll pos
 
         this.node.style.display = 'none';
@@ -62,7 +70,9 @@ define(["bean",
     };
 
     Overlay.prototype.remove = function() {
-        this.node.parentNode.removeChild(this.node);
+        if (this.node.parentNode) {
+            this.node.parentNode.removeChild(this.node);
+        }
     };
 
     return Overlay;
