@@ -1,7 +1,7 @@
 package controllers
 
-import frontsapi.model.{Block, Section, Trail}
-import play.api.mvc.Controller
+import frontsapi.model.{UpdateList, Block, Section, Trail}
+import play.api.mvc.{Action, Controller}
 import conf.AdminConfiguration
 import tools.S3FrontsApi
 import play.api.libs.json._
@@ -11,6 +11,7 @@ object FrontsController extends Controller with Logging {
   implicit val trailRead = Json.reads[Trail]
   implicit val blockRead = Json.reads[Block]
   implicit val sectionRead = Json.reads[Section]
+  implicit val updateListRead = Json.reads[UpdateList]
 
   implicit val trailWrite = Json.writes[Trail]
   implicit val blockWrite = Json.writes[Block]
@@ -42,9 +43,24 @@ object FrontsController extends Controller with Logging {
    * @todo
    */
   def updateBlock(edition: String, section: String, blockId: String) = AuthAction{ request =>
-    request.body.asJson.map{ json =>
-    }
-    Ok
+    request.body.asJson.map { json =>
+      json.asOpt[UpdateList].map { update: UpdateList =>
+        S3FrontsApi.getFront(edition, section).map { frontJson =>
+          Json.parse(frontJson).asOpt[Section] map { sec =>
+            val block = sec.blocks.filter(_.id == blockId).head
+            val index = update.after match {
+              case Some(true) => block.trails.indexWhere(_.id == update.position.getOrElse("")) + 1
+              case _          => block.trails.indexWhere(_.id == update.position.getOrElse(""))
+            }
+            val splitList = block.trails.splitAt(index)
+            val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
+            val newSection = sec.copy(blocks = sec.blocks.filterNot(_.id == block.id) :+ block.copy(trails = trails))
+            S3FrontsApi.putFront(edition, section, Json.prettyPrint(Json.toJson(newSection))) //Don't need pretty, only for us devs
+            Ok
+          } getOrElse InternalServerError("Parse Error")
+        } getOrElse NotFound("No Edition or Section")
+      } getOrElse NotFound("Invalid JSON")
+    } getOrElse NotFound("Problem parsing json")
   }
 
   /**

@@ -23,3 +23,5 @@ case class Trail(
                   trailImage: Option[String],
                   linkText: Option[String]
                   )
+
+case class UpdateList(item: String, position: Option[String], after: Option[Boolean])
