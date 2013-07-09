@@ -21,81 +21,43 @@
 
 .sport-miniscorecard__body {
   background-color: $mushroom;
+
+  td {
+    @extend %type-10;
+    display: table-cell;
+    padding: $baseline*2 $baseline*3;
+  }
 }
 
 .sport-miniscorecard__score {
   td {
-    @extend %type-10;
-    display: block;
-    padding: 0 $baseline*3;
+    border-bottom: 1px solid #DEDEDD;
   }
 
   td:first-child {
     font-weight: bold;
-    padding-top: $baseline*2;
-  }
-
-  td:last-child {
-    border-bottom: 1px solid #DEDEDD;
-    padding-bottom: $baseline*2;
+    min-width: 130px;
+    width: 35%
   }
 }
 
 .sport-miniscorecard__detail {
   td {
     @extend %type-10;
-    display: block;
-    padding: 0 $baseline*3;
+    display: table-cell;
+    padding: $baseline*2 $baseline*3;
   }
 
   td:first-child {
-    padding-top: $baseline*2;
+    min-width: 60px;
+    width: 30%
   }
 
-  td:last-child {
-    padding-bottom: $baseline*2;
-  }
-
-  tr:first-child {
+  tr {
     border-bottom: 1px solid #DEDEDD;
   }
-}
 
-@media (min-width: $tablet) {
-  .sport-miniscorecard__score {
-    td {
-      border-bottom: 1px solid #DEDEDD;
-      display: table-cell;
-      padding: $baseline*2 $baseline*3;
-    }
-
-    td:first-child {
-      width: 25%;
-    }
-
-    td:last-child {
-      width: 75%;
-    }
-  }
-
-  .sport-miniscorecard__detail {
-    td {
-      display: table-cell;
-    }
-
-    td:first-child {
-      padding: $baseline*2 0 $baseline*2 $baseline*3;
-      width: 15%;
-    }
-
-    td:last-child {
-
-      padding: $baseline*2 $baseline*3 $baseline*2 0;
-      width: 85%;
-    }
-
-    tr:first-child {
-      border-bottom: 1px solid #DEDEDD;
-    }
+  tr:last-child {
+    border-bottom: 0px;
   }
 }

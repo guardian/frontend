@@ -86,10 +86,15 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
 
                 var cricketMatch = config.referencesOfType('esaCricketMatch');
+                var options;
 
                 if(cricketMatch[0]) {
-
-                    cricket(config, context, cricketMatch[0]);
+                    options = { url: cricketMatch[0],
+                                loadSummary: true,
+                                loadScorecard: true,
+                                summaryElement: '.article-headline',
+                                scorecardElement: '.article-headline' };
+                    cricket(config, context, options);
                 }
             });
         }
