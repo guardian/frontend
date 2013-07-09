@@ -165,7 +165,7 @@ define([
                     type: 'json',
                     method: method,
                     contentType: 'application/json',
-                    data: delta
+                    data: JSON.stringify(delta)
                 }).then(
                     function(resp) { },
                     function(xhr) { console.log(xhr); } // error
