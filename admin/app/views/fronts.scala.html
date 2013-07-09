@@ -28,13 +28,13 @@
         </div>
 
         <div class="lists" data-bind="foreach: listsDisplayed">
-            <div class="trailblock" data-bind="attr: {'data-list-name': name}">
+            <div class="trailblock">
                 <div class="list-header">
-                    <a class="list-header__control" data-bind="click: $parent.hideList">HIDE</a>
-                    <span class="list-header__title" data-bind="text: name"></span>
+                    <a class="list-header__control" data-bind="click: $parent.dropList">HIDE</a>
+                    <span class="list-header__title" data-bind="text: id"></span>
                 </div>
                 <div class="connectedList" data-bind="
-                    attr: {id: name}, 
+                    attr: {'data-list-id': id},
                     template: {name: 'template_article', foreach: list
                 }"></div>
             </div>

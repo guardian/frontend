@@ -26,28 +26,46 @@ define([
                 selectedBlock   : knockout.observable()
             };
 
-        viewModel.displayList = function(id) {
+        function displayList(id) {
             reqwest({
                 url: apiBase + id,
                 type: 'json'
             }).then(
                 function(resp) {
-                    console.log(resp);
-                    /*
-                    viewModel.hideList(item);
-                    populateList(item.list, resp.trails);
-                    viewModel.listsDisplayed.unshift(item);
-                    limitListsDisplayed(maxDisplayedLists);
-                    connectSortableLists();
-                    */
+                    addList(id, resp.trails)
                 },
-                function(xhr) { console.log(xhr); } // error
+                function(xhr) {
+                    if(xhr.status === 404) {
+                        addList(id, [])
+                    }
+                }
             );
         }
 
-        viewModel.hideList = function(list) {
-            viewModel.listsDisplayed.remove(list);
+        function addList(id, articles) {
+            var list = knockout.observableArray();
+            [].concat(articles).forEach(function(item){
+                list.push(new Article({
+                    id: item.id
+                }));
+            });
+            dropList(id);
+            viewModel.listsDisplayed.unshift({
+                id: id,
+                list: list
+            });
+            limitListsDisplayed(maxDisplayedLists);
+            ContentApi.decorateItems(list());
+            connectSortableLists();
         }
+
+        function dropList(id) {
+            id = id.id || id;
+            viewModel.listsDisplayed.remove(function(item) {
+                return item.id === id;
+            })
+        }
+        viewModel.dropList = dropList;
 
         function limitListsDisplayed(max) {
             if(viewModel.listsDisplayed().length > max) {
@@ -91,6 +109,7 @@ define([
             var lists = [];
 
             item = $(item).data('url');
+
             if (!item || !fromList || !toList) {
                 return;
             }
@@ -104,29 +123,46 @@ define([
             }
 
             lists.map(function(list){
-                var inList = $("[data-url='" + item + "']", list),
-                    delta = {
-                        list: list.id,
-                        item: item,
-                        verb: 'add'
-                    };
+                var listId = $(list).attr('data-list-id'),
+                    inList,
+                    position,
+                    endpoint,
+                    method,
+                    delta;
+
+                if (!listId) { return; }
+
+                inList = $("[data-url='" + item + "']", list);
 
                 if (inList.length) {
-                    delta.position = inList.next().data('url') || '';
-                    // if this is adding after the last item
-                    var numOfItems = $("[data-url]", list).length;
-                    if (!delta.position && numOfItems > 1) {
-                        delta.after = true;
-                        delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
-                    } 
+                    method = 'post',
+                    endpoint = apiBase + listId;
+                    delta = {
+                        item: item
+                    };
+
+                    position = inList.next().data('url');
+
+                    if (position) {
+                        delta.position = position;
+                    } else {
+                        var numOfItems = $("[data-url]", list).length;
+                        if (numOfItems > 1) {
+                            delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
+                            delta.after = true;
+                        } 
+                    }
+
                 } else {
-                    delta.verb = 'remove';
+                    method = 'delete';
+                    endpoint = apiBase + listId + '/' + item 
                 }
+
                 reqwest({
-                    url: '/frontsapi/listitem/' + delta.list,
+                    url: endpoint,
                     contentType: 'application/json',
                     type: 'json',
-                    method: 'post',
+                    method: method,
                     data: JSON.stringify(delta)
                 }).then(
                     function(resp) { },
@@ -135,30 +171,13 @@ define([
             });
         };
 
-        function addItem(list, item) {
-            if (!item || !list) { return; }
-            list.push(new Article({
-                id: item
-            }));
-        };
-
-        function populateList(list, items) {
-            if (!items || !items.length || !list) { return; }
-            list.removeAll();
-            items.forEach(function(item){
-                addItem(list, item);
-            });
-            ContentApi.decorateItems(list());
-        };
-
         viewModel.selectedBlock.subscribe(function(block) {
             if(block && block.id) {
-                var list = '/' + viewModel.selectedEdition().id +
-                           '/' + viewModel.selectedSection().id +
-                           '/' + block.id
+                var id = '/' + viewModel.selectedEdition().id +
+                         '/' + viewModel.selectedSection().id +
+                         '/' + block.id
 
-                viewModel.displayList(list);
-                console.log(list);                
+                displayList(id);
             }
         });
 
