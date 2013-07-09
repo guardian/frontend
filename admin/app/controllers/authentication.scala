@@ -1,6 +1,6 @@
 package controllers
 
-import conf.AdminConfiguration
+import conf.Configuration
 import common.{ ExecutionContexts, Logging }
 import net.liftweb.json.{ Serialization, NoTypeHints }
 import net.liftweb.json.Serialization.{ read, write }
@@ -95,7 +95,7 @@ object Login extends Controller with ExecutionContexts {
   def login = NonAuthAction {
     request =>
       val error = request.flash.get("error")
-      Ok(views.html.auth.login(request, error, AdminConfiguration.environment.stage))
+      Ok(views.html.auth.login(request, error, Configuration.environment.stage))
   }
 
   def loginPost = Action {
@@ -123,7 +123,7 @@ object Login extends Controller with ExecutionContexts {
             )
 
             // allow test user access
-            val isTestUser = (credentials.email == "test.automation@gutest.com" && List("dev", "code", "gudev").contains(AdminConfiguration.environment.stage))
+            val isTestUser = (credentials.email == "test.automation@gutest.com" && List("dev", "code", "gudev").contains(Configuration.environment.stage.toLowerCase))
 
             if (credentials.emailDomain == "guardian.co.uk" || isTestUser) {
               Redirect(session.get("loginFromUrl").getOrElse("/admin")).withSession {
