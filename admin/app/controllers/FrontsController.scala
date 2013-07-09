@@ -8,12 +8,12 @@ import common.Logging
 
 object FrontsController extends Controller with Logging {
 
-  def index() = AuthAction{ request =>
+  def index = AuthAction{ request =>
     Ok(views.html.fronts(AdminConfiguration.environment.stage))
   }
 
-  def schema() = AuthAction{ request =>
-    S3FrontsApi.getSchema().map { json: String =>
+  def schema = AuthAction{ request =>
+    S3FrontsApi.getSchema.map { json: String =>
       Ok(json).as("application/json")
     }.getOrElse(NotFound)
   }
