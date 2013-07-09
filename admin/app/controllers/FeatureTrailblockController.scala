@@ -2,7 +2,7 @@ package controllers
 
 import common.{ ExecutionContexts, Logging }
 import common.AdminMetrics.{ ConfigUpdateCounter, ConfigUpdateErrorCounter }
-import conf.AdminConfiguration
+import conf.Configuration
 import play.api.mvc._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
@@ -17,7 +17,7 @@ object FeatureTrailblockController extends Controller with Logging with AuthLogg
     val promiseOfConfig = Akka.future(S3.getConfig)
 
     Async{
-      promiseOfConfig.map(config => Ok(views.html.edit(config.getOrElse("{}"), AdminConfiguration.environment.stage)))
+      promiseOfConfig.map(config => Ok(views.html.edit(config.getOrElse("{}"), Configuration.environment.stage)))
     }
   }
 
