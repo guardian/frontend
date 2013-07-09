@@ -72,12 +72,14 @@ define(["bean",
 
             common.mediator.on('modules:overlay:close', this.removeOverlay);
 
-            bean.on(window, 'popstate', function(event) {
+            bean.one(window, 'popstate', function(event) {
                 // Slight timeout as browsers reset the scroll position on popstate
                 setTimeout(function() {
                     overlay.hide();
                     self.removeOverlay();
                 },10);
+
+                common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
             });
         };
 
