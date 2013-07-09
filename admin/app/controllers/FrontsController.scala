@@ -1,5 +1,6 @@
 package controllers
 
+import frontsapi.model.{Block, Section, Trail}
 import play.api.mvc.Controller
 import conf.AdminConfiguration
 import tools.S3FrontsApi
@@ -7,6 +8,13 @@ import play.api.libs.json._
 import common.Logging
 
 object FrontsController extends Controller with Logging {
+  implicit val trailRead = Json.reads[Trail]
+  implicit val blockRead = Json.reads[Block]
+  implicit val sectionRead = Json.reads[Section]
+
+  implicit val trailWrite = Json.writes[Trail]
+  implicit val blockWrite = Json.writes[Block]
+  implicit val sectionWrite = Json.writes[Section]
 
   def index = AuthAction{ request =>
     Ok(views.html.fronts(AdminConfiguration.environment.stage))
@@ -48,28 +56,17 @@ object FrontsController extends Controller with Logging {
     Ok
   }
 
-  /**
-   * @todo
-   */
   def deleteTrail(edition: String, section: String, blockId: String, trailId: String) = AuthAction{ request =>
-    var front = Json.parse(S3FrontsApi.getFront(edition, section).get)
-    val block = (front \ "blocks").as[Seq[JsObject]].find { block =>
-      (block \ "id").as[String].equals(blockId)
-    }
-    val blockIndex = (front \ "blocks").as[Seq[JsObject]].indexWhere { block =>
-      (block \ "id").as[String].equals(blockId)
-    }
-    block.map { block =>
-      val newTrails = (block \ "trails").as[Seq[JsObject]].filterNot { trail =>
-        (trail \ "id").as[String].equals(trailId)
-      }
-      block.transform((__ \ 'trails).json.put(Json.arr(newTrails))).map { json =>
-        // NOTE: indexed path broke for some reason
-        front.transform((__ \ 'blocks)(blockIndex).json.put(Json.arr(json))).map { foo =>
-          Ok(Json.prettyPrint(foo))
-        }.getOrElse(NotFound)
-      }.getOrElse(NotFound)
-    }.getOrElse(NotFound)
+      S3FrontsApi.getFront(edition, section) map { json: String =>
+        Json.parse(json).asOpt[Section] map { sectionClass: Section =>
+          sectionClass.blocks.find(_.id == blockId).map { block =>
+            val trails = block.trails.filterNot(_.id == trailId)
+            val newSection = sectionClass.copy(blocks = sectionClass.blocks.filterNot(_.id == block.id) :+ block.copy(trails = trails))
+            S3FrontsApi.putFront(edition, section, Json.prettyPrint(Json.toJson(newSection))) //Don't need pretty, only for us devs
+            Ok
+          } getOrElse NotFound("Block Not Found")
+        } getOrElse InternalServerError("Parse Error")
+      } getOrElse NotFound("No edition or section") //To be more silent in the future?
   }
 
   private def getBlock(edition: String, section: String, blockId: String): Option[JsObject] = {
