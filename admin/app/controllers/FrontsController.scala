@@ -56,7 +56,7 @@ object FrontsController extends Controller with Logging {
           } getOrElse InternalServerError("Parse Error")
         } getOrElse {
           S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None))))))
-          Ok
+          Created
         }
       } getOrElse NotFound("Invalid JSON")
 
