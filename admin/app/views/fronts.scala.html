@@ -24,13 +24,18 @@
 
         <div class="finder">
             <div class="finder__title">Latest Articles</div>
+            
+            <!--div>
+                <input type="checkbox" name="orderBy" value="" data-bind="checked: latestArticles.mostViewed"/> Most popular
+            </div-->
+
             <input type="text" placeholder="url or keyword" data-bind='
-                event: {keyup: latestArticles.search, afterpaste: latestArticles.articleSearch},
+                event: {keyup: latestArticles.search, afterpaste: latestArticles.search},
                 value: latestArticles.term,
                 valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
             <input type="text" placeholder="section" data-bind='
-                event: {keyup: latestArticles.search, afterpaste: latestArticles.articleSearch},
+                event: {keyup: latestArticles.search, afterpaste: latestArticles.search},
                 value: latestArticles.section,
                 valueUpdate: ["afterkeydown", "afterpaste"]'/>
 

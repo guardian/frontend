@@ -18,7 +18,8 @@ define([
 
         this.articles   = ko.observableArray();
         this.term       = ko.observable(Common.queryParams.q || '');
-        this.section    = ko.observable(Common.queryParams.section || '');
+        this.section    = ko.observable('');
+        this.mostViewed = ko.observable(false);
 
         var reqwest = opts.reqwest || Reqwest;
         
@@ -26,19 +27,15 @@ define([
             return self.term().match(/\//);
         }
 
-        this.term.subscribe(function(){
-            self.search();    
-        });
-
-        this.section.subscribe(function(){
-            self.search();    
-        });
+        this.term.subscribe(function(){ self.search(); });
+        this.section.subscribe(function(){ self.search(); });
+        this.mostViewed.subscribe(function(){ self.search(); });
 
         // Grab articles from Content Api
         this.search = function() {
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
-                
+
                 var url, propName;
 
                 // If term contains slashes, assume it's an article id
@@ -49,6 +46,7 @@ define([
                     url  = '/api/proxy/search?show-fields=all&page-size=50&format=json';
                     url += '&q=' + encodeURIComponent(self.term());
                     url += '&section=' + encodeURIComponent(self.section());
+                    url += self.mostViewed() ? '&show-most-viewed=true' : '';
                     propName = 'results';
                 }
 
