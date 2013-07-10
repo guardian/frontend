@@ -10,7 +10,9 @@
         @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
     }{
         @if(EditionalisedSections.isEditionalised(item.id)){
-            @Edition.others.map{ ed => <link rel="alternate" hreflang="@ed.hreflang" href="/@Editionalise(item.id, ed)" /> }
+            @Edition.others.map{ ed =>
+                <link rel="alternate" hreflang="@ed.hreflang" href="/@Editionalise(item.id, ed)" />
+            }
         }
     }
 
