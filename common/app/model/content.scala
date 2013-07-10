@@ -65,6 +65,9 @@ class Content(
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
 
+  lazy val cricketMatch: Option[String] = delegate.references.find(_.`type` == "esa-cricket-match")
+    .map(_.id).map(Reference(_)).map(_._2)
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
