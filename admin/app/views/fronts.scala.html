@@ -15,7 +15,7 @@
                     <select data-bind="options: $root.selectedSection().blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Block...'"></select>
 
                     <span data-bind="if: $root.selectedBlock()">
-                        <a href="#"> &laquo; View in all editions</a>
+                        <a href="#" data-bind="click: displayAllEditions"> &laquo; View in all editions</a>
                     </span>
                 </span>
 

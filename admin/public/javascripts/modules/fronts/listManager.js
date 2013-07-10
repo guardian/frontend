@@ -200,6 +200,18 @@ define([
             poller = false;
         }
 
+        function displayAllEditions() {
+            viewModel.editions.forEach(function(edition){
+                if (edition.id !== viewModel.selectedEdition().id) {
+                    var id = edition.id + '/' +
+                        viewModel.selectedSection().id + '/' + 
+                        viewModel.selectedBlock().id; 
+
+                    loadList(id, addList);
+                }
+            });
+        }
+
         function fetchSchema() {
             reqwest({
                 url: apiBase,
@@ -223,7 +235,9 @@ define([
             viewModel.selectedEdition = knockout.observable();
             viewModel.selectedSection = knockout.observable();
             viewModel.selectedBlock   = knockout.observable();
-            viewModel.dropList        = dropList;
+
+            viewModel.dropList           = dropList;
+            viewModel.displayAllEditions = displayAllEditions;
 
             fetchSchema();
 
