@@ -1,203 +1,138 @@
 package tools
 
-import common.{ Logging, AkkaSupport }
-import conf.AdminConfiguration
-import play.api.GlobalSettings
-import scala.slick.jdbc.StaticQuery
-import scala.slick.session.Session
-import scala.concurrent.duration._
+import common.{ CSV, S3 }
+import conf.Configuration
 import org.joda.time.DateTime
 
-trait AnalyticsLifecycle extends GlobalSettings {
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
-    AnalyticsService.start()
-  }
-
-  override def onStop(app: play.api.Application) {
-    AnalyticsService.stop()
-    super.onStop(app)
-  }
-}
-
-case class AveragePageviewsByDayData(year: Int, month: Int, day: Int, average: Double) {
-  lazy val key: (Int, Int, Int) = (year, month, day)
-  lazy val date: DateTime = new DateTime(year, month, day, 0, 0, 0, 0)
-}
-case class ReturnUsersByDayData(year: Int, month: Int, day: Int, total: Long) {
-  lazy val key: (Int, Int, Int) = (year, month, day)
-  lazy val date: DateTime = new DateTime(year, month, day, 0, 0, 0, 0)
-}
-case class PageviewsData(year: Int, month: Int, day: Int, existing: Boolean, total: Long) {
-  lazy val key: (Int, Int, Int) = (year, month, day)
-  lazy val date: DateTime = new DateTime(year, month, day, 0, 0, 0, 0)
-}
-case class CountriesData(country: String, total: Long)
-case class AgentData(operatingSystem: String, operatingSystemVersion: Option[String], browser: String, browserVersion: Option[String], total: Long) {
-  lazy val operatingSystemAndVersion: String = s"$operatingSystem ${operatingSystemVersion.getOrElse("(unknown)")}".trim
-  lazy val browserAndVersion: String = s"$browser ${browserVersion.getOrElse("(unknown)")}".trim
-}
-
-object Analytics {
-  var averagePageviewsByDayTable: List[AveragePageviewsByDayData] = Nil
-  var returnUsersByDayTable: List[ReturnUsersByDayData] = Nil
-  var pageviewsTable: List[PageviewsData] = Nil
-  var countriesTable: List[CountriesData] = Nil
-  var agentsTable: List[AgentData] = Nil
-
-  def averagePageviewsByDay(): List[(DateTime, Double)] = {
-    val sorted = averagePageviewsByDayTable sortBy { _.key }
-    sorted map { data => (data.date, data.average) }
-  }
-
-  def returnUsersByDay(): List[(DateTime, Long)] = {
-    val sorted = returnUsersByDayTable sortBy { _.key }
-    sorted map { data => (data.date, data.total) }
-  }
+object Analytics extends implicits.Dates {
 
   def pageviews(): List[(DateTime, Long)] = {
-    // sum out the new/existing split
-    val groups: Map[(Int, Int, Int), List[PageviewsData]] = pageviewsTable groupBy { _.key }
-    val summed: Map[(Int, Int, Int), Long] = groups mapValues { data => (data map { _.total }).sum }
-    val sorted: List[((Int, Int, Int), Long)] = summed.toList sortBy { _._1 }
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews.csv")
+    val lines = data.toList flatMap { _.split("\n") }
 
-    sorted map {
-      case (key, total) => (new DateTime(key._1, key._2, key._3, 0, 0, 0, 0), total)
+    val parsed: List[(DateTime, String, Long)] = lines map { CSV.parse } collect {
+      case List(year, month, day, existing, count) =>
+        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), existing, count.toLong)
     }
+
+    // sum out the new/existing split
+    val groups = parsed groupBy { _._1 }
+    val summed = (groups mapValues { data => (data map { _._3 }).sum }).toList
+
+    // Add missing days
+    val first = (summed map { _._1 }).min.dayOfEpoch
+    val last = (summed map { _._1 }).max.dayOfEpoch
+    val zeros = (first to last).toList map { dayOfEpoch => (Epoch.day(dayOfEpoch), 0L) }
+
+    val based = ((summed ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
+
+    // Sort for display
+    based sortBy { _._1 }
   }
 
   def newCookies(): List[(DateTime, Long)] = {
-    val newCookies: List[PageviewsData] = pageviewsTable filter { !_.existing }
-    val sorted: List[PageviewsData] = newCookies sortBy { _.key }
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews.csv")
+    val lines = data.toList flatMap { _.split("\n") }
 
-    sorted map { data => (data.date, data.total) }
+    val parsed: List[(DateTime, String, Long)] = lines map { CSV.parse } collect {
+      case List(year, month, day, existing, count) =>
+        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), existing, count.toLong)
+    }
+
+    // filter for new cookies
+    val filtered = parsed filter { _._2.toUpperCase == "N" } map { data => (data._1, data._3) }
+
+    // Add missing days
+    val first = (filtered map { _._1 }).min.dayOfEpoch
+    val last = (filtered map { _._1 }).max.dayOfEpoch
+    val zeros = (first to last).toList map { dayOfEpoch => (Epoch.day(dayOfEpoch), 0L) }
+
+    val based = ((filtered ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
+
+    // Sort for display
+    based sortBy { _._1 }
   }
 
-  def countries(): List[(String, Long)] = countriesTable map { data => (data.country, data.total) }
+  def pageviewsByCountry(): List[(String, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/countries.csv")
+    val lines = data.toList flatMap { _.split("\n") }
 
-  def operatingSystems(): List[(String, Long)] = {
-    // sum out the browser splits
-    val groups: Map[String, List[AgentData]] = agentsTable groupBy { _.operatingSystemAndVersion }
-    val summed: Map[String, Long] = groups mapValues { data => (data map { _.total }).sum }
+    val parsed: List[(String, Long)] = lines map { CSV.parse } collect {
+      case List(country, count) => (country.toUpperCase, count.toLong)
+    }
+
+    parsed
+  }
+
+  def pageviewsByOperatingSystem(): List[(String, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/agents.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    val parsed: List[(String, Long)] = lines map { CSV.parse } collect {
+      case List(operatingSystem, operatingSystemVersion, _, _, count) =>
+        (s"$operatingSystem ${Option(operatingSystemVersion).getOrElse("(unknown)")}".trim, count.toLong)
+    }
+
+    // sum out the operating system splits
+    val groups = parsed groupBy { _._1 }
+    val summed = groups mapValues { data => (data map { _._2 }).sum }
 
     summed.toList
   }
 
-  def browsers(): List[(String, Long)] = {
+  def pageviewsByBrowser(): List[(String, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/agents.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    val parsed: List[(String, Long)] = lines map { CSV.parse } collect {
+      case List(_, _, browser, browserVersion, count) =>
+        (s"$browser ${Option(browserVersion).getOrElse("(unknown)")}".trim, count.toLong)
+    }
+
     // sum out the browser splits
-    val groups: Map[String, List[AgentData]] = agentsTable groupBy { _.browserAndVersion }
-    val summed: Map[String, Long] = groups mapValues { data => (data map { _.total }).sum }
+    val groups = parsed groupBy { _._1 }
+    val summed = groups mapValues { data => (data map { _._2 }).sum }
 
     summed.toList
   }
-}
 
-object AnalyticsService extends AkkaSupport with Logging {
-  private lazy val refreshSchedule = play_akka.scheduler.every(6.hours) {
-    log.info("Refreshing analytics data")
-    refresh()
-    log.info("Finished refreshing analytics data")
+  def averagePageviewsByDay(): List[(DateTime, Double)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/average-pageviews-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    val parsed: List[(DateTime, Double)] = lines map { CSV.parse } collect {
+      case List(year, month, day, average) =>
+        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), average.toDouble)
+    }
+
+    // Add missing days
+    val first = (parsed map { _._1 }).min.dayOfEpoch
+    val last = (parsed map { _._1 }).max.dayOfEpoch
+    val zeros = (first to last).toList map { dayOfEpoch => (Epoch.day(dayOfEpoch), 0.0) }
+
+    val based = ((parsed ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
+
+    // Sort for display
+    based sortBy { _._1 }
   }
 
-  def refresh() {
-    AdminConfiguration.analytics.db withSession { implicit session: Session =>
-      val results = StaticQuery.queryNA[(Int, Int, Int, String, Long)]("""
-        select year, month, day_of_month, new_or_existing, count(*) as total
-        from pageviews
-        where host = 'm.guardian.co.uk' or host = 'm.guardiannews.com'
-        group by year, month, day_of_month, new_or_existing;
-      """).list()
+  def returnUsersByDay(): List[(DateTime, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/return-users-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
 
-      val pageviews = results map {
-        case (year, month, day, newOrExisting, total) => PageviewsData(year, month, day, newOrExisting == "E", total)
-      }
-
-      Analytics.pageviewsTable = pageviews
+    val parsed: List[(DateTime, Long)] = lines map { CSV.parse } collect {
+      case List(year, month, day, count) =>
+        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), count.toLong)
     }
 
-    AdminConfiguration.analytics.db withSession { implicit session: Session =>
-      // TODO: Remove ORDER and LIMIT below after Redshift fix
-      val results = StaticQuery.queryNA[(String, Long)]("""
-        select country, count(*) as total
-        from pageviews
-        where host = 'm.guardian.co.uk' or host = 'm.guardiannews.com'
-        group by country
-        order by total desc
-        limit 64;
-      """).list()
+    // Add missing days
+    val first = (parsed map { _._1 }).min.dayOfEpoch
+    val last = (parsed map { _._1 }).max.dayOfEpoch
+    val zeros = (first to last).toList map { dayOfEpoch => (Epoch.day(dayOfEpoch), 0L) }
 
-      val countries = results map {
-        case (country, total) => CountriesData(country, total)
-      }
+    val based = ((parsed ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
 
-      Analytics.countriesTable = countries
-    }
-
-    AdminConfiguration.analytics.db withSession { implicit session: Session =>
-      val results = StaticQuery.queryNA[(String, String, String, String, Long)]("""
-        select os_family, os_version_major, browser_family, browser_version, count(*) as total
-        from pageviews
-        where host = 'm.guardian.co.uk' or host = 'm.guardiannews.com'
-        group by os_family, os_version_major, browser_family, browser_version
-        order by total desc
-        limit 64;
-      """).list()
-
-      val agents = results map {
-        case (operatingSystem, operatingSystemVersion, browser, browserVersion, total) =>
-          AgentData(operatingSystem, Option(operatingSystemVersion), browser, Option(browserVersion), total)
-      }
-
-      Analytics.agentsTable = agents
-    }
-
-    AdminConfiguration.analytics.db withSession { implicit session: Session =>
-      val results = StaticQuery.queryNA[(Int, Int, Int, Double)]("""
-        select year, month, day_of_month, avg(user_pageviews_for_day) from
-        (
-          select year, month, day_of_month, count(*)::float as user_pageviews_for_day from pageviews
-          where host = 'm.guardian.co.uk' or host = 'm.guardiannews.com'
-          group by year, month, day_of_month, ophan
-        )
-        group by year, month, day_of_month;
-      """).list()
-
-      val averagePageviewsByDay = results map {
-        case (year, month, day, average) => AveragePageviewsByDayData(year, month, day, average)
-      }
-
-      Analytics.averagePageviewsByDayTable = averagePageviewsByDay
-    }
-
-    AdminConfiguration.analytics.db withSession { implicit session: Session =>
-      val results = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
-        select year, month, day_of_month, count(return_user_for_day) as return_users_for_day from
-        (
-          select p.year, p.month, p.day_of_month, p.ophan as return_user_for_day
-          from pageviews p
-          inner join users u
-          on p.ophan = u.ophan
-          where (p.host = 'm.guardian.co.uk' or p.host = 'm.guardiannews.com')
-          and u.total_page_views > 1
-          and u.first_seen_days_since_epoch < p.days_since_epoch
-          group by p.year, p.month, p.day_of_month, p.ophan
-        )
-        group by year, month, day_of_month;
-      """).list()
-
-      val returnUsersByDay = results map {
-        case (year, month, day, total) => ReturnUsersByDayData(year, month, day, total)
-      }
-
-      Analytics.returnUsersByDayTable = returnUsersByDay
-    }
-  }
-
-  def start() {
-    refreshSchedule
-  }
-
-  def stop() {
-    refreshSchedule.cancel()
+    // Sort for display
+    based sortBy { _._1 }
   }
 }
