@@ -72,8 +72,8 @@ object Editionalise {
       id
     } else {
       id match {
-        case "" => s"${edition.id.toLowerCase}-edition"
-        case _ => s"$id/${edition.id.toLowerCase}-edition"
+        case "" => s"${edition.id.toLowerCase}"
+        case _ => s"${edition.id.toLowerCase}/$id"
       }
     }
   }

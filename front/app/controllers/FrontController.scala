@@ -79,11 +79,15 @@ object FrontPage {
 class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val EditionalisedKey = """(.*\w\w-edition)""".r
-  val FrontPath = """(\w\w-edition)?""".r
+  val FrontPath = """(\w\w-edition|\w\w)?""".r
+
+  // TODO - disappears after www.theguardian.com
+  val BackwardsCompatiblePath = """([\w\d-]*)/?(\w\w)-edition""".r
 
   val front: Front = Front
 
   private def editionPath(path: String, edition: Edition) = path match {
+    case BackwardsCompatiblePath(id, edition) => Seq(edition, id).filter(_.nonEmpty).mkString("/")
     case EditionalisedKey(_) => path
     case _ => Editionalise(path, edition)
   }
