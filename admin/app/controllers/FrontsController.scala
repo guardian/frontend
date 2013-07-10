@@ -6,6 +6,7 @@ import conf.AdminConfiguration
 import tools.S3FrontsApi
 import play.api.libs.json._
 import common.Logging
+import org.joda.time.DateTime
 
 object FrontsController extends Controller with Logging {
   implicit val trailRead = Json.reads[Trail]
@@ -55,7 +56,7 @@ object FrontsController extends Controller with Logging {
             Ok
           } getOrElse InternalServerError("Parse Error")
         } getOrElse {
-          S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None))))))
+          S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None)), DateTime.now.toString))))
           Created
         }
       } getOrElse NotFound("Invalid JSON")
