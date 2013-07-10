@@ -27,7 +27,7 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    callback(id, resp.trails)
+                    callback(id, resp.trails, resp.lastUpdated)
                 },
                 function(xhr) {
                     if(xhr.status === 404) {
@@ -37,14 +37,15 @@ define([
             );
         }
 
-        function addList(id, articles) {
+        function addList(id, articles, lastUpdated) {
             var list = knockout.observableArray();
             hydrateList(list, articles);
             dropList(id);
             viewModel.listsDisplayed.unshift({
                 id: id,
                 crumbs: id.split(/\//g),
-                list: list
+                list: list,
+                lastUpdated: knockout.observable(humanized_time_span(lastUpdated))
             });
             limitListsDisplayed(maxDisplayedLists);
             connectSortableLists();
@@ -179,9 +180,10 @@ define([
             stopPoller();
             poller = setInterval(function(){
                 viewModel.listsDisplayed().forEach(function(list){
-                    loadList(list.id, function(id, articles) {
+                    loadList(list.id, function(id, articles, lastUpdated) {
                         if (poller) {
                             hydrateList(list.list, articles);
+                            list.lastUpdated(humanized_time_span(lastUpdated));
 
                             // A hack. Knockout doesn't flush the elements dragged into
                             // a container when it regenerates the DOM content of that container 

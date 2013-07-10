@@ -494,7 +494,6 @@ a.cta, .cta a {
 .fronts .finder__title,
 .fronts .list-header__title {
     font-size: 18px;
-    margin: 0 0 5px 0;
 }
 
 .fronts .list-picker__title {
@@ -535,8 +534,8 @@ a.cta, .cta a {
     overflow: auto;
 }
 
-.fronts .list-header__title {
-    float: left;
+.fronts .list-header__last-updated {
+    font-size: 10px;
 }
 
 .fronts .list-header__control {
