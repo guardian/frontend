@@ -4,6 +4,9 @@ import java.net.URLEncoder
 import org.apache.commons.lang.StringEscapeUtils
 
 trait Strings {
+
+  def nullsafeString[A](a: A) = Option(a) map { _.toString } getOrElse ""
+
   implicit class String2ToOptions(s: String) {
     lazy val toIntOption: Option[Int] = try { Some(s.toInt) } catch { case _: Throwable => None }
     lazy val toBooleanOption: Option[Boolean] = try { Some(s.toBoolean) } catch { case _: Throwable => None }

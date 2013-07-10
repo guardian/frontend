@@ -15,7 +15,8 @@ define('bootstraps/app', [
     "bootstraps/gallery",
     "bootstraps/interactive",
     "bootstraps/story",
-    "modules/pageconfig"
+    "modules/pageconfig",
+    "bootstraps/tag"
 ], function (
     common,
     domReady,
@@ -33,7 +34,8 @@ define('bootstraps/app', [
     Gallery,
     Interactive,
     Story,
-    pageConfig
+    pageConfig,
+    Tag
 ) {
 
     var modules = {
@@ -112,6 +114,10 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "Interactive") {
                     Interactive.init(config, context);
+                }
+
+                if (config.page.contentType === "Tag") {
+                    Tag.init(config, context);
                 }
 
                 //Kick it all off

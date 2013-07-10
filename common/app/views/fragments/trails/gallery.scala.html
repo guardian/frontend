@@ -24,7 +24,7 @@
                             data-lowsrc="@image.url.map(ImgSrc(_, GallerySmallTrail))"
                             data-thumb-width="280"
                         }
-                        alt="@Html(image.caption.getOrElse(""))"
+                        alt="@image.altText.getOrElse("")"
                     />
                 </a>
             </li>
