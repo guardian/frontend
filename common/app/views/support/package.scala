@@ -375,3 +375,10 @@ object Head {
   private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
   private lazy val persistantCss: String = volatileCss
 }
+
+object CricketMatch {
+  def apply(trail: Trail): Option[String] = trail match {
+    case c: Content => c.cricketMatch
+    case _ => None
+  }
+}
