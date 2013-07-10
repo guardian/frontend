@@ -11,7 +11,7 @@ define([
     MatchNav,
     Reading,
     Discussion,
-    cricket
+    Cricket
 ) {
 
     var modules = {
@@ -65,7 +65,7 @@ define([
             });
         },
 
-        logReading: function(context) {
+        logReading: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 var wordCount = config.page.wordCount;
                 if(wordCount !== "") {
@@ -82,21 +82,20 @@ define([
             });
         },
 
-        initCricket: function(context) {
+        initCricket: function() {
             common.mediator.on('page:article:ready', function(config, context) {
 
                 var cricketMatchRefs = config.referencesOfType('esaCricketMatch');
-                var options;
 
                 if(cricketMatchRefs[0]) {
-                    options = { url: cricketMatchRefs[0],
+                    var options = { url: cricketMatchRefs[0],
                                 loadSummary: true,
                                 loadScorecard: true,
                                 summaryElement: '.article-headline',
                                 scorecardElement: '.article-headline',
                                 summaryManipulation: 'after',
                                 scorecardManipulation: 'after' };
-                    cricket(config, context, options);
+                    Cricket.cricketArticle(config, context, options);
                 }
             });
         }
@@ -107,9 +106,9 @@ define([
             this.initialised = true;
             modules.matchNav();
             modules.initLiveBlogging();
-            modules.logReading(context);
+            modules.logReading();
             modules.initDiscussion();
-            modules.initCricket(context);
+            modules.initCricket();
         }
         common.mediator.emit("page:article:ready", config, context);
     };
