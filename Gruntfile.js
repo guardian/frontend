@@ -145,6 +145,18 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
+                  "font-weight": "200",
+                  "file": "resources/fonts/EgyptianHeadline-Light.woff",
+                  "format": "woff"
+                },
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "500",
+                  "file": "resources/fonts/EgyptianHeadline-Medium.woff",
+                  "format": "woff"
+                },
+                {
+                  "font-family": "EgyptianHeadline",
                   "font-weight": "600",
                   "file": "resources/fonts/EgyptianHeadline-Semibold.woff",
                   "format": "woff"
@@ -176,36 +188,20 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
+                  "font-weight": "200",
+                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
+                  "format": "ttf"
+                },
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "500",
+                  "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
+                  "format": "ttf"
+                },
+                {
+                  "font-family": "EgyptianHeadline",
                   "font-weight": "600",
                   "file": "resources/fonts/EgyptianHeadline-Semibold.ttf",
-                  "format": "ttf"
-                }
-              ]
-            }
-          },
-          WebEgyptianNavWoff: {
-            options: {
-              "filename": "common/app/public/fonts/WebEgyptianNav.woff.js",
-              "callback": "guFont",
-              "fonts": [
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "200",
-                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
-                  "format": "ttf"
-                }
-              ]
-            }
-          },
-          WebEgyptianNavTtf: {
-            options: {
-              "filename": "common/app/public/fonts/WebEgyptianNav.ttf.js",
-              "callback": "guFont",
-              "fonts": [
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "200",
-                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
                   "format": "ttf"
                 }
               ]
