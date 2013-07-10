@@ -18,7 +18,8 @@ define([
 
         var viewModel = {},
             poller,
-            self = this;
+            self = this,
+            draggedElem;
 
         function loadList(id, callback) {
             reqwest({
@@ -37,26 +38,27 @@ define([
         }
 
         function addList(id, articles) {
+            var list = knockout.observableArray();
+            hydrateList(list, articles);
             dropList(id);
             viewModel.listsDisplayed.push({
                 id: id,
                 crumbs: id.split(/\//g),
-                list: hydratedList(articles)
+                list: list
             });
             limitListsDisplayed(maxDisplayedLists);
             connectSortableLists();
             startPoller();
         }
 
-        function hydratedList(articles) {
-            var list = knockout.observableArray();
+        function hydrateList(list, articles) {
+            list.removeAll();
             articles.forEach(function(item){
                 list.push(new Article({
                     id: item.id
                 }));
             });
             ContentApi.decorateItems(list());
-            return list;
         }
 
         function dropList(id) {
@@ -92,6 +94,7 @@ define([
                     stopPoller();
                 },
                 stop: function(event, ui) {
+                    draggedElem = item[0];
                     saveListDeltas(
                         item[0],
                         fromList[0],
@@ -175,10 +178,17 @@ define([
         function startPoller() {
             stopPoller();
             poller = setInterval(function(){
-                viewModel.listsDisplayed().forEach(function(displayed){
-                    loadList(displayed.id, function(id, articles) {
+                viewModel.listsDisplayed().forEach(function(list){
+                    loadList(list.id, function(id, articles) {
                         if (poller) {
-                            displayed.list = hydratedList(articles);
+                            hydrateList(list.list, articles);
+
+                            // A hack. Knockout doesn't flush the elements dragged into
+                            // a container when it regenerates the DOM content of that container 
+                            if (draggedElem) {
+                                $(draggedElem).remove();
+                                draggedElem = false;
+                            }
                         }
                     });
                 });

@@ -4,7 +4,7 @@
 
     <div class="fronts">
         <div class="list-picker">
-            <span class="list-picker__title">Select a trailblock:</span>
+            <span class="list-picker__title">Select a block:</span>
 
             <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Edition...'"></select>
 
@@ -37,8 +37,7 @@
                 </div>
                 <div class="connectedList" data-bind="
                     attr: {'data-list-id': id},
-                    template: {name: 'template_article', foreach: list
-                }"></div>
+                    template: {name: 'template_article', foreach: list}"></div>
             </div>
         </div>
     </div>
