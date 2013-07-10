@@ -28,38 +28,34 @@ object FrontsController extends Controller with Logging {
   }
 
   def readSection(edition: String, section: String) = AuthAction{ request =>
-    S3FrontsApi.getFront(edition, section).map { json: String =>
+    S3FrontsApi.getFront(edition, section) map { json: String =>
       Ok(json).as("application/json")
-    }.getOrElse(NotFound)
+    } getOrElse NotFound
   }
 
   def readBlock(edition: String, section: String, blockId: String) = AuthAction{ request =>
-    getBlock(edition, section, blockId).map { block =>
-      Ok(Json.prettyPrint(block)).as("application/json")
-    }.getOrElse(NotFound)
+    S3FrontsApi.getBlock(edition, section, blockId) map { json =>
+      Ok(json).as("application/json")
+    } getOrElse NotFound
   }
 
-  /**
-   * @todo
-   */
   def updateBlock(edition: String, section: String, blockId: String) = AuthAction{ request =>
     request.body.asJson.map { json =>
       json.asOpt[UpdateList].map { update: UpdateList =>
-        S3FrontsApi.getFront(edition, section).map { frontJson =>
-          Json.parse(frontJson).asOpt[Section] map { sec =>
-            val block = sec.blocks.filter(_.id == blockId).head
+        S3FrontsApi.getBlock(edition, section, blockId).map { blockJson =>
+          Json.parse(blockJson).asOpt[Block] map { block =>
             val index = update.after match {
               case Some(true) => block.trails.indexWhere(_.id == update.position.getOrElse("")) + 1
               case _          => block.trails.indexWhere(_.id == update.position.getOrElse(""))
             }
             val splitList = block.trails.filterNot(_.id == update.item).splitAt(index)
             val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
-            val newSection = sec.copy(blocks = sec.blocks.filterNot(_.id == block.id) :+ block.copy(trails = trails))
-            S3FrontsApi.putFront(edition, section, Json.prettyPrint(Json.toJson(newSection))) //Don't need pretty, only for us devs
+            val newBlock = block.copy(trails = trails)
+            S3FrontsApi.putBlock(edition, section, block.id, Json.prettyPrint(Json.toJson(newBlock))) //Don't need pretty, only for us devs
             Ok
           } getOrElse InternalServerError("Parse Error")
         } getOrElse {
-          S3FrontsApi.putFront(edition, section, Json.prettyPrint(Json.toJson(Section(Option(section), List(Block(blockId, None, List(Trail(update.item, None, None, None))))))))
+          S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None))))))
           Ok
         }
       } getOrElse NotFound("Invalid JSON")
@@ -77,14 +73,12 @@ object FrontsController extends Controller with Logging {
   }
 
   def deleteTrail(edition: String, section: String, blockId: String, trailId: String) = AuthAction{ request =>
-      S3FrontsApi.getFront(edition, section) map { json: String =>
-        Json.parse(json).asOpt[Section] map { sectionClass: Section =>
-          sectionClass.blocks.find(_.id == blockId).map { block =>
-            val trails = block.trails.filterNot(_.id == trailId)
-            val newSection = sectionClass.copy(blocks = sectionClass.blocks.filterNot(_.id == block.id) :+ block.copy(trails = trails))
-            S3FrontsApi.putFront(edition, section, Json.prettyPrint(Json.toJson(newSection))) //Don't need pretty, only for us devs
-            Ok
-          } getOrElse NotFound("Block Not Found")
+    S3FrontsApi.getBlock(edition, section, blockId) map { json: String =>
+        Json.parse(json).asOpt[Block] map { block: Block =>
+          val trails = block.trails.filterNot(_.id == trailId)
+          val newBlock = block.copy(trails = trails)
+          S3FrontsApi.putBlock(edition, section, block.id, Json.prettyPrint(Json.toJson(newBlock))) //Don't need pretty, only for us devs
+          Ok
         } getOrElse InternalServerError("Parse Error")
       } getOrElse NotFound("No edition or section") //To be more silent in the future?
   }
