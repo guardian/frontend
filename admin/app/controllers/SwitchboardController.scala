@@ -6,7 +6,7 @@ import conf.{ Switches, Configuration }
 import play.api.mvc._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
-import tools.S3
+import tools.Store
 
 object SwitchboardController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
@@ -15,7 +15,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
   def render() = AuthAction { request =>
     log("loaded Switchboard", request)
 
-    val promiseOfSwitches = Akka future { S3.getSwitches }
+    val promiseOfSwitches = Akka future { Store.getSwitches }
 
     Async {
       promiseOfSwitches map { configuration =>
@@ -57,7 +57,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
       switch.name + "=" + (if (switch.isSwitchedOn) "on" else "off")
     }
 
-    S3.putSwitches(updates mkString "\n")
+    Store.putSwitches(updates mkString "\n")
     SwitchesUpdateCounter.recordCount(1)
 
     log.info("switches successfully updated")

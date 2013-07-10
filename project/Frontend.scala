@@ -19,7 +19,7 @@ object Frontend extends Build with Prototypes {
       "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
 
-      "com.amazonaws" % "aws-java-sdk" % "1.4.5",
+      "com.amazonaws" % "aws-java-sdk" % "1.4.7",
 
       "org.jboss.dna" % "dna-common" % "0.6",
       "commons-io" % "commons-io" % "2.4",
