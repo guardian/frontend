@@ -6,6 +6,7 @@ import conf.AdminConfiguration
 import tools.S3FrontsApi
 import play.api.libs.json._
 import common.Logging
+import org.joda.time.DateTime
 
 object FrontsController extends Controller with Logging {
   implicit val trailRead = Json.reads[Trail]
@@ -27,11 +28,6 @@ object FrontsController extends Controller with Logging {
     }.getOrElse(NotFound)
   }
 
-  def readSection(edition: String, section: String) = AuthAction{ request =>
-    S3FrontsApi.getFront(edition, section) map { json: String =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
-  }
 
   def readBlock(edition: String, section: String, blockId: String) = AuthAction{ request =>
     S3FrontsApi.getBlock(edition, section, blockId) map { json =>
@@ -55,8 +51,8 @@ object FrontsController extends Controller with Logging {
             Ok
           } getOrElse InternalServerError("Parse Error")
         } getOrElse {
-          S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None))))))
-          Ok
+          S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None)), DateTime.now.toString))))
+          Created
         }
       } getOrElse NotFound("Invalid JSON")
 
@@ -81,14 +77,6 @@ object FrontsController extends Controller with Logging {
           Ok
         } getOrElse InternalServerError("Parse Error")
       } getOrElse NotFound("No edition or section") //To be more silent in the future?
-  }
-
-  private def getBlock(edition: String, section: String, blockId: String): Option[JsObject] = {
-    S3FrontsApi.getFront(edition, section).flatMap { r =>
-      (Json.parse(r) \ "blocks").as[Seq[JsObject]].find { block =>
-        (block \ "id").as[String].equals(blockId)
-      }
-    }
   }
 
 }

@@ -1,5 +1,7 @@
 package frontsapi.model
 
+import org.joda.time.DateTime
+
 case class Edition(
                     id: String,
                     sections: List[Section]
@@ -13,8 +15,8 @@ case class Section(
 case class Block(
                   id: String,
                   name: Option[String],
-                  trails: List[Trail]
-                  //lastUpdated: DateTime = DateTime.now
+                  trails: List[Trail],
+                  lastUpdated: String
                   )
 
 case class Trail(
