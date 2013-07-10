@@ -15,7 +15,7 @@ define(['common', 'bonzo', 'ajax'], function (common, bonzo, ajax) {
          */
 
         if (!config.switches.liveCricket) {
-            return
+            return;
         }
 
         ajax({
