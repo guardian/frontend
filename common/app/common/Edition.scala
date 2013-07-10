@@ -25,7 +25,8 @@ object Edition {
 
   val all = Seq(
     editions.Uk,
-    editions.Us
+    editions.Us,
+    editions.Au
   )
 
   def apply(request: RequestHeader): Edition = {
