@@ -128,7 +128,7 @@ class RunningOrderTrailblockDescription(
 
   def configuredQuery() = {
     // get the running order from the api
-    val configUrl = s"${Configuration.frontsApi.base}/${edition.id.toLowerCase}/$section/latest/latest.json"
+    val configUrl = s"${Configuration.frontsApi.base}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
     log.info(s"loading running order configuration from: $configUrl")
     parseResponse(WS.url(s"$configUrl").withTimeout(2000).get())
   }
@@ -137,16 +137,10 @@ class RunningOrderTrailblockDescription(
     response.map{ r =>
       r.status match {
         case 200 =>
-          // get the block
-          val block: Option[JsObject] = (parse(r.body) \ "blocks").as[Seq[JsObject]] find { block =>
-            (block \ "id").as[String].equals(blockId)
-          }
           // extract the articles
-          val articles: Seq[String] = block.map { block =>
-            (block \ "trails").as[Seq[JsObject]] map { trail =>
-              (trail \ "id").as[String]
-            }
-          } getOrElse(Nil)
+          val articles: Seq[String] = (parse(r.body) \ "trails").as[Seq[JsObject]] map { trail =>
+            (trail \ "id").as[String]
+          }
           // only make content api request if we have articles
           if (articles.nonEmpty)
             Some(CustomTrailblockDescription(id, name, numItemsVisible){

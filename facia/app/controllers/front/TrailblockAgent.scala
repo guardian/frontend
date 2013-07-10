@@ -51,10 +51,7 @@ class ConfiguredTrailblockAgent(val description: ConfiguredTrailblockDescription
 
   private lazy val agent = play_akka.agent[Option[TrailblockAgent]](None)
 
-  def close() = {
-    agent().map(_.close())
-    agent.close()
-  }
+  def close() = agent.close()
 
   def refresh() = description.configuredQuery map { query =>
     query map refreshTrailblock
