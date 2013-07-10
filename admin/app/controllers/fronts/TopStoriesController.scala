@@ -6,13 +6,13 @@ import controllers.{AuthAction, AuthLogging}
 import play.api.libs.json.Json.toJson
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
-import tools.S3
+import tools.Store
 
 object TopStoriesController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
   def read() = AuthAction{ request =>
     val promiseOfTopStories = Akka future {
-      S3.getTopStories
+      Store.getTopStories
     }
     Async {
       promiseOfTopStories.map { topStories =>
@@ -23,7 +23,7 @@ object TopStoriesController extends Controller with AuthLogging with Logging wit
   
   def update() = AuthAction{ request =>
     val promiseOfSavedTopStories = Akka.future {
-      S3.putTopStories(request.body.asJson.map(_.toString).getOrElse(""))
+      Store.putTopStories(request.body.asJson.map(_.toString).getOrElse(""))
     }
     Async {
       promiseOfSavedTopStories.map { savedTopStories =>
