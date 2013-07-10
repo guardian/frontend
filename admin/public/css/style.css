@@ -477,12 +477,14 @@ a.cta, .cta a {
     padding: 7px 7px 5px 7px;
 }
 
+.fronts .finder input[type="text"] {
+    width: 49%;
+}
+
 .fronts .list-picker {
     background-color: #ccc;
     padding: 7px 7px 5px 7px;
-
     float: right;
-    text-align: right;
     width: 75%;
     border-left: 10px solid #fff;
     box-sizing: border-box;

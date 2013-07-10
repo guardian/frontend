@@ -13,6 +13,10 @@
 
                 <span data-bind="if: $root.selectedSection()">
                     <select data-bind="options: $root.selectedSection().blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Block...'"></select>
+
+                    <span data-bind="if: $root.selectedBlock()">
+                        <a href="#"> &laquo; View in all editions</a>
+                    </span>
                 </span>
 
             </span>
@@ -25,7 +29,7 @@
                 value: latestArticles.term,
                 valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
-            <input type="text" placeholder="url or keyword" data-bind='
+            <input type="text" placeholder="section" data-bind='
                 event: {keyup: latestArticles.search, afterpaste: latestArticles.articleSearch},
                 value: latestArticles.section,
                 valueUpdate: ["afterkeydown", "afterpaste"]'/>

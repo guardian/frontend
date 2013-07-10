@@ -41,7 +41,7 @@ define([
             var list = knockout.observableArray();
             hydrateList(list, articles);
             dropList(id);
-            viewModel.listsDisplayed.push({
+            viewModel.listsDisplayed.unshift({
                 id: id,
                 crumbs: id.split(/\//g),
                 list: list
@@ -70,7 +70,7 @@ define([
 
         function limitListsDisplayed(max) {
             if(viewModel.listsDisplayed().length > max) {
-                viewModel.listsDisplayed.shift();
+                viewModel.listsDisplayed.pop();
                 limitListsDisplayed(max);
             }
         }
@@ -227,6 +227,7 @@ define([
 
             fetchSchema();
 
+            // Whenever a block is selected, load its list 
             viewModel.selectedBlock.subscribe(function(block) {
                 if(block && block.id) {
                     var id = viewModel.selectedEdition().id + '/' +
@@ -235,6 +236,11 @@ define([
 
                     loadList(id, addList);
                 }
+            });
+
+            // Whenever a section is selected, update the search
+            viewModel.selectedSection.subscribe(function(section) {
+                viewModel.latestArticles.section(section.id);
             });
 
             viewModel.latestArticles.search();
