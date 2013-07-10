@@ -18,7 +18,7 @@ define([
 
         this.articles   = ko.observableArray();
         this.term       = ko.observable(Common.queryParams.q || '');
-        this.section    = ko.observable();
+        this.section    = ko.observable(Common.queryParams.section || '');
 
         var reqwest = opts.reqwest || Reqwest;
         
@@ -35,7 +35,7 @@ define([
 
                 // If term contains slashes, assume it's an article id
                 if (self.isTermAnItem()) {
-                    var url = '/api/proxy/' + self.term() + '?show-fields=all&format=json';
+                    var url = '/api/proxy/' + self.term() + '?show-fields=all&section=' + self.section() + '&format=json';
                     propName = 'content';
                 } else {
                     url  = '/api/proxy/search?show-fields=all&page-size=50&format=json&q=';

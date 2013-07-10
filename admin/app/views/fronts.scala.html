@@ -20,9 +20,15 @@
 
         <div class="finder">
             <div class="finder__title">Latest Articles</div>
-            <input type="text" placeholder="url or keyword" 
-                data-bind='event: {keyup: latestArticles.search, mousedown: latestArticles.articleSearch, afterpaste: latestArticles.articleSearch}, value:
-                latestArticles.term, valueUpdate: ["afterkeydown", "afterpaste"]'/>
+            <input type="text" placeholder="url or keyword" data-bind='
+                event: {keyup: latestArticles.search, afterpaste: latestArticles.articleSearch},
+                value: latestArticles.term,
+                valueUpdate: ["afterkeydown", "afterpaste"]'/>
+
+            <input type="text" placeholder="url or keyword" data-bind='
+                event: {keyup: latestArticles.search, afterpaste: latestArticles.articleSearch},
+                value: latestArticles.section,
+                valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
             <div class="connectedList throwAway" data-bind="template: {name: 'template_article', foreach: latestArticles.articles()}"></div>
         </div>
