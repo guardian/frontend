@@ -8,13 +8,13 @@ import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.json.Json.toJson
-import tools.S3
+import tools.Store
 
 object FeatureTrailblockController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
   def edit() = AuthAction{ request =>
     log("loaded config", request)
-    val promiseOfConfig = Akka.future(S3.getConfig)
+    val promiseOfConfig = Akka.future(Store.getConfig)
 
     Async{
       promiseOfConfig.map(config => Ok(views.html.edit(config.getOrElse("{}"), Configuration.environment.stage)))
@@ -32,7 +32,7 @@ object FeatureTrailblockController extends Controller with Logging with AuthLogg
   }
 
   private def saveConfigOrError(json: JsValue) = try {
-    S3.putConfig(Json.stringify(json))
+    Store.putConfig(Json.stringify(json))
     log.info("config successfully updated")
     ConfigUpdateCounter.recordCount(1)
     Ok(toJson(Map("status" -> "Configuration updated")))

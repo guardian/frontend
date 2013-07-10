@@ -19,7 +19,7 @@ object Frontend extends Build with Prototypes {
       "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
 
-      "com.amazonaws" % "aws-java-sdk" % "1.4.5",
+      "com.amazonaws" % "aws-java-sdk" % "1.4.7",
 
       "org.jboss.dna" % "dna-common" % "0.6",
       "commons-io" % "commons-io" % "2.4",
@@ -70,9 +70,7 @@ object Frontend extends Build with Prototypes {
 
   val admin = application("admin").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624",
-      "com.typesafe.slick" %% "slick" % "1.0.0",
-      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
+      "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
     )
   )
   val porter = application("porter").dependsOn(commonWithTests).settings(
