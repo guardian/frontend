@@ -8,7 +8,7 @@ object Feed {
 
   private val baseUrl: String = "http://guardian.cloud.opta.net/"
 
-  def getMatchSummary(matchId: String)(implicit context: ExecutionContext): Future[CricketMatchSummary] =
+  def getMatchSummary(matchId: String)(implicit context: ExecutionContext): Future[cricketModel.Match] =
     get(s"?game_id=$matchId&feed_type=c2").map(parseMatch)
 
   private def get(suffix: String)(implicit context: ExecutionContext): Future[String] = {

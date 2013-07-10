@@ -107,6 +107,8 @@ GET     /football/match/:matchId                                                
 
 #Cricket
 GET     /cricket/match/:matchId                                     controllers.CricketMatchController.renderMatchId(matchId)
+GET     /sport/cricket/match/:matchId.json                          controllers.CricketMatchController.renderMatchId(matchId)
+GET     /sport/cricket/match/:matchId                               controllers.CricketMatchController.renderMatchId(matchId)
 
 #Front
 GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)

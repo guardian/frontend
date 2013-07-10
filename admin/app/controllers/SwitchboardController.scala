@@ -2,7 +2,7 @@ package controllers
 
 import common._
 import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
-import conf.{ Switches, AdminConfiguration }
+import conf.{ Switches, Configuration }
 import play.api.mvc._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
@@ -28,7 +28,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
           }
         }
 
-        Ok(views.html.switchboard(AdminConfiguration.environment.stage))
+        Ok(views.html.switchboard(Configuration.environment.stage))
       }
     }
   }
@@ -63,7 +63,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     log.info("switches successfully updated")
 
     val changes = updates filterNot { current contains _ }
-    Notification.onSwitchChanges(requester, AdminConfiguration.environment.stage, changes)
+    Notification.onSwitchChanges(requester, Configuration.environment.stage, changes)
     changes foreach { change =>
       Audit(s"Switch change by ${requester}: ${change}")
     }

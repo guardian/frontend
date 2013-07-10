@@ -27,7 +27,6 @@ define(["bean",
         this.selector = '.trail--gallery';
         this.galleryEndpoint = '';
 
-
         this.init = function() {
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
@@ -66,21 +65,29 @@ define(["bean",
                 }
             });
 
-            common.mediator.on('modules:overlay:close', common.debounce(function(e){
-                // Needs a delay to give time for analytics to fire before DOM removal
-                overlay.remove();
-                return true;
-            }, 500));
-
             bean.on(window, 'orientationchange', function() {
                 self.layout();
                 self.jumpToContent();
             });
 
+            common.mediator.on('modules:overlay:close', this.removeOverlay);
+
+            bean.one(window, 'popstate', function(event) {
+                // Slight timeout as browsers reset the scroll position on popstate
+                setTimeout(function() {
+                    overlay.hide();
+                    self.removeOverlay();
+                },10);
+
+                common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
+            });
         };
 
         this.loadGallery = function() {
             overlay.showLoading();
+
+            // Save state to preserve back button functionality
+            url.pushUrl({ lightbox: true }, document.title, window.location.href);
 
             ajax({
                 url: self.galleryEndpoint,
@@ -155,7 +162,7 @@ define(["bean",
             });
 
             currentImage = index;
-            self.imageIndexNode.innerText = currentImage;
+            self.imageIndexNode.innerHTML = currentImage;
             self.switchToFullImage();
         };
 
@@ -208,6 +215,12 @@ define(["bean",
             var browserChrome = (window.screen.height - window.innerHeight);
             overlay.node.style.minHeight = window.screen.height + browserChrome + 'px';
         };
+
+        this.removeOverlay = common.debounce(function(e){
+            // Needs a delay to give time for analytics to fire before DOM removal
+            overlay.remove();
+            return true;
+        }, 500);
     }
 
     return LightboxGallery;

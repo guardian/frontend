@@ -167,6 +167,12 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
+  // Sport Switch
+
+  val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
+    "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
+    safeState = Off);
+
   // Dummy Switch
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -204,7 +210,8 @@ object Switches extends Collections {
     iPhoneAppSwitch,
     LocalNavSwitch,
     ABAa,
-    LightboxGalleriesSwitch
+    LightboxGalleriesSwitch,
+    LiveCricketSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
