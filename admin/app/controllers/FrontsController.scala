@@ -28,11 +28,6 @@ object FrontsController extends Controller with Logging {
     }.getOrElse(NotFound)
   }
 
-  def readSection(edition: String, section: String) = AuthAction{ request =>
-    S3FrontsApi.getFront(edition, section) map { json: String =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
-  }
 
   def readBlock(edition: String, section: String, blockId: String) = AuthAction{ request =>
     S3FrontsApi.getBlock(edition, section, blockId) map { json =>
@@ -82,14 +77,6 @@ object FrontsController extends Controller with Logging {
           Ok
         } getOrElse InternalServerError("Parse Error")
       } getOrElse NotFound("No edition or section") //To be more silent in the future?
-  }
-
-  private def getBlock(edition: String, section: String, blockId: String): Option[JsObject] = {
-    S3FrontsApi.getFront(edition, section).flatMap { r =>
-      (Json.parse(r) \ "blocks").as[Seq[JsObject]].find { block =>
-        (block \ "id").as[String].equals(blockId)
-      }
-    }
   }
 
 }
