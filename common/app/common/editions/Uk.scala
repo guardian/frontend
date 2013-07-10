@@ -111,10 +111,8 @@ object Uk extends Edition(
 
   val configuredFrontsFacia = Map(
     (Editionalise("", Uk), Seq(
-      ItemTrailblockDescription("film", "Film", 1),
       RunningOrderTrailblockDescription("culture", "top-stories", "Culture", 5),
-      RunningOrderTrailblockDescription("culture", "features", "Features", 5),
-      FeatureTrailblockDescription("film", "Film", 1)
+      RunningOrderTrailblockDescription("culture", "features", "Features", 5)
     )),
 
     (Editionalise("sport", Uk), Seq(
