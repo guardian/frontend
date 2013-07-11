@@ -32,9 +32,8 @@ define([
             // temporary test of the diagnostics box - @commuterjoy
             var oneInOneThousand = (Math.random() < 0.001);
             if (oneInOneThousand) {
-                var e = new Errors({ window: window, isDev: config.page.isDev });
-                e.init();
-                e.log('ab/' + document.body.className + '~' + s.prop51 + '~' + s.eVar51, 'modules/analytics/omniture', 0, false);
+                var msg = 'document.body.className + '~' + s.prop51 + '~' + s.eVar51, 
+                    e = new Errors({ window: window, isDev: config.page.isDev }).log(msg, 'modules/analytics/omniture', 0, false);
             }
 
             s.t();
