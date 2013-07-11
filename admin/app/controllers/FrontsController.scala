@@ -1,12 +1,12 @@
 package controllers
 
 import frontsapi.model.{UpdateList, Block, Section, Trail}
-import play.api.mvc.{Action, Controller}
-import conf.AdminConfiguration
-import tools.S3FrontsApi
+import play.api.mvc. Controller
 import play.api.libs.json._
-import common.Logging
+import common.{S3FrontsApi, Logging}
 import org.joda.time.DateTime
+import conf.Configuration
+
 
 object FrontsController extends Controller with Logging {
   implicit val trailRead = Json.reads[Trail]
@@ -18,8 +18,8 @@ object FrontsController extends Controller with Logging {
   implicit val blockWrite = Json.writes[Block]
   implicit val sectionWrite = Json.writes[Section]
 
-  def index = AuthAction{ request =>
-    Ok(views.html.fronts(AdminConfiguration.environment.stage))
+  def index() = AuthAction{ request =>
+    Ok(views.html.fronts(Configuration.environment.stage))
   }
 
   def schema = AuthAction{ request =>
@@ -40,15 +40,17 @@ object FrontsController extends Controller with Logging {
       json.asOpt[UpdateList].map { update: UpdateList =>
         S3FrontsApi.getBlock(edition, section, blockId).map { blockJson =>
           Json.parse(blockJson).asOpt[Block] map { block =>
+            val listWithoutItem = block.trails.filterNot(_.id == update.item)
             val index = update.after match {
-              case Some(true) => block.trails.indexWhere(_.id == update.position.getOrElse("")) + 1
-              case _          => block.trails.indexWhere(_.id == update.position.getOrElse(""))
+              case Some(true) => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1
+              case _          => listWithoutItem.indexWhere(_.id == update.position.getOrElse(""))
             }
-            val splitList = block.trails.filterNot(_.id == update.item).splitAt(index)
+            val splitList = listWithoutItem.splitAt(index)
             val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
             val identity = Identity(request).get
             val newBlock = block.copy(trails = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
             S3FrontsApi.putBlock(edition, section, block.id, Json.prettyPrint(Json.toJson(newBlock))) //Don't need pretty, only for us devs
+            S3FrontsApi.archive(edition, section, block.id, blockJson)
             Ok
           } getOrElse InternalServerError("Parse Error")
         } getOrElse {

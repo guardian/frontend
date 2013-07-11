@@ -148,6 +148,10 @@ object Switches extends Collections {
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off)
 
+  val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
+    "If this switch is on, gallery trails are opened in a lightbox.",
+    safeState = Off)
+
 
   // A/B Test Switches
 
@@ -162,6 +166,12 @@ object Switches extends Collections {
   val ABAa = Switch("A/B Tests", "ab-aa",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
+
+  // Sport Switch
+
+  val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
+    "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
+    safeState = Off);
 
   // Dummy Switch
 
@@ -199,7 +209,9 @@ object Switches extends Collections {
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     LocalNavSwitch,
-    ABAa
+    ABAa,
+    LightboxGalleriesSwitch,
+    LiveCricketSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

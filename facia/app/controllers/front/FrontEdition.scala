@@ -1,8 +1,7 @@
 package controllers.front
 
-import model.TrailblockDescription
+import model.{ConfiguredTrailblockDescription, TrailblockDescription, Trailblock}
 import scala.Some
-import model.Trailblock
 import common.Edition
 
 /*
@@ -11,7 +10,10 @@ import common.Edition
  */
 class FrontEdition(val edition: Edition, val descriptions: Seq[TrailblockDescription]) {
 
-  val manualAgents = descriptions.map(TrailblockAgent(_))
+  val manualAgents: Seq[TrailblockAgent] = descriptions.map {
+    case desc: ConfiguredTrailblockDescription => ConfiguredTrailblockAgent(desc)
+    case desc => QueryTrailblockAgent(desc)
+  }
 
   def apply(): Seq[Trailblock] = dedupe(manualAgents.flatMap(_.trailblock))
 

@@ -4,14 +4,14 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
-    "modules/cricketsummary"
+    "modules/cricket"
 ], function (
     common,
     AutoUpdate,
     MatchNav,
     Reading,
     Discussion,
-    cricketSummary
+    Cricket
 ) {
 
     var modules = {
@@ -65,7 +65,7 @@ define([
             });
         },
 
-        logReading: function(context) {
+        logReading: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 var wordCount = config.page.wordCount;
                 if(wordCount !== "") {
@@ -82,14 +82,20 @@ define([
             });
         },
 
-        initCricketSummary: function(context) {
+        initCricket: function() {
             common.mediator.on('page:article:ready', function(config, context) {
 
-                var cricketMatch = config.referencesOfType('esaCricketMatch');
+                var cricketMatchRefs = config.referencesOfType('esaCricketMatch');
 
-                if(cricketMatch[0]) {
-
-                    cricketSummary(config, context, cricketMatch[0]);
+                if(cricketMatchRefs[0]) {
+                    var options = { url: cricketMatchRefs[0],
+                                loadSummary: true,
+                                loadScorecard: true,
+                                summaryElement: '.article-headline',
+                                scorecardElement: '.article-headline',
+                                summaryManipulation: 'after',
+                                scorecardManipulation: 'after' };
+                    Cricket.cricketArticle(config, context, options);
                 }
             });
         }
@@ -100,9 +106,9 @@ define([
             this.initialised = true;
             modules.matchNav();
             modules.initLiveBlogging();
-            modules.logReading(context);
+            modules.logReading();
             modules.initDiscussion();
-            modules.initCricketSummary(context);
+            modules.initCricket();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

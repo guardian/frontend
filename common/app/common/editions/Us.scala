@@ -2,7 +2,7 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{MetaData, ItemTrailblockDescription}
+import model.{RunningOrderTrailblockDescription, MetaData, ItemTrailblockDescription}
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
@@ -64,7 +64,7 @@ object Us extends Edition(
       ItemTrailblockDescription("sport/nhl", "NHL", numItemsVisible = 1, style = Some(Thumbnail))
     ),
 
-  Editionalise("culture", Us) -> Seq(
+    Editionalise("culture", Us) -> Seq(
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -75,7 +75,19 @@ object Us extends Edition(
       ItemTrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail))
     ),
 
-  Editionalise("australia", Us)  -> Seq(
+    Editionalise("commentisfree", Us) -> Seq(
+      ItemTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 20, style = Some(Featured))
+    ),
+
+    Editionalise("business", Us) -> Seq(
+      ItemTrailblockDescription("business", "Business", numItemsVisible = 20, style = Some(Featured))
+    ),
+
+    Editionalise("money", Us) -> Seq(
+      ItemTrailblockDescription("money", "Money", numItemsVisible = 20, style = Some(Featured))
+    ),
+
+    Editionalise("australia", Us)  -> Seq(
       ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = false)(Au),
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = false)(Au),
       ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Thumbnail), showMore = false)(Au),
@@ -87,5 +99,37 @@ object Us extends Edition(
       ItemTrailblockDescription("environment", "Environment", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
       Au.videoCustomBlock
     )
+  )
+
+  val configuredFrontsFacia = Map(
+    (Editionalise("", Us), Seq(
+      RunningOrderTrailblockDescription("news", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("news", "features", "Features", 5),
+      RunningOrderTrailblockDescription("news", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("culture", Us), Seq(
+      RunningOrderTrailblockDescription("culture", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("culture", "features", "Features", 5),
+      RunningOrderTrailblockDescription("culture", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("fashion", Us), Seq(
+      RunningOrderTrailblockDescription("fashion", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("fashion", "features", "Features", 5),
+      RunningOrderTrailblockDescription("fashion", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("technology", Us), Seq(
+      RunningOrderTrailblockDescription("technology", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("technology", "features", "Features", 5),
+      RunningOrderTrailblockDescription("technology", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("film", Us), Seq(
+      RunningOrderTrailblockDescription("film", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("film", "features", "Features", 5),
+      RunningOrderTrailblockDescription("film", "editors-picks", "Editor's Picks", 5)
+    ))
   )
 }

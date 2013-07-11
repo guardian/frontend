@@ -87,14 +87,14 @@ class LinkToTest extends FlatSpec with ShouldMatchers {
     // TODO we only really care about this for theguardian.com - other domains will be removed later from other tests
 
     //editionalised urls
-    ("http://www.theguardian.com/commentisfree/uk-edition", "/commentisfree/uk-edition"),
-    ("http://www.theguardian.com/commentisfree", "/commentisfree/uk-edition"),
-    ("http://www.theguardian.com", "/uk-edition"),
+    ("http://www.theguardian.com/uk/commentisfree", "/uk/commentisfree"),
+    ("http://www.theguardian.com/commentisfree", "/uk/commentisfree"),
+    ("http://www.theguardian.com", "/uk"),
 
     //editionalised paths
-    ("/culture/uk-edition", "/culture/uk-edition"),
-    ("/culture", "/culture/uk-edition"),
-    ("/", "/uk-edition")
+    ("/uk/culture", "/uk/culture"),
+    ("/culture", "/uk/culture"),
+    ("/", "/uk")
 
   )
 
