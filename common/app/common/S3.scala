@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model._
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.util.StringInputStream
 import scala.io.Source
+import org.joda.time.DateTime
 
 trait S3 extends Logging {
 
@@ -59,4 +60,9 @@ object S3FrontsApi extends S3 {
   def getBlock(edition: String, section: String, block: String) = get(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json")
   def putBlock(edition: String, section: String, block: String, json: String) =
     put(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json", json, "application/json", PublicRead)
+
+  def archive(edition: String, section: String, block: String, json: String) = {
+    val now = DateTime.now
+    put(s"${frontsKey}/${edition}/${section}/${block}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+  }
 }

@@ -49,6 +49,7 @@ object FrontsController extends Controller with Logging {
             val identity = Identity(request).get
             val newBlock = block.copy(trails = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
             S3FrontsApi.putBlock(edition, section, block.id, Json.prettyPrint(Json.toJson(newBlock))) //Don't need pretty, only for us devs
+            S3FrontsApi.archive(edition, section, block.id, blockJson)
             Ok
           } getOrElse InternalServerError("Parse Error")
         } getOrElse {
