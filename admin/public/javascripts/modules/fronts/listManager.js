@@ -18,8 +18,7 @@ define([
 
         var viewModel = {},
             poller,
-            self = this,
-            draggedElem;
+            self = this;
 
         function loadList(id, callback) {
             reqwest({
@@ -91,13 +90,25 @@ define([
                 toList;
 
             $(selector).sortable({
+                helper: 'clone',
                 start: function(event, ui) {
+                    ui.placeholder.height(ui.item.height());
                     item = ui.item;
-                    toList = fromList = ui.item.parent();
+                    toList = fromList = item.parent();
                     stopPoller();
                 },
                 stop: function(event, ui) {
-                    draggedElem = item[0];
+                    var idx,
+                        elm;
+
+                    if(toList !== fromList) {
+                        idx = toList.children().index(item);
+                        elm = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
+
+                        toList.children(':eq(' + idx + ')').after(elm);
+                        $(this).sortable('cancel');
+                    }
+
                     saveListDeltas(
                         item[0],
                         fromList[0],
@@ -121,11 +132,17 @@ define([
                 return;
             }
 
+            /*
             if (!$(fromList).hasClass('throwAway')) {
                 lists.push(fromList);
             }
 
             if (!$(toList).hasClass('throwAway') && fromList !== toList) {
+                lists.push(toList);
+            }
+            */
+
+            if (!$(toList).hasClass('throwAway')) {
                 lists.push(toList);
             }
 
@@ -188,17 +205,15 @@ define([
                 viewModel.listsDisplayed().forEach(function(list){
                     loadList(list.id, function(id, articles, lastUpdated, updatedBy, updatedEmail) {
                         if (poller) {
+                            // Knockout doesn't seem to empty elements dragged into
+                            // a container when it regenerates its DOM content. So empty it first.
+                            list.containerEl = list.containerEl || $('[data-list-id="' + list.id + '"]');
+                            list.containerEl.empty();
+
                             hydrateList(list.list, articles);
                             list.lastUpdated(timeAgoString(lastUpdated));
                             list.updatedBy(updatedBy),
                             list.updatedEmail(updatedEmail)
-
-                            // A hack. Knockout doesn't flush the elements dragged into
-                            // a container when it regenerates the DOM content of that container 
-                            if (draggedElem) {
-                                $(draggedElem).remove();
-                                draggedElem = false;
-                            }
                         }
                     });
                 });
