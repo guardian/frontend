@@ -157,7 +157,9 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         }
       }
 
-      if (trailblocks.isEmpty) {
+      if (request.isSingleDomain && path != realPath) {
+        Redirect(s"/$realPath")
+      } else if (trailblocks.isEmpty) {
         InternalServerError
       } else {
         val htmlResponse = () => views.html.front(frontPage, trailblocks)
