@@ -9,7 +9,7 @@ GET     /assets/*file                                                    control
 GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
 GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
 
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>                     controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>.json                controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
+GET     /$path<[^/]*(/\w\w-edition)?>                     controllers.FrontController.render(path)
+GET     /$path<[^/]*(/\w\w-edition)?>.json                controllers.FrontController.render(path)
+GET     /$path<[^/]*(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
+GET     /$path<[^/]*(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
