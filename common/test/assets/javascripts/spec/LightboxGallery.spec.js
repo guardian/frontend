@@ -109,12 +109,18 @@ define(['common',
             expect(document.querySelector('.js-image-index').innerHTML).toBe('5');
         });
 
-        it("should hide/show the furniture when clicking the image", function() {
-            bean.fire(document.querySelector('.gallery-item'), 'click');
+        it("should hide the furniture when clicking the caption", function() {
+            bean.fire(document.querySelector('.gallerycaption'), 'click');
             expect(document.querySelector('.gallery').className).toContain('gallery--hide-furniture');
-            bean.fire(document.querySelector('.gallery-item'), 'click');
+        });
+
+        it("should show the furniture when clicking the image", function() {
+            bean.fire(document.querySelector('.gallerycaption'), 'click');
+            expect(document.querySelector('.gallery').className).toContain('gallery--hide-furniture');
+            bean.fire(document.querySelector('.gallerycaption'), 'click');
             expect(document.querySelector('.gallery').className).not.toContain('gallery--hide-furniture');
         });
+
 
         it("should update the image counter on prev/next", function() {
             bean.fire(document.querySelector('.gallery .js-gallery-next'), 'click');
