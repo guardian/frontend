@@ -19,7 +19,7 @@ object Management extends GuManagement {
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      "/",
+      "/uk",
       "/sport/2012/sep/23/world-road-race-championship-gilbert-cavendish",
       "/football"
     ) { override val base = "http://localhost" },

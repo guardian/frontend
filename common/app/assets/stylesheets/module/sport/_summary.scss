@@ -8,12 +8,15 @@
 }
 
 .sport-summary__head {
+    @extend %type-7;
+    background-color: $mushroom;
+    border-bottom: 1px solid #DEDEDD;
+    color: $sportBright;
     display: block;
-    background-color: $sportBright;
-    color: #fff;
+    font-weight: 500;
     margin-top: $baseline*2;
-    margin-bottom: $baseline;
-    padding: 9px $baseline*2;
+    margin-bottom: 0;
+    padding: 10px $baseline*2 $baseline*2;
 }
 
 .sport-summary__body {

@@ -7,3 +7,5 @@ GET     /assets/*file                                               controllers.
 
 # Cricket
 GET     /cricket/match/:matchId                                     controllers.CricketMatchController.renderMatchId(matchId)
+GET     /sport/cricket/match/:matchId.json                          controllers.CricketMatchController.renderMatchId(matchId)
+GET     /sport/cricket/match/:matchId                               controllers.CricketMatchController.renderMatchId(matchId)

@@ -5,9 +5,24 @@ import com.gu.management.{ Manifest => ManifestFile }
 import com.amazonaws.auth.{ BasicAWSCredentials, AWSCredentials }
 import java.net.InetAddress
 import play.api.Play
+import java.io.{FileInputStream, File}
+import org.apache.commons.io.IOUtils
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
+
+  object environment {
+    private val installVars = (new File("/etc/gu/install_vars")) match {
+      case f if f.exists => IOUtils.toString(new FileInputStream(f))
+      case _ => ""
+    }
+
+    private val properties = Properties(installVars)
+
+    def apply(key: String, default: String) = properties.getOrElse(key, default).toLowerCase
+
+    val stage = apply("STAGE", "unknown")
+  }
 
   object switches {
     lazy val configurationUrl = configuration.getStringProperty("switchboard.config.url").getOrElse(
@@ -145,6 +160,7 @@ class GuardianConfiguration(
 
     lazy val bucket = configuration.getStringProperty("aws.bucket").getOrElse(throw new RuntimeException("AWS bucket is not setup"))
     lazy val frontsApiBucket = configuration.getStringProperty("frontsApi.aws.bucket").getOrElse(throw new RuntimeException("Fronts API AWS bucket is not setup"))
+    lazy val frontsKey = configuration.getStringProperty("frontsApi.file").getOrElse(throw new RuntimeException("Fronts API file is not setup"))
     lazy val sns: String = configuration.getStringProperty("sns.notification.topic.arn").getOrElse {
       throw new IllegalStateException("Cannot send SNS notifications without topic ARN property (sns.notification.topic.arn).")
     }

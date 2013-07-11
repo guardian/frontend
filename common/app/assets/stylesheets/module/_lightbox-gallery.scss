@@ -1,0 +1,200 @@
+@charset "UTF-8";
+
+.gallery {
+    position: relative;
+}
+
+i.gallery__watermark {
+    display: none;
+    position: absolute;
+    top: $baseline * 2;
+    left: $gutter;
+
+    @media (min-width: $tablet) {
+        display: block;
+    }
+}
+
+.gallery--hide-furniture {
+    .gallery__watermark,
+    .gallerycaption,
+    .gallery-arrow-cta  {
+        display: none;
+    }
+
+}
+
+/* ==========================================================================
+   Thumbnail/Single Full image modes
+   ========================================================================== */
+.gallery--grid-mode {
+
+    .gallery__watermark,
+    .gallerycaption,
+    .gallerycaption-handle,
+    .gallery__nav {
+        display: none;
+    }
+
+    .gallery-item {
+        @include fix-aspect-ratio(1, 1, 140px);
+        float: left;
+        margin: $gutter / 2;
+        cursor: pointer;
+    }
+
+    .gallery-item--portrait .gallery__img {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        top: -10%;
+    }
+
+    .gallery-item--landscape .gallery__img {
+        position: absolute;
+        width: auto;
+        height: 100%;
+        left: -30%;
+    }
+
+}
+
+
+.gallery--fullimage-mode {
+    .gallery-item {
+        display: none;
+        text-align: center;
+    }
+}
+
+
+
+/* ==========================================================================
+   Image container
+   ========================================================================== */
+.gallery__img {
+    width: 100%
+}
+
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+.gallery__nav {
+    width: 70px;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    border: 0;
+
+    &,
+    &:active,
+    &:focus {
+        background: rgba(0,0,0,0); // Makes transparent element clickable in IE9
+        outline: none;
+    }
+
+    .gallery-arrow-cta {
+        top: 85px;
+    }
+}
+
+.gallery__nav--prev .gallery-arrow-cta {
+    @include rotate(180deg);
+    left: $gutter;
+}
+
+.gallery__nav--next {
+    right: 0;
+}
+
+
+.gallery-arrow-cta {
+    display: block;
+    position: absolute;
+    right: $gutter;
+    top: 50%;
+    width: 22px;
+    height: 36px;
+    background-color: rgba(0,0,0,0.9);
+
+    .i {
+        margin: 10px 8px;
+    }
+}
+
+
+/* ==========================================================================
+   Captions
+   ========================================================================== */
+.gallerycaption-handle {
+    @include rotate(-90deg);
+    position: absolute;
+    left: 50%;
+    top: auto;
+    right: auto;
+    margin-top: -35px;
+    margin-left: -11px;
+    display: none;
+
+
+    .gallery--hide-furniture & {
+        display: block;
+    }
+}
+
+
+.gallerycaption {
+    color: #aaaaaa;
+    padding: 0 $gutter;
+    text-align: left;
+
+    a {
+        color: #ffffff;
+    }
+
+    &:before {
+        display: none; // Hide the caption icon
+    }
+
+    @media (orientation:landscape) {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(34, 34, 34, 0.90);
+        padding: $baseline * 3 $gutter;
+    }
+}
+
+.gallerycaption__text {
+    @extend %type-10;
+    line-height: 16px;
+    padding-bottom: $baseline * 4;
+    border-bottom: 1px solid #676767;
+    margin-bottom: $baseline;
+}
+
+.gallerycaption__credit {
+    @extend %type-11;
+    margin-bottom: $baseline * 4;
+}
+
+
+
+/* ==========================================================================
+   Image counter
+   ========================================================================== */
+
+.gallery__counter {
+    @extend %type-10;
+    margin-left: 0;
+    letter-spacing: -1px;
+    line-height: 44px;
+    color: #AAAAAA;
+}
+
+.gallery__counter--current-image {
+    color: #FFFFFF;
+}

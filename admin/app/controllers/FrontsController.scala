@@ -1,12 +1,13 @@
 package controllers
 
 import frontsapi.model.{UpdateList, Block, Section, Trail}
-import play.api.mvc.{Action, Controller}
-import conf.AdminConfiguration
+import play.api.mvc. Controller
 import tools.S3FrontsApi
 import play.api.libs.json._
 import common.Logging
 import org.joda.time.DateTime
+import conf.Configuration
+
 
 object FrontsController extends Controller with Logging {
   implicit val trailRead = Json.reads[Trail]
@@ -18,8 +19,8 @@ object FrontsController extends Controller with Logging {
   implicit val blockWrite = Json.writes[Block]
   implicit val sectionWrite = Json.writes[Section]
 
-  def index = AuthAction{ request =>
-    Ok(views.html.fronts(AdminConfiguration.environment.stage))
+  def index() = AuthAction{ request =>
+    Ok(views.html.fronts(Configuration.environment.stage))
   }
 
   def schema = AuthAction{ request =>

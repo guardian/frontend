@@ -104,7 +104,7 @@ object PageviewsGeoGraph extends Chart {
 
   override lazy val form: String = "GeoChart"
 
-  def dataset = Analytics.countries() map {
+  def dataset = Analytics.pageviewsByCountry() map {
     case (country, total) => DataPoint(country, Seq(total))
   }
 }
@@ -115,7 +115,7 @@ object PageviewsOSTreeMapGraph extends Chart {
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("OS", "pageviews")
-  def dataset = Analytics.operatingSystems() map {
+  def dataset = Analytics.pageviewsByOperatingSystem() map {
     case (os, total) => DataPoint(os, Seq(total))
   }
 
@@ -136,7 +136,7 @@ object PageviewsBrowsersTreeMapGraph extends Chart {
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("Browsers", "pageviews")
-  def dataset = Analytics.browsers() map {
+  def dataset = Analytics.pageviewsByBrowser() map {
     case (browser, total) => DataPoint(browser, Seq(total))
   }
 

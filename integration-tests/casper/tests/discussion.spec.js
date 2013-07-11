@@ -20,7 +20,10 @@ casper.then(function() {
 
     casper.test.comment('Read top level comments');
 
+    casper.waitForSelector('.js-show-discussion', function() {
     casper.click('.js-show-discussion');
+    });
+
 
     casper.waitForSelector('.d-discussion',function(){
 
@@ -47,7 +50,7 @@ casper.then(function() {
  **/
 casper.then(function() {
 
-    casper.test.comment('Read top level comments');
+    casper.test.comment('Show more comments');
 
     casper.click('.js-show-more-comments');
 
