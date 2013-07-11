@@ -4,12 +4,12 @@
 
 
 # For dev machines
-GET     /assets/*file                                                    controllers.Assets.at(path="/public", file)
+GET     /assets/*file                                controllers.Assets.at(path="/public", file)
 
-GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
-GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
+GET     /$path<(\w\w-edition)?>                      controllers.FaciaController.render(path)
+GET     /$path<(\w\w-edition)?>.json                 controllers.FaciaController.render(path)
 
-GET     /$path<[^/]*(/\w\w-edition)?>                     controllers.FrontController.render(path)
-GET     /$path<[^/]*(/\w\w-edition)?>.json                controllers.FrontController.render(path)
-GET     /$path<[^/]*(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
-GET     /$path<[^/]*(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
+GET     /$path<[^/]*(/\w\w-edition)?>                controllers.FaciaController.render(path)
+GET     /$path<[^/]*(/\w\w-edition)?>.json           controllers.FaciaController.render(path)
+GET     /$path<[^/]*(/\w\w-edition)?>/trails         controllers.FaciaController.renderTrails(path)
+GET     /$path<[^/]*(/\w\w-edition)?>/trails.json    controllers.FaciaController.renderTrails(path)
