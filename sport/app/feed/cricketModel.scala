@@ -83,7 +83,13 @@ case class Innings(
   description: String,
   batsmen: List[InningsBatsman],
   bowlers: List[InningsBowler],
-  fallOfWicket: List[InningsWicket])
+  fallOfWicket: List[InningsWicket],
+  byes: Int,
+  legByes: Int,
+  noBalls: Int,
+  penalties: Int,
+  wides: Int,
+  extras: Int)
 {
   def closed = declared || forfeited || allOut
   def allOut = wickets == 10
