@@ -13,7 +13,7 @@ trait TrailblockAgent {
 /*
   Responsible for refreshing one block on the front (e.g. the Sport block) for one edition
  */
-class QueryTrailblockAgent(val description: TrailblockDescription) extends TrailblockAgent with AkkaSupport with Logging {
+class QueryTrailblockAgent(var description: TrailblockDescription) extends TrailblockAgent with AkkaSupport with Logging {
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
@@ -49,19 +49,21 @@ object QueryTrailblockAgent {
 
 class ConfiguredTrailblockAgent(val description: ConfiguredTrailblockDescription) extends TrailblockAgent with AkkaSupport with Logging {
 
-  private lazy val agent = play_akka.agent[Option[TrailblockAgent]](None)
+  private lazy val agent = play_akka.agent[Option[QueryTrailblockAgent]](Some(QueryTrailblockAgent(description)))
 
-  def close() = agent.close()
+  def close() = {
+    agent().map(_.close())
+    agent.close()
+  }
 
   def refresh() = description.configuredQuery map { query =>
     query map refreshTrailblock
   }
 
   private def refreshTrailblock(trailblockDescription: TrailblockDescription) = {
-    agent.send { old =>
-      val newAgent = QueryTrailblockAgent(trailblockDescription)
-      newAgent.refresh()
-      Option(newAgent)
+    agent().map { queryTrailblockAgent =>
+      queryTrailblockAgent.description = trailblockDescription
+      queryTrailblockAgent.refresh()
     }
   }
 

@@ -147,8 +147,8 @@ class RunningOrderTrailblockDescription(
               ContentApi.search(edition)
                 .ids(articles.mkString(","))
                 .response map { r =>
-                r.results.map(new Content(_)).sortBy(t => articles.indexWhere(_.equals(t.id)))
-              }
+                  r.results.map(new Content(_)).sortBy(t => articles.indexWhere(_.equals(t.id)))
+                }
             })
           else
             None
