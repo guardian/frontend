@@ -51,7 +51,10 @@
                     </div>
                     <div class="list-header__meta">
                         Updated <span class="list-header__meta__last-updated" data-bind="text: lastUpdated"></span> 
-                        by <span class="list-header__meta__user" data-bind="text: updatedBy"></span>
+                        by <a class="list-header__meta__user" data-bind="
+                            text: updatedBy,
+                            attr: {href: 'mailto:' + updatedEmail}
+                            "></a>
                     </div>
                 </div>
                 <div class="connectedList" data-bind="

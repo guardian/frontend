@@ -546,7 +546,14 @@ a.cta, .cta a {
 }
 
 .fronts .list-header__meta {
+    color: #fff;
     font-size: 10px;
+}
+
+.fronts .list-header__meta a,
+.fronts .list-header__meta a:hover,
+.fronts .list-header__meta a:visited {
+    color: #fff;
 }
 
 .fronts .list-header__meta__last-updated {
