@@ -41,23 +41,20 @@ i.gallery__watermark {
     }
 
     .gallery-item {
-        @include fix-aspect-ratio(1, 1, 140px);
         float: left;
         margin: $gutter / 2;
     }
 
-    .gallery-item--portrait .gallery__img {
-        position: absolute;
-        width: 100%;
-        height: auto;
-        top: -10%;
+    .gallery-item--portrait {
+        @include fix-aspect-ratio(3, 4, 140px);
     }
 
-    .gallery-item--landscape .gallery__img {
-        position: absolute;
-        width: auto;
-        height: 100%;
-        left: -30%;
+    .gallery-item--landscape {
+        @include fix-aspect-ratio(5, 3, 140px);
+    }
+
+    .gallery__img {
+        position: absolute;;
     }
 
 }
@@ -151,12 +148,12 @@ i.gallery__watermark {
    ========================================================================== */
 .gallerycaption-handle {
     position: absolute;
+    display: none;
     left: 50%;
     top: auto;
     right: auto;
     margin-top: -48px;
-    margin-left: -25px;
-    display: none;
+    margin-left: -40px;
     width: 80px;
     height: 40px;
     border: 0;
