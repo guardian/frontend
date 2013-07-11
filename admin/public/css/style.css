@@ -545,15 +545,15 @@ a.cta, .cta a {
     overflow: auto;
 }
 
+.fronts .list-header a,
+.fronts .list-header a:hover,
+.fronts .list-header a:visited {
+    color: #fff;
+}
+
 .fronts .list-header__meta {
     color: #fff;
     font-size: 10px;
-}
-
-.fronts .list-header__meta a,
-.fronts .list-header__meta a:hover,
-.fronts .list-header__meta a:visited {
-    color: #fff;
 }
 
 .fronts .list-header__meta__last-updated {
@@ -584,6 +584,17 @@ a.cta, .cta a {
 
 .fronts .trail:hover {
     background-color: #eee;
+}
+
+.fronts .trail .trail__control {
+    display: none;
+}
+
+.fronts .trailblock .trail:hover .trail__control {
+    display: block;
+    float: right;
+    font-size: 10px;
+    margin: -6px -2px 0 0;
 }
 
 .fronts .trail img {

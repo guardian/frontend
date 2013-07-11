@@ -45,7 +45,7 @@
         <div class="lists" data-bind="foreach: listsDisplayed">
             <div class="trailblock">
                 <div class="list-header">
-                    <a class="list-header__control" data-bind="click: $parent.dropList"><i class="icon-remove  icon-white"></i></a>
+                    <a class="list-header__control" data-bind="click: $parent.dropList">HIDE</a>
                     <div data-bind="foreach: crumbs">
                         <span class="list-header__title" data-bind="text: $data"></span> 
                     </div>
@@ -71,6 +71,11 @@
 
     <script type="text/html" id="template_article">
         <div class="trail cf" data-bind="attr: {'data-url': id}">
+
+            <a class="trail__control" data-bind="click: $parent.dropItem">
+                <i class="icon-remove"></i>
+            </a>
+
             <div class="date" data-bind="html: _humanDate"></div>
             <img data-bind="attr: {src: thumbnail}" />
 

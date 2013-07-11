@@ -1,15 +1,15 @@
 define([
     'Reqwest',
     'knockout',
+    'models/fronts/list',
     'models/fronts/article',
-    'models/fronts/latestArticles',
-    'models/fronts/contentApi'
+    'models/fronts/latestArticles'
 ], function(
     reqwest,
     knockout,
+    List,
     Article,
-    LatestArticles,
-    ContentApi
+    LatestArticles
 ) {
     var apiBase = '/fronts/api',
         maxDisplayedLists = 3;
@@ -20,47 +20,12 @@ define([
             poller,
             self = this;
 
-        function loadList(id, callback) {
-            reqwest({
-                url: apiBase + '/' + id,
-                type: 'json'
-            }).then(
-                function(resp) {
-                    callback(id, resp.trails, resp.lastUpdated, resp.updatedBy, resp.updatedEmail)
-                },
-                function(xhr) {
-                    if(xhr.status === 404) {
-                        callback(id, [])
-                    }
-                }
-            );
-        }
-
-        function addList(id, articles, lastUpdated, updatedBy, updatedEmail) {
-            var list = knockout.observableArray();
-            hydrateList(list, articles);
+        function showList(id) {
             dropList(id);
-            viewModel.listsDisplayed.unshift({
-                id: id,
-                crumbs: id.split(/\//g),
-                list: list,
-                lastUpdated: knockout.observable(timeAgoString(lastUpdated)),
-                updatedBy: knockout.observable(updatedBy),
-                updatedEmail: knockout.observable(updatedEmail)
-            });
+            viewModel.listsDisplayed.unshift(new List(id));
             limitListsDisplayed(maxDisplayedLists);
             connectSortableLists();
             startPoller();
-        }
-
-        function hydrateList(list, articles) {
-            list.removeAll();
-            articles.forEach(function(item){
-                list.push(new Article({
-                    id: item.id
-                }));
-            });
-            ContentApi.decorateItems(list());
         }
 
         function dropList(id) {
@@ -76,12 +41,6 @@ define([
                 limitListsDisplayed(max);
             }
         }
-
-        function withKeyValue(arr, prop, val) {
-            return arr.filter(function(obj){
-                return obj[prop] === val;
-            });
-        }        
 
         function connectSortableLists() {
             var selector = '.connectedList',
@@ -109,11 +68,7 @@ define([
                         $(this).sortable('cancel');
                     }
 
-                    saveListDeltas(
-                        item[0],
-                        fromList[0],
-                        toList[0]
-                    );
+                    saveListDeltas(item.data('url'), toList);
                     startPoller();
                 },
                 change: function(event, ui) {
@@ -123,99 +78,49 @@ define([
             }).disableSelection();
         };
 
-        function saveListDeltas(item, fromList, toList) {
-            var lists = [];
-                    
-            item = $(item).data('url');
+        function saveListDeltas(id, list) {
+            var listId,
+                inList,
+                position,
+                delta;
+                
+            if (list.hasClass('throwAway')) { return; }
 
-            if (!item || !fromList || !toList) {
-                return;
-            }
+            listId = list.attr('data-list-id');
+            if (!listId) { return; }
 
-            /*
-            if (!$(fromList).hasClass('throwAway')) {
-                lists.push(fromList);
-            }
+            inList = $("[data-url='" + id + "']", list);
+            if (inList.length) {
+                delta = {
+                    item: id
+                };
 
-            if (!$(toList).hasClass('throwAway') && fromList !== toList) {
-                lists.push(toList);
-            }
-            */
-
-            if (!$(toList).hasClass('throwAway')) {
-                lists.push(toList);
-            }
-
-            lists.map(function(list){
-                var listId = $(list).attr('data-list-id'),
-                    inList,
-                    position,
-                    delta,
-                    opts;
-
-                if (!listId) { return; }
-
-                inList = $("[data-url='" + item + "']", list);
-
-                if (inList.length) {
-                    delta = {
-                        item: item
-                    };
-
-                    position = inList.next().data('url');
-                    if (position) {
-                        delta.position = position;
-                    } else {
-                        var numOfItems = $("[data-url]", list).length;
-                        if (numOfItems > 1) {
-                            delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
-                            delta.after = true;
-                        } 
-                    }
-
-                    opts = {
-                        method: 'post',
-                        url: apiBase + '/' + listId,
-                        type: 'json',
-                        contentType: 'application/json',
-                        data: JSON.stringify(delta)
-                    };
-
+                position = inList.next().data('url');
+                if (position) {
+                    delta.position = position;
                 } else {
-                    opts = {
-                        method: 'delete',
-                        url: apiBase + '/' + listId + '/' + item,
-                    };
+                    var numOfItems = $("[data-url]", list).length;
+                    if (numOfItems > 1) {
+                        delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
+                        delta.after = true;
+                    } 
                 }
 
-                reqwest(opts).then(
-                    function(resp) { },
-                    function(xhr) { console.log(xhr); } // error
-                );
-            });
+                reqwest({
+                    method: 'post',
+                    url: apiBase + '/' + listId,
+                    type: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(delta)
+                });
+            }
         };
-
-        function timeAgoString(date) {
-            return date ? humanized_time_span(date) : '';
-        }
 
         function startPoller() {
             stopPoller();
             poller = setInterval(function(){
                 viewModel.listsDisplayed().forEach(function(list){
-                    loadList(list.id, function(id, articles, lastUpdated, updatedBy, updatedEmail) {
-                        if (poller) {
-                            // Knockout doesn't seem to empty elements dragged into
-                            // a container when it regenerates its DOM content. So empty it first.
-                            list.containerEl = list.containerEl || $('[data-list-id="' + list.id + '"]');
-                            list.containerEl.empty();
-
-                            hydrateList(list.list, articles);
-                            list.lastUpdated(timeAgoString(lastUpdated));
-                            list.updatedBy(updatedBy),
-                            list.updatedEmail(updatedEmail)
-                        }
-                    });
+                    list.load();
                 });
             }, 3000);
         }
@@ -227,13 +132,11 @@ define([
 
         function displayAllEditions() {
             viewModel.editions.forEach(function(edition){
-                if (edition.id !== viewModel.selectedEdition().id) {
-                    var id = edition.id + '/' +
-                        viewModel.selectedSection().id + '/' + 
-                        viewModel.selectedBlock().id; 
+                var id = edition.id + '/' +
+                    viewModel.selectedSection().id + '/' + 
+                    viewModel.selectedBlock().id; 
 
-                    loadList(id, addList);
-                }
+                showList(id);
             });
         }
 
@@ -253,10 +156,8 @@ define([
         };
 
         this.init = function(callback) {
-
             viewModel.latestArticles  = new LatestArticles();
             viewModel.listsDisplayed  = knockout.observableArray();
-
             viewModel.selectedEdition = knockout.observable();
             viewModel.selectedSection = knockout.observable();
             viewModel.selectedBlock   = knockout.observable();
@@ -273,7 +174,7 @@ define([
                              viewModel.selectedSection().id + '/' + 
                              block.id;
 
-                    loadList(id, addList);
+                    showList(id);
                 }
             });
 
