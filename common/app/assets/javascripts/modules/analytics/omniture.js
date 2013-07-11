@@ -34,7 +34,7 @@ define([
             if (oneInOneThousand) {
                 var e = new Errors({ window: window, isDev: config.page.isDev });
                 e.init();
-                e.log('ab/' + document.body.className + '|' + s.prop51 + '|' + s.eVar51, 'modules/analytics/omniture', 0, false);
+                e.log('ab/' + document.body.className + '~' + s.prop51 + '~' + s.eVar51, 'modules/analytics/omniture', 0, false);
             }
 
             s.t();
