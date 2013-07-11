@@ -64,6 +64,12 @@ class GuardianConfiguration(
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
+  object frontsApi {
+    lazy val base = configuration.getStringProperty("fronts.api") getOrElse {
+      throw new IllegalStateException("Fronts Api not configured")
+    }
+  }
+
   object mongo {
     lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
   }

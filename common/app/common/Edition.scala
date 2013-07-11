@@ -12,6 +12,7 @@ abstract class Edition(
     val hreflang: String // see http://support.google.com/webmasters/bin/answer.py?hl=en&answer=189077
   ) {
   def configuredFronts: Map[String, Seq[TrailblockDescription]]
+  def configuredFrontsFacia: Map[String, Seq[TrailblockDescription]]
   def zones: Seq[Zone]
   def navigation(metadata: MetaData): Seq[NavItem]
 }
