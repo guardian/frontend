@@ -22,7 +22,8 @@ define(["bean",
             totalImages = 0,
             mode = 'fullimage',
             overlay,
-            $navArrows;
+            $navArrows,
+            $images;
 
         this.selector = '.trail--gallery';
         this.galleryEndpoint = '';
@@ -56,12 +57,13 @@ define(["bean",
             bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-prev', this.prev);
             bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
+            bean.on(overlay.bodyNode,    'click', '.gallerycaption, .gallerycaption-handle', this.toggleFurniture);
             bean.on(overlay.bodyNode,    'click', '.gallery-item', function(el) {
                 if (mode === 'grid') {
                     var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
                     self.goTo(index);
                 } else {
-                    self.toggleFurniture();
+                    self.next();
                 }
             });
 
@@ -69,6 +71,10 @@ define(["bean",
                 self.layout();
                 self.jumpToContent();
             });
+
+            bean.on(window, 'resize', common.debounce(function() {
+                self.layout();
+            }));
 
             common.mediator.on('modules:overlay:close', this.removeOverlay);
 
@@ -99,6 +105,7 @@ define(["bean",
 
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
                     $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav .gallery-arrow-cta'));
+                    $images      = bonzo(galleryNode.querySelectorAll('.gallery__img'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
                     self.layout();
@@ -137,12 +144,12 @@ define(["bean",
         };
 
         this.prev = function(e) {
-            e.preventDefault();
+            if (e) { e.preventDefault(); }
             self.goTo(currentImage - 1);
         };
 
         this.next = function(e) {
-            e.preventDefault();
+            if (e) { e.preventDefault(); }
             self.goTo(currentImage + 1);
         };
 
@@ -181,6 +188,8 @@ define(["bean",
             self.gridModeCta.style.display = 'none';
             self.fullModeCta.style.display = 'block';
 
+            self.layout();
+
             if (e) { e.preventDefault(); }
         };
 
@@ -214,9 +223,17 @@ define(["bean",
         };
 
         this.layout = function() {
+            var orientation = (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
+
             // Make overlay large enough to allow the browser chrome to be hidden
-            var browserChrome = (window.screen.height - window.innerHeight);
-            overlay.node.style.minHeight = window.screen.height + browserChrome + 'px';
+            overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
+
+            if (orientation === 'landscape' && mode === 'fullimage') {
+                // In landscape, size all images to the height of the screen
+                $images.css({'height': window.innerHeight + 'px', 'width': 'auto'});
+            } else {
+                $images.removeAttr('style');
+            }
         };
 
         this.removeOverlay = common.debounce(function(e){

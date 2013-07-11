@@ -16,9 +16,11 @@
                              data-width="@image.width"
                              data-height="@image.height"
                         />
-                        <span class="gallery-arrow-cta gallerycaption-handle">
-                            <i class="i i-gallery-arrow"></i>
-                        </span>
+                        <button class="gallerycaption-handle" data-is-ajax data-link-name="Show caption">
+                            <span class="gallery-arrow-cta gallery-arrow-cta--caption-toggle">
+                                <i class="i i-gallery-arrow"></i>
+                            </span>
+                        </button>
                         <figcaption class="gallerycaption" itemprop="description">
                             <p class="gallerycaption__text">@Html(image.caption.getOrElse(""))</p>
                             <p class="gallerycaption__credit">@image.credit</p>

@@ -24,6 +24,10 @@ i.gallery__watermark {
 
 }
 
+.gallery-item {
+    cursor: pointer;
+}
+
 /* ==========================================================================
    Thumbnail/Single Full image modes
    ========================================================================== */
@@ -40,7 +44,6 @@ i.gallery__watermark {
         @include fix-aspect-ratio(1, 1, 140px);
         float: left;
         margin: $gutter / 2;
-        cursor: pointer;
     }
 
     .gallery-item--portrait .gallery__img {
@@ -65,7 +68,15 @@ i.gallery__watermark {
         display: none;
         text-align: center;
     }
+
+    @media (orientation:landscape) {
+        .gallery__img {
+            margin: 0 auto;
+        }
+    }
 }
+
+
 
 
 
@@ -110,6 +121,10 @@ i.gallery__watermark {
 }
 
 
+/* ==========================================================================
+   Arrow CTAs
+   ========================================================================== */
+
 .gallery-arrow-cta {
     display: block;
     position: absolute;
@@ -124,22 +139,32 @@ i.gallery__watermark {
     }
 }
 
+.gallery-arrow-cta--caption-toggle {
+    @include rotate(-90deg);
+    top: 11px;
+    right: 28px;
+}
+
 
 /* ==========================================================================
    Captions
    ========================================================================== */
 .gallerycaption-handle {
-    @include rotate(-90deg);
     position: absolute;
     left: 50%;
     top: auto;
     right: auto;
-    margin-top: -35px;
-    margin-left: -11px;
+    margin-top: -48px;
+    margin-left: -25px;
     display: none;
+    width: 80px;
+    height: 40px;
+    border: 0;
+    padding: 0;
+    background: transparent;
 
-
-    .gallery--hide-furniture & {
+    .gallery--hide-furniture &,
+    .gallery-arrow-cta {
         display: block;
     }
 }
@@ -197,4 +222,13 @@ i.gallery__watermark {
 
 .gallery__counter--current-image {
     color: #FFFFFF;
+}
+
+
+
+/* ==========================================================================
+   Landscape styles
+   ========================================================================== */
+@media (orientation:landscape) {
+
 }
