@@ -1,24 +1,25 @@
 package controllers.front
 
-import model._
-import model.Trailblock
-import scala.Some
-import model.TrailblockDescription
+import model.{ConfiguredTrailblockDescription, Trail, Trailblock, TrailblockDescription}
 import common._
+import scala.Some
 
-import scala.concurrent.duration._
-
+trait TrailblockAgent {
+  def refresh()
+  def close()
+  def trailblock(): Option[Trailblock]
+}
 
 /*
   Responsible for refreshing one block on the front (e.g. the Sport block) for one edition
  */
-class TrailblockAgent(val description: TrailblockDescription) extends AkkaSupport with Logging {
+class QueryTrailblockAgent(var description: TrailblockDescription) extends TrailblockAgent with AkkaSupport with Logging {
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
   def refresh() = description.query map refreshTrails
 
-  def refreshTrails(newTrails: Seq[Trail]) = {
+  private def refreshTrails(newTrails: Seq[Trail]) = {
     agent.send{ old =>
 
       val oldUrls = old.toList.flatMap(_.trails).map(_.url).toList
@@ -38,11 +39,39 @@ class TrailblockAgent(val description: TrailblockDescription) extends AkkaSuppor
 
   def close() = agent.close()
 
-  def trailblock: Option[Trailblock] = agent()
+  def trailblock = agent()
 
 }
 
-object TrailblockAgent {
-  def apply(description: TrailblockDescription): TrailblockAgent =
-    new TrailblockAgent(description)
+object QueryTrailblockAgent {
+  def apply(description: TrailblockDescription): QueryTrailblockAgent = new QueryTrailblockAgent(description)
+}
+
+class ConfiguredTrailblockAgent(val description: ConfiguredTrailblockDescription) extends TrailblockAgent with AkkaSupport with Logging {
+
+  private lazy val agent = play_akka.agent[Option[QueryTrailblockAgent]](Some(QueryTrailblockAgent(description)))
+
+  def close() = {
+    agent().map(_.close())
+    agent.close()
+  }
+
+  def refresh() = description.configuredQuery map { query =>
+    query map refreshTrailblock
+  }
+
+  private def refreshTrailblock(trailblockDescription: TrailblockDescription) = {
+    agent().map { queryTrailblockAgent =>
+      queryTrailblockAgent.description = trailblockDescription
+      queryTrailblockAgent.refresh()
+    }
+  }
+
+  def trailblock = agent().flatMap(_.trailblock)
+
+}
+
+object ConfiguredTrailblockAgent {
+  def apply(description: ConfiguredTrailblockDescription): ConfiguredTrailblockAgent =
+    new ConfiguredTrailblockAgent(description)
 }
