@@ -122,7 +122,7 @@ object Switches extends Collections {
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
-    safeState = On)
+    safeState = Off)
 
   val NetworkFrontAppealSwitch = Switch("Feature Switches", "network-front-appeal",
     "Switch to show the appeal trailblock on the network front.",
