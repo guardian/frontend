@@ -27,7 +27,7 @@
 }
 
 .sport-fullscorecard__secondary {
-    table {
+    .sport-fullscorecard__table {
         @include box-sizing(border-box);
         border-right: $baseline/2 solid #FFFFFF;
         display: table;
@@ -35,7 +35,7 @@
 }
 
 .sport-fullscorecard__detail {
-    table {
+    .sport-fullscorecard__table {
         @include box-sizing(border-box);
         border-left: $baseline/2 solid #FFFFFF;
         display: table;
