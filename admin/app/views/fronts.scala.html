@@ -50,11 +50,16 @@
                         <span class="list-header__title" data-bind="text: $data"></span> 
                     </div>
                     <div class="list-header__meta">
-                        Updated <span class="list-header__meta__last-updated" data-bind="text: lastUpdated"></span> 
-                        by <a class="list-header__meta__user" data-bind="
-                            text: updatedBy,
-                            attr: {href: 'mailto:' + updatedEmail}
-                            "></a>
+                        <!-- ko if: lastUpdated -->
+                            Updated <span class="list-header__meta__last-updated" data-bind="text: lastUpdated"></span> 
+                            by <a class="list-header__meta__user" data-bind="
+                                text: updatedBy,
+                                attr: {href: 'mailto:' + updatedEmail}
+                                "></a>
+                        <!-- /ko -->
+                        <!-- ko ifnot: lastUpdated -->
+                            Empty
+                        <!-- /ko -->
                     </div>
                 </div>
                 <div class="connectedList" data-bind="
