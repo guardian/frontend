@@ -496,6 +496,17 @@ a.cta, .cta a {
     font-size: 18px;
 }
 
+.fronts .list-header__title {
+    display: inline-block;
+    padding-left: 4px;
+    border-left: 1px solid #5a6b87;
+}
+
+.fronts .list-header__title:first-child {
+    padding-left: 0;
+    border-left: 0;
+}
+
 .fronts .list-picker__title {
     color: #666;
 }
@@ -541,10 +552,8 @@ a.cta, .cta a {
 .fronts .list-header__control {
     float: right;
     font-size: 10px;
-}
+    margin: -6px -2px 0 0;
 
-.fronts .list-header__control {
-    color: #fff;
 }
 
 .fronts .trailblock {

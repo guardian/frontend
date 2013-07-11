@@ -46,11 +46,11 @@
             <div class="trailblock">
                 <div class="list-header">
                     <a class="list-header__control" data-bind="click: $parent.dropList"><i class="icon-remove  icon-white"></i></a>
-                    <div class="list-header__title" data-bind="foreach: crumbs">
-                        <span data-bind="text: $data"></span> | 
+                    <div data-bind="foreach: crumbs">
+                        <span class="list-header__title" data-bind="text: $data"></span> 
                     </div>
                     <div class="list-header__last-updated">
-                        Updated by Firstname Lastname <span data-bind="text: lastUpdated"></span>
+                        Updated <span data-bind="text: lastUpdated"></span> by Firstname Lastname
                     </div>
                 </div>
                 <div class="connectedList" data-bind="
