@@ -3,7 +3,7 @@ package common
 import conf.Configuration
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
-import com.amazonaws.services.s3.model.CannedAccessControlList.Private
+import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.util.StringInputStream
 import scala.io.Source
 
@@ -31,12 +31,12 @@ trait S3 extends Logging {
     client.shutdown()
   }
 
-  def put(key: String, value: String, contentType: String) {
+  def put(key: String, value: String, contentType: String, accessControl: CannedAccessControlList = Private) {
     val metadata = new ObjectMetadata()
     metadata.setCacheControl("no-cache,no-store")
     metadata.setContentType(contentType)
 
-    val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(Private)
+    val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControl)
 
     client.putObject(request)
     client.shutdown()
@@ -58,5 +58,5 @@ object S3FrontsApi extends S3 {
 
   def getBlock(edition: String, section: String, block: String) = get(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json")
   def putBlock(edition: String, section: String, block: String, json: String) =
-    put(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json", json, "application/json")
+    put(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json", json, "application/json", PublicRead)
 }
