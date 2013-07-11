@@ -151,14 +151,8 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight": "500",
-                  "file": "resources/fonts/EgyptianHeadline-Medium.woff",
-                  "format": "woff"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
                   "font-weight": "600",
-                  "file": "resources/fonts/EgyptianHeadline-Semibold.woff",
+                  "file": "resources/fonts/EgyptianHeadline-Medium.woff",
                   "format": "woff"
                 }
               ]
@@ -194,14 +188,8 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight": "500",
-                  "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
-                  "format": "ttf"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
                   "font-weight": "600",
-                  "file": "resources/fonts/EgyptianHeadline-Semibold.ttf",
+                  "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
                   "format": "ttf"
                 }
               ]
