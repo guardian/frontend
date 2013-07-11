@@ -82,20 +82,18 @@ trait Images {
     mainPictureCrops.filter(_.width == width).filter(_.height == height).headOption.orElse(mainPicture)
 
   //the canonical main picture, the actual one the editor chose
+  // Assume it's the one with the lowest index (including videos)
   lazy val mainPicture: Option[Image] = if (hasMainPicture)
-    images.filter(List("body", "main", "gallery") contains _.rel).filter(_.index == 1).headOption
+    (images.filter(List("body", "main", "gallery") contains _.rel) ++ videoImages).sortBy(_.index).headOption
   else
-    // we might have videos
-    videoImages.sortBy(_.index).filter(_.index == 1).headOption.orElse {
-      // otherwise just get the 460 sized crop
-      // NOTE safe?
-      images.filter(_.rel == "alt-size").filter(_.width == 460).headOption
-    }
+    // otherwise just get the 460 sized crop
+    // NOTE safe?
+    images.filter(_.rel == "alt-size").filter(_.width == 460).headOption
 
   //Assumption number 2 - the first rel="body" picture is the main picture if (and only if) there are more rel="body"
   //pictures than there are in-body pictures. If there are the same amount, then there is no main picture.
   lazy val hasMainPicture: Boolean = {
-    val bodyPictureCount = images.filter(List("body", "main" , "gallery") contains _.rel).size
+    val bodyPictureCount = (images.filter(List("body", "main" , "gallery") contains _.rel) ++ videoImages).size
     bodyPictureCount > inBodyPictureCount
   }
 

@@ -112,6 +112,20 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
     images.mainPicture.foreach(_.caption should be(Some("a")))
   }
 
+  it should "understand that main image is the image with the lowest index" in {
+
+    val pictureMedia = List(image("b", 69, index = 2))
+    val videoMedia = List(image("a", 50, `type` = "video", index = 1))
+
+    val images = new Images {
+      def images = pictureMedia.map(Image(_))
+      def videoImages = videoMedia.map(Image(_))
+    }
+
+    images.mainPicture.size should be(1)
+    images.mainPicture.foreach(_.caption should be(Some("a")))
+  }
+
   it should "return crops with index 1 if more than one body picture" in {
 
     val imageMedia = List(image("a", 50, index = 1), image("b", 69, index = 2), image("c", 50, rel = "alt-size", index = 1), image("d", 69, rel = "alt-size", index = 2))
@@ -156,7 +170,7 @@ class ImagesTest extends FlatSpec with ShouldMatchers {
   }
 
   private def image(caption: String, width: Int, rel: String = "body", index: Int = 1, `type`: String = "picture") = {
-    MediaAsset(`type`, rel, 1, Some("http://www.foo.com/bar"),
+    MediaAsset(`type`, rel, index, Some("http://www.foo.com/bar"),
       Some(Map("caption" -> caption, "width" -> width.toString)))
   }
 }
