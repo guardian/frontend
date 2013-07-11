@@ -60,17 +60,15 @@
 .sport-fullscorecard__thead {
     th {
         @extend %type-10;
-        font-weight: 500;
         background-color: $mushroom;
         color: $sportMid;
         display: table-cell;
+        font-weight: 500;
         padding: $baseline*2 $baseline*3;
     }
-
     [colspan] {
         text-align: left;
     }
-
     .sport-fullscorecard__additional {
         display: none;
     }
@@ -84,7 +82,6 @@
         display: table-cell;
         padding: $baseline*2 $baseline*3;
     }
-
     .sport-fullscorecard__additional {
         display: none;
     }
@@ -100,7 +97,6 @@
             display: table-cell;
         }
     }
-
     .sport-fullscorecard__tbody {
         br {
             display: inline;
@@ -108,17 +104,14 @@
         span {
             display: none;
         }
-
         .sport-fullscorecard__additional {
             display: table-cell;
         }
     }
-
     .sport-fullscorecard__secondary {
         width: 50%;
         float: left;
     }
-
     .sport-fullscorecard__detail {
         width: 50%;
         float: left;
