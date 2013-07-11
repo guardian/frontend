@@ -40,11 +40,12 @@ object FrontsController extends Controller with Logging {
       json.asOpt[UpdateList].map { update: UpdateList =>
         S3FrontsApi.getBlock(edition, section, blockId).map { blockJson =>
           Json.parse(blockJson).asOpt[Block] map { block =>
+            val listWithoutItem = block.trails.filterNot(_.id == update.item)
             val index = update.after match {
-              case Some(true) => block.trails.indexWhere(_.id == update.position.getOrElse("")) + 1
-              case _          => block.trails.indexWhere(_.id == update.position.getOrElse(""))
+              case Some(true) => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1
+              case _          => listWithoutItem.indexWhere(_.id == update.position.getOrElse(""))
             }
-            val splitList = block.trails.filterNot(_.id == update.item).splitAt(index)
+            val splitList = listWithoutItem.splitAt(index)
             val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
             val identity = Identity(request).get
             val newBlock = block.copy(trails = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
