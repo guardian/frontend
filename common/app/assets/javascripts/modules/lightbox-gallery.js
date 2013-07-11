@@ -106,7 +106,7 @@ define(["bean",
                     self.goTo(currentImage);
 
                     // Register this as a page view
-                    common.mediator.emit('page:common:deferred:loaded', response.config, galleryNode);
+                    common.mediator.emit('module:lightbox-gallery:loaded', response.config, galleryNode);
                 },
                 error: function() {
                     var errorMsg = '<div class="preload-msg">Error loading gallery' +

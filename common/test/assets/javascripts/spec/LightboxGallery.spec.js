@@ -14,6 +14,7 @@ define(['common',
     describe("Lightbox Gallery", function() {
 
         var $ = common.$g,
+            server,
             gallery,
             conf = {
                 id: 'lightbox-gallery',
@@ -24,8 +25,6 @@ define(['common',
                     '</li>'
                 ]
         };
-
-        var spy = sinon.spy(common.mediator, 'emit');
 
         // setup ajax
         ajax.init({page: {
@@ -40,12 +39,16 @@ define(['common',
             }
         };
 
-        // setup fake server
-        var server = sinon.fakeServer.create();
-        server.autoRespond = true;
-        server.respondWith(galleryResponse);
 
         beforeEach(function() {
+            // setup fake server
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
+            server.respondWith(galleryResponse);
+
+
+            sinon.spy(common.mediator, 'emit');
+
             fixtures.render(conf);
 
             common.$g('.overlay').remove();
@@ -54,6 +57,11 @@ define(['common',
 
             bean.fire(document.querySelector('.trail--gallery a'), 'click');
             waits(100);
+        });
+
+        afterEach(function() {
+            server.restore();
+            common.mediator.emit.restore();
         });
 
 
@@ -145,6 +153,7 @@ define(['common',
             gallery.init();
 
             bean.fire(document.querySelector('.trail--gallery a'), 'click');
+
             waits(100);
 
             runs(function() {
@@ -152,13 +161,12 @@ define(['common',
             });
         });
 
-        it("should register a page load when the overlay is opened", function() {
-            waits(100);
-            runs(function(){
-                expect(spy).toHaveBeenCalledWith('page:common:deferred:loaded');
-            });
 
+        it("should register that the gallery has loaded", function() {
+            expect(common.mediator.emit).toHaveBeenCalledWith('module:lightbox-gallery:loaded');
         });
+
+
 
     });
 });

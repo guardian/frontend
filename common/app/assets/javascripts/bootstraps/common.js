@@ -152,6 +152,11 @@ define([
                     urlHashEnabled: true
                 });
             });
+
+            // Register as a page view
+            common.mediator.on('module:lightbox-gallery:loaded', function(config, context) {
+                common.mediator.emit('page:common:deferred:loaded', config, context);
+            });
         },
 
         loadAnalytics: function () {
