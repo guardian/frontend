@@ -2,7 +2,7 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model._
+import model.{RunningOrderTrailblockDescription, ItemTrailblockDescription, MetaData}
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
@@ -28,19 +28,19 @@ object Uk extends Edition(
   )
 
   def navigation(metadata: MetaData) = Seq(
-      NavItem(home),
-      NavItem(uk, Seq(politics, media, science, society, health, education)),
-      NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
-      NavItem(cif, Seq(cifbelief, cifgreen)),
-      NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling)),
-      footballNav(metadata),
-      NavItem(lifeandstyle, Seq(foodanddrink, fashion, relationships, healthandwellbeing, women)),
-      NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
-      NavItem(business, Seq(economics, banking, property, workandcareers, savings)),
-      NavItem(travel, Seq(shortbreaks, uktravel, europetravel, hotels, resturants)),
-      NavItem(technology, Seq(internet, games, mobilephones, appsblog)),
-      NavItem(environment, Seq(climatechange, wildlife, energy, conservation, food))
-    )
+    NavItem(home),
+    NavItem(uk, Seq(politics, media, science, society, health, education)),
+    NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
+    NavItem(cif, Seq(cifbelief, cifgreen)),
+    NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling)),
+    footballNav(metadata),
+    NavItem(lifeandstyle, Seq(foodanddrink, fashion, relationships, healthandwellbeing, women)),
+    NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
+    NavItem(business, Seq(economics, banking, property, workandcareers, savings)),
+    NavItem(travel, Seq(shortbreaks, uktravel, europetravel, hotels, resturants)),
+    NavItem(technology, Seq(internet, games, mobilephones, appsblog)),
+    NavItem(environment, Seq(climatechange, wildlife, energy, conservation, food))
+  )
 
 
   val configuredFronts = Map(
@@ -132,6 +132,12 @@ object Uk extends Edition(
       RunningOrderTrailblockDescription("technology", "top-stories", "Top Stories", 5),
       RunningOrderTrailblockDescription("technology", "features", "Features", 5),
       RunningOrderTrailblockDescription("technology", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("film", Uk), Seq(
+      RunningOrderTrailblockDescription("film", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("film", "features", "Features", 5),
+      RunningOrderTrailblockDescription("film", "editors-picks", "Editor's Picks", 5)
     ))
   )
 }

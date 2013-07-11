@@ -2,7 +2,7 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{MetaData, ItemTrailblockDescription, RunningOrderTrailblockDescription}
+import model.{RunningOrderTrailblockDescription, MetaData, ItemTrailblockDescription}
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
@@ -64,7 +64,7 @@ object Us extends Edition(
       ItemTrailblockDescription("sport/nhl", "NHL", numItemsVisible = 1, style = Some(Thumbnail))
     ),
 
-  Editionalise("culture", Us) -> Seq(
+    Editionalise("culture", Us) -> Seq(
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
@@ -124,7 +124,12 @@ object Us extends Edition(
       RunningOrderTrailblockDescription("technology", "top-stories", "Top Stories", 5),
       RunningOrderTrailblockDescription("technology", "features", "Features", 5),
       RunningOrderTrailblockDescription("technology", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("film", Us), Seq(
+      RunningOrderTrailblockDescription("film", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("film", "features", "Features", 5),
+      RunningOrderTrailblockDescription("film", "editors-picks", "Editor's Picks", 5)
     ))
   )
-
 }
