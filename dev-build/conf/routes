@@ -110,14 +110,19 @@ GET     /cricket/match/:matchId                                     controllers.
 GET     /sport/cricket/match/:matchId.json                          controllers.CricketMatchController.renderMatchId(matchId)
 GET     /sport/cricket/match/:matchId                               controllers.CricketMatchController.renderMatchId(matchId)
 
-#Front
-GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
-GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
 
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>                     controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>.json                controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
+#Front
+GET     /$path<(us|uk|au)?>                                                                         controllers.FrontController.render(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                     controllers.FrontController.render(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json                controllers.FrontController.render(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails              controllers.FrontController.renderTrails(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails.json         controllers.FrontController.renderTrails(path)
+
+# TODO these are legacy Front paths that can be deleted after www.theguardian.com go-live
+GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>                     controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>.json                controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>/trails              controllers.FrontController.renderTrails(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>/trails.json         controllers.FrontController.renderTrails(path)
 
 #Video
 GET     /$path<[\w\d-]*/video/.*>.json              controllers.VideoController.render(path)
