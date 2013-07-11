@@ -51,7 +51,8 @@ object FrontsController extends Controller with Logging {
             Ok
           } getOrElse InternalServerError("Parse Error")
         } getOrElse {
-          S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None)), DateTime.now.toString))))
+          val identity = Identity(request).get
+          S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))))
           Created
         }
       } getOrElse NotFound("Invalid JSON")

@@ -16,7 +16,9 @@ case class Block(
                   id: String,
                   name: Option[String],
                   trails: List[Trail],
-                  lastUpdated: String
+                  lastUpdated: String,
+                  updatedBy: String,
+                  updatedEmail: String
                   )
 
 case class Trail(
