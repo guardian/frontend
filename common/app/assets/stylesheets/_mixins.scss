@@ -62,8 +62,7 @@
     overflow: hidden;
 }
 
-
-@function px-to-em($px, $base-font-size: 16px) {
+@function px2em($px, $base-font-size: 16px) {
     @return ($px / $base-font-size) * 1em;
 }
 
@@ -89,37 +88,31 @@ $mq-wide:    1260px !default;
 // }
 
 @mixin mq($from: false, $to: false) {
-  
+
     // Initialize variables
     $min-width: null;
     $max-width: null;
 
     // From: this breakpoint
     @if ($from == mobile) {
-        $min-width: px-to-em($mq-mobile);
-    }
-    @if ($from == tablet) {
-        $min-width: px-to-em($mq-tablet);
-    }
-    @if ($from == desktop) {
-        $min-width: px-to-em($mq-desktop);
-    }
-    @if ($from == wide) {
-        $min-width: px-to-em($mq-wide);
+        $min-width: px2em($mq-mobile);
+    } @else if ($from == tablet) {
+        $min-width: px2em($mq-tablet);
+    } @else if ($from == desktop) {
+        $min-width: px2em($mq-desktop);
+    } @else if ($from == wide) {
+        $min-width: px2em($mq-wide);
     }
 
     // To: that breakpoint
     @if ($to == mobile) {
-        $max-width: px-to-em($mq-mobile - 1px);
-    }
-    @if ($to == tablet) {
-        $max-width: px-to-em($mq-tablet - 1px);
-    }
-    @if ($to == desktop) {
-        $max-width: px-to-em($mq-desktop - 1px);
-    }
-    @if ($to == wide) {
-        $max-width: px-to-em($mq-wide - 1px);
+        $max-width: px2em($mq-mobile - 1px);
+    } @else if ($to == tablet) {
+        $max-width: px2em($mq-tablet - 1px);
+    } @else if ($to == desktop) {
+        $max-width: px2em($mq-desktop - 1px);
+    } @else if ($to == wide) {
+        $max-width: px2em($mq-wide - 1px);
     }
 
     // Output @media query
