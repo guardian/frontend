@@ -185,7 +185,15 @@ object PorterMetrics {
     None
   ) with TimingMetricLogging
 
-  val all: Seq[Metric] = Seq(AnalyticsLoadTimingMetric)
+  object FastlyCloudwatchLoadTimingMetric extends TimingMetric(
+    "porter",
+    "porter-fastly-cloudwatch-load",
+    "Porter Fastly to Cloudwatch load timing",
+    "Time spent running Fastly to Cloudwatch statistics load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(AnalyticsLoadTimingMetric, FastlyCloudwatchLoadTimingMetric)
 }
 
 //case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
