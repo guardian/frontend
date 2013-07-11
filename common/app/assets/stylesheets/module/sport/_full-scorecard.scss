@@ -98,20 +98,14 @@
         }
     }
     .sport-fullscorecard__tbody {
-        br {
-            display: inline;
-        }
-        span {
-            display: none;
-        }
         .sport-fullscorecard__additional {
             display: table-cell;
         }
+        .sport-fullscorecard__inline-info {
+            display: none;
+        }
     }
-    .sport-fullscorecard__secondary {
-        width: 50%;
-        float: left;
-    }
+    .sport-fullscorecard__secondary,
     .sport-fullscorecard__detail {
         width: 50%;
         float: left;

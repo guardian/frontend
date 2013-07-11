@@ -1,11 +1,6 @@
 @(theMatch: cricketModel.Match)(implicit request: RequestHeader)
 
 <div class="sport-fullscorecard sport-fullscorecard--cricket">
-    <header>
-        <time class="sport-fullscorecard__date h" datetime="@theMatch.gameDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
-            data-timestamp="@theMatch.gameDate.getMillis">@Format(theMatch.gameDate, "d MMM y")</time>
-    </header>
-
     @for(innings <- theMatch.innings.reverse) {
         @displayInnings(innings)
     }
@@ -30,8 +25,8 @@
                 @for(batsman <- innings.batsmen) {
                     <tr>
                         <td>@batsman.name
-                            <br />
-                            <span>@batsman.howOut</span>
+                            <br class="sport-fullscorecard__inline-info"/>
+                            <span class="sport-fullscorecard__inline-info">@batsman.howOut</span>
                         </td>
                         <td class="sport-fullscorecard__additional">@batsman.howOut</td>
                         <td>@batsman.runs</td>
