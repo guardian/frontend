@@ -46,7 +46,8 @@ object FrontsController extends Controller with Logging {
             }
             val splitList = block.trails.filterNot(_.id == update.item).splitAt(index)
             val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
-            val newBlock = block.copy(trails = trails, lastUpdated = DateTime.now.toString)
+            val identity = Identity(request).get
+            val newBlock = block.copy(trails = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
             S3FrontsApi.putBlock(edition, section, block.id, Json.prettyPrint(Json.toJson(newBlock))) //Don't need pretty, only for us devs
             Ok
           } getOrElse InternalServerError("Parse Error")
