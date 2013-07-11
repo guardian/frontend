@@ -61,3 +61,81 @@
     position: relative;
     overflow: hidden;
 }
+
+
+@function px-to-em($px, $base-font-size: 16px) {
+    @return ($px / $base-font-size) * 1em;
+}
+
+// Breakpoints are in pixel for simpler understanding & manipulation
+// they get translated into ems in @media queries
+
+$mq-mobile:  300px  !default;
+$mq-tablet:  600px  !default;
+$mq-desktop: 900px  !default;
+$mq-wide:    1260px !default;
+
+// Usage:
+// .element {
+//     @include mq($from: mobile) {
+//         color: red;
+//     }
+//     @include mq($to: tablet) {
+//         color: blue;
+//     }
+//     @include mq(mobile, tablet) {
+//         color: green;
+//     }
+// }
+
+@mixin mq($from: false, $to: false) {
+  
+    // Initialize variables
+    $min-width: null;
+    $max-width: null;
+
+    // From: this breakpoint
+    @if ($from == mobile) {
+        $min-width: px-to-em($mq-mobile);
+    }
+    @if ($from == tablet) {
+        $min-width: px-to-em($mq-tablet);
+    }
+    @if ($from == desktop) {
+        $min-width: px-to-em($mq-desktop);
+    }
+    @if ($from == wide) {
+        $min-width: px-to-em($mq-wide);
+    }
+
+    // To: that breakpoint
+    @if ($to == mobile) {
+        $max-width: px-to-em($mq-mobile - 1px);
+    }
+    @if ($to == tablet) {
+        $max-width: px-to-em($mq-tablet - 1px);
+    }
+    @if ($to == desktop) {
+        $max-width: px-to-em($mq-desktop - 1px);
+    }
+    @if ($to == wide) {
+        $max-width: px-to-em($mq-wide - 1px);
+    }
+
+    // Output @media query
+    @if ($from == false) {
+        @media (max-width: $max-width) {
+            @content;
+        }
+    } @else {
+        @if ($to == false) {
+            @media (min-width: $min-width) {
+                @content;
+            }
+        } @else {
+            @media (min-width: $min-width) and (max-width: $max-width) {
+                @content;
+            }
+        }
+    }
+}

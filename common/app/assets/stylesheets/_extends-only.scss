@@ -25,13 +25,13 @@
     display: inline-block;
     position: relative;
     top: -.1em;
-    background: #005689;
-    color: #fff;
-    font: bold 13px/1 EgyptianHeadline, Georgia, serif;
     width: 1em;
     height: 1em;
     margin-left: .2em;
     vertical-align: middle;
+    background: #005689;
+    font: bold 13px/1 $serifheadline;
+    color: #fff;
     text-align: center;
     cursor: help;
 }

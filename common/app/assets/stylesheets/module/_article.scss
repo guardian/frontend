@@ -26,6 +26,11 @@
     @extend %type-3;
     margin-bottom: $baseline*2;
 
+    @include mq(tablet) {
+        font-family: $serifheadline;
+        font-weight: 500;
+    }
+
     a {
         &:link,
         &:visited,
