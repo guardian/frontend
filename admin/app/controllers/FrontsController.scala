@@ -2,9 +2,8 @@ package controllers
 
 import frontsapi.model.{UpdateList, Block, Section, Trail}
 import play.api.mvc. Controller
-import tools.S3FrontsApi
 import play.api.libs.json._
-import common.Logging
+import common.{S3FrontsApi, Logging}
 import org.joda.time.DateTime
 import conf.Configuration
 
