@@ -27,7 +27,7 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    callback(id, resp.trails, resp.lastUpdated)
+                    callback(id, resp.trails, resp.lastUpdated, resp.updatedBy, resp.updatedEmail)
                 },
                 function(xhr) {
                     if(xhr.status === 404) {
@@ -37,7 +37,7 @@ define([
             );
         }
 
-        function addList(id, articles, lastUpdated) {
+        function addList(id, articles, lastUpdated, updatedBy, updatedEmail) {
             var list = knockout.observableArray();
             hydrateList(list, articles);
             dropList(id);
@@ -45,7 +45,9 @@ define([
                 id: id,
                 crumbs: id.split(/\//g),
                 list: list,
-                lastUpdated: knockout.observable(humanized_time_span(lastUpdated))
+                lastUpdated: knockout.observable(timeAgoString(lastUpdated)),
+                updatedBy: knockout.observable(updatedBy),
+                updatedEmail: knockout.observable(updatedEmail)
             });
             limitListsDisplayed(maxDisplayedLists);
             connectSortableLists();
@@ -176,14 +178,20 @@ define([
             });
         };
 
+        function timeAgoString(date) {
+            return date ? humanized_time_span(date) : '';
+        }
+
         function startPoller() {
             stopPoller();
             poller = setInterval(function(){
                 viewModel.listsDisplayed().forEach(function(list){
-                    loadList(list.id, function(id, articles, lastUpdated) {
+                    loadList(list.id, function(id, articles, lastUpdated, updatedBy, updatedEmail) {
                         if (poller) {
                             hydrateList(list.list, articles);
-                            list.lastUpdated(humanized_time_span(lastUpdated));
+                            list.lastUpdated(timeAgoString(lastUpdated));
+                            list.updatedBy(updatedBy),
+                            list.updatedEmail(updatedEmail)
 
                             // A hack. Knockout doesn't flush the elements dragged into
                             // a container when it regenerates the DOM content of that container 
@@ -194,7 +202,7 @@ define([
                         }
                     });
                 });
-            }, 2000);
+            }, 3000);
         }
 
         function stopPoller() {

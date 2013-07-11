@@ -545,8 +545,12 @@ a.cta, .cta a {
     overflow: auto;
 }
 
-.fronts .list-header__last-updated {
+.fronts .list-header__meta {
     font-size: 10px;
+}
+
+.fronts .list-header__meta__last-updated {
+    font-weight: bold;
 }
 
 .fronts .list-header__control {

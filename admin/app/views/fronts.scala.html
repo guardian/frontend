@@ -49,8 +49,9 @@
                     <div data-bind="foreach: crumbs">
                         <span class="list-header__title" data-bind="text: $data"></span> 
                     </div>
-                    <div class="list-header__last-updated">
-                        Updated <span data-bind="text: lastUpdated"></span> by Firstname Lastname
+                    <div class="list-header__meta">
+                        Updated <span class="list-header__meta__last-updated" data-bind="text: lastUpdated"></span> 
+                        by <span class="list-header__meta__user" data-bind="text: updatedBy"></span>
                     </div>
                 </div>
                 <div class="connectedList" data-bind="
