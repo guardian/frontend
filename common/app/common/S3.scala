@@ -57,20 +57,20 @@ object S3 extends S3
 object S3FrontsApi extends S3 {
 
   override lazy val bucket = Configuration.aws.frontsApiBucket
-  lazy val frontsKey = Configuration.aws.frontsKey
+  lazy val stage = Configuration.environment.stage.toUpperCase
 
-  def getSchema = get(s"${frontsKey}/schema.json")
-  def getFront(edition: String, section: String) = get(s"${frontsKey}/${edition}/${section}/latest/latest.json")
+  def getSchema = get(s"${stage}/schema.json")
+  def getFront(edition: String, section: String) = get(s"${stage}/${edition}/${section}/latest/latest.json")
   def putFront(edition: String, section: String, json: String) =
-    putPublic(s"${frontsKey}/${edition}/${section}/latest/latest.json", json, "application/json")
+    putPublic(s"${stage}/${edition}/${section}/latest/latest.json", json, "application/json")
 
 
-  def getBlock(edition: String, section: String, block: String) = get(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json")
+  def getBlock(edition: String, section: String, block: String) = get(s"${stage}/${edition}/${section}/${block}/latest/latest.json")
   def putBlock(edition: String, section: String, block: String, json: String) =
-    putPublic(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json", json, "application/json")
+    putPublic(s"${stage}/${edition}/${section}/${block}/latest/latest.json", json, "application/json")
 
   def archive(edition: String, section: String, block: String, json: String) = {
     val now = DateTime.now
-    putPrivate(s"${frontsKey}/${edition}/${section}/${block}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+    putPrivate(s"${stage}/${edition}/${section}/${block}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
   }
 }
