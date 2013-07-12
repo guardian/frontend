@@ -22,7 +22,7 @@ define([
 
         function showList(id) {
             dropList(id);
-            viewModel.listsDisplayed.unshift(new List(id));
+            viewModel.listsDisplayed.push(new List(id));
             limitListsDisplayed(maxDisplayedLists);
             connectSortableLists();
             startPoller();
@@ -37,7 +37,7 @@ define([
 
         function limitListsDisplayed(max) {
             if(viewModel.listsDisplayed().length > max) {
-                viewModel.listsDisplayed.pop();
+                viewModel.listsDisplayed.shift();
                 limitListsDisplayed(max);
             }
         }
