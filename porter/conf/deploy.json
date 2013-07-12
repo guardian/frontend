@@ -1,0 +1,28 @@
+{
+    "packages":{
+        "frontend-porter":{
+            "type":"asg-elb",
+            "apps":[ "frontend::porter" ],
+            "data":{
+                "secondsToWait":900,
+                "port":18080,
+                "healthcheckGrace":20,
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
+        }
+    },
+    "recipes":{
+        "default":{
+            "depends" : ["artifactUpload", "deploy"]
+        },
+        "deploy":{
+            "actionsBeforeApp": ["frontend-porter.deploy"]
+        },
+        "artifactUpload":{
+            "actionsBeforeApp": ["frontend-porter.uploadArtifacts"]
+        }
+    }
+}

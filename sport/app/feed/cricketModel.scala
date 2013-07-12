@@ -1,32 +1,122 @@
 package cricketModel
 
-import cricketOpta._
+import org.joda.time.DateTime
 
-class Match(
-    private val matchSummary: CricketMatchSummary )
+case class Match(
+  teams: List[Team],
+  innings: List[Innings],
+  sessions: List[Session],
+  competitionName: String,
+  description: String,
+  venueName: String,
+  result: String,
+  gameDate: DateTime)
 {
-  lazy val homeTeam = matchSummary.teams.filter(_.homeOrAway == "home").head
-  lazy val awayTeam = matchSummary.teams.filter(_.homeOrAway == "away").head
+  def homeTeam: Team = teams.filter(_.homeOrAway == "home").head
+  def awayTeam: Team = teams.filter(_.homeOrAway == "away").head
+  def homeTeamInnings: List[Innings] = innings.filter(x => x.battingTeamId == homeTeam.id).sortBy(_.id)
+  def awayTeamInnings: List[Innings] = innings.filter(x => x.battingTeamId == awayTeam.id).sortBy(_.id)
 
-  lazy val competitionName = matchSummary.matchDetail.competitionName
-  lazy val description = matchSummary.matchDetail.description
-  lazy val venueName = matchSummary.matchDetail.venueName
-  lazy val result = matchSummary.matchDetail.result
-  lazy val gameDate = matchSummary.matchDetail.gameDate
+  def lastInnings: Option[Innings] = {
+    innings match {
+      case Nil => None
+      case _ => Some(innings.last)
+    }
+  }
 
-  lazy val homeTeamInnings = matchSummary.innings.filter(x => x.battingTeamId == homeTeam.id).sortBy(_.id)
-  lazy val awayTeamInnings = matchSummary.innings.filter(x => x.battingTeamId == awayTeam.id).sortBy(_.id)
+  def firstInBatsman: Option[InningsBatsman] = {
+    lastInnings match {
+      case Some(innings) => innings.batsmen.indexWhere(x => !x.out) match {
+        case -1 => None
+        case index => Some(innings.batsmen(index))
+      }
+      case _ => None
+    }
+  }
+
+  def secondInBatsman: Option[InningsBatsman] = {
+    lastInnings match {
+      case Some(innings) => innings.batsmen.lastIndexWhere(x => !x.out) match {
+        case -1 => None
+        case index => Some(innings.batsmen(index))
+      }
+      case _ => None
+    }
+  }
+
+  def lastOut: Option[InningsBatsman] = {
+    lastInnings match {
+      case Some(innings) => innings.batsmen.lastIndexWhere(x => x.out) match {
+        case -1 => None
+        case index => Some(innings.batsmen(index))
+      }
+      case _ => None
+    }
+  }
+
+  def bowlerOnStrike: Option[InningsBowler] = {
+    lastInnings match {
+      case Some(innings) => innings.bowlers.filter(x => x.onStrike) match {
+        case head :: _ => Some(head)
+        case Nil => None
+      }
+      case _ => None
+    }
+  }
 }
 
-abstract class Innings {
-  def id: Int
-  def battingTeamId: Int
-  def runsScored: Int
-  def overs: String
-  def wickets: Int
-  def declared: Boolean
-  def forfeited: Boolean
+case class Session(
+  day: String)
 
-  lazy val closed = declared || forfeited || allOut
-  lazy val allOut = wickets == 10
+case class Team(
+  name: String,
+  id: Int,
+  homeOrAway: String)
+
+case class Innings(
+  id: Int,
+  battingTeamId: Int,
+  runsScored: Int,
+  overs: String,
+  declared: Boolean,
+  forfeited: Boolean,
+  description: String,
+  batsmen: List[InningsBatsman],
+  bowlers: List[InningsBowler],
+  fallOfWicket: List[InningsWicket],
+  byes: Int,
+  legByes: Int,
+  noBalls: Int,
+  penalties: Int,
+  wides: Int,
+  extras: Int)
+{
+  def closed = declared || forfeited || allOut
+  def allOut = wickets == 10
+  def wickets = fallOfWicket.length
 }
+
+case class InningsBatsman(
+  name: String,
+  ballsFaced: Int,
+  runs: Int,
+  fours: Int,
+  sixes: Int,
+  out: Boolean,
+  howOut: String,
+  onStrike: Boolean,
+  nonStrike: Boolean)
+
+case class InningsBowler(
+  name: String,
+  overs: Int,
+  maidens: Int,
+  runs: Int,
+  wickets: Int,
+  onStrike: Boolean,
+  nonStrike: Boolean)
+
+case class InningsWicket(
+  order: Int,
+  name: String,
+  runs: Int)

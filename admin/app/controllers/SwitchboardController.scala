@@ -2,11 +2,11 @@ package controllers
 
 import common._
 import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
-import conf.{ Switches, AdminConfiguration }
+import conf.{ Switches, Configuration }
 import play.api.mvc._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
-import tools.S3
+import tools.Store
 
 object SwitchboardController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
@@ -15,7 +15,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
   def render() = AuthAction { request =>
     log("loaded Switchboard", request)
 
-    val promiseOfSwitches = Akka future { S3.getSwitches }
+    val promiseOfSwitches = Akka future { Store.getSwitches }
 
     Async {
       promiseOfSwitches map { configuration =>
@@ -28,7 +28,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
           }
         }
 
-        Ok(views.html.switchboard(AdminConfiguration.environment.stage))
+        Ok(views.html.switchboard(Configuration.environment.stage))
       }
     }
   }
@@ -57,13 +57,13 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
       switch.name + "=" + (if (switch.isSwitchedOn) "on" else "off")
     }
 
-    S3.putSwitches(updates mkString "\n")
+    Store.putSwitches(updates mkString "\n")
     SwitchesUpdateCounter.recordCount(1)
 
     log.info("switches successfully updated")
 
     val changes = updates filterNot { current contains _ }
-    Notification.onSwitchChanges(requester, AdminConfiguration.environment.stage, changes)
+    Notification.onSwitchChanges(requester, Configuration.environment.stage, changes)
     changes foreach { change =>
       Audit(s"Switch change by ${requester}: ${change}")
     }

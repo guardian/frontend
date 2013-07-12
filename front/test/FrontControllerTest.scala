@@ -18,11 +18,17 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
   it should "understand the editionalised network front" in Fake {
     val result = controllers.FrontController.render("uk-edition")(TestRequest())
     status(result) should be(200)
+
+    val result2 = controllers.FrontController.render("uk")(TestRequest())
+    status(result2) should be(200)
   }
 
   it should "understand editionalised section fronts" in Fake {
     val result = controllers.FrontController.render("culture/uk-edition")(TestRequest())
     status(result) should be(200)
+
+    val result2 = controllers.FrontController.render("uk/culture")(TestRequest())
+    status(result2) should be(200)
   }
 
   it should "return JSONP when callback is supplied to front" in Fake {

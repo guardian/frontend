@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 
-public class IsSiteRespondingTest {
+public class IsSiteResponding {
     protected static String HOST;
 
     static {

@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Mini-scorecard object
+   ========================================================================== */
+
+.sport-miniscorecard {
+    margin-bottom: $baseline*4;
+    width: 100%;
+}
+
+.sport-miniscorecard__head {
+    @extend %type-7;
+    background-color: $mushroom;
+    border-bottom: 1px solid #DEDEDD;
+    color: $sportBright;
+    display: block;
+    font-weight: 500;
+    margin-top: $baseline*2;
+    margin-bottom: 0;
+    padding: 10px $baseline*2 $baseline*2;
+}
+
+.sport-miniscorecard__body {
+    background-color: $mushroom;
+
+    td {
+        @extend %type-10;
+        display: table-cell;
+        padding: $baseline*2 $baseline*3;
+    }
+}
+
+.sport-miniscorecard__score {
+    td {
+        border-bottom: 1px solid #DEDEDD;
+    }
+
+    td:first-child {
+        font-weight: bold;
+        min-width: 130px;
+        width: 35%
+    }
+}
+
+.sport-miniscorecard__detail {
+    td {
+        @extend %type-10;
+        display: table-cell;
+        padding: $baseline*2 $baseline*3;
+    }
+
+    td:first-child {
+        min-width: 60px;
+        width: 30%
+    }
+
+    tr {
+        border-bottom: 1px solid #DEDEDD;
+    }
+
+    tr:last-child {
+        border-bottom: 0;
+    }
+}
