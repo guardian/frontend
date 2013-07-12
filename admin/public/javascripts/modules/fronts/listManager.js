@@ -173,8 +173,21 @@ define([
 
             fetchSchema();
 
-            // Whenever a block is selected, load its list 
+            viewModel.selectedEdition.subscribe(function(edition) {
+                viewModel.selectedSection(undefined);
+                viewModel.selectedBlock(undefined);
+            });
+
+            viewModel.selectedSection.subscribe(function(section) {
+                viewModel.selectedBlock(undefined);
+                if (section && section.id) {
+                    viewModel.latestArticles.section(section.id);
+                }
+            });
+
+            // Whenever a block is selected, load its list
             viewModel.selectedBlock.subscribe(function(block) {
+                console.log(viewModel.selectedBlock())
                 if(block && block.id) {
                     var id = viewModel.selectedEdition().id + '/' +
                              viewModel.selectedSection().id + '/' + 
@@ -182,11 +195,6 @@ define([
 
                     showList(id);
                 }
-            });
-
-            // Whenever a section is selected, update the search
-            viewModel.selectedSection.subscribe(function(section) {
-                viewModel.latestArticles.section(section.id);
             });
 
             viewModel.latestArticles.search();
