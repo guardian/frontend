@@ -109,15 +109,10 @@ define(['common',
             expect(document.querySelector('.js-image-index').innerHTML).toBe('5');
         });
 
-        it("should hide the furniture when clicking the caption", function() {
-            bean.fire(document.querySelector('.gallerycaption'), 'click');
+        it("should hide/show the furniture when clicking the caption toggle", function() {
+            bean.fire(document.querySelector('.js-toggle-furniture'), 'click');
             expect(document.querySelector('.gallery').className).toContain('gallery--hide-furniture');
-        });
-
-        it("should show the furniture when clicking the image", function() {
-            bean.fire(document.querySelector('.gallerycaption'), 'click');
-            expect(document.querySelector('.gallery').className).toContain('gallery--hide-furniture');
-            bean.fire(document.querySelector('.gallerycaption'), 'click');
+            bean.fire(document.querySelector('.js-toggle-furniture'), 'click');
             expect(document.querySelector('.gallery').className).not.toContain('gallery--hide-furniture');
         });
 
