@@ -63,15 +63,15 @@ define([
                 return false;
             }
             return true;
-        })
-    };
+        });
+    }
 
     function testCanBeRun (test, config, context) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun(config, context) && !expired && config.switches['ab' + test.id])
+        return (test.canRun(config, context) && !expired && config.switches['ab' + test.id]);
     }
 
-    // Finds variant in specific tests and runs it 
+    // Finds variant in specific tests and runs it
     function run(test, config, context) {
 
         if (!isParticipating(test) || !testCanBeRun(test, config, context)) {
