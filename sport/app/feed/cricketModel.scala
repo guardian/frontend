@@ -38,7 +38,8 @@ case class Match(
     lastInnings match {
       case Some(innings) => innings.batsmen.lastIndexWhere(x => !x.out) match {
         case -1 => None
-        case index => Some(innings.batsmen(index))
+        case index if (index != innings.batsmen.indexWhere(x => !x.out)) => Some(innings.batsmen(index))
+        case _ => None
       }
       case _ => None
     }
