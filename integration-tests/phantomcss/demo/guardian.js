@@ -19,7 +19,7 @@ var url = initPageOnServer('demo/testpage.html');
 
 function resize_and_take_screenshot(width){
 		casper.viewport(width,800)
-		css.screenshot('body', 250,'', 'screenshot_'+width+'.png');
+		css.screenshot('body', 1000,'', 'screenshot_'+width+'.png');
 
 }
 
@@ -36,6 +36,7 @@ casper.
 		casper.waitForSelector('.ad-slot', function() {
 			casper.evaluate(function(){
 				document.querySelector('.js-popular').style.visibility = 'hidden';
+				document.querySelector('footer').style.visibility = 'hidden';
 				var ads = document.querySelectorAll('.ad-slot');
 				Array.prototype.forEach.call(ads, function(el) {
 				 	el.style.visibility = "hidden";
