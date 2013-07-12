@@ -533,6 +533,7 @@ a.cta, .cta a {
 }
 
 .fronts .lists .connectedList {
+    min-height: 10px;
     background-color: #a1aec4;
     margin: 0 0 20px 0;
 }
