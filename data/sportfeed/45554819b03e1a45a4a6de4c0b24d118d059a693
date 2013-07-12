@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2001-2013 Opta Sportsdata Ltd. All rights reserved. -->
+
+<!-- PRODUCTION HEADER
+     produced on:        valde-jobq-a03.nexus.opta.net
+     production time:    20130712T162428,704Z
+     production module:  Opta::Feed::XML::Cricket::C2
+-->
+<CricketMatchSummary timestamp="20130712T172428+0100">
+  <Innings id="1" batting_team_id="2" bowling_team_id="1" declared="0" follow_on="0" forfeited="0" overnight_runs="0" overnight_wickets="0">
+    <Batsmen>
+      <Batsman id="3297" balls_faced="26" bowled_by="4906" caught_by="2707" day="1" dismissal_id="3" fours_scored="2" how_out="Caught Brad Haddin Bowled James Pattinson" minutes="41" non_strike="0" on_strike="0" order="1" runs_scored="13" sixes_scored="0" />
+      <Batsman id="4541" balls_faced="64" bowled_by="4242" caught_by="0" day="1" dismissal_id="1" fours_scored="6" how_out="Bowled Peter Siddle" minutes="100" non_strike="0" on_strike="0" order="2" runs_scored="30" sixes_scored="0" />
+      <Batsman id="3542" balls_faced="80" bowled_by="4242" caught_by="0" day="1" dismissal_id="1" fours_scored="9" how_out="Bowled Peter Siddle" minutes="124" non_strike="0" on_strike="0" order="3" runs_scored="48" sixes_scored="0" />
+      <Batsman id="3238" balls_faced="23" bowled_by="4242" caught_by="3067" day="1" dismissal_id="3" fours_scored="3" how_out="Caught Michael Clarke Bowled Peter Siddle" minutes="27" non_strike="0" on_strike="0" order="4" runs_scored="14" sixes_scored="0" />
+      <Batsman id="3207" balls_faced="63" bowled_by="4242" caught_by="3017" day="1" dismissal_id="3" fours_scored="6" how_out="Caught Shane Watson Bowled Peter Siddle" minutes="92" non_strike="0" on_strike="0" order="5" runs_scored="25" sixes_scored="0" />
+      <Batsman id="4249" balls_faced="51" bowled_by="4910" caught_by="0" day="1" dismissal_id="1" fours_scored="7" how_out="Bowled Mitchell Starc" minutes="102" non_strike="0" on_strike="0" order="6" runs_scored="37" sixes_scored="0" />
+      <Batsman id="3239" balls_faced="7" bowled_by="4242" caught_by="4292" day="1" dismissal_id="3" fours_scored="0" how_out="Caught Phillip Hughes Bowled Peter Siddle" minutes="7" non_strike="0" on_strike="0" order="7" runs_scored="1" sixes_scored="0" />
+      <Batsman id="3425" balls_faced="30" bowled_by="4906" caught_by="4906" day="1" dismissal_id="2" fours_scored="5" how_out="Caught and Bowled James Pattinson" minutes="34" non_strike="0" on_strike="0" order="8" runs_scored="24" sixes_scored="0" />
+      <Batsman id="2906" balls_faced="5" bowled_by="4906" caught_by="4292" day="1" dismissal_id="3" fours_scored="0" how_out="Caught Phillip Hughes Bowled James Pattinson" minutes="17" non_strike="0" on_strike="0" order="9" runs_scored="1" sixes_scored="0" />
+      <Batsman id="3873" balls_faced="1" bowled_by="4910" caught_by="2707" day="1" dismissal_id="3" fours_scored="0" how_out="Caught Brad Haddin Bowled Mitchell Starc" minutes="1" non_strike="0" on_strike="0" order="10" runs_scored="0" sixes_scored="0" />
+      <Batsman id="3065" balls_faced="6" bowled_by="0" caught_by="0" day="1" dismissal_id="0" fours_scored="0" how_out="Not Out" minutes="10" non_strike="1" on_strike="0" order="11" runs_scored="1" sixes_scored="0" />
+    </Batsmen>
+    <Bowlers>
+      <Bowler id="4906" balls_bowled="0" maidens_bowled="2" no_balls="1" non_strike="1" on_strike="0" order="1" overs_bowled="17" runs_conceded="69" wickets_taken="3" wides="2" />
+      <Bowler id="4910" balls_bowled="0" maidens_bowled="5" no_balls="0" non_strike="0" on_strike="1" order="2" overs_bowled="17" runs_conceded="54" wickets_taken="2" wides="0" />
+      <Bowler id="4242" balls_bowled="0" maidens_bowled="4" no_balls="1" non_strike="0" on_strike="0" order="3" overs_bowled="14" runs_conceded="50" wickets_taken="5" wides="1" />
+      <Bowler id="5358" balls_bowled="0" maidens_bowled="1" no_balls="0" non_strike="0" on_strike="0" order="4" overs_bowled="7" runs_conceded="24" wickets_taken="0" wides="0" />
+      <Bowler id="3017" balls_bowled="0" maidens_bowled="2" no_balls="0" non_strike="0" on_strike="0" order="5" overs_bowled="4" runs_conceded="7" wickets_taken="0" wides="1" />
+    </Bowlers>
+    <Extras byes="6" leg_byes="5" no_balls="2" penalties="0" total_extras="21" wides="8" />
+    <FallofWickets>
+      <FallofWicket order="1" over_ball="8.6" player_id="3297" runs="27" />
+      <FallofWicket order="2" over_ball="21.1" player_id="4541" runs="78" />
+      <FallofWicket order="3" over_ball="27.3" player_id="3238" runs="102" />
+      <FallofWicket order="4" over_ball="35.5" player_id="3542" runs="124" />
+      <FallofWicket order="5" over_ball="47.5" player_id="3207" runs="178" />
+      <FallofWicket order="6" over_ball="49.2" player_id="3239" runs="180" />
+      <FallofWicket order="7" over_ball="56.5" player_id="3425" runs="213" />
+      <FallofWicket order="8" over_ball="57.1" player_id="4249" runs="213" />
+      <FallofWicket order="9" over_ball="57.2" player_id="3873" runs="213" />
+      <FallofWicket order="10" over_ball="58.6" player_id="2906" runs="215" />
+    </FallofWickets>
+    <Total overs="59.0" runs_scored="215" wickets="10" />
+  </Innings>
+  <Innings id="2" batting_team_id="1" bowling_team_id="2" declared="0" follow_on="0" forfeited="0" overnight_runs="280" overnight_wickets="10">
+    <Batsmen>
+      <Batsman id="3017" balls_faced="14" bowled_by="3873" caught_by="4541" day="1" dismissal_id="3" fours_scored="3" how_out="Caught Joe Root Bowled Steven Finn" minutes="15" non_strike="0" on_strike="0" order="1" runs_scored="13" sixes_scored="0" />
+      <Batsman id="3636" balls_faced="37" bowled_by="3065" caught_by="0" day="1" dismissal_id="7" fours_scored="2" how_out="L.B.W. James Anderson" minutes="70" non_strike="0" on_strike="0" order="2" runs_scored="16" sixes_scored="0" />
+      <Batsman id="4146" balls_faced="1" bowled_by="3873" caught_by="2906" day="1" dismissal_id="3" fours_scored="0" how_out="Caught Graeme Swann Bowled Steven Finn" minutes="0" non_strike="0" on_strike="0" order="3" runs_scored="0" sixes_scored="0" />
+      <Batsman id="3067" balls_faced="6" bowled_by="3065" caught_by="0" day="1" dismissal_id="1" fours_scored="0" how_out="Bowled James Anderson" minutes="14" non_strike="0" on_strike="0" order="4" runs_scored="0" sixes_scored="0" />
+      <Batsman id="4552" balls_faced="79" bowled_by="3065" caught_by="3239" day="2" dismissal_id="3" fours_scored="7" how_out="Caught Matt Prior Bowled James Anderson" minutes="99" non_strike="0" on_strike="0" order="5" runs_scored="53" sixes_scored="1" />
+      <Batsman id="4292" balls_faced="131" bowled_by="0" caught_by="0" day="2" dismissal_id="0" fours_scored="9" how_out="Not Out" minutes="219" non_strike="1" on_strike="0" order="6" runs_scored="81" sixes_scored="0" />
+      <Batsman id="2707" balls_faced="2" bowled_by="2906" caught_by="0" day="2" dismissal_id="1" fours_scored="0" how_out="Bowled Graeme Swann" minutes="5" non_strike="0" on_strike="0" order="7" runs_scored="1" sixes_scored="0" />
+      <Batsman id="4242" balls_faced="5" bowled_by="3065" caught_by="3239" day="2" dismissal_id="3" fours_scored="0" how_out="Caught Matt Prior Bowled James Anderson" minutes="5" non_strike="0" on_strike="0" order="8" runs_scored="1" sixes_scored="0" />
+      <Batsman id="4910" balls_faced="5" bowled_by="3065" caught_by="3239" day="2" dismissal_id="3" fours_scored="0" how_out="Caught Matt Prior Bowled James Anderson" minutes="5" non_strike="0" on_strike="0" order="9" runs_scored="0" sixes_scored="0" />
+      <Batsman id="4906" balls_faced="8" bowled_by="2906" caught_by="0" day="2" dismissal_id="7" fours_scored="0" how_out="L.B.W. Graeme Swann" minutes="6" non_strike="0" on_strike="0" order="10" runs_scored="2" sixes_scored="0" />
+      <Batsman id="5358" balls_faced="101" bowled_by="3425" caught_by="2906" day="2" dismissal_id="3" fours_scored="12" how_out="Caught Graeme Swann Bowled Stuart Broad" minutes="131" non_strike="0" on_strike="0" order="11" runs_scored="98" sixes_scored="2" />
+    </Batsmen>
+    <Bowlers>
+      <Bowler id="3065" balls_bowled="0" maidens_bowled="2" no_balls="0" non_strike="0" on_strike="0" order="1" overs_bowled="24" runs_conceded="85" wickets_taken="5" wides="0" />
+      <Bowler id="3873" balls_bowled="0" maidens_bowled="0" no_balls="0" non_strike="0" on_strike="0" order="2" overs_bowled="15" runs_conceded="80" wickets_taken="2" wides="0" />
+      <Bowler id="2906" balls_bowled="0" maidens_bowled="4" no_balls="0" non_strike="1" on_strike="0" order="3" overs_bowled="19" runs_conceded="60" wickets_taken="2" wides="0" />
+      <Bowler id="3425" balls_bowled="5" maidens_bowled="0" no_balls="0" non_strike="0" on_strike="1" order="4" overs_bowled="6" runs_conceded="40" wickets_taken="1" wides="0" />
+    </Bowlers>
+    <Extras byes="0" leg_byes="15" no_balls="0" penalties="0" total_extras="15" wides="0" />
+    <FallofWickets>
+      <FallofWicket order="1" over_ball="3.3" player_id="3017" runs="19" />
+      <FallofWicket order="2" over_ball="3.4" player_id="4146" runs="19" />
+      <FallofWicket order="3" over_ball="6.2" player_id="3067" runs="22" />
+      <FallofWicket order="4" over_ball="14.3" player_id="3636" runs="53" />
+      <FallofWicket order="5" over_ball="28.3" player_id="4552" runs="108" />
+      <FallofWicket order="6" over_ball="29.1" player_id="2707" runs="113" />
+      <FallofWicket order="7" over_ball="30.2" player_id="4242" runs="114" />
+      <FallofWicket order="8" over_ball="32.1" player_id="4910" runs="114" />
+      <FallofWicket order="9" over_ball="33.4" player_id="4906" runs="117" />
+      <FallofWicket order="10" over_ball="64.5" player_id="5358" runs="280" />
+    </FallofWickets>
+    <Total overs="64.5" runs_scored="280" wickets="10" />
+  </Innings>
+  <Innings id="3" batting_team_id="2" bowling_team_id="1" declared="0" follow_on="0" forfeited="0" overnight_runs="80" overnight_wickets="2">
+    <Batsmen>
+      <Batsman id="3297" balls_faced="165" bowled_by="5358" caught_by="3067" day="3" dismissal_id="3" fours_scored="6" how_out="Caught Michael Clarke Bowled Ashton Agar" minutes="261" non_strike="0" on_strike="0" order="1" runs_scored="50" sixes_scored="0" />
+      <Batsman id="4541" balls_faced="31" bowled_by="4910" caught_by="2707" day="2" dismissal_id="3" fours_scored="1" how_out="Caught Brad Haddin Bowled Mitchell Starc" minutes="33" non_strike="0" on_strike="0" order="2" runs_scored="5" sixes_scored="0" />
+      <Batsman id="3542" balls_faced="1" bowled_by="4910" caught_by="0" day="2" dismissal_id="7" fours_scored="0" how_out="L.B.W. Mitchell Starc" minutes="3" non_strike="0" on_strike="0" order="3" runs_scored="0" sixes_scored="0" />
+      <Batsman id="3238" balls_faced="150" bowled_by="4906" caught_by="0" day="3" dismissal_id="1" fours_scored="12" how_out="Bowled James Pattinson" minutes="211" non_strike="0" on_strike="0" order="4" runs_scored="64" sixes_scored="0" />
+      <Batsman id="3207" balls_faced="182" bowled_by="0" caught_by="0" day="3" dismissal_id="0" fours_scored="9" how_out="Not Out" minutes="264" non_strike="1" on_strike="0" order="5" runs_scored="77" sixes_scored="0" />
+      <Batsman id="4249" balls_faced="62" bowled_by="5358" caught_by="2707" day="3" dismissal_id="3" fours_scored="0" how_out="Caught Brad Haddin Bowled Ashton Agar" minutes="84" non_strike="0" on_strike="0" order="6" runs_scored="15" sixes_scored="0" />
+      <Batsman id="3239" balls_faced="42" bowled_by="4242" caught_by="4146" day="3" dismissal_id="3" fours_scored="6" how_out="Caught Ed Cowan Bowled Peter Siddle" minutes="58" non_strike="0" on_strike="0" order="7" runs_scored="31" sixes_scored="0" />
+      <Batsman id="3425" balls_faced="77" bowled_by="0" caught_by="0" day="3" dismissal_id="0" fours_scored="4" how_out="Not Out" minutes="110" non_strike="0" on_strike="1" order="8" runs_scored="37" sixes_scored="0" />
+      <Batsman id="2906" balls_faced="" bowled_by="" caught_by="" day="0" dismissal_id="" fours_scored="" how_out="" minutes="" non_strike="0" on_strike="0" order="9" runs_scored="" sixes_scored="" />
+      <Batsman id="3873" balls_faced="" bowled_by="" caught_by="" day="0" dismissal_id="" fours_scored="" how_out="" minutes="" non_strike="0" on_strike="0" order="10" runs_scored="" sixes_scored="" />
+      <Batsman id="3065" balls_faced="" bowled_by="" caught_by="" day="0" dismissal_id="" fours_scored="" how_out="" minutes="" non_strike="0" on_strike="0" order="11" runs_scored="" sixes_scored="" />
+    </Batsmen>
+    <Bowlers>
+      <Bowler id="4906" balls_bowled="0" maidens_bowled="7" no_balls="1" non_strike="0" on_strike="0" order="1" overs_bowled="26" runs_conceded="85" wickets_taken="1" wides="0" />
+      <Bowler id="4910" balls_bowled="0" maidens_bowled="7" no_balls="0" non_strike="0" on_strike="0" order="2" overs_bowled="27" runs_conceded="66" wickets_taken="2" wides="1" />
+      <Bowler id="5358" balls_bowled="5" maidens_bowled="5" no_balls="1" non_strike="0" on_strike="1" order="3" overs_bowled="27" runs_conceded="75" wickets_taken="2" wides="0" />
+      <Bowler id="4242" balls_bowled="0" maidens_bowled="9" no_balls="1" non_strike="1" on_strike="0" order="4" overs_bowled="25" runs_conceded="54" wickets_taken="1" wides="0" />
+      <Bowler id="3017" balls_bowled="0" maidens_bowled="10" no_balls="0" non_strike="0" on_strike="0" order="5" overs_bowled="12" runs_conceded="3" wickets_taken="0" wides="0" />
+    </Bowlers>
+    <Extras byes="1" leg_byes="13" no_balls="3" penalties="0" total_extras="18" wides="1" />
+    <FallofWickets>
+      <FallofWicket order="1" over_ball="7.3" player_id="4541" runs="11" />
+      <FallofWicket order="2" over_ball="7.4" player_id="3542" runs="11" />
+      <FallofWicket order="3" over_ball="56.6" player_id="3238" runs="121" />
+      <FallofWicket order="4" over_ball="59.1" player_id="3297" runs="131" />
+      <FallofWicket order="5" over_ball="79.6" player_id="4249" runs="174" />
+      <FallofWicket order="6" over_ball="92.6" player_id="3239" runs="218" />
+    </FallofWickets>
+    <Total overs="117.5" runs_scored="297" wickets="6" />
+  </Innings>
+  <MatchDetail away_batting_bonus="0" away_bowling_bonus="0" away_team="Australia" away_team_id="1" competition_id="1196" competition_name="England v Australia Test Series 2013" description="1st Test" dl="0" game_date="2013-07-10" game_date_time="2013-07-10T11:00:00+01:00" game_id="34780" game_time="11:00:00" game_type_id="1" gmt_offset="60" home_batting_bonus="0" home_bowling_bonus="0" home_team="England" home_team_id="2" match_day="3" number_days="5" result="England lead Australia by 232 runs with 4  wickets remaining" result_id="7" status_id="1" toss="England won the toss and elected to bat." toss_decision="Bat" toss_team_id="2" total_overs="" venue_id="60">
+    <Officials official_1_first_name="Aleem" official_1_id="10" official_1_initials="A S" official_1_last_name="Dar" official_1_umpire_type="On Field" official_2_first_name="Handunnettige" official_2_id="254" official_2_initials="H D P K" official_2_last_name="Dharmasena" official_2_umpire_type="On Field" official_3_first_name="Marais" official_3_id="36" official_3_initials="M" official_3_last_name="Erasmus" official_3_umpire_type="Video" official_4_first_name="Neil" official_4_id="144" official_4_initials="N A" official_4_last_name="Mallender" official_4_umpire_type="Reserve" official_5_first_name="Ranjan" official_5_id="5" official_5_initials="R S" official_5_last_name="Madugalle" official_5_umpire_type="Match Referee" />
+    <Venue venue_city="Nottingham" venue_country="England" venue_id="60" venue_name="Trent Bridge" />
+  </MatchDetail>
+  <PlayerDetail>
+    <Team home_or_away="home" team_id="2" team_name="England">
+      <Player id="3297" captain="-1" game_player_id="1154840" order="1" player_first_name="Alastair" player_initials="A.N." player_last_name="Cook" player_middle_name="Nathan" player_name="Alastair Cook" />
+      <Player id="4541" game_player_id="1154841" order="2" player_first_name="Joseph" player_initials="J.E." player_last_name="Root" player_middle_name="Edward" player_name="Joe Root" />
+      <Player id="3542" game_player_id="1154842" order="3" player_first_name="Ian" player_initials="I.J.L." player_last_name="Trott" player_middle_name="Jonathan Leonard" player_name="Jonathan Trott" />
+      <Player id="3238" game_player_id="1154843" order="4" player_first_name="Kevin" player_initials="K.P." player_last_name="Pietersen" player_middle_name="Peter" player_name="Kevin Pietersen" />
+      <Player id="3207" game_player_id="1154844" order="5" player_first_name="Ian" player_initials="I.R." player_last_name="Bell" player_middle_name="Ronald" player_name="Ian Bell" />
+      <Player id="4249" game_player_id="1154845" order="6" player_first_name="Jonathan" player_initials="J.M." player_last_name="Bairstow" player_middle_name="Marc" player_name="Jonny Bairstow" />
+      <Player id="3239" game_player_id="1154846" keeper="-1" order="7" player_first_name="Matthew" player_initials="M.J." player_last_name="Prior" player_middle_name="James" player_name="Matt Prior" />
+      <Player id="3425" game_player_id="1154847" order="8" player_first_name="Stuart" player_initials="S.C.J." player_last_name="Broad" player_middle_name="Christopher John" player_name="Stuart Broad" />
+      <Player id="2906" game_player_id="1154848" order="9" player_first_name="Graeme" player_initials="G.P." player_last_name="Swann" player_middle_name="Peter" player_name="Graeme Swann" />
+      <Player id="3873" game_player_id="1154849" order="10" player_first_name="Steven" player_initials="S.T." player_last_name="Finn" player_middle_name="Thomas" player_name="Steven Finn" />
+      <Player id="3065" game_player_id="1154850" order="11" player_first_name="James" player_initials="J.M." player_last_name="Anderson" player_middle_name="Michael" player_name="James Anderson" />
+    </Team>
+    <Team home_or_away="away" team_id="1" team_name="Australia">
+      <Player id="3017" game_player_id="1154851" order="1" player_first_name="Shane" player_initials="S.R." player_last_name="Watson" player_middle_name="Robert" player_name="Shane Watson" />
+      <Player id="3636" game_player_id="1154852" order="2" player_first_name="Christopher" player_initials="C.J.L." player_last_name="Rogers" player_middle_name="John Llewellyn" player_name="Chris Rogers" />
+      <Player id="4146" game_player_id="1154853" order="3" player_first_name="Edward" player_initials="E.J.M." player_last_name="Cowan" player_middle_name="James McKenzie" player_name="Ed Cowan" />
+      <Player id="3067" captain="-1" game_player_id="1154854" order="4" player_first_name="Michael" player_initials="M.J." player_last_name="Clarke" player_middle_name="John" player_name="Michael Clarke" />
+      <Player id="4292" game_player_id="1154855" order="5" player_first_name="Phillip" player_initials="P.J." player_last_name="Hughes" player_middle_name="Joel" player_name="Phillip Hughes" />
+      <Player id="4552" game_player_id="1154856" order="6" player_first_name="Steven" player_initials="S.P.D." player_last_name="Smith" player_middle_name="Peter Devereux" player_name="Steven Smith" />
+      <Player id="2707" game_player_id="1154857" keeper="-1" order="7" player_first_name="Bradley" player_initials="B.J." player_last_name="Haddin" player_middle_name="James" player_name="Brad Haddin" />
+      <Player id="4242" game_player_id="1154858" order="8" player_first_name="Peter" player_initials="P.M." player_last_name="Siddle" player_middle_name="Matthew" player_name="Peter Siddle" />
+      <Player id="4906" game_player_id="1154859" order="9" player_first_name="James" player_initials="J.L." player_last_name="Pattinson" player_middle_name="Lee" player_name="James Pattinson" />
+      <Player id="4910" game_player_id="1154860" order="10" player_first_name="Mitchell" player_initials="M.A." player_last_name="Starc" player_middle_name="Aaron" player_name="Mitchell Starc" />
+      <Player id="5358" game_player_id="1154861" order="11" player_first_name="Ashton" player_initials="A.C." player_last_name="Agar" player_middle_name="Charles" player_name="Ashton Agar" />
+    </Team>
+  </PlayerDetail>
+  <SessionUpdates>
+    <session day="1" innings="1" overs="0.0" runs="0" status_id="1" time="10:59:07" wickets="0">
+      <player id="3297" runs_scored="0" />
+      <player id="4541" runs_scored="0" />
+    </session>
+    <session day="1" innings="1" overs="13.0" runs="39" status_id="15" time="12:01:01" wickets="1">
+      <player id="4541" runs_scored="12" />
+      <player id="3542" runs_scored="12" />
+    </session>
+    <session day="1" innings="1" overs="13.0" runs="39" status_id="1" time="12:03:42" wickets="1">
+      <player id="4541" runs_scored="12" />
+      <player id="3542" runs_scored="12" />
+    </session>
+    <session day="1" innings="1" overs="26.0" runs="98" status_id="3" time="13:02:50" wickets="2">
+      <player id="3542" runs_scored="37" />
+      <player id="3238" runs_scored="10" />
+    </session>
+    <session day="1" innings="1" overs="26.0" runs="98" status_id="1" time="13:40:06" wickets="2">
+      <player id="3542" runs_scored="37" />
+      <player id="3238" runs_scored="10" />
+    </session>
+    <session day="1" innings="1" overs="39.0" runs="134" status_id="15" time="14:41:03" wickets="4">
+      <player id="3207" runs_scored="8" />
+      <player id="4249" runs_scored="4" />
+    </session>
+    <session day="1" innings="1" overs="39.0" runs="134" status_id="1" time="14:44:27" wickets="4">
+      <player id="3207" runs_scored="8" />
+      <player id="4249" runs_scored="4" />
+    </session>
+    <session day="1" innings="1" overs="52.0" runs="185" status_id="2" time="15:42:18" wickets="6">
+      <player id="3425" runs_scored="1" />
+      <player id="4249" runs_scored="32" />
+    </session>
+    <session day="1" innings="1" overs="52.0" runs="185" status_id="1" time="16:00:40" wickets="6">
+      <player id="3425" runs_scored="1" />
+      <player id="4249" runs_scored="32" />
+    </session>
+    <session day="1" innings="1" overs="59.0" runs="215" status_id="4" time="16:42:23" wickets="10">
+      <player id="3065" runs_scored="1" />
+    </session>
+    <session day="1" innings="2" overs="0.0" runs="0" status_id="1" time="16:50:57" wickets="0">
+      <player id="3017" runs_scored="0" />
+      <player id="3636" runs_scored="0" />
+    </session>
+    <session day="1" innings="2" overs="21.0" runs="75" status_id="5" time="18:30:52" wickets="4">
+      <player id="4552" runs_scored="38" />
+      <player id="4292" runs_scored="7" />
+    </session>
+    <session day="2" innings="2" overs="21.0" runs="75" status_id="1" time="10:58:55" wickets="4">
+      <player id="4552" runs_scored="38" />
+      <player id="4292" runs_scored="7" />
+    </session>
+    <session day="2" innings="2" overs="33.4" runs="117" status_id="15" time="11:59:51" wickets="9">
+      <player id="4292" runs_scored="21" />
+    </session>
+    <session day="2" innings="2" overs="33.4" runs="117" status_id="1" time="12:01:52" wickets="9">
+      <player id="4292" runs_scored="21" />
+    </session>
+    <session day="2" innings="2" overs="55.0" runs="229" status_id="3" time="13:32:14" wickets="9">
+      <player id="5358" runs_scored="69" />
+      <player id="4292" runs_scored="63" />
+    </session>
+    <session day="2" innings="2" overs="55.0" runs="229" status_id="1" time="14:11:52" wickets="9">
+      <player id="5358" runs_scored="69" />
+      <player id="4292" runs_scored="63" />
+    </session>
+    <session day="2" innings="2" overs="64.5" runs="280" status_id="4" time="14:54:43" wickets="10">
+      <player id="4292" runs_scored="81" />
+    </session>
+    <session day="2" innings="3" overs="0.0" runs="0" status_id="1" time="15:02:55" wickets="0">
+      <player id="3297" runs_scored="0" />
+      <player id="4541" runs_scored="0" />
+    </session>
+    <session day="2" innings="3" overs="7.4" runs="11" status_id="2" time="15:42:11" wickets="2">
+      <player id="3297" runs_scored="4" />
+    </session>
+    <session day="2" innings="3" overs="7.4" runs="11" status_id="1" time="16:00:13" wickets="2">
+      <player id="3238" runs_scored="0" />
+      <player id="3297" runs_scored="4" />
+    </session>
+    <session day="2" innings="3" overs="25.0" runs="49" status_id="15" time="17:16:00" wickets="2">
+      <player id="3297" runs_scored="20" />
+      <player id="3238" runs_scored="21" />
+    </session>
+    <session day="2" innings="3" overs="25.0" runs="49" status_id="1" time="17:19:02" wickets="2">
+      <player id="3297" runs_scored="20" />
+      <player id="3238" runs_scored="21" />
+    </session>
+    <session day="2" innings="3" overs="43.0" runs="80" status_id="5" time="18:32:22" wickets="2">
+      <player id="3238" runs_scored="35" />
+      <player id="3297" runs_scored="37" />
+    </session>
+    <session day="3" innings="3" overs="43.0" runs="80" status_id="1" time="10:58:23" wickets="2">
+      <player id="3238" runs_scored="35" />
+      <player id="3297" runs_scored="37" />
+    </session>
+    <session day="3" innings="3" overs="57.0" runs="121" status_id="15" time="12:01:59" wickets="3">
+      <player id="3297" runs_scored="48" />
+      <player id="3207" runs_scored="0" />
+    </session>
+    <session day="3" innings="3" overs="57.0" runs="121" status_id="1" time="12:03:05" wickets="3">
+      <player id="3297" runs_scored="48" />
+      <player id="3207" runs_scored="0" />
+    </session>
+    <session day="3" innings="3" overs="72.0" runs="157" status_id="3" time="13:03:18" wickets="4">
+      <player id="4249" runs_scored="13" />
+      <player id="3207" runs_scored="20" />
+    </session>
+    <session day="3" innings="3" overs="72.0" runs="157" status_id="1" time="13:41:00" wickets="4">
+      <player id="4249" runs_scored="13" />
+      <player id="3207" runs_scored="20" />
+    </session>
+    <session day="3" innings="3" overs="86.0" runs="196" status_id="15" time="14:42:38" wickets="5">
+      <player id="3207" runs_scored="42" />
+      <player id="3239" runs_scored="15" />
+    </session>
+    <session day="3" innings="3" overs="86.0" runs="196" status_id="1" time="14:44:56" wickets="5">
+      <player id="3207" runs_scored="42" />
+      <player id="3239" runs_scored="15" />
+    </session>
+    <session day="3" innings="3" overs="99.0" runs="230" status_id="2" time="15:41:47" wickets="6">
+      <player id="3207" runs_scored="56" />
+      <player id="3425" runs_scored="1" />
+    </session>
+    <session day="3" innings="3" overs="99.0" runs="230" status_id="1" time="15:59:20" wickets="6">
+      <player id="3207" runs_scored="56" />
+      <player id="3425" runs_scored="1" />
+    </session>
+    <session day="3" innings="3" overs="117.0" runs="297" status_id="15" time="17:18:06" wickets="6">
+      <player id="3425" runs_scored="37" />
+      <player id="3207" runs_scored="77" />
+    </session>
+    <session day="3" innings="3" overs="117.0" runs="297" status_id="1" time="17:21:37" wickets="6">
+      <player id="3425" runs_scored="37" />
+      <player id="3207" runs_scored="77" />
+    </session>
+  </SessionUpdates>
+</CricketMatchSummary>
