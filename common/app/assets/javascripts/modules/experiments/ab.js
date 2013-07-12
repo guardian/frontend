@@ -64,15 +64,8 @@ define([
             if (!isParticipating(test)) {
                 bucket(test);
             }
-            var participations = getParticipations(),
-                variantId = participations[test.id].variant;
-            test.variants.some(function(variant) {
-                if (variant.id === variantId) {
-                    variant.test();
-                    initTracking(test, variantId);
-                    return true;
-                }
-            });
+            
+            return;
         }
     }
 
@@ -111,25 +104,6 @@ define([
             var hash = window.location.hash.substring(1),
                 opts = options || {};
 
-            // allow setting of test with url hash
-            if (hash.indexOf('ab-test') === 0 || opts.test) {
-                var testConfig = hash.replace('ab-test', '').split('='),
-                    testId = (opts.test) ? opts.test.id : testConfig[0],
-                    variantId = (opts.test) ? opts.test.variant : testConfig[1];
-                // get the test
-                TESTS.some(function(test) {
-                    if (test.id === testId) {
-                        addParticipation(test, variantId);
-                        return true;
-                    }
-                });
-            }
-
-            // Clear up legacy storage names. This can be deleted "in the future".
-            store.clearByPrefix('gu.prefs.ab');
-            store.remove('gu.ab.current');
-            store.remove('gu.ab.participation');
-            
             TESTS.filter(function(test) {
                 var expired = (new Date() - new Date(test.expiry)) > 0;
                 if (expired) {

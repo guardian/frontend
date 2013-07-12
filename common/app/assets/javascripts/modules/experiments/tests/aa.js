@@ -5,7 +5,7 @@ define(['common'], function (common) {
     var Aa = function () {
 
         this.id = 'Aa';
-        this.expiry = '2013-07-12';
+        this.expiry = '2013-07-19';
         this.audience = 0.1;
         this.description = 'A/A test to prove we bucket users evenly';
         this.canRun = function(config) {
