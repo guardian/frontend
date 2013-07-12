@@ -25,6 +25,8 @@ define(['common',
                 ]
         };
 
+        var spy = sinon.spy(common.mediator, 'emit');
+
         // setup ajax
         ajax.init({page: {
             ajaxUrl: "",
@@ -148,6 +150,14 @@ define(['common',
             runs(function() {
                 expect(document.querySelector('.overlay .preload-msg').innerHTML).toContain('Error loading gallery');
             });
+        });
+
+        it("should register a page load when the overlay is opened", function() {
+            waits(100);
+            runs(function(){
+                expect(spy).toHaveBeenCalledWith('page:common:deferred:loaded');
+            });
+
         });
 
     });
