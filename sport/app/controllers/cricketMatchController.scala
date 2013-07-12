@@ -11,7 +11,7 @@ case class CricketMatchPage(theMatch: Match, matchId: String) extends MetaData w
   override lazy val canonicalUrl = None
   override lazy val id = s"sport/cricket/match/$matchId"
   override lazy val section = "cricket"
-  override lazy val webTitle = s"${theMatch.homeTeam.name} ${theMatch.awayTeam.name}"
+  override lazy val webTitle = s"${theMatch.description}, ${theMatch.venueName}"
   override lazy val analyticsName = s"GFE:Cricket:automatic:match:${theMatch.gameDate.toString("dd MMM YYYY")}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}"
 }
 
