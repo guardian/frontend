@@ -104,7 +104,13 @@ class Parser {
                 inningsDescription(inningsId, battingTeamId),
                 parseInningsBatsmen(singleInnings \ "Batsmen" \ "Batsman"),
                 parseInningsBowlers(singleInnings \ "Bowlers" \ "Bowler"),
-                parseInningsWickets(singleInnings \ "FallofWickets" \ "FallofWicket"))
+                parseInningsWickets(singleInnings \ "FallofWickets" \ "FallofWicket"),
+                (singleInnings \ "Extras" \ ("@" + "byes")).text.toInt,
+                (singleInnings \ "Extras" \ ("@" + "leg_byes")).text.toInt,
+                (singleInnings \ "Extras" \ ("@" + "no_balls")).text.toInt,
+                (singleInnings \ "Extras" \ ("@" + "penalties")).text.toInt,
+                (singleInnings \ "Extras" \ ("@" + "wides")).text.toInt,
+                (singleInnings \ "Extras" \ ("@" + "total_extras")).text.toInt)
     }.toList.sortBy(_.id)
 
   private def parseInningsBatsmen(batsmen: NodeSeq) :List[InningsBatsman] =
@@ -139,7 +145,7 @@ class Parser {
   private def parseInningsWickets(wickets: NodeSeq) :List[InningsWicket] =
     wickets.map { wicket =>
       InningsWicket( (wicket \ ("@" + "order")).text.toInt,
-        (wicket \ ("@" + "player_id")).text,
+        players((wicket \ ("@" + "player_id")).text.toInt),
         (wicket \ ("@" + "runs")).text.toInt)
     }.toList
 
