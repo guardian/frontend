@@ -91,6 +91,28 @@
     width: $baseline*3;
 }
 
+.sport-fullscorecard__information {
+    background-color: $mushroom;
+    margin: $baseline*2 0;
+
+    dt {
+        @extend %type-10;
+        color: $sportMid;
+        font-weight: 500;
+        padding: $baseline*2 $baseline*3 0;
+    }
+    dd {
+        @extend %type-10;
+        border-bottom: 1px solid #DEDEDD;
+        margin: 0;
+        padding: $baseline*2 $baseline*3;
+    }
+
+    dd:last-child {
+        border-bottom: 0;
+    }
+}
+
 @media (min-width: $tablet) {
     .sport-fullscorecard__thead {
         .sport-fullscorecard__additional {
