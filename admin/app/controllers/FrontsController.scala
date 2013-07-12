@@ -38,7 +38,7 @@ object FrontsController extends Controller with Logging {
   def updateBlock(edition: String, section: String, blockId: String) = AuthAction{ request =>
     request.body.asJson.map { json =>
       json.asOpt[UpdateList].map { update: UpdateList =>
-        if (update.item == update.position)
+        if (update.item == update.position.getOrElse(""))
           Conflict
         else {
           S3FrontsApi.getBlock(edition, section, blockId).map { blockJson =>
