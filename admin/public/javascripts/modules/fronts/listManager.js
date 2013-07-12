@@ -44,18 +44,21 @@ define([
 
         function connectSortableLists() {
             var selector = '.connectedList',
+                sortables = $(selector),
                 item,
                 fromList,
                 toList;
 
-            $(selector).sortable({
+            console.log(sortables);
+
+            sortables.sortable({
                 helper: 'clone',
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
 
                     // Display the source trail. (The clone gets dragged.) 
-                    $(selector).find('.trail:hidden').show();
+                    sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
@@ -174,20 +177,19 @@ define([
             fetchSchema();
 
             viewModel.selectedEdition.subscribe(function(edition) {
-                viewModel.selectedSection(undefined);
-                viewModel.selectedBlock(undefined);
+                viewModel.selectedSection('');
+                viewModel.selectedBlock('');
             });
 
             viewModel.selectedSection.subscribe(function(section) {
-                viewModel.selectedBlock(undefined);
+                console
+                viewModel.selectedBlock('');
                 if (section && section.id) {
                     viewModel.latestArticles.section(section.id);
                 }
             });
 
-            // Whenever a block is selected, load its list
             viewModel.selectedBlock.subscribe(function(block) {
-                console.log(viewModel.selectedBlock())
                 if(block && block.id) {
                     var id = viewModel.selectedEdition().id + '/' +
                              viewModel.selectedSection().id + '/' + 
