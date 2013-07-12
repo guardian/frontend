@@ -2,6 +2,7 @@
 
 .gallery {
     position: relative;
+    margin-bottom: $baseline * 6;
 }
 
 i.gallery__watermark {
@@ -17,8 +18,7 @@ i.gallery__watermark {
 
 .gallery--hide-furniture {
     .gallery__watermark,
-    .gallerycaption,
-    .gallery-arrow-cta  {
+    .gallerycaption  {
         display: none;
     }
 
@@ -76,12 +76,12 @@ i.gallery__watermark {
 
 
 
-
 /* ==========================================================================
    Image container
    ========================================================================== */
 .gallery__img {
-    width: 100%
+    width: 100%;
+    margin-bottom: 0;
 }
 
 
@@ -95,6 +95,9 @@ i.gallery__watermark {
     position: absolute;
     top: 0;
     border: 0;
+    z-index: 50;
+    -ms-touch-action: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
     &,
     &:active,
@@ -104,25 +107,28 @@ i.gallery__watermark {
     }
 
     .gallery-arrow-cta {
+        position: absolute;
         top: 85px;
     }
-}
-
-.gallery__nav--prev .gallery-arrow-cta {
-    @include rotate(180deg);
-    left: $gutter;
 }
 
 
 .gallery__nav--prev {
     left: 0;
     width: 20%;
-}
 
+    .gallery-arrow-cta {
+        left: $gutter;
+    }
+}
 
 .gallery__nav--next {
     right: 0;
     width: 80%;
+
+    .gallery-arrow-cta {
+        right: $gutter;
+    }
 }
 
 
@@ -132,52 +138,42 @@ i.gallery__watermark {
 
 .gallery-arrow-cta {
     display: block;
-    position: absolute;
+    /*position: absolute;
     right: $gutter;
-    top: 50%;
+    top: 50%;*/
     width: 22px;
     height: 36px;
-    background-color: rgba(0,0,0,0.9);
+    background: rgba(34, 34, 34, 0.90);
 
     .i {
         margin: 10px 8px;
     }
 }
 
-.gallery-arrow-cta--caption-toggle {
+.gallery-arrow-cta--up {
     @include rotate(-90deg);
-    top: 11px;
-    right: 28px;
 }
+
+.gallery-arrow-cta--down {
+    @include rotate(90deg);
+}
+
+.gallery-arrow-cta--left {
+    @include rotate(180deg);
+}
+
+.gallery-arrow-cta--right {
+    @include rotate(0deg);
+}
+
 
 
 /* ==========================================================================
    Captions
    ========================================================================== */
-.gallerycaption-handle {
-    position: absolute;
-    display: none;
-    left: 50%;
-    top: auto;
-    right: auto;
-    margin-top: -48px;
-    margin-left: -40px;
-    width: 80px;
-    height: 40px;
-    border: 0;
-    padding: 0;
-    background: transparent;
-
-    .gallery--hide-furniture &,
-    .gallery-arrow-cta {
-        display: block;
-    }
-}
-
 
 .gallerycaption {
     color: #aaaaaa;
-    padding: 0 $gutter;
     text-align: left;
 
     a {
@@ -193,9 +189,13 @@ i.gallery__watermark {
         right: 0;
         bottom: 0;
         left: 0;
-        background: rgba(34, 34, 34, 0.90);
-        padding: $baseline * 3 $gutter;
+        z-index: 60;
     }
+}
+
+.gallerycaption__inner {
+    background: rgba(34, 34, 34, 0.90);
+    padding: $baseline * 2 $gutter;
 }
 
 .gallerycaption__text {
@@ -208,9 +208,35 @@ i.gallery__watermark {
 
 .gallerycaption__credit {
     @extend %type-11;
-    margin-bottom: $baseline * 4;
+    margin-bottom: 0;
+    padding-bottom: $baseline;
 }
 
+
+
+/* ==========================================================================
+   Caption control CTA
+   ========================================================================== */
+
+.captioncontrol {
+    border: 0;
+    background: transparent;
+    margin: 0 auto;
+    height: 30px;
+    display: block;
+}
+
+.captioncontrol--show {
+    display: none;
+
+    .gallery--hide-furniture & {
+        display: block;
+    }
+
+    @media (orientation:landscape) {
+        margin-top: -30px;
+    }
+}
 
 
 /* ==========================================================================
@@ -229,11 +255,3 @@ i.gallery__watermark {
     color: #FFFFFF;
 }
 
-
-
-/* ==========================================================================
-   Landscape styles
-   ========================================================================== */
-@media (orientation:landscape) {
-
-}
