@@ -5,12 +5,12 @@ import org.joda.time.DateTime
 case class Match(
   teams: List[Team],
   innings: List[Innings],
-  sessions: List[Session],
   competitionName: String,
   description: String,
   venueName: String,
   result: String,
-  gameDate: DateTime)
+  gameDate: DateTime,
+  officials: List[String])
 {
   def homeTeam: Team = teams.filter(_.homeOrAway == "home").head
   def awayTeam: Team = teams.filter(_.homeOrAway == "away").head
@@ -66,13 +66,11 @@ case class Match(
   }
 }
 
-case class Session(
-  day: String)
-
 case class Team(
   name: String,
   id: Int,
-  homeOrAway: String)
+  homeOrAway: String,
+  lineup: List[String])
 
 case class Innings(
   id: Int,
