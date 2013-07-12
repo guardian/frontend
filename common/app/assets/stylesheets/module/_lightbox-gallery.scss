@@ -113,8 +113,16 @@ i.gallery__watermark {
     left: $gutter;
 }
 
+
+.gallery__nav--prev {
+    left: 0;
+    width: 20%;
+}
+
+
 .gallery__nav--next {
     right: 0;
+    width: 80%;
 }
 
 

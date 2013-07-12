@@ -58,13 +58,9 @@ define(["bean",
             bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
             bean.on(overlay.bodyNode,    'click', '.gallerycaption, .gallerycaption-handle', this.toggleFurniture);
-            bean.on(overlay.bodyNode,    'click', '.gallery-item', function(el) {
-                if (mode === 'grid') {
-                    var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
-                    self.goTo(index);
-                } else {
-                    self.next();
-                }
+            bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery-item', function(el) {
+                var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
+                self.goTo(index);
             });
 
             bean.on(window, 'orientationchange', function() {
@@ -104,7 +100,7 @@ define(["bean",
                     overlay.setBody(response.html);
 
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
-                    $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav .gallery-arrow-cta'));
+                    $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav'));
                     $images      = bonzo(galleryNode.querySelectorAll('.gallery__img'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
@@ -166,6 +162,7 @@ define(["bean",
 
                 if (itemIndex === index) {
                     el.style.display = 'block';
+                    $navArrows.css('height', $images[index-1].offsetHeight + 'px'); // Adjust arrows to match height of image
                 } else {
                     el.style.display = ''; // Not set to 'none' so that it doesn't hide them from the Grid view
                 }
