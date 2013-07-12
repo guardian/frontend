@@ -25,6 +25,9 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
 
   */
 
+  /*
+    IMPORTANT - we strip out other parameters in the CDN - simply adding a parameter here is not enough
+  */
   val allowedParams = Seq(
     "index",
     "page"
