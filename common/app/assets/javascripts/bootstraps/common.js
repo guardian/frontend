@@ -153,6 +153,12 @@ define([
                 });
             });
         },
+        
+        runAbTests: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                ab.run(config, context);
+            });
+        },
 
         loadAnalytics: function () {
             var omniture = new Omniture();
@@ -294,6 +300,7 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();

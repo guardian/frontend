@@ -28,25 +28,10 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(ab).toBeDefined();
         });
 
-        xit('should be able to start test', function() {
+        it('should be able to start test', function() {
             ab.init({ switches: {'abDummyTest': true} }, document);
+            ab.run({ switches: {'abDummyTest': true} }, document);
             expect(controlSpy.called || variantSpy.called).toBeTruthy();
-        });
-
-        xit('should allow forcing of test via url', function() {
-            ab.init({
-                switches: {
-                    abDummyTest: true
-                }
-            },
-            document,
-            {
-                test: {
-                    id: 'DummyTest',
-                    variant: 'hide'
-                }
-            });
-            expect(variantSpy).toHaveBeenCalled();
         });
 
         it('should put all non-participating users in a "not in test" group', function() {
@@ -103,30 +88,30 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(controlSpy.called || variantSpy.called).toBeFalsy();
         });
 
-        xit('should add "data-link-test" tracking to body', function() {
+        it('should add "data-link-test" tracking to body', function() {
             ab.init({
                 switches: {
                     abDummyTest: true
                 }
             });
+            ab.run({ switches: {'abDummyTest': true} }, document);
             expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide)$/);
         });
 
-        xit('should concat "data-link-test" tracking when more than one test', function() {
+        it('should concat "data-link-test" tracking when more than one test', function() {
             var otherTest = new ABTest();
             otherTest.id = 'DummyTest2';
             ab.addTest(otherTest);
-
-            ab.init({
-                switches: {
-                    abDummyTest: true,
-                    abDummyTest2: true,
+            var s = {
+                abDummyTest: true,
+                abDummyTest2: true,
                 }
-            });
+            ab.init({ switches: s });
+            ab.run({ switches: s }, document);
             expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide), AB \| DummyTest2 test \| (control|hide)$/);
         });
 
-        it('should not bucket user if test can\'t be run', function() {
+        it("should not bucket user if test can't be run", function() {
             test.canRun = function() { return false; }
             ab.init({
                 switches: {
@@ -136,9 +121,14 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(controlSpy.called || variantSpy.called).toBeFalsy();
             expect(ab.getParticipations()).toEqual([]);
         });
+        
+        it('should not run the test if the user has not been put in a bucket', function () {
+            // Nb. no call to ab.init(...)
+            ab.run({ switches: { abDummyTest: true } });
+            expect(controlSpy.called || variantSpy.called).toBeFalsy();
+        });
 
-        xit('should refuse to run the after the expiry date', function () {
-            
+        it('should refuse to run the after the expiry date', function () {
             test.expiry = "2012-01-01";
             ab.init({
                 switches: {
@@ -147,6 +137,19 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             });
         });
 
+        it('should run the test if it has not expired', function () {
+            var futureDate = new Date();
+            futureDate.setHours(futureDate.getHours() + 10);
+            test.expiry = futureDate.toString();
+            ab.init({
+                switches: {
+                    abDummyTest: true
+                }
+            });
+            ab.run({ switches: { abDummyTest: true } });
+            expect(controlSpy.called || variantSpy.called).toBeTruthy();
+        });
+        
         it('should remove expired tests from being logged', function () {
             localStorage.setItem(participationsKey, '{"value":{"DummyTest":{"variant":"null"}}}');
             test.expiry = "2012-01-01";
@@ -157,20 +160,6 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             });
             expect(localStorage.getItem(participationsKey)).toBe('{"value":{}}');
         });
-        
-        xit('should run the test if it has not expired', function () {
-            var futureDate = new Date();
-            futureDate.setHours(futureDate.getHours() + 10);
-            test.expiry = futureDate.toString();
-            ab.init({
-                switches: {
-                    abDummyTest: true
-                }
-            });
-            expect(controlSpy.called || variantSpy.called).toBeTruthy();
-        });
-
 
     });
-
 });

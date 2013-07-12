@@ -54,22 +54,49 @@ define([
         dataLinkTest.push(['AB', test.id + ' test', variantId]. join(' | '));
         common.$g(document.body).attr('data-link-test', dataLinkTest.join(', '));
     }
-
-    //Finds variant in specific tests and exec's
-    function run(test, config, context) {
-        var expired = (new Date() - new Date(test.expiry)) > 0;
-        if (test.canRun(config, context) && !expired && config.switches['ab' + test.id]) {
         
-            // if user not in test, bucket them
-            if (!isParticipating(test)) {
-                bucket(test);
+    function getActiveTests() {
+        return TESTS.filter(function(test) {
+            var expired = (new Date() - new Date(test.expiry)) > 0;
+            if (expired) {
+                removeParticipation(test);
+                return false;
             }
-            
-            return;
-        }
+            return true;
+        })
+    };
+
+    function testCanBeRun (test, config, context) {
+        var expired = (new Date() - new Date(test.expiry)) > 0;
+        return (test.canRun(config, context) && !expired && config.switches['ab' + test.id])
     }
 
-    function bucket(test) {
+    // Finds variant in specific tests and runs it 
+    function run(test, config, context) {
+
+        if (!isParticipating(test) || !testCanBeRun(test, config, context)) {
+            return false;
+        }
+        
+        var participations = getParticipations(),
+            variantId = participations[test.id].variant;
+        
+            test.variants.some(function(variant) {
+                if (variant.id === variantId) {
+                    variant.test();
+                    initTracking(test, variantId);
+                    return true;
+                }
+        });
+    }
+
+    function bucket(test, config, context) {
+        
+        // if user not in test, bucket them
+        if (isParticipating(test) || !testCanBeRun(test, config, context)) {
+            return false;
+        }
+
         // always at least place in control
         var testVariantId = 'notintest';
 
@@ -85,36 +112,35 @@ define([
 
         // store
         addParticipation(test, testVariantId);
+
+        return true;
     }
 
     var ab = {
 
-        //For testing purposes
         addTest: function(test) {
             TESTS.push(test);
         },
-
-        getParticipations: getParticipations,
         
         clearTests: function() {
             TESTS = [];
         },
 
         init: function(config, context, options) {
-            var hash = window.location.hash.substring(1),
-                opts = options || {};
-
-            TESTS.filter(function(test) {
-                var expired = (new Date() - new Date(test.expiry)) > 0;
-                if (expired) {
-                    removeParticipation(test);
-                    return false;
-                }
-                return true;
-            }).forEach(function(test) {
+            var opts = options || {};
+            getActiveTests().forEach(function(test) {
+                bucket(test, config, context);
+            });
+        },
+        
+        run: function(config, context, options) {
+            var opts = options || {};
+            getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });
-        }
+        },
+
+        getParticipations: getParticipations
 
     };
 
