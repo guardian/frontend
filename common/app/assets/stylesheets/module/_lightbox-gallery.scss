@@ -138,9 +138,6 @@ i.gallery__watermark {
 
 .gallery-arrow-cta {
     display: block;
-    /*position: absolute;
-    right: $gutter;
-    top: 50%;*/
     width: 22px;
     height: 36px;
     background: rgba(34, 34, 34, 0.90);
@@ -222,8 +219,9 @@ i.gallery__watermark {
     border: 0;
     background: transparent;
     margin: 0 auto;
-    height: 30px;
+    height: 29px;
     display: block;
+    padding: 0;
 }
 
 .captioncontrol--show {
@@ -234,7 +232,7 @@ i.gallery__watermark {
     }
 
     @media (orientation:landscape) {
-        margin-top: -30px;
+        margin-top: -29px;
     }
 }
 
