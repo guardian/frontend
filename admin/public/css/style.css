@@ -585,6 +585,10 @@ a.cta, .cta a {
     background-color: #eee;
 }
 
+.fronts .ui-sortable-placeholder {
+    background-color: #fff;
+}
+
 .fronts .trail .trail__control {
     display: none;
 }

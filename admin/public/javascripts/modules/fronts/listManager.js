@@ -53,26 +53,28 @@ define([
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
+
+                    // Display the source trail. (The clone gets dragged.) 
                     $(selector).find('.trail:hidden').show();
-                    $(selector).find('.trail.ui-sortable-placeholder').height(10);
 
                     item = ui.item;
                     toList = fromList = item.parent();
                     stopPoller();
                 },
                 stop: function(event, ui) {
-                    var idx,
-                        elm;
+                    var index,
+                        clone;
 
+                    // If we move between lists, effect a copy by cloning
                     if(toList !== fromList) {
-                        idx = toList.children().index(item);
-                        elm = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
-
-                        toList.children(':eq(' + idx + ')').after(elm);
+                        index = toList.children().index(item);
+                        clone = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
+                        toList.children(':eq(' + index + ')').after(clone);
+                        // So that the original stays in place:
                         $(this).sortable('cancel');
                     }
 
-                    saveListDeltas(item.data('url'), toList);
+                    saveListDelta(item.data('url'), toList);
                     startPoller();
                 },
                 change: function(event, ui) {
@@ -82,7 +84,7 @@ define([
             }).disableSelection();
         };
 
-        function saveListDeltas(id, list) {
+        function saveListDelta(id, list) {
             var listId,
                 inList,
                 position,
@@ -171,8 +173,21 @@ define([
 
             fetchSchema();
 
-            // Whenever a block is selected, load its list 
+            viewModel.selectedEdition.subscribe(function(edition) {
+                viewModel.selectedSection(undefined);
+                viewModel.selectedBlock(undefined);
+            });
+
+            viewModel.selectedSection.subscribe(function(section) {
+                viewModel.selectedBlock(undefined);
+                if (section && section.id) {
+                    viewModel.latestArticles.section(section.id);
+                }
+            });
+
+            // Whenever a block is selected, load its list
             viewModel.selectedBlock.subscribe(function(block) {
+                console.log(viewModel.selectedBlock())
                 if(block && block.id) {
                     var id = viewModel.selectedEdition().id + '/' +
                              viewModel.selectedSection().id + '/' + 
@@ -180,11 +195,6 @@ define([
 
                     showList(id);
                 }
-            });
-
-            // Whenever a section is selected, update the search
-            viewModel.selectedSection.subscribe(function(section) {
-                viewModel.latestArticles.section(section.id);
             });
 
             viewModel.latestArticles.search();
