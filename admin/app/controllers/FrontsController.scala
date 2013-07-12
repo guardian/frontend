@@ -38,28 +38,31 @@ object FrontsController extends Controller with Logging {
   def updateBlock(edition: String, section: String, blockId: String) = AuthAction{ request =>
     request.body.asJson.map { json =>
       json.asOpt[UpdateList].map { update: UpdateList =>
-        S3FrontsApi.getBlock(edition, section, blockId).map { blockJson =>
-          Json.parse(blockJson).asOpt[Block] map { block =>
-            val listWithoutItem = block.trails.filterNot(_.id == update.item)
-            val index = update.after match {
-              case Some(true) => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1
-              case _          => listWithoutItem.indexWhere(_.id == update.position.getOrElse(""))
-            }
-            val splitList = listWithoutItem.splitAt(index)
-            val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
+        if (update.item == update.position)
+          Conflict
+        else {
+          S3FrontsApi.getBlock(edition, section, blockId).map { blockJson =>
+            Json.parse(blockJson).asOpt[Block] map { block =>
+              val listWithoutItem = block.trails.filterNot(_.id == update.item)
+              val index = update.after match {
+                case Some(true) => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1
+                case _          => listWithoutItem.indexWhere(_.id == update.position.getOrElse(""))
+              }
+              val splitList = listWithoutItem.splitAt(index)
+              val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
+              val identity = Identity(request).get
+              val newBlock = block.copy(trails = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
+              S3FrontsApi.putBlock(edition, section, block.id, Json.prettyPrint(Json.toJson(newBlock))) //Don't need pretty, only for us devs
+              S3FrontsApi.archive(edition, section, block.id, blockJson)
+              Ok
+            } getOrElse InternalServerError("Parse Error")
+          } getOrElse {
             val identity = Identity(request).get
-            val newBlock = block.copy(trails = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
-            S3FrontsApi.putBlock(edition, section, block.id, Json.prettyPrint(Json.toJson(newBlock))) //Don't need pretty, only for us devs
-            S3FrontsApi.archive(edition, section, block.id, blockJson)
-            Ok
-          } getOrElse InternalServerError("Parse Error")
-        } getOrElse {
-          val identity = Identity(request).get
-          S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))))
-          Created
+            S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(Block(blockId, None, List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))))
+            Created
+          }
         }
       } getOrElse NotFound("Invalid JSON")
-
     } getOrElse NotFound("Problem parsing json")
   }
 
