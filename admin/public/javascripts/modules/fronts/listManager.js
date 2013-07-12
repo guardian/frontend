@@ -49,8 +49,6 @@ define([
                 fromList,
                 toList;
 
-            console.log(sortables);
-
             sortables.sortable({
                 helper: 'clone',
                 revert: 200,
