@@ -54,8 +54,8 @@ define(["bean",
         this.bindEvents = function() {
             bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-grid', this.switchToGrid);
             bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-full', this.switchToFullImage);
-            bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-prev', this.prev);
-            bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-next', this.next);
+            bean.on(overlay.bodyNode,    'click', '.js-gallery-prev', this.prev);
+            bean.on(overlay.bodyNode,    'click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
             bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
             bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery-item', function(el) {
@@ -171,6 +171,7 @@ define(["bean",
             currentImage = index;
             self.imageIndexNode.innerHTML = currentImage;
             self.switchToFullImage();
+            self.jumpToContent();
         };
 
         this.switchToGrid = function(e) {
