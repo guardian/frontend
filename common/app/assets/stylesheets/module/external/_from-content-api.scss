@@ -148,3 +148,35 @@ figure {
         }
     }
 }
+
+/* Tables
+   ========================================================================== */
+.from-content-api {
+    table {
+        margin-bottom: $baseline*4;
+    }
+
+    //This is a weird xml output from the api
+    table caption {
+        @extend %type-5;
+        padding: $baseline*2 0;
+        text-align: left;
+        border-top: 1px solid #B3B3B4;
+    }
+
+    th, td {
+        @extend %type-11;
+        padding: $baseline*2;
+        color: #676767;
+    }
+
+    th {
+        font-weight: 600;
+        color: #333;
+    }
+
+    tbody tr:nth-child(odd) td {
+        background-color: #F9F9F7;
+    }
+}
+
