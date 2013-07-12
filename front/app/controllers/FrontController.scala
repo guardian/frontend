@@ -6,9 +6,7 @@ import model._
 import conf._
 import play.api.mvc._
 import model.Trailblock
-import scala.Some
-
-import concurrent.Future
+import Switches.EditionRedirectSwitch
 
 // TODO, this needs a rethink, does not seem elegant
 object FrontPage {
@@ -157,7 +155,9 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         }
       }
 
-      if (trailblocks.isEmpty) {
+      if (EditionRedirectSwitch.isSwitchedOn && request.isSingleDomain && path != realPath) {
+        Redirect(s"/$realPath")
+      } else if (trailblocks.isEmpty) {
         InternalServerError
       } else {
         val htmlResponse = () => views.html.front(frontPage, trailblocks)
