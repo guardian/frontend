@@ -30,10 +30,10 @@ class AnalyticsLoadJob extends Job {
       "text/csv"
     )
 
-    log.info("Generating average pageviews by day analytics and uploading to S3.")
+    log.info("Generating pageviews by day analytics and uploading to S3.")
     S3.putPrivate(
-      s"${Configuration.environment.stage.toUpperCase}/analytics/average-pageviews-by-day.csv",
-      Analytics.getAveragePageviewsByDayData() map { CSV.write } mkString "\n",
+      s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-by-day.csv",
+      Analytics.getPageviewsByDayData() map { CSV.write } mkString "\n",
       "text/csv"
     )
 

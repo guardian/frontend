@@ -43,16 +43,16 @@ object Analytics extends AkkaSupport with Logging {
     }
   }
 
-  def getAveragePageviewsByDayData(): List[(Int, Int, Int, Double)] = {
+  def getPageviewsByDayData(): List[(Int, Int, Int, Int, Int)] = {
     PorterConfiguration.analytics.db withSession { implicit session: Session =>
-      StaticQuery.queryNA[(Int, Int, Int, Double)]( """
-        select year, month, day_of_month, avg(user_pageviews_for_day) from
+      StaticQuery.queryNA[(Int, Int, Int, Int, Int)]( """
+        select year, month, day_of_month, user_pageviews_for_day, count(*) as count from
         (
-          select year, month, day_of_month, count(*)::float as user_pageviews_for_day from pageviews
+          select year, month, day_of_month, count(*) as user_pageviews_for_day from pageviews
           where host = 'm.guardian.co.uk' or host = 'm.guardiannews.com'
           group by year, month, day_of_month, ophan
         )
-        group by year, month, day_of_month
+        group by year, month, day_of_month, user_pageviews_for_day
       """).list()
     }
   }

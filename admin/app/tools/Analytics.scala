@@ -4,7 +4,7 @@ import common.{ CSV, S3 }
 import conf.Configuration
 import org.joda.time.DateTime
 
-object Analytics extends implicits.Dates {
+object Analytics extends implicits.Dates with implicits.Tuples with implicits.Statistics {
 
   def pageviews(): List[(DateTime, Long)] = {
     val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews.csv")
@@ -97,20 +97,29 @@ object Analytics extends implicits.Dates {
   }
 
   def averagePageviewsByDay(): List[(DateTime, Double)] = {
-    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/average-pageviews-by-day.csv")
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-by-day.csv")
     val lines = data.toList flatMap { _.split("\n") }
 
-    val parsed: List[(DateTime, Double)] = lines map { CSV.parse } collect {
-      case List(year, month, day, average) =>
-        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), average.toDouble)
+    val parsed: List[(DateTime, Int, Int)] = lines map { CSV.parse } collect {
+      case List(year, month, day, pageviews, count) =>
+        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), pageviews.toInt, count.toInt)
+    }
+
+    val averages: Map[DateTime, Double] = {
+      val groups: Map[Int, List[(DateTime, Int, Int)]] = parsed groupBy { _._1.dayOfEpoch }
+      val data: Map[DateTime, List[(Int, Int)]] = groups map {
+        case (dayOfEpoch, distribution) => (Epoch.day(dayOfEpoch), distribution map { point => (point.second, point.third) })
+      }
+
+      data mapValues { _.weightedAverage }
     }
 
     // Add missing days
-    val first = (parsed map { _._1 }).min.dayOfEpoch
-    val last = (parsed map { _._1 }).max.dayOfEpoch
+    val first = averages.keys.min.dayOfEpoch
+    val last = averages.keys.max.dayOfEpoch
     val zeros = (first to last).toList map { dayOfEpoch => (Epoch.day(dayOfEpoch), 0.0) }
 
-    val based = ((parsed ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
+    val based = ((averages.toList ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
 
     // Sort for display
     based sortBy { _._1 }
