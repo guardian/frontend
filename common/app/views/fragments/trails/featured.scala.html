@@ -1,7 +1,9 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
 <@element class="trail trail--featured t@rowNum @if(trail.mainPicture(width=220)) { trail--has-image}"
-    data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+     data-link-name="trail"
+    @trail.discussionId.map{ id => data-discussion-id="@id" }
+    @CricketMatch(trail).map{ id => data-cricket-match="@id" }>
 
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 

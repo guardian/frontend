@@ -16,9 +16,9 @@ class Front extends AkkaSupport with Logging {
     Front.refresh()
   }
 
-  lazy val fronts: Map[String, ConfiguredEdition] = Edition.all.flatMap{ edition =>
-    edition.configuredFronts.map{
-      case (name, blocks) => name ->  new ConfiguredEdition(edition, blocks)
+  lazy val fronts: Map[String, FrontEdition] = Edition.all.flatMap{ edition =>
+    edition.configuredFrontsFacia.map{
+      case (name, trailblockDescriptions) => name ->  new FrontEdition(edition, trailblockDescriptions)
     }.toMap
   }.toMap
 

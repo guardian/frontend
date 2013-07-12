@@ -176,6 +176,25 @@ object AdminMetrics {
   val all = Seq(ConfigUpdateCounter, ConfigUpdateErrorCounter, SwitchesUpdateCounter, SwitchesUpdateErrorCounter)
 }
 
+object PorterMetrics {
+  object AnalyticsLoadTimingMetric extends TimingMetric(
+    "porter",
+    "porter-analytics-load",
+    "Porter analytics load timing",
+    "Time spent running analytics load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object FastlyCloudwatchLoadTimingMetric extends TimingMetric(
+    "porter",
+    "porter-fastly-cloudwatch-load",
+    "Porter Fastly to Cloudwatch load timing",
+    "Time spent running Fastly to Cloudwatch statistics load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(AnalyticsLoadTimingMetric, FastlyCloudwatchLoadTimingMetric)
+}
 
 //case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
 
@@ -186,4 +205,5 @@ object Metrics {
   lazy val mongo = MongoMetrics.all
   lazy val pa = PaMetrics.all
   lazy val admin = AdminMetrics.all
+  lazy val porter = PorterMetrics.all
 }

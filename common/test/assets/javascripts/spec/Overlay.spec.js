@@ -51,6 +51,14 @@ define(['common', 'modules/overlay', 'bean'], function(common, Overlay, bean) {
             expect(document.querySelectorAll('.overlay .is-updating').length).toBe(1);
         });
 
+        it("should have put the 'loading' animation when called with .showLoading()", function() {
+            overlay.show();
+            overlay.bodyNode.innerHTML = "<p>test html</p>";
+            overlay.showLoading();
+            expect(document.querySelectorAll('.overlay .is-updating').length).toBe(1);
+        });
+
+
         it("should hide when the 'Close' CTA is clicked", function() {
             overlay.show();
             bean.fire(document.querySelector('.js-overlay-close'), 'click');

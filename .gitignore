@@ -16,6 +16,7 @@ frontend-applications.properties
 *.log
 
 .*
+!.editorconfig
 
 log
 logs

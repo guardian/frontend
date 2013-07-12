@@ -5,9 +5,7 @@
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
     <h@headingLevel class="trail__headline type-5">
-        @if(trail.isInPicturesSeries) {
-            <div class="trail__headline-kicker">In Pictures:</div>
-        }
+        <span class="trail__headline-kicker">Gallery:</span>
         <a href="@LinkTo{@trail.url}" data-link-name="@rowNum | text">
             @RemoveOuterParaHtml(trail.headline)
         </a>
@@ -26,7 +24,7 @@
                             data-lowsrc="@image.url.map(ImgSrc(_, GallerySmallTrail))"
                             data-thumb-width="280"
                         }
-                        alt="@Html(image.caption.getOrElse(""))"
+                        alt="@image.altText.getOrElse("")"
                     />
                 </a>
             </li>

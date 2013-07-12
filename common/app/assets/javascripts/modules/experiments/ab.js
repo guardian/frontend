@@ -78,7 +78,7 @@ define([
 
     function bucket(test) {
         // always at least place in control
-        var testVariantId = 'null';
+        var testVariantId = 'notintest';
 
         //Only run on test required audience segment
         if (Math.random() < test.audience) {
@@ -129,8 +129,15 @@ define([
             store.clearByPrefix('gu.prefs.ab');
             store.remove('gu.ab.current');
             store.remove('gu.ab.participation');
-
-            TESTS.forEach(function(test) {
+            
+            TESTS.filter(function(test) {
+                var expired = (new Date() - new Date(test.expiry)) > 0;
+                if (expired) {
+                    removeParticipation(test);
+                    return false;
+                }
+                return true;
+            }).forEach(function(test) {
                 run(test, config, context);
             });
         }
