@@ -154,7 +154,8 @@ class RunningOrderTrailblockDescription(
             None
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
-          None
+          // NOTE: better way of handling fallback
+          Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition))
       }
     }
 

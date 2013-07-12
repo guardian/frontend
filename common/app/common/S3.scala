@@ -32,12 +32,20 @@ trait S3 extends Logging {
     client.shutdown()
   }
 
-  def put(key: String, value: String, contentType: String, accessControl: CannedAccessControlList = Private) {
+  def putPublic(key: String, value: String, contentType: String) {
+    put(key: String, value: String, contentType: String, PublicRead)
+  }
+
+  def putPrivate(key: String, value: String, contentType: String) {
+    put(key: String, value: String, contentType: String, Private)
+  }
+
+  private def put(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
     val metadata = new ObjectMetadata()
     metadata.setCacheControl("no-cache,no-store")
     metadata.setContentType(contentType)
 
-    val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControl)
+    val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
     client.putObject(request)
     client.shutdown()
@@ -54,15 +62,15 @@ object S3FrontsApi extends S3 {
   def getSchema = get(s"${frontsKey}/schema.json")
   def getFront(edition: String, section: String) = get(s"${frontsKey}/${edition}/${section}/latest/latest.json")
   def putFront(edition: String, section: String, json: String) =
-    put(s"${frontsKey}/${edition}/${section}/latest/latest.json", json, "application/json")
+    putPublic(s"${frontsKey}/${edition}/${section}/latest/latest.json", json, "application/json")
 
 
   def getBlock(edition: String, section: String, block: String) = get(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json")
   def putBlock(edition: String, section: String, block: String, json: String) =
-    put(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json", json, "application/json", PublicRead)
+    putPublic(s"${frontsKey}/${edition}/${section}/${block}/latest/latest.json", json, "application/json")
 
   def archive(edition: String, section: String, block: String, json: String) = {
     val now = DateTime.now
-    put(s"${frontsKey}/${edition}/${section}/${block}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+    putPrivate(s"${frontsKey}/${edition}/${section}/${block}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
   }
 }
