@@ -50,8 +50,12 @@ define([
 
             $(selector).sortable({
                 helper: 'clone',
+                revert: 200,
+                scroll: true,
                 start: function(event, ui) {
-                    ui.placeholder.height(ui.item.height());
+                    $(selector).find('.trail:hidden').show();
+                    $(selector).find('.trail.ui-sortable-placeholder').height(10);
+
                     item = ui.item;
                     toList = fromList = item.parent();
                     stopPoller();
