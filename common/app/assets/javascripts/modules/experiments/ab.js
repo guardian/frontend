@@ -71,6 +71,22 @@ define([
         return (test.canRun(config, context) && !expired && config.switches['ab' + test.id]);
     }
 
+    function getTest(id) {
+        var test = TESTS.filter(function (test) {
+            return (test.id === id);
+        });
+        return (test) ? test[0] : '';
+    }
+
+    function makeOmnitureTag (config, context) {
+        var participations = getParticipations();
+        return Object.keys(participations).map(function (k) {
+            if (testCanBeRun(getTest(k), config, context)) {
+                return ['AB', k, participations[k].variant].join(' | ');
+            }
+        }).join(',');
+    }
+
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
 
@@ -140,7 +156,8 @@ define([
             });
         },
 
-        getParticipations: getParticipations
+        getParticipations: getParticipations,
+        makeOmnitureTag: makeOmnitureTag
 
     };
 
