@@ -62,6 +62,7 @@
     overflow: hidden;
 }
 
+
 @function px2em($px, $base-font-size: 16px) {
     @return ($px / $base-font-size) * 1em;
 }
@@ -73,6 +74,8 @@ $mq-mobile:  300px  !default;
 $mq-tablet:  600px  !default;
 $mq-desktop: 900px  !default;
 $mq-wide:    1260px !default;
+
+$old-ie: false !default;
 
 // Usage:
 // .element {
@@ -86,6 +89,9 @@ $mq-wide:    1260px !default;
 //         color: green;
 //     }
 // }
+// Inspired by:
+// - https://github.com/alphagov/govuk_frontend_toolkit/blob/master/stylesheets/_conditionals.scss
+// - http://jakearchibald.github.io/sass-ie/
 
 @mixin mq($from: false, $to: false) {
 
@@ -115,20 +121,35 @@ $mq-wide:    1260px !default;
         $max-width: px2em($mq-wide - 1px);
     }
 
-    // Output @media query
-    @if ($from == false) {
-        @media (max-width: $max-width) {
+    // If this is IE8, output everything and rely on the cascade
+    @if ($old-ie) {
+        // Only if a min-width query is available
+        @if ($from and $to == false) {
             @content;
         }
     } @else {
-        @if ($to == false) {
-            @media (min-width: $min-width) {
-                @content;
+        // Output @media query
+        @if $from {
+            @if $to {
+                @media (min-width: $min-width) and (max-width: $max-width) {
+                    @content;
+                }
+            } @else {
+                @media (min-width: $min-width) {
+                    @content;
+                }
             }
         } @else {
-            @media (min-width: $min-width) and (max-width: $max-width) {
+            @media (max-width: $max-width) {
                 @content;
             }
         }
+    }
+}
+
+@mixin old-ie {
+    // Only use this content if we're dealing with old IE
+    @if $old-ie {
+        @content;
     }
 }
