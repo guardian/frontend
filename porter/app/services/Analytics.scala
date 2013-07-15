@@ -131,8 +131,8 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
   }
 
   def getPageviewsPerUserByDay(): Map[DateMidnight, Double] = {
-    val pageviews: List[(DateMidnight, Long, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
-      val data = StaticQuery.queryNA[(Int, Int, Int, Long, Long)]( """
+    val pageviews: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         select year, month, day_of_month, user_pageviews_for_day, count(*) as count from
         (
           select year, month, day_of_month, count(*) as user_pageviews_for_day from pageviews
@@ -148,8 +148,8 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     }
 
     val pageviewsPerUser: Map[DateMidnight, Double] = {
-      val groups: Map[DateMidnight, List[(DateMidnight, Long, Long)]] = pageviews groupBy { _.first }
-      val data: Map[DateMidnight, List[(Long, Long)]] = groups mapValues {
+      val groups: Map[DateMidnight, List[(DateMidnight, Int, Long)]] = pageviews groupBy { _.first }
+      val data: Map[DateMidnight, List[(Int, Long)]] = groups mapValues {
         distribution => distribution map { point => (point.second, point.third) }
       }
 
@@ -205,4 +205,201 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
   def getReturnUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = getReturnUsersByDay().toList map {
     case (day, returns) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, returns)
   }
+
+  def getWeeklyPageviewsPerUsersByDay(): Map[DateMidnight, Double] = {
+    val pageviews: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
+        with day as (
+          select year, month, day_of_month, days_since_epoch, ophan, count(*) as pageviews
+          from pageviews
+          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          group by year, month, day_of_month, days_since_epoch, ophan
+        )
+        select year, month, day_of_month, user_pageviews_for_week, count(*) as count
+        from (
+          select d1.year, d1.month, d1.day_of_month, d1.ophan, sum(d2.pageviews) as user_pageviews_for_week
+          from day d1
+          inner join day d2
+          on d1.ophan = d2.ophan
+          where d1.days_since_epoch >= d2.days_since_epoch
+          and d2.days_since_epoch > d1.days_since_epoch - 7
+          group by d1.year, d1.month, d1.day_of_month, d1.ophan
+        )
+        group by year, month, day_of_month, user_pageviews_for_week
+      """).list()
+
+      data map {
+        case (year, month, day, pageviews, count) => (new DateMidnight(year, month, day), pageviews, count)
+      }
+    }
+
+    val pageviewsPerUser: Map[DateMidnight, Double] = {
+      val groups: Map[DateMidnight, List[(DateMidnight, Int, Long)]] = pageviews groupBy { _.first }
+      val data: Map[DateMidnight, List[(Int, Long)]] = groups mapValues {
+        distribution => distribution map { point => (point.second, point.third) }
+      }
+
+      data mapValues { _.weightedAverage }
+    }
+
+    val pageviewsPerUserWithZeros = {
+      val withZeros = pageviewsPerUser.withDefaultValue(0.0)
+      val dateRange = pageviewsPerUser.keySet.min.dayOfEpoch to pageviewsPerUser.keySet.max.dayOfEpoch
+      dateRange map { Epoch.day } toMapWith { withZeros.apply }
+    }
+
+    pageviewsPerUserWithZeros
+  }
+
+  def getWeeklyPageviewsPerUsersByDayDateExpanded(): List[(Int, Int, Int, Double)] = getWeeklyPageviewsPerUsersByDay().toList map {
+    case (day, pageviews) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, pageviews)
+  }
+
+  def getFourWeeklyPageviewsPerUsersByDay(): Map[DateMidnight, Double] = {
+    val pageviews: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
+        with day as (
+          select year, month, day_of_month, days_since_epoch, ophan, count(*) as pageviews
+          from pageviews
+          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          group by year, month, day_of_month, days_since_epoch, ophan
+        )
+        select year, month, day_of_month, user_pageviews_for_four_weeks, count(*) as count
+        from (
+          select d1.year, d1.month, d1.day_of_month, d1.ophan, sum(d2.pageviews) as user_pageviews_for_four_weeks
+          from day d1
+          inner join day d2
+          on d1.ophan = d2.ophan
+          where d1.days_since_epoch >= d2.days_since_epoch
+          and d2.days_since_epoch > d1.days_since_epoch - 28
+          group by d1.year, d1.month, d1.day_of_month, d1.ophan
+        )
+        group by year, month, day_of_month, user_pageviews_for_four_weeks
+      """).list()
+
+      data map {
+        case (year, month, day, pageviews, count) => (new DateMidnight(year, month, day), pageviews, count)
+      }
+    }
+
+    val pageviewsPerUser: Map[DateMidnight, Double] = {
+      val groups: Map[DateMidnight, List[(DateMidnight, Int, Long)]] = pageviews groupBy { _.first }
+      val data: Map[DateMidnight, List[(Int, Long)]] = groups mapValues {
+        distribution => distribution map { point => (point.second, point.third) }
+      }
+
+      data mapValues { _.weightedAverage }
+    }
+
+    val pageviewsPerUserWithZeros = {
+      val withZeros = pageviewsPerUser.withDefaultValue(0.0)
+      val dateRange = pageviewsPerUser.keySet.min.dayOfEpoch to pageviewsPerUser.keySet.max.dayOfEpoch
+      dateRange map { Epoch.day } toMapWith { withZeros.apply }
+    }
+
+    pageviewsPerUserWithZeros
+  }
+
+  def getFourWeeklyPageviewsPerUsersByDayDateExpanded(): List[(Int, Int, Int, Double)] = getFourWeeklyPageviewsPerUsersByDay().toList map {
+    case (day, pageviews) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, pageviews)
+  }
+
+  def getWeeklyDaysSeenPerUsersByDay(): Map[DateMidnight, Double] = {
+    val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
+        with day as (
+          select year, month, day_of_month, days_since_epoch, ophan, 1 as days_seen
+          from pageviews
+          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          group by year, month, day_of_month, days_since_epoch, ophan
+        )
+        select year, month, day_of_month, user_days_seen_for_week, count(*) as count
+        from (
+          select d1.year, d1.month, d1.day_of_month, d1.ophan, sum(d2.days_seen) as user_days_seen_for_week
+          from day d1
+          inner join day d2
+          on d1.ophan = d2.ophan
+          where d1.days_since_epoch >= d2.days_since_epoch
+          and d2.days_since_epoch > d1.days_since_epoch - 7
+          group by d1.year, d1.month, d1.day_of_month, d1.ophan
+        )
+        group by year, month, day_of_month, user_days_seen_for_week
+      """).list()
+
+      data map {
+        case (year, month, day, daysSeen, count) => (new DateMidnight(year, month, day), daysSeen, count)
+      }
+    }
+
+    val daysSeenPerUser: Map[DateMidnight, Double] = {
+      val groups: Map[DateMidnight, List[(DateMidnight, Int, Long)]] = daysSeen groupBy { _.first }
+      val data: Map[DateMidnight, List[(Int, Long)]] = groups mapValues {
+        distribution => distribution map { point => (point.second, point.third) }
+      }
+
+      data mapValues { _.weightedAverage }
+    }
+
+    val daysSeenPerUserWithZeros = {
+      val withZeros = daysSeenPerUser.withDefaultValue(0.0)
+      val dateRange = daysSeenPerUser.keySet.min.dayOfEpoch to daysSeenPerUser.keySet.max.dayOfEpoch
+      dateRange map { Epoch.day } toMapWith { withZeros.apply }
+    }
+
+    daysSeenPerUserWithZeros
+  }
+
+  def getWeeklyDaysSeenPerUsersByDayDateExpanded(): List[(Int, Int, Int, Double)] = getWeeklyDaysSeenPerUsersByDay().toList map {
+    case (day, days_seen) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, days_seen)
+  }
+
+  def getFourWeeklyDaysSeenPerUsersByDay(): Map[DateMidnight, Double] = {
+    val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
+        with day as (
+          select year, month, day_of_month, days_since_epoch, ophan, 1 as days_seen
+          from pageviews
+          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          group by year, month, day_of_month, days_since_epoch, ophan
+        )
+        select year, month, day_of_month, user_days_seen_for_four_weeks, count(*) as count
+        from (
+          select d1.year, d1.month, d1.day_of_month, d1.ophan, sum(d2.days_seen) as user_days_seen_for_four_weeks
+          from day d1
+          inner join day d2
+          on d1.ophan = d2.ophan
+          where d1.days_since_epoch >= d2.days_since_epoch
+          and d2.days_since_epoch > d1.days_since_epoch - 28
+          group by d1.year, d1.month, d1.day_of_month, d1.ophan
+        )
+        group by year, month, day_of_month, user_days_seen_for_four_weeks
+      """).list()
+
+      data map {
+        case (year, month, day, daysSeen, count) => (new DateMidnight(year, month, day), daysSeen, count)
+      }
+    }
+
+    val daysSeenPerUser: Map[DateMidnight, Double] = {
+      val groups: Map[DateMidnight, List[(DateMidnight, Int, Long)]] = daysSeen groupBy { _.first }
+      val data: Map[DateMidnight, List[(Int, Long)]] = groups mapValues {
+        distribution => distribution map { point => (point.second, point.third) }
+      }
+
+      data mapValues { _.weightedAverage }
+    }
+
+    val daysSeenPerUserWithZeros = {
+      val withZeros = daysSeenPerUser.withDefaultValue(0.0)
+      val dateRange = daysSeenPerUser.keySet.min.dayOfEpoch to daysSeenPerUser.keySet.max.dayOfEpoch
+      dateRange map { Epoch.day } toMapWith { withZeros.apply }
+    }
+
+    daysSeenPerUserWithZeros
+  }
+
+  def getFourWeeklyDaysSeenPerUsersByDayDateExpanded(): List[(Int, Int, Int, Double)] = getFourWeeklyDaysSeenPerUsersByDay().toList map {
+    case (day, days_seen) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, days_seen)
+  }
+
 }
