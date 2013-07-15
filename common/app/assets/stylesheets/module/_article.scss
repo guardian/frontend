@@ -2,6 +2,7 @@
     padding: 13px 0 14px;
     margin-left: $gutter;
     margin-right: $gutter;
+    font-weight: bolder;
     line-height: 1;
     border-bottom: 1px solid $mushroom;
 
@@ -25,6 +26,10 @@
 .article-headline {
     @extend %type-3;
     margin-bottom: $baseline*2;
+
+    @include mq(tablet) {
+        font-family: $serifheadline;
+    }
 
     a {
         &:link,

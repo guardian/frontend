@@ -16,12 +16,12 @@
         </section>
     }
 }
-
-<h2 class="article-zone type-1 sport-header">
-    <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
-</h2>
-
-<h1 class="page-head">@page.webTitle</h1>
+<header class="article-head">
+    <h2 class="article-zone type-1 sport-header">
+        <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
+    </h2>
+    <h1 class="page-head">@page.webTitle</h1>
+</header>
 
 @competitionList.map{ comp =>
     @renderFilter(comp)

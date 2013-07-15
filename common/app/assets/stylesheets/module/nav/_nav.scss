@@ -23,7 +23,7 @@
     }
 
     .nav li.is-active {
-        font-weight: 500;
+        font-weight: bold;
     }
 
 /* ==========================================================================
@@ -202,7 +202,7 @@
     .is-active .nav__link {
         font-family: $serifheadline !important;
         line-height: 18px !important;
-        font-weight: 600;
+        font-weight: bold;
     }
 
         .nav__item:first-child .nav__link { padding-left: 0; }
@@ -255,14 +255,14 @@
         padding: 2px 9px 0 9px;
         font-family: $serif !important;
         font-size: 14px;
-        font-weight: 500;
+        font-weight: bold;
         text-decoration: none;
     }
 
     .is-active .nav__link {
         font-family: $serifheadline !important;
         line-height: 18px !important;
-        font-weight: 600;
+        font-weight: bold;
     }
 
     .nav__item:first-child .nav__link { padding-left: 0; }
