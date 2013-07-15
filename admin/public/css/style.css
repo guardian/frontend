@@ -473,34 +473,46 @@ a.cta, .cta a {
 }
 
 .fronts .finder {
-    background-color: #ddd;
+    background-color: #ccc;
     padding: 7px 7px 5px 7px;
 }
 
+.fronts .finder input[type="text"] {
+    width: 49%;
+}
+
 .fronts .list-picker {
-    background-color: #ddd;
+    background-color: #ccc;
     padding: 7px 7px 5px 7px;
+    float: right;
+    width: 75%;
+    border-left: 10px solid #fff;
+    box-sizing: border-box;
 }
 
 .fronts .list-picker__title,
 .fronts .finder__title,
 .fronts .list-header__title {
     font-size: 18px;
-    margin: 0 0 10px 0;
+}
+
+.fronts .list-header__title {
+    display: inline-block;
+    padding-left: 4px;
+    border-left: 1px solid #5a6b87;
+}
+
+.fronts .list-header__title:first-child {
+    padding-left: 0;
+    border-left: 0;
 }
 
 .fronts .list-picker__title {
     color: #666;
-    margin: 0 0 20px 0;
 }
 
 .fronts .finder__title {
     color: #666;
-    margin: 0 0 5px 0;
-}
-
-.fronts .finder__title {
-    margin-top:  10px;
 }
 
 .fronts .list-picker__item {
@@ -520,13 +532,8 @@ a.cta, .cta a {
     border-right:  0;
 }
 
-.fronts .list-picker__new {
-    float: right;
-}
-
 .fronts .lists .connectedList {
-    min-height:50px;
-    background-color: rgb(223, 240, 216);
+    min-height: 100px;
     margin: 0 0 20px 0;
 }
 
@@ -537,17 +544,26 @@ a.cta, .cta a {
     overflow: auto;
 }
 
-.fronts .list-header__title {
-    float: left;
+.fronts .list-header a,
+.fronts .list-header a:hover,
+.fronts .list-header a:visited {
+    color: #fff;
+}
+
+.fronts .list-header__meta {
+    color: #fff;
+    font-size: 10px;
+}
+
+.fronts .list-header__meta__last-updated {
+    font-weight: bold;
 }
 
 .fronts .list-header__control {
     float: right;
     font-size: 10px;
-}
+    margin: -6px -2px 0 0;
 
-.fronts .list-header__control {
-    color: #fff;
 }
 
 .fronts .trailblock {
@@ -567,6 +583,23 @@ a.cta, .cta a {
 
 .fronts .trail:hover {
     background-color: #eee;
+}
+
+.fronts .ui-sortable-placeholder {
+    height: 10px;
+    background-color: #a1aec4;
+    visibility: visible !important;
+}
+
+.fronts .trail .trail__control {
+    display: none;
+}
+
+.fronts .trailblock .trail:hover .trail__control {
+    display: block;
+    float: right;
+    font-size: 10px;
+    margin: -6px -2px 0 0;
 }
 
 .fronts .trail img {
@@ -611,3 +644,7 @@ a.cta, .cta a {
 .fronts input[type="text"] {
 }
 
+.fronts select {
+    width: 15%;
+    margin: -2px 0 0 0;
+}
