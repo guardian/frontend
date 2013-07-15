@@ -59,6 +59,25 @@
     text-indent: -9999px;
 }
 
+
+/* Columning
+   ========================================================================== */
+
+.monocolumn-wrapper {
+    padding-left: $gutter;
+    padding-right: $gutter;
+
+    .article-zone {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .page-head {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+
 /* Layout helpers
    ========================================================================== */
 
