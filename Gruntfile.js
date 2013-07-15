@@ -133,7 +133,7 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-weight": "500",
+                  "font-weight": "700",
                   "file": "resources/fonts/EgyptianText-Medium.woff",
                   "format": "woff"
                 },
@@ -151,8 +151,16 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight": "600",
+                  "font-weight": "700",
                   "file": "resources/fonts/EgyptianHeadline-Medium.woff",
+                  "format": "woff"
+                },
+                // This weight contains only a certain set of chars
+                // since it is used only in one place (section names)
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "900",
+                  "file": "resources/fonts/EgyptianHeadline-Semibold-redux.woff",
                   "format": "woff"
                 }
               ]
@@ -170,7 +178,7 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-weight": "600",
+                  "font-weight": "700",
                   "file": "resources/fonts/EgyptianText-Medium.ttf",
                   "format": "ttf"
                 },
@@ -188,8 +196,16 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight": "600",
+                  "font-weight": "700",
                   "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
+                  "format": "ttf"
+                },
+                // This weight contains only a certain set of chars
+                // since it is used only in one place (section names)
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "900",
+                  "file": "resources/fonts/EgyptianHeadline-Semibold-redux.ttf",
                   "format": "ttf"
                 }
               ]

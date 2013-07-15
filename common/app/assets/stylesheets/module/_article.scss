@@ -2,6 +2,7 @@
     padding: 13px 0 14px;
     margin-left: $gutter;
     margin-right: $gutter;
+    font-weight: bolder;
     line-height: 1;
     border-bottom: 1px solid $mushroom;
 
@@ -28,7 +29,7 @@
 
     @include mq(tablet) {
         font-family: $serifheadline;
-        font-weight: 600;
+        font-weight: bold;
     }
 
     a {
