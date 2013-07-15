@@ -15,6 +15,14 @@
 
             @fragments.headline(article.headline)
 
+            @article.cricketMatch.map { id =>
+                <div class="after-headline">
+                    <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}">View full scorecard
+                        <i class="i i-sport-arrow-small"></i>
+                    </a>
+                </div>
+            }
+
             @fragments.standfirst(article)
         </header>
 
