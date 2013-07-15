@@ -127,7 +127,9 @@ define(["bean",
                           '<button class="overlay__cta js-gallery-full" data-link-name="Gallery full image mode">' +
                           '  <i class="i i-gallery-fullimage-icon"></i> ' +
                           '</button>' +
-                          '<div class="overlay__cta gallery__counter"><span class="js-image-index gallery__counter--current-image"></span> | '+totalImages+'</div>';
+                          '<div class="overlay__cta gallery__counter">' +
+                          '  <span class="js-image-index gallery__counter--current-image"></span> | '+totalImages +
+                          '</div>';
 
             overlay.toolbarNode.innerHTML = toolbar;
             self.imageIndexNode = overlay.toolbarNode.querySelector('.js-image-index');
@@ -158,11 +160,14 @@ define(["bean",
             }
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery-item'), function(el) {
-                var itemIndex = parseInt(el.getAttribute('data-index'), 10);
+                var itemIndex = parseInt(el.getAttribute('data-index'), 10),
+                    captionControlHeight = 35; // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
 
                 if (itemIndex === index) {
                     el.style.display = 'block';
-                    $navArrows.css('height', ($images[index-1].offsetHeight - 35) + 'px'); // Adjust arrows to match height of image
+
+                    // Match arrows to the height of image, minus height of the caption control to prevent overlap
+                    $navArrows.css('height', ($images[index-1].offsetHeight - captionControlHeight) + 'px');
                 } else {
                     el.style.display = ''; // Not set to 'none' so that it doesn't hide them from the Grid view
                 }
