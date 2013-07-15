@@ -148,9 +148,7 @@ define([
         initLightboxGalleries: function () {
             common.mediator.on('page:common:ready', function(config, context) {
                 var galleries = new LightboxGallery(config, context);
-                galleries.init({
-                    urlHashEnabled: true
-                });
+                galleries.init();
             });
 
             // Register as a page view
