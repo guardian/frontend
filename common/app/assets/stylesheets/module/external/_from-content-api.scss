@@ -30,10 +30,6 @@
         margin: 0 0 $baseline*2 0;
         padding: 0;
     }
-    b,
-    strong {
-        font-weight: 500;
-    }
     h2 {
         @extend %type-4;
         color: #333;

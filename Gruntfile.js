@@ -170,7 +170,7 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-weight": "500",
+                  "font-weight": "600",
                   "file": "resources/fonts/EgyptianText-Medium.ttf",
                   "format": "ttf"
                 },
