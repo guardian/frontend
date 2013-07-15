@@ -29,6 +29,20 @@
 
     @include mq(tablet) {
         font-family: $serifheadline;
+        -webkit-font-smoothing: antialiased;
+        font-size: 34px;
+        font-size: 3.4rem;
+        line-height: 42px;
+        line-height: 4.2rem;
+        margin-bottom: $baseline*5;
+    }
+
+    @include mq(desktop) {
+        font-size: 40px;
+        font-size: 4rem;
+        line-height: 48px;
+        line-height: 4.8rem;
+        margin-bottom: $baseline*6;
     }
 
     a {
@@ -45,6 +59,20 @@
 .article-standfirst {
     margin-bottom: 0;
     text-rendering: optimizeLegibility;
+
+    @include mq(tablet) {
+        -webkit-font-smoothing: antialiased;
+        font-size: 16px;
+        font-size: 1.6rem;
+        line-height: 24px;
+        line-height: 2.4rem;
+    }
+    @include mq(desktop) {
+        font-size: 18px;
+        font-size: 1.8rem;
+        line-height: 24px;
+        line-height: 2.4rem;
+    }
 }
 
 .bullet {
