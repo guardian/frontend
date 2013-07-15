@@ -2,146 +2,110 @@ package tools
 
 import common.{ CSV, S3 }
 import conf.Configuration
-import org.joda.time.DateTime
+import org.joda.time.DateMidnight
 
 object Analytics extends implicits.Dates with implicits.Tuples with implicits.Statistics {
 
-  def pageviews(): List[(DateTime, Long)] = {
-    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews.csv")
-    val lines = data.toList flatMap { _.split("\n") }
-
-    val parsed: List[(DateTime, String, Long)] = lines map { CSV.parse } collect {
-      case List(year, month, day, existing, count) =>
-        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), existing, count.toLong)
+  def getPageviewsByDay(): Map[DateMidnight, Long] = {
+    val uptyped: List[(DateMidnight, Long)] = getPageviewsByDayDateExpanded collect {
+      case (year, month, day, total) => (new DateMidnight(year, month, day), total)
     }
 
-    // sum out the new/existing split
-    val groups = parsed groupBy { _._1 }
-    val summed = (groups mapValues { data => (data map { _._3 }).sum }).toList
-
-    // Add missing days
-    val first = (summed map { _._1 }).min.dayOfEpoch
-    val last = (summed map { _._1 }).max.dayOfEpoch
-    val zeros = (first to last).toList map { dayOfEpoch => (Epoch.day(dayOfEpoch), 0L) }
-
-    val based = ((summed ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
-
-    // Sort for display
-    based sortBy { _._1 }
+    uptyped.toMap
   }
 
-  def newCookies(): List[(DateTime, Long)] = {
-    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews.csv")
+  def getPageviewsByDayDateExpanded(): List[(Int, Int, Int, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-by-day.csv")
     val lines = data.toList flatMap { _.split("\n") }
 
-    val parsed: List[(DateTime, String, Long)] = lines map { CSV.parse } collect {
-      case List(year, month, day, existing, count) =>
-        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), existing, count.toLong)
-    }
-
-    // filter for new cookies
-    val filtered = parsed filter { _._2.toUpperCase == "N" } map { data => (data._1, data._3) }
-
-    // Add missing days
-    val first = (filtered map { _._1 }).min.dayOfEpoch
-    val last = (filtered map { _._1 }).max.dayOfEpoch
-    val zeros = (first to last).toList map { dayOfEpoch => (Epoch.day(dayOfEpoch), 0L) }
-
-    val based = ((filtered ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
-
-    // Sort for display
-    based sortBy { _._1 }
-  }
-
-  def pageviewsByCountry(): List[(String, Long)] = {
-    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/countries.csv")
-    val lines = data.toList flatMap { _.split("\n") }
-
-    val parsed: List[(String, Long)] = lines map { CSV.parse } collect {
-      case List(country, count) => (country.toUpperCase, count.toLong)
+    val parsed: List[(Int, Int, Int, Long)] = lines map { CSV.parse } collect {
+      case List(year, month, day, total) => (year.toInt, month.toInt, day.toInt, total.toLong)
     }
 
     parsed
   }
 
-  def pageviewsByOperatingSystem(): List[(String, Long)] = {
-    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/agents.csv")
+  def getNewPageviewsByDay(): Map[DateMidnight, Long] = {
+    val uptyped: List[(DateMidnight, Long)] = getNewPageviewsByDayDateExpanded collect {
+      case (year, month, day, total) => (new DateMidnight(year, month, day), total)
+    }
+
+    uptyped.toMap
+  }
+
+  def getNewPageviewsByDayDateExpanded(): List[(Int, Int, Int, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/new-pageviews-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    lines map { CSV.parse } collect {
+      case List(year, month, day, total) => (year.toInt, month.toInt, day.toInt, total.toLong)
+    }
+  }
+
+  def getPageviewsByCountry(): Map[String, Long] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-by-country.csv")
     val lines = data.toList flatMap { _.split("\n") }
 
     val parsed: List[(String, Long)] = lines map { CSV.parse } collect {
-      case List(operatingSystem, operatingSystemVersion, _, _, count) =>
-        (s"$operatingSystem ${Option(operatingSystemVersion).getOrElse("(unknown)")}".trim, count.toLong)
+      case List(country, total) => (country, total.toLong)
     }
 
-    // sum out the operating system splits
-    val groups = parsed groupBy { _._1 }
-    val summed = groups mapValues { data => (data map { _._2 }).sum }
-
-    summed.toList
+    parsed.toMap
   }
 
-  def pageviewsByBrowser(): List[(String, Long)] = {
-    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/agents.csv")
+  def getPageviewsByOperatingSystem(): Map[String, Long] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-by-operating-system.csv")
     val lines = data.toList flatMap { _.split("\n") }
 
     val parsed: List[(String, Long)] = lines map { CSV.parse } collect {
-      case List(_, _, browser, browserVersion, count) =>
-        (s"$browser ${Option(browserVersion).getOrElse("(unknown)")}".trim, count.toLong)
+      case List(operatingSystemAndVersion, total) => (operatingSystemAndVersion, total.toLong)
     }
 
-    // sum out the browser splits
-    val groups = parsed groupBy { _._1 }
-    val summed = groups mapValues { data => (data map { _._2 }).sum }
-
-    summed.toList
+    parsed.toMap
   }
 
-  def averagePageviewsByDay(): List[(DateTime, Double)] = {
-    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-by-day.csv")
+  def getPageviewsByBrowser(): Map[String, Long] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-by-browser.csv")
     val lines = data.toList flatMap { _.split("\n") }
 
-    val parsed: List[(DateTime, Int, Int)] = lines map { CSV.parse } collect {
-      case List(year, month, day, pageviews, count) =>
-        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), pageviews.toInt, count.toInt)
+    val parsed: List[(String, Long)] = lines map { CSV.parse } collect {
+      case List(browserAndVersion, total) => (browserAndVersion, total.toLong)
     }
 
-    val averages: Map[DateTime, Double] = {
-      val groups: Map[Int, List[(DateTime, Int, Int)]] = parsed groupBy { _._1.dayOfEpoch }
-      val data: Map[DateTime, List[(Int, Int)]] = groups map {
-        case (dayOfEpoch, distribution) => (Epoch.day(dayOfEpoch), distribution map { point => (point.second, point.third) })
-      }
-
-      data mapValues { _.weightedAverage }
-    }
-
-    // Add missing days
-    val first = averages.keys.min.dayOfEpoch
-    val last = averages.keys.max.dayOfEpoch
-    val zeros = (first to last).toList map { dayOfEpoch => (Epoch.day(dayOfEpoch), 0.0) }
-
-    val based = ((averages.toList ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
-
-    // Sort for display
-    based sortBy { _._1 }
+    parsed.toMap
   }
 
-  def returnUsersByDay(): List[(DateTime, Long)] = {
+  def getPageviewsPerUserByDay(): Map[DateMidnight, Double] = {
+    val uptyped: List[(DateMidnight, Double)] = getPageviewsPerUserByDayDateExpanded collect {
+      case (year, month, day, average) => (new DateMidnight(year, month, day), average)
+    }
+
+    uptyped.toMap
+  }
+
+  def getPageviewsPerUserByDayDateExpanded(): List[(Int, Int, Int, Double)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-per-user-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    lines map { CSV.parse } collect {
+      case List(year, month, day, average) => (year.toInt, month.toInt, day.toInt, average.toDouble)
+    }
+  }
+
+  def getReturnUsersByDay(): Map[DateMidnight, Long] = {
+    val uptyped: List[(DateMidnight, Long)] = getReturnUsersByDayDateExpanded collect {
+      case (year, month, day, total) => (new DateMidnight(year, month, day), total)
+    }
+
+    uptyped.toMap
+  }
+
+  def getReturnUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = {
     val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/return-users-by-day.csv")
     val lines = data.toList flatMap { _.split("\n") }
 
-    val parsed: List[(DateTime, Long)] = lines map { CSV.parse } collect {
-      case List(year, month, day, count) =>
-        (new DateTime(year.toInt, month.toInt, day.toInt, 0, 0, 0, 0), count.toLong)
+    lines map { CSV.parse } collect {
+      case List(year, month, day, total) => (year.toInt, month.toInt, day.toInt, total.toLong)
     }
-
-    // Add missing days
-    val first = (parsed map { _._1 }).min.dayOfEpoch
-    val last = (parsed map { _._1 }).max.dayOfEpoch
-    val zeros = (first to last).toList map { dayOfEpoch => (Epoch.day(dayOfEpoch), 0L) }
-
-    val based = ((parsed ++ zeros) groupBy { _._1.dayOfEpoch } mapValues { _ maxBy { _._2 } }).values.toList
-
-    // Sort for display
-    based sortBy { _._1 }
   }
 }

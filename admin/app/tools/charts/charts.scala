@@ -62,60 +62,60 @@ case class Request2xxGraph(name: String, private val metrics: Future[GetMetricSt
   )
 }
 
-object AveragePageviewsByDayGraph extends Chart {
+object PageviewsPerUserByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
   val name = "Average pageviews per user (by day)"
   lazy val labels = Seq("Date", "pageviews")
 
-  def dataset = Analytics.averagePageviewsByDay() map {
+  def dataset = Analytics.getPageviewsPerUserByDay().toList sortBy { _.first } map {
     case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
   }
 }
 
-object ReturnUsersByDayGraph extends Chart {
+object ReturnUsersByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
   val name = "Return users (by day)"
   lazy val labels = Seq("Date", "users")
 
-  def dataset = Analytics.returnUsersByDay() map {
+  def dataset = Analytics.getReturnUsersByDay().toList sortBy { _.first } map {
     case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
   }
 }
 
-object PageviewsGraph extends Chart {
+object PageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
   val name = "Pageviews"
   lazy val labels = Seq("Date", "pageviews")
 
-  def dataset = Analytics.pageviews() map {
+  def dataset = Analytics.getPageviewsByDay().toList sortBy { _.first } map {
     case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
   }
 }
 
-object NewPageviewsGraph extends Chart {
+object NewPageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Dates{
   val name = "Pageviews (new users)"
   lazy val labels = Seq("Date", "pageviews")
 
-  def dataset = Analytics.newCookies() map {
+  def dataset = Analytics.getNewPageviewsByDay().toList sortBy { _.first } map {
     case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
   }
 }
 
-object PageviewsGeoGraph extends Chart {
+object PageviewsByCountryGeoGraph extends Chart {
   val name = "Pageviews"
   lazy val labels = Seq("Country", "pageviews")
 
   override lazy val form: String = "GeoChart"
 
-  def dataset = Analytics.pageviewsByCountry() map {
+  def dataset = Analytics.getPageviewsByCountry().toList map {
     case (country, total) => DataPoint(country, Seq(total))
   }
 }
 
-object PageviewsOSTreeMapGraph extends Chart {
+object PageviewsByOperatingSystemTreeMapGraph extends Chart {
   val name = ""
 
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("OS", "pageviews")
-  def dataset = Analytics.pageviewsByOperatingSystem() map {
+  def dataset = Analytics.getPageviewsByOperatingSystem().toList map {
     case (os, total) => DataPoint(os, Seq(total))
   }
 
@@ -130,18 +130,18 @@ object PageviewsOSTreeMapGraph extends Chart {
   }
 }
 
-object PageviewsBrowsersTreeMapGraph extends Chart {
+object PageviewsByBrowserTreeMapGraph extends Chart {
   val name = ""
 
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("Browsers", "pageviews")
-  def dataset = Analytics.pageviewsByBrowser() map {
+  def dataset = Analytics.getPageviewsByBrowser().toList map {
     case (browser, total) => DataPoint(browser, Seq(total))
   }
 
   override def asDataset = s"[[$labelString], [$rootElement], $dataString]"
-  private def labelString = "'Browser','parent','pageviews'"
+  private def labelString = "'Browser','parent','getPageviewsByDay'"
   private def rootElement = "'Browser', null, 0"
 
   private def dataString = dataset.map(datapointString).mkString(",")
