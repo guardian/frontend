@@ -40,7 +40,7 @@
 
 a.competition-title {
     color: $sportBright;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .competition-title i,
@@ -109,7 +109,7 @@ a.competition-title {
     left: 50.5%;
     margin-left: -20px;
     text-align: center;
-    font-weight: 500;
+    font-weight: bold;
     letter-spacing: 2px;
 }
 
@@ -271,7 +271,7 @@ a.competition-title {
     }
 
     h2 {
-        font-weight: 500;
+        font-weight: bold;
         font-family: $sans-serif;
         font-size: 14px;
         color: #fff;
