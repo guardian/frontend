@@ -16,13 +16,18 @@
                              data-width="@image.width"
                              data-height="@image.height"
                         />
-                        <span class="gallery-arrow-cta gallerycaption-handle">
-                            <i class="i i-gallery-arrow"></i>
-                        </span>
                         <figcaption class="gallerycaption" itemprop="description">
-                            <p class="gallerycaption__text">@Html(image.caption.getOrElse(""))</p>
-                            <p class="gallerycaption__credit">@image.credit</p>
+                            <button class="captioncontrol captioncontrol--hide js-toggle-furniture" data-is-ajax data-link-name="Hide caption">
+                                <span class="gallery-arrow-cta gallery-arrow-cta--down">
+                                    <i class="i i-gallery-arrow"></i>
+                                </span>
+                            </button>
+                            <div class="gallerycaption__inner">
+                                <p class="gallerycaption__text">@Html(image.caption.getOrElse(""))</p>
+                                <p class="gallerycaption__credit">@image.credit</p>
+                            </div>
                         </figcaption>
+
                     </figure>
             </li>
         }
@@ -31,7 +36,7 @@
     <button class="gallery__nav gallery__nav--prev js-gallery-prev"
        data-link-name="Gallery Previous"
        data-is-ajax="true">
-          <span class="gallery-arrow-cta">
+          <span class="gallery-arrow-cta gallery-arrow-cta--left">
              <i class="i i-gallery-arrow"></i>
              <span class="h">Previous</span>
           </span>
@@ -40,10 +45,16 @@
     <button class="gallery__nav gallery__nav--next js-gallery-next"
        data-link-name="Gallery Next"
        data-is-ajax="true">
-          <span class="gallery-arrow-cta">
+          <span class="gallery-arrow-cta gallery-arrow-cta--right">
              <i class="i i-gallery-arrow"></i>
              <span class="h">Next</span>
           </span>
+    </button>
+
+    <button class="captioncontrol captioncontrol--show js-toggle-furniture" data-is-ajax data-link-name="Show caption">
+        <span class="gallery-arrow-cta gallery-arrow-cta--up">
+            <i class="i i-gallery-arrow"></i>
+        </span>
     </button>
 
 </div>
