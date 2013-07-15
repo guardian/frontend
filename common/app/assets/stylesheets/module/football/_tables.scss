@@ -24,7 +24,7 @@
 
 .table-football-body th {
     background: #f4f4ee;
-    font-weight: 500;
+    font-weight: bold;
     color: $sportMid;
     border-top: 1px solid #DEDEDD;
 
@@ -51,7 +51,7 @@
 }
 
 .table-football td:last-child {
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .table-football-body tr {
@@ -65,7 +65,7 @@
 
 .table-football-body a {
     color: #000;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 @media (min-width: 40.0625em) {

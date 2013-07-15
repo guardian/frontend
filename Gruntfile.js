@@ -133,7 +133,7 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-weight": "500",
+                  "font-weight": "700",
                   "file": "resources/fonts/EgyptianText-Medium.woff",
                   "format": "woff"
                 },
@@ -145,8 +145,22 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight": "600",
-                  "file": "resources/fonts/EgyptianHeadline-Semibold.woff",
+                  "font-weight": "200",
+                  "file": "resources/fonts/EgyptianHeadline-Light.woff",
+                  "format": "woff"
+                },
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "700",
+                  "file": "resources/fonts/EgyptianHeadline-Medium.woff",
+                  "format": "woff"
+                },
+                // This weight contains only a certain set of chars
+                // since it is used only in one place (section names)
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "900",
+                  "file": "resources/fonts/EgyptianHeadline-Semibold-redux.woff",
                   "format": "woff"
                 }
               ]
@@ -164,7 +178,7 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianText",
-                  "font-weight": "500",
+                  "font-weight": "700",
                   "file": "resources/fonts/EgyptianText-Medium.ttf",
                   "format": "ttf"
                 },
@@ -176,36 +190,22 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight": "600",
-                  "file": "resources/fonts/EgyptianHeadline-Semibold.ttf",
-                  "format": "ttf"
-                }
-              ]
-            }
-          },
-          WebEgyptianNavWoff: {
-            options: {
-              "filename": "common/app/public/fonts/WebEgyptianNav.woff.js",
-              "callback": "guFont",
-              "fonts": [
-                {
-                  "font-family": "EgyptianHeadline",
                   "font-weight": "200",
                   "file": "resources/fonts/EgyptianHeadline-Light.ttf",
                   "format": "ttf"
-                }
-              ]
-            }
-          },
-          WebEgyptianNavTtf: {
-            options: {
-              "filename": "common/app/public/fonts/WebEgyptianNav.ttf.js",
-              "callback": "guFont",
-              "fonts": [
+                },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight": "200",
-                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
+                  "font-weight": "700",
+                  "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
+                  "format": "ttf"
+                },
+                // This weight contains only a certain set of chars
+                // since it is used only in one place (section names)
+                {
+                  "font-family": "EgyptianHeadline",
+                  "font-weight": "900",
+                  "file": "resources/fonts/EgyptianHeadline-Semibold-redux.ttf",
                   "format": "ttf"
                 }
               ]
