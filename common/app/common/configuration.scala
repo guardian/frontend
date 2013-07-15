@@ -159,7 +159,6 @@ class GuardianConfiguration(
     lazy val region = configuration.getStringProperty("aws.region").getOrElse(throw new RuntimeException("AWS region is not setup"))
 
     lazy val bucket = configuration.getStringProperty("aws.bucket").getOrElse(throw new RuntimeException("AWS bucket is not setup"))
-    lazy val frontsApiBucket = configuration.getStringProperty("frontsApi.aws.bucket").getOrElse(throw new RuntimeException("Fronts API AWS bucket is not setup"))
     lazy val sns: String = configuration.getStringProperty("sns.notification.topic.arn").getOrElse {
       throw new IllegalStateException("Cannot send SNS notifications without topic ARN property (sns.notification.topic.arn).")
     }
