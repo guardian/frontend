@@ -6,6 +6,5 @@
 GET     /assets/*file                                               controllers.Assets.at(path="/public", file)
 
 # Cricket
-GET     /cricket/match/:matchId                                     controllers.CricketMatchController.renderMatchId(matchId)
 GET     /sport/cricket/match/:matchId.json                          controllers.CricketMatchController.renderMatchId(matchId)
 GET     /sport/cricket/match/:matchId                               controllers.CricketMatchController.renderMatchId(matchId)
