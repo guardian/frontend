@@ -18,6 +18,15 @@ Requirements
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
 * Installed Ruby >= v1.9.x & [bundler](http://gembundler.com/) (You will already have this installed, but run `ruby -v` to check version number)
 
+NPM ownership
+-------------
+
+Sometimes when you install npm it ends up owned by root (but in your home directory).
+
+Check that you own your own .npm directory `ls -ld ~/.npm`
+
+If it is owned by root then take ownership of it `sudo chown -R username:username ~/.npm`
+
 File handles
 ------------
 
