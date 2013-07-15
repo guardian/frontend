@@ -50,11 +50,9 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
                 expect(controlSpy.called || variantSpy.called).toBeFalsy();
             });
             
-            it('should segment the user in to a test', function() {
-                
+            it('should assign the user to a segment (aka. variant)', function() {
                 ab.addTest(test.two);
                 ab.segment(switches.both_tests_on);
-                
                 var storedParticipated = JSON.parse(localStorage.getItem(participationsKey)).value;
                 expect(storedParticipated.DummyTest.variant).not.toBeUndefined();
                 expect(storedParticipated.DummyTest2.variant).not.toBeUndefined();
@@ -79,10 +77,8 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             it('should get all the tests user is in', function() {
                 ab.addTest(test.two);
                 ab.segment(switches.both_tests_on);
-                var tests = Object.keys(ab.getParticipations()).map(function(k){
-                    return k; }).toString()
+                var tests = Object.keys(ab.getParticipations()).map(function(k){ return k; }).toString()
                 expect(tests).toBe('DummyTest,DummyTest2');
-                
             });
             
             it('should remove expired tests from being logged', function () {
