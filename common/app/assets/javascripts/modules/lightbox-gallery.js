@@ -221,8 +221,6 @@ define(["bean",
             if (galleryNode.className.indexOf('gallery--hide-furniture') !== -1) {
                 self.jumpToContent();
             }
-
-            common.mediator.emit('module:clickstream:interaction', 'Toggle gallery furniture');
         };
 
         this.layout = function() {

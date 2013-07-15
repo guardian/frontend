@@ -14,7 +14,6 @@ object AdminConfiguration {
   lazy val switchesKey = configuration.getStringProperty("switches.file").getOrElse(throw new RuntimeException("Switches file name is not setup"))
   lazy val topStoriesKey = configuration.getStringProperty("top-stories.config").getOrElse(throw new RuntimeException("Top Stories file name is not setup"))
 
-
   object stories {
     val preview = configuration.getStringProperty("stories.preview.url")
   }

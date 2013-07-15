@@ -13,7 +13,7 @@ function (
 ){
     var absUrlHost = 'http://m.guardian.co.uk/';
 
-    var Article = function(opts) {
+    function Article(opts) {
         this.id                 = ko.observable();
         this.webTitle           = ko.observable();
         this.webPublicationDate = ko.observable();

@@ -17,6 +17,7 @@ i.gallery__watermark {
 }
 
 .gallery--hide-furniture {
+    .gallery__nav .gallery-arrow-cta,
     .gallery__watermark,
     .gallerycaption  {
         display: none;
@@ -35,7 +36,7 @@ i.gallery__watermark {
 
     .gallery__watermark,
     .gallerycaption,
-    .gallerycaption-handle,
+    .captioncontrol,
     .gallery__nav {
         display: none;
     }
@@ -221,9 +222,14 @@ i.gallery__watermark {
     border: 0;
     background: transparent;
     margin: 0 auto;
+    width: 100%;
     height: 29px;
     display: block;
     padding: 0;
+
+    .gallery-arrow-cta {
+        margin: 0 auto;
+    }
 }
 
 .captioncontrol--show {
@@ -234,7 +240,8 @@ i.gallery__watermark {
     }
 
     @media (orientation:landscape) {
-        margin-top: -29px;
+        position: absolute;
+        bottom: 0;
     }
 }
 
