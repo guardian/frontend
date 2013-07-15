@@ -10,7 +10,11 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
   // thats right, we only do PROD analytics
     Ok(views.html.kpis("PROD", Seq(
       PageviewsPerUserByDayGraph,
-      ReturnUsersByDayGraph
+      ReturnUsersByDayGraph,
+      WeeklyPageviewsPerUserByDayGraph,
+      FourWeeklyPageviewsPerUserByDayGraph,
+      WeeklyDaysSeenPerUserByDayGraph,
+      FourWeeklyDaysSeenPerUserByDayGraph
     )))
   }
 
