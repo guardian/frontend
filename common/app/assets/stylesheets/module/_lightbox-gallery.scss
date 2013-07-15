@@ -140,6 +140,7 @@ i.gallery__watermark {
     display: block;
     width: 22px;
     height: 36px;
+    background: rgb(34, 34, 34);
     background: rgba(34, 34, 34, 0.90);
 
     .i {
@@ -191,6 +192,7 @@ i.gallery__watermark {
 }
 
 .gallerycaption__inner {
+    background: rgb(34, 34, 34);
     background: rgba(34, 34, 34, 0.90);
     padding: $baseline * 2 $gutter;
 }
