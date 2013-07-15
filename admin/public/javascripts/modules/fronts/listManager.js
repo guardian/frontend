@@ -12,7 +12,18 @@ define([
     LatestArticles
 ) {
     var apiBase = '/fronts/api',
-        maxDisplayedLists = 3;
+        maxDisplayedLists = 3,
+        queryParams = (function(){
+            var result = {};
+            if (window.location.search) {
+                var params = window.location.search.slice(1).split("&");
+                for (var i = 0; i < params.length; i++) {
+                    var tmp = params[i].split("=");
+                    result[tmp[0]] = unescape(tmp[1]);
+                }
+            }
+            return result;
+        }());
 
     return function(selector) {
 
@@ -180,7 +191,7 @@ define([
             });
 
             viewModel.selectedSection.subscribe(function(section) {
-                console
+                console.log(viewModel.selectedSection());
                 viewModel.selectedBlock('');
                 if (section && section.id) {
                     viewModel.latestArticles.section(section.id);
@@ -196,6 +207,12 @@ define([
                     showList(id);
                 }
             });
+
+            if (queryParams.blocks) {
+                queryParams.blocks.split(',').forEach(function(list){
+                    showList(list);
+                });
+            }
 
             viewModel.latestArticles.search();
         };

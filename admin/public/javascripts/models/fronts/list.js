@@ -17,7 +17,7 @@ define([
         this.id = id;
         this.crumbs = id.split(/\//g);
 
-        this.list         = knockout.observableArray();
+        this.live         = knockout.observableArray();
         this.lastUpdated  = knockout.observable();
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
@@ -27,7 +27,7 @@ define([
                 method: 'delete',
                 url: apiBase + '/' + self.id + '/' + item.id()
             });
-            self.list.remove(item);
+            self.live.remove(item);
         }
 
         this.load();
@@ -51,8 +51,7 @@ define([
     }
 
     List.prototype.populate = function(opts) {
-        var trails = opts.trails || [],
-            self = this;
+        var self = this;
 
         // Knockout doesn't seem to empty elements dragged into
         // a container when it regenerates its DOM content. So empty it first.
@@ -61,13 +60,13 @@ define([
             this.containerEl.empty();
         }
 
-        this.list.removeAll();
-        trails.forEach(function(item) {
-            self.list.push(new Article({
+        this.live.removeAll();
+        [].concat(opts.trails).forEach(function(item) {
+            self.live.push(new Article({
                 id: item.id
             }));
         });
-        ContentApi.decorateItems(this.list());
+        ContentApi.decorateItems(this.live());
 
         this.lastUpdated(this.timeAgoString(opts.lastUpdated));
         this.updatedBy(opts.updatedBy);
