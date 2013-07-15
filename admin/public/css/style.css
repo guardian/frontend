@@ -538,7 +538,7 @@ a.cta, .cta a {
 }
 
 .fronts .list-header {
-    background-color: #214583;
+    background-color: #666;
     color: #fff;
     padding: 7px 7px 0 10px;
     overflow: auto;
@@ -551,7 +551,8 @@ a.cta, .cta a {
 }
 
 .fronts .list-header.liveEdit {
-    background-color: #20a111;
+    background-color: #d61d00;
+
 }
 
 .fronts .list-header.hasUnPublishedEdits {
