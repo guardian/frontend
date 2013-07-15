@@ -142,7 +142,7 @@ define([
             TESTS = [];
         },
 
-        init: function(config, context, options) {
+        segment: function(config, context, options) {
             var opts = options || {};
             getActiveTests().forEach(function(test) {
                 bucket(test, config, context);
