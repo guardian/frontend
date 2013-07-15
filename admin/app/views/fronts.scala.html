@@ -44,7 +44,11 @@
 
         <div class="lists" data-bind="foreach: listsDisplayed">
             <div class="trailblock">
-                <div class="list-header">
+                <div class="list-header" data-bind="
+                    css: {
+                        liveEdit: liveEdit(),
+                        hasUnPublishedEdits: hasUnPublishedEdits()
+                    }">
                     <a class="list-header__control" data-bind="click: $parent.dropList">HIDE</a>
                     <div data-bind="foreach: crumbs">
                         <span class="list-header__title" data-bind="text: $data"></span> 
@@ -61,10 +65,16 @@
                             Empty
                         <!-- /ko -->
                     </div>
+                    <div class="list-header__meta">
+                        mode: <a data-bind="click: toggleLiveEdit, text: liveEdit() ? 'LIVE' : 'DRAFT'"></a>
+                    </div>                    
                 </div>
                 <div class="connectedList" data-bind="
-                    attr: {'data-list-id': id},
-                    template: {name: 'template_article', foreach: live}"></div>
+                    attr: {
+                        'data-list-id': id,
+                        'data-live-edit': liveEdit()
+                    },
+                    template: {name: 'template_article', foreach: liveEdit() ? live : draft}"></div>
             </div>
         </div>
     </div>

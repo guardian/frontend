@@ -9,7 +9,8 @@ define([
     Article,
     ContentApi
 ) {
-    var apiBase = '/fronts/api';
+    var liveEditDefault = false,
+        apiBase = '/fronts/api';
 
     function List(id) {
         var self = this;
@@ -18,9 +19,14 @@ define([
         this.crumbs = id.split(/\//g);
 
         this.live         = knockout.observableArray();
+        this.draft        = knockout.observableArray();
+
         this.lastUpdated  = knockout.observable();
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
+
+        this.liveEdit     = knockout.observable(liveEditDefault);
+        this.hasUnPublishedEdits = knockout.observable();
 
         this.dropItem = function(item) {
             reqwest({
@@ -32,6 +38,18 @@ define([
 
         this.load();
     }
+
+    List.prototype.setLiveEdit = function(state) {
+        if(this.hasUnPublishedEdits()) {
+            this.liveEdit(false);
+        } else if (!!state === !!this.liveEdit()) {
+            this.liveEdit(!!state);
+        }
+    };
+
+    List.prototype.toggleLiveEdit = function() {
+        this.liveEdit(!this.liveEdit());  
+    };
 
     List.prototype.load = function() {
         var self = this;
@@ -48,10 +66,12 @@ define([
                 }
             }
         );
-    }
+    };
 
     List.prototype.populate = function(opts) {
-        var self = this;
+        var self = this,
+            liveChecksum = '',
+            draftChecksum = '';
 
         // Knockout doesn't seem to empty elements dragged into
         // a container when it regenerates its DOM content. So empty it first.
@@ -61,21 +81,37 @@ define([
         }
 
         this.live.removeAll();
+        //Change trails to live
         [].concat(opts.trails).forEach(function(item) {
             self.live.push(new Article({
                 id: item.id
             }));
+            liveChecksum += item.id + ':';
         });
+
+        this.draft.removeAll();
+        //Change trails to draft
+        [].concat(opts.trails).forEach(function(item) {
+            self.draft.push(new Article({
+                id: item.id
+            }));
+            draftChecksum += item.id + ':';
+        });
+
+        this.hasUnPublishedEdits(liveChecksum !== draftChecksum);
+        this.setLiveEdit(this.liveEdit());
+
         ContentApi.decorateItems(this.live());
+        ContentApi.decorateItems(this.draft());
 
         this.lastUpdated(this.timeAgoString(opts.lastUpdated));
         this.updatedBy(opts.updatedBy);
         this.updatedEmail(opts.updatedEmail);
-    }
+    };
 
     List.prototype.timeAgoString = function(date) {
         return date ? humanized_time_span(date) : '';
-    }
+    };
 
     return List;
 });

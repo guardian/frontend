@@ -110,7 +110,8 @@ define([
             inList = $("[data-url='" + id + "']", list);
             if (inList.length) {
                 delta = {
-                    item: id
+                    item: id,
+                    publish: !!list.attr('data-live-edit')
                 };
 
                 position = inList.next().data('url');
@@ -191,7 +192,6 @@ define([
             });
 
             viewModel.selectedSection.subscribe(function(section) {
-                console.log(viewModel.selectedSection());
                 viewModel.selectedBlock('');
                 if (section && section.id) {
                     viewModel.latestArticles.section(section.id);
