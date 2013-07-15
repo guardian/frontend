@@ -1,12 +1,4 @@
 @include mq(tablet) {
-    .monocolumn-wrapper {
-        max-width: gs-span(8);
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .monocolumn-wrapper--no-limit {
-        max-width: none;
-    }
     .article-body,
     .article-head,
     .main-caption {
