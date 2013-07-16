@@ -148,7 +148,7 @@ video {
         .media-primary {
             float: left;
             width: gs-span(4);
-            margin-right: $gutter;
+            margin-right: $gutter !important;
         }
         .media-primary--comments-on {
             display: none;
