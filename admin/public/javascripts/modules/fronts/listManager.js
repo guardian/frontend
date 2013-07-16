@@ -99,15 +99,19 @@ define([
         function saveListDelta(id, list) {
             var listId,
                 inList,
+                listObj,
                 position,
                 delta;
                 
             if (list.hasClass('throwAway')) { return; }
 
+            listObj = knockout.dataFor(list[0]);
+
             listId = list.attr('data-list-id');
             if (!listId) { return; }
 
             inList = $("[data-url='" + id + "']", list);
+
             if (inList.length) {
                 delta = {
                     item: id,
@@ -132,6 +136,8 @@ define([
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
                 });
+
+                listObj.pending(true);
             }
         };
 
@@ -141,7 +147,7 @@ define([
                 viewModel.listsDisplayed().forEach(function(list){
                     list.load();
                 });
-            }, 3000);
+            }, 1500);
         }
 
         function stopPoller() {

@@ -82,8 +82,8 @@
                                 </span>
                             </span>
                             <span data-bind="if: !liveEdit() && hasUnPublishedEdits()">
-                                &middot; <a class="list-header__status__control">publish</a>
-                                &middot; <a class="list-header__status__control">discard</a>
+                                &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
+                                &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
                             </span>
                         </div>                    
                     </div>                    
@@ -93,6 +93,7 @@
                         'data-list-id': id,
                         'data-live-edit': liveEdit()
                     },
+                    css: {pending: pending},
                     template: {name: 'template_article', foreach: liveEdit() ? live : draft}"></div>
             </div>
         </div>
