@@ -5,18 +5,29 @@
 .trailblock {
     max-height: none;
     padding: 0 $gutter;
-}
 
-    .trailblock ul {
+    > ul {
         margin-bottom: 0;
+
+        + ul {
+            border-top: 1px solid #EDEDE7;
+        }
     }
+}
 
 
 /* Trailblock expandables
    ========================================================================== */
 
-.trailblock.shut .count {
-    display: inline-block;
+.trailblock.shut {
+    > ul {
+        + ul {
+            border-top: none;
+        }
+    }
+    .count {
+        display: inline-block;
+    }
 }
 
 .trailblock.rolled-up,
