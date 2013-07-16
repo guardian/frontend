@@ -5,7 +5,7 @@ import conf.Configuration
 import services.Analytics
 
 class AnalyticsLoadJob extends Job {
-  val cron = "0 0 9/24 * * ?"
+  val cron = "0 0 8/24 * * ?"
   val metric = PorterMetrics.AnalyticsLoadTimingMetric
 
   def run() {
@@ -51,13 +51,6 @@ class AnalyticsLoadJob extends Job {
       "text/csv"
     )
 
-    log.info("Generating analytics for return users by day and uploading to S3.")
-    S3.putPrivate(
-      s"${Configuration.environment.stage.toUpperCase}/analytics/return-users-by-day.csv",
-      Analytics.getReturnUsersByDayDateExpanded() map { CSV.write } mkString "\n",
-      "text/csv"
-    )
-
     log.info("Generating analytics for weekly pageviews/users by day and uploading to S3.")
     S3.putPrivate(
       s"${Configuration.environment.stage.toUpperCase}/analytics/weekly-pageviews-per-user-by-day.csv",
@@ -69,6 +62,27 @@ class AnalyticsLoadJob extends Job {
     S3.putPrivate(
       s"${Configuration.environment.stage.toUpperCase}/analytics/four-weekly-pageviews-per-user-by-day.csv",
       Analytics.getFourWeeklyPageviewsPerUsersByDayDateExpanded() map { CSV.write } mkString "\n",
+      "text/csv"
+    )
+
+    log.info("Generating analytics for return users by day and uploading to S3.")
+    S3.putPrivate(
+      s"${Configuration.environment.stage.toUpperCase}/analytics/return-users-by-day.csv",
+      Analytics.getReturnUsersByDayDateExpanded() map { CSV.write } mkString "\n",
+      "text/csv"
+    )
+
+    log.info("Generating analytics for weekly return users by day and uploading to S3.")
+    S3.putPrivate(
+      s"${Configuration.environment.stage.toUpperCase}/analytics/weekly-return-users-by-day.csv",
+      Analytics.getWeeklyReturnUsersByDayDateExpanded() map { CSV.write } mkString "\n",
+      "text/csv"
+    )
+
+    log.info("Generating analytics for four weekly return users by day and uploading to S3.")
+    S3.putPrivate(
+      s"${Configuration.environment.stage.toUpperCase}/analytics/four-weekly-return-users-by-day.csv",
+      Analytics.getFourWeeklyReturnUsersByDayDateExpanded() map { CSV.write } mkString "\n",
       "text/csv"
     )
 
