@@ -34,6 +34,9 @@ define(['common',
 
         // fake config
         var config = {
+            page: {
+                pageId: 'path/to/page'
+            },
             switches: {
                 lightboxGalleries: true
             }
