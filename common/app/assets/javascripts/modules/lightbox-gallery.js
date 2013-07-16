@@ -100,9 +100,6 @@ define(["bean",
         this.loadGallery = function() {
             overlay.showLoading();
 
-            // Save state to preserve back button functionality
-            //url.pushUrl({ lightbox: true }, document.title, window.location.href);
-
             ajax({
                 url: self.galleryEndpoint,
                 type: 'json',
