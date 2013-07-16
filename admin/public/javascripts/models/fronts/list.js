@@ -9,7 +9,7 @@ define([
     Article,
     ContentApi
 ) {
-    var liveEditDefault = false,
+    var liveEditDefault = true,
         apiBase = '/fronts/api';
 
     function List(id) {
@@ -39,16 +39,12 @@ define([
         this.load();
     }
 
-    List.prototype.setLiveEdit = function(state) {
-        if(this.hasUnPublishedEdits()) {
-            this.liveEdit(false);
-        } else if (!!state === !!this.liveEdit()) {
-            this.liveEdit(!!state);
-        }
+    List.prototype.setLiveEdit = function() {
+        this.liveEdit(true);
     };
 
-    List.prototype.toggleLiveEdit = function() {
-        this.liveEdit(!this.liveEdit());  
+    List.prototype.setDraftEdit = function() {
+        this.liveEdit(false);
     };
 
     List.prototype.load = function() {
@@ -99,7 +95,6 @@ define([
         });
 
         this.hasUnPublishedEdits(liveChecksum !== draftChecksum);
-        this.setLiveEdit(this.liveEdit());
 
         ContentApi.decorateItems(this.live());
         ContentApi.decorateItems(this.draft());

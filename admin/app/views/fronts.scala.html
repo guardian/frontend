@@ -2,7 +2,9 @@
 
 @admin_main("Fronts editor", env, isAuthed = true) {
 
-    <div class="fronts">
+    <div class="splash" data-bind="visible: false">Loading Fronts Editor...</div> 
+
+    <div class="fronts" data-bind="visible: true" style="display: none">
         <div class="list-picker">
             <span class="list-picker__title">Select a block:</span>
 
@@ -44,14 +46,10 @@
 
         <div class="lists" data-bind="foreach: listsDisplayed">
             <div class="trailblock">
-                <div class="list-header" data-bind="
-                    css: {
-                        liveEdit: liveEdit(),
-                        hasUnPublishedEdits: hasUnPublishedEdits()
-                    }">
-                    <a class="list-header__control" data-bind="click: $parent.dropList">HIDE</a>
-                    <div data-bind="foreach: crumbs">
-                        <span class="list-header__title" data-bind="text: $data"></span> 
+                <div class="list-header">
+                    <a class="list-header__hide" data-bind="click: $parent.dropList">HIDE</a>
+                    <div class="list-header__title" data-bind="foreach: crumbs">
+                        <span class="list-header__title__part" data-bind="text: $data"></span> 
                     </div>
                     <div class="list-header__meta">
                         <!-- ko if: lastUpdated -->
@@ -65,8 +63,29 @@
                             Empty
                         <!-- /ko -->
                     </div>
-                    <div class="list-header__meta">
-                        mode: <a data-bind="click: toggleLiveEdit, text: liveEdit() ? 'LIVE' : 'DRAFT'"></a>
+                    <div class="list-header__status">
+                        <div class="list-header__status__live" data-bind="
+                            css: {
+                                active: liveEdit()
+                            }">
+                            <span class="list-header__status__live__title" data-bind="click: setLiveEdit">LIVE</span>
+                        </div>                    
+                        <div class="list-header__status__draft" data-bind="
+                            css: {
+                                active: !liveEdit(),
+                                hasUnPublishedEdits: hasUnPublishedEdits()
+                            }">
+                            <span class="list-header__status__draft__title" data-bind="click: setDraftEdit">
+                                DRAFT
+                                <span data-bind="if: hasUnPublishedEdits()">
+                                    has edits
+                                </span>
+                            </span>
+                            <span data-bind="if: !liveEdit() && hasUnPublishedEdits()">
+                                &middot; <a class="list-header__status__control">publish</a>
+                                &middot; <a class="list-header__status__control">discard</a>
+                            </span>
+                        </div>                    
                     </div>                    
                 </div>
                 <div class="connectedList" data-bind="

@@ -491,27 +491,15 @@ a.cta, .cta a {
 }
 
 .fronts .list-picker__title,
-.fronts .finder__title,
-.fronts .list-header__title {
+.fronts .finder__title {
     font-size: 18px;
 }
 
-.fronts .list-header__title {
-    display: inline-block;
-    padding-left: 4px;
-    border-left: 1px solid #ccc;
-}
-
-.fronts .list-header__title:first-child {
-    padding-left: 0;
-    border-left: 0;
-}
-
-.fronts .list-picker__title {
+.fronts .finder__title {
     color: #666;
 }
 
-.fronts .finder__title {
+.fronts .list-picker__title {
     color: #666;
 }
 
@@ -540,7 +528,7 @@ a.cta, .cta a {
 .fronts .list-header {
     background-color: #666;
     color: #fff;
-    padding: 7px 7px 0 10px;
+    padding: 0;
     overflow: auto;
 }
 
@@ -550,17 +538,25 @@ a.cta, .cta a {
     color: #fff;
 }
 
-.fronts .list-header.liveEdit {
-    background-color: #d61d00;
-
+.fronts .list-header__title {
+    font-size: 18px;
+    padding: 3px 0 0 6px;
 }
 
-.fronts .list-header.hasUnPublishedEdits {
-    background-color: #f89406;
+.fronts .list-header__title__part {
+    font-size: 18px;
+    display: inline-block;
+    padding-left: 4px;
+    border-left: 1px solid #ccc;
+}
+
+.fronts .list-header__title__part:first-child {
+    padding-left: 0;
+    border-left: 0;
 }
 
 .fronts .list-header__meta {
-    color: #fff;
+    padding: 0 6px;
     font-size: 10px;
 }
 
@@ -568,10 +564,57 @@ a.cta, .cta a {
     font-weight: bold;
 }
 
-.fronts .list-header__control {
-    float: right;
+.fronts .list-header__status {
+}
+
+.fronts .list-header__status__live,
+.fronts .list-header__status__draft {
+    font-size: 12px;
+    float: left;
+    padding: 0 6px;    
+    margin: 2px 0 0 3px;
+    background-color: #ccc;    
+    cursor: pointer;
+}
+
+.fronts .list-header__status__live.active {
+    color: #d61d00;
+    background-color: #fff;    
+}
+
+.fronts .list-header__status__draft.hasUnPublishedEdits {
+    background-color: #f89406;
+}
+
+.fronts .list-header__status__draft.active {
+    color: #000;
+    background-color: #fff;    
+}
+
+.fronts .list-header__status__live__title,
+.fronts .list-header__status__draft__title {
+    font-weight: bold;
+}
+
+.fronts a.list-header__status__control {
+    color: #f89406;
+    cursor: pointer;
+    text-transform: uppercase;
     font-size: 10px;
-    margin: -6px -2px 0 0;
+    line-height: 10px;
+    font-weight: bold;
+    padding: 0 2px;
+}
+
+.fronts a.list-header__status__control:hover,
+.fronts a.list-header__status__control:visited {
+    color: #000;
+}
+
+.fronts .list-header__hide {
+    float: right;
+    font-size: 9px;
+    margin: 0 5px 0 0;
 
 }
 
@@ -596,7 +639,9 @@ a.cta, .cta a {
 
 .fronts .ui-sortable-placeholder {
     height: 10px;
-    background-color: #a1aec4;
+    border-top: 3px solid #666;
+    border-bottom: 3px solid #666;
+    background-color: #DFF0D8;
     visibility: visible !important;
 }
 
