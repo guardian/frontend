@@ -57,18 +57,26 @@ object FrontsController extends Controller with Logging {
   }
 
   private def updateBlock(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity, block: Block): Unit = {
-    val listWithoutItem = block.draft.filterNot(_.id == update.item)
-    val index = update.after match {
-      case Some(true) => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1
-      case _          => listWithoutItem.indexWhere(_.id == update.position.getOrElse(""))
+    update.item.map { item =>
+      val listWithoutItem = block.draft.filterNot(_.id == update.item)
+      val index = update.after match {
+        case Some(true) => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1
+        case _          => listWithoutItem.indexWhere(_.id == update.position.getOrElse(""))
+      }
+      val splitList = listWithoutItem.splitAt(index)
+      val trails = splitList._1 ++ List(Trail(item, None, None, None)) ++ splitList._2
+      val newBlock = block.copy(draft = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
+      FrontsApi.putBlock(edition, section, blockId, newBlock) //Don't need pretty, only for us devs
+    } getOrElse {
+      if (update.publish)
+        FrontsApi.putBlock(edition, section, blockId, block.copy(live = block.draft))
     }
-    val splitList = listWithoutItem.splitAt(index)
-    val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
-    val newBlock = block.copy(draft = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
-    FrontsApi.putBlock(edition, section, blockId, newBlock) //Don't need pretty, only for us devs
   }
+
   private def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-    FrontsApi.putBlock(edition, section, block, Block(block, None, Nil, List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))
+    update.item.map { item =>
+      FrontsApi.putBlock(edition, section, block, Block(block, None, Nil, List(Trail(item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))
+    }
   }
   /**
    * @todo
