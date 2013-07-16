@@ -4,6 +4,23 @@
     @for(innings <- theMatch.innings.reverse) {
         @displayInnings(innings)
     }
+
+    <dl class="sport-fullscorecard__information">
+        <dt>Umpires</dt>
+        <dd>
+            @theMatch.officials.mkString(", ")
+        </dd>
+
+        <dt>@theMatch.homeTeam.name</dt>
+        <dd>
+            @theMatch.homeTeam.lineup.mkString(", ")
+        </dd>
+
+        <dt>@theMatch.awayTeam.name</dt>
+        <dd>
+            @theMatch.awayTeam.lineup.mkString(", ")
+        </dd>
+    </dl>
 </div>
 
 @displayInnings(innings: cricketModel.Innings) = {

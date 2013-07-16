@@ -12,7 +12,7 @@
     }
 }
 
-@media (min-width: $tablet) {
+@include mq(tablet) {
     .monocolumn-wrapper {
         max-width: gs-span(8);
         margin-left: auto;
@@ -75,31 +75,31 @@
 
 // Scaling typography up
 .article-headline {
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        font-size: 28px;
-        font-size: 2.8rem;
-        line-height: 32px;
-        line-height: 3.2rem;
+        font-size: 34px;
+        font-size: 3.4rem;
+        line-height: 42px;
+        line-height: 4.2rem;
         margin-bottom: $baseline*5;
     }
-    @media (min-width: $desktop) {
-        font-size: 32px;
-        font-size: 3.2rem;
-        line-height: 40px;
-        line-height: 4rem;
+    @include mq(desktop) {
+        font-size: 40px;
+        font-size: 4rem;
+        line-height: 48px;
+        line-height: 4.8rem;
         margin-bottom: $baseline*6;
     }
 }
 .article-standfirst {
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
         font-size: 16px;
         font-size: 1.6rem;
         line-height: 24px;
         line-height: 2.4rem;
     }
-    @media (min-width: $desktop) {
+    @include mq(desktop) {
         font-size: 18px;
         font-size: 1.8rem;
         line-height: 24px;

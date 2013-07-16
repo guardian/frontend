@@ -12,7 +12,7 @@ $orange: #FF7F00;
     min-height: 44px;
     margin: 0 2px;
     font-family: $serifheadline;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 18px;
     font-size: 1.8rem;
     line-height: 22px;
@@ -30,7 +30,7 @@ $orange: #FF7F00;
     margin: 0 2px;
     border-top: 1px solid #717272;
     padding: 5px;
-    font-weight: 500;
+    font-weight: bold;
 
     &,
     &:link,
@@ -48,7 +48,7 @@ $orange: #FF7F00;
     font-family: $serifheadline;
     font-size: 26px;
     font-size: 2.6rem;
-    font-weight: 600;
+    font-weight: bold;
     line-height: 30px;
     line-height: 3rem;
     padding: 12px 0 32px;
@@ -194,7 +194,7 @@ $orange: #FF7F00;
     margin-left: 2px;
     margin-bottom: 15px;
     font-family: $serifheadline;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 16px;
     font-size: 1.6rem;
     font-style: normal;
@@ -361,7 +361,7 @@ $orange: #FF7F00;
 .agent__role {
     margin: 0;
     font-family: $serifheadline;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 1.4rem;
     line-height: 1.2em;
     color: #000;

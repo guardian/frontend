@@ -2,6 +2,7 @@
 
 .gallery {
     position: relative;
+    margin-bottom: $baseline * 6;
 }
 
 i.gallery__watermark {
@@ -16,12 +17,16 @@ i.gallery__watermark {
 }
 
 .gallery--hide-furniture {
+    .gallery__nav .gallery-arrow-cta,
     .gallery__watermark,
-    .gallerycaption,
-    .gallery-arrow-cta  {
+    .gallerycaption  {
         display: none;
     }
 
+}
+
+.gallery-item {
+    cursor: pointer;
 }
 
 /* ==========================================================================
@@ -31,30 +36,26 @@ i.gallery__watermark {
 
     .gallery__watermark,
     .gallerycaption,
-    .gallerycaption-handle,
+    .captioncontrol,
     .gallery__nav {
         display: none;
     }
 
     .gallery-item {
-        @include fix-aspect-ratio(1, 1, 140px);
         float: left;
         margin: $gutter / 2;
-        cursor: pointer;
     }
 
-    .gallery-item--portrait .gallery__img {
-        position: absolute;
-        width: 100%;
-        height: auto;
-        top: -10%;
+    .gallery-item--portrait {
+        @include fix-aspect-ratio(3, 4, 140px);
     }
 
-    .gallery-item--landscape .gallery__img {
-        position: absolute;
-        width: auto;
-        height: 100%;
-        left: -30%;
+    .gallery-item--landscape {
+        @include fix-aspect-ratio(5, 3, 140px);
+    }
+
+    .gallery__img {
+        position: absolute;;
     }
 
 }
@@ -65,7 +66,14 @@ i.gallery__watermark {
         display: none;
         text-align: center;
     }
+
+    @media (orientation:landscape) {
+        .gallery__img {
+            margin: 0 auto;
+        }
+    }
 }
+
 
 
 
@@ -73,7 +81,8 @@ i.gallery__watermark {
    Image container
    ========================================================================== */
 .gallery__img {
-    width: 100%
+    width: 100%;
+    margin-bottom: 0;
 }
 
 
@@ -87,6 +96,9 @@ i.gallery__watermark {
     position: absolute;
     top: 0;
     border: 0;
+    z-index: 50;
+    -ms-touch-action: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
     &,
     &:active,
@@ -96,58 +108,71 @@ i.gallery__watermark {
     }
 
     .gallery-arrow-cta {
+        position: absolute;
         top: 85px;
     }
 }
 
-.gallery__nav--prev .gallery-arrow-cta {
-    @include rotate(180deg);
-    left: $gutter;
+
+.gallery__nav--prev {
+    left: 0;
+    width: 20%;
+
+    .gallery-arrow-cta {
+        left: $gutter;
+    }
 }
 
 .gallery__nav--next {
     right: 0;
+    width: 80%;
+
+    .gallery-arrow-cta {
+        right: $gutter;
+    }
 }
 
 
+/* ==========================================================================
+   Arrow CTAs
+   ========================================================================== */
+
 .gallery-arrow-cta {
     display: block;
-    position: absolute;
-    right: $gutter;
-    top: 50%;
     width: 22px;
     height: 36px;
-    background-color: rgba(0,0,0,0.9);
+    background: rgb(34, 34, 34);
+    background: rgba(34, 34, 34, 0.90);
 
     .i {
         margin: 10px 8px;
     }
 }
 
+.gallery-arrow-cta--up {
+    @include rotate(-90deg);
+}
+
+.gallery-arrow-cta--down {
+    @include rotate(90deg);
+}
+
+.gallery-arrow-cta--left {
+    @include rotate(180deg);
+}
+
+.gallery-arrow-cta--right {
+    @include rotate(0deg);
+}
+
+
 
 /* ==========================================================================
    Captions
    ========================================================================== */
-.gallerycaption-handle {
-    @include rotate(-90deg);
-    position: absolute;
-    left: 50%;
-    top: auto;
-    right: auto;
-    margin-top: -35px;
-    margin-left: -11px;
-    display: none;
-
-
-    .gallery--hide-furniture & {
-        display: block;
-    }
-}
-
 
 .gallerycaption {
     color: #aaaaaa;
-    padding: 0 $gutter;
     text-align: left;
 
     a {
@@ -163,9 +188,14 @@ i.gallery__watermark {
         right: 0;
         bottom: 0;
         left: 0;
-        background: rgba(34, 34, 34, 0.90);
-        padding: $baseline * 3 $gutter;
+        z-index: 60;
     }
+}
+
+.gallerycaption__inner {
+    background: rgb(34, 34, 34);
+    background: rgba(34, 34, 34, 0.90);
+    padding: $baseline * 2 $gutter;
 }
 
 .gallerycaption__text {
@@ -178,9 +208,42 @@ i.gallery__watermark {
 
 .gallerycaption__credit {
     @extend %type-11;
-    margin-bottom: $baseline * 4;
+    margin-bottom: 0;
+    padding-bottom: $baseline;
 }
 
+
+
+/* ==========================================================================
+   Caption control CTA
+   ========================================================================== */
+
+.captioncontrol {
+    border: 0;
+    background: transparent;
+    margin: 0 auto;
+    width: 100%;
+    height: 29px;
+    display: block;
+    padding: 0;
+
+    .gallery-arrow-cta {
+        margin: 0 auto;
+    }
+}
+
+.captioncontrol--show {
+    display: none;
+
+    .gallery--hide-furniture & {
+        display: block;
+    }
+
+    @media (orientation:landscape) {
+        position: absolute;
+        bottom: 0;
+    }
+}
 
 
 /* ==========================================================================
@@ -198,3 +261,4 @@ i.gallery__watermark {
 .gallery__counter--current-image {
     color: #FFFFFF;
 }
+

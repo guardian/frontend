@@ -89,6 +89,10 @@ trait Football {
   implicit class Match2hasStarted(m: FootballMatch) {
     lazy val hasStarted = m.isLive || m.isResult
   }
+
+  implicit class TeamHasScored(t: MatchDayTeam) {
+    lazy val hasScored = t.score.exists(_ != 0)
+  }
 }
 
 object Football extends Football

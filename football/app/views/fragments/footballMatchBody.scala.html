@@ -6,17 +6,18 @@
     <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
 </h2>
 
-<article class="article" role="main">
-    <p class="dateline box-indent">
-        @fragments.status(page.theMatch)
-        <time data-timestamp="@page.theMatch.date.getMillis">
-            @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z")
-        </time>
-    </p>
-
-    <div class="match-summary box-indent" data-match-id="@page.theMatch.id">
-        @fragments.matchSummary(page.theMatch)
-    </div>
+<article class="article football-article" role="main">
+    <header class="article-head">
+        <p class="dateline box-indent">
+            @fragments.status(page.theMatch)
+            <time data-timestamp="@page.theMatch.date.getMillis">
+                @Format(page.theMatch.date, "EEEE d MMMM y HH.mm z")
+            </time>
+        </p>
+        <div class="match-summary box-indent" data-match-id="@page.theMatch.id">
+            @fragments.matchSummary(page.theMatch)
+        </div>
+    </header>
 
     @if(page.theMatch.isLive) {
         <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>

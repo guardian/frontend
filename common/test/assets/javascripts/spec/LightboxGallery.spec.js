@@ -14,6 +14,7 @@ define(['common',
     describe("Lightbox Gallery", function() {
 
         var $ = common.$g,
+            server,
             gallery,
             conf = {
                 id: 'lightbox-gallery',
@@ -38,12 +39,16 @@ define(['common',
             }
         };
 
-        // setup fake server
-        var server = sinon.fakeServer.create();
-        server.autoRespond = true;
-        server.respondWith(galleryResponse);
 
         beforeEach(function() {
+            // setup fake server
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
+            server.respondWith(galleryResponse);
+
+
+            sinon.spy(common.mediator, 'emit');
+
             fixtures.render(conf);
 
             common.$g('.overlay').remove();
@@ -52,6 +57,11 @@ define(['common',
 
             bean.fire(document.querySelector('.trail--gallery a'), 'click');
             waits(100);
+        });
+
+        afterEach(function() {
+            server.restore();
+            common.mediator.emit.restore();
         });
 
 
@@ -99,12 +109,13 @@ define(['common',
             expect(document.querySelector('.js-image-index').innerHTML).toBe('5');
         });
 
-        it("should hide/show the furniture when clicking the image", function() {
-            bean.fire(document.querySelector('.gallery-item'), 'click');
+        it("should hide/show the furniture when clicking the caption toggle", function() {
+            bean.fire(document.querySelector('.js-toggle-furniture'), 'click');
             expect(document.querySelector('.gallery').className).toContain('gallery--hide-furniture');
-            bean.fire(document.querySelector('.gallery-item'), 'click');
+            bean.fire(document.querySelector('.js-toggle-furniture'), 'click');
             expect(document.querySelector('.gallery').className).not.toContain('gallery--hide-furniture');
         });
+
 
         it("should update the image counter on prev/next", function() {
             bean.fire(document.querySelector('.gallery .js-gallery-next'), 'click');
@@ -143,12 +154,20 @@ define(['common',
             gallery.init();
 
             bean.fire(document.querySelector('.trail--gallery a'), 'click');
+
             waits(100);
 
             runs(function() {
                 expect(document.querySelector('.overlay .preload-msg').innerHTML).toContain('Error loading gallery');
             });
         });
+
+
+        it("should register that the gallery has loaded", function() {
+            expect(common.mediator.emit).toHaveBeenCalledWith('module:lightbox-gallery:loaded');
+        });
+
+
 
     });
 });
