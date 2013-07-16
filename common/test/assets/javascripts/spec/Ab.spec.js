@@ -133,7 +133,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
                 expect(controlSpy.called || variantSpy.called).toBeFalsy();
             });
             
-            it('DOM should be able to start test', function() {
+            it('The current DOM context should be passed to the test variant functions', function() {
                 ab.segment(switches.test_one_on);
                 ab.run(switches.test_one_on, document.createElement('div'));
                 expect(test.one.variants[1].test.lastCall.args[0].nodeName).toBe('DIV');
