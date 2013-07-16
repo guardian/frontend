@@ -66,9 +66,9 @@ define([
         });
     }
 
-    function testCanBeRun (test, config, context) {
+    function testCanBeRun (test, config) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun(config, context) && !expired && config.switches['ab' + test.id]);
+        return (test.canRun(config) && !expired && config.switches['ab' + test.id]);
     }
 
     function getTest(id) {
@@ -78,10 +78,10 @@ define([
         return (test) ? test[0] : '';
     }
 
-    function makeOmnitureTag (config, context) {
+    function makeOmnitureTag (config) {
         var participations = getParticipations();
         return Object.keys(participations).map(function (k) {
-            if (testCanBeRun(getTest(k), config, context)) {
+            if (testCanBeRun(getTest(k), config)) {
                 return ['AB', k, participations[k].variant].join(' | ');
             }
         }).join(',');
@@ -90,30 +90,29 @@ define([
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
 
-        if (!isParticipating(test) || !testCanBeRun(test, config, context)) {
+        if (!isParticipating(test) || !testCanBeRun(test, config)) {
             return false;
         }
         
         var participations = getParticipations(),
             variantId = participations[test.id].variant;
-        
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
-                    variant.test();
+                    variant.test(context);
                     initTracking(test, variantId);
                     return true;
                 }
         });
     }
 
-    function bucket(test, config, context) {
+    function bucket(test, config) {
         
         // if user not in test, bucket them
-        if (isParticipating(test) || !testCanBeRun(test, config, context)) {
+        if (isParticipating(test) || !testCanBeRun(test, config)) {
             return false;
         }
 
-        // always at least place in control
+        // always at least place in a notintest control
         var testVariantId = 'notintest';
 
         //Only run on test required audience segment
@@ -142,10 +141,10 @@ define([
             TESTS = [];
         },
 
-        segment: function(config, context, options) {
+        segment: function(config, options) {
             var opts = options || {};
             getActiveTests().forEach(function(test) {
-                bucket(test, config, context);
+                bucket(test, config);
             });
         },
         

@@ -12,14 +12,14 @@ define([], function () {
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    console.log('Control ran');
+                test: function (context) {
+                    console.log('Control ran', context);
                 }
             },
             {
                 id: 'hide',
-                test: function () {
-                    console.log('Hide ran');
+                test: function (context) {
+                    console.log('Hide ran', context);
                 }
             }
         ];

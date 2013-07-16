@@ -132,6 +132,13 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
                 ab.run(switches.test_one_on);
                 expect(controlSpy.called || variantSpy.called).toBeFalsy();
             });
+            
+            it('DOM should be able to start test', function() {
+                ab.segment(switches.test_one_on);
+                ab.run(switches.test_one_on, document.createElement('div'));
+                expect(test.one.variants[1].test.lastCall.args[0].nodeName).toBe('DIV');
+            });
+
         });
 
         describe("Analytics", function () {
