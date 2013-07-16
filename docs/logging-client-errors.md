@@ -1,10 +1,8 @@
 # Logging client-side information.
 
-It is useful to be able to log random data back on to the server to help diagnose problems.
+It is useful to be able to log data back on to the server to help diagnose problems. The client-side diagnostics box serves this purpose.
 
-The client-side diagnostics box serves this purpose.
-
-The quickest way to use is it for your code to depend on the Errors module,
+The quickest way to use is it for your code to depend on the Errors module from your own AMD module,
 
 ```
 define([
