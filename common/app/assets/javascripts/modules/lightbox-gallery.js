@@ -30,8 +30,6 @@ define(["bean",
         this.galleryEndpoint = '';
 
         this.init = function(opts) {
-            self.opts = opts || {};
-
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl = e.currentTarget.href;
@@ -78,9 +76,8 @@ define(["bean",
             common.mediator.on('modules:overlay:close', function() {
                 self.removeOverlay();
 
-                if (self.opts.usePushState) {
-                    url.pushUrl({}, document.title, pageUrl);
-                }
+                // Go back to the URL that we started on
+                url.pushUrl({}, document.title, pageUrl);
             });
 
             bean.on(window, 'popstate', function(event) {
@@ -263,13 +260,11 @@ define(["bean",
 
 
         this.pushUrlState = function() {
-            if (self.opts.usePushState) {
-                var state = {
-                    lightbox: true,
-                    currentImage: currentImage
-                };
-                url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
-            }
+            var state = {
+                lightbox: true,
+                currentImage: currentImage
+            };
+            url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
         };
 
     }
