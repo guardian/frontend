@@ -1,12 +1,17 @@
 package controllers
 
-import frontsapi.model.{UpdateList, Block, Section, Trail}
+import frontsapi.model._
+import frontsapi.model.Block
+import frontsapi.model.Section
+import frontsapi.model.Trail
+import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{S3FrontsApi, Logging}
 import org.joda.time.DateTime
 import conf.Configuration
 import tools.FrontsApi
+import scala.Some
 
 
 object FrontsController extends Controller with Logging {
@@ -14,6 +19,7 @@ object FrontsController extends Controller with Logging {
   implicit val blockRead = Json.reads[Block]
   implicit val sectionRead = Json.reads[Section]
   implicit val updateListRead = Json.reads[UpdateList]
+  implicit val blockActionRead = Json.reads[BlockAction]
 
   implicit val trailWrite = Json.writes[Trail]
   implicit val blockWrite = Json.writes[Block]
@@ -52,31 +58,28 @@ object FrontsController extends Controller with Logging {
                 Created
               }
             }
+        } orElse json.asOpt[BlockAction]
+        .map {blockAction => blockAction
+          FrontsApi.publishBlock(edition, section, blockId)
+          Ok
         } getOrElse NotFound("Invalid JSON")
     } getOrElse NotFound("Problem parsing json")
   }
 
   private def updateBlock(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity, block: Block): Unit = {
-    update.item.map { item =>
       val listWithoutItem = block.draft.filterNot(_.id == update.item)
       val index = update.after match {
         case Some(true) => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1
         case _          => listWithoutItem.indexWhere(_.id == update.position.getOrElse(""))
       }
       val splitList = listWithoutItem.splitAt(index)
-      val trails = splitList._1 ++ List(Trail(item, None, None, None)) ++ splitList._2
+      val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
       val newBlock = block.copy(draft = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
       FrontsApi.putBlock(edition, section, blockId, newBlock) //Don't need pretty, only for us devs
-    } getOrElse {
-      if (update.publish)
-        FrontsApi.putBlock(edition, section, blockId, block.copy(live = block.draft))
-    }
   }
 
   private def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-    update.item.map { item =>
-      FrontsApi.putBlock(edition, section, block, Block(block, None, Nil, List(Trail(item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))
-    }
+      FrontsApi.putBlock(edition, section, block, Block(block, None, Nil, List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))
   }
   /**
    * @todo

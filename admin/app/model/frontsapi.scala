@@ -29,4 +29,5 @@ case class Trail(
                   linkText: Option[String]
                   )
 
-case class UpdateList(item: Option[String], position: Option[String], after: Option[Boolean], publish: Boolean)
+case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean)
+case class BlockAction(publish: Option[Boolean], discard: Option[Boolean])
