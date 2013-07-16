@@ -62,10 +62,14 @@
     overflow: hidden;
 }
 
-
 @function px2em($px, $base-font-size: 16px) {
+    @if (unitless($px)) {
+        @warn "Assuming #{$px} to be in pixels";
+        $px: $px + 0px; // attempt to convert $px in pixels
+    }
     @return ($px / $base-font-size) * 1em;
 }
+
 
 // Breakpoints are in pixel for simpler understanding & manipulation
 // they get translated into ems in @media queries
@@ -88,6 +92,9 @@ $old-ie: false !default;
 //     @include mq(mobile, tablet) {
 //         color: green;
 //     }
+//     @include mq(950px) {
+//         color: hotpink;
+//     }
 // }
 // Inspired by:
 // - https://github.com/alphagov/govuk_frontend_toolkit/blob/master/stylesheets/_conditionals.scss
@@ -100,25 +107,37 @@ $old-ie: false !default;
     $max-width: null;
 
     // From: this breakpoint
-    @if ($from == mobile) {
-        $min-width: px2em($mq-mobile);
-    } @else if ($from == tablet) {
-        $min-width: px2em($mq-tablet);
-    } @else if ($from == desktop) {
-        $min-width: px2em($mq-desktop);
-    } @else if ($from == wide) {
-        $min-width: px2em($mq-wide);
+    @if (type-of($from) == number) {
+        $min-width: px2em($from);
+    } @else {
+        @if ($from == mobile) {
+            $min-width: px2em($mq-mobile);
+        } @else if ($from == tablet) {
+            $min-width: px2em($mq-tablet);
+        } @else if ($from == desktop) {
+            $min-width: px2em($mq-desktop);
+        } @else if ($from == wide) {
+            $min-width: px2em($mq-wide);
+        } @else {
+            @warn "Assuming #{$from} to be in pixels or one of: mobile, tablet, desktop or wide";
+        }
     }
-
+    
     // To: that breakpoint
-    @if ($to == mobile) {
-        $max-width: px2em($mq-mobile - 1px);
-    } @else if ($to == tablet) {
-        $max-width: px2em($mq-tablet - 1px);
-    } @else if ($to == desktop) {
-        $max-width: px2em($mq-desktop - 1px);
-    } @else if ($to == wide) {
-        $max-width: px2em($mq-wide - 1px);
+    @if (type-of($to) == number) {
+        $max-width: px2em($to);
+    } @else {
+        @if ($to == mobile) {
+            $max-width: px2em($mq-mobile - 1px);
+        } @else if ($to == tablet) {
+            $max-width: px2em($mq-tablet - 1px);
+        } @else if ($to == desktop) {
+            $max-width: px2em($mq-desktop - 1px);
+        } @else if ($to == wide) {
+            $max-width: px2em($mq-wide - 1px);
+        } @else {
+            @warn "Assuming #{$to} to be in pixels or one of: mobile, tablet, desktop or wide";
+        }
     }
 
     // If this is IE8, output everything and rely on the cascade
