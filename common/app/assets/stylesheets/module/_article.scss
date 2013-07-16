@@ -122,8 +122,8 @@ video {
     .article-body,
     .article-head,
     .main-caption {
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
     }
     .article-head {
         padding-top: $baseline*2;
