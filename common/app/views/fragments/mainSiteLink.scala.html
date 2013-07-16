@@ -1,4 +1,6 @@
 @(item: MetaData)(implicit request: RequestHeader)
+@import model.MetaData
+@import common._
 @import java.net.URI
 
 @item.canonicalUrl.map(canonical => new URI(canonical).getPath()).map{ url =>
@@ -10,7 +12,7 @@
             <a id="main-site" rel="nofollow" href="http://@{site.desktopHost}@url?mobile-redirect=false" data-link-name="desktop version @Edition(request).id">Desktop version</a>
         }
     }{
-        <a id="main-site" rel="nofollow" href="/?mobile-redirect=false" data-link-name="desktop version @Edition(request).id">Desktop version</a>
+        <a class="main-site-link" rel="nofollow" href="@LinkTo{/@item.id?view=desktop}" data-link-name="desktop version @Edition(request).id - bottom of page">Desktop version</a>
     }
 }
 
