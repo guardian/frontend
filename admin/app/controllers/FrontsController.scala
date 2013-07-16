@@ -44,7 +44,7 @@ object FrontsController extends Controller with Logging {
             else {
               val identity = Identity(request).get
               FrontsApi.getBlock(edition, section, blockId).map { block =>
-                  updateBlock(edition, section, update, identity, block)
+                  updateBlock(edition, section, blockId, update, identity, block)
                   FrontsApi.archive(edition, section, block)
                   Ok
               } getOrElse {
@@ -56,19 +56,19 @@ object FrontsController extends Controller with Logging {
     } getOrElse NotFound("Problem parsing json")
   }
 
-  private def updateBlock(edition: String, section: String, update: UpdateList, identity: Identity, block: Block): Unit = {
-    val listWithoutItem = block.trails.filterNot(_.id == update.item)
+  private def updateBlock(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity, block: Block): Unit = {
+    val listWithoutItem = block.draft.filterNot(_.id == update.item)
     val index = update.after match {
       case Some(true) => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1
       case _          => listWithoutItem.indexWhere(_.id == update.position.getOrElse(""))
     }
     val splitList = listWithoutItem.splitAt(index)
     val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
-    val newBlock = block.copy(trails = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
-    FrontsApi.putBlock(edition, section, newBlock) //Don't need pretty, only for us devs
+    val newBlock = block.copy(draft = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
+    FrontsApi.putBlock(edition, section, blockId, newBlock) //Don't need pretty, only for us devs
   }
   private def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-    FrontsApi.putBlock(edition, section, block, Block(update.item, None, List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))
+    FrontsApi.putBlock(edition, section, block, Block(block, None, Nil, List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))
   }
   /**
    * @todo
@@ -81,8 +81,8 @@ object FrontsController extends Controller with Logging {
 
   def deleteTrail(edition: String, section: String, blockId: String, trailId: String) = AuthAction { request =>
     FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
-        val trails = block.trails.filterNot(_.id == trailId)
-        val newBlock = block.copy(trails = trails)
+        val trails = block.draft.filterNot(_.id == trailId)
+        val newBlock = block.copy(draft = trails)
         S3FrontsApi.putBlock(edition, section, block.id, Json.prettyPrint(Json.toJson(newBlock))) //Don't need pretty, only for us devs
         Ok
     } getOrElse NotFound("No edition or section") //To be more silent in the future?
