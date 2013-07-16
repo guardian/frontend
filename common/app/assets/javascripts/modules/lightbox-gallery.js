@@ -29,7 +29,9 @@ define(["bean",
         this.selector = '.trail--gallery';
         this.galleryEndpoint = '';
 
-        this.init = function() {
+        this.init = function(opts) {
+            self.opts = opts || {};
+
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl = e.currentTarget.href;
@@ -76,15 +78,17 @@ define(["bean",
             common.mediator.on('modules:overlay:close', function() {
                 self.removeOverlay();
 
-                url.pushUrl({}, document.title, pageUrl);
+                if (self.opts.usePushState) {
+                    url.pushUrl({}, document.title, pageUrl);
+                }
             });
 
             bean.on(window, 'popstate', function(event) {
-                if (event.state.lightbox) {
+                if (event.state && event.state.lightbox) {
                     // This keeps the back button to navigate back through images
                     self.goTo(event.state.currentImage);
 
-                } else if (!event.state.lightbox) {
+                } else if (event.state && !event.state.lightbox) {
                     // This happens when we reach back to the state before the lightbox was opened
                     // Needs a slight timeout as browsers reset the scroll position on popstate
                     setTimeout(function() {
@@ -259,12 +263,13 @@ define(["bean",
 
 
         this.pushUrlState = function() {
-            var state = {
-                lightbox: true,
-                currentImage: currentImage
-            };
-
-            url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
+            if (self.opts.usePushState) {
+                var state = {
+                    lightbox: true,
+                    currentImage: currentImage
+                };
+                url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
+            }
         };
 
     }
