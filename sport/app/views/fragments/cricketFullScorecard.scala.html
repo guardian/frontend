@@ -41,9 +41,11 @@
             <tbody class="sport-fullscorecard__tbody">
                 @for(batsman <- innings.batsmen) {
                     <tr>
-                        <td class="sport-fullscorecard__inline-name">@batsman.name
-                            <br class="sport-fullscorecard__inline-info"/>
-                            <span class="sport-fullscorecard__inline-info">@batsman.howOut</span>
+                        <td>
+                            <b>@batsman.name</b>
+                            <div class="sport-fullscorecard__inline-info">
+                                @batsman.howOut
+                            </div>
                         </td>
                         <td class="sport-fullscorecard__additional">@batsman.howOut</td>
                         <td>@batsman.runs</td>
