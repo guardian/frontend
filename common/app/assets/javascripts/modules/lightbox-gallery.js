@@ -17,6 +17,7 @@ define(["bean",
 
     function LightboxGallery(config, context) {
         var self = this,
+            pageUrl = '/' + config.page.pageId, // The page url we're starting from
             galleryNode,
             currentImage = 1,
             totalImages = 0,
@@ -72,16 +73,27 @@ define(["bean",
                 self.layout();
             }));
 
-            common.mediator.on('modules:overlay:close', this.removeOverlay);
+            common.mediator.on('modules:overlay:close', function() {
+                self.removeOverlay();
 
-            bean.one(window, 'popstate', function(event) {
-                // Slight timeout as browsers reset the scroll position on popstate
-                setTimeout(function() {
-                    overlay.hide();
-                    self.removeOverlay();
-                },10);
+                url.pushUrl({}, document.title, pageUrl);
+            });
 
-                common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
+            bean.on(window, 'popstate', function(event) {
+                if (event.state.lightbox) {
+                    // This keeps the back button to navigate back through images
+                    self.goTo(event.state.currentImage);
+
+                } else if (!event.state.lightbox) {
+                    // This happens when we reach back to the state before the lightbox was opened
+                    // Needs a slight timeout as browsers reset the scroll position on popstate
+                    setTimeout(function() {
+                        overlay.hide();
+                        self.removeOverlay();
+                    },10);
+
+                    common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
+                }
             });
         };
 
@@ -98,7 +110,7 @@ define(["bean",
                 crossOrigin: true,
                 success: function(response) {
                     self.galleryUrl = '/' + response.config.page.pageId;
-                    url.pushUrl({ lightbox: true }, document.title, self.galleryUrl);
+                    self.pushUrlState();
 
                     overlay.setBody(response.html);
 
@@ -147,11 +159,13 @@ define(["bean",
         this.prev = function(e) {
             if (e) { e.preventDefault(); }
             self.goTo(currentImage - 1);
+            self.pushUrlState();
         };
 
         this.next = function(e) {
             if (e) { e.preventDefault(); }
             self.goTo(currentImage + 1);
+            self.pushUrlState();
         };
 
         this.goTo = function(index) {
@@ -245,6 +259,17 @@ define(["bean",
             overlay.remove();
             return true;
         }, 500);
+
+
+        this.pushUrlState = function() {
+            var state = {
+                lightbox: true,
+                currentImage: currentImage
+            };
+
+            url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
+        };
+
     }
 
     return LightboxGallery;
