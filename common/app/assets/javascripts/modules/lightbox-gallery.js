@@ -89,7 +89,7 @@ define(["bean",
             overlay.showLoading();
 
             // Save state to preserve back button functionality
-            url.pushUrl({ lightbox: true }, document.title, window.location.href);
+            //url.pushUrl({ lightbox: true }, document.title, window.location.href);
 
             ajax({
                 url: self.galleryEndpoint,
@@ -97,6 +97,9 @@ define(["bean",
                 method: 'get',
                 crossOrigin: true,
                 success: function(response) {
+                    self.galleryUrl = '/' + response.config.page.pageId;
+                    url.pushUrl({ lightbox: true }, document.title, self.galleryUrl);
+
                     overlay.setBody(response.html);
 
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
