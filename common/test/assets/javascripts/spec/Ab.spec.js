@@ -8,169 +8,154 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             participationsKey = 'gu.ab.participations';
 
         beforeEach(function() {
+            
             ab.clearTests();
-            test = new ABTest(),
-            controlSpy = sinon.spy(test.variants[0], 'test'),
-            variantSpy = sinon.spy(test.variants[1], 'test');
-            // add a test
-            ab.addTest(test);
+
+            // a list of ab-tests that can be used in the spec's 
+            test = {
+                one: new ABTest('DummyTest'),
+                two: new ABTest('DummyTest2')
+            }
+             
+            switches = {
+                test_one_off: { switches: { abDummyTest: false }},
+                test_one_on: { switches: { abDummyTest: true }},
+                both_tests_on: { switches: { abDummyTest: true, abDummyTest2: true }}
+            }
+
+            controlSpy = sinon.spy(test.one.variants[0], 'test'),
+            variantSpy = sinon.spy(test.one.variants[1], 'test');
+            
+            ab.addTest(test.one);
         });
 
         afterEach(function() {
             ab.clearTests();
             localStorage.removeItem(participationsKey);
-            // remove tracking from body
             document.body.removeAttribute('data-link-test');
         });
 
-        it('should exist', function() {
-            // basic, check it exists
-            expect(ab).toBeDefined();
-        });
-
-        xit('should be able to start test', function() {
-            ab.init({ switches: {'abDummyTest': true} }, document);
-            expect(controlSpy.called || variantSpy.called).toBeTruthy();
-        });
-
-        xit('should allow forcing of test via url', function() {
-            ab.init({
-                switches: {
-                    abDummyTest: true
-                }
-            },
-            document,
-            {
-                test: {
-                    id: 'DummyTest',
-                    variant: 'hide'
-                }
-            });
-            expect(variantSpy).toHaveBeenCalled();
-        });
-
-        it('should put all non-participating users in a "not in test" group', function() {
-            test.audience = 0;
-            ab.init({
-                switches: {
-                    abDummyTest: true
-                }
-            });
-            expect(controlSpy).not.toHaveBeenCalled();
-            var storedParticipated = JSON.parse(localStorage.getItem(participationsKey)).value;
-            expect(storedParticipated.DummyTest.variant).toBe("notintest");
-        });
-
-        it('should store all the tests user is in', function() {
-            var otherTest = new ABTest();
-            otherTest.id = 'DummyTest2';
-            ab.addTest(otherTest);
-
-            ab.init({
-                switches: {
-                    abDummyTest: true,
-                    abDummyTest2: true,
-                }
-            });
-            var storedParticipated = JSON.parse(localStorage.getItem(participationsKey)).value;
-            expect(storedParticipated.DummyTest.variant).not.toBeUndefined();
-            expect(storedParticipated.DummyTest2.variant).not.toBeUndefined();
-        });
+        describe("Ab", function () {
         
-        it('should get all the tests user is in', function() {
-            var otherTest = new ABTest();
-            otherTest.id = 'DummyTest2';
-            ab.addTest(otherTest);
-
-            ab.init({
-                switches: {
-                    abDummyTest: true,
-                    abDummyTest2: true
-                }
+            it('should exist', function() {
+                expect(ab).toBeDefined();
             });
         
-            var tests = Object.keys(ab.getParticipations()).map(function(k){ return k; }).toString()
-            expect(tests).toBe('DummyTest,DummyTest2');
+        });
+
+        describe("User segmentation", function () {
+            
+            it('should not run if switch is off', function() {
+                ab.segment(switches.test_one_off);
+                expect(controlSpy.called || variantSpy.called).toBeFalsy();
+            });
+            
+            it('should assign the user to a segment (aka. variant)', function() {
+                ab.addTest(test.two);
+                ab.segment(switches.both_tests_on);
+                var storedParticipated = JSON.parse(localStorage.getItem(participationsKey)).value;
+                expect(storedParticipated.DummyTest.variant).not.toBeUndefined();
+                expect(storedParticipated.DummyTest2.variant).not.toBeUndefined();
+            });
+            
+            it('should put all non-participating users in a "not in test" group', function() {
+                test.one.audience = 0;
+                ab.segment(switches.test_one_on);
+                expect(controlSpy).not.toHaveBeenCalled();
+                var storedParticipated = JSON.parse(localStorage.getItem(participationsKey)).value;
+                expect(storedParticipated.DummyTest.variant).toBe("notintest");
+            });
+            
+            it("should not segment user if test can't be run", function() {
+                test.one.canRun = function() { return false; }
+                ab.segment(switches.test_one_on);
+                expect(controlSpy.called || variantSpy.called).toBeFalsy();
+                expect(ab.getParticipations()).toEqual([]);
+            });
+
+
+            it('should get all the tests user is in', function() {
+                ab.addTest(test.two);
+                ab.segment(switches.both_tests_on);
+                var tests = Object.keys(ab.getParticipations()).map(function(k){ return k; }).toString()
+                expect(tests).toBe('DummyTest,DummyTest2');
+            });
+            
+            it('should remove expired tests from being logged', function () {
+                localStorage.setItem(participationsKey, '{"value":{"DummyTest":{"variant":"null"}}}');
+                test.one.expiry = "2012-01-01";
+                ab.segment(switches.test_one_on);
+                expect(localStorage.getItem(participationsKey)).toBe('{"value":{}}');
+            });
+
+        });
+    
+        describe("Running tests", function () {
+            
+            it('should be able to start test', function() {
+                ab.segment(switches.test_one_on);
+                ab.run(switches.test_one_on);
+                expect(controlSpy.called || variantSpy.called).toBeTruthy();
+            });
+
+            it('should not run the test if the user has not been put in a segment', function () {
+                // Nb. no call to ab.segment(...)
+                ab.run(switches.test_one_on);
+                expect(controlSpy.called || variantSpy.called).toBeFalsy();
+            });
+
+            it('should refuse to run the after the expiry date', function () {
+                test.one.expiry = "2012-01-01";
+                ab.segment(switches.test_one_on);
+                ab.run(switches.test_one_on);
+                expect(controlSpy.called || variantSpy.called).toBeFalsy();
+            });
+
+            it('should run the test if it has not expired', function () {
+                var futureDate = new Date();
+                futureDate.setHours(futureDate.getHours() + 10);
+                test.expiry = futureDate.toString();
+                ab.segment(switches.test_one_on);
+                ab.run(switches.test_one_on);
+                expect(controlSpy.called || variantSpy.called).toBeTruthy();
+            });
             
         });
 
-        it('should not run if switch is off', function() {
-            ab.init({
-                switches: {
-                    abDummyTest: false,
-                }
-            });
-            expect(controlSpy.called || variantSpy.called).toBeFalsy();
-        });
-
-        xit('should add "data-link-test" tracking to body', function() {
-            ab.init({
-                switches: {
-                    abDummyTest: true
-                }
-            });
-            expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide)$/);
-        });
-
-        xit('should concat "data-link-test" tracking when more than one test', function() {
-            var otherTest = new ABTest();
-            otherTest.id = 'DummyTest2';
-            ab.addTest(otherTest);
-
-            ab.init({
-                switches: {
-                    abDummyTest: true,
-                    abDummyTest2: true,
-                }
-            });
-            expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide), AB \| DummyTest2 test \| (control|hide)$/);
-        });
-
-        it('should not bucket user if test can\'t be run', function() {
-            test.canRun = function() { return false; }
-            ab.init({
-                switches: {
-                    abDummyTest: true
-                }
-            });
-            expect(controlSpy.called || variantSpy.called).toBeFalsy();
-            expect(ab.getParticipations()).toEqual([]);
-        });
-
-        xit('should refuse to run the after the expiry date', function () {
+        describe("Analytics", function () {
             
-            test.expiry = "2012-01-01";
-            ab.init({
-                switches: {
-                    abDummyTest: true
-                }
+            it('should add "data-link-test" tracking to body', function() {
+                ab.segment(switches.test_one_on);
+                ab.run(switches.test_one_on);
+                expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide)$/);
             });
-        });
 
-        it('should remove expired tests from being logged', function () {
-            localStorage.setItem(participationsKey, '{"value":{"DummyTest":{"variant":"null"}}}');
-            test.expiry = "2012-01-01";
-            ab.init({
-                switches: {
-                    abDummyTest: true
-                }
+            it('should concat "data-link-test" tracking when more than one test', function() {
+                ab.addTest(test.two);
+                ab.segment(switches.both_tests_on);
+                ab.run(switches.both_tests_on);
+                expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide), AB \| DummyTest2 test \| (control|hide)$/);
             });
-            expect(localStorage.getItem(participationsKey)).toBe('{"value":{}}');
-        });
+            
+            it('should generate a string for Omniture to tag the test(s) the user is in', function() {
+                Math.seedrandom('gu');
+                test.two.audience = 1; 
+                ab.addTest(test.two);
+                ab.segment(switches.both_tests_on);
+                ab.run(switches.both_tests_on);
+                expect(ab.makeOmnitureTag(switches.both_tests_on)).toBe("AB | DummyTest | control,AB | DummyTest2 | control");
         
-        xit('should run the test if it has not expired', function () {
-            var futureDate = new Date();
-            futureDate.setHours(futureDate.getHours() + 10);
-            test.expiry = futureDate.toString();
-            ab.init({
-                switches: {
-                    abDummyTest: true
-                }
             });
-            expect(controlSpy.called || variantSpy.called).toBeTruthy();
+            
+            it('should not generate Omniture tags when a test can not be run', function() {
+                test.two.canRun = function() { return false; }
+                ab.addTest(test.two);
+                ab.segment(switches.both_tests_on);
+                ab.run(switches.both_tests_on);
+                expect(ab.makeOmnitureTag(switches.both_tests_on)).toBe("AB | DummyTest | control");
+            });
+        
         });
-
 
     });
-
 });

@@ -56,7 +56,7 @@ define('bootstraps/app', [
         },
     
         initialiseAbTest: function (config) {
-            ab.init(config);
+            ab.segment(config);
         },
 
         loadFonts: function(config, ua) {
