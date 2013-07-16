@@ -78,17 +78,17 @@ define([
             type: 'json'
         }).then(
             function(resp) {
-                self.populate(resp);
+                self.populateLists(resp);
             },
             function(xhr) {
                 if(xhr.status === 404) {
-                    self.populate({});
+                    self.populateLists({});
                 }
             }
         );
     };
 
-    List.prototype.populate = function(opts) {
+    List.prototype.populateLists = function(opts) {
         var self = this,
             liveChecksum = '',
             draftChecksum = '';
@@ -101,25 +101,26 @@ define([
         }
 
         this.live.removeAll();
-        //Change trails to live
-        [].concat(opts.live).forEach(function(item) {
-            self.live.push(new Article({
-                id: item.id
-            }));
-            liveChecksum += item.id + ':';
-        });
+        if (opts.live && opts.live.length) {
+            opts.live.forEach(function(item) {
+                self.live.push(new Article({
+                    id: item.id
+                }));
+                liveChecksum += item.id + ':';
+            });
+        }
 
         this.draft.removeAll();
-        //Change trails to draft
-        [].concat(opts.draft).forEach(function(item) {
-            self.draft.push(new Article({
-                id: item.id
-            }));
-            draftChecksum += item.id + ':';
-        });
+        if (opts.draft && opts.draft.length) {
+            opts.draft.forEach(function(item) {
+                self.draft.push(new Article({
+                    id: item.id
+                }));
+                draftChecksum += item.id + ':';
+            });
+        }
 
         this.hasUnPublishedEdits(liveChecksum !== draftChecksum);
-
         this.pending(false);
 
         ContentApi.decorateItems(this.live());

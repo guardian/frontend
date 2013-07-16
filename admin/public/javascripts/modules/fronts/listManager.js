@@ -115,7 +115,8 @@ define([
             if (inList.length) {
                 delta = {
                     item: id,
-                    publish: !!list.attr('data-live-edit')
+                    draft: true,
+                    live: !!list.attr('data-live-edit')
                 };
 
                 position = inList.next().data('url');
