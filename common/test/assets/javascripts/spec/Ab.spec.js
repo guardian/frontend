@@ -5,7 +5,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
         var test,
             controlSpy,
             variantSpy,
-            participationsKey = 'gu.ab.participations'
+            participationsKey = 'gu.ab.participations',
             getItem = function (testId) {
                 return JSON.parse(localStorage.getItem(participationsKey)).value[testId];
             };
