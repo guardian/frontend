@@ -103,8 +103,8 @@ $old-ie: false !default;
 @mixin mq($from: false, $to: false) {
 
     // Initialize variables
-    $min-width: null;
-    $max-width: null;
+    $min-width: 0;
+    $max-width: 0;
 
     // From: this breakpoint
     @if (type-of($from) == number) {
