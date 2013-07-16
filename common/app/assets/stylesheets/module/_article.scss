@@ -126,8 +126,8 @@ video {
         padding-right: 0;
     }
     .article-head {
-        padding-top: 8px;
-        padding-bottom: 8px;
+        padding-top: $baseline*2;
+        padding-bottom: $baseline*2;
     }
     .d-tabs__item--byline,
     .byline {
@@ -166,7 +166,7 @@ video {
             margin-bottom: 0 !important;
 
             + .article__container {
-                padding-top: 12px;
+                padding-top: $baseline*3;
             }
         }
     }
