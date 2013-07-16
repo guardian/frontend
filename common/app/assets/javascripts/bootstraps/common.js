@@ -19,6 +19,7 @@ define([
     'modules/navigation/control',
     'modules/navigation/australia',
     'modules/navigation/edition-switch',
+    'modules/navigation/platform-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
@@ -52,6 +53,7 @@ define([
     NavControl,
     Australia,
     EditionSwitch,
+    PlatformSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
@@ -92,6 +94,7 @@ define([
                 search = new Search(config),
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
+                platforms = new PlatformSwitch(),
                 header = document.querySelector('body');
 
 

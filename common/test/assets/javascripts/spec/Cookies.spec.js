@@ -3,7 +3,7 @@ define(['modules/cookies'], function(cookies) {
     describe("Cookie", function() {
 
         beforeEach(function() {
-            cookies.cleanUp(['testname1', 'testname2', 'testname3', 'COOKIE_NAME']);
+            cookies.cleanUp(['testname1', 'testname2', 'testname3', 'COOKIE_NAME', 'COOKIE_NAME2']);
         });
 
         it("should let list of cookies be cleared", function() {
@@ -30,6 +30,12 @@ define(['modules/cookies'], function(cookies) {
         it("should set a cookie", function() {
             cookies.add('COOKIE_NAME', 'cookie_value');
             expect(document.cookie).toMatch(/COOKIE_NAME=cookie_value/);
+        });
+
+        it("should set a cookie for a specific number of days", function() {
+            cookies.add('COOKIE_NAME2', 'cookie_value2', 7);
+            expect(document.cookie).toMatch(/COOKIE_NAME2=cookie_value2/);
+            // you cannot get the expiry date of a cookie with javascript...
         });
 
     });
