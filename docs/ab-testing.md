@@ -1,3 +1,4 @@
+
 This explains how to run an A/B test in frontend.
 
 We have a homebrewed AB testing framework running in the application. The data it collects is logged with both Ophan and Omniture.
@@ -59,19 +60,19 @@ define(['bonzo'], function (bonzo) {
         this.audience = 0.2;
         this.description = 'Hides related content block on article to see if increases click through on most popular';
         this.canRun = function(config) {
-          return (config.page && config.page.contentType === "Article" && document.querySelector('.js-related')) ? true : false;
+          return (config.page && config.page.contentType === "Article") ? true : false;
         };
         this.variants = [
             {
                 id: 'control',
-                test: function () {
+                test: function (context) { 
                    return true;
                 }
             },
             {
                 id: 'hide',
-                test: function () {
-                    bonzo(document.querySelector('.js-related')).hide();
+                test: function (context) {
+                    bonzo(context.querySelector('.js-related')).hide();
                 }
             }
         ];
