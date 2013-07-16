@@ -102,7 +102,7 @@ define([
 
         this.live.removeAll();
         //Change trails to live
-        [].concat(opts.trails).forEach(function(item) {
+        [].concat(opts.live).forEach(function(item) {
             self.live.push(new Article({
                 id: item.id
             }));
@@ -111,7 +111,7 @@ define([
 
         this.draft.removeAll();
         //Change trails to draft
-        [].concat(opts.trails).forEach(function(item) {
+        [].concat(opts.draft).forEach(function(item) {
             self.draft.push(new Article({
                 id: item.id
             }));
