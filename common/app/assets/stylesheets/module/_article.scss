@@ -144,30 +144,4 @@ video {
         margin-left: 0 !important;
         margin-right: 0 !important;
     }
-    @media (max-height: 768px) { // Decided with Chris, to refine with real world usage examples
-        .media-primary {
-            float: left;
-            width: gs-span(4);
-            margin-right: $gutter !important;
-        }
-        .media-primary--comments-on {
-            display: none;
-        }
-        .byline,
-        .d-tabs {
-            display: table-cell;
-            width: 100000px;
-            max-width: 100%;
-        }
-        .d-tabs__item--byline.d-tabs__item--is-active {
-            padding-left: 0 !important;
-        }
-        .byline {
-            margin-bottom: 0 !important;
-
-            + .article__container {
-                padding-top: $baseline*3;
-            }
-        }
-    }
 }
