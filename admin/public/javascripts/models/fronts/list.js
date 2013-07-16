@@ -25,6 +25,7 @@ define([
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
 
+        this.pending      = knockout.observable();
         this.liveEdit     = knockout.observable(liveEditDefault);
         this.hasUnPublishedEdits = knockout.observable();
 
@@ -34,6 +35,7 @@ define([
                 url: apiBase + '/' + self.id + '/' + item.id()
             });
             self.live.remove(item);
+            self.pending(true);
         }
 
         this.load();
@@ -45,6 +47,28 @@ define([
 
     List.prototype.setDraftEdit = function() {
         this.liveEdit(false);
+    };
+
+    List.prototype.publishDraft = function() {
+        this.processDraft(true);
+    };
+
+    List.prototype.discardDraft = function() {
+        this.processDraft(false);
+    };
+
+    List.prototype.processDraft = function(publish) {
+        var data = {};
+        data[publish ? 'publish' : 'discard'] = true;
+        reqwest({
+            url: apiBase + '/' + this.id,
+            method: 'post',
+            type: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        });
+        this.hasUnPublishedEdits(false);
+        this.pending(true);
     };
 
     List.prototype.load = function() {
@@ -95,6 +119,8 @@ define([
         });
 
         this.hasUnPublishedEdits(liveChecksum !== draftChecksum);
+
+        this.pending(false);
 
         ContentApi.decorateItems(this.live());
         ContentApi.decorateItems(this.draft());

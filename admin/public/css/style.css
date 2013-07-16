@@ -525,6 +525,11 @@ a.cta, .cta a {
     margin: 0 0 20px 0;
 }
 
+.fronts .lists .connectedList.pending {
+    pointer-events: none;
+    opacity: 0.75;
+}
+
 .fronts .list-header {
     background-color: #666;
     color: #fff;
