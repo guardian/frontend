@@ -15,7 +15,8 @@ case class Section(
 case class Block(
                   id: String,
                   name: Option[String],
-                  trails: List[Trail],
+                  live: List[Trail],
+                  draft: List[Trail],
                   lastUpdated: String,
                   updatedBy: String,
                   updatedEmail: String
@@ -28,4 +29,4 @@ case class Trail(
                   linkText: Option[String]
                   )
 
-case class UpdateList(item: String, position: Option[String], after: Option[Boolean])
+case class UpdateList(item: String, position: Option[String], after: Option[Boolean], publish: Boolean)
