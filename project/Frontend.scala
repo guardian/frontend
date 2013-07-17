@@ -84,6 +84,8 @@ object Frontend extends Build with Prototypes {
 
   val frontsApi = application("fronts-api").dependsOn(commonWithTests)
 
+  val identity = application("identity").dependsOn(commonWithTests)
+
   val dev = base("dev-build")
     .dependsOn(front)
     .dependsOn(article)
@@ -98,6 +100,7 @@ object Frontend extends Build with Prototypes {
     .dependsOn(router)
     .dependsOn(diagnostics)
     .dependsOn(styleGuide)
+    .dependsOn(identity)
 
   val faciaDev = application("facia-dev-build")
     .dependsOn(admin)
@@ -128,6 +131,7 @@ object Frontend extends Build with Prototypes {
     styleGuide,
     admin,
     porter,
-    frontsApi
+    frontsApi,
+    identity
   )
 }
