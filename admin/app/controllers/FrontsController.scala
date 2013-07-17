@@ -80,6 +80,11 @@ object FrontsController extends Controller with Logging {
       val trails = updateList(update, block.live)
       newBlock = newBlock.copy(live = trails)
     }
+    if (newBlock.live == newBlock.draft) {
+      newBlock = newBlock.copy(areEqual=true)
+    } else {
+      newBlock = newBlock.copy(areEqual=false)
+    }
     FrontsApi.putBlock(edition, section, blockId, newBlock) //Don't need pretty, only for us devs
   }
 
@@ -93,7 +98,7 @@ object FrontsController extends Controller with Logging {
   }
 
   private def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-      FrontsApi.putBlock(edition, section, block, Block(block, None, List(Trail(update.item, None, None, None)), List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))
+      FrontsApi.putBlock(edition, section, block, Block(block, None, List(Trail(update.item, None, None, None)), List(Trail(update.item, None, None, None)), areEqual=true, DateTime.now.toString, identity.fullName, identity.email))
   }
   /**
    * @todo
