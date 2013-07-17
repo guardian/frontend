@@ -1,7 +1,7 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 
-<div class="article-wrapper monocolumn-wrapper monocolumn-wrapper--no-limit">
+<div class="article-wrapper monocolumn-wrapper">
 
     <h2 class="article-zone type-1">
         <a class="zone-color" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
@@ -53,15 +53,15 @@
                     @BodyCleaner(article)
                 </div>
             </div>
-        </div>
 
-        @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-            <div class="article__discussion article-body"></div>
-        }
+            @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+                <div class="article__discussion"></div>
+            }
+            @fragments.social(article)
+        </div>
 
     </article>
 
-    @fragments.social(article)
 
     @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
         <div class="d-show-cta-wrapper">    
@@ -80,4 +80,4 @@
     <aside class="js-related" role="complementary"></aside>
 }
 
-<div   class="js-popular" role="complementary"></div>
+<div class="js-popular" role="complementary"></div>

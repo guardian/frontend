@@ -1,12 +1,12 @@
-.article-wrapper {
-    padding-left: $gutter;
-    padding-right: $gutter;
-}
+$a-leftCol-width:    gs-span(3);
+$a-leftCol-trigger:  gs-span(15);
+$a-rightCol-width:   gs-span(4);
+$a-rightCol-trigger: gs-span(11);
 
 .article-zone {
     padding: 13px 0 14px;
-    margin-left: $gutter;
-    margin-right: $gutter;
+    margin-left: $gs-gutter;
+    margin-right: $gs-gutter;
     font-weight: bolder;
     line-height: 1;
     border-bottom: 1px solid $mushroom;
@@ -85,19 +85,15 @@
     display: inline-block;
     color: #999999;
     margin: $baseline/2 4px 0 0;
-}
 
-.bullet:first-of-type {
-    margin-top: $baseline;
+    &:first-of-type {
+        margin-top: $baseline;
+    }
 }
-
-$articleLeftCol: gs-span(3);
-$triggerLeftCol: gs-span(9);
 
 .article__inner {
     position: relative;
 }
-
 
 .byline {
     border-top: 1px solid #cccccc;
@@ -107,23 +103,30 @@ $triggerLeftCol: gs-span(9);
 }
     .byline--cloned {
         display: none;
-
-        @include mq($triggerLeftCol) {
-            position: absolute;
-            top: 0;
-            display: block;
-            width: $articleLeftCol;
-        }
     }
+
+@include mq($a-leftCol-trigger) {
+    .byline {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: $a-leftCol-width;
+    }
+}
+@include mq(tablet) {
+    .d-tabs__item--byline,
+    .byline {
+        font-size: 16px !important;
+        font-size: 1.6rem !important;
+    }
+}
 .media-primary {
     margin-left: $gutter * -1;
     margin-right: $gutter * -1;
 }
 .article .main-image {
     margin-bottom: 0;
-}
-.article-body {
-
 }
 
 .gu-video {
@@ -140,48 +143,11 @@ video {
 
 /* Layout changes across devices
    ========================================================================== */
-
-@include mq($triggerLeftCol) {
-    .d-tabs {
-        display: none;
-    }
+@include mq(tablet) {
+    .article-head,
     .main-caption {
         padding-left: 0 !important;
         padding-right: 0 !important;
-    }
-    .article-wrapper > .article-zone {
-        max-width: $articleLeftCol;
-        margin-left: $articleLeftCol + $gutter;
-        margin-right: 0;
-    }
-    .article-body {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .social-wrapper,
-    .d-show-cta-wrapper,
-    .article-head,
-    .article__inner {
-        padding-left: $articleLeftCol + $gutter !important;
-        padding-right: 0;
-    }
-    .article-head {
-        padding-top: $baseline*2;
-        padding-bottom: $baseline*2;
-    }
-    .d-tabs__item--byline,
-    .byline {
-        font-size: 16px !important;
-        font-size: 1.6rem !important;
-    }
-    .byline {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: $articleLeftCol;
-    }
-    .d-tabs__item--byline {
-        padding-left: $baseline !important;
     }
     .d-tabs,
     .byline,
@@ -189,5 +155,59 @@ video {
     .media-primary {
         margin-left: 0 !important;
         margin-right: 0 !important;
+    }
+
+    .d-tabs__item--byline {
+        padding-left: $baseline !important;
+    }
+}
+
+@include mq($a-rightCol-trigger) {
+    .article-wrapper {
+        position: relative;
+        max-width: none;
+
+         > .article-zone {
+            margin-right: $a-rightCol-width + $gs-gutter;
+        }
+    }
+    .d-show-cta-wrapper,
+    .article-head,
+    .article__inner {
+        padding-right: $a-rightCol-width + $gs-gutter !important;
+        padding-left: 0;
+        max-width: gs-span(8);
+    }
+    .social-wrapper {
+        padding: 0 !important;
+        margin: 0 !important;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: $a-rightCol-width;
+    }
+}
+
+@include mq($a-leftCol-trigger) {
+    .d-actions .top,
+    .d-tabs {
+        display: none;
+    }
+    // Show comments below article
+    .article__container,
+    .article__discussion {
+        display: block !important;
+    }
+    .article-wrapper > .article-zone {
+        margin-left: $a-leftCol-width + $gs-gutter;
+    }
+    .d-show-cta-wrapper,
+    .article-head,
+    .article__inner {
+        padding-left: $a-leftCol-width + $gs-gutter !important;
+    }
+    .article-head {
+        padding-top: $baseline*2;
+        padding-bottom: $baseline*2;
     }
 }
