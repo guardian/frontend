@@ -66,22 +66,22 @@
                     <div class="list-header__status">
                         <div class="list-header__status__live" data-bind="
                             css: {
-                                active: liveEdit()
+                                active: liveMode()
                             }">
-                            <span class="list-header__status__live__title" data-bind="click: setLiveEdit">LIVE</span>
+                            <span class="list-header__status__live__title" data-bind="click: setLiveMode">LIVE</span>
                         </div>                    
                         <div class="list-header__status__draft" data-bind="
                             css: {
-                                active: !liveEdit(),
+                                active: !liveMode(),
                                 hasUnPublishedEdits: hasUnPublishedEdits()
                             }">
-                            <span class="list-header__status__draft__title" data-bind="click: setDraftEdit">
+                            <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
                                 DRAFT
                                 <span data-bind="if: hasUnPublishedEdits()">
                                     has edits
                                 </span>
                             </span>
-                            <span data-bind="if: !liveEdit() && hasUnPublishedEdits()">
+                            <span data-bind="if: !liveMode() && hasUnPublishedEdits()">
                                 &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
                                 &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
                             </span>
@@ -91,10 +91,10 @@
                 <div class="connectedList" data-bind="
                     attr: {
                         'data-list-id': id,
-                        'data-live-edit': liveEdit()
+                        'data-live-edit': liveMode()
                     },
                     css: {pending: loadIsPending},
-                    template: {name: 'template_article', foreach: liveEdit() ? live : draft}"></div>
+                    template: {name: 'template_article', foreach: liveMode() ? live : draft}"></div>
             </div>
         </div>
     </div>

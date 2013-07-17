@@ -27,7 +27,7 @@ define([
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
 
-        this.liveEdit     = knockout.observable(liveEditDefault);
+        this.liveMode     = knockout.observable(liveEditDefault);
         this.loadIsPending  = knockout.observable();
         this.hasUnPublishedEdits = knockout.observable();
 
@@ -39,8 +39,8 @@ define([
                 contentType: 'application/json',
                 data: JSON.stringify({
                     item: item.id(),
-                    live: self.liveEdit(),
-                    draft: !self.liveEdit()
+                    live: self.liveMode(),
+                    draft: true
                 })
             }).then(
                 function(resp) {
@@ -58,12 +58,12 @@ define([
         this.load();
     }
 
-    List.prototype.setLiveEdit = function() {
-        this.liveEdit(true);
+    List.prototype.setLiveMode = function() {
+        this.liveMode(true);
     };
 
-    List.prototype.setDraftEdit = function() {
-        this.liveEdit(false);
+    List.prototype.setDraftMode = function() {
+        this.liveMode(false);
     };
 
     List.prototype.publishDraft = function() {
