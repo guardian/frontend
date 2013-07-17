@@ -84,7 +84,12 @@ object Frontend extends Build with Prototypes {
 
   val frontsApi = application("fronts-api").dependsOn(commonWithTests)
 
-  val identity = application("identity").dependsOn(commonWithTests)
+  val identity = application("identity").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      "com.tzavellas" % "sse-guice" % "0.7.1",
+      "com.google.inject" % "guice" % "3.0"
+    )
+  )
 
   val dev = base("dev-build")
     .dependsOn(front)

@@ -1,0 +1,15 @@
+@(page: MetaData, form: Form[(String, String, Boolean)])(implicit request: RequestHeader)
+
+@main(page, Switches.all){
+
+}{
+    <div class="monocolumn-wrapper">
+        <h2 class="page-head page-head--article">Signin</h2>
+
+        @helper.form(action = routes.SigninController.processForm) {
+            @helper.inputText(form("email"))
+            @helper.inputPassword(form("password"))
+            <input />
+        }
+    </div>
+}
