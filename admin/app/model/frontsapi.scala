@@ -17,6 +17,7 @@ case class Block(
                   name: Option[String],
                   live: List[Trail],
                   draft: List[Trail],
+                  areEqual: Boolean,
                   lastUpdated: String,
                   updatedBy: String,
                   updatedEmail: String
