@@ -40,6 +40,6 @@ object FrontsApi extends FrontsApiRead with FrontsApiWrite {
   def putBlock(edition: String, section: String, blockId: String, block: Block) = S3FrontsApi.putBlock(edition, section, blockId, Json.prettyPrint(Json.toJson(block)))
   def putBlock(edition: String, section: String, block: Block) = putBlock(edition, section, block.id, block)
   def publishBlock(edition: String, section: String, blockId: String) = getBlock(edition, section, blockId) foreach { block => putBlock(edition, section, blockId, block.copy(live = block.draft))}
-  def discardBlock(edition: String, section: String, blockId: String) = ???
+  def discardBlock(edition: String, section: String, blockId: String) = getBlock(edition, section, blockId) foreach { block => putBlock(edition,section, blockId, block.copy(draft = block.live))}
   def archive(edition: String, section: String, block: Block) = S3FrontsApi.archive(edition, section, block.id, Json.prettyPrint(Json.toJson(block)))
 }

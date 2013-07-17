@@ -60,22 +60,36 @@ object FrontsController extends Controller with Logging {
             }
         } orElse json.asOpt[BlockAction]
         .map {blockAction => blockAction
-          FrontsApi.publishBlock(edition, section, blockId)
+          blockAction.publish.filter {_ == true}
+            .map { _ => FrontsApi.publishBlock(edition, section, blockId) }
+            .orElse {
+            blockAction.discard.filter {_ == true}.map(_ => FrontsApi.discardBlock(edition, section, blockId))
+          } getOrElse NotFound("Invalid JSON")
           Ok
         } getOrElse NotFound("Invalid JSON")
     } getOrElse NotFound("Problem parsing json")
   }
 
   private def updateBlock(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity, block: Block): Unit = {
-      val listWithoutItem = block.draft.filterNot(_.id == update.item)
-      val index = update.after match {
-        case Some(true) => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1
-        case _          => listWithoutItem.indexWhere(_.id == update.position.getOrElse(""))
-      }
-      val splitList = listWithoutItem.splitAt(index)
-      val trails = splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
-      val newBlock = block.copy(draft = trails, lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
-      FrontsApi.putBlock(edition, section, blockId, newBlock) //Don't need pretty, only for us devs
+    var newBlock: Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
+    if (update.draft) {
+      val trails = updateList(update, block.draft)
+      newBlock = newBlock.copy(draft = trails)
+    }
+    if (update.live) {
+      val trails = updateList(update, block.live)
+      newBlock = newBlock.copy(live = trails)
+    }
+    FrontsApi.putBlock(edition, section, blockId, newBlock) //Don't need pretty, only for us devs
+  }
+
+  private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
+    val listWithoutItem = blocks.filterNot(_.id == update.item)
+    val index = update.after.filter {_ == true}
+      .map {_ => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1}
+      .getOrElse { listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) }
+    val splitList = listWithoutItem.splitAt(index)
+    splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
   }
 
   private def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {

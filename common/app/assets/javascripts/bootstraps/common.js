@@ -19,6 +19,7 @@ define([
     'modules/navigation/control',
     'modules/navigation/australia',
     'modules/navigation/edition-switch',
+    'modules/navigation/platform-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
@@ -52,6 +53,7 @@ define([
     NavControl,
     Australia,
     EditionSwitch,
+    PlatformSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
@@ -92,6 +94,7 @@ define([
                 search = new Search(config),
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
+                platforms = new PlatformSwitch(),
                 header = document.querySelector('body');
 
 
@@ -154,6 +157,12 @@ define([
             // Register as a page view
             common.mediator.on('module:lightbox-gallery:loaded', function(config, context) {
                 common.mediator.emit('page:common:deferred:loaded', config, context);
+            });
+        },
+        
+        runAbTests: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                ab.run(config, context);
             });
         },
 
@@ -297,6 +306,7 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
