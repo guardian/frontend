@@ -95,7 +95,7 @@ $keylineSize: 1px;
 .d-comment {
     color: #333;
     font-family: sans-serif;
-    border-top: 1px solid #EDEDE7;
+    border-top: 1px solid $medianMushroom;
 }
 .d-comment--has-replies + .d-comment {
     border-top: 2px solid $darkMushroom;

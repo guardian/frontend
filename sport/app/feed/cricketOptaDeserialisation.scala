@@ -70,9 +70,9 @@ class Parser {
   {
     // Construct a string consisting of the team name and an innings index.
     inningsId match {
-      case 1 => s"${teams(battingTeamId)} 1st Innings"
-      case 2 => s"${teams(battingTeamId)} 1st Innings"
-      case _ => s"${teams(battingTeamId)} 2nd Innings"
+      case 1 => s"${teams(battingTeamId)} first innings"
+      case 2 => s"${teams(battingTeamId)} first innings"
+      case _ => s"${teams(battingTeamId)} second innings"
     }
   }
 
