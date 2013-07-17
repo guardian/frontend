@@ -267,6 +267,39 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     case (day, pageviews) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, pageviews)
   }
 
+  def getUsersByDay(): Map[DateMidnight, Long] = {
+    val users: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
+        select year, month, day_of_month, count(*) as total
+        from (
+          select year, month, day_of_month, ophan
+          from pageviews
+          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          group by year, month, day_of_month, ophan
+        )
+        group by year, month, day_of_month
+      """).list()
+
+      val uptyped = data map {
+        case (year, month, day, total) => (new DateMidnight(year, month, day), total)
+      }
+
+      uptyped.toMap
+    }
+
+    val usersWithZeros = {
+      val withZeros = users.withDefaultValue(0L)
+      val dateRange = users.keySet.min.dayOfEpoch to users.keySet.max.dayOfEpoch
+      dateRange map { Epoch.day } toMapWith { withZeros.apply }
+    }
+
+    usersWithZeros
+  }
+
+  def getUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = getUsersByDay().toList map {
+    case (day, users) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, users)
+  }
+
   def getReturnUsersByDay(): Map[DateMidnight, Long] = {
     val returns: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]( """

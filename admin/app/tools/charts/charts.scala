@@ -149,18 +149,21 @@ object PageviewsPerUserGraph extends Chart with implicits.Tuples with implicits.
   }
 }
 
-object ReturnUsersByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
-  val name = "Return users (daily/weekly/4 weekly)"
+object ReturnUsersPercentageByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Return users % (daily/weekly/4 weekly)"
   lazy val labels = Seq("Date", "day", "week", "4 week")
 
   def dataset = {
+    val users = Analytics.getUsersByDay() mapValues { _ max 1L }
+
     val day = Analytics.getReturnUsersByDay() withDefaultValue 0L
     val week = Analytics.getWeeklyReturnUsersByDay() withDefaultValue 0L
     val month = Analytics.getFourWeeklyReturnUsersByDay() withDefaultValue 0L
 
     val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
     range map { date =>
-      DataPoint(date.toString("dd/MM"), Seq(day(date), week(date), month(date)))
+      val totalUsers = users(date) / 100.0
+      DataPoint(date.toString("dd/MM"), Seq(day(date)/totalUsers, week(date)/totalUsers, month(date)/totalUsers))
     }
   }
 }
