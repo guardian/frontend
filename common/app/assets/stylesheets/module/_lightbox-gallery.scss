@@ -262,3 +262,24 @@ i.gallery__watermark {
     color: #FFFFFF;
 }
 
+
+/* ==========================================================================
+   Swipe styles
+   ========================================================================== */
+.gallery--swipe {
+    .gallery__images {
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .gallery-item {
+        float: left;
+        width: 100%;
+        position: relative;
+    }
+
+    .gallery__nav--prev,
+    .gallery__nav--next {
+        display: none;
+    }
+}
