@@ -11,7 +11,7 @@ define([
     Article,
     ContentApi
 ) {
-    var liveEditDefault = true,
+    var defaultToLiveMode = true,
         apiBase = '/fronts/api';
 
     function List(id) {
@@ -27,7 +27,7 @@ define([
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
 
-        this.liveMode     = knockout.observable(liveEditDefault);
+        this.liveMode     = knockout.observable(defaultToLiveMode);
         this.loadIsPending  = knockout.observable();
         this.hasUnPublishedEdits = knockout.observable();
 
@@ -87,7 +87,8 @@ define([
             data: JSON.stringify(data)
         }).then(
             function(resp) {
-                self.loadIsPending(false);
+                self.liveMode(true);
+                self.load();
             },
             function(xhr) {
                 self.loadIsPending(false);
