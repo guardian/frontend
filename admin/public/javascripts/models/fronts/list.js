@@ -1,11 +1,13 @@
 define([
     'Reqwest',
     'knockout',
+    'models/fronts/globals',
     'models/fronts/article',
     'models/fronts/contentApi'
 ], function(
     reqwest,
     knockout,
+    globals,
     Article,
     ContentApi
 ) {
@@ -25,27 +27,32 @@ define([
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
 
-        this.refreshable  = knockout.observable(true);
-        this.pending      = knockout.observable(false);
         this.liveEdit     = knockout.observable(liveEditDefault);
+        this.loadIsPending  = knockout.observable();
         this.hasUnPublishedEdits = knockout.observable();
 
         this.dropItem = function(item) {
             reqwest({
                 method: 'delete',
-                url: apiBase + '/' + self.id + '/' + item.id()
+                url: apiBase + '/' + self.id,
+                type: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    item: item.id(),
+                    live: self.liveEdit(),
+                    draft: !self.liveEdit()
+                })
             }).then(
                 function(resp) {
                     self.load();
                 },
                 function(xhr) {
-                    self.pending(false);
+                    self.loadIsPending(false);
                     console.log(xhr);
                 }
             );
             self.live.remove(item);
-            self.refreshable(false);
-            self.pending(true);
+            self.loadIsPending(true);
         }
 
         this.load();
@@ -80,14 +87,14 @@ define([
             data: JSON.stringify(data)
         }).then(
             function(resp) {
-                self.pending(false);
+                self.loadIsPending(false);
             },
             function(xhr) {
-                self.pending(false);
+                self.loadIsPending(false);
             }
         );
         this.hasUnPublishedEdits(false);
-        this.pending(true);
+        this.loadIsPending(true);
     };
 
     List.prototype.load = function() {
@@ -98,27 +105,28 @@ define([
         }).then(
             function(resp) {
                 self.populateLists(resp);
-                self.pending(false);
+                self.loadIsPending(false);
             },
             function(xhr) {
                 if(xhr.status === 404) {
                     self.populateLists({});
                 }
-                self.pending(false);
+                self.loadIsPending(false);
             }
         );
     };
 
     List.prototype.refresh = function() {
-        if (this.refreshable() && !this.pending()) {
-            this.load();
-        }
+        if (globals.uiBusy) { return; }
+        this.load();
     };
 
     List.prototype.populateLists = function(opts) {
         var self = this,
             liveChecksum = '',
             draftChecksum = '';
+
+        if (globals.uiBusy) { return; }
 
         // Knockout doesn't seem to empty elements dragged into
         // a container when it regenerates its DOM content. So empty it first.

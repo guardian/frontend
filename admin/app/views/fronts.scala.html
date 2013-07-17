@@ -93,7 +93,7 @@
                         'data-list-id': id,
                         'data-live-edit': liveEdit()
                     },
-                    css: {pending: pending},
+                    css: {pending: loadIsPending},
                     template: {name: 'template_article', foreach: liveEdit() ? live : draft}"></div>
             </div>
         </div>
@@ -106,12 +106,12 @@
                 <i class="icon-remove"></i>
             </a>
 
-            <div class="date" data-bind="html: _humanDate"></div>
+            <div class="date" data-bind="html: _humanDate() ? _humanDate : 'Loading...'"></div>
             <img data-bind="attr: {src: thumbnail}" />
 
             <div class="webTitle" data-edit="webTitle" data-bind="
                 visible: !_editing_webTitle(),
-                text: webTitle() ? webTitle : '[webTitle]',
+                text: webTitle() ? webTitle : '',
                 click: _edit
                 "></div>
             <input type="text" placeholder="webTitle" data-bind="
@@ -120,16 +120,16 @@
                 hasfocus: _editing_webTitle
                 "/>
 
-            <div class="trailText" data-edit="trailText" data-bind="
+            <!--div class="trailText" data-edit="trailText" data-bind="
                 visible: !_editing_trailText(),
-                html: trailText() ? trailText : '[trailText]',
+                html: trailText() ? trailText : '',
                 click: _edit
                 "></div>
             <textarea type="text" placeholder="trailText" data-bind="
                 visible: _editing_trailText,
                 value: trailText,
                 hasfocus: _editing_trailText
-                "/></textarea>
+                "/></textarea-->
         </div>
     </script>
     

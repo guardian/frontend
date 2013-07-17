@@ -1,12 +1,14 @@
 define([
     'Reqwest',
     'knockout',
+    'models/fronts/globals',
     'models/fronts/list',
     'models/fronts/article',
     'models/fronts/latestArticles'
 ], function(
     reqwest,
     knockout,
+    globals,
     List,
     Article,
     LatestArticles
@@ -65,20 +67,21 @@ define([
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
-                    // Display the source trail. (The clone gets dragged.) 
+                    globals.uiBusy = true;
+
+                    // Display the source item. (The clone gets dragged.) 
                     sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
                     fromListObj = knockout.dataFor(fromList[0]);
-
-                    fromListObj.refreshable(false);
+                    
                 },
                 stop: function(event, ui) {
                     var index,
                         clone;
 
-                    fromListObj.refreshable(true);
+                    globals.uiBusy = false;
 
                     // If we move between lists, effect a copy by cloning
                     if(toList !== fromList) {
@@ -145,7 +148,7 @@ define([
                     function(xhr) { console.log(xhr); } // error
                 );
 
-                listObj.pending(true);
+                listObj.pendingLoad(true);
             }
         };
 
@@ -156,7 +159,7 @@ define([
                         list.refresh();
                     }
                 });
-            }, 1000);
+            }, 5000);
         }
 
         function displayAllEditions() {

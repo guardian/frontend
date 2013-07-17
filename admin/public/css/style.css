@@ -531,7 +531,7 @@ a.cta, .cta a {
 
 .fronts .lists .connectedList.pending {
     pointer-events: none;
-    opacity: 0.75;
+    opacity: 0.5;
 }
 
 .fronts .list-header {
@@ -670,8 +670,8 @@ a.cta, .cta a {
     float: left;
     margin: 2px 10px 10px 0;
     width: 42%;
-    max-width: 140px;
-    max-height: 84px;    
+    width: 140px;
+    height: 84px;    
     background-color: #eee;
 }
 
