@@ -136,7 +136,12 @@ define([
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
-                });
+                }).then(
+                    function(resp) {
+                        listObj.load();
+                    },
+                    function(xhr) { console.log(xhr); } // error
+                );
 
                 listObj.pending(true);
             }

@@ -71,7 +71,7 @@ define([
         this.pending(true);
     };
 
-    List.prototype.load = function() {
+    List.prototype.load = function(callback) {
         var self = this;
         reqwest({
             url: apiBase + '/' + this.id,
@@ -79,10 +79,12 @@ define([
         }).then(
             function(resp) {
                 self.populateLists(resp);
+                if (typeof callback === 'function') { callback(); }
             },
             function(xhr) {
                 if(xhr.status === 404) {
                     self.populateLists({});
+                    if (typeof callback === 'function') { callback(); }
                 }
             }
         );
