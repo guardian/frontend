@@ -266,7 +266,6 @@ define(["bean",
                     speed: 200,
                     continuous: false,
                     callback: function(index, elm) {
-                        console.log(index);
                         self.imageIndexNode.innerHTML = index + 1;
                     }
                 });
