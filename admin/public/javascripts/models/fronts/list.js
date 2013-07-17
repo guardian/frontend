@@ -151,7 +151,7 @@ define([
             });
         }
 
-        this.hasUnPublishedEdits(!opts.areEqual);
+        this.hasUnPublishedEdits(opts.areEqual === false);
 
         ContentApi.decorateItems(this.live());
         ContentApi.decorateItems(this.draft());
