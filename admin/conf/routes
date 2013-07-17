@@ -75,7 +75,7 @@ GET       /fronts/api                                    controllers.FrontsContr
 GET       /fronts/api/:edition/:section/:block           controllers.FrontsController.readBlock(edition, section, block)
 POST      /fronts/api/:edition/:section/:block           controllers.FrontsController.updateBlock(edition, section, block)
 POST      /fronts/api/:edition/:section/:block/*trail    controllers.FrontsController.updateTrail(edition, section, block, trail)
-DELETE    /fronts/api/:edition/:section/:block/*trail    controllers.FrontsController.deleteTrail(edition, section, block, trail)
+DELETE    /fronts/api/:edition/:section/:block           controllers.FrontsController.deleteTrail(edition, section, block)
 
 
 # Analytics
