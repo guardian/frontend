@@ -4,8 +4,7 @@ define(["bean",
         "bonzo",
         "modules/detect",
         "modules/url",
-        "modules/overlay",
-        "swipe",
+        "modules/overlay"
         ],
     function (
         bean,
@@ -14,8 +13,7 @@ define(["bean",
         bonzo,
         detect,
         url,
-        Overlay,
-        Swipe) {
+        Overlay) {
 
     function LightboxGallery(config, context) {
         var self = this,
@@ -66,7 +64,7 @@ define(["bean",
                 self.goTo(index);
             });
 
-            bean.on(overlay.bodyNode,    'click', '.gallery__img', function(el) {
+            bean.on(overlay.bodyNode,    'click', '.gallery__img', function() {
                 self.toggleFurniture();
             });
 
@@ -259,19 +257,24 @@ define(["bean",
         };
 
         this.setupSwipe = function() {
-            // set up the swipe actions
-            galleryNode.className += ' gallery--swipe';
+            require(['js!swipe'], function() {
+                // set up the swipe actions
+                galleryNode.className += ' gallery--swipe';
 
-            var swipe = new Swipe(galleryNode, {
-                startSlide: currentImage - 1,
-                speed: 200,
-                callback: function(event, index, elm) {
-                    self.imageIndexNode.innerHTML = index + 1;
-                }
+                self.swipe = new Swipe(galleryNode, {
+                    startSlide: currentImage - 1,
+                    speed: 200,
+                    continuous: false,
+                    callback: function(index, elm) {
+                        console.log(index);
+                        self.imageIndexNode.innerHTML = index + 1;
+                    }
+                });
             });
         };
 
         this.removeSwipe = function() {
+            self.swipe.kill();
             bonzo(imagesNode).removeAttr('style')
                              .html(imagesNode._originalHtml);
 
