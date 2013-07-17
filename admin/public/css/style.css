@@ -31,7 +31,8 @@ input.invalid {
 
 fieldset, 
 input[type=text] {
-    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 input[type=text] {
@@ -461,13 +462,15 @@ a.cta, .cta a {
 .cf{zoom:1}
 
 .fronts .finder {
-    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: left;
     width: 25%;
 }
 
 .fronts .lists {
-    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: left;
     width: 75%;
 }
@@ -487,6 +490,7 @@ a.cta, .cta a {
     float: right;
     width: 75%;
     border-left: 10px solid #fff;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -624,7 +628,8 @@ a.cta, .cta a {
 }
 
 .fronts .trailblock {
-    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     width: 33.333%;
     float: left;
     border-top:  10px solid #fff;
@@ -675,11 +680,11 @@ a.cta, .cta a {
     padding: 0;
 }
 
-.fronts .trail h2 {
+.fronts .trail .webTitle {
     font-family: EgyptianText, georgia, serif;
-    font-size: 16px;
-    line-height: 18px;
-    weight: normal;
+    font-size: 15px;
+    line-height: 17px;
+    font-weight: bold;
     margin: 0;
     padding: 0 0 5px 0;
 }
