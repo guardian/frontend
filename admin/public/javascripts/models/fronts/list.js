@@ -122,9 +122,7 @@ define([
     };
 
     List.prototype.populateLists = function(opts) {
-        var self = this,
-            liveChecksum = '',
-            draftChecksum = '';
+        var self = this;
 
         if (globals.uiBusy) { return; }
 
@@ -141,7 +139,6 @@ define([
                 self.live.push(new Article({
                     id: item.id
                 }));
-                liveChecksum += item.id + ':';
             });
         }
 
@@ -151,11 +148,10 @@ define([
                 self.draft.push(new Article({
                     id: item.id
                 }));
-                draftChecksum += item.id + ':';
             });
         }
 
-        this.hasUnPublishedEdits(liveChecksum !== draftChecksum);
+        this.hasUnPublishedEdits(!opts.areEqual);
 
         ContentApi.decorateItems(this.live());
         ContentApi.decorateItems(this.draft());
