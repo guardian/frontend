@@ -1,8 +1,8 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 
-<div class="monocolumn-wrapper">
-    
+<div class="article-wrapper monocolumn-wrapper">
+
     <h2 class="article-zone type-1">
         <a class="zone-color" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
     </h2>
@@ -31,37 +31,38 @@
 
         <div class="after-header"></div>
 
-         @if(!article.isLive  && !article.hasVideoAtTop) {
-             @article.mainPicture.map{ mainPicture =>
-                 @article.mainPicture(width=220).map{ smallCrop =>
-                     @fragments.img(mainPicture, smallCrop)
-                 }
-             }
-         }
+        <div class="article__inner">
+            @if(!article.isLive && !article.hasVideoAtTop) {
+                @article.mainPicture.map{ mainPicture =>
+                    @article.mainPicture(width=220).map{ smallCrop =>
+                        @fragments.img(mainPicture, smallCrop)
+                    }
+                }
+            }
 
-         @fragments.byline(article.byline, article)
+            @fragments.byline(article.byline, article)
 
-         <div class="article__container">
-             @if(article.isLive) {
-                 @fragments.autoUpdate()
-             }
+            <div class="js-article__container article__container">
+                @if(article.isLive) {
+                    @fragments.autoUpdate()
+                }
 
-             <div class="article-body from-content-api @if(article.isLive) {live-blog}"
-             itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-                 @BodyCleaner(article)
+                <div class="article-body from-content-api @if(article.isLive) {live-blog}"
+                itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+                    @BodyCleaner(article)
+                </div>
             </div>
-        </div>
 
-        @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-            <div class="article__discussion article-body"></div>
-        }
+            @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+                <div class="article__discussion"></div>
+            }
+            @fragments.social(article)
+        </div>
 
     </article>
 
-    @fragments.social(article)
 
     @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-        <div class="article__discussion article-body"></div>
         <div class="d-show-cta-wrapper">    
             <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion/@article.shortUrlId}"
                data-is-ajax data-link-name="View all comments">
@@ -78,4 +79,4 @@
     <aside class="js-related" role="complementary"></aside>
 }
 
-<div   class="js-popular" role="complementary"></div>
+<div class="js-popular" role="complementary"></div>
