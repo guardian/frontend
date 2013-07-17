@@ -13,6 +13,7 @@ define([
 ) {
     var apiBase = '/fronts/api',
         maxDisplayedLists = 3,
+        dragging = false,
         queryParams = (function(){
             var result = {};
             if (window.location.search) {
@@ -28,7 +29,6 @@ define([
     return function(selector) {
 
         var viewModel = {},
-            poller,
             self = this;
 
         function showList(id) {
@@ -36,7 +36,6 @@ define([
             viewModel.listsDisplayed.push(new List(id));
             limitListsDisplayed(maxDisplayedLists);
             connectSortableLists();
-            startPoller();
         }
 
         function dropList(id) {
@@ -58,6 +57,7 @@ define([
                 sortables = $(selector),
                 item,
                 fromList,
+                fromListObj,
                 toList;
 
             sortables.sortable({
@@ -65,17 +65,20 @@ define([
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
-
                     // Display the source trail. (The clone gets dragged.) 
                     sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    stopPoller();
+                    fromListObj = knockout.dataFor(fromList[0]);
+
+                    fromListObj.refreshable(false);
                 },
                 stop: function(event, ui) {
                     var index,
                         clone;
+
+                    fromListObj.refreshable(true);
 
                     // If we move between lists, effect a copy by cloning
                     if(toList !== fromList) {
@@ -87,7 +90,6 @@ define([
                     }
 
                     saveListDelta(item.data('url'), toList);
-                    startPoller();
                 },
                 change: function(event, ui) {
                     if(ui.sender) toList = ui.placeholder.parent();
@@ -148,17 +150,13 @@ define([
         };
 
         function startPoller() {
-            stopPoller();
-            poller = setInterval(function(){
+            setInterval(function(){
                 viewModel.listsDisplayed().forEach(function(list){
-                    list.load();
+                    if (!dragging) {
+                        list.refresh();
+                    }
                 });
-            }, 1500);
-        }
-
-        function stopPoller() {
-            clearInterval(poller);
-            poller = false;
+            }, 1000);
         }
 
         function displayAllEditions() {
@@ -227,6 +225,8 @@ define([
             }
 
             viewModel.latestArticles.search();
+
+            startPoller();
         };
 
     };

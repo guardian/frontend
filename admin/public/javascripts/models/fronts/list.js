@@ -25,7 +25,8 @@ define([
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
 
-        this.pending      = knockout.observable();
+        this.refreshable  = knockout.observable(true);
+        this.pending      = knockout.observable(false);
         this.liveEdit     = knockout.observable(liveEditDefault);
         this.hasUnPublishedEdits = knockout.observable();
 
@@ -33,8 +34,17 @@ define([
             reqwest({
                 method: 'delete',
                 url: apiBase + '/' + self.id + '/' + item.id()
-            });
+            }).then(
+                function(resp) {
+                    self.load();
+                },
+                function(xhr) {
+                    self.pending(false);
+                    console.log(xhr);
+                }
+            );
             self.live.remove(item);
+            self.refreshable(false);
             self.pending(true);
         }
 
@@ -58,7 +68,9 @@ define([
     };
 
     List.prototype.processDraft = function(publish) {
-        var data = {};
+        var self = this,
+            data = {};
+
         data[publish ? 'publish' : 'discard'] = true;
         reqwest({
             url: apiBase + '/' + this.id,
@@ -66,7 +78,14 @@ define([
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify(data)
-        });
+        }).then(
+            function(resp) {
+                self.pending(false);
+            },
+            function(xhr) {
+                self.pending(false);
+            }
+        );
         this.hasUnPublishedEdits(false);
         this.pending(true);
     };
@@ -79,13 +98,21 @@ define([
         }).then(
             function(resp) {
                 self.populateLists(resp);
+                self.pending(false);
             },
             function(xhr) {
                 if(xhr.status === 404) {
                     self.populateLists({});
                 }
+                self.pending(false);
             }
         );
+    };
+
+    List.prototype.refresh = function() {
+        if (this.refreshable() && !this.pending()) {
+            this.load();
+        }
     };
 
     List.prototype.populateLists = function(opts) {
@@ -121,7 +148,6 @@ define([
         }
 
         this.hasUnPublishedEdits(liveChecksum !== draftChecksum);
-        this.pending(false);
 
         ContentApi.decorateItems(this.live());
         ContentApi.decorateItems(this.draft());
