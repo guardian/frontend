@@ -122,6 +122,11 @@ object FrontsController extends Controller with Logging {
             val trails = block.live.filterNot(_.id == update.item)
             newBlock = newBlock.copy(live = trails)
           }
+          if (newBlock.live == newBlock.draft) {
+            newBlock = newBlock.copy(areEqual=true)
+          } else {
+            newBlock = newBlock.copy(areEqual=false)
+          }
           FrontsApi.putBlock(edition, section, block.id, newBlock) //Don't need pretty, only for us devs
           Ok
         } getOrElse NotFound("No edition or section") //To be more silent in the future?
