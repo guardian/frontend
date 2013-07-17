@@ -200,20 +200,21 @@ define([
             fetchSchema();
 
             viewModel.selectedEdition.subscribe(function(edition) {
-                viewModel.selectedSection('');
-                viewModel.selectedBlock('');
+                viewModel.selectedSection(undefined);
+                viewModel.selectedBlock(undefined);
             });
 
             viewModel.selectedSection.subscribe(function(section) {
-                viewModel.selectedBlock('');
+                viewModel.selectedBlock(undefined);
                 if (section && section.id) {
                     viewModel.latestArticles.section(section.id);
                 }
             });
 
             viewModel.selectedBlock.subscribe(function(block) {
+                var id;
                 if(block && block.id) {
-                    var id = viewModel.selectedEdition().id + '/' +
+                    id = viewModel.selectedEdition().id + '/' +
                              viewModel.selectedSection().id + '/' + 
                              block.id;
 
@@ -227,9 +228,10 @@ define([
                 });
             }
 
-            viewModel.latestArticles.search();
-
             startPoller();
+
+            viewModel.latestArticles.search();
+            viewModel.latestArticles.startPoller();
         };
 
     };

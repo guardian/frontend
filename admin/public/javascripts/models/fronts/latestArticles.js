@@ -71,10 +71,11 @@ define([
             return true; // ensure default click happens on all the bindings
         };
 
-        function startPoller() {
+        this.startPoller = function() {
             setInterval(function(){
-                this.search();
-            }, 15000);
+                console.log('search');
+                self.search();
+            }, 10000);
         }
     };
 });

@@ -8,13 +8,13 @@
         <div class="list-picker">
             <span class="list-picker__title">Select a block:</span>
 
-            <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Edition...'"></select>
+            <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Choose Edition...'"></select>
 
             <span data-bind="with: $root.selectedEdition()">
-                <select data-bind="options: sections, optionsText: 'id', value: $root.selectedSection, optionsCaption: 'Section...'"></select>
+                <select data-bind="options: sections, optionsText: 'id', value: $root.selectedSection, optionsCaption: 'Choose Section...'"></select>
 
                 <span data-bind="with: $root.selectedSection()">
-                    <select data-bind="options: blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Block...'"></select>
+                    <select data-bind="options: blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Choose Block...'"></select>
 
                     <span data-bind="with: $root.selectedBlock()">
                         <a href="#" data-bind="click: $root.displayAllEditions"> &laquo; View in all editions</a>
