@@ -105,7 +105,7 @@ $a-rightCol-trigger: gs-span(11) + $gutter*2;
     margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
 
-    @include mq(tablet, $a-leftCol-trigger) {
+    @include mq(tablet, ($a-leftCol-trigger - 1px)) {
         font-size: 16px;
         font-size: 1.6rem;
     }
