@@ -93,7 +93,7 @@ object FrontsController extends Controller with Logging {
   }
 
   private def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-      FrontsApi.putBlock(edition, section, block, Block(block, None, Nil, List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))
+      FrontsApi.putBlock(edition, section, block, Block(block, None, List(Trail(update.item, None, None, None)), List(Trail(update.item, None, None, None)), DateTime.now.toString, identity.fullName, identity.email))
   }
   /**
    * @todo
@@ -104,13 +104,24 @@ object FrontsController extends Controller with Logging {
     Ok
   }
 
-  def deleteTrail(edition: String, section: String, blockId: String, trailId: String) = AuthAction { request =>
-    FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
-        val trails = block.draft.filterNot(_.id == trailId)
-        val newBlock = block.copy(draft = trails)
-        S3FrontsApi.putBlock(edition, section, block.id, Json.prettyPrint(Json.toJson(newBlock))) //Don't need pretty, only for us devs
-        Ok
-    } getOrElse NotFound("No edition or section") //To be more silent in the future?
+  def deleteTrail(edition: String, section: String, blockId: String) = AuthAction { request =>
+    request.body.asJson.map { json =>
+      json.asOpt[UpdateList].map { update: UpdateList =>
+        FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
+          var newBlock = block.copy()
+          if (update.draft) {
+            val trails = block.draft.filterNot(_.id == update.item)
+            newBlock = newBlock.copy(draft = trails)
+          }
+          if (update.live) {
+            val trails = block.live.filterNot(_.id == update.item)
+            newBlock = newBlock.copy(live = trails)
+          }
+          FrontsApi.putBlock(edition, section, block.id, newBlock) //Don't need pretty, only for us devs
+          Ok
+        } getOrElse NotFound("No edition or section") //To be more silent in the future?
+      } getOrElse NotFound("Invalid JSON")
+    } getOrElse NotFound("Problem parsing json")
   }
 
 }
