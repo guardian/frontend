@@ -31,15 +31,14 @@
 
         <div class="after-header"></div>
 
-
-         <div class="article__inner">
-             @if(!article.isLive && !article.hasVideoAtTop) {
-                 @article.mainPicture.map{ mainPicture =>
-                     @article.mainPicture(width=220).map{ smallCrop =>
-                         @fragments.img(mainPicture, smallCrop)
-                     }
-                 }
-             }
+        <div class="article__inner">
+            @if(!article.isLive && !article.hasVideoAtTop) {
+                @article.mainPicture.map{ mainPicture =>
+                    @article.mainPicture(width=220).map{ smallCrop =>
+                        @fragments.img(mainPicture, smallCrop)
+                    }
+                }
+            }
 
             @fragments.byline(article.byline, article)
 
