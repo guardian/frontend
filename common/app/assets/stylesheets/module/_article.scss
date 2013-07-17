@@ -1,7 +1,7 @@
-$a-leftCol-width:    gs-span(3);
-$a-leftCol-trigger:  gs-span(15);
+$a-leftCol-width:    gs-span(2);
+$a-leftCol-trigger:  gs-span(13) + $gutter*2;
 $a-rightCol-width:   gs-span(4);
-$a-rightCol-trigger: gs-span(11);
+$a-rightCol-trigger: gs-span(11) + $gutter*2;
 
 .article-zone {
     padding: 13px 0 14px;
@@ -105,6 +105,10 @@ $a-rightCol-trigger: gs-span(11);
     margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
 
+    @include mq(tablet, $a-leftCol-trigger) {
+        font-size: 16px;
+        font-size: 1.6rem;
+    }
     @include mq($a-rightCol-trigger) {
         display: block;
     }
@@ -116,12 +120,12 @@ $a-rightCol-trigger: gs-span(11);
     }
 }
 @include mq(tablet) {
-    .d-tabs__item--byline,
-    .byline {
+    .d-tabs__item--byline {
         font-size: 16px !important;
         font-size: 1.6rem !important;
     }
 }
+
 .media-primary {
     margin-left: $gutter * -1;
     margin-right: $gutter * -1;
