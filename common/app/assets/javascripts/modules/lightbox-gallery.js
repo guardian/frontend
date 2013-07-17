@@ -4,7 +4,8 @@ define(["bean",
         "bonzo",
         "modules/detect",
         "modules/url",
-        "modules/overlay"
+        "modules/overlay",
+        "swipe",
         ],
     function (
         bean,
@@ -13,11 +14,13 @@ define(["bean",
         bonzo,
         detect,
         url,
-        Overlay) {
+        Overlay,
+        Swipe) {
 
     function LightboxGallery(config, context) {
         var self = this,
             galleryNode,
+            imagesNode,
             currentImage = 1,
             totalImages = 0,
             mode = 'fullimage',
@@ -63,9 +66,15 @@ define(["bean",
                 self.goTo(index);
             });
 
+            bean.on(overlay.bodyNode,    'click', '.gallery__img', function(el) {
+                self.toggleFurniture();
+            });
+
             bean.on(window, 'orientationchange', function() {
                 self.layout();
-                self.jumpToContent();
+                if (self.getOrientation() === 'landscape') {
+                    self.jumpToContent();
+                }
             });
 
             bean.on(window, 'resize', common.debounce(function() {
@@ -103,6 +112,11 @@ define(["bean",
                     $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav'));
                     $images      = bonzo(galleryNode.querySelectorAll('.gallery__img'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
+
+                    // Keep a copy of the original images markup, so we can
+                    // easily restore it back when removing swipe
+                    imagesNode   = galleryNode.querySelector('.gallery__images');
+                    imagesNode._originalHtml = imagesNode.innerHTML;
 
                     self.layout();
                     self.setupOverlayHeader();
@@ -176,11 +190,12 @@ define(["bean",
             currentImage = index;
             self.imageIndexNode.innerHTML = currentImage;
             self.switchToFullImage();
-            self.jumpToContent();
+            //self.jumpToContent();
         };
 
         this.switchToGrid = function(e) {
             mode = 'grid';
+            self.removeSwipe();
             bonzo(galleryNode).removeClass('gallery--fullimage-mode').addClass('gallery--grid-mode');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
@@ -198,6 +213,7 @@ define(["bean",
 
         this.switchToFullImage = function(e) {
             mode = 'fullimage';
+            self.setupSwipe();
             bonzo(galleryNode).removeClass('gallery--grid-mode').addClass('gallery--fullimage-mode');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el, i) {
@@ -216,15 +232,10 @@ define(["bean",
 
         this.toggleFurniture = function() {
             bonzo(galleryNode).toggleClass('gallery--hide-furniture');
-
-            // When the furniture is hidden, hide the browser chrome by jumping to the content
-            if (galleryNode.className.indexOf('gallery--hide-furniture') !== -1) {
-                self.jumpToContent();
-            }
         };
 
         this.layout = function() {
-            var orientation = (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
+            var orientation = self.getOrientation();
 
             // Make overlay large enough to allow the browser chrome to be hidden
             overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
@@ -242,6 +253,30 @@ define(["bean",
             overlay.remove();
             return true;
         }, 500);
+
+        this.getOrientation = function() {
+            return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
+        };
+
+        this.setupSwipe = function() {
+            // set up the swipe actions
+            galleryNode.className += ' gallery--swipe';
+
+            var swipe = new Swipe(galleryNode, {
+                startSlide: currentImage - 1,
+                speed: 200,
+                callback: function(event, index, elm) {
+                    self.imageIndexNode.innerHTML = index + 1;
+                }
+            });
+        };
+
+        this.removeSwipe = function() {
+            bonzo(imagesNode).removeAttr('style')
+                             .html(imagesNode._originalHtml);
+
+            bonzo(galleryNode).removeClass('gallery--swipe');
+        };
     }
 
     return LightboxGallery;
