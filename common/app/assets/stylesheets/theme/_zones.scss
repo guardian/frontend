@@ -1,4 +1,4 @@
-// be sure to update the styleguide when changing these
+// TODO make this human readable
 
 .zone-news .zone-color {
     color: $newsRed; // red
@@ -43,7 +43,7 @@
 .zone-technology .zone-color,
 .zone-society .zone-color,
 .zone-politics .zone-color,
-.zone-uk .zone-color,
+.zone-uk-news .zone-color,
 .zone-media .zone-color,
 .zone-world .zone-color {
     color: $newsRed;
@@ -99,7 +99,7 @@
 .zone-technology .zone-background,
 .zone-society .zone-background,
 .zone-politics .zone-background,
-.zone-uk .zone-background,
+.zone-uk-news .zone-background,
 .zone-media .zone-background,
 .zone-world .zone-background {
     background-color: $newsRed;
@@ -156,7 +156,7 @@
 .zone-technology .zone-border,
 .zone-society .zone-border,
 .zone-politics .zone-border,
-.zone-uk .zone-border,
+.zone-uk-news .zone-border,
 .zone-media .zone-border,
 .zone-world .zone-border {
     border-color: $newsRed;

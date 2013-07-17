@@ -5,73 +5,34 @@ import org.joda.time.DateTime
 case class Match(
   teams: List[Team],
   innings: List[Innings],
-  sessions: List[Session],
   competitionName: String,
   description: String,
   venueName: String,
   result: String,
-  gameDate: DateTime)
+  gameDate: DateTime,
+  officials: List[String])
 {
   def homeTeam: Team = teams.filter(_.homeOrAway == "home").head
   def awayTeam: Team = teams.filter(_.homeOrAway == "away").head
   def homeTeamInnings: List[Innings] = innings.filter(x => x.battingTeamId == homeTeam.id).sortBy(_.id)
   def awayTeamInnings: List[Innings] = innings.filter(x => x.battingTeamId == awayTeam.id).sortBy(_.id)
 
-  def lastInnings: Option[Innings] = {
-    innings match {
-      case Nil => None
-      case _ => Some(innings.last)
-    }
-  }
+  def lastInnings: Option[Innings] = innings.lastOption
 
-  def firstInBatsman: Option[InningsBatsman] = {
-    lastInnings match {
-      case Some(innings) => innings.batsmen.indexWhere(x => !x.out) match {
-        case -1 => None
-        case index => Some(innings.batsmen(index))
-      }
-      case _ => None
-    }
-  }
+  def firstInBatsman: Option[InningsBatsman] = lastInnings.flatMap( _.firstIn )
 
-  def secondInBatsman: Option[InningsBatsman] = {
-    lastInnings match {
-      case Some(innings) => innings.batsmen.lastIndexWhere(x => !x.out) match {
-        case -1 => None
-        case index => Some(innings.batsmen(index))
-      }
-      case _ => None
-    }
-  }
+  def secondInBatsman: Option[InningsBatsman] = lastInnings.flatMap( _.secondIn )
 
-  def lastOut: Option[InningsBatsman] = {
-    lastInnings match {
-      case Some(innings) => innings.batsmen.lastIndexWhere(x => x.out) match {
-        case -1 => None
-        case index => Some(innings.batsmen(index))
-      }
-      case _ => None
-    }
-  }
+  def lastOut: Option[InningsBatsman] = lastInnings.flatMap( _.lastOut )
 
-  def bowlerOnStrike: Option[InningsBowler] = {
-    lastInnings match {
-      case Some(innings) => innings.bowlers.filter(x => x.onStrike) match {
-        case head :: _ => Some(head)
-        case Nil => None
-      }
-      case _ => None
-    }
-  }
+  def bowlerOnStrike: Option[InningsBowler] = lastInnings.flatMap( _.currentBowler )
 }
-
-case class Session(
-  day: String)
 
 case class Team(
   name: String,
   id: Int,
-  homeOrAway: String)
+  homeOrAway: String,
+  lineup: List[String])
 
 case class Innings(
   id: Int,
@@ -91,9 +52,19 @@ case class Innings(
   wides: Int,
   extras: Int)
 {
-  def closed = declared || forfeited || allOut
-  def allOut = wickets == 10
-  def wickets = fallOfWicket.length
+  lazy val closed = declared || forfeited || allOut
+  lazy val allOut = wickets == 10
+  lazy val wickets = fallOfWicket.length
+
+  lazy val firstIn: Option[InningsBatsman] = batsmen.find( _.notOut )
+  lazy val secondIn: Option[InningsBatsman] = {
+    batsmen.filter( _.notOut ) match {
+      case first :: second :: _ => Some(second)
+      case _ => None
+    }
+  }
+  lazy val lastOut: Option[InningsBatsman] = batsmen.filter( _.out ).lastOption
+  lazy val currentBowler: Option[InningsBowler] = bowlers.find( _.onStrike )
 }
 
 case class InningsBatsman(
@@ -105,7 +76,9 @@ case class InningsBatsman(
   out: Boolean,
   howOut: String,
   onStrike: Boolean,
-  nonStrike: Boolean)
+  nonStrike: Boolean) {
+  lazy val notOut: Boolean = !out
+}
 
 case class InningsBowler(
   name: String,

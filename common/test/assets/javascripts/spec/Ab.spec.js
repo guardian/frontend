@@ -28,12 +28,12 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(ab).toBeDefined();
         });
 
-        it('should be able to start test', function() {
+        xit('should be able to start test', function() {
             ab.init({ switches: {'abDummyTest': true} }, document);
             expect(controlSpy.called || variantSpy.called).toBeTruthy();
         });
 
-        it('should allow forcing of test via url', function() {
+        xit('should allow forcing of test via url', function() {
             ab.init({
                 switches: {
                     abDummyTest: true
@@ -103,7 +103,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(controlSpy.called || variantSpy.called).toBeFalsy();
         });
 
-        it('should add "data-link-test" tracking to body', function() {
+        xit('should add "data-link-test" tracking to body', function() {
             ab.init({
                 switches: {
                     abDummyTest: true
@@ -112,7 +112,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide)$/);
         });
 
-        it('should concat "data-link-test" tracking when more than one test', function() {
+        xit('should concat "data-link-test" tracking when more than one test', function() {
             var otherTest = new ABTest();
             otherTest.id = 'DummyTest2';
             ab.addTest(otherTest);
@@ -137,7 +137,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(ab.getParticipations()).toEqual([]);
         });
 
-        it('should refuse to run the after the expiry date', function () {
+        xit('should refuse to run the after the expiry date', function () {
             
             test.expiry = "2012-01-01";
             ab.init({
@@ -158,7 +158,7 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
             expect(localStorage.getItem(participationsKey)).toBe('{"value":{}}');
         });
         
-        it('should run the test if it has not expired', function () {
+        xit('should run the test if it has not expired', function () {
             var futureDate = new Date();
             futureDate.setHours(futureDate.getHours() + 10);
             test.expiry = futureDate.toString();

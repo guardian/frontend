@@ -22,7 +22,8 @@ define(["bean",
             totalImages = 0,
             mode = 'fullimage',
             overlay,
-            $navArrows;
+            $navArrows,
+            $images;
 
         this.selector = '.trail--gallery';
         this.galleryEndpoint = '';
@@ -53,22 +54,23 @@ define(["bean",
         this.bindEvents = function() {
             bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-grid', this.switchToGrid);
             bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-full', this.switchToFullImage);
-            bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-prev', this.prev);
-            bean.on(overlay.bodyNode,    'touchstart click', '.js-gallery-next', this.next);
+            bean.on(overlay.bodyNode,    'click', '.js-gallery-prev', this.prev);
+            bean.on(overlay.bodyNode,    'click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
-            bean.on(overlay.bodyNode,    'click', '.gallery-item', function(el) {
-                if (mode === 'grid') {
-                    var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
-                    self.goTo(index);
-                } else {
-                    self.toggleFurniture();
-                }
+            bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
+            bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery-item', function(el) {
+                var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
+                self.goTo(index);
             });
 
             bean.on(window, 'orientationchange', function() {
                 self.layout();
                 self.jumpToContent();
             });
+
+            bean.on(window, 'resize', common.debounce(function() {
+                self.layout();
+            }));
 
             common.mediator.on('modules:overlay:close', this.removeOverlay);
 
@@ -98,12 +100,16 @@ define(["bean",
                     overlay.setBody(response.html);
 
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
-                    $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav .gallery-arrow-cta'));
+                    $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav'));
+                    $images      = bonzo(galleryNode.querySelectorAll('.gallery__img'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
 
                     self.layout();
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
+
+                    // Register this as a page view
+                    common.mediator.emit('module:lightbox-gallery:loaded', response.config, galleryNode);
                 },
                 error: function() {
                     var errorMsg = '<div class="preload-msg">Error loading gallery' +
@@ -121,7 +127,9 @@ define(["bean",
                           '<button class="overlay__cta js-gallery-full" data-link-name="Gallery full image mode">' +
                           '  <i class="i i-gallery-fullimage-icon"></i> ' +
                           '</button>' +
-                          '<div class="overlay__cta gallery__counter"><span class="js-image-index gallery__counter--current-image"></span> | '+totalImages+'</div>';
+                          '<div class="overlay__cta gallery__counter">' +
+                          '  <span class="js-image-index gallery__counter--current-image"></span> | '+totalImages +
+                          '</div>';
 
             overlay.toolbarNode.innerHTML = toolbar;
             self.imageIndexNode = overlay.toolbarNode.querySelector('.js-image-index');
@@ -134,12 +142,12 @@ define(["bean",
         };
 
         this.prev = function(e) {
-            e.preventDefault();
+            if (e) { e.preventDefault(); }
             self.goTo(currentImage - 1);
         };
 
         this.next = function(e) {
-            e.preventDefault();
+            if (e) { e.preventDefault(); }
             self.goTo(currentImage + 1);
         };
 
@@ -152,10 +160,14 @@ define(["bean",
             }
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery-item'), function(el) {
-                var itemIndex = parseInt(el.getAttribute('data-index'), 10);
+                var itemIndex = parseInt(el.getAttribute('data-index'), 10),
+                    captionControlHeight = 35; // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
 
                 if (itemIndex === index) {
                     el.style.display = 'block';
+
+                    // Match arrows to the height of image, minus height of the caption control to prevent overlap
+                    $navArrows.css('height', ($images[index-1].offsetHeight - captionControlHeight) + 'px');
                 } else {
                     el.style.display = ''; // Not set to 'none' so that it doesn't hide them from the Grid view
                 }
@@ -164,6 +176,7 @@ define(["bean",
             currentImage = index;
             self.imageIndexNode.innerHTML = currentImage;
             self.switchToFullImage();
+            self.jumpToContent();
         };
 
         this.switchToGrid = function(e) {
@@ -177,6 +190,8 @@ define(["bean",
             // Update CTAs
             self.gridModeCta.style.display = 'none';
             self.fullModeCta.style.display = 'block';
+
+            self.layout();
 
             if (e) { e.preventDefault(); }
         };
@@ -206,14 +221,20 @@ define(["bean",
             if (galleryNode.className.indexOf('gallery--hide-furniture') !== -1) {
                 self.jumpToContent();
             }
-
-            common.mediator.emit('module:clickstream:interaction', 'Toggle gallery furniture');
         };
 
         this.layout = function() {
+            var orientation = (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
+
             // Make overlay large enough to allow the browser chrome to be hidden
-            var browserChrome = (window.screen.height - window.innerHeight);
-            overlay.node.style.minHeight = window.screen.height + browserChrome + 'px';
+            overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
+
+            if (orientation === 'landscape' && mode === 'fullimage') {
+                // In landscape, size all images to the height of the screen
+                $images.css({'height': window.innerHeight + 'px', 'width': 'auto'});
+            } else {
+                $images.removeAttr('style');
+            }
         };
 
         this.removeOverlay = common.debounce(function(e){

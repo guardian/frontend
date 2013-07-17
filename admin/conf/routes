@@ -70,7 +70,12 @@ GET     /organisations                   controllers.event.EntityController.find
 GET     /organisations*id                controllers.event.EntityController.read(id, rdfType = "http://schema.org/Organization")
 
 # Fronts
-GET     /fronts                          controllers.FrontsController.index()
+GET       /fronts                                        controllers.FrontsController.index()
+GET       /fronts/api                                    controllers.FrontsController.schema()
+GET       /fronts/api/:edition/:section/:block           controllers.FrontsController.readBlock(edition, section, block)
+POST      /fronts/api/:edition/:section/:block           controllers.FrontsController.updateBlock(edition, section, block)
+POST      /fronts/api/:edition/:section/:block/*trail    controllers.FrontsController.updateTrail(edition, section, block, trail)
+DELETE    /fronts/api/:edition/:section/:block/*trail    controllers.FrontsController.deleteTrail(edition, section, block, trail)
 
 
 # Analytics

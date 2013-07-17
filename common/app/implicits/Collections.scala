@@ -35,6 +35,9 @@ trait Collections {
       rst foreach { builder += _ }
       builder.result
     }
+
+    def toMapWith[S](f: T => S)(
+      implicit cbf: CanBuildFrom[C[(T, S)], (T, S), C[(T, S)]]): Map[T, S] = zipWith(f).toMap
   }
 
   implicit class Seq2StableGroupBy[T, C[T] <: LinearSeq[T]](tees: C[T]) {
@@ -51,6 +54,4 @@ trait Collections {
       builder.result
     }
   }
-
-
 }
