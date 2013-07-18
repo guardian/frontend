@@ -139,8 +139,8 @@ object PageviewsPerUserGraph extends Chart with implicits.Tuples with implicits.
 
   def dataset = {
     val day = Analytics.getPageviewsPerUserByDay() withDefaultValue 0.0
-    val week = Analytics.getWeeklyPageviewsPerUsersByDay() withDefaultValue 0.0
-    val month = Analytics.getFourWeeklyPageviewsPerUsersByDay() withDefaultValue 0.0
+    val week = Analytics.getWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
+    val month = Analytics.getFourWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
 
     val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
     range map { date =>
@@ -173,8 +173,8 @@ object DaysSeenPerUserGraph extends Chart with implicits.Tuples with implicits.D
   lazy val labels = Seq("Date", "week", "4 week")
 
   def dataset = {
-    val week = Analytics.getWeeklyDaysSeenPerUsersByDay() withDefaultValue 0.0
-    val month = Analytics.getFourWeeklyDaysSeenPerUsersByDay() withDefaultValue 0.0
+    val week = Analytics.getWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
+    val month = Analytics.getFourWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
 
     val range = (week.keySet ++ month.keySet - today()).toList.sorted
     range map { date =>

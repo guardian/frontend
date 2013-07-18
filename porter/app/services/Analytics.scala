@@ -169,7 +169,7 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     case (day, pageviews) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, pageviews)
   }
 
-  def getWeeklyPageviewsPerUsersByDay(): Map[DateMidnight, Double] = {
+  def getWeeklyPageviewsPerUserByDay(): Map[DateMidnight, Double] = {
     val pageviews: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
@@ -214,11 +214,11 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     pageviewsPerUserWithZeros
   }
 
-  def getWeeklyPageviewsPerUsersByDayDateExpanded(): List[(Int, Int, Int, Double)] = getWeeklyPageviewsPerUsersByDay().toList map {
+  def getWeeklyPageviewsPerUserByDayDateExpanded(): List[(Int, Int, Int, Double)] = getWeeklyPageviewsPerUserByDay().toList map {
     case (day, pageviews) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, pageviews)
   }
 
-  def getFourWeeklyPageviewsPerUsersByDay(): Map[DateMidnight, Double] = {
+  def getFourWeeklyPageviewsPerUserByDay(): Map[DateMidnight, Double] = {
     val pageviews: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
@@ -263,7 +263,7 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     pageviewsPerUserWithZeros
   }
 
-  def getFourWeeklyPageviewsPerUsersByDayDateExpanded(): List[(Int, Int, Int, Double)] = getFourWeeklyPageviewsPerUsersByDay().toList map {
+  def getFourWeeklyPageviewsPerUserByDayDateExpanded(): List[(Int, Int, Int, Double)] = getFourWeeklyPageviewsPerUserByDay().toList map {
     case (day, pageviews) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, pageviews)
   }
 
@@ -425,7 +425,7 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     case (day, returns) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, returns)
   }
 
-  def getWeeklyDaysSeenPerUsersByDay(): Map[DateMidnight, Double] = {
+  def getWeeklyDaysSeenPerUserByDay(): Map[DateMidnight, Double] = {
     val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
@@ -470,11 +470,11 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     daysSeenPerUserWithZeros
   }
 
-  def getWeeklyDaysSeenPerUsersByDayDateExpanded(): List[(Int, Int, Int, Double)] = getWeeklyDaysSeenPerUsersByDay().toList map {
+  def getWeeklyDaysSeenPerUserByDayDateExpanded(): List[(Int, Int, Int, Double)] = getWeeklyDaysSeenPerUserByDay().toList map {
     case (day, days_seen) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, days_seen)
   }
 
-  def getFourWeeklyDaysSeenPerUsersByDay(): Map[DateMidnight, Double] = {
+  def getFourWeeklyDaysSeenPerUserByDay(): Map[DateMidnight, Double] = {
     val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
@@ -519,8 +519,7 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     daysSeenPerUserWithZeros
   }
 
-  def getFourWeeklyDaysSeenPerUsersByDayDateExpanded(): List[(Int, Int, Int, Double)] = getFourWeeklyDaysSeenPerUsersByDay().toList map {
+  def getFourWeeklyDaysSeenPerUserByDayDateExpanded(): List[(Int, Int, Int, Double)] = getFourWeeklyDaysSeenPerUserByDay().toList map {
     case (day, days_seen) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, days_seen)
   }
-
 }
