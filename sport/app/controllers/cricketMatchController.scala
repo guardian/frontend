@@ -41,4 +41,6 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
     }
 
   }
+
+  def healthCheck() = Action { Ok("Ok") }
 }

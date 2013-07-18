@@ -17,7 +17,7 @@ object Management extends GuManagement {
     new UrlPagesHealthcheckManagementPage(
       //"/sport/cricket/match/34822",
       // Failed healthcheck
-      "/sport/cricket"
+      "/sport/cricket/match/1"
     ),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
