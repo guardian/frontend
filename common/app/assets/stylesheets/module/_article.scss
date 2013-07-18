@@ -25,7 +25,7 @@ $a-rightCol-trigger: gs-span(11) + $gutter*2;
 }
 
 .article-head {
-    padding: $baseline*3 0 $baseline*4;
+    padding-top: $baseline*3;
 }
 
 .article-headline {
@@ -42,7 +42,7 @@ $a-rightCol-trigger: gs-span(11) + $gutter*2;
         margin-bottom: $baseline*5;
     }
 
-    @include mq(desktop) {
+    @include mq(($a-rightCol-trigger + gs-span(1))) {
         font-size: 40px;
         font-size: 4rem;
         line-height: 48px;
@@ -62,7 +62,7 @@ $a-rightCol-trigger: gs-span(11) + $gutter*2;
 }
 
 .article-standfirst {
-    margin-bottom: 0;
+    margin-bottom: $baseline*4;
     text-rendering: optimizeLegibility;
 
     @include mq(tablet) {
