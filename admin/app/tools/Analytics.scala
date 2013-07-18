@@ -92,23 +92,6 @@ object Analytics extends implicits.Dates with implicits.Tuples with implicits.St
     }
   }
 
-  def getReturnUsersByDay(): Map[DateMidnight, Long] = {
-    val uptyped: List[(DateMidnight, Long)] = getReturnUsersByDayDateExpanded collect {
-      case (year, month, day, total) => (new DateMidnight(year, month, day), total)
-    }
-
-    uptyped.toMap
-  }
-
-  def getReturnUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = {
-    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/return-users-by-day.csv")
-    val lines = data.toList flatMap { _.split("\n") }
-
-    lines map { CSV.parse } collect {
-      case List(year, month, day, total) => (year.toInt, month.toInt, day.toInt, total.toLong)
-    }
-  }
-
   def getWeeklyPageviewsPerUsersByDay(): Map[DateMidnight, Double] = {
     val uptyped: List[(DateMidnight, Double)] = getWeeklyPageviewsPerUsersByDayDateExpanded collect {
       case (year, month, day, average) => (new DateMidnight(year, month, day), average)
@@ -140,6 +123,74 @@ object Analytics extends implicits.Dates with implicits.Tuples with implicits.St
 
     lines map { CSV.parse } collect {
       case List(year, month, day, average) => (year.toInt, month.toInt, day.toInt, average.toDouble)
+    }
+  }
+
+  def getUsersByDay(): Map[DateMidnight, Long] = {
+    val uptyped: List[(DateMidnight, Long)] = getUsersByDayDateExpanded collect {
+      case (year, month, day, total) => (new DateMidnight(year, month, day), total)
+    }
+
+    uptyped.toMap
+  }
+
+  def getUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/users-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    lines map { CSV.parse } collect {
+      case List(year, month, day, total) => (year.toInt, month.toInt, day.toInt, total.toLong)
+    }
+  }
+
+  def getReturnUsersByDay(): Map[DateMidnight, Long] = {
+    val uptyped: List[(DateMidnight, Long)] = getReturnUsersByDayDateExpanded collect {
+      case (year, month, day, total) => (new DateMidnight(year, month, day), total)
+    }
+
+    uptyped.toMap
+  }
+
+  def getReturnUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/return-users-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    lines map { CSV.parse } collect {
+      case List(year, month, day, total) => (year.toInt, month.toInt, day.toInt, total.toLong)
+    }
+  }
+
+  def getWeeklyReturnUsersByDay(): Map[DateMidnight, Long] = {
+    val uptyped: List[(DateMidnight, Long)] = getWeeklyReturnUsersByDayDateExpanded collect {
+      case (year, month, day, total) => (new DateMidnight(year, month, day), total)
+    }
+
+    uptyped.toMap
+  }
+
+  def getWeeklyReturnUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/weekly-return-users-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    lines map { CSV.parse } collect {
+      case List(year, month, day, total) => (year.toInt, month.toInt, day.toInt, total.toLong)
+    }
+  }
+
+  def getFourWeeklyReturnUsersByDay(): Map[DateMidnight, Long] = {
+    val uptyped: List[(DateMidnight, Long)] = getFourWeeklyReturnUsersByDayDateExpanded collect {
+      case (year, month, day, total) => (new DateMidnight(year, month, day), total)
+    }
+
+    uptyped.toMap
+  }
+
+  def getFourWeeklyReturnUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/four-weekly-return-users-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    lines map { CSV.parse } collect {
+      case List(year, month, day, total) => (year.toInt, month.toInt, day.toInt, total.toLong)
     }
   }
 
