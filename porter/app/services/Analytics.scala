@@ -300,6 +300,94 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     case (day, users) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, users)
   }
 
+  def getWeeklyUsersByDay(): Map[DateMidnight, Long] = {
+    val users: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
+        with day as (
+          select year, month, day_of_month, days_since_epoch, ophan
+          from pageviews
+          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          group by year, month, day_of_month, days_since_epoch, ophan
+        ), range as (
+          select year, month, day_of_month, days_since_epoch
+          from day
+          group by year, month, day_of_month, days_since_epoch
+        )
+        select year, month, day_of_month, count(*) as count
+        from (
+          select range.year, range.month, range.day_of_month, day.ophan
+          from day, range
+          where range.days_since_epoch >= day.days_since_epoch
+          and day.days_since_epoch > range.days_since_epoch - 7
+          group by range.year, range.month, range.day_of_month, day.ophan
+        )
+        group by year, month, day_of_month
+      """).list()
+
+      val uptyped = data map {
+        case (year, month, day, total) => (new DateMidnight(year, month, day), total)
+      }
+
+      uptyped.toMap
+    }
+
+    val usersWithZeros = {
+      val withZeros = users.withDefaultValue(0L)
+      val dateRange = users.keySet.min.dayOfEpoch to users.keySet.max.dayOfEpoch
+      dateRange map { Epoch.day } toMapWith { withZeros.apply }
+    }
+
+    usersWithZeros
+  }
+
+  def getWeeklyUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = getWeeklyUsersByDay().toList map {
+    case (day, users) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, users)
+  }
+
+  def getFourWeeklyUsersByDay(): Map[DateMidnight, Long] = {
+    val users: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
+        with day as (
+          select year, month, day_of_month, days_since_epoch, ophan
+          from pageviews
+          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          group by year, month, day_of_month, days_since_epoch, ophan
+        ), range as (
+          select year, month, day_of_month, days_since_epoch
+          from day
+          group by year, month, day_of_month, days_since_epoch
+        )
+        select year, month, day_of_month, count(*) as count
+        from (
+          select range.year, range.month, range.day_of_month, day.ophan
+          from day, range
+          where range.days_since_epoch >= day.days_since_epoch
+          and day.days_since_epoch > range.days_since_epoch - 28
+          group by range.year, range.month, range.day_of_month, day.ophan
+        )
+        group by year, month, day_of_month
+      """).list()
+
+      val uptyped = data map {
+        case (year, month, day, total) => (new DateMidnight(year, month, day), total)
+      }
+
+      uptyped.toMap
+    }
+
+    val usersWithZeros = {
+      val withZeros = users.withDefaultValue(0L)
+      val dateRange = users.keySet.min.dayOfEpoch to users.keySet.max.dayOfEpoch
+      dateRange map { Epoch.day } toMapWith { withZeros.apply }
+    }
+
+    usersWithZeros
+  }
+
+  def getFourWeeklyUsersByDayDateExpanded(): List[(Int, Int, Int, Long)] = getFourWeeklyUsersByDay().toList map {
+    case (day, users) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, users)
+  }
+
   def getReturnUsersByDay(): Map[DateMidnight, Long] = {
     val returns: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]( """

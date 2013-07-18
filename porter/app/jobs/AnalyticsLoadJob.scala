@@ -72,6 +72,20 @@ class AnalyticsLoadJob extends Job {
       "text/csv"
     )
 
+    log.info("Generating analytics for weekly users by day and uploading to S3.")
+    S3.putPrivate(
+      s"${Configuration.environment.stage.toUpperCase}/analytics/weekly-users-by-day.csv",
+      Analytics.getWeeklyUsersByDayDateExpanded() map { CSV.write } mkString "\n",
+      "text/csv"
+    )
+
+    log.info("Generating analytics for users by day and uploading to S3.")
+    S3.putPrivate(
+      s"${Configuration.environment.stage.toUpperCase}/analytics/four-weekly-users-by-day.csv",
+      Analytics.getFourWeeklyUsersByDayDateExpanded() map { CSV.write } mkString "\n",
+      "text/csv"
+    )
+
     log.info("Generating analytics for return users by day and uploading to S3.")
     S3.putPrivate(
       s"${Configuration.environment.stage.toUpperCase}/analytics/return-users-by-day.csv",

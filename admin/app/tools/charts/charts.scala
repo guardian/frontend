@@ -182,3 +182,21 @@ object DaysSeenPerUserGraph extends Chart with implicits.Tuples with implicits.D
     }
   }
 }
+
+object ActiveUserProportionGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Active users as a percentage of monthly active users (daily/weekly)"
+  lazy val labels = Seq("Date", "day", "week")
+
+  def dataset = {
+    val day = Analytics.getUsersByDay() withDefaultValue 0L
+    val week = Analytics.getWeeklyUsersByDay() withDefaultValue 0L
+    val month = Analytics.getFourWeeklyUsersByDay() mapValues { _ max 1L }
+
+    val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      val monthlyUsers = month(date) / 100.0
+      println(date.toString("dd/MM") + " -> " + day(date) + " " + month(date))
+      DataPoint(date.toString("dd/MM"), Seq(day(date)/monthlyUsers, week(date)/monthlyUsers))
+    }
+  }
+}
