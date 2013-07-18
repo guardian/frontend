@@ -52,14 +52,14 @@
                         <span class="list-header__title__part" data-bind="text: $data"></span> 
                     </div>
                     <div class="list-header__meta">
-                        <!-- ko if: lastUpdated -->
-                            updated <span class="list-header__meta__last-updated" data-bind="text: lastUpdated"></span> 
+                        <!-- ko if: timeAgo -->
+                            updated <span class="list-header__meta__last-updated" data-bind="text: timeAgo"></span> 
                             by <a class="list-header__meta__user" data-bind="
                                 text: updatedBy,
                                 attr: {href: 'mailto:' + updatedEmail}
                                 "></a>
                         <!-- /ko -->
-                        <!-- ko ifnot: lastUpdated -->
+                        <!-- ko ifnot: timeAgo -->
                             Empty
                         <!-- /ko -->
                     </div>

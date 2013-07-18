@@ -148,7 +148,7 @@ define([
                     function(xhr) { console.log(xhr); } // error
                 );
 
-                listObj.loadIsPending(true);
+                listObj.loadIsPending = true;
             }
         };
 

@@ -24,12 +24,14 @@ define([
         this.draft        = knockout.observableArray();
 
         this.lastUpdated  = knockout.observable();
+        this.timeAgo      = knockout.observable();
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
 
         this.liveMode     = knockout.observable(defaultToLiveMode);
-        this.loadIsPending  = knockout.observable();
         this.hasUnPublishedEdits = knockout.observable();
+
+        this.loadIsPending  = false;
 
         this.dropItem = function(item) {
             reqwest({
@@ -47,12 +49,12 @@ define([
                     self.load();
                 },
                 function(xhr) {
-                    self.loadIsPending(false);
+                    self.loadIsPending = false;
                     console.log(xhr);
                 }
             );
             self.live.remove(item);
-            self.loadIsPending(true);
+            self.loadIsPending = true;
         }
 
         this.load();
@@ -87,45 +89,61 @@ define([
             data: JSON.stringify(data)
         }).then(
             function(resp) {
-                self.liveMode(true);
-                self.load();
+                self.load({
+                    callback: function(){ self.liveMode(true); }
+                });
             },
             function(xhr) {
-                self.loadIsPending(false);
+                self.loadIsPending = false;
             }
         );
         this.hasUnPublishedEdits(false);
-        this.loadIsPending(true);
+        this.loadIsPending = true;
     };
 
-    List.prototype.load = function() {
+    List.prototype.load = function(opts) {
         var self = this;
+
+        opts = opts || {};
+
         reqwest({
             url: apiBase + '/' + this.id,
             type: 'json'
         }).then(
             function(resp) {
+                if (opts.isRefresh && self.loadIsPending) { return; }
+                self.loadIsPending = false;
                 self.populateLists(resp);
-                self.loadIsPending(false);
+                if (typeof opts.callback === 'function') { opts.callback(); } 
             },
             function(xhr) {
-                if(xhr.status === 404) {
+                if (opts.isRefresh && self.loadIsPending) { return; }
+                self.loadIsPending = false;
+                if(xhr.status === 404) { // 404 qualifies as an empty block
                     self.populateLists({});
+                    if (typeof opts.callback === 'function') { opts.callback(); } 
                 }
-                self.loadIsPending(false);
             }
         );
     };
 
     List.prototype.refresh = function() {
         if (globals.uiBusy) { return; }
-        this.load();
+        if (self.loadIsPending) { return; }
+        this.load({
+            isRefresh: true
+        });
     };
 
     List.prototype.populateLists = function(opts) {
         var self = this;
 
         if (globals.uiBusy) { return; }
+
+        this.lastUpdated(opts.lastUpdated);
+        this.timeAgo(this.getTimeAgo(opts.lastUpdated));
+        this.updatedBy(opts.updatedBy);
+        this.updatedEmail(opts.updatedEmail);
 
         // Knockout doesn't seem to empty elements dragged into
         // a container when it regenerates its DOM content. So empty it first.
@@ -152,17 +170,13 @@ define([
             });
         }
 
-        this.hasUnPublishedEdits(opts.areEqual === false);
-
         ContentApi.decorateItems(this.live());
         ContentApi.decorateItems(this.draft());
 
-        this.lastUpdated(this.timeAgoString(opts.lastUpdated));
-        this.updatedBy(opts.updatedBy);
-        this.updatedEmail(opts.updatedEmail);
+        this.hasUnPublishedEdits(opts.areEqual === false);
     };
 
-    List.prototype.timeAgoString = function(date) {
+    List.prototype.getTimeAgo = function(date) {
         return date ? humanized_time_span(date) : '';
     };
 

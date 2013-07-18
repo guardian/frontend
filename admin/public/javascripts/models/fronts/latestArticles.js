@@ -73,7 +73,6 @@ define([
 
         this.startPoller = function() {
             setInterval(function(){
-                console.log('search');
                 self.search();
             }, 10000);
         }
