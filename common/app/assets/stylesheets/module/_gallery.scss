@@ -2,7 +2,7 @@
 
 .gallery-container {
     overflow: hidden;
-    margin: 0 $gutter;
+    margin: 0;
 }
 
 .gallery-caption {
@@ -21,7 +21,7 @@
     margin-top: $baseline;
 }
 
-.gallery-swipe li {
+.gallery-container li {
     float: left;
     min-height: 200px;
 
