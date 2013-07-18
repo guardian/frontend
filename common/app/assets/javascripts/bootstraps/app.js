@@ -15,6 +15,7 @@ define('bootstraps/app', [
     "bootstraps/gallery",
     "bootstraps/interactive",
     "bootstraps/story",
+    "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag"
 ], function (
@@ -34,6 +35,7 @@ define('bootstraps/app', [
     Gallery,
     Interactive,
     Story,
+    ab,
     pageConfig,
     Tag
 ) {
@@ -51,6 +53,10 @@ define('bootstraps/app', [
             });
             e.init();
             common.mediator.on("module:error", e.log);
+        },
+    
+        initialiseAbTest: function (config) {
+            ab.segment(config);
         },
 
         loadFonts: function(config, ua) {
@@ -72,8 +78,9 @@ define('bootstraps/app', [
 
         domReady(function() {
             var context = document.getElementById('preload-1');
-
+            
             modules.initialiseAjax(config);
+            modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();

@@ -24,14 +24,16 @@ define([
     var config = {
         page: {
             'keywords': 'keyword,go here,there',
-            'oasUrl':"http://oas.guardian.co.uk/RealMedia/ads/",
-            'oasSiteIdHost':"m.guardian.co.uk",
             'contentType': 'contentType',
             'section': 'section',
             'pageType': 'page',
             'pageId': 'environment/2012/foo',
-            'audienceScienceUrl': 'http://js.revsci.net/gateway/gw.js?csid=E05516'
+            'audienceScienceUrl': 'http://js.revsci.net/gateway/gw.js?csid=E05516',
+            'oasUrl':"http://oas.guardian.co.uk/RealMedia/ads/",
+            'oasSiteIdHost':"m.guardian.co.uk",
+            'oasHost': "oas.guardian.co.uk"
         }
+
     };
    
     beforeEach(function(){

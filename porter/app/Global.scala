@@ -3,7 +3,8 @@ import play.api.GlobalSettings
 
 object Global extends GlobalSettings  {
   val jobs = List(
-    new JobScheduler[AnalyticsLoadJob]
+    new JobScheduler[AnalyticsLoadJob],
+    new JobScheduler[FastlyCloudwatchLoadJob]
   )
 
   override def onStart(app: play.api.Application) {

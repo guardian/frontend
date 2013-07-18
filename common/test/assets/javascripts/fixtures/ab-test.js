@@ -1,8 +1,8 @@
 define([], function () {
 
-    var ABTest = function () {
+    var ABTest = function (id) {
 
-        this.id = 'DummyTest';
+        this.id = id;
         this.audience = 1;
         this.expiry = '2045-01-01';
         this.description = 'Dummy test';
@@ -12,16 +12,14 @@ define([], function () {
         this.variants = [
             {
                 id: 'control',
-                split: 50,
-                test: function () {
-                    console.log('Control ran');
+                test: function (context) {
+                    console.log('Control ran', context);
                 }
             },
             {
                 id: 'hide',
-                split: 50,
-                test: function () {
-                    console.log('Hide ran');
+                test: function (context) {
+                    console.log('Hide ran', context);
                 }
             }
         ];

@@ -21,4 +21,8 @@ object PorterConfiguration {
       driver = "org.postgresql.Driver"
     )
   }
+
+  object fastly {
+    lazy val key = configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))
+  }
 }

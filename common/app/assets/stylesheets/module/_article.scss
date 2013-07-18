@@ -1,11 +1,17 @@
+$a-leftCol-width:    gs-span(2);
+$a-leftCol-trigger:  gs-span(13) + $gutter*2;
+$a-rightCol-width:   gs-span(4);
+$a-rightCol-trigger: gs-span(11) + $gutter*2;
+
 .article-zone {
     padding: 13px 0 14px;
-    margin-left: $gutter;
-    margin-right: $gutter;
+    margin-left: $gs-gutter;
+    margin-right: $gs-gutter;
+    font-weight: bolder;
     line-height: 1;
     border-bottom: 1px solid $mushroom;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         border-top: none;
     }
 
@@ -19,12 +25,30 @@
 }
 
 .article-head {
-    padding: $baseline*3 0 $baseline*4;
+    padding-top: $baseline*3;
 }
 
 .article-headline {
     @extend %type-3;
     margin-bottom: $baseline*2;
+
+    @include mq(tablet) {
+        font-family: $serifheadline;
+        -webkit-font-smoothing: antialiased;
+        font-size: 34px;
+        font-size: 3.4rem;
+        line-height: 42px;
+        line-height: 4.2rem;
+        margin-bottom: $baseline*5;
+    }
+
+    @include mq(($a-rightCol-trigger + gs-span(1))) {
+        font-size: 40px;
+        font-size: 4rem;
+        line-height: 48px;
+        line-height: 4.8rem;
+        margin-bottom: $baseline*6;
+    }
 
     a {
         &:link,
@@ -38,8 +62,22 @@
 }
 
 .article-standfirst {
-    margin-bottom: 0;
+    margin-bottom: $baseline*4;
     text-rendering: optimizeLegibility;
+
+    @include mq(tablet) {
+        -webkit-font-smoothing: antialiased;
+        font-size: 16px;
+        font-size: 1.6rem;
+        line-height: 24px;
+        line-height: 2.4rem;
+    }
+    @include mq(desktop) {
+        font-size: 18px;
+        font-size: 1.8rem;
+        line-height: 24px;
+        line-height: 2.4rem;
+    }
 }
 
 .bullet {
@@ -47,10 +85,18 @@
     display: inline-block;
     color: #999999;
     margin: $baseline/2 4px 0 0;
+
+    &:first-of-type {
+        margin-top: $baseline;
+    }
 }
 
-.bullet:first-of-type {
-    margin-top: $baseline;
+.article__inner {
+    position: relative;
+}
+
+.byline--cloned {
+    display: none;
 }
 
 .byline {
@@ -58,16 +104,34 @@
     border-bottom: 1px solid #cccccc;
     margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
+
+    @include mq(tablet, ($a-leftCol-trigger - 1px)) {
+        font-size: 16px;
+        font-size: 1.6rem;
+    }
+    @include mq($a-rightCol-trigger) {
+        display: block;
+    }
+    @include mq($a-leftCol-trigger) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: $a-leftCol-width;
+    }
 }
+@include mq(tablet) {
+    .d-tabs__item--byline {
+        font-size: 16px !important;
+        font-size: 1.6rem !important;
+    }
+}
+
 .media-primary {
     margin-left: $gutter * -1;
     margin-right: $gutter * -1;
 }
 .article .main-image {
     margin-bottom: 0;
-}
-.article-body {
-
 }
 
 .gu-video {
@@ -79,4 +143,92 @@ video {
     max-width: 100%;
     height: auto;
     @include user-select;
+}
+
+
+/* Layout changes across devices
+   ========================================================================== */
+
+@include mq(tablet) {
+    .article-head,
+    .main-caption {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .d-tabs,
+    .byline,
+    .player,
+    .media-primary {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .d-tabs__item--byline {
+        padding-left: $baseline !important;
+    }
+}
+
+@mixin hide-discussion-tabs {
+    .d-actions .top,
+    .d-tabs {
+        display: none;
+    }
+}
+@mixin comments-below-article {
+    .article__container,
+    .article__discussion {
+        display: block !important;
+    }
+}
+
+@include mq($a-rightCol-trigger) {
+
+    @include hide-discussion-tabs;
+    @include comments-below-article;
+
+    .article-wrapper {
+        position: relative;
+        max-width: none;
+
+         > .article-zone {
+            margin-right: $a-rightCol-width + $gs-gutter;
+        }
+    }
+    .d-show-cta-wrapper,
+    .article-head,
+    .article__inner {
+        padding-right: $a-rightCol-width + $gs-gutter !important;
+        padding-left: 0;
+        max-width: gs-span(8);
+    }
+    .social-wrapper {
+        padding: 0 !important;
+        margin: 0 !important;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: $a-rightCol-width;
+    }
+}
+
+@include mq($a-leftCol-trigger) {
+    #preloads {
+        padding: 0 $gutter;
+    }
+    .article-wrapper {
+        padding-left: 0;
+        padding-right: 0;
+
+        > .article-zone {
+            margin-left: $a-leftCol-width + $gs-gutter;
+        }
+    }
+    .d-show-cta-wrapper,
+    .article-head,
+    .article__inner {
+        padding-left: $a-leftCol-width + $gs-gutter !important;
+    }
+    .article-head {
+        padding-top: $baseline*2;
+        padding-bottom: $baseline*2;
+    }
 }

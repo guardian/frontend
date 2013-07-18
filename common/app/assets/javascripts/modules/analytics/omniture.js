@@ -3,13 +3,15 @@ define([
     'modules/detect',
     'modules/experiments/ab',
     'modules/storage',
-    'components/gu-id/id'
+    'components/gu-id/id',
+    'modules/errors'
 ], function(
     common,
     detect,
     ab,
     storage,
-    id
+    id,
+    Errors
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -26,6 +28,14 @@ define([
         w = w || {};
 
         this.logView = function() {
+
+            // temporary test of the diagnostics box - @commuterjoy
+            var oneInOneThousand = (Math.random() < 0.001);
+            if (oneInOneThousand) {
+                var msg = document.body.className + '~' + s.prop51 + '~' + s.eVar51 + '~' + localStorage.getItem('gu.ab.participations'),
+                    e = new Errors({ window: window, isDev: config.page.isDev }).log(msg, 'modules/analytics/omniture', 0, false);
+            }
+
             s.t();
         };
 
@@ -118,23 +128,14 @@ define([
             s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
-    
-            var participations = ab.getParticipations(),
-                participationsKeys = Object.keys(participations);
+   
+            var mvt = ab.makeOmnitureTag(config, document);
+            if (mvt.length > 0) {
 
-            if (participationsKeys.length > 0) {
-                
-                var testData = participationsKeys.map(function(k){
-                    return ['AB', k, participations[k].variant].join(' | ');
-                }).join(',');
-
-                s.prop51  = testData;
-                s.eVar51  = testData;
+                s.prop51  = mvt;
+                s.eVar51  = mvt;
                 s.events = s.apl(s.events,'event58',',');
 
-            } else if (detect.canSwipe()) {
-                s.prop51  = 'can swipe';
-                s.eVar51  = 'can swipe';
             }
 
             s.prop56    = 'Javascript';
@@ -147,10 +148,6 @@ define([
                 s.prop30 = 'content';
             } else {
                 s.prop30 = 'non-content';
-            }
-
-            if (window.location.hash === '#popup:homescreen') {
-                s.eVar38 = 'popup:homescreen';
             }
 
             /* Retrieve navigation interaction data, incl. swipe */

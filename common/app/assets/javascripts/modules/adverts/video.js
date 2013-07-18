@@ -181,7 +181,7 @@ define([
     Video.prototype.init = function(config) {
         var id = (config.pageId === '') ? '' : config.pageId + '/',
             host = (window.location.hostname === "localhost") ? "m.gucode.co.uk" :  window.location.hostname,
-            url = "http://oas.guardian.co.uk//2/" + host + "/" + id + "oas.html/" + (new Date().getTime()) + "@x40";
+            url = "http://" + config.oasHost + "//2/" + host + "/" + id + "oas.html/" + (new Date().getTime()) + "@x50";
 
         this.getVastData(url);
 

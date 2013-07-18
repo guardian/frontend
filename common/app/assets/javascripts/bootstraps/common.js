@@ -19,6 +19,7 @@ define([
     'modules/navigation/control',
     'modules/navigation/australia',
     'modules/navigation/edition-switch',
+    'modules/navigation/platform-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
@@ -52,6 +53,7 @@ define([
     NavControl,
     Australia,
     EditionSwitch,
+    PlatformSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
@@ -92,6 +94,7 @@ define([
                 search = new Search(config),
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
+                platforms = new PlatformSwitch(),
                 header = document.querySelector('body');
 
 
@@ -148,9 +151,18 @@ define([
         initLightboxGalleries: function () {
             common.mediator.on('page:common:ready', function(config, context) {
                 var galleries = new LightboxGallery(config, context);
-                galleries.init({
-                    urlHashEnabled: true
-                });
+                galleries.init();
+            });
+
+            // Register as a page view
+            common.mediator.on('module:lightbox-gallery:loaded', function(config, context) {
+                common.mediator.emit('page:common:deferred:loaded', config, context);
+            });
+        },
+        
+        runAbTests: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                ab.run(config, context);
             });
         },
 
@@ -175,8 +187,7 @@ define([
 
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
-                // AB must execute before Omniture
-                ab.init(config, context);
+                
 
                 common.mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
@@ -270,29 +281,6 @@ define([
                     }
                 });
             }
-        },
-
-        paragraphSpacing: function(config) {
-            // NOTE: force user's to view particular paragraph spacing - can be deleted
-            // TODO: ability to force user in particular ab test
-            var hash = window.location.hash,
-                storageKey = 'gu.test.paragraph-spacing',
-                test = (hash.indexOf('#paragraph-spacing=') === 0) ? hash.split('=')[1] : storage.get(storageKey);
-            if (test) {
-                ['control', 'no-spacing-indents', 'more-spacing'].some(function(validTest) {
-                    if (test === validTest) {
-                        if (config.page.contentType === 'Article') {
-                            // remove any existing 'test-paragraph-spacing--' classes (added by the ab test)
-                            document.body.className = document.body.className.replace(/(\s|^)test-paragraph-spacing--[^\s]*/g, '')
-                                + ' test-paragraph-spacing--' + test;
-                            // force ab test off, in case it runs later
-                            config.switches.abParagraphSpacing = false;
-                        }
-                        storage.set(storageKey, test);
-                        return true;
-                    }
-                });
-            }
         }
     };
 
@@ -316,9 +304,9 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.paragraphSpacing(config);
             modules.upgradeImages();
             modules.showTabs();
+            modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
