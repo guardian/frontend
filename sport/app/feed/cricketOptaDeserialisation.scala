@@ -170,7 +170,7 @@ class Parser {
 
   private def parseOfficials(officials: NodeSeq) :List[String]=
     // If the feed has empty string officials, just return  default string
-    (officials \ "@official_1_first_id").text match {
+    (officials \ "@official_1_id").text match {
       case empty:String if (empty.isEmpty) => List("Umpires yet to be announced")
       case _ =>
         List(s"${(officials \ "@official_1_first_name").text} ${(officials \ "@official_1_last_name").text}",
