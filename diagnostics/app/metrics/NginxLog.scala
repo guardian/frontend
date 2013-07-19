@@ -31,19 +31,6 @@ object NginxLog {
     }
   }
 
-  // handle _fonts_ namespaced errors
-  object fonts {
-
-    println("- fonts -")
-
-    val total = new CountMetric("diagnostics", "fonts", "Font render time warnings", "")
-    val metrics: Seq[Metric] = Seq(total)
-
-    def apply() {
-      total.recordCount(1)
-    }
-  }
-  
   // handle feature healthchecks
   object feature {
     
@@ -161,7 +148,7 @@ object NginxLog {
   }
 
   // combine all the metrics
-  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ fonts.metrics ++ ads.metrics ++ feature.metrics
+  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ ads.metrics ++ feature.metrics
 
   Tailer.create(new File(Configuration.nginx.log), new TailerListenerAdapter() {
     override def handle(line: String) {
@@ -190,7 +177,6 @@ object NginxLog {
         
         // handle individual errors
         namespace.getOrElse("unknown") match {
-          case "fonts" => fonts()
           case "js" => js(userAgent)
           case "ads" => ads()
           case "feature" => feature()
