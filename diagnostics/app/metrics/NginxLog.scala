@@ -34,13 +34,19 @@ object NginxLog {
   // handle feature healthchecks
   object feature {
     
-    println("- feature -")
+    val navigation = new CountMetric("diagnostics", "feature_navigation", "Interactions with navigation bar", "")
+    val other = new CountMetric("diagnostics", "feature_other", "Uncaught interactions", "")
+    
+    val metrics: Seq[Metric] = Seq(navigation)
 
-    val total = new CountMetric("diagnostics", "features", "Feature healthchecks", "")
-    val metrics: Seq[Metric] = Seq(total)
-
-    def apply() {
-      total.recordCount(1)
+    def apply(path: Option[String]) {
+      
+      val measure = path.getOrElse("").split("[?\\/]").toList.drop(3).headOption
+      
+      measure.getOrElse("unknown") match {
+        case "navigation" => navigation.recordCount(1)  
+        case _ => other.recordCount(1) 
+      }
     }
   }
 
@@ -78,8 +84,6 @@ object NginxLog {
       val os = ua.getOperatingSystem
       val osFamily = os.getFamilyName.replaceAll(" ", "")
 
-      println(osFamily)
-
       osFamily.toLowerCase match {
 
         case "ios" => js_ios.recordCount(1)
@@ -113,20 +117,16 @@ object NginxLog {
 
       path filter { path => isMetric(path) && (!isHealthCheck(userAgent)) } foreach { _ =>
 
-        println(path)
-
         val namespace = path.getOrElse("").split("[?\\/]").toList.drop(2).headOption
 
         // log all errors
         entry()
-
-        println(namespace)
         
         // handle individual errors
         namespace.getOrElse("unknown") match {
           case "js" => js(userAgent)
           case "ads" => ads()
-          case "feature" => feature()
+          case "feature" => feature(path)
           case _ => null
         }
 
