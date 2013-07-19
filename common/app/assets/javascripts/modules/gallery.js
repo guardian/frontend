@@ -113,7 +113,7 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
                 // this means the user used the back/forward buttons
                 // so we should change gallery state to match
                 window.onpopstate = function(event) {
-                    if (event.state && event.state.index) {
+                    if (event.state && event.state.index && (event.state.index !== view.galleryConfig.currentIndex)) {
 
                         // if it's swipe we need to animate the slider
                         // so first we work out which direction to move in

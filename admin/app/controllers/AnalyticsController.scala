@@ -9,19 +9,21 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
   def kpis() = AuthAction { request =>
   // thats right, we only do PROD analytics
     Ok(views.html.kpis("PROD", Seq(
-      AveragePageviewsByDayGraph,
-      ReturnUsersByDayGraph
+      PageviewsPerUserGraph,
+      ReturnUsersPercentageByDayGraph,
+      DaysSeenPerUserGraph,
+      ActiveUserProportionGraph
     )))
   }
 
   def pageviews() = AuthAction { request =>
       // thats right, we only do PROD analytics
       Ok(views.html.pageviews("PROD", Seq(
-        PageviewsGeoGraph,
-        PageviewsGraph,
-        NewPageviewsGraph,
-        PageviewsBrowsersTreeMapGraph,
-        PageviewsOSTreeMapGraph
+        PageviewsByCountryGeoGraph,
+        PageviewsByDayGraph,
+        NewPageviewsByDayGraph,
+        PageviewsByBrowserTreeMapGraph,
+        PageviewsByOperatingSystemTreeMapGraph
       )))
   }
 }

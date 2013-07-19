@@ -19,9 +19,14 @@ casper.start(host + 'world/2013/jun/06/obama-administration-nsa-verizon-records'
 casper.then(function() {
 
     casper.test.comment('Read top level comments');
+//wait for comment count to be visible
+    casper.waitForText('1678', function() {
+    casper.click('.js-show-discussion.js-top');
+    },function timeout(){
 
-    casper.waitForSelector('.js-show-discussion', function() {
-    casper.click('.js-show-discussion');
+    casper.captureSelector('body.png', 'body');
+casper.test.fail('failed to find comment bubble');
+
     });
 
 

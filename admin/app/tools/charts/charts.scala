@@ -62,60 +62,42 @@ case class Request2xxGraph(name: String, private val metrics: Future[GetMetricSt
   )
 }
 
-object AveragePageviewsByDayGraph extends Chart {
-  val name = "Average pageviews per user (by day)"
-  lazy val labels = Seq("Date", "pageviews")
-
-  def dataset = Analytics.averagePageviewsByDay() map {
-    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
-  }
-}
-
-object ReturnUsersByDayGraph extends Chart {
-  val name = "Return users (by day)"
-  lazy val labels = Seq("Date", "users")
-
-  def dataset = Analytics.returnUsersByDay() map {
-    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
-  }
-}
-
-object PageviewsGraph extends Chart {
+object PageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
   val name = "Pageviews"
   lazy val labels = Seq("Date", "pageviews")
 
-  def dataset = Analytics.pageviews() map {
+  def dataset = Analytics.getPageviewsByDay().toList sortBy { _.first } map {
     case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
   }
 }
 
-object NewPageviewsGraph extends Chart {
+object NewPageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Dates{
   val name = "Pageviews (new users)"
   lazy val labels = Seq("Date", "pageviews")
 
-  def dataset = Analytics.newCookies() map {
+  def dataset = Analytics.getNewPageviewsByDay().toList sortBy { _.first } map {
     case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
   }
 }
 
-object PageviewsGeoGraph extends Chart {
+object PageviewsByCountryGeoGraph extends Chart {
   val name = "Pageviews"
   lazy val labels = Seq("Country", "pageviews")
 
   override lazy val form: String = "GeoChart"
 
-  def dataset = Analytics.pageviewsByCountry() map {
+  def dataset = Analytics.getPageviewsByCountry().toList map {
     case (country, total) => DataPoint(country, Seq(total))
   }
 }
 
-object PageviewsOSTreeMapGraph extends Chart {
+object PageviewsByOperatingSystemTreeMapGraph extends Chart {
   val name = ""
 
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("OS", "pageviews")
-  def dataset = Analytics.pageviewsByOperatingSystem() map {
+  def dataset = Analytics.getPageviewsByOperatingSystem().toList map {
     case (os, total) => DataPoint(os, Seq(total))
   }
 
@@ -130,23 +112,91 @@ object PageviewsOSTreeMapGraph extends Chart {
   }
 }
 
-object PageviewsBrowsersTreeMapGraph extends Chart {
+object PageviewsByBrowserTreeMapGraph extends Chart {
   val name = ""
 
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("Browsers", "pageviews")
-  def dataset = Analytics.pageviewsByBrowser() map {
+  def dataset = Analytics.getPageviewsByBrowser().toList map {
     case (browser, total) => DataPoint(browser, Seq(total))
   }
 
   override def asDataset = s"[[$labelString], [$rootElement], $dataString]"
-  private def labelString = "'Browser','parent','pageviews'"
+  private def labelString = "'Browser','parent','getPageviewsByDay'"
   private def rootElement = "'Browser', null, 0"
 
   private def dataString = dataset.map(datapointString).mkString(",")
   private def datapointString(point: DataPoint) = {
     val data = point.values.mkString(",")
     s"['${point.name}', 'Browser', $data]"
+  }
+}
+
+object PageviewsPerUserGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Average pageviews per user (daily/weekly/4 weekly)"
+  lazy val labels = Seq("Date", "day", "week", "4 week")
+
+  def dataset = {
+    val day = Analytics.getPageviewsPerUserByDay() withDefaultValue 0.0
+    val week = Analytics.getWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
+    val month = Analytics.getFourWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
+
+    val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      DataPoint(date.toString("dd/MM"), Seq(day(date), week(date), month(date)))
+    }
+  }
+}
+
+object ReturnUsersPercentageByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Return users % (daily/weekly/4 weekly)"
+  lazy val labels = Seq("Date", "day", "week", "4 week")
+
+  def dataset = {
+    val users = Analytics.getUsersByDay() mapValues { _ max 1L }
+
+    val day = Analytics.getReturnUsersByDay() withDefaultValue 0L
+    val week = Analytics.getWeeklyReturnUsersByDay() withDefaultValue 0L
+    val month = Analytics.getFourWeeklyReturnUsersByDay() withDefaultValue 0L
+
+    val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      val totalUsers = users(date) / 100.0
+      DataPoint(date.toString("dd/MM"), Seq(day(date)/totalUsers, week(date)/totalUsers, month(date)/totalUsers))
+    }
+  }
+}
+
+object DaysSeenPerUserGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Average days seen per user  (weekly/4 weekly)"
+  lazy val labels = Seq("Date", "week", "4 week")
+
+  def dataset = {
+    val week = Analytics.getWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
+    val month = Analytics.getFourWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
+
+    val range = (week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      DataPoint(date.toString("dd/MM"), Seq(week(date), month(date)))
+    }
+  }
+}
+
+object ActiveUserProportionGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Active users as a percentage of monthly active users (daily/weekly)"
+  lazy val labels = Seq("Date", "day", "week")
+
+  def dataset = {
+    val day = Analytics.getUsersByDay() withDefaultValue 0L
+    val week = Analytics.getWeeklyUsersByDay() withDefaultValue 0L
+    val month = Analytics.getFourWeeklyUsersByDay() mapValues { _ max 1L }
+
+    val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      val monthlyUsers = month(date) / 100.0
+      println(date.toString("dd/MM") + " -> " + day(date) + " " + month(date))
+      DataPoint(date.toString("dd/MM"), Seq(day(date)/monthlyUsers, week(date)/monthlyUsers))
+    }
   }
 }

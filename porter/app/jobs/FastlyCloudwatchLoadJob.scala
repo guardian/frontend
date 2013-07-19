@@ -6,16 +6,19 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.collection.mutable
 import conf.Configuration
+import org.joda.time.DateTime
 
 class FastlyCloudwatchLoadJob extends Job {
-  val cron = "0 * * * * ?"
+  val cron = "0 0/2 * * * ?"
   val metric = PorterMetrics.FastlyCloudwatchLoadTimingMetric
 
   // Samples in CloudWatch are additive so we want to
   // limit duplicate reporting as much as reasonable.
   // We do not want to corrupt the past either.
+  // Choose a default value that accounts for the Fastly api query,
+  // which omits the most recent 15 minutes of results.
   val latestTimestampsSent = mutable.Map[(String, String), Long]().
-    withDefaultValue(System.currentTimeMillis)
+    withDefaultValue( DateTime.now().minusMinutes(15).getMillis() )
 
   def run() {
     log.info("Loading statistics from Fastly to CloudWatch.")

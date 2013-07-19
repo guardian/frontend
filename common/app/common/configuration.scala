@@ -116,12 +116,14 @@ class GuardianConfiguration(
     }
   }
 
+  object oas {
+    lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse("m.guardian.co.uk")
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
-    // But does not change accross environments
+    // But does not change across environments
     lazy val config: Map[String, String] = Map(
-      "oasUrl" -> "http://oas.guardian.co.uk/RealMedia/ads/",
-      "oasSiteIdHost" -> configuration.getStringProperty("oas.siteId.host").getOrElse("m.guardian.co.uk"),
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
       "discussionApiUrl" -> "http://discussion.guardianapis.com/discussion-api",

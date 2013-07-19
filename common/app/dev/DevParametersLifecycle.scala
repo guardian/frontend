@@ -29,8 +29,13 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     IMPORTANT - we strip out other parameters in the CDN - simply adding a parameter here is not enough
   */
   val allowedParams = Seq(
+
+    // these params are whitelisted in the CDN
     "index",
-    "page"
+    "page",
+
+    // these params are only whitelisted on dev machines, they will not make it through the CDN
+    "view"
   )
 
   override def onRouteRequest(request: RequestHeader) = {
