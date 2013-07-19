@@ -21,7 +21,7 @@ case class FastlyStatistic(service: String, timestamp: Long, name: String, value
 object Fastly extends ExecutionContexts with Logging {
 
   def apply(): Future[List[FastlyStatistic]] = {
-    val response: Future[String] = WS.url("https://api.fastly.com/stats?by=minute&from=30+minutes+ago").withHeaders(
+    val response: Future[String] = WS.url("https://api.fastly.com/stats?by=minute&from=45+minutes+ago&to=15+minutes+ago").withHeaders(
       "Fastly-Key" -> PorterConfiguration.fastly.key
     ).get() map { _.body }
 
