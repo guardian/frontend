@@ -56,7 +56,8 @@ define('bootstraps/app', [
             e.init();
             common.mediator.on("module:error", e.log);
         },
-        
+       
+       // RUM on features
        sendInTheCanary: function (config) {
             var c = new Canary({
                 isDev: config.page.isDev
