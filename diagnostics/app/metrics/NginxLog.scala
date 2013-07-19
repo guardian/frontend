@@ -32,10 +32,10 @@ object NginxLog {
   }
 
   // handle feature healthchecks
-  object feature {
+  object canary {
     
-    val navigation = new CountMetric("diagnostics", "feature_navigation", "Interactions with navigation bar", "")
-    val other = new CountMetric("diagnostics", "feature_other", "Uncaught interactions", "")
+    val navigation = new CountMetric("diagnostics", "canary_navigation", "Interactions with navigation bar", "")
+    val other = new CountMetric("diagnostics", "canary_other", "Uncaught interactions", "")
     
     val metrics: Seq[Metric] = Seq(navigation)
 
@@ -99,7 +99,7 @@ object NginxLog {
   }
 
   // combine all the metrics
-  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ ads.metrics ++ feature.metrics
+  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ ads.metrics ++ canary.metrics
 
   Tailer.create(new File(Configuration.nginx.log), new TailerListenerAdapter() {
     override def handle(line: String) {
@@ -126,7 +126,7 @@ object NginxLog {
         namespace.getOrElse("unknown") match {
           case "js" => js(userAgent)
           case "ads" => ads()
-          case "feature" => feature(path)
+          case "canary" => canary(path)
           case _ => null
         }
 

@@ -23,7 +23,7 @@ define(['common'], function (common) {
                 body.appendChild(image);
             },
             makeUrl = function(feature) {
-                return url + path + '?' + 'feature/' + feature ;
+                return url + path + '?' + 'canary/' + feature ;
             },
             log = function(feature) {
                 var url = makeUrl(feature);
