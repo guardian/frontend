@@ -34,7 +34,22 @@ object NginxLog {
   // handle _fonts_ namespaced errors
   object fonts {
 
+    println("- fonts -")
+
     val total = new CountMetric("diagnostics", "fonts", "Font render time warnings", "")
+    val metrics: Seq[Metric] = Seq(total)
+
+    def apply() {
+      total.recordCount(1)
+    }
+  }
+  
+  // handle feature healthchecks
+  object feature {
+    
+    println("- feature -")
+
+    val total = new CountMetric("diagnostics", "features", "Feature healthchecks", "")
     val metrics: Seq[Metric] = Seq(total)
 
     def apply() {
@@ -146,7 +161,7 @@ object NginxLog {
   }
 
   // combine all the metrics
-  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ fonts.metrics ++ ads.metrics
+  val metrics: Seq[Metric] = entry.metrics ++ js.metrics ++ fonts.metrics ++ ads.metrics ++ feature.metrics
 
   Tailer.create(new File(Configuration.nginx.log), new TailerListenerAdapter() {
     override def handle(line: String) {
@@ -164,16 +179,21 @@ object NginxLog {
 
       path filter { path => isMetric(path) && (!isHealthCheck(userAgent)) } foreach { _ =>
 
+        println(path)
+
         val namespace = path.getOrElse("").split("[?\\/]").toList.drop(2).headOption
 
         // log all errors
         entry()
 
+        println(namespace)
+        
         // handle individual errors
         namespace.getOrElse("unknown") match {
           case "fonts" => fonts()
           case "js" => js(userAgent)
           case "ads" => ads()
+          case "feature" => feature()
           case _ => null
         }
 
