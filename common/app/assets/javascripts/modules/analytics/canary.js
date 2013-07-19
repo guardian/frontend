@@ -34,6 +34,7 @@ define(['common'], function (common) {
                 common.mediator.on('module:clickstream:click', function (clickSpec) {
                     if (clickSpec.toLowerCase().indexOf('global navigation: header | sections') > -1) {
                         log('navigation');
+                    }
                 });
             };
 
