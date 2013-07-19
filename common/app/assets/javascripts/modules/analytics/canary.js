@@ -32,7 +32,7 @@ define(['common'], function (common) {
             },
             init = function() {
                 common.mediator.on('module:clickstream:click', function (clickSpec) {
-                    if (clickSpec.toLowerCase().indexOf('global navigation: header | sections') > -1)
+                    if (clickSpec.toLowerCase().indexOf('global navigation: header | sections') > -1) {
                         log('navigation');
                 });
             };
