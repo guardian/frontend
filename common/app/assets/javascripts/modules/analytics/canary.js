@@ -26,7 +26,6 @@ define(['common'], function (common) {
                 return url + path + '?' + 'feature/' + feature ;
             },
             log = function(feature) {
-                cons.log('canary ' + feature);
                 var url = makeUrl(feature);
                 createImage(url);
             },
