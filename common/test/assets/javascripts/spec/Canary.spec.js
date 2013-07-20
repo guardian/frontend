@@ -2,14 +2,18 @@ define(['common', 'bean', 'modules/analytics/canary'], function(common, bean, Ca
 
     describe("Canary", function() {
        
-        var e,
-            p = '/uk/2012/oct/15/mod-military-arms-firms',
-            w = {},
-            fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' };
+        var w = {};
         
         it("should exist", function(){
-            e = new Canary({window: w});
-            expect(e).toBeDefined();
+            var c = new Canary({window: w});
+            expect(c).toBeDefined();
+        });
+        
+        it("should log interactions with features", function(){
+            var c = new Canary();
+            c.init();
+            common.mediator.emit('module:clickstream:click', 'Article | global navigation: header | sections | Culture')
+            expect(document.querySelector('#js-canary').getAttribute('src')).toContain('px.gif?canary/navigation');
         });
 
     })
