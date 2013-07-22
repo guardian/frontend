@@ -34,15 +34,15 @@ define(['common'], function (common) {
             evaluateClick = function(clickSpec) {
                 // https://github.com/guardian/frontend/pull/1237#issuecomment-21261022
                 [
-                    { 
+                    {
                         linkname: 'global navigation: header | sections',
                         feature: 'navigation'
                     }
                 ].forEach(function(spec) {
                     if (clickSpec.toLowerCase().indexOf(spec.linkname) > -1) {
-                        log(spec.feature); 
+                        log(spec.feature);
                     }
-                })
+                });
             },
             init = function() {
                
