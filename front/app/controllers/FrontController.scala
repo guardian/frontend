@@ -6,7 +6,6 @@ import model._
 import conf._
 import play.api.mvc._
 import model.Trailblock
-import Switches.EditionRedirectSwitch
 
 // TODO, this needs a rethink, does not seem elegant
 object FrontPage {
@@ -155,7 +154,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         }
       }
 
-      if (EditionRedirectSwitch.isSwitchedOn && request.isSingleDomain && path != realPath) {
+      if (path != realPath) {
         Redirect(s"/$realPath")
       } else if (trailblocks.isEmpty) {
         InternalServerError

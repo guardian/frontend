@@ -67,7 +67,7 @@ object LinkTo extends Logging {
   }
 
   private def paramsOk(queryString: String, url: String) = {
-    if (queryString.contains("mobile-redirect=false")) {
+    if (queryString.contains("view=desktop")) {
       log.debug("unsupported: url %s was a mobile redirect" format (url))
       false
     } else {

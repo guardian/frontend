@@ -94,12 +94,10 @@ define([
 
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
 
-            //TODO temporary till after dotcom switch
-            // then make this permanent in the omniture vendor file
-            if (config.page.isDotcom) {
-                s.trackingServer="hits.theguardian.com";
-                s.trackingServerSecure="hits-secure.theguardian.com";
-            }
+            //TODO make this permanent in the omniture vendor file
+            s.trackingServer="hits.theguardian.com";
+            s.trackingServerSecure="hits-secure.theguardian.com";
+
 
             s.ce= "UTF-8";
             s.pageName  = config.page.analyticsName;
