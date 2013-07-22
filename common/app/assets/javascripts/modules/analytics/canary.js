@@ -15,7 +15,6 @@ define(['common'], function (common) {
             url = "//beacon." + window.location.hostname,
             sample = c.sample || 0.01, // only sample 1:100 requests (we are interested in % of drop, not absolute numbers)
             path = '/px.gif',
-            cons = c.console || window.console,
             body = document.body,
             createImage = function(url) {
                 var image = new Image();
