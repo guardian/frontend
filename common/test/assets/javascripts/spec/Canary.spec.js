@@ -5,7 +5,7 @@ define(['common', 'bean', 'modules/analytics/canary'], function(common, bean, Ca
         var w = {};
        
         beforeEach(function(){
-            console.log(common.$g('#js-canary').remove());
+            common.$g('#js-canary').remove();
         })
 
         it("should exist", function(){
