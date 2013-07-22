@@ -3,7 +3,11 @@ define(['common', 'bean', 'modules/analytics/canary'], function(common, bean, Ca
     describe("Canary", function() {
        
         var w = {};
-        
+       
+        beforeEach(function(){
+            console.log(common.$g('#js-canary').remove());
+        })
+
         it("should exist", function(){
             var c = new Canary({window: w});
             expect(c).toBeDefined();
@@ -20,7 +24,7 @@ define(['common', 'bean', 'modules/analytics/canary'], function(common, bean, Ca
             var c = new Canary({ sample: 1 });
             c.init();
             common.mediator.emit('module:clickstream:click', 'Unknown | clickstream | event')
-            expect(document.querySelectorAll('#js-canary').length).toBe(1);
+            expect(document.querySelectorAll('#js-canary').length).toBe(0);
         });
 
     })
