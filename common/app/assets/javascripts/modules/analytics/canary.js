@@ -6,13 +6,14 @@ define(['common'], function (common) {
     // before affecting the miners. Signs of distress from the bird indicated to the miners that
     // conditions were unsafe.
 
-    // Our canary logs feature interactions to help quickly find broken features..
+    // Our canary logs feature interactions (clickstream) to help quickly find broken features.
     
     var Canary = function (config) {
 
         var c = config || {},
             isDev = (c.isDev !== undefined) ? c.isDev : false,
             url = "//beacon." + window.location.hostname,
+            sample = c.sample || 0.01, // only sample 1:100 requests (we are interested in % of drop, not absolute numbers)
             path = '/px.gif',
             cons = c.console || window.console,
             body = document.body,
@@ -31,12 +32,22 @@ define(['common'], function (common) {
                 createImage(url);
             },
             init = function() {
+               
+                if (Math.random() > sample) {
+                    return false;
+                }
+                
+                // https://github.com/guardian/frontend/pull/1237#issuecomment-21261022
+
                 // navigation
                 common.mediator.on('module:clickstream:click', function (clickSpec) {
+                    
                     if (clickSpec.toLowerCase().indexOf('global navigation: header | sections') > -1) {
                         log('navigation');
                     }
+
                 });
+
             };
 
         return {

@@ -10,7 +10,7 @@ define(['common', 'bean', 'modules/analytics/canary'], function(common, bean, Ca
         });
         
         it("should log interactions with features", function(){
-            var c = new Canary();
+            var c = new Canary({ sample: 1 });
             c.init();
             common.mediator.emit('module:clickstream:click', 'Article | global navigation: header | sections | Culture')
             expect(document.querySelector('#js-canary').getAttribute('src')).toContain('px.gif?canary/navigation');
