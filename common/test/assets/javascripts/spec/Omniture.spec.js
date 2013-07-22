@@ -67,7 +67,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             var o = new Omniture(s, w);
             o.go(config);
 
-            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com");
+            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com");
             expect(s.pageName).toBe("GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long");
             expect(s.prop9).toBe("Article");
             expect(s.channel).toBe("theworld");
@@ -101,6 +101,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
 
             expect(s.trackingServer).toBe('hits.theguardian.com');
             expect(s.trackingServerSecure).toBe('hits-secure.theguardian.com');
+            expect(s.cookieDomainPeriods).toBe('2');
 
         });
 

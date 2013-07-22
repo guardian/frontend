@@ -90,9 +90,15 @@ define([
         this.populatePageProperties = function() {
 
             // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
-            s.cookieDomainPeriods = config.page.edition === "US" ? "2" : "3";
 
-            s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
+            //TODO temporary till after theguardian.com
+            if(config.page.isDotcom){
+                s.cookieDomainPeriods = "2";
+            } else {
+                s.cookieDomainPeriods = config.page.edition === "US" ? "2" : "3";
+            }
+
+            s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com';
 
             //TODO make this permanent in the omniture vendor file
             s.trackingServer="hits.theguardian.com";

@@ -32,7 +32,7 @@ function s_doPlugins(s) {
 //    s.prop62 = "Mdot Guardian H.25.3 v1 20130122";
 
     /* URL */
-//    s.prop61 = "D=g";
+    s.prop61 = "D=g";
 
     /* Set Page View Event */
 //    s.events=s.apl(s.events,'event4',',',2);
