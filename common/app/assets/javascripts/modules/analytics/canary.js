@@ -31,21 +31,27 @@ define(['common'], function (common) {
                 var url = makeUrl(feature);
                 createImage(url);
             },
+            evaluateClick = function(clickSpec) {
+                // https://github.com/guardian/frontend/pull/1237#issuecomment-21261022
+                [
+                    { 
+                        linkname: 'global navigation: header | sections',
+                        feature: 'navigation'
+                    }
+                ].forEach(function(spec) {
+                    if (clickSpec.toLowerCase().indexOf(spec.linkname) > -1) {
+                        log(spec.feature); 
+                    }
+                })
+            },
             init = function() {
                
                 if (Math.random() > sample) {
                     return false;
                 }
                 
-                // https://github.com/guardian/frontend/pull/1237#issuecomment-21261022
-
-                // navigation
                 common.mediator.on('module:clickstream:click', function (clickSpec) {
-                    
-                    if (clickSpec.toLowerCase().indexOf('global navigation: header | sections') > -1) {
-                        log('navigation');
-                    }
-
+                    evaluateClick(clickSpec);
                 });
 
             };
