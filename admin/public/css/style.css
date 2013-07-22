@@ -667,12 +667,18 @@ a.cta, .cta a {
 }
 
 .fronts .trail img {
+    display: none;
     float: left;
     margin: 2px 10px 10px 0;
     width: 42%;
     width: 140px;
     height: 84px;    
     background-color: #eee;
+}
+
+.fronts .trailblock .trail img,
+.fronts .trail:hover img {
+    display: block;    
 }
 
 .fronts .trail p {
@@ -711,4 +717,10 @@ a.cta, .cta a {
 .fronts select {
     width: 20%;
     margin: -2px 0 0 0;
+}
+
+.fronts .clipboard {
+    min-height: 20px;
+    margin: 5px 0 10px 0;
+    background: #ddd;
 }
