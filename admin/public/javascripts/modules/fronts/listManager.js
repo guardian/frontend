@@ -15,36 +15,40 @@ define([
 ) {
     var apiBase = '/fronts/api',
         maxDisplayedLists = 3,
-        dragging = false,
-        queryParams = (function(){
-            var result = {};
-            if (window.location.search) {
-                var params = window.location.search.slice(1).split("&");
-                for (var i = 0; i < params.length; i++) {
-                    var tmp = params[i].split("=");
-                    result[tmp[0]] = unescape(tmp[1]);
-                }
-            }
-            return result;
-        }());
+        dragging = false;
 
     return function(selector) {
 
         var viewModel = {},
             self = this;
 
-        function showList(id) {
-            dropList(id);
-            viewModel.listsDisplayed.push(new List(id));
-            limitListsDisplayed(maxDisplayedLists);
+        function getHashLists() {
+            return window.location.hash ? window.location.hash.slice(1).split(",") : [];
+        }
+
+        function renderLists() {
+            viewModel.listsDisplayed.removeAll();
+            getHashLists().forEach(function(id){
+                viewModel.listsDisplayed.push(new List(id));
+            });
             connectSortableLists();
         }
 
-        function dropList(id) {
-            id = id.id || id;
-            viewModel.listsDisplayed.remove(function(item) {
-                return item.id === id;
-            })
+        function addList(id) {
+            var ids = getHashLists().slice(1 - maxDisplayedLists);
+            ids.push(id);
+            window.location.hash = ids.join(',');
+        }
+
+        function dropList(list) {
+            var ids = getHashLists(),
+                id = list.id || list,
+                pos = ids.indexOf(id);
+
+            if (pos > -1) {
+                ids.splice(pos, 1);
+                window.location.hash = ids.join(',');
+            }
         }
 
         function limitListsDisplayed(max) {
@@ -168,7 +172,7 @@ define([
                     viewModel.selectedSection().id + '/' + 
                     viewModel.selectedBlock().id; 
 
-                showList(id);
+                addList(id);
             });
         }
 
@@ -215,18 +219,15 @@ define([
                 var id;
                 if(block && block.id) {
                     id = viewModel.selectedEdition().id + '/' +
-                             viewModel.selectedSection().id + '/' + 
-                             block.id;
+                         viewModel.selectedSection().id + '/' + 
+                         block.id;
 
-                    showList(id);
+                    addList(id);
                 }
             });
 
-            if (queryParams.blocks) {
-                queryParams.blocks.split(',').forEach(function(list){
-                    showList(list);
-                });
-            }
+            renderLists();
+            window.onhashchange = renderLists;
 
             startPoller();
 
