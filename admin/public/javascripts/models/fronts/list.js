@@ -30,8 +30,7 @@ define([
 
         this.liveMode     = knockout.observable(defaultToLiveMode);
         this.hasUnPublishedEdits = knockout.observable();
-
-        this.loadIsPending  = false;
+        this.loadIsPending = knockout.observable(false);
 
         this.dropItem = function(item) {
             reqwest({
@@ -49,12 +48,12 @@ define([
                     self.load();
                 },
                 function(xhr) {
-                    self.loadIsPending = false;
+                    self.loadIsPending(false);
                     console.log(xhr);
                 }
             );
             self.live.remove(item);
-            self.loadIsPending = true;
+            self.loadIsPending(true);
         }
 
         this.load();
@@ -94,42 +93,34 @@ define([
                 });
             },
             function(xhr) {
-                self.loadIsPending = false;
+                self.loadIsPending(false);
             }
         );
         this.hasUnPublishedEdits(false);
-        this.loadIsPending = true;
+        this.loadIsPending(true);
     };
 
     List.prototype.load = function(opts) {
         var self = this;
 
         opts = opts || {};
-
         reqwest({
             url: apiBase + '/' + this.id,
             type: 'json'
-        }).then(
+        }).always(
             function(resp) {
-                if (opts.isRefresh && self.loadIsPending) { return; }
-                self.loadIsPending = false;
-                self.populateLists(resp);
-                if (typeof opts.callback === 'function') { opts.callback(); } 
-            },
-            function(xhr) {
-                if (opts.isRefresh && self.loadIsPending) { return; }
-                self.loadIsPending = false;
-                if(xhr.status === 404) { // 404 qualifies as an empty block
-                    self.populateLists({});
-                    if (typeof opts.callback === 'function') { opts.callback(); } 
+                if (opts.isRefresh && (self.loadIsPending() || resp.lastUpdated === self.lastUpdated())) { 
+                    return;
                 }
+                self.populateLists(resp || {});
+                if (typeof opts.callback === 'function') { opts.callback(); } 
+                self.loadIsPending(false);
             }
         );
     };
 
     List.prototype.refresh = function() {
-        if (globals.uiBusy) { return; }
-        if (self.loadIsPending) { return; }
+        if (globals.uiBusy || this.loadIsPending()) { return; }
         this.load({
             isRefresh: true
         });
