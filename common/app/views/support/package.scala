@@ -232,7 +232,8 @@ object InBodyElementCleaner extends HtmlCleaner {
   private val supportedElements = Seq(
     "element-tweet",
     "element-video",
-    "element-image"
+    "element-image",
+    "element-witness"
   )
 
   override def clean(document: Document): Document = {
