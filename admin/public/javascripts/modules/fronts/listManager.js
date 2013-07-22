@@ -36,8 +36,16 @@ define([
 
         function addList(id) {
             var ids = getHashLists().slice(1 - maxDisplayedLists);
-            ids.push(id);
-            window.location.hash = ids.join(',');
+            if(ids.indexOf(id) === -1) {
+                ids.push(id);
+                window.location.hash = ids.join(',');
+            }
+        }
+
+        function displayAllEditions() {
+            window.location.hash = viewModel.editions.map(function(edition){
+                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
+            }).join(',');
         }
 
         function dropList(list) {
@@ -164,16 +172,6 @@ define([
                     }
                 });
             }, 5000);
-        }
-
-        function displayAllEditions() {
-            viewModel.editions.forEach(function(edition){
-                var id = edition.id + '/' +
-                    viewModel.selectedSection().id + '/' + 
-                    viewModel.selectedBlock().id; 
-
-                addList(id);
-            });
         }
 
         function fetchSchema() {
