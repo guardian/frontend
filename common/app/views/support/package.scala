@@ -233,7 +233,8 @@ object InBodyElementCleaner extends HtmlCleaner {
     "element-tweet",
     "element-video",
     "element-image",
-    "element-witness"
+    "element-witness",
+    "element-comment"
   )
 
   override def clean(document: Document): Document = {
