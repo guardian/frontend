@@ -23,15 +23,7 @@ function resize_and_take_screenshot(width){
 
 }
 
-css.init({
-	screenshotRoot: './screenshots',
-	failedComparisonsRoot: './failures',
-	testRunnerUrl: url.emptyPage,
-});
-
-casper.
-	start(url.testPage).
-	then( function hide_variable_elements(){
+function hide_variable_elements(){
 		
 		casper.waitForSelector('.ad-slot', function() {
 			casper.evaluate(function(){
@@ -43,6 +35,21 @@ casper.
 				});
 			})
 		});
+
+}
+
+
+
+css.init({
+	screenshotRoot: './screenshots',
+	failedComparisonsRoot: './failures',
+	testRunnerUrl: url.emptyPage,
+});
+
+casper.
+	start(url.testPage).
+	then( function hide_elements(){
+	hide_variable_elements();
 	} ).
 	then( function resize_and_take_screenshot_320(){
     resize_and_take_screenshot(320);
@@ -51,13 +58,14 @@ casper.
 	then( function resize_and_take_screenshot_600(){
 		resize_and_take_screenshot(600);
 	}).
-		then( function resize_and_take_screenshot_900(){
+	then( function resize_and_take_screenshot_900(){
 		resize_and_take_screenshot(900);
 	}).
-
 	then( function now_check_the_screenshots(){
 		css.compareAll();
 	}).
+
+
 	run( function end_it(){
 		console.log('\nTHE END.');
 		phantom.exit(css.getExitStatus());
