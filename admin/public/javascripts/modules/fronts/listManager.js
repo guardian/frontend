@@ -20,6 +20,7 @@ define([
     return function(selector) {
 
         var viewModel = {},
+            schemaLookUp = {},
             self = this;
 
         function getHashLists() {
@@ -29,7 +30,7 @@ define([
         function renderLists() {
             viewModel.listsDisplayed.removeAll();
             getHashLists().forEach(function(id){
-                viewModel.listsDisplayed.push(new List(id));
+                viewModel.listsDisplayed.push(new List(id, schemaLookUp[id]));
             });
             connectSortableLists();
         }
@@ -174,16 +175,23 @@ define([
             }, 5000);
         }
 
-        function fetchSchema() {
+        function fetchSchema(callback) {
             reqwest({
                 url: apiBase,
                 type: 'json'
             }).then(
                 function(resp) {
-                    viewModel.editions = resp.editions;                    
-                    // Render the page
-                    knockout.applyBindings(viewModel);
-                    connectSortableLists();
+                    // Make a flat version of schema for lookup by id path, e.g. "uk/news/top-stories" 
+                    [].concat(resp.editions).forEach(function(edition){
+                        [].concat(edition.sections).forEach(function(section){
+                            [].concat(section.blocks).forEach(function(block){
+                                schemaLookUp[edition.id + '/' + section.id + '/' + block.id] = block;
+                            });
+                        });
+                    });
+
+                    viewModel.editions = resp.editions;
+                    if (typeof callback === 'function') { callback(); }
                 },
                 function(xhr) { console.log(xhr); } // error
             );
@@ -199,8 +207,6 @@ define([
             viewModel.dropList           = dropList;
             viewModel.displayAllEditions = displayAllEditions;
 
-            fetchSchema();
-
             viewModel.selectedEdition.subscribe(function(edition) {
                 viewModel.selectedSection(undefined);
                 viewModel.selectedBlock(undefined);
@@ -209,7 +215,7 @@ define([
             viewModel.selectedSection.subscribe(function(section) {
                 viewModel.selectedBlock(undefined);
                 if (section && section.id) {
-                    viewModel.latestArticles.section(section.id);
+                    viewModel.latestArticles.section(section.sectionSearch || section.id);
                 }
             });
 
@@ -224,13 +230,16 @@ define([
                 }
             });
 
-            renderLists();
-            window.onhashchange = renderLists;
+            fetchSchema(function(){
+                knockout.applyBindings(viewModel);
 
-            startPoller();
+                renderLists();
+                window.onhashchange = renderLists;
 
-            viewModel.latestArticles.search();
-            viewModel.latestArticles.startPoller();
+                startPoller();
+                viewModel.latestArticles.search();
+                viewModel.latestArticles.startPoller();
+            });
         };
 
     };

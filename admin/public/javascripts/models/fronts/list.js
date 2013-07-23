@@ -14,7 +14,7 @@ define([
     var defaultToLiveMode = true,
         apiBase = '/fronts/api';
 
-    function List(id) {
+    function List(id, opts) {
         var self = this;
 
         this.id = id;
@@ -28,9 +28,18 @@ define([
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
 
+        this.min          = knockout.observable(opts.min);
+        this.max          = knockout.observable(opts.max);
+
         this.liveMode     = knockout.observable(defaultToLiveMode);
         this.hasUnPublishedEdits = knockout.observable();
         this.loadIsPending = knockout.observable(false);
+
+        this.needsMore = knockout.computed(function() {
+            if (self.liveMode()  && self.live().length  < self.min()) { return true; }
+            if (!self.liveMode() && self.draft().length < self.min()) { return true; }
+            return false;
+        });
 
         this.dropItem = function(item) {
             reqwest({

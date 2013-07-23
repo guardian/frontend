@@ -526,7 +526,6 @@ a.cta, .cta a {
 
 .fronts .lists .connectedList {
     min-height: 100px;
-    margin: 0 0 20px 0;
 }
 
 .fronts .lists .connectedList.pending {
@@ -643,6 +642,10 @@ a.cta, .cta a {
     border-bottom: 1px solid #ccc;
 }
 
+.fronts .trail.redundant {
+    opacity: 0.2;
+}
+
 .fronts .trail:hover {
     background-color: #eee;
 }
@@ -723,4 +726,15 @@ a.cta, .cta a {
     min-height: 20px;
     margin: 5px 0 10px 0;
     background: #ddd;
+}
+
+.fronts .needs-more {
+    color: #d61d00;
+    padding: 5px 0 0 10px;
+    font-size: 12px;
+    text-transform: uppercase;    
+}
+
+.fronts .needs-more__num {
+    font-weight: bold;
 }

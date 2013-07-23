@@ -98,12 +98,19 @@
                     },
                     css: {pending: loadIsPending},
                     template: {name: 'template_article', foreach: liveMode() ? live : draft}"></div>
+
+                <div class="needs-more" data-bind="if: needsMore">
+                    Needs at least <span class="needs-more__num" data-bind="text: min"></span> articles
+                </div>
             </div>
         </div>
     </div>
 
     <script type="text/html" id="template_article">
-        <div class="trail cf" data-bind="attr: {'data-url': id}">
+        <div class="trail cf" data-bind="
+                attr: {'data-url': id},
+                css: {redundant: $parent.max ? (0 + $index()) >= (0 + $parent.max()) : false}
+            ">
 
             <a class="trail__control" data-bind="click: $parent.dropItem">
                 <i class="icon-remove"></i>
@@ -133,6 +140,7 @@
                 value: trailText,
                 hasfocus: _editing_trailText
                 "/></textarea-->
+
         </div>
     </script>
     
