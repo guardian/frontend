@@ -110,13 +110,35 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
 
                 }
 
-                // this means the user used the back/forward buttons
-                // so we should change gallery state to match
-                window.onpopstate = function(event) {
-                    if (event.state && event.state.index && (event.state.index !== view.galleryConfig.currentIndex)) {
-                        window.location.reload();
-                    }
-                };
+                if(!detect.canSwipe()) {
+                    // this means the user used the back/forward buttons
+                    // so we should change gallery state to match
+                    window.onpopstate = function(event) {
+                        if (event.state && event.state.index && (event.state.index !== view.galleryConfig.currentIndex)) {
+
+                            // if it's swipe we need to animate the slider
+                            // so first we work out which direction to move in
+                            if (view.galleryConfig.inSwipeMode) {
+
+                                var currentSlide = context.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
+                                var currentIndex = parseInt(currentSlide.getAttribute('data-index'), 10);
+
+                                // we don't need to manually update URLs as popstate does it for us
+                                view.galleryConfig.stopUpdatingURL = true;
+
+                                if (currentIndex <= event.state.index) {
+                                    view.galleryConfig.gallerySwipe.next();
+                                } else {
+                                    view.galleryConfig.gallerySwipe.prev();
+                                }
+
+                            } else {
+                                // in non-touch mode, so just move to a specific slide
+                                view.advanceGallery(null, event.state.index);
+                            }
+                        }
+                    };
+                }
 
             },
 
@@ -181,7 +203,7 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
                 // we don't need to do this when using customItemIndexToShow
                 // as popState does this for us
                 if (!customItemIndexToShow) {
-                    if (!view.galleryConfig.stopUpdatingURL) {
+                    if (!view.galleryConfig.stopUpdatingURL && !detect.canSwipe()) {
                         view.updateURL('index=' + newSlideIndex, newSlideIndex);
                     } else {
                         // reset this so other things can update URLs
