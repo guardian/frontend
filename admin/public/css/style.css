@@ -706,12 +706,20 @@ a.cta, .cta a {
     line-height: 18px;
 }
 
-.fronts .trail .date {
+.fronts .trail .trail__meta {
     color: #999;
     font-family: arial, sans-serif;
     font-size: 11px;
     font-weight: normal;
     line-height: 16px;
+}
+
+.fronts .trail .trail__meta a {
+    color: #999;
+}
+
+.fronts .trail .trail__meta a:hover {
+    color: #333;
 }
 
 .fronts input[type="text"] {

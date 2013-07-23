@@ -116,7 +116,12 @@
                 <i class="icon-remove"></i>
             </a>
 
-            <div class="date" data-bind="html: _humanDate() ? _humanDate : 'Loading...'"></div>
+            <div class="trail__meta">
+                <span data-bind="html: _humanDate() ? _humanDate : 'Loading...'"></span> &middot;
+                <a data-bind="attr: {href: 'http://m.guardian.co.uk/' + id()}">view</a> &middot;
+                <a data-bind="attr: {href: 'http://dashboard.ophan.co.uk/summary?path=/' + id()}">stats</a>
+            </div>
+
             <img data-bind="attr: {src: thumbnail}" />
 
             <div class="webTitle" data-edit="webTitle" data-bind="
