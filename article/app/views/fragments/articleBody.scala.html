@@ -1,5 +1,5 @@
 @(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
-@import conf.Switches.DiscussionSwitch
+@import conf.Switches._
 
 <div class="article-wrapper monocolumn-wrapper">
 
@@ -15,13 +15,15 @@
 
             @fragments.headline(article.headline)
 
-            @article.cricketMatch.map { id =>
-                <div class="after-headline">
-                    <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
-                        itemprop="significantLink" id="schema-WebPage">View full scorecard
-                        <i class="i i-sport-arrow-small"></i>
-                    </a>
-                </div>
+            @if(LiveCricketSwitch.isSwitchedOn) {
+                @article.cricketMatch.map { id =>
+                    <div class="after-headline">
+                        <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
+                            itemprop="significantLink" id="schema-WebPage">View full scorecard
+                            <i class="i i-sport-arrow-small"></i>
+                        </a>
+                    </div>
+                }
             }
 
             @fragments.standfirst(article)

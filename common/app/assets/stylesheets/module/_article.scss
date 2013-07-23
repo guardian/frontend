@@ -42,7 +42,7 @@ $a-rightCol-trigger: gs-span(11) + $gutter*2;
         margin-bottom: $baseline*5;
     }
 
-    @include mq(desktop) {
+    @include mq(($a-rightCol-trigger + gs-span(1))) {
         font-size: 40px;
         font-size: 4rem;
         line-height: 48px;

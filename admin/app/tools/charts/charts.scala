@@ -139,8 +139,8 @@ object PageviewsPerUserGraph extends Chart with implicits.Tuples with implicits.
 
   def dataset = {
     val day = Analytics.getPageviewsPerUserByDay() withDefaultValue 0.0
-    val week = Analytics.getWeeklyPageviewsPerUsersByDay() withDefaultValue 0.0
-    val month = Analytics.getFourWeeklyPageviewsPerUsersByDay() withDefaultValue 0.0
+    val week = Analytics.getWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
+    val month = Analytics.getFourWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
 
     val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
     range map { date =>
@@ -173,12 +173,30 @@ object DaysSeenPerUserGraph extends Chart with implicits.Tuples with implicits.D
   lazy val labels = Seq("Date", "week", "4 week")
 
   def dataset = {
-    val week = Analytics.getWeeklyDaysSeenPerUsersByDay() withDefaultValue 0.0
-    val month = Analytics.getFourWeeklyDaysSeenPerUsersByDay() withDefaultValue 0.0
+    val week = Analytics.getWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
+    val month = Analytics.getFourWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
 
     val range = (week.keySet ++ month.keySet - today()).toList.sorted
     range map { date =>
       DataPoint(date.toString("dd/MM"), Seq(week(date), month(date)))
+    }
+  }
+}
+
+object ActiveUserProportionGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Active users as a percentage of monthly active users (daily/weekly)"
+  lazy val labels = Seq("Date", "day", "week")
+
+  def dataset = {
+    val day = Analytics.getUsersByDay() withDefaultValue 0L
+    val week = Analytics.getWeeklyUsersByDay() withDefaultValue 0L
+    val month = Analytics.getFourWeeklyUsersByDay() mapValues { _ max 1L }
+
+    val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      val monthlyUsers = month(date) / 100.0
+      println(date.toString("dd/MM") + " -> " + day(date) + " " + month(date))
+      DataPoint(date.toString("dd/MM"), Seq(day(date)/monthlyUsers, week(date)/monthlyUsers))
     }
   }
 }
