@@ -30,7 +30,6 @@ define([
         initiatedBy = 'initial',
         initialUrl,
         linkContext,
-        noHistoryPush = false,
         panes,
         paneNow = 1,
         paneThen = 1,
@@ -234,7 +233,7 @@ define([
         return pos > -1 && pos < sequenceLen ? sequence[pos].url : sequence[0].url;
     }
 
-    function loadSequence(callback) {
+    function loadSequence(config, callback) {
         var sequenceUrl = linkContext;
 
         if (sequenceUrl) {
@@ -248,9 +247,9 @@ define([
                 sequenceUrl = '/' + sequenceUrl;
                 storage.remove(storePrefix + 'linkContext');
             } else {
-                // No data-link-context, so infer the section from current url
-                sequenceUrl = window.location.pathname.match(/^\/([^\/]+)/);
-                sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl[1] : '');
+                // No data-link-context, so infer the section from page config
+                sequenceUrl = (config.page && config.page.section) ? config.page.section : null;
+                sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl : '');
             }
         }
 
@@ -534,7 +533,7 @@ define([
     }
 
     var initialise = function(config) {
-        loadSequence(function(){
+        loadSequence(config, function(){
             var loc = window.location.href;
 
             initialUrl       = urlAbsPath(loc);
