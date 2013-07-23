@@ -229,6 +229,24 @@ define([
 
         },
 
+        // Temporary - for a user zoom survey
+        paragraphSpacing: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                var typographyPrefs = userPrefs.get('paragraphSpacing');
+                switch (typographyPrefs) {
+                    case 'none':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing');
+                        break;
+                    case 'indents':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing-indents');
+                        break;
+                    case 'more':
+                        common.$g('body').addClass('test-paragraph-spacing--more-spacing');
+                        break;
+                }
+            });
+        },
+
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
@@ -319,6 +337,7 @@ define([
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
+            modules.paragraphSpacing();
         }
         common.mediator.emit("page:common:ready", config, context);
     };
