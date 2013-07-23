@@ -28,8 +28,8 @@ define([
         this.updatedBy    = knockout.observable();
         this.updatedEmail = knockout.observable();
 
-        this.min          = knockout.observable(opts.min);
-        this.max          = knockout.observable(opts.max);
+        this.min          = knockout.observable(opts.min || 1);
+        this.max          = knockout.observable(opts.max || 50);
 
         this.liveMode     = knockout.observable(defaultToLiveMode);
         this.hasUnPublishedEdits = knockout.observable();
