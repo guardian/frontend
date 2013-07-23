@@ -84,3 +84,6 @@ GET     /analytics/pageviews             controllers.AnalyticsController.pagevie
 
 # Metrics
 GET     /metrics/loadbalancers           controllers.metrics.DashboardController.render()
+
+# Radiator
+GET     /radiator                        controllers.RadiatorController.render()
