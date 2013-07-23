@@ -1,4 +1,4 @@
-define(['bean'], function(bean) {
+define(['common', 'bean'], function(common, bean) {
 
     var btnClassName = 'swipe-ear',
         dataAttribute = 'data-direction',
@@ -13,15 +13,16 @@ define(['bean'], function(bean) {
         return btn;
     }
 
-    function bindListeners(btn) {
-        var dir = btn.getAttribute(dataAttribute);
+    function bindListeners() {
+        bean.on(body, 'click', 'js-' + btnClassName, function(e) {
+            var dir = (e.target.getAttribute(dataAttribute) === 'left') ? 'next' : 'prev';
+            common.mediator.emit('module:swipenav:navigate:' + dir);
+        });
     }
 
     function appendToDom(frag) {
         body.appendChild(frag);
     }
-
-    module:swipenav:navigate:next
 
     function init() {
         var frag = document.createDocumentFragment();
@@ -31,7 +32,7 @@ define(['bean'], function(bean) {
         });
 
         appendToDom(frag);
-        bindListeners =
+        bindListeners();
     }
 
     return {
