@@ -29,7 +29,7 @@ define([
     'modules/analytics/omnitureMedia',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/swipenav',
+    'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
     "modules/lightbox-gallery"
@@ -288,7 +288,9 @@ define([
 
         initSwipe: function(config) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
-                swipeNav(config);
+                var swipe = swipeNav(config);
+                common.mediator.on('module:swipenav:navigate:next', swipe.next);
+                common.mediator.on('module:swipenav:navigate:prev', swipe.prev);
             }
             if (config.switches.swipeNav && detect.canSwipe()) {
                 bonzo(document.body).addClass('can-swipe');
