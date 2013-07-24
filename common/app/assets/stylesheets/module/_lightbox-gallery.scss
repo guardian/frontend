@@ -41,8 +41,12 @@ i.gallery__watermark {
         display: none;
     }
 
+    .gallery__images {
+        text-align: center;
+    }
+
     .gallery-item {
-        float: left;
+        display: inline-block;
         margin: $gutter / 2;
     }
 
