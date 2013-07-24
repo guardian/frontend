@@ -77,10 +77,10 @@ POST      /fronts/api/:edition/:section/:block           controllers.FrontsContr
 POST      /fronts/api/:edition/:section/:block/*trail    controllers.FrontsController.updateTrail(edition, section, block, trail)
 DELETE    /fronts/api/:edition/:section/:block/*trail    controllers.FrontsController.deleteTrail(edition, section, block, trail)
 
-
 # Analytics
 GET     /analytics/kpis                  controllers.AnalyticsController.kpis()
 GET     /analytics/pageviews             controllers.AnalyticsController.pageviews()
 
 # Metrics
 GET     /metrics/loadbalancers           controllers.metrics.DashboardController.render()
+GET     /metrics/fastly                  controllers.metrics.FastlyController.render()
