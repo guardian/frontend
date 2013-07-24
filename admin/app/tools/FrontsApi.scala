@@ -22,7 +22,6 @@ trait FrontsApiWrite {
 object FrontsApi extends FrontsApiRead with FrontsApiWrite {
   implicit val trailRead = Json.reads[Trail]
   implicit val blockRead = Json.reads[Block]
-  implicit val updateListRead = Json.reads[UpdateList]
 
   implicit val trailWrite = Json.writes[Trail]
   implicit val blockWrite = Json.writes[Block]
