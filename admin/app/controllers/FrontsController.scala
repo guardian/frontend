@@ -10,17 +10,11 @@ import common.{S3FrontsApi, Logging}
 import org.joda.time.DateTime
 import conf.Configuration
 import tools.FrontsApi
-import scala.Some
 
 
 object FrontsController extends Controller with Logging {
-  implicit val trailRead = Json.reads[Trail]
-  implicit val blockRead = Json.reads[Block]
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val blockActionRead = Json.reads[BlockAction]
-
-  implicit val trailWrite = Json.writes[Trail]
-  implicit val blockWrite = Json.writes[Block]
 
   def index() = AuthAction{ request =>
     Ok(views.html.fronts(Configuration.environment.stage))
