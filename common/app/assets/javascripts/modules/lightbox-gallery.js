@@ -23,6 +23,7 @@ define(["bean",
             totalImages = 0,
             mode = 'fullimage',
             overlay,
+            swipeActive = false,
             $navArrows,
             $images;
 
@@ -132,6 +133,7 @@ define(["bean",
             });
         };
 
+        // Overlay methods
         this.setupOverlayHeader = function() {
             var toolbar = '<button class="overlay__cta js-gallery-grid" data-link-name="Gallery grid mode">' +
                           '  <i class="i i-gallery-thumb-icon"></i> ' +
@@ -149,10 +151,14 @@ define(["bean",
             self.fullModeCta    = overlay.headerNode.querySelector('.js-gallery-full');
         };
 
-        this.jumpToContent = function() {
-            window.scrollTo(0, overlay.headerNode.offsetHeight);
-        };
+        this.removeOverlay = common.debounce(function(e){
+            // Needs a delay to give time for analytics to fire before DOM removal
+            overlay.remove();
+            return true;
+        }, 500);
 
+
+        // Gallery methods
         this.prev = function(e) {
             if (e) { e.preventDefault(); }
             self.goTo(currentImage - 1);
@@ -176,7 +182,7 @@ define(["bean",
                     captionControlHeight = 35; // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
 
                 if (itemIndex === index) {
-                    el.style.display = 'block';
+                    el.style.display = 'inline-block';
 
                     // Match arrows to the height of image, minus height of the caption control to prevent overlap
                     $navArrows.css('height', ($images[index-1].offsetHeight - captionControlHeight) + 'px');
@@ -193,7 +199,11 @@ define(["bean",
 
         this.switchToGrid = function(e) {
             mode = 'grid';
-            self.removeSwipe();
+
+            if (swipeActive) {
+                self.removeSwipe();
+            }
+
             bonzo(galleryNode).removeClass('gallery--fullimage-mode').addClass('gallery--grid-mode');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
@@ -211,7 +221,11 @@ define(["bean",
 
         this.switchToFullImage = function(e) {
             mode = 'fullimage';
-            self.setupSwipe();
+
+            if (detect.hasTouchScreen()) {
+                self.setupSwipe();
+            }
+
             bonzo(galleryNode).removeClass('gallery--grid-mode').addClass('gallery--fullimage-mode');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el, i) {
@@ -246,16 +260,17 @@ define(["bean",
             }
         };
 
-        this.removeOverlay = common.debounce(function(e){
-            // Needs a delay to give time for analytics to fire before DOM removal
-            overlay.remove();
-            return true;
-        }, 500);
-
+        // Utils
         this.getOrientation = function() {
             return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
         };
 
+        this.jumpToContent = function() {
+            window.scrollTo(0, overlay.headerNode.offsetHeight);
+        };
+
+
+        // Swipe methods
         this.setupSwipe = function() {
             require(['js!swipe'], function() {
                 // set up the swipe actions
@@ -269,6 +284,8 @@ define(["bean",
                         self.imageIndexNode.innerHTML = index + 1;
                     }
                 });
+
+                swipeActive = true;
             });
         };
 
@@ -278,6 +295,8 @@ define(["bean",
                              .html(imagesNode._originalHtml);
 
             bonzo(galleryNode).removeClass('gallery--swipe');
+
+            swipeActive = false;
         };
     }
 
