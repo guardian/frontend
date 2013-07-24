@@ -1,6 +1,7 @@
 @(charts: Seq[tools.Chart], metadata: MetaData, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
-@main(metadata, Switches.all){
+@main(metadata, Switches.all) {
+    <meta http-equiv="refresh" content="60">
 } {
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
