@@ -21,6 +21,9 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
             // runs on domready
             bindGallery: function () {
 
+                //Reset counter
+                context.querySelector('.js-gallery-index').innerHTML = urlParams.index || 1;
+
                 if (detect.hasTouchScreen()) { // only enable swiping for touch devices, duh.
 
                     view.galleryConfig.inSwipeMode = true;
