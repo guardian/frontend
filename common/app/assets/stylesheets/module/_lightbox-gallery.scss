@@ -267,6 +267,8 @@ i.gallery__watermark {
    Swipe styles
    ========================================================================== */
 .gallery--swipe {
+    overflow: hidden;
+
     .gallery__images {
         overflow: hidden;
         position: relative;
