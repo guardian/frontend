@@ -30,6 +30,9 @@
         .down, .Failed { color: red; }
         .Running { color: orange; }
     </style>
+    
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
     <script type="text/javascript">
         window.addEventListener('load', function() {
                 
@@ -42,10 +45,7 @@
 
             // pingdom
             var pingdom = document.getElementById('pingdom')
-            require([
-                    'reqwest'
-                ]).then(function(r) {
-                    r({url:'/radiator/pingdom', type:'json'}, function(status) {
+            $.ajax({ url:'/radiator/pingdom', success: function(status) {
                         JSON.parse(status).checks.filter(function (check) {
 
                             return /ELB|Host|CDN/.test(check.name);
@@ -56,19 +56,14 @@
                                 li.textContent = check.name;
                                 pingdom.appendChild(li);
                             })
-
-                        })
-                   })
+                        }})
 
             // riff raff - requires you to be on the guardian network
         
-            require([
-                    'reqwest'
-                ]).then(function(r) {
-                    r({
+            $.ajax({
                         url: 'https://riffraff.gutools.co.uk/api/history?stage=PROD&projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=50', 
-                        type: 'jsonp'
-                        }, function(deployments) {
+                        dataType: 'jsonp',
+                        success: function(deployments) {
 
                             // a hash of the last deployment each project 
                             var latestDeployments = {};
@@ -89,12 +84,12 @@
                                 var d  = latestDeployments[deployment];
                                 var li = document.createElement('li');
                                 li.className = d.status;
-                                li.innerHTML = d.projectName + ' <small>' + (Math.round(new Date(d.time)/1000*60*60)%60) + ' hours ago by ' + d.deployer + '</small>';
+                                li.innerHTML = d.projectName + ' <small>by ' + d.deployer + '</small>';
                                 riffraff.appendChild(li);
                             });
 
-                        })
-                   })
+                        }})
+                   
 
         });
 
