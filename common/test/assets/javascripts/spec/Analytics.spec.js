@@ -52,7 +52,7 @@ define(['analytics'], function(Analytics) {
             new Analytics().setup(config, detect, s);
 
             //then all omniture properties should be set
-            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com");
+            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,theguardian.com");
 
             expect(s.pageName).toBe("a really long title a really long title a really long title a really lon:Article:12345");
 

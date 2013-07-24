@@ -54,23 +54,65 @@ define([
         dataLinkTest.push(['AB', test.id + ' test', variantId]. join(' | '));
         common.$g(document.body).attr('data-link-test', dataLinkTest.join(', '));
     }
-
-    //Finds variant in specific tests and exec's
-    function run(test, config, context) {
-        var expired = (new Date() - new Date(test.expiry)) > 0;
-        if (test.canRun(config, context) && !expired && config.switches['ab' + test.id]) {
         
-            // if user not in test, bucket them
-            if (!isParticipating(test)) {
-                bucket(test);
+    function getActiveTests() {
+        return TESTS.filter(function(test) {
+            var expired = (new Date() - new Date(test.expiry)) > 0;
+            if (expired) {
+                removeParticipation(test);
+                return false;
             }
-            
-            return;
-        }
+            return true;
+        });
     }
 
-    function bucket(test) {
-        // always at least place in control
+    function testCanBeRun (test, config) {
+        var expired = (new Date() - new Date(test.expiry)) > 0;
+        return (test.canRun(config) && !expired && config.switches['ab' + test.id]);
+    }
+
+    function getTest(id) {
+        var test = TESTS.filter(function (test) {
+            return (test.id === id);
+        });
+        return (test) ? test[0] : '';
+    }
+
+    function makeOmnitureTag (config) {
+        var participations = getParticipations();
+        return Object.keys(participations).map(function (k) {
+            if (testCanBeRun(getTest(k), config)) {
+                return ['AB', k, participations[k].variant].join(' | ');
+            }
+        }).join(',');
+    }
+
+    // Finds variant in specific tests and runs it
+    function run(test, config, context) {
+
+        if (!isParticipating(test) || !testCanBeRun(test, config)) {
+            return false;
+        }
+        
+        var participations = getParticipations(),
+            variantId = participations[test.id].variant;
+            test.variants.some(function(variant) {
+                if (variant.id === variantId) {
+                    variant.test(context);
+                    initTracking(test, variantId);
+                    return true;
+                }
+        });
+    }
+
+    function bucket(test, config) {
+        
+        // if user not in test, bucket them
+        if (isParticipating(test) || !testCanBeRun(test, config)) {
+            return false;
+        }
+
+        // always at least place in a notintest control
         var testVariantId = 'notintest';
 
         //Only run on test required audience segment
@@ -85,36 +127,36 @@ define([
 
         // store
         addParticipation(test, testVariantId);
+
+        return true;
     }
 
     var ab = {
 
-        //For testing purposes
         addTest: function(test) {
             TESTS.push(test);
         },
-
-        getParticipations: getParticipations,
         
         clearTests: function() {
             TESTS = [];
         },
 
-        init: function(config, context, options) {
-            var hash = window.location.hash.substring(1),
-                opts = options || {};
-
-            TESTS.filter(function(test) {
-                var expired = (new Date() - new Date(test.expiry)) > 0;
-                if (expired) {
-                    removeParticipation(test);
-                    return false;
-                }
-                return true;
-            }).forEach(function(test) {
+        segment: function(config, options) {
+            var opts = options || {};
+            getActiveTests().forEach(function(test) {
+                bucket(test, config);
+            });
+        },
+        
+        run: function(config, context, options) {
+            var opts = options || {};
+            getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });
-        }
+        },
+
+        getParticipations: getParticipations,
+        makeOmnitureTag: makeOmnitureTag
 
     };
 

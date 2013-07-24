@@ -40,7 +40,9 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
   }
 
   private def refreshAgents(configString: String, oldAgents: Seq[TrailblockAgent]) = {
-    val newTrailblocks = toBlocks(parse(configString) \ (edition.id.toLowerCase))
+    val newTrailblocks = (parse(configString) \ (edition.id.toLowerCase)).asOpt[JsValue].map { editionJson =>
+      toBlocks(editionJson)
+    }.getOrElse(Nil)
 
     //only replace blocks if they are different (do not replace an old block with the same new block)
     val newAgents: Seq[TrailblockAgent] = newTrailblocks.map { newDescription =>
@@ -63,9 +65,8 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
 
   def configuredTrailblocks: List[Trailblock] = configAgent().flatMap(_.trailblock).toList
 
-  private def toBlocks(editionJson: JsValue): Seq[TrailblockDescription] = editionJson match {
-    case JsNull => Nil
-    case _ =>  (editionJson \ "blocks").as[Seq[JsValue]] map { block =>
+  private def toBlocks(editionJson: JsValue): Seq[TrailblockDescription] = (editionJson \ "blocks").asOpt[Seq[JsValue]].map { blocks =>
+      blocks.map { block =>
         ItemTrailblockDescription(
           toId((block \ "id").as[String]),
           (block \ "title").as[String],
@@ -74,8 +75,7 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
           isConfigured = true
         )(edition)
       }
-
-  }
+    }.getOrElse(Nil)
 
   private def toId(id: String) = id.split("/").toSeq match {
     case Seq(start, end) if start == end => start // this is a sections tag e.g. politics/politics

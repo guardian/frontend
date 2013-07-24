@@ -17,12 +17,15 @@
     a {
         display: block;
         padding: 15px $gutter;
+    }
+}
 
-        &,
-        &:link,
-        &:visited {
-            color: #fff;
-        }
+
+.front-section-head a {
+    &,
+    &:link,
+    &:visited {
+        color: #fff;
     }
 }
 

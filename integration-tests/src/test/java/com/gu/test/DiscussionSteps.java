@@ -34,10 +34,12 @@ public class DiscussionSteps {
 
 
     @When("^I choose to view the comments$")
-    public void I_choose_to_view_the_comments()  {
-        WebElement commentlink=webDriver.findElement(By.cssSelector(".js-commentcount__number"));
-        webDriver.click(commentlink);
-        webDriver.waitForElement(By.cssSelector(".d-discussion"));
+    public void I_choose_to_view_the_comments() throws InterruptedException {
+       //wait for comment count to be visible indicating JS has finished loading
+       webDriver.waitForText(By.cssSelector("body"),"2935");
+       WebElement commentlink=webDriver.findElement(By.cssSelector(".js-show-discussion.js-top"));
+       webDriver.click(commentlink);
+       webDriver.waitForElement(By.cssSelector(".d-discussion"));
     }
 
     @Then("^the main image has a toggle class applied to it$")

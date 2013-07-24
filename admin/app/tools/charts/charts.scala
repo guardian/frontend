@@ -62,60 +62,6 @@ case class Request2xxGraph(name: String, private val metrics: Future[GetMetricSt
   )
 }
 
-object PageviewsPerUserByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
-  val name = "Average pageviews per user (by day)"
-  lazy val labels = Seq("Date", "pageviews")
-
-  def dataset = Analytics.getPageviewsPerUserByDay().toList sortBy { _.first } map {
-    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
-  }
-}
-
-object WeeklyPageviewsPerUserByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
-  val name = "Average weekly pageviews per user (by day)"
-  lazy val labels = Seq("Date", "pageviews")
-
-  def dataset = Analytics.getWeeklyPageviewsPerUsersByDay().toList sortBy { _.first } map {
-    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
-  }
-}
-
-object FourWeeklyPageviewsPerUserByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
-  val name = "Average 4 weekly pageviews per user (by day)"
-  lazy val labels = Seq("Date", "pageviews")
-
-  def dataset = Analytics.getFourWeeklyPageviewsPerUsersByDay().toList sortBy { _.first } map {
-    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
-  }
-}
-
-object ReturnUsersByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
-  val name = "Return users (by day)"
-  lazy val labels = Seq("Date", "users")
-
-  def dataset = Analytics.getReturnUsersByDay().toList sortBy { _.first } map {
-    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
-  }
-}
-
-object WeeklyDaysSeenPerUserByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
-  val name = "Average days seen per week per user (by day)"
-  lazy val labels = Seq("Date", "days seen")
-
-  def dataset = Analytics.getWeeklyDaysSeenPerUsersByDay().toList sortBy { _.first } map {
-    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
-  }
-}
-
-object FourWeeklyDaysSeenPerUserByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
-  val name = "Average days seen per four weeks per user (by day)"
-  lazy val labels = Seq("Date", "days seen")
-
-  def dataset = Analytics.getFourWeeklyDaysSeenPerUsersByDay().toList sortBy { _.first } map {
-    case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
-  }
-}
-
 object PageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
   val name = "Pageviews"
   lazy val labels = Seq("Date", "pageviews")
@@ -185,4 +131,88 @@ object PageviewsByBrowserTreeMapGraph extends Chart {
     val data = point.values.mkString(",")
     s"['${point.name}', 'Browser', $data]"
   }
+}
+
+object PageviewsPerUserGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Average pageviews per user (daily/weekly/4 weekly)"
+  lazy val labels = Seq("Date", "day", "week", "4 week")
+
+  def dataset = {
+    val day = Analytics.getPageviewsPerUserByDay() withDefaultValue 0.0
+    val week = Analytics.getWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
+    val month = Analytics.getFourWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
+
+    val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      DataPoint(date.toString("dd/MM"), Seq(day(date), week(date), month(date)))
+    }
+  }
+}
+
+object ReturnUsersPercentageByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Return users % (daily/weekly/4 weekly)"
+  lazy val labels = Seq("Date", "day", "week", "4 week")
+
+  def dataset = {
+    val users = Analytics.getUsersByDay() mapValues { _ max 1L }
+
+    val day = Analytics.getReturnUsersByDay() withDefaultValue 0L
+    val week = Analytics.getWeeklyReturnUsersByDay() withDefaultValue 0L
+    val month = Analytics.getFourWeeklyReturnUsersByDay() withDefaultValue 0L
+
+    val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      val totalUsers = users(date) / 100.0
+      DataPoint(date.toString("dd/MM"), Seq(day(date)/totalUsers, week(date)/totalUsers, month(date)/totalUsers))
+    }
+  }
+}
+
+object DaysSeenPerUserGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Average days seen per user  (weekly/4 weekly)"
+  lazy val labels = Seq("Date", "week", "4 week")
+
+  def dataset = {
+    val week = Analytics.getWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
+    val month = Analytics.getFourWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
+
+    val range = (week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      DataPoint(date.toString("dd/MM"), Seq(week(date), month(date)))
+    }
+  }
+}
+
+object ActiveUserProportionGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Active users as a percentage of monthly active users (daily/weekly)"
+  lazy val labels = Seq("Date", "day", "week")
+
+  def dataset = {
+    val day = Analytics.getUsersByDay() withDefaultValue 0L
+    val week = Analytics.getWeeklyUsersByDay() withDefaultValue 0L
+    val month = Analytics.getFourWeeklyUsersByDay() mapValues { _ max 1L }
+
+    val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      val monthlyUsers = month(date) / 100.0
+      println(date.toString("dd/MM") + " -> " + day(date) + " " + month(date))
+      DataPoint(date.toString("dd/MM"), Seq(day(date)/monthlyUsers, week(date)/monthlyUsers))
+    }
+  }
+}
+
+case class FastlyMetricGraph(
+  name: String,
+  private val metric: String,
+  private val metricResults: Future[GetMetricStatisticsResult]) extends Chart {
+
+  override lazy val labels = Seq("Time", metric)
+
+  override lazy val yAxis = Some(metric)
+
+  private lazy val datapoints = metricResults.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
+
+  override lazy val dataset = datapoints.map(d => DataPoint(
+    new DateTime(d.getTimestamp.getTime).toString("HH:mm"), Seq(d.getAverage))
+  )
 }
