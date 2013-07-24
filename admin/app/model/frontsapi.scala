@@ -1,17 +1,5 @@
 package frontsapi.model
 
-import org.joda.time.DateTime
-
-case class Edition(
-                    id: String,
-                    sections: List[Section]
-                    )
-
-case class Section(
-                    id: Option[String],
-                    blocks: List[Block]
-                    )
-
 case class Block(
                   id: String,
                   name: Option[String],

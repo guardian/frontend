@@ -2,7 +2,6 @@ package controllers
 
 import frontsapi.model._
 import frontsapi.model.Block
-import frontsapi.model.Section
 import frontsapi.model.Trail
 import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
@@ -17,13 +16,11 @@ import scala.Some
 object FrontsController extends Controller with Logging {
   implicit val trailRead = Json.reads[Trail]
   implicit val blockRead = Json.reads[Block]
-  implicit val sectionRead = Json.reads[Section]
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val blockActionRead = Json.reads[BlockAction]
 
   implicit val trailWrite = Json.writes[Trail]
   implicit val blockWrite = Json.writes[Block]
-  implicit val sectionWrite = Json.writes[Section]
 
   def index() = AuthAction{ request =>
     Ok(views.html.fronts(Configuration.environment.stage))
