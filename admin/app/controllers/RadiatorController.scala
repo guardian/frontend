@@ -9,6 +9,7 @@ import play.api.libs.ws.WS
 import com.ning.http.client.Realm
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
+import conf.Configuration
 
 object RadiatorController extends Controller with Logging with AuthLogging {
 
@@ -29,10 +30,10 @@ object RadiatorController extends Controller with Logging with AuthLogging {
 
   def pingdom() = AuthAction{ implicit request =>
   
-    val url = "https://api.pingdom.com/api/2.0/checks"
-    val user = ""
-    val password = ""
-    val apiKey = ""
+    val url = Configuration.pingdom.url + "/checks" 
+    val user = Configuration.pingdom.user
+    val password = Configuration.pingdom.password
+    val apiKey = Configuration.pingdom.apiKey
 
     Async {
           WS.url(url)
