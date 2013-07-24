@@ -58,3 +58,23 @@
     @extend %type-4;
     padding: 0 $gutter $baseline*2;
 }
+
+
+
+
+.beta {
+    
+    display: none;
+
+    @include mq(tablet) {
+        
+        margin: 18px 0 0 2px;
+        color:  white;
+        display: inline-block;
+        font-size: 10px;
+        float:  left;
+        color: #95B1CA;
+
+    }
+}
+
