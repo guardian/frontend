@@ -159,6 +159,12 @@ define([
                 common.mediator.emit('page:common:deferred:loaded', config, context);
             });
         },
+        
+        runAbTests: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                ab.run(config, context);
+            });
+        },
 
         loadAnalytics: function () {
             var omniture = new Omniture();
@@ -221,6 +227,28 @@ define([
 
             });
 
+        },
+
+        // Temporary - for a user zoom survey
+        paragraphSpacing: function () {
+            var key = 'paragraphSpacing';
+            common.mediator.on('page:common:ready', function(config, context) {
+                var typographyPrefs = userPrefs.get(key);
+                switch (typographyPrefs) {
+                    case 'none':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing');
+                        break;
+                    case 'indents':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing-indents');
+                        break;
+                    case 'more':
+                        common.$g('body').addClass('test-paragraph-spacing--more-spacing');
+                        break;
+                    case 'clear':
+                        userPrefs.remove(key);
+                        break;
+                }
+            });
         },
 
         loadAdverts: function () {
@@ -300,6 +328,7 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
@@ -312,6 +341,7 @@ define([
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
+            modules.paragraphSpacing();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

@@ -90,9 +90,15 @@ define([
         this.populatePageProperties = function() {
 
             // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
-            s.cookieDomainPeriods = config.page.edition === "US" ? "2" : "3";
 
-            s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com';
+            //TODO temporary till after theguardian.com
+            if(config.page.isDotcom){
+                s.cookieDomainPeriods = "2";
+            } else {
+                s.cookieDomainPeriods = config.page.edition === "US" ? "2" : "3";
+            }
+
+            s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com';
 
             //TODO temporary till after dotcom switch
             // then make this permanent in the omniture vendor file
@@ -128,23 +134,16 @@ define([
             s.prop31    = id.isLoggedIn() ? "Logged in user" : "Guest user";
 
             s.prop47    = config.page.edition || '';
-    
-            var participations = ab.getParticipations(),
-                participationsKeys = Object.keys(participations);
+   
+            var mvt = ab.makeOmnitureTag(config, document);
+            if (mvt.length > 0) {
 
-            if (participationsKeys.length > 0) {
-                
-                var testData = participationsKeys.map(function(k){
-                    return ['AB', k, participations[k].variant].join(' | ');
-                }).join(',');
-
-                s.prop51  = testData;
-                s.eVar51  = testData;
+                s.prop51  = mvt;
+                s.eVar51  = mvt;
                 s.events = s.apl(s.events,'event58',',');
-
             }
 
-            s.prop56    = 'Javascript';
+            s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
 
             s.prop65    = config.page.headline || '';
 

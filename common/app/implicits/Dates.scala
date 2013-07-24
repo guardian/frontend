@@ -8,6 +8,8 @@ trait Dates {
     def day(dayOfEpoch: Int): DateMidnight = zero.plusDays(dayOfEpoch)
   }
 
+  def today(): DateMidnight = DateMidnight.now()
+
   implicit class DateMidnight2DayOfEpoch(datetime: DateMidnight) {
     lazy val dayOfEpoch: Int = Days.daysBetween(Epoch.zero, datetime).getDays
   }
