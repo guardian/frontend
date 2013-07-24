@@ -87,3 +87,4 @@ GET     /metrics/loadbalancers           controllers.metrics.DashboardController
 
 # Radiator
 GET     /radiator                        controllers.RadiatorController.render()
+GET     /radiator/pingdom                controllers.RadiatorController.pingdom()

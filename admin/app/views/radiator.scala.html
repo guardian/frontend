@@ -21,6 +21,12 @@
 
     @charts.map{ chart => <div id="@chart.id" style="max-width: 1200px"></div> }
 
+    <ul id="pingdom"></ul>
+
+    <style>
+        .up { color: green; } 
+        .down { color: red; } 
+    </style>
     <script type="text/javascript">
         window.addEventListener('load', function() {
             var ads = document.querySelectorAll('.ad-slot')
@@ -29,6 +35,27 @@
             }
 
             document.querySelector('#footer-nav').className = 'h';
-        });
+
+            var pingdom = document.getElementById('pingdom')
+            require([
+                    'reqwest'
+                ]).then(function(r) {
+                    r({url:'/radiator/pingdom', type:'json'}, function(status) {
+                        JSON.parse(status).checks.filter(function (check) {
+
+                            return /ELB|Host|CDN/.test(check.name);
+
+                            }).forEach(function(check){
+                                var li = document.createElement('li');
+                                li.className = check.status;
+                                li.textContent = check.name;
+                                pingdom.appendChild(li);
+                            })
+
+                        })
+                   })
+
+           });
+
     </script>
-}
+    }
