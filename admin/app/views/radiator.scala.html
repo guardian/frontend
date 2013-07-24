@@ -1,6 +1,7 @@
 @(charts: Seq[tools.Chart], metadata: MetaData, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
 
-@main(metadata, Switches.all){
+@main(metadata, Switches.all) {
+    <meta http-equiv="refresh" content="60">
 } {
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -31,6 +32,7 @@
     </style>
     <script type="text/javascript">
         window.addEventListener('load', function() {
+                
             var ads = document.querySelectorAll('.ad-slot')
             for (var i = 0; i < ads.length; i++) {
                 ads[i].className = 'h';
@@ -87,7 +89,7 @@
                                 var d  = latestDeployments[deployment];
                                 var li = document.createElement('li');
                                 li.className = d.status;
-                                li.innerHTML = d.projectName + ' <small>' + (Math.round(new Date(d.time)/1000*60*60)%60) + ' hours ago.</small>';
+                                li.innerHTML = d.projectName + ' <small>' + (Math.round(new Date(d.time)/1000*60*60)%60) + ' hours ago by ' + d.deployer + '</small>';
                                 riffraff.appendChild(li);
                             });
 
