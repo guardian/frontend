@@ -1,0 +1,23 @@
+.swipe-ear {
+  display: block;
+  position: fixed;
+  top: 50%;
+  height: 36px;
+  width: 22px;
+  border: none;
+  background-color: #F9F9F7;
+  background-color: rgba(149, 149, 147, 0.9);
+
+  //For fading
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity 1s ease-in-out;
+
+  &.is-hidden {
+    opacity: 0;
+  }
+}
+
+.swipe-ear--right { right: 0; }
+.swipe-ear--left { left: 0; }

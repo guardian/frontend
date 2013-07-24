@@ -32,7 +32,8 @@ define([
     'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
-    "modules/lightbox-gallery"
+    "modules/lightbox-gallery",
+    "modules/swipe/ears"
 ], function (
     common,
     ajax,
@@ -66,7 +67,8 @@ define([
     swipeNav,
     VideoAdvert,
     CommentCount,
-    LightboxGallery
+    LightboxGallery,
+    ears
 ) {
 
     var modules = {
@@ -289,8 +291,9 @@ define([
         initSwipe: function(config) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
                 var swipe = swipeNav(config);
-                common.mediator.on('module:swipenav:navigate:next', swipe.next);
-                common.mediator.on('module:swipenav:navigate:prev', swipe.prev);
+                ears.init();
+                common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
+                common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
             }
             if (config.switches.swipeNav && detect.canSwipe()) {
                 bonzo(document.body).addClass('can-swipe');
