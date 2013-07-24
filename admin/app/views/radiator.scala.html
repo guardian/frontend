@@ -1,9 +1,66 @@
 @(charts: Seq[tools.Chart], env: String)
 
-@admin_main("Radiator", env, isAuthed = true) {
-
     <meta http-equiv="refresh" content="60">
+    
+    <style>
 
+        body { background-color: #222; margin: 0 auto; max-width: 90%; padding-top: 30px; }
+        
+        header {
+            color: #95B1CA;
+            font-size: 18px;
+        }
+        .navbar { display: none; }
+        #pingdom li, #riffraff li { font-size: 30px; line-height: 30px; } 
+        #pingdom small, #riffraff small { font-size: 20px; }
+        .up, .Completed {
+            color: green;
+        
+        } 
+        .down, .Failed { color: red; }
+        .Running { color: orange; }
+        ul {
+            height: 30px;
+            margin-left: 40px;
+        } 
+        #pingdom li, #riffraff li {
+            min-width: 30px;
+            min-height: 30px;
+            font-size: 0;
+            color: transparent;
+            float: left;
+            display: inline-block;
+            margin-right: 10px;
+        }
+       
+        #pingdom li.up, #riffraff li.Completed { 
+            background-color: green;
+        }
+        
+        #pingdom li.down, #riffraff li.Failed {
+            background-color: red;
+        }
+
+        #riffraff li.Running {
+            background-color: orange;
+        }
+        
+        h2 {
+            font-family: Georgia, serif;
+            color: #666;
+            clear: both;
+            font-weight: normal;
+        }
+        #logo .white {
+            color: white;
+        }
+
+    </style>
+    
+    <header>
+    <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
+    </header>
+    <h2>ELB Latency</h2>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         google.load("visualization", "1", {packages:["corechart"]});
@@ -13,26 +70,24 @@
             @charts.map{ chart =>
                 new google.visualization.LineChart(document.getElementById('@chart.id'))
                     .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
-                    title: '@chart.name',
+                    backgroundColor: '#222222',
+                    colors: ['#CCFF66'],
+                    hAxis: { textStyle: {color: '#666'}},
+                    vAxis: { textStyle: {color: '#666'}, gridlines: { count: 0 } },
                     legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
                 });
             }
         }
     </script>
 
-    @charts.map{ chart => <div id="@chart.id" style="max-width: 1200px"></div> }
+    @charts.map{ chart => <div id="@chart.id" style="max-width: 100%"></div> }
 
+    <h2>Pingdom</h2>
     <ul id="pingdom"></ul>
+    
+    <h2>Deployments</h2>
     <ul id="riffraff"></ul>
 
-    <style>
-        #pingdom, #riffraff { font-size: 30px; }
-        #pingdom small, #riffraff small { font-size: 20px; }
-        .up, .Completed { color: green; } 
-        .down, .Failed { color: red; }
-        .Running { color: orange; }
-    </style>
-    
     <script src="/assets/javascripts/components/jquery/jquery.js"></script>
 
     <script type="text/javascript">
@@ -84,7 +139,7 @@
                                 var d  = latestDeployments[deployment];
                                 var li = document.createElement('li');
                                 li.className = d.status;
-                                li.innerHTML = d.projectName + ' <small>by ' + d.deployer + '</small>';
+                                li.innerHTML = d.projectName;
                                 riffraff.appendChild(li);
                             });
 
@@ -94,4 +149,3 @@
 
 
     </script>
-    }

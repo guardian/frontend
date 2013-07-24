@@ -14,7 +14,7 @@ import conf.Configuration
 object RadiatorController extends Controller with Logging with AuthLogging {
 
   def render() = AuthAction{ implicit request =>
-      val graphs = Seq(PageviewsByDayGraph) ++ (CloudWatch.latency filter { _.name == "Router" })
+      val graphs = (CloudWatch.latency filter { _.name == "Router" })
       Ok(views.html.radiator(graphs, Configuration.environment.stage))
   }
 
