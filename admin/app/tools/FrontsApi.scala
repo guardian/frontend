@@ -1,9 +1,8 @@
 package tools
 
-import frontsapi.model.{UpdateList, Trail, Block}
+import frontsapi.model.{Trail, Block}
 import org.joda.time.DateTime
-import common.{S3, S3FrontsApi}
-import conf.Configuration
+import common.S3FrontsApi
 import play.api.libs.json.Json
 
 trait FrontsApiRead {
