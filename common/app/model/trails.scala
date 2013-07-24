@@ -5,12 +5,14 @@ import views.support.Style
 import scala.math
 import scala.concurrent.Future
 import conf.{Configuration, ContentApi}
-import common.{Logging, AkkaSupport, ExecutionContexts, Edition}
+import common._
 import contentapi.QueryDefaults
-import play.api.libs.ws.{WS, Response}
+import play.api.libs.ws.WS
 import play.api.libs.json.Json._
-import play.api.libs.json.{JsObject, JsValue}
+import play.api.libs.json.JsValue
+import play.api.libs.ws.Response
 import scala.Some
+import play.api.libs.json.JsObject
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -128,7 +130,7 @@ class RunningOrderTrailblockDescription(
 
   def configuredQuery() = {
     // get the running order from the api
-    val configUrl = s"${Configuration.frontsApi.base}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
+    val configUrl = s"${Configuration.frontsApi.base}/${S3FrontsApi.location}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
     log.info(s"loading running order configuration from: $configUrl")
     parseResponse(WS.url(s"$configUrl").withTimeout(2000).get())
   }
@@ -138,7 +140,7 @@ class RunningOrderTrailblockDescription(
       r.status match {
         case 200 =>
           // extract the articles
-          val articles: Seq[String] = (parse(r.body) \ "trails").as[Seq[JsObject]] map { trail =>
+          val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
             (trail \ "id").as[String]
           }
           // only make content api request if we have articles
