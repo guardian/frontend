@@ -64,8 +64,8 @@ class GuardianConfiguration(
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
-  object frontsApi {
-    lazy val base = configuration.getStringProperty("fronts.api") getOrElse {
+  object frontend {
+    lazy val store = configuration.getStringProperty("frontend.store") getOrElse {
       throw new IllegalStateException("Fronts Api not configured")
     }
   }

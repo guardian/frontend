@@ -113,7 +113,7 @@ object FrontsController extends Controller with Logging {
           }
           newBlock = newBlock.copy(areEqual = newBlock.live==newBlock.draft)
 
-          FrontsApi.putBlock(edition, section, block.id, newBlock) //Don't need pretty, only for us devs
+          FrontsApi.putBlock(edition, section, block.id, newBlock)
           Ok
         } getOrElse NotFound("No edition or section") //To be more silent in the future?
       } getOrElse NotFound("Invalid JSON")
