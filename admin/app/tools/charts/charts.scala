@@ -200,3 +200,19 @@ object ActiveUserProportionGraph extends Chart with implicits.Tuples with implic
     }
   }
 }
+
+case class FastlyMetricGraph(
+  name: String,
+  private val metric: String,
+  private val metricResults: Future[GetMetricStatisticsResult]) extends Chart {
+
+  override lazy val labels = Seq("Time", metric)
+
+  override lazy val yAxis = Some(metric)
+
+  private lazy val datapoints = metricResults.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
+
+  override lazy val dataset = datapoints.map(d => DataPoint(
+    new DateTime(d.getTimestamp.getTime).toString("HH:mm"), Seq(d.getAverage))
+  )
+}
