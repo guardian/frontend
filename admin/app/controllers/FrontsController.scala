@@ -21,9 +21,9 @@ object FrontsController extends Controller with Logging {
   }
 
   def schema = AuthAction{ request =>
-    S3FrontsApi.getSchema.map { json: String =>
+    S3FrontsApi.getSchema map { json: String =>
       Ok(json).as("application/json")
-    }.getOrElse(NotFound)
+    } getOrElse NotFound
   }
 
 
