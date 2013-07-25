@@ -12,13 +12,11 @@ class FastlyCloudwatchLoadJob extends Job {
   val cron = "0 0/2 * * * ?"
   val metric = PorterMetrics.FastlyCloudwatchLoadTimingMetric
 
-  // Samples in CloudWatch are additive so we want to
-  // limit duplicate reporting as much as reasonable.
-  // We do not want to corrupt the past either.
-  // Choose a default value that accounts for the Fastly api query,
-  // which omits the most recent 15 minutes of results.
-  val latestTimestampsSent = mutable.Map[(String, String), Long]().
-    withDefaultValue( DateTime.now().minusMinutes(15).getMillis() )
+  // Samples in CloudWatch are additive so we want to limit duplicate reporting.
+  // We do not want to corrupt the past either, so set a default value (the most
+  // recent 15 minutes of results are unstable).
+  val latestTimestampsSent = mutable.Map[(String, String, String), Long]().
+    withDefaultValue(DateTime.now().minusMinutes(15).getMillis())
 
   def run() {
     log.info("Loading statistics from Fastly to CloudWatch.")

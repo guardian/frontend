@@ -30,7 +30,6 @@ define([
         initiatedBy = 'initial',
         initialUrl,
         linkContext,
-        noHistoryPush = false,
         panes,
         paneNow = 1,
         paneThen = 1,
@@ -175,7 +174,7 @@ define([
 
         if (initiatedBy === 'initial') {
             loadSidePanes();
-            urls.pushUrl({}, document.title, window.location.href);
+            urls.pushUrl({title: document.title}, document.title, window.location.href, true);
             return;
         }
 
@@ -195,15 +194,15 @@ define([
         // Update canonical tag using pushed location
         canonicalLink.attr('href', window.location.href);
 
-        if (!noHistoryPush) {
-            urls.pushUrl({}, document.title, url);
+        //Push state change to history
+        if(referrer.indexOf(url) === -1) {
+            urls.pushUrl({title: document.title}, document.title, url);
         }
-        noHistoryPush = false;
 
         config.swipe = {
             initiatedBy: initiatedBy,
             referrer: referrer,
-            referrerPageName: referrerPageName,
+            referrerPageName: referrerPageName
         };
 
         common.mediator.emit('page:ready', pageConfig(config), context);
@@ -234,7 +233,7 @@ define([
         return pos > -1 && pos < sequenceLen ? sequence[pos].url : sequence[0].url;
     }
 
-    function loadSequence(callback) {
+    function loadSequence(config, callback) {
         var sequenceUrl = linkContext;
 
         if (sequenceUrl) {
@@ -248,9 +247,9 @@ define([
                 sequenceUrl = '/' + sequenceUrl;
                 storage.remove(storePrefix + 'linkContext');
             } else {
-                // No data-link-context, so infer the section from current url
-                sequenceUrl = window.location.pathname.match(/^\/([^\/]+)/);
-                sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl[1] : '');
+                // No data-link-context, so infer the section from page config
+                sequenceUrl = (config.page && config.page.section) ? config.page.section : null;
+                sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl : '');
             }
         }
 
@@ -287,7 +286,6 @@ define([
                             sequenceCache[s.url] = s;
                             sequence.push(s);
                             sequenceLen += 1;
-                            //window.console.log(i + " " + s.url);
                         }
                     }
                     setSequencePos(window.location.pathname);
@@ -523,22 +521,9 @@ define([
 
         // Bind back/forward button behavior
         window.onpopstate = function (event) {
-            var state = event.state,
-                popId,
-                dir;
-
             // Ignore inital popstate that some browsers fire on page load
-            if (!state || initiatedBy === 'initial') { return; }
-
-            initiatedBy = 'browser_history';
-
-            // Prevent a history state from being pushed as a result of calling gotoUrl
-            noHistoryPush = true;
-
-            // Reveal the newly poped location, if new
-            if(referrer !== window.location.href) {
-                gotoUrl(urlAbsPath(window.location.href));
-            }
+            if (!event.state && !event.state.title) { return; }
+            window.location.reload();
         };
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
@@ -548,7 +533,7 @@ define([
     }
 
     var initialise = function(config) {
-        loadSequence(function(){
+        loadSequence(config, function(){
             var loc = window.location.href;
 
             initialUrl       = urlAbsPath(loc);
