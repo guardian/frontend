@@ -87,7 +87,7 @@ $keylineSize: 1px;
     padding-left: 28px; /* aligns with top level comment's body */
     border-left: 8px solid $darkMushroom;
 
-    @include mq(min-width: 768px) {
+    @include mq(768px) {
         padding-left: 44px;
         border-left-width: 16px;
     }
