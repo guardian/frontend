@@ -1,0 +1,22 @@
+@(page: Page)(implicit request: RequestHeader)
+
+@main(page, Switches.all){ } {
+<form class="form" novalidate action="/signin">
+  <ul class="form-fields">
+    <li>
+      <label for="email">Email address</label>
+      <input class="text-input" autocomplete="on" spellcheck="false" type="email" id="email" value="" />
+    </li>
+    <li>
+      <label for="password">Password</label>
+      <input class="text-input" type="password" id="password" />
+      <a class="assistance" href="/id/recover">Forgotten password?</a>
+    </li>
+    <li>
+      <label for="persistent-login" class="check-label">Remember me</label>
+      <input type="checkbox" value="1" id="persistent-login" />
+    </li>
+  </ul>
+  <button type="submit">Signin</button>
+</form>
+}
