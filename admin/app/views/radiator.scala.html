@@ -1,151 +1,52 @@
 @(charts: Seq[tools.Chart], env: String)
+<!DOCTYPE html>
+<html>
+  <head>
+        <meta http-equiv="refresh" content="60">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>theguardian.com radiator</title>
+        <link rel="stylesheet" type="text/css" href="/assets/css/radiator.css">
+        <script src="https://www.google.com/jsapi"></script>
+  </head>
+  <body>
+  
+        <header>
+            <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
+        </header>
 
-    <meta http-equiv="refresh" content="60">
-    
-    <style>
-
-        body { background-color: #222; margin: 0 auto; max-width: 90%; padding-top: 30px; }
+        <h2>Cloudwatch</h2>
         
-        header {
-            color: #95B1CA;
-            font-size: 18px;
-        }
-        .navbar { display: none; }
-        #pingdom li, #riffraff li { font-size: 30px; line-height: 30px; } 
-        #pingdom small, #riffraff small { font-size: 20px; }
-        .up, .Completed {
-            color: green;
-        
-        } 
-        .down, .Failed { color: red; }
-        .Running { color: orange; }
-        ul {
-            height: 30px;
-            margin-left: 40px;
-        } 
-        #pingdom li, #riffraff li {
-            min-width: 30px;
-            min-height: 30px;
-            font-size: 0;
-            color: transparent;
-            float: left;
-            display: inline-block;
-            margin-right: 10px;
-        }
-       
-        #pingdom li.up, #riffraff li.Completed { 
-            background-color: green;
-        }
-        
-        #pingdom li.down, #riffraff li.Failed {
-            background-color: red;
-        }
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawCharts);
 
-        #riffraff li.Running {
-            background-color: orange;
-        }
-        
-        h2 {
-            font-family: Georgia, serif;
-            color: #666;
-            clear: both;
-            font-weight: normal;
-        }
-        #logo .white {
-            color: white;
-        }
-
-    </style>
-    
-    <header>
-    <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
-    </header>
-    <h2>ELB Latency</h2>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawCharts);
-
-        function drawCharts() {
-            @charts.map{ chart =>
-                new google.visualization.LineChart(document.getElementById('@chart.id'))
-                    .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
-                    backgroundColor: '#222222',
-                    colors: ['#CCFF66'],
-                    hAxis: { textStyle: {color: '#666'}},
-                    vAxis: { textStyle: {color: '#666'}, gridlines: { count: 0 } },
-                    legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
-                });
+            function drawCharts() {
+                @charts.map{ chart =>
+                    new google.visualization.LineChart(document.getElementById('@chart.id'))
+                        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                        backgroundColor: '#fff',
+                        colors: ['#333'],
+                        height: 120,
+                        hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
+                        legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title", textStyle: {color: '#ccc'}, gridlines: { count: 3, color: '#ccc' }} }
+                    });
+                }
             }
-        }
-    </script>
+        </script>
 
-    @charts.map{ chart => <div id="@chart.id" style="max-width: 100%"></div> }
+        @charts.map{ chart => <div id="@chart.id" class="charts"></div> }
 
-    <h2>Pingdom</h2>
-    <ul id="pingdom"></ul>
-    
-    <h2>Deployments</h2>
-    <ul id="riffraff"></ul>
-
-    <script src="/assets/javascripts/components/jquery/jquery.js"></script>
-
-    <script type="text/javascript">
-        window.addEventListener('load', function() {
-                
-            var ads = document.querySelectorAll('.ad-slot')
-            for (var i = 0; i < ads.length; i++) {
-                ads[i].className = 'h';
-            }
-
-            // pingdom
-            var pingdom = document.getElementById('pingdom')
-            $.ajax({ url:'/radiator/pingdom', success: function(status) {
-                        JSON.parse(status).checks.filter(function (check) {
-
-                            return /ELB|Host|CDN/.test(check.name);
-
-                            }).forEach(function(check){
-                                var li = document.createElement('li');
-                                li.className = check.status;
-                                li.textContent = check.name;
-                                pingdom.appendChild(li);
-                            })
-                        }})
-
-            // riff raff - requires you to be on the guardian network
+        <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
+        <ul id="pingdom"></ul>
         
-            $.ajax({
-                        url: 'https://riffraff.gutools.co.uk/api/history?stage=PROD&projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=50', 
-                        dataType: 'jsonp',
-                        success: function(deployments) {
+        <h2>Deployments <small>(the last deployment for each RiffRaff project)</small></h2>
+        <ul id="riffraff"></ul>
 
-                            // a hash of the last deployment each project 
-                            var latestDeployments = {};
-                            deployments.response.results.filter(function (deployment) {
-                                
-                                    return /^frontend::/.test(deployment.projectName)
+        <!-- TODO - add team city & pager duty -->
 
-                                }).forEach(function(deploy) {
-                                    
-                                    var project = deploy.projectName;
-                                    if (!latestDeployments.hasOwnProperty(project)) {
-                                        latestDeployments[project] = deploy;
-                                    }
-                                })
-
-                            // render
-                            Object.keys(latestDeployments).forEach(function (deployment)  {
-                                var d  = latestDeployments[deployment];
-                                var li = document.createElement('li');
-                                li.className = d.status;
-                                li.innerHTML = d.projectName;
-                                riffraff.appendChild(li);
-                            });
-
-                        }})
-        });
-
-
-
-    </script>
+        <script src="https://www.google.com/jsapi"></script>
+        <script src="/assets/javascripts/components/jquery/jquery.js"></script>
+        <script src="/assets/javascripts/radiator/bootstrap.js"></script>
+  </body>
+</html>
