@@ -30,9 +30,11 @@ define(["bean",
             $images;
 
         this.selector = '.trail--gallery';
-        this.galleryEndpoint = '';
+        this.galleryEndpoint = ''; // Hook for tests
 
         this.init = function(opts) {
+            self.opts = opts || {};
+
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl = e.currentTarget.href;
@@ -54,7 +56,7 @@ define(["bean",
                 });
 
                 // Disable URL changes when the app-wide swipe is on
-                if(document.body.className.indexOf('has-swipe') != -1) {
+                if(document.body.className.indexOf('has-swipe') !== -1) {
                     pushUrlChanges = false;
                 }
             }
@@ -97,9 +99,12 @@ define(["bean",
             });
 
             bean.on(window, 'popstate', function(event) {
+
                 if (event.state && event.state.lightbox) {
                     // This keeps the back button to navigate back through images
-                    self.goTo(event.state.currentImage);
+                    self.goTo(event.state.currentImage, {
+                        dontUpdateUrl: true
+                    });
 
                 } else if (event.state && !event.state.lightbox) {
                     // This happens when we reach back to the state before the lightbox was opened
@@ -124,7 +129,6 @@ define(["bean",
                 crossOrigin: true,
                 success: function(response) {
                     self.galleryUrl = '/' + response.config.page.pageId;
-                    self.pushUrlState();
 
                     overlay.setBody(response.html);
 
@@ -190,7 +194,9 @@ define(["bean",
             self.goTo(currentImage + 1);
         };
 
-        this.goTo = function(index) {
+        this.goTo = function(index, opts) {
+            opts = opts || {};
+
             // Protecting against the boundaries
             if (index > totalImages) {
                 index = 1;
@@ -215,7 +221,11 @@ define(["bean",
             currentImage = index;
             self.imageIndexNode.innerHTML = currentImage;
             self.switchToFullImage();
-            self.pushUrlState();
+
+
+            if (!opts.dontUpdateUrl) {
+                self.pushUrlState();
+            }
         };
 
         this.switchToGrid = function(e) {
@@ -243,9 +253,10 @@ define(["bean",
         this.switchToFullImage = function(e) {
             mode = 'fullimage';
 
-            if (detect.hasTouchScreen() && !swipeActive) {
+            if (detect.hasTouchScreen() && !swipeActive && !self.opts.disableSwipe) {
                 self.setupSwipe();
             }
+
 
             bonzo(galleryNode).removeClass('gallery--grid-mode').addClass('gallery--fullimage-mode');
 
@@ -295,14 +306,15 @@ define(["bean",
         this.setupSwipe = function() {
             require(['js!swipe'], function() {
                 // set up the swipe actions
-                galleryNode.className += ' gallery--swipe';
+                bonzo(galleryNode).addClass('gallery--swipe');
 
                 self.swipe = new Swipe(galleryNode, {
                     startSlide: currentImage - 1,
                     speed: 200,
                     continuous: false,
                     callback: function(index, elm) {
-                        self.goTo(index + 1);
+                        currentImage = index + 1;
+                        self.imageIndexNode.innerHTML = currentImage;
                     }
                 });
 
