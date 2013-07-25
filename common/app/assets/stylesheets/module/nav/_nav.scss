@@ -96,7 +96,7 @@
     }
 
         .nav-popup--small .nav--section-divider {
-            @media (min-width: $tablet) {
+            @include mq(tablet) {
                 margin-top: -5px !important;
 
                 .nav__item { margin: 0; }
@@ -108,7 +108,7 @@
         }
 
         .control--sections .i-nav-divider {
-            @media (min-width: $tablet) {
+            @include mq(tablet) {
                 border-left: 0;
             }
         }
@@ -149,7 +149,7 @@
     background-color: #F5F5F2;
     border-bottom: 1px solid $darkMushroom;
 
-    @media (min-width: $tablet) { display: block; }
+    @include mq(tablet) { display: block; }
 }
 
 .nav--global {
@@ -162,7 +162,7 @@
     overflow: hidden;
     padding: 0 50px 0 0;
 
-    @media (min-width: $tablet) { display: block; }
+    @include mq(tablet) { display: block; }
 
     .nav__item {
         position: relative;
@@ -321,7 +321,7 @@
     display: none;
     margin: 0 $baseline*2 0 $gutter;
     padding: $baseline*3 0 0;
-    @media (min-width: $tablet) { display: block; }
+    @include mq(tablet) { display: block; }
 
     .nav__item {
         margin: $baseline 0 0 0;

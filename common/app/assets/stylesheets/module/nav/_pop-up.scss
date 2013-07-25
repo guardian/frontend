@@ -20,7 +20,7 @@
 .nav-popup .nav--section-divider {
     padding-bottom: $baseline*4;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         margin: 0;
         border-top: none;
     }
@@ -32,7 +32,7 @@
 .nav-popup--small {
     padding-bottom: 0;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         position: absolute;
         top: 99px;
         right: 0;
@@ -50,7 +50,7 @@
     }
 
     .nav__item {
-        @media (min-width: $tablet) {
+        @include mq(tablet) {
             margin: 0 $gutter;
             border-bottom: 1px solid $darkMushroom;
             text-align: right;
@@ -65,7 +65,7 @@
     .nav--columns .nav__link {
         @extend %type-7;
 
-        @media (min-width: $tablet) {
+        @include mq(tablet) {
             padding: $baseline*3 0 $baseline*3 0;
             @include font($serifheadline, 200, 14, 14);
         }

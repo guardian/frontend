@@ -1,4 +1,4 @@
-@media (min-width: $tablet) {
+@include mq(tablet) {
     .front-container--facia .front-section:nth-child(odd) {
         float: left;
         clear: left;

@@ -11,7 +11,7 @@ i.gallery__watermark {
     top: $baseline * 2;
     left: $gutter;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         display: block;
     }
 }
