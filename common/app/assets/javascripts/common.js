@@ -48,6 +48,9 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                 }
             };
         },
+        listToArray : function(list) {
+            return Array.prototype.slice.call(list);
+        },
         lazyLoadCss: function(name, config) {
             // append server specific css
             bonzo(document.createElement('link'))
