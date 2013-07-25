@@ -32,6 +32,19 @@ i.gallery__watermark {
 /* ==========================================================================
    Thumbnail/Single Full image modes
    ========================================================================== */
+
+$thumbnailOuterWidth: 156px; // 140px + 16px margins
+
+@function gridContainerWidth($n-thumbnails) {
+    @return $n-thumbnails * $thumbnailOuterWidth;
+}
+
+@function viewportWidth($n-thumbnails) {
+    $gridContainerWidth: gridContainerWidth($n-thumbnails);
+    @return $gridContainerWidth;
+}
+
+
 .gallery--grid-mode {
 
     .gallery__watermark,
@@ -41,12 +54,8 @@ i.gallery__watermark {
         display: none;
     }
 
-    .gallery__images {
-        text-align: center;
-    }
-
     .gallery-item {
-        display: inline-block;
+        float: left;
         margin: $gutter / 2;
     }
 
@@ -62,6 +71,20 @@ i.gallery__watermark {
         position: absolute;
     }
 
+    .gallery__images {
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+    }
+
+    // This sets a fixed width to the gallery container, so it can be centered
+    @for $i from 2 through 8 {
+        @media (min-width: viewportWidth($i)) {
+            .gallery__images {
+                width: gridContainerWidth($i);
+            }
+        }
+    }
 }
 
 
@@ -77,7 +100,6 @@ i.gallery__watermark {
         }
     }
 }
-
 
 
 
@@ -290,3 +312,4 @@ i.gallery__watermark {
         display: none;
     }
 }
+

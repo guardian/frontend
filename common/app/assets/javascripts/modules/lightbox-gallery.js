@@ -209,7 +209,7 @@ define(["bean",
                     captionControlHeight = 35; // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
 
                 if (itemIndex === index) {
-                    el.style.display = 'inline-block';
+                    el.style.display = 'block';
 
                     // Match arrows to the height of image, minus height of the caption control to prevent overlap
                     $navArrows.css('height', ($images[index-1].offsetHeight - captionControlHeight) + 'px');
@@ -313,6 +313,9 @@ define(["bean",
                     speed: 200,
                     continuous: false,
                     callback: function(index, elm) {
+                        var swipeDir = (index + 1 > currentImage) ? 'next' : 'prev';
+                        self.trackInteraction('Gallery swipe - ' + swipeDir);
+
                         currentImage = index + 1;
                         self.imageIndexNode.innerHTML = currentImage;
                     }
@@ -342,6 +345,12 @@ define(["bean",
 
                 url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
             }
+        };
+
+
+        // send custom (eg non-link) interactions to omniture
+        this.trackInteraction = function (str) {
+            common.mediator.emit('module:clickstream:interaction', str);
         };
 
     }
