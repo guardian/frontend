@@ -1,4 +1,4 @@
-@(url: String)
+@(url: String)(implicit request: RequestHeader)
 <span class="trail__comment-count">
-    <a class="trail__comment-count" href="@url#comments" data-link-name="Comment count"></a>
+    <a class="trail__comment-count" href="@LinkTo{@url#comments}" data-link-name="Comment count"></a>
 </span>

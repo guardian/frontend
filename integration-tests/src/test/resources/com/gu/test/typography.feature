@@ -3,7 +3,9 @@ Feature: Typography
 
     Scenario: Setting the typeface
         Given I visit a page
-        Then the typeface should be rendered as "EgyptianText"
+        Then the headline typeface should be rendered as "EgyptianHeadline"
+        And  the body typeface should be rendered as "EgyptianText"
+
 
 #@not-testable
    # Scenario: Typeface kill-switch

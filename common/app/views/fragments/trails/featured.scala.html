@@ -1,20 +1,22 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
 <@element class="trail trail--featured t@rowNum @if(trail.mainPicture(width=220)) { trail--has-image}"
-    data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+     data-link-name="trail"
+    @trail.discussionId.map{ id => data-discussion-id="@id" }
+    @CricketMatch(trail).map{ id => data-cricket-match="@id" }>
 
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
     <h@headingLevel class="type-3">
-        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+        <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
             @RemoveOuterParaHtml(trail.headline)
         </a>
     </h@headingLevel>
 
-    @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
+    @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
 
     @trail.mainPicture(width=220).map{ smallCrop =>
-        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image">
+        <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image" role="presentation">
             <img class="maxed" src="@smallCrop.path"
                 data-force-upgrade="true"
                 data-thumb-width="@smallCrop.width"
@@ -23,8 +25,7 @@
                     data-full-width="@largeCrop.width"
                 }
                 itemprop="contentURL"
-                alt="@StripHtmlTags(smallCrop.altText.getOrElse(""))"
-                title="@StripHtmlTags(smallCrop.caption.getOrElse(""))"
+                alt=""
             />
         </a>
     }

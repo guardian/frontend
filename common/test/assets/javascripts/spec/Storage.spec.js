@@ -1,8 +1,18 @@
-define(['common', 'moment', 'modules/storage'], function(common, moment, storage) {
+define(['common', 'modules/storage'], function(common, storage) {
 
     describe('Storage', function() {
         
         sinon.spy(common.mediator, 'emit');
+        var date;
+
+        Date.prototype.addHours = function(h){
+            this.setHours(this.getHours()+h);
+            return this;
+        };
+
+        beforeEach(function() {
+           date = new Date;
+        });
 
         afterEach(function() {
             // restore stubbed local storage methods
@@ -93,7 +103,7 @@ define(['common', 'moment', 'modules/storage'], function(common, moment, storage
         describe('Expiration', function() {
 
             it('should delete if expired', function() {
-                var expires = moment().subtract('hour', 1).toDate(),
+                var expires = date.addHours(-1),
                     key = 'foo',
                     value = 'bar',
                     storedData = '{"value":"' + value + '","expires":"' + expires.toISOString() + '"}',
@@ -114,7 +124,7 @@ define(['common', 'moment', 'modules/storage'], function(common, moment, storage
             });
 
             it('should not delete if not expired', function() {
-                var expires = moment().add('hour', 1).toDate(),
+                var expires = date.addHours(+1),
                     key = 'foo',
                     value = 'bar',
                     removeItemSpy = sinon.spy();

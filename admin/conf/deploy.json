@@ -4,8 +4,9 @@
             "type":"asg-elb",
             "apps":[ "frontend::front" ],
             "data":{
-                "secondsToWait":600,
+                "secondsToWait":900,
                 "port":18080,
+                "healthcheckGrace":20,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
                     "/management/healthcheck"

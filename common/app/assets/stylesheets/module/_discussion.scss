@@ -35,6 +35,7 @@ $keylineSize: 1px;
     border-bottom: $keylineSize solid $keylineColor;
     display: table-cell;
     cursor: pointer;
+    @include box-sizing(border-box);
 }
 .d-tabs__item--byline {
     @extend %type-7;
@@ -94,7 +95,7 @@ $keylineSize: 1px;
 .d-comment {
     color: #333;
     font-family: sans-serif;
-    border-top: 1px solid #EDEDE7;
+    border-top: 1px solid $medianMushroom;
 }
 .d-comment--has-replies + .d-comment {
     border-top: 2px solid $darkMushroom;

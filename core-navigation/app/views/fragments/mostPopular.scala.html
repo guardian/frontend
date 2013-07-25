@@ -1,4 +1,4 @@
-@(popular: Seq[model.MostPopular], visibleTrails: Int)
+@(popular: Seq[model.MostPopular], visibleTrails: Int)(implicit request: RequestHeader)
 
 @defining(popular.size > 1){ isTabbed =>
 

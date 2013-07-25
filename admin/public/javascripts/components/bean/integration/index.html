@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Ender Integration Test</title>
+    <style type="text/css">
+      body {
+        font: 300 12px 'helvetica neue', helvetica, arial;
+      }
+      fieldset {
+        padding: 5px;
+        margin : 5px;
+        border : solid 1px;
+      }
+      fieldset:nth-child(6n+1) { border-color: red; }
+      fieldset:nth-child(6n+2) { border-color: orange; }
+      fieldset:nth-child(6n+3) { border-color: yellow; }
+      fieldset:nth-child(6n+4) { border-color: green; }
+      fieldset:nth-child(6n+5) { border-color: blue; }
+      fieldset:nth-child(6n+6) { border-color: purple; }
+    </style>
+  </head>
+
+  <body>
+
+    <div id="tests"></div>
+
+    <script src="ender.js"></script>
+
+    <script type="text/javascript">
+      var fixtureOuter = '<fieldset><legend></legend><pre><code></code></pre></fieldset>'
+        , tests = 0
+
+        , test = function (name, html, cb) {
+            $(fixtureOuter)
+              .attr('id', 'test' + (++tests))
+              .appendTo('#tests')
+              .down('legend')
+              .text('Test #' + ': ' + name)
+              .after(html)
+              .up('fieldset')
+              .down('> pre > code')
+              .html(cb.toString().replace(/^function \([^\)]*\) \{\n/, '').replace(/^\s{12,14}/gm, '').replace(/\n\}$/, ''))
+            cb(tests)
+          }
+
+      $.domReady(function () {
+
+        test(
+            // name
+            'delegate()'
+            // fixture
+          ,   '<p>clicking me shouldn\'t do anything</p>'
+            + '<p id="clickme" style="background:#ff5;">#clickme, delegated event</p>'
+            + '<p>clicking me shouldn\'t do anything</p>'
+            // execute
+          , function (index) {
+              $('#test' + index).delegate('#clickme', 'click', function (e) {
+                alert('delegated')
+              })
+            }
+        )
+
+        test(
+            // name
+            'on() style delegation'
+            // fixture
+          ,   '<p>clicking me shouldn\'t do anything</p>'
+            + '<p id="clickme2" style="background:#ff5;">#clickme, delegated event</p>'
+            + '<p>clicking me shouldn\'t do anything</p>'
+            // execute
+          , function (index) {
+              $('#test' + index).on('click', '#clickme2', function (e) {
+                alert('delegated')
+              })
+            }
+        )
+
+        test(
+            // name
+            'click()'
+            // fixture
+          , '<p id="directclick" style="background:#ff5;">#directclick, click() event</p>'
+            // execute
+          , function () {
+              $('#directclick').click(function (e) { alert('click()!') })
+            }
+        )
+
+        test(
+            // name
+            'one()'
+            // fixture
+          , '<p id="one" style="background:#ff5;">#one, click event should work only once</p>'
+            // execute
+          , function () {
+              $('#one').one('click', function (e) { alert('click()!') })
+            }
+        )
+
+        test(
+            // name
+            'stop()'
+            // fixture
+          , '<p style="background:#ff5;">#stopper, typing in here should not result in characters: <input type="text" id="stopper"></p>'
+            // execute
+          , function (index) {
+              $('#test' + index).on('keydown', function () {
+                alert('SHOULD NOT GET THIS!')
+              })
+              $('#stopper').on('keydown', function (e) {
+                e.stop()
+              })
+            }
+        )
+      })
+    </script>
+
+  </body>
+
+</html>

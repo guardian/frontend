@@ -19,6 +19,7 @@ define([
     'modules/navigation/control',
     'modules/navigation/australia',
     'modules/navigation/edition-switch',
+    'modules/navigation/platform-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
@@ -30,7 +31,8 @@ define([
     'modules/experiments/ab',
     'modules/swipenav',
     "modules/adverts/video",
-    "modules/discussion/commentCount"
+    "modules/discussion/commentCount",
+    "modules/lightbox-gallery"
 ], function (
     common,
     ajax,
@@ -51,6 +53,7 @@ define([
     NavControl,
     Australia,
     EditionSwitch,
+    PlatformSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
@@ -59,10 +62,11 @@ define([
     Cookies,
     OmnitureMedia,
     Debug,
-    AB,
+    ab,
     swipeNav,
     VideoAdvert,
-    CommentCount
+    CommentCount,
+    LightboxGallery
 ) {
 
     var modules = {
@@ -75,20 +79,28 @@ define([
             common.mediator.on('fragment:ready:images', function(context) {
                 images.upgrade(context);
             });
+            common.mediator.on('modules:related:loaded', function(config, context) {
+                images.upgrade(context);
+            });
+            common.mediator.on('modules:images:upgrade', function() {
+                common.$g('body').addClass('images-upgraded');
+            });
         },
 
         initialiseNavigation: function (config) {
             var navControl = new NavControl(),
                 topStories = new TopStories(),
-                sections = new Sections(),
+                sections = new Sections(config),
                 search = new Search(config),
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
+                platforms = new PlatformSwitch(),
                 header = document.querySelector('body');
 
+
+            sections.init(header);
             navControl.init(header);
             topStories.load(config, header);
-            sections.init(header);
             search.init(header);
             aus.init(header);
 
@@ -136,6 +148,24 @@ define([
             });
         },
 
+        initLightboxGalleries: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                var galleries = new LightboxGallery(config, context);
+                galleries.init();
+            });
+
+            // Register as a page view
+            common.mediator.on('module:lightbox-gallery:loaded', function(config, context) {
+                common.mediator.emit('page:common:deferred:loaded', config, context);
+            });
+        },
+        
+        runAbTests: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                ab.run(config, context);
+            });
+        },
+
         loadAnalytics: function () {
             var omniture = new Omniture();
 
@@ -157,9 +187,6 @@ define([
 
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
-                // AB must execute before Omniture
-                AB.init(config, context);
-
                 common.mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
                 require(config.page.ophanUrl, function (Ophan) {
@@ -178,13 +205,17 @@ define([
                             viewData.audsci_json = JSON.stringify(audsci);
                         }
 
-                        if(AB.inTest(config.switches)) {
-                            var test = AB.getTest();
-                            viewData.experiments_json = JSON.stringify([{
-                                id: test.id,
-                                variant: test.variant
-                            }]);
+                        var participations = ab.getParticipations(),
+                            participationsKeys = Object.keys(participations);
+
+                        if (participationsKeys.length > 0) {
+                            var testData = participationsKeys.map(function(k) {
+                                return { id: k, variant: participations[k].variant };
+                            });
+                            viewData.experiments_json = JSON.stringify(testData);
                         }
+
+
 
                         return viewData;
                     });
@@ -194,6 +225,28 @@ define([
 
             });
 
+        },
+
+        // Temporary - for a user zoom survey
+        paragraphSpacing: function () {
+            var key = 'paragraphSpacing';
+            common.mediator.on('page:common:ready', function(config, context) {
+                var typographyPrefs = userPrefs.get(key);
+                switch (typographyPrefs) {
+                    case 'none':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing');
+                        break;
+                    case 'indents':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing-indents');
+                        break;
+                    case 'more':
+                        common.$g('body').addClass('test-paragraph-spacing--more-spacing');
+                        break;
+                    case 'clear':
+                        userPrefs.remove(key);
+                        break;
+                }
+            });
         },
 
         loadAdverts: function () {
@@ -210,7 +263,7 @@ define([
         },
 
         loadVideoAdverts: function(config) {
-            common.mediator.on('page:video:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 if(config.switches.videoAdverts && !config.page.blockAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
@@ -229,17 +282,6 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
-        },
-
-        showSharedWisdomToolbar: function(config) {
-            // only display if switched on
-            if (userPrefs.isOn('shared-wisdom-toolbar')) {
-                require('modules/shared-wisdom-toolbar', function(sharedWisdomToolbar) {
-                    sharedWisdomToolbar.init(function() {
-                        sharedWisdomToolbar.show();
-                    }, config.modules.sharedWisdomToolbar);
-                });
-            }
         },
 
         initSwipe: function(config) {
@@ -268,11 +310,12 @@ define([
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.loadAdverts();
-                modules.loadAnalytics();
+                if (!config.switches.analyticsOnDomReady) {
+                    modules.loadAnalytics();
+                }
 
                 // TODO: make these run in event 'page:common:deferred:loaded'
                 modules.cleanupCookies(context);
-                modules.showSharedWisdomToolbar(config);
             }
             common.mediator.emit("page:common:deferred:loaded", config, context);
         });
@@ -283,14 +326,20 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
             modules.initialiseNavigation(config);
             modules.loadVideoAdverts(config);
             modules.initClickstream();
+            if (config.switches.analyticsOnDomReady) {
+                modules.loadAnalytics();
+            }
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
+            modules.initLightboxGalleries();
+            modules.paragraphSpacing();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

@@ -8,19 +8,26 @@ import model.{MetaData, TrailblockDescription}
 abstract class Edition(
     val id: String,
     val displayName: String,
-    val timezone: DateTimeZone
+    val timezone: DateTimeZone,
+    val hreflang: String // see http://support.google.com/webmasters/bin/answer.py?hl=en&answer=189077
   ) {
   def configuredFronts: Map[String, Seq[TrailblockDescription]]
+  def configuredFrontsFacia: Map[String, Seq[TrailblockDescription]]
   def zones: Seq[Zone]
   def navigation(metadata: MetaData): Seq[NavItem]
 }
 
 object Edition {
 
+  // gives templates an implicit edition
+  implicit def edition(implicit request: RequestHeader) = this(request)
+
   val defaultEdition = editions.Uk
+
   val all = Seq(
     editions.Uk,
-    editions.Us
+    editions.Us,
+    editions.Au
   )
 
   def apply(request: RequestHeader): Edition = {
@@ -66,8 +73,8 @@ object Editionalise {
       id
     } else {
       id match {
-        case "" => s"${edition.id.toLowerCase}-edition"
-        case _ => s"$id/${edition.id.toLowerCase}-edition"
+        case "" => s"${edition.id.toLowerCase}"
+        case _ => s"${edition.id.toLowerCase}/$id"
       }
     }
   }

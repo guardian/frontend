@@ -4,6 +4,7 @@ define('bootstraps/app', [
     "ajax",
     'modules/detect',
     'modules/errors',
+    'modules/analytics/canary',
     'modules/fonts',
     'modules/debug',
     "modules/router",
@@ -13,14 +14,18 @@ define('bootstraps/app', [
     "bootstraps/article",
     "bootstraps/video",
     "bootstraps/gallery",
+    "bootstraps/interactive",
     "bootstraps/story",
-    "modules/pageconfig"
+    "modules/experiments/ab",
+    "modules/pageconfig",
+    "bootstraps/tag"
 ], function (
     common,
     domReady,
     ajax,
     detect,
     Errors,
+    Canary,
     Fonts,
     Debug,
     Router,
@@ -30,8 +35,11 @@ define('bootstraps/app', [
     Article,
     Video,
     Gallery,
+    Interactive,
     Story,
-    pageConfig
+    ab,
+    pageConfig,
+    Tag
 ) {
 
     var modules = {
@@ -47,6 +55,18 @@ define('bootstraps/app', [
             });
             e.init();
             common.mediator.on("module:error", e.log);
+        },
+       
+       // RUM on features
+       sendInTheCanary: function (config) {
+            var c = new Canary({
+                isDev: config.page.isDev
+            });
+            c.init();
+        },
+    
+        initialiseAbTest: function (config) {
+            ab.segment(config);
         },
 
         loadFonts: function(config, ua) {
@@ -68,9 +88,11 @@ define('bootstraps/app', [
 
         domReady(function() {
             var context = document.getElementById('preload-1');
-
+            
             modules.initialiseAjax(config);
+            modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
+            modules.sendInTheCanary(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
 
@@ -81,11 +103,11 @@ define('bootstraps/app', [
 
                 bootstrapCommon.init(config, context);
 
+
                 //Fronts
-                r.get('/', function(req) {        Front.init(config, context); });
-                r.get('/sport', function(req) {   Front.init(config, context); });
-                r.get('/culture', function(req) { Front.init(config, context); });
-                r.get('/australia', function(req) { Front.init(config, context); });
+                if(config.page.isFront){
+                    Front.init(config, context);
+                }
 
                 //Football
                 r.get('/football', function(req) {                                Football.init(req, config, context); });
@@ -108,12 +130,19 @@ define('bootstraps/app', [
                     Gallery.init(config, context);
                 }
 
+                if (config.page.contentType === "Interactive") {
+                    Interactive.init(config, context);
+                }
+
+                if (config.page.contentType === "Tag") {
+                    Tag.init(config, context);
+                }
+
                 //Kick it all off
                 r.init();
             };
 
             common.mediator.on('page:ready', pageRoute);
-            
             common.mediator.emit('page:ready', config, context);
         });
     };

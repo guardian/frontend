@@ -11,9 +11,9 @@ import com.mongodb.casbah.Imports._
 
 object EventController extends Controller with Logging with AuthLogging {
 
-  def render() = AuthAction{ request =>
+  def render() = AuthAction { request =>
     val identity = request.session.get("identity").head
-    Ok(views.html.events(identity, AdminConfiguration.environment.stage))
+    Ok(views.html.events(identity, Configuration.environment.stage))
   }
 
   /* API */
@@ -29,13 +29,13 @@ object EventController extends Controller with Logging with AuthLogging {
     }.getOrElse(BadRequest(status("Invalid Json")).as("application/json"))
   }
   
-  def read(eventId: String) = AuthAction{ request =>
+  def read(eventId: String) = AuthAction { request =>
     // eventId will have leading /
     Event.mongo.byId(eventId.drop(1)).map{ event =>   Ok(Event.toJsonString(event)) }
       .getOrElse(NotFound(status("no event found: " + eventId)).as("application/json"))
   }
 
-  def update(eventId: String) = AuthAction{ request =>
+  def update(eventId: String) = AuthAction { request =>
     request.body.asJson.map(_.toString).map(Event.fromJson).map { event =>
 
       // eventId has a leading /
@@ -48,7 +48,7 @@ object EventController extends Controller with Logging with AuthLogging {
     }.getOrElse(BadRequest(status("Invalid Json")).as("application/json"))
   }
 
-  def delete(eventId: String) = AuthAction{ request =>
+  def delete(eventId: String) = AuthAction { request =>
     val deleteOk = Event.mongo.delete(eventId.drop(1))
     if (deleteOk) {
       Ok(status("deleted: " + eventId.drop(1))).as("application/json")

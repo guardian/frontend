@@ -1,0 +1,214 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# For dev machines
+GET     /assets/*file                         controllers.Assets.at(path="/public", file)
+
+
+#Note the order of these is important
+GET     /login                      controllers.Login.login
+POST    /login                      controllers.Login.loginPost
+GET     /openIDCallback             controllers.Login.openIDCallback
+GET     /logout                     controllers.Login.logout
+
+# static files
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+##################### NOTE ############################
+#all endpoints below this line should be authenticated#
+#######################################################
+
+#Index page
+GET /                                    controllers.IndexController.index()
+GET /admin                               controllers.IndexController.admin()
+
+# Admin endpoints
+GET     /admin/feature-trailblock        controllers.FeatureTrailblockController.edit()
+POST    /admin/feature-trailblock        controllers.FeatureTrailblockController.save()
+
+# API endpoint proxying for https
+GET     /api/proxy/*path                 controllers.Api.proxy(path, callback)
+GET     /api/tag                         controllers.Api.tag(q, callback)
+GET     /api/item/*path                  controllers.Api.item(path, callback)
+GET     /json/proxy/*absUrl              controllers.Api.json(absUrl)
+
+#Development endpoints
+GET     /dev/switchboard                 controllers.SwitchboardController.render()
+POST    /dev/switchboard                 controllers.SwitchboardController.save()
+
+#Events
+GET     /events                          controllers.event.EventController.render()
+POST    /events                          controllers.event.EventController.create()
+
+GET     /events/list                     controllers.event.EventController.find()
+
+GET     /events*eventId                  controllers.event.EventController.read(eventId)
+POST    /events*eventId                  controllers.event.EventController.update(eventId)
+DELETE  /events*eventId                  controllers.event.EventController.delete(eventId)
+
+#Stories
+GET     /story*storyId                   controllers.event.StoryController.read(storyId)
+DELETE  /story*storyId                   controllers.event.StoryController.delete(storyId)
+
+GET     /story                           controllers.event.StoryController.find(title: String ?= "")
+POST    /story                           controllers.event.StoryController.create()
+POST    /story*storyId                   controllers.event.StoryController.update(storyId)
+
+#Entities
+GET     /entity*entityId                 controllers.event.EntityController.read(entityId, rdfType: String = "")
+DELETE  /entity*entityId                 controllers.event.EntityController.delete(entityId)
+
+GET     /entity                          controllers.event.EntityController.find(id: String ?= "")
+POST    /entity                          controllers.event.EntityController.create()
+POST    /entity*entityId                 controllers.event.EntityController.update(entityId)
+
+# Public face of typed entities
+GET     /people                          controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Person")
+GET     /people*id                       controllers.event.EntityController.read(id, rdfType = "http://schema.org/Person")
+GET     /places                          controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Place")
+GET     /places*id                       controllers.event.EntityController.read(id, rdfType = "http://schema.org/Place")
+GET     /countries                       controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Country")
+GET     /countries*id                    controllers.event.EntityController.read(id, rdfType = "http://schema.org/Country")
+GET     /organisations                   controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Organization")
+GET     /organisations*id                controllers.event.EntityController.read(id, rdfType = "http://schema.org/Organization")
+
+# Fronts
+GET     /fronts                          controllers.FrontsController.index()
+
+
+#Metrics
+
+GET /metrics/loadbalancers               controllers.metrics.DashboardController.render()
+
+# Fronts Api
+GET     /frontsapi/lists                                    controllers.FrontsApiController.getLists
+GET     /frontsapi/list/:listName                           controllers.FrontsApiController.getList(listName)
+POST    /frontsapi/listitem/:listName                       controllers.FrontsApiController.updateList(listName)
+GET     /frontsapi/bootstrap                                controllers.FrontsApiController.bootStrap
+
+# Discussion
+GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)
+GET     /discussion/comment-counts.json                     controllers.CommentCountController.render(shortUrls: String)
+GET     /discussion/*shortUrl.json                          controllers.CommentPageController.render(shortUrl)
+GET     /discussion/*shortUrl                               controllers.CommentPageController.render(shortUrl)
+
+#Core nav
+GET    /most-read                                           controllers.MostPopularController.render(path = "")
+GET    /most-read.json                                      controllers.MostPopularController.render(path = "")
+GET    /most-read/*path.json                                controllers.MostPopularController.render(path)
+GET    /most-read/*path                                     controllers.MostPopularController.render(path)
+GET    /top-stories                                         controllers.TopStoriesController.render()
+GET    /top-stories.json                                    controllers.TopStoriesController.renderJson()
+GET    /top-stories/trails                                  controllers.TopStoriesController.renderTrails()
+GET    /top-stories/trails.json                             controllers.TopStoriesController.renderJsonTrails()
+GET    /related/*path.json                                  controllers.RelatedController.render(path)
+GET    /related/*path                                       controllers.RelatedController.render(path)
+# more stories for swipe
+GET    /most-viewed                                         controllers.MoreStoriesController.renderMostViewed(path = "")
+GET    /most-viewed.json                                    controllers.MoreStoriesController.renderMostViewed(path = "")
+GET    /most-viewed/*path.json                              controllers.MoreStoriesController.renderMostViewed(path)
+GET    /most-viewed/*path                                   controllers.MoreStoriesController.renderMostViewed(path)
+GET    /front-trails                                        controllers.MoreStoriesController.renderFrontTrails(path = "")
+GET    /front-trails.json                                   controllers.MoreStoriesController.renderFrontTrails(path = "")
+GET    /front-trails/*path.json                             controllers.MoreStoriesController.renderFrontTrails(path)
+GET    /front-trails/*path                                  controllers.MoreStoriesController.renderFrontTrails(path)
+
+#Football
+GET     /football/fixtures/:year/:month/:day.json                 controllers.FixturesController.renderForJson(year, month, day)
+GET     /football/fixtures/:year/:month/:day                      controllers.FixturesController.renderFor(year, month, day)
+GET     /football/fixtures                                        controllers.FixturesController.render()
+GET     /football/fixtures.json                                   controllers.FixturesController.renderJson()
+GET     /football/:competition/fixtures/:year/:month/:day.json    controllers.CompetitionFixturesController.renderForJson(year, month, day, competition)
+GET     /football/:competition/fixtures/:year/:month/:day         controllers.CompetitionFixturesController.renderFor(year, month, day, competition)
+GET     /football/:competition/fixtures                           controllers.FixturesController.renderTag(competition)
+GET     /football/:competition/fixtures.json                      controllers.FixturesController.renderTag(competition)
+
+GET     /football/results/:year/:month/:day.json                  controllers.ResultsController.renderForJson(year, month, day)
+GET     /football/results/:year/:month/:day                       controllers.ResultsController.renderFor(year, month, day)
+GET     /football/results                                         controllers.ResultsController.render()
+GET     /football/results.json                                    controllers.ResultsController.renderJson()
+GET     /football/:competition/results/:year/:month/:day.json     controllers.CompetitionResultsController.renderForJson(year, month, day, competition)
+GET     /football/:competition/results/:year/:month/:day          controllers.CompetitionResultsController.renderFor(year, month, day, competition)
+GET     /football/:tag/results                                    controllers.ResultsController.renderTag(tag)
+GET     /football/:tag/results,json                               controllers.ResultsController.renderTag(tag)
+
+GET     /football/live                                            controllers.LiveMatchesController.render()
+GET     /football/live.json                                       controllers.LiveMatchesController.renderJson()
+GET     /football/:competition/live                               controllers.LiveMatchesController.renderFor(competition)
+GET     /football/:competition/live.json                          controllers.LiveMatchesController.renderFor(competition)
+
+GET     /football/tables                                          controllers.LeagueTableController.render()
+GET     /football/tables.json                                     controllers.LeagueTableController.renderJson()
+GET     /football/:competition/table                              controllers.LeagueTableController.renderCompetition(competition)
+GET     /football/:competition/table.json                         controllers.LeagueTableController.renderCompetition(competition)
+
+GET     /football/api/frontscores                                 controllers.FrontScoresController.render()
+GET     /football/api/frontscores.json                            controllers.FrontScoresController.renderJson()
+GET     /football/api/competitiontable                            controllers.CompetitionTablesController.renderCompetition()
+GET     /football/api/competitiontable.json                       controllers.CompetitionTablesController.renderCompetitionJson()
+GET     /football/api/teamtable/:teamId.json                      controllers.CompetitionTablesController.renderTeam(teamId)
+GET     /football/api/teamtable/:teamId                           controllers.CompetitionTablesController.renderTeam(teamId)
+GET     /football/api/teamfixtures/:teamId.json                   controllers.TeamFixturesController.renderComponent(teamId)
+GET     /football/api/teamfixtures/:teamId                        controllers.TeamFixturesController.renderComponent(teamId)
+
+GET     /football/api/match-nav/:year/:month/:day/:home/:away.json    controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
+GET     /football/api/match-nav/:year/:month/:day/:home/:away         controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
+GET     /football/api/match-nav/:matchId.json                         controllers.MoreOnMatchController.moreOn(matchId)
+GET     /football/api/match-nav/:matchId                              controllers.MoreOnMatchController.moreOn(matchId)
+
+GET     /football/competitions                                        controllers.CompetitionListController.render()
+GET     /football/competitions.json                                   controllers.CompetitionListController.renderJson()
+GET     /football/teams                                               controllers.LeagueTableController.renderTeamlist()
+GET     /football/teams.json                                          controllers.LeagueTableController.renderTeamlistJson()
+
+GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+>.json    controllers.MatchController.renderMatchJson(year,month,day,home,away)
+GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+>         controllers.MatchController.renderMatch(year,month,day,home,away)
+GET     /football/match/:matchId.json                                                   controllers.MatchController.renderMatchId(matchId)
+GET     /football/match/:matchId                                                        controllers.MatchController.renderMatchId(matchId)
+
+#Front
+GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
+GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
+
+GET     /$path<(culture|sport|australia)(/\w\w-edition)?>                     controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia)(/\w\w-edition)?>.json                controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
+GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
+
+#Video
+GET     /$path<[\w\d-]*/video/.*>.json              controllers.VideoController.render(path)
+GET     /$path<[\w\d-]*/video/.*>                   controllers.VideoController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/video/.*>.json     controllers.VideoController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/video/.*>          controllers.VideoController.render(path)
+
+#Gallery
+GET     /$path<[\w\d-]*/gallery/.*>.json            controllers.GalleryController.render(path)
+GET     /$path<[\w\d-]*/gallery/.*>                 controllers.GalleryController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>.json   controllers.GalleryController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>        controllers.GalleryController.render(path)
+
+#Section
+GET     /sections                                                  controllers.SectionsController.render()
+GET     /sections.json                                             controllers.SectionsController.renderJson()
+# culture and sport sections now live in front
+GET    /$path<[\w\d-]*(/\w\w-edition)?>/trails.json          controllers.SectionController.renderJsonTrails(path)
+GET    /$path<[\w\d-]*(/\w\w-edition)?>/trails               controllers.SectionController.renderTrails(path)
+GET    /$path<[\w\d-]*(/\w\w-edition)?>.json                 controllers.SectionController.renderJson(path)
+GET    /$path<[\w\d-]*(/\w\w-edition)?>                      controllers.SectionController.render(path)
+
+
+#Tag
+# note: reg ex so this doesn't interfer with $section/trails
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>                       controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>.json                  controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>/trails                controllers.TagController.renderTrails(path)
+GET     /$path<[\w\d-]*/(?!trails)[\w\d-]*>/trails.json           controllers.TagController.renderTrails(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>                        controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>.json                   controllers.TagController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails                 controllers.TagController.renderTrails(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails.json            controllers.TagController.renderTrails(path)
+
+#Articles
+GET     /*path.json                 controllers.ArticleController.render(path)
+GET     /*path                      controllers.ArticleController.render(path)

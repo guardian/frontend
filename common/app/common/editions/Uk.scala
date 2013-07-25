@@ -2,13 +2,17 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{ItemTrailblockDescription, MetaData}
+import model.{RunningOrderTrailblockDescription, ItemTrailblockDescription, MetaData}
 import views.support.{Headline, Thumbnail, Featured}
 import scala.Some
 import common.NavItem
 
 
-object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London")) with Sections with Zones {
+object Uk extends Edition(
+  id = "UK",
+  displayName = "UK edition",
+  timezone = DateTimeZone.forID("Europe/London"),
+  hreflang = "en-gb") with Sections with Zones {
 
   implicit val UK = Uk
   val zones = Seq(
@@ -24,19 +28,19 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
   )
 
   def navigation(metadata: MetaData) = Seq(
-      NavItem(home),
-      NavItem(uk, Seq(politics, media, science, society, health, education)),
-      NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
-      NavItem(cif, Seq(cifbelief, cifgreen)),
-      NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling)),
-      footballNav(metadata),
-      NavItem(lifeandstyle, Seq(foodanddrink, fashion, relationships, healthandwellbeing, women)),
-      NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
-      NavItem(business, Seq(economics, banking, property, workandcareers, savings)),
-      NavItem(travel, Seq(shortbreaks, uktravel, europetravel, hotels, resturants)),
-      NavItem(technology, Seq(internet, games, mobilephones, appsblog)),
-      NavItem(environment, Seq(climatechange, wildlife, energy, conservation, food))
-    )
+    NavItem(home),
+    NavItem(uk, Seq(politics, media, science, society, health, education)),
+    NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
+    NavItem(cif, Seq(cifbelief, cifgreen)),
+    NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling)),
+    footballNav(metadata),
+    NavItem(lifeandstyle, Seq(foodanddrink, fashion, relationships, healthandwellbeing, women)),
+    NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
+    NavItem(business, Seq(economics, banking, property, workandcareers, savings)),
+    NavItem(travel, Seq(shortbreaks, uktravel, europetravel, hotels, resturants)),
+    NavItem(technology, Seq(internet, games, mobilephones, appsblog)),
+    NavItem(environment, Seq(climatechange, wildlife, energy, conservation, food))
+  )
 
 
   val configuredFronts = Map(
@@ -78,6 +82,18 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
       ItemTrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
     ),
 
+    Editionalise("commentisfree", Uk) -> Seq(
+      ItemTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 20, style = Some(Featured))
+    ),
+
+    Editionalise("business", Uk) -> Seq(
+      ItemTrailblockDescription("business", "Business", numItemsVisible = 20, style = Some(Featured))
+    ),
+
+    Editionalise("money", Uk) -> Seq(
+      ItemTrailblockDescription("money", "Money", numItemsVisible = 20, style = Some(Featured))
+    ),
+
     Editionalise("australia", Uk) -> Seq(
       ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = false)(Au),
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = false)(Au),
@@ -91,5 +107,37 @@ object Uk extends Edition("UK", "UK edition", DateTimeZone.forID("Europe/London"
       Au.videoCustomBlock
 
     )
+  )
+
+  val configuredFrontsFacia = Map(
+    (Editionalise("", Uk), Seq(
+      RunningOrderTrailblockDescription("news", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("news", "features", "Features", 5),
+      RunningOrderTrailblockDescription("news", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("culture", Uk), Seq(
+      RunningOrderTrailblockDescription("culture", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("culture", "features", "Features", 5),
+      RunningOrderTrailblockDescription("culture", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("fashion", Uk), Seq(
+      RunningOrderTrailblockDescription("fashion", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("fashion", "features", "Features", 5),
+      RunningOrderTrailblockDescription("fashion", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("technology", Uk), Seq(
+      RunningOrderTrailblockDescription("technology", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("technology", "features", "Features", 5),
+      RunningOrderTrailblockDescription("technology", "editors-picks", "Editor's Picks", 5)
+    )),
+
+    (Editionalise("film", Uk), Seq(
+      RunningOrderTrailblockDescription("film", "top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("film", "features", "Features", 5),
+      RunningOrderTrailblockDescription("film", "editors-picks", "Editor's Picks", 5)
+    ))
   )
 }

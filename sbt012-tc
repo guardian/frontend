@@ -9,11 +9,19 @@ npm install
 
 NPM_EXIT=$?
 
-
-
 if [ $NPM_EXIT == "1" ]; then
    exit 1
 fi
+
+#Install casperjs to target
+if [ ! -d dev/casperjs ]; then
+    git clone git://github.com/n1k0/casperjs.git dev/casperjs
+    cd dev/casperjs
+    git checkout tags/1.0.2
+    cd ../..
+fi
+export PATH=$PATH:$(pwd)/dev/casperjs/bin
+export PATH=$PATH:$(pwd)/node_modules/phantomjs/bin
 
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
@@ -59,9 +67,11 @@ fi
 
 #MaxPermSize specifies the the maximum size for the permanent generation heap,
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
-java -Xmx4096M -XX:MaxPermSize=2048m \
+cat /dev/null | java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
+  -Dsbt.log.noformat=true \
+  -DAPP_SECRET="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS" \
   $PROXY_CONF \
   $BUILD_PARAMS \
   $IVY_PARAMS \

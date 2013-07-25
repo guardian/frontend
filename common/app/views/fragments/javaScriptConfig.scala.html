@@ -1,4 +1,10 @@
-@(item: MetaData, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+@(item: model.MetaData, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+@import conf.Configuration
+@import views.support.MetadataJson
+@import views.support.JavaScriptVariableName
+@import common.Edition
+@import common.Site
+@import common.SiteOr
 
 {
     "page": {
@@ -8,15 +14,15 @@
         )},
         "edition": "@Edition(request).id",
         "ajaxUrl": "@Configuration.ajax.url",
-        "isDev": @play.Play.isDev()
+        "isDev": @play.Play.isDev(),
+        "isDotcom": @{!Site(request).isDefined}, @* TODO temporary till after dotcom switch *@
+        "oasHost": @SiteOr{site=>"oas.guardian.co.uk"}{"oas.theguardian.com"},
+        "oasUrl": @SiteOr{site=>"http://oas.guardian.co.uk/RealMedia/ads/"}{"http://oas.theguardian.com/RealMedia/ads/"},
+        "oasSiteIdHost": @SiteOr{site=>"@Configuration.oas.siteIdHost"}{"www.theguardian.com"}
     },
     "switches" : { @{Html(switches.map{ switch =>
             s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""
         }.mkString(","))}
     },
-    "modules": {
-        "sharedWisdomToolbar": {
-            "css": "@Static("stylesheets/modules/shared-wisdom-toolbar.css")"
-        }
-    }
+    "modules": { }
 }

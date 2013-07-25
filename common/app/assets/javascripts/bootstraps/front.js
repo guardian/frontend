@@ -6,18 +6,25 @@ define([
     //Modules
     "modules/trailblocktoggle",
     "modules/trailblock-show-more",
-    "modules/footballfixtures"
+    "modules/footballfixtures",
+    "modules/cricket"
 ], function (
     common,
     bonzo,
     domReady,
-
     TrailblockToggle,
     TrailblockShowMore,
-    FootballFixtures
+    FootballFixtures,
+    Cricket
 ) {
 
     var modules = {
+
+        showCricket: function(){
+            common.mediator.on('page:front:ready', function(config, context) {
+                Cricket.cricketTrail(config, context);
+            });
+        },
             
         showTrailblockToggles: function () {
             var tt = new TrailblockToggle();
@@ -30,6 +37,16 @@ define([
             var trailblockShowMore = new TrailblockShowMore();
             common.mediator.on('page:front:ready', function(config, context) {
                 trailblockShowMore.init(context);
+            });
+        },
+
+        promoteMostPopular: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                if (context.querySelector('.front-container--new') && window.location.pathname === '/') {
+                    bonzo(context.querySelector('.js-popular'))
+                        .appendTo(bonzo.create('<section class="front-section">'))
+                        .insertAfter(context.querySelector('section.front-section'));
+                }
             });
         },
 
@@ -73,9 +90,11 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.promoteMostPopular();
             modules.showTrailblockToggles();
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();
+            modules.showCricket();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

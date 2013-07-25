@@ -5,7 +5,7 @@ object EditionalisedSections {
 
   val sections = Seq(
     "", // network front
-    "commentisfree", "culture", "business"
+    "commentisfree", "culture", "business", "money", "sport"
   )
 
   def isEditionalised(id: String) = sections.contains(id)

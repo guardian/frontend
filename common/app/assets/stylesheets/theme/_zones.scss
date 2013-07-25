@@ -1,4 +1,4 @@
-// be sure to update the styleguide when changing these
+// TODO make this human readable
 
 .zone-news .zone-color {
     color: $newsRed; // red
@@ -33,7 +33,6 @@
     color: $culturePink;
 }
 
-
 .zone-journalismcompetition .zone-color,
 .zone-global-development .zone-color,
 .zone-law .zone-color,
@@ -45,6 +44,7 @@
 .zone-society .zone-color,
 .zone-politics .zone-color,
 .zone-uk .zone-color,
+.zone-uk-news .zone-color,
 .zone-media .zone-color,
 .zone-world .zone-color {
     color: $newsRed;
@@ -56,7 +56,8 @@
 }
 
 .zone-sport .zone-color,
-.zone-football .zone-color {
+.zone-football .zone-color,
+.zone-cricket .zone-color {
     color: $sportBright;
 }
 
@@ -100,6 +101,7 @@
 .zone-society .zone-background,
 .zone-politics .zone-background,
 .zone-uk .zone-background,
+.zone-uk-news .zone-background,
 .zone-media .zone-background,
 .zone-world .zone-background {
     background-color: $newsRed;
@@ -131,4 +133,62 @@
 
 .zone-money .zone-background {
     background-color: $moneyPurple;
+}
+
+
+
+.zone-childrens-books-site .zone-border,
+.zone-tv-and-radio .zone-border,
+.zone-artanddesign .zone-border,
+.zone-stage .zone-border,
+.zone-culture .zone-border,
+.zone-film .zone-border,
+.zone-books .zone-border,
+.zone-music .zone-border {
+    border-color: $culturePink;
+}
+
+.zone-journalismcompetition .zone-border,
+.zone-global-development .zone-border,
+.zone-law .zone-border,
+.zone-theobserver .zone-border,
+.zone-science .zone-border,
+.zone-theguardian .zone-border,
+.zone-education .zone-border,
+.zone-technology .zone-border,
+.zone-society .zone-border,
+.zone-politics .zone-border,
+.zone-uk .zone-border,
+.zone-uk-news .zone-border,
+.zone-media .zone-border,
+.zone-world .zone-border {
+    border-color: $newsRed;
+}
+
+.zone-fashion .zone-border,
+.zone-lifeandstyle .zone-border {
+    border-color: $lifeandstyleOrange;
+}
+
+.zone-sport .zone-border,
+.zone-football .zone-border {
+    border-color: $sportBright;
+}
+
+.zone-travel .zone-border {
+    border-color: $travelBlue;
+}
+
+.zone-business .zone-border {
+    border-color: $businessBlue;
+}
+
+.zone-commentisfree .zone-border,
+.zone-tone .zone-border,
+.zone-global .zone-border {
+    border-color: $commentBlue;
+}
+
+.zone-money .zone-border {
+    border-color: $moneyPurple;
 }

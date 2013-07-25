@@ -1,0 +1,1 @@
+//knockout-sortable 0.7.2 | (c) 2012 Ryan Niemeyer | http://www.opensource.org/licenses/mit-license

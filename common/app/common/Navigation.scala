@@ -19,8 +19,8 @@ trait Sections  {
   //News
   val home = SectionLink("news", "News", "/", "Home")
   val news  = SectionLink("news", "News", "/", "News")
-  val world = SectionLink("world", "World News", "/world", "World news")
-  val uk    = SectionLink("uk", "UK", "/uk", "UK news")
+  val world = SectionLink("world", "World", "/world", "World")
+  val uk    = SectionLink("uk", "UK", "/uk-news", "UK")
   val us    = SectionLink("us", "US", "/world/usa", "US")
   val politics = SectionLink("politics", "Politics", "/politics", "Politics")
   val technology = SectionLink("technology", "Technology", "/technology", "Technology")
@@ -66,7 +66,7 @@ trait Sections  {
   val nhl = SectionLink("sport", "NHL", "/sport/nhl", "NHL")
 
   //Cif
-  val cif = SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free")
+  val cif = SectionLink("commentisfree", "Comment", "/commentisfree", "Comment")
   val cifbelief = SectionLink("commentisfree", "Cif belief", "/commentisfree/belief", "Cif belief")
   val cifgreen = SectionLink("commentisfree", "Cif green", "/commentisfree/cif-green", "Cif green")
 

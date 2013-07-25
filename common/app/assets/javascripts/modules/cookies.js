@@ -6,10 +6,17 @@ define(function () {
         }
     }
 
-    function add(name, value) {
+    function add(name, value, daysToLive) {
+
         var expires = new Date();
-        expires.setMonth(expires.getMonth() + 5);
-        expires.setDate(1);
+
+        if (daysToLive) {
+            expires.setDate(expires.getDate() + daysToLive);
+        } else {
+            expires.setMonth(expires.getMonth() + 5);
+            expires.setDate(1);
+        }
+
         document.cookie = name + "=" + value + "; path=/; expires=" + expires.toUTCString() + ";";
     }
 

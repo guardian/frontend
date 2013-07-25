@@ -8,8 +8,8 @@ import play.api.mvc._
 import model.Trailblock
 import scala.Some
 import play.api.libs.json._
-
 import concurrent.Future
+import Switches.EditionRedirectSwitch
 
 // TODO, this needs a rethink, does not seem elegant
 object FrontPage {
@@ -24,7 +24,8 @@ object FrontPage {
       override lazy val analyticsName = "GFE:Network Front"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "content-type" -> "Network Front"
+        "content-type" -> "Network Front",
+        "is-front" -> true
       )
     },
 
@@ -37,7 +38,50 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Sport",
-        "content-type" -> "Section"
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new MetaData {
+      override val canonicalUrl = Some("http://www.guardian.co.uk/money")
+      override val id = "money"
+      override val section = "money"
+      override val webTitle = "Money"
+      override lazy val analyticsName = "GFE:money"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Money",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new MetaData {
+      override val canonicalUrl = Some("http://www.guardian.co.uk/commentisfree")
+      override val id = "commentisfree"
+      override val section = "commentisfree"
+      override val webTitle = "commentisfree"
+      override lazy val analyticsName = "GFE:commentisfree"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Comment is free",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new MetaData {
+      override val canonicalUrl = Some("http://www.guardian.co.uk/business")
+      override val id = "business"
+      override val section = "business"
+      override val webTitle = "business"
+      override lazy val analyticsName = "GFE:business"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Business",
+        "content-type" -> "Section",
+        "is-front" -> true
       )
     },
 
@@ -50,7 +94,8 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Culture",
-        "content-type" -> "Section"
+        "content-type" -> "Section",
+        "is-front" -> true
       )
     },
 
@@ -63,7 +108,8 @@ object FrontPage {
       override lazy val analyticsName = "GFE:Network Front"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "content-type" -> "Network Front"
+        "content-type" -> "Network Front",
+        "is-front" -> true
       )
     }
   )
@@ -76,10 +122,15 @@ object FrontPage {
 class FrontController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val EditionalisedKey = """(.*\w\w-edition)""".r
+  val FrontPath = """(\w\w-edition|\w\w)?""".r
+
+  // TODO - disappears after www.theguardian.com
+  val BackwardsCompatiblePath = """([\w\d-]*)/?(\w\w)-edition""".r
 
   val front: Front = Front
 
   private def editionPath(path: String, edition: Edition) = path match {
+    case BackwardsCompatiblePath(id, edition) => Seq(edition, id).filter(_.nonEmpty).mkString("/")
     case EditionalisedKey(_) => path
     case _ => Editionalise(path, edition)
   }
@@ -90,7 +141,11 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     // go live
     val realPath = editionPath(path, Edition(request))
 
-    FrontPage(realPath).map { frontPage =>
+    // TODO - needed till after www.theguardian.com
+    val pageId = realPath.drop(3)  //removes the edition
+
+
+    FrontPage(pageId).map { frontPage =>
 
       // get the trailblocks
       val trailblocks: Seq[Trailblock] = front(realPath).filterNot { trailblock =>
@@ -98,12 +153,14 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
         // filter out configured trailblocks if not on the network front
         path match {
-          case "front" => false
+          case FrontPath(_) => false
           case _ => trailblock.description.isConfigured
         }
       }
 
-      if (trailblocks.isEmpty) {
+      if (EditionRedirectSwitch.isSwitchedOn && request.isSingleDomain && path != realPath) {
+        Redirect(s"/$realPath")
+      } else if (trailblocks.isEmpty) {
         InternalServerError
       } else {
         Cached(frontPage){

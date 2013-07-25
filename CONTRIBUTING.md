@@ -1,3 +1,20 @@
+## Raising an issue
+
+Here is a template for raising an issue, copy and paste it into the text field and fill it:
+
+```
+## How to reproduce
+
+
+
+## Environment
+
+Device: 
+Browser: 
+OS: 
+URL: 
+```
+
 We welcome code submissions from other teams. Here's the rules of engagement.
 
 ## General 
@@ -14,9 +31,13 @@ We welcome code submissions from other teams. Here's the rules of engagement.
 
 This is applicable to [GMG employees](http://www.gmgplc.co.uk/).
 
+- Understand what you are trying to achieve with the change (what does success look like?)
 - Fork the code and make your changes.
 - Ensure your branch is built succesfully by TeamCity, both [builds](http://teamcity.gudev.gnl:8111/project.html?projectId=project35&tab=projectOverview) and [intergration tests](http://teamcity.gudev.gnl:8111/project.html?projectId=project41&tab=projectOverview).
 - Open a pull request.
+    - Explain why you are making this change in the pull request
+    - Include information about how you plan to measure success (e.g. links to analytics reports)
+    - If this change is not measurable be very clear about that fact.
 - A member of the team will review the changes. Once they are satisfied they will add +1 to the pull request.
 - Deploy the code yourself, first to CODE then to PROD.
 - Pay close attention to our [monitoring](http://graphite.guprod.gnl/dashboard/dashboards-dev/gdn-frontend.php?time=1d&env=PROD).

@@ -1,0 +1,9 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# For dev machines
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+GET     /*path.json                 controllers.InteractiveController.render(path)
+GET     /*path                      controllers.InteractiveController.render(path)

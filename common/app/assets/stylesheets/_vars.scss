@@ -19,6 +19,7 @@ $desktop: 56.25em; //900px
    ========================================================================== */
 
 $desktopAd: 810px; // Pixel width for leader board change.
+$mobileLandscape: 30em;
 
 
 /* Layout dimensions
@@ -26,6 +27,7 @@ $desktopAd: 810px; // Pixel width for leader board change.
 
 $baseline: 4px;
 $gutter: 16px;
+$unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
 $trailblockImgWidth: 100%;
 $trailblockImgWidthLarge: 140px;
@@ -50,7 +52,9 @@ $darkBlue: #152E5F;
 $lightBlue: #95B2CB;
 $linkBlue: #005689;
 $mushroom: #F4F4EE;
+$medianMushroom: #EDEDE7;
 $darkMushroom: #E3E3DB;
+
 
 
 /* Zones

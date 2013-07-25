@@ -1,20 +1,21 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-<@element class="trail trail--thumbnail t@rowNum" data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+<@element class="trail trail--thumbnail t@rowNum" data-link-name="trail"
+    @trail.discussionId.map{ id => data-discussion-id="@id" }
+    @CricketMatch(trail).map{ id => data-cricket-match="@id" } >
 
     @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
     <div class="media">
         @if(showThumbnail) {
             @trail.thumbnailPath.map{ thumbnailPath =>
-                <a href="@trail.url" class="media__img" data-link-name="@rowNum | image">
-                    <img class="maxed" src="@thumbnailPath"
+                <a href="@LinkTo{@trail.url}" class="media__img trail__img" data-link-name="@rowNum | image" role="presentation">
+                    <img class="maxed" data-lowsrc="@thumbnailPath"
                         data-thumb-width="140"
                         @trail.mainPicture(width=220).map { largeCrop =>
                             data-fullsrc="@largeCrop.path"
                             data-full-width="@largeCrop.width"
-                            alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))"
-                            title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
+                            alt=""
                         }
                         itemprop="contentURL"
                     />
@@ -23,12 +24,12 @@
         }
 
         <h@headingLevel class="media__body trail__headline type-5">
-            <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+            <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
                 @RemoveOuterParaHtml(trail.headline)
             </a>
         </h@headingLevel>
 
-        @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)</div> }
+        @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
     </div>
 
 </@element>

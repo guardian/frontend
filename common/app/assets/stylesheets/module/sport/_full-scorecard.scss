@@ -1,0 +1,135 @@
+/* ==========================================================================
+   Full-scorecard object
+   ========================================================================== */
+
+.sport-fullscorecard {
+    margin-bottom: $baseline*4;
+    width: 100%;
+}
+
+.sport-fullscorecard__primary {
+    .sport-fullscorecard__tbody {
+        tr:last-child {
+            td {
+                font-weight: bold;
+            }
+            td:last-child {
+                text-align: right;
+            }
+        }
+    }
+}
+
+.sport-fullscorecard__container {
+    overflow: auto;
+    margin-bottom: $baseline*2;
+    width: 100%;
+}
+
+.sport-fullscorecard__secondary {
+    .sport-fullscorecard__table {
+        @include box-sizing(border-box);
+        border-right: $baseline/2 solid #FFFFFF;
+        display: table;
+    }
+}
+
+.sport-fullscorecard__detail {
+    .sport-fullscorecard__table {
+        @include box-sizing(border-box);
+        border-left: $baseline/2 solid #FFFFFF;
+        display: table;
+    }
+}
+
+.sport-fullscorecard__heading {
+    @extend %type-7;
+    background-color: $mushroom;
+    border-bottom: 1px solid #DEDEDD;
+    color: $sportBright;
+    font-weight: 500;
+    margin: $baseline*2 0 0 0;
+    padding: 10px $baseline*2 $baseline*2;
+}
+
+.sport-fullscorecard__table {
+    background-color: $mushroom;
+    margin: 0 0 $baseline;
+}
+
+.sport-fullscorecard__thead {
+    th {
+        @extend %type-10;
+        background-color: $mushroom;
+        color: $sportMid;
+        display: table-cell;
+        font-weight: 500;
+        padding: $baseline*2 $baseline*3;
+    }
+    [colspan] {
+        text-align: left;
+    }
+    .sport-fullscorecard__additional {
+        display: none;
+    }
+}
+
+.sport-fullscorecard__tbody {
+    td {
+        @extend %type-10;
+        background-color: $mushroom;
+        border-top: 1px solid #DEDEDD;
+        display: table-cell;
+        padding: $baseline*2 $baseline*3;
+    }
+    .sport-fullscorecard__additional {
+        display: none;
+    }
+}
+
+.sport-fullscorecard__statistic {
+    width: $baseline*3;
+}
+
+.sport-fullscorecard__information {
+    background-color: $mushroom;
+    margin: $baseline*2 0;
+
+    dt {
+        @extend %type-10;
+        color: $sportMid;
+        font-weight: 500;
+        padding: $baseline*2 $baseline*3 0;
+    }
+    dd {
+        @extend %type-10;
+        border-bottom: 1px solid #DEDEDD;
+        margin: 0;
+        padding: $baseline*2 $baseline*3;
+    }
+
+    dd:last-child {
+        border-bottom: 0;
+    }
+}
+
+@media (min-width: $tablet) {
+    .sport-fullscorecard__thead {
+        .sport-fullscorecard__additional {
+            display: table-cell;
+        }
+    }
+    .sport-fullscorecard__tbody {
+        .sport-fullscorecard__additional {
+            display: table-cell;
+        }
+        .sport-fullscorecard__inline-info {
+            display: none;
+        }
+    }
+    .sport-fullscorecard__secondary,
+    .sport-fullscorecard__detail {
+        width: 50%;
+        float: left;
+    }
+}

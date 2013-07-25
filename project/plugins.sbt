@@ -10,10 +10,10 @@ resolvers ++= Seq(
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.3.0")
 
-addSbtPlugin("play" % "sbt-plugin" % "2.1.1")
+addSbtPlugin("play" % "sbt-plugin" % "2.1.2")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.0.1")
 
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.8.5")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.9.0")
 
 addSbtPlugin("com.gu" % "sbt-teamcity-test-reporting-plugin" % "1.3")

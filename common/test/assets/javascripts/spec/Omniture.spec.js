@@ -10,8 +10,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         }
 
         beforeEach(function(){
-
-            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' };
+            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name', isDotcom: false };
             config.switches = {};
 
             s = { t: function(){}, tl: function(){}, apl: function(){} };
@@ -62,13 +61,14 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                     buildNumber: "build-73",
                     edition: "US",
                     webPublicationDate: "2012-02-22T16:58:00.000Z",
-                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long"
+                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long",
+                    isDotcom: false
             };
 
             var o = new Omniture(s, w);
             o.go(config);
 
-            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com");
+            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com");
             expect(s.pageName).toBe("GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long");
             expect(s.prop9).toBe("Article");
             expect(s.channel).toBe("theworld");
@@ -86,6 +86,27 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop19).toBe("frontend");
             expect(s.eVar19).toBe("frontend");
             expect(s.cookieDomainPeriods).toBe("2")
+
+            //check we have not overridden these
+            expect(s.trackingServer).toBe(undefined);
+            expect(s.trackingServerSecure).toBe(undefined);
+
+        });
+
+        it("should correctly set omniture domain if it is www.theguardian.com", function(){
+
+            s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk'
+            config.page = {
+                isDotcom: true
+            };
+
+            var o = new Omniture(s, w);
+            o.go(config);
+
+            expect(s.trackingServer).toBe('hits.theguardian.com');
+            expect(s.trackingServerSecure).toBe('hits-secure.theguardian.com');
+            expect(s.cookieDomainPeriods).toBe('2');
+
         });
 
         it("should correctly set cookieDomainPeriods for UK edition", function(){

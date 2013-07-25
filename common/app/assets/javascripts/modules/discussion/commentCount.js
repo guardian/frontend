@@ -10,7 +10,7 @@ define([
 
     var attributeName = "data-discussion-id",
         countUrl = "/discussion/comment-counts.json?shortUrls=",
-        tpl = '<span class="trail__comment-count">';
+        tpl = '<span class="trail__count trail__count--commentcount">';
         tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-count-small"></i>[COUNT]';
         tpl += '<span class="h"> comments</span></a></span>';
 

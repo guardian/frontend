@@ -1,3 +1,4 @@
+
 This explains how to run an A/B test in frontend.
 
 We have a homebrewed AB testing framework running in the application. The data it collects is logged with both Ophan and Omniture.
@@ -55,22 +56,23 @@ define(['bonzo'], function (bonzo) {
     var ExperimentRelatedContent = function () {
 
         this.id = 'RelatedContentV2';
+        this.expiry = "2013-01-01";
         this.audience = 0.2;
         this.description = 'Hides related content block on article to see if increases click through on most popular';
         this.canRun = function(config) {
-          return (config.page && config.page.contentType === "Article" && document.querySelector('.js-related')) ? true : false;
+          return (config.page && config.page.contentType === "Article") ? true : false;
         };
         this.variants = [
             {
                 id: 'control',
-                test: function () {
+                test: function (context) { 
                    return true;
                 }
             },
             {
                 id: 'hide',
-                test: function () {
-                    bonzo(document.querySelector('.js-related')).hide();
+                test: function (context) {
+                    bonzo(context.querySelector('.js-related')).hide();
                 }
             }
         ];
@@ -84,6 +86,7 @@ define(['bonzo'], function (bonzo) {
 The AMD module must return an object with the following properties,
 
 - id: The unique name of the test.
+- expiry: The date on which this test is due to stop running. Expressed as a string parsable by the JavaScript Date obejct.
 - audience: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
 - description: A plain English summary of the test.
 - canRun: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.)

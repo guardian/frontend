@@ -65,6 +65,9 @@ class Content(
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
 
+  lazy val cricketMatch: Option[String] = delegate.references.find(_.`type` == "esa-cricket-match")
+    .map(_.id).map(Reference(_)).map(_._2)
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
@@ -85,8 +88,8 @@ class Content(
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override lazy val cacheSeconds = {
-    if (isLive) 5
-    else if (lastModified > DateTime.now - 24.hours) 60
+    if (isLive) 30 // live blogs can expect imminent updates
+    else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
 }
@@ -138,9 +141,18 @@ class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] =
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
   lazy val contentType = "Gallery"
-  lazy val landscapes = images.filter(i => i.aspectRatio >= 1.5 && i.aspectRatio <= 1.55)
+  lazy val landscapes = images.filter(i => i.width > i.height)
+  lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
+
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
+}
+
+class Interactive(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+  lazy val contentType = "Interactive"
+  lazy val body: String = delegate.safeFields("body")
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
+  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
 
 case class Quote(

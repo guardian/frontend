@@ -8,6 +8,9 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 #Note the order of these is important
 
+#Identity
+GET     /identity/signin                               controllers.SigninController.renderForm()
+
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)
 GET     /discussion/comment-counts.json                     controllers.CommentCountController.render(shortUrls: String)
@@ -96,14 +99,24 @@ GET     /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]+> 
 GET     /football/match/:matchId.json                                                   controllers.MatchController.renderMatchId(matchId)
 GET     /football/match/:matchId                                                        controllers.MatchController.renderMatchId(matchId)
 
-#Front
-GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
-GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
+#Cricket
+GET     /cricket/match/:matchId                                     controllers.CricketMatchController.renderMatchId(matchId)
+GET     /sport/cricket/match/:matchId.json                          controllers.CricketMatchController.renderMatchId(matchId)
+GET     /sport/cricket/match/:matchId                               controllers.CricketMatchController.renderMatchId(matchId)
 
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>                     controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>.json                controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
+
+#Front
+GET     /$path<(us|uk|au)?>                                                                         controllers.FrontController.render(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                     controllers.FrontController.render(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json                controllers.FrontController.render(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails              controllers.FrontController.renderTrails(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails.json         controllers.FrontController.renderTrails(path)
+
+# TODO these are legacy Front paths that can be deleted after www.theguardian.com go-live
+GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>                     controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>.json                controllers.FrontController.render(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>/trails              controllers.FrontController.renderTrails(path)
+GET     /$path<(culture|sport|australia|commentisfree|business|money)/\w\w-edition>/trails.json         controllers.FrontController.renderTrails(path)
 
 #Video
 GET     /$path<[\w\d-]*/video/.*>.json              controllers.VideoController.render(path)
@@ -112,10 +125,12 @@ GET     /$path<[\w\d-]*/[\w\d-]*/video/.*>.json     controllers.VideoController.
 GET     /$path<[\w\d-]*/[\w\d-]*/video/.*>          controllers.VideoController.render(path)
 
 #Gallery
-GET     /$path<[\w\d-]*/gallery/.*>.json            controllers.GalleryController.render(path)
-GET     /$path<[\w\d-]*/gallery/.*>                 controllers.GalleryController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>.json   controllers.GalleryController.render(path)
-GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>        controllers.GalleryController.render(path)
+GET     /$path<[\w\d-]*/gallery/.*>/lightbox.json          controllers.GalleryController.renderLightbox(path)
+GET     /$path<[\w\d-]*/gallery/.*>.json                   controllers.GalleryController.render(path)
+GET     /$path<[\w\d-]*/gallery/.*>                        controllers.GalleryController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>/lightbox.json controllers.GalleryController.renderLightbox(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>.json          controllers.GalleryController.render(path)
+GET     /$path<[\w\d-]*/[\w\d-]*/gallery/.*>               controllers.GalleryController.render(path)
 
 #Section
 GET     /sections                                                  controllers.SectionsController.render()
@@ -139,5 +154,6 @@ GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails                 controllers.Ta
 GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails.json            controllers.TagController.renderTrails(path)
 
 #Articles
-GET     /*path.json                 controllers.ArticleController.render(path)
+GET     /*path.json                 controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
 GET     /*path                      controllers.ArticleController.render(path)
+

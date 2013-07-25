@@ -1,0 +1,10 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# For dev machines
+GET     /assets/*file                                               controllers.Assets.at(path="/public", file)
+
+# Cricket
+GET     /sport/cricket/match/:matchId.json                          controllers.CricketMatchController.renderMatchId(matchId)
+GET     /sport/cricket/match/:matchId                               controllers.CricketMatchController.renderMatchId(matchId)

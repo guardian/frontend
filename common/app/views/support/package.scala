@@ -6,12 +6,12 @@ import model._
 import org.jsoup.nodes.{ Element, Document }
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
+import org.jsoup.safety.Cleaner
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-
 import scala.Some
 import play.api.mvc.RequestHeader
 import org.joda.time.{ DateTimeZone, DateTime }
@@ -19,6 +19,8 @@ import org.joda.time.format.DateTimeFormat
 import conf.Configuration
 import com.gu.openplatform.contentapi.model.MediaAsset
 import play.Play
+import org.jsoup.nodes.Entities.EscapeMode
+import org.apache.commons.lang.StringEscapeUtils
 
 sealed trait Style {
   val className: String
@@ -134,6 +136,16 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
+object VideoEmbedCleaner extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    document.getElementsByClass("element-video").foreach { element: Element =>
+      element.child(0).wrap("<div class=\"element-video__wrap\"></div>")
+    }
+    document
+  }
+}
+
 case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
@@ -148,7 +160,7 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
           val src = img.attr("src")
           img.attr("src", ImgSrc(src, Naked))
           Option(img.attr("width")).filter(_.isInt) foreach { width =>
-            fig.attr("class", width.toInt match {
+            fig.addClass(width.toInt match {
               case width if width <= 220 => "img-base inline-image"
               case width if width < 460 => "img-median inline-image"
               case width => "img-extended"
@@ -184,12 +196,12 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
-case class InBodyLinkCleaner(dataLinkName: String) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
 
     links.foreach { link =>
-      link.attr("href", InBodyLink(link.attr("href")))
+      link.attr("href", LinkTo(link.attr("href"), edition))
       link.attr("data-link-name", dataLinkName)
     }
     body
@@ -211,6 +223,24 @@ object TweetCleaner extends HtmlCleaner {
         element.appendChild(userEl).appendChild(date).appendChild(body)
       }
     }
+    document
+  }
+}
+
+object InBodyElementCleaner extends HtmlCleaner {
+
+  private val supportedElements = Seq(
+    "element-tweet",
+    "element-video",
+    "element-image",
+    "element-witness",
+    "element-comment"
+  )
+
+  override def clean(document: Document): Document = {
+    val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+    val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
+    unsupportedElements.foreach(_.remove())
     document
   }
 }
@@ -323,7 +353,7 @@ object Format {
 }
 
 object cleanTrailText {
-  def apply(text: String): Html = {
+  def apply(text: String)(implicit edition: Edition): Html = {
     `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
 }
@@ -332,9 +362,25 @@ object StripHtmlTags {
   def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
 }
 
+object StripHtmlTagsAndUnescapeEntities{
+  def apply( html: String) : String = {
+    val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
+    val stripped = doc.body.html
+    val unescaped = StringEscapeUtils.unescapeHtml(stripped)
+    unescaped.replace("\"","&#34;")   //double quotes will break HTML attributes
+  }
+}
+
 object Head {
   def css = if (Play.isDev) volatileCss else persistantCss
 
   private def volatileCss: String = io.Source.fromInputStream(getClass.getResourceAsStream("/public/stylesheets/head.min.css")).mkString
   private lazy val persistantCss: String = volatileCss
+}
+
+object CricketMatch {
+  def apply(trail: Trail): Option[String] = trail match {
+    case c: Content => c.cricketMatch
+    case _ => None
+  }
 }

@@ -23,7 +23,7 @@ trait Prototypes {
     ),
     scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings",
-      "Xfatal-warnings")
+      "-Xfatal-warnings")
   )
 
   val frontendDependencyManagementSettings = Seq(
@@ -39,9 +39,7 @@ trait Prototypes {
       Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
       "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
       "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-      "Akka" at "http://repo.akka.io/releases",
-      // No released version of Salat for 2.10.0
-      "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+      "Akka" at "http://repo.akka.io/releases"
     )
   )
 
@@ -82,13 +80,15 @@ trait Prototypes {
 
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "1.9.1" % "test"
-    )
+    ),
+
+    (javaOptions in test) += "-DAPP_SECRET=secret"
   )
 
   val frontendAssemblySettings = Seq(
     test in assembly := {},
     executableName <<= (name) { "frontend-%s" format _ },
-    jarName in assembly <<= (executableName) { "%s.jar" format _ },
+    jarName in assembly <<= (executableName) map { "%s.jar" format _ },
 
     mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
       {
@@ -112,7 +112,7 @@ trait Prototypes {
     javascriptFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.js" },
     cssFiles <<= baseDirectory{ (baseDir) => baseDir \ "app" \ "assets" ** "*.scss" },
 
-    (test in Test) <<= (test in Test) dependsOn (gruntTask("test")),
+    (test in Test) <<= (test in Test) dependsOn (gruntTask("jshint:common")),
 
     resources in Compile <<= (resources in Compile) dependsOn (gruntTask("compile:common:js", javascriptFiles)),
     resources in Compile <<= (resources in Compile) dependsOn (gruntTask("compile:common:css", cssFiles))
@@ -125,16 +125,16 @@ trait Prototypes {
     )
 
   def base(name: String) = play.Project(name, version, path = file(name))
-    .settings(playAssetHashDistSettings: _*)
     .settings(VersionInfo.settings:_*)
     .settings(frontendCompilationSettings:_*)
     .settings(frontendDependencyManagementSettings:_*)
-    .settings(frontendClientSideSettings:_*)
     .settings(frontendTestSettings:_*)
 
   def application(name: String) = base(name)
+    .settings(playAssetHashDistSettings: _*)
+    .settings(frontendClientSideSettings:_*)
     .settings(frontendAssemblySettings:_*)
 
-  def grunt(name: String) = base(name)
+  def grunt(name: String) = application(name)
     .settings(frontendGruntSettings:_*)
 }

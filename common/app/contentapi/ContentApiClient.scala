@@ -16,9 +16,9 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   //NOTE - do NOT add body to this list
   val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl"
 
-  val references = "pa-football-competition,pa-football-team,witness-assignment"
+  val references = "pa-football-competition,pa-football-team,witness-assignment,esa-cricket-match"
 
-  val inlineElements = "picture,witness,video"
+  val inlineElements = "picture,witness,video,embed"
 
   val leadContentMaxAge = 2.days
 

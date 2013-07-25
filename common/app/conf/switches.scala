@@ -53,6 +53,10 @@ object Switches extends Collections {
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
     safeState = Off)
 
+  val iPhoneAppSwitch = Switch("Advertising", "iphone-app",
+    "If this switch is on then the iPhone app upsell will be enabled.",
+    safeState = Off)
+
 
   // Analytics Switches
 
@@ -62,6 +66,10 @@ object Switches extends Collections {
 
   val QuantcastSwitch = Switch("Analytics", "quantcast",
     "Enable the Quantcast audience segment tracking.",
+    safeState = Off)
+
+  val OmnitureDomReadySwitch = Switch("Analytics", "omniture-dom-ready",
+    "Initialise Omniture on dom-ready, rather than on page-load.",
     safeState = Off)
 
 
@@ -132,12 +140,20 @@ object Switches extends Collections {
     "If this switch is turned on then Google search is added to the sections nav.",
     safeState = Off)
 
-  val HomescreenSwitch = Switch("Feature Switches", "homescreen",
-    "If this switch is enabled the add-to-homescreen popup will plague iOS users.",
-    safeState = Off)
-
   val AustraliaFrontSwitch = Switch("Feature Switches", "australia-front",
     "If this switch is on the australia front will be available. Otherwise it will 404.",
+    safeState = Off)
+
+  val LocalNavSwitch = Switch("Feature Switches", "local-nav",
+    "If this switch is on, a secondary local nav is shown.",
+    safeState = Off)
+
+  val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
+    "If this switch is on, gallery trails are opened in a lightbox.",
+    safeState = Off)
+
+  val EditionRedirectSwitch = Switch("Feature Switches", "edition-redirects",
+    "If this switch is on, editionalised pages will redirect from the root to the appropriate edition, e.g. culture -> uk/culture (only on www.theguardian.com)",
     safeState = Off)
 
 
@@ -147,13 +163,25 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
     safeState = Off)
 
+  val ABParagraphSpacingSwitch = Switch("A/B Tests", "ab-paragraph-spacing",
+    "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
+    safeState = Off)
+
+  val ABAa = Switch("A/B Tests", "ab-aa",
+    "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
+    safeState = Off)
+
+  // Sport Switch
+
+  val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
+    "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
+    safeState = Off);
 
   // Dummy Switch
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
-
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -163,6 +191,7 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     QuantcastSwitch,
+    OmnitureDomReadySwitch,
     DiscussionSwitch,
     ShortDiscussionSwitch,
     ExperimentStoryModule01Switch,
@@ -177,11 +206,17 @@ object Switches extends Collections {
     WitnessVideoSwitch,
     SocialSwitch,
     SearchSwitch,
-    HomescreenSwitch,
     ImageServerSwitch,
     AustraliaFrontSwitch,
     FontDelaySwitch,
-    IntegrationTestSwitch
+    ABParagraphSpacingSwitch,
+    IntegrationTestSwitch,
+    iPhoneAppSwitch,
+    LocalNavSwitch,
+    ABAa,
+    LightboxGalleriesSwitch,
+    EditionRedirectSwitch,
+    LiveCricketSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

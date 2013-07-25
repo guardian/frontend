@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>main curl test file</title>
+
+<script>
+
+	curl = {
+		paths: {
+			curl: '../src/curl/'
+		}
+	};
+
+</script>
+<script src="../dist/curl-kitchen-sink/curl.js"></script>
+
+<script type="text/javascript">
+
+	curl(
+		[
+			'stuff/three',
+			'css!stuff/base',
+			'text!stuff/template.html'
+		]
+	).then(
+		function (three, link, template) {
+				(three == 3 ? success : failure)('A module with dependencies loaded.');
+				(typeof template == 'string' && template.length ? success : failure)('text resource loaded.');
+		}
+	);
+
+	function write (msg) {
+		curl(['domReady!'], function () {
+			document.body.appendChild(document.createElement('div')).innerHTML = msg;
+		});
+	}
+
+	function failure (msg) { write('FAILED: ' + msg); }
+	function success (msg) { write('SUCCESS: ' + msg); }
+
+</script>
+
+</head>
+<body>
+
+<p>This text should all be the same <span style="color: #2faced;">color</span> if the css file loaded.</p>
+
+</body>
+</html>

@@ -18,6 +18,15 @@ Requirements
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
 * Installed Ruby >= v1.9.x & [bundler](http://gembundler.com/) (You will already have this installed, but run `ruby -v` to check version number)
 
+NPM ownership
+-------------
+
+Sometimes when you install npm it ends up owned by root (but in your home directory).
+
+Check that you own your own .npm directory `ls -ld ~/.npm`
+
+If it is owned by root then take ownership of it `sudo chown -R username:username ~/.npm`
+
 File handles
 ------------
 
@@ -121,6 +130,17 @@ Deploying
 ---------
 Deployment uses the [Magenta][magenta] library.
 
+Debugging
+---------
+You can debug your local Frontend application, by attaching a debugger.
+
+* Start Simple Build Tool in debug mode by typing `./sbt012 --debug`
+* Build and run your application. See "Running" for steps.
+* Use a debugger to attach to the remote Java process, on localhost:1044.
+
+Any IDE debugger should be compatible. In IntelliJ, add a new Debug Configuration, based on the Remote default.
+Ensure the Transport is Socket, the Debugger mode is Attach, and the port is set to 1044.
+Start a new Debug session, and your breakpoints should be active.
 
 Additional Documentation
 ------------------------

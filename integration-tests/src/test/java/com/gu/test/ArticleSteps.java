@@ -24,7 +24,7 @@ public class ArticleSteps {
 	protected String sportArticle = "/sport/2012/jul/27/london-2012-team-gb-clark-lenzly";
 	protected String article = "/sport/2012/oct/10/icc-suspends-umpires-corruption-claims";
 	protected String articleWithImage = "/technology/2012/oct/15/google-privacy-policy";
-	protected String articleWithMoreExapnders = "/football/blog/2012/may/10/signing-of-season-premier-league";
+	protected String articleWithMoreExapnders = "/world/2013/jun/17/turkish-trade-unions-call-for-strike";
 	protected String articleWithRelatedExapnders = "/world/2012/oct/07/venezuela-voters-chavez";
 	protected Map<String, String> datedArticles = new HashMap<String, String>();
 	
@@ -121,6 +121,7 @@ public class ArticleSteps {
 
 	@Then("^\"([^\"]*)\" section tab show read \"([^\"]*)\"$")
 	public void section_tab_show_read(String arg1, String arg2) throws Throwable {
+        webDriver.waitForElement(By.className("tabs-selected"));
 		assertTrue(webDriver.isTextPresentByElement(By.className("tabs-selected"), arg2));
 	}
 

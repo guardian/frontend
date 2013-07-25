@@ -143,7 +143,7 @@ textarea.event-explainer {
 .article {
     display: block;
     overflow: hidden;
-    padding: 2px 2px 6px 2px;
+    padding: 2px;
     margin-bottom: 4px;
     -webkit-transition: opacity 0.2s;
        -moz-transition: opacity 0.2s;
@@ -154,7 +154,6 @@ textarea.event-explainer {
 
 .article:hover {
     background-color: #fff;
-    box-shadow: 0px 5px 10px rgba(0,0,0,.2);
 }
 
 .article a {
@@ -165,10 +164,20 @@ textarea.event-explainer {
 
 .icon-star:hover, .icon-star-empty:hover { cursor: pointer; }
 
-.article-title { font-size: 12px; color: #005689; display: inline-block; }
+.article-title {
+    font-size: 12px;
+    line-height: 14px;
+    color: #005689;
+    display: inline-block;
+}
+
 .article-id { font-size: 1em; color: #999; margin-bottom: 0; font-size: 0.9em; }
 
-.meta { color: #BFBF9F; margin: 0 0 4px 0; font-size: 11px; line-height: 1.2em; }
+.meta {
+    color: #BFBF9F;
+    font-size: 11px;
+    line-height: 1.2em;
+}
 
 .event-articles {margin: 0 0 0 2px;}
 
@@ -443,3 +452,199 @@ a.cta, .cta a {
     color: #E0AF1B;
 }
 
+
+/* FRONTS MANAGER */
+
+.cf:before,
+.cf:after{content:"";display:table}
+.cf:after{clear:both}
+.cf{zoom:1}
+
+.fronts .finder {
+    box-sizing:border-box;
+    float: left;
+    width: 25%;
+}
+
+.fronts .lists {
+    box-sizing:border-box;
+    float: left;
+    width: 75%;
+}
+
+.fronts .finder {
+    background-color: #ccc;
+    padding: 7px 7px 5px 7px;
+}
+
+.fronts .finder input[type="text"] {
+    width: 49%;
+}
+
+.fronts .list-picker {
+    background-color: #ccc;
+    padding: 7px 7px 5px 7px;
+    float: right;
+    width: 75%;
+    border-left: 10px solid #fff;
+    box-sizing: border-box;
+}
+
+.fronts .list-picker__title,
+.fronts .finder__title,
+.fronts .list-header__title {
+    font-size: 18px;
+}
+
+.fronts .list-header__title {
+    display: inline-block;
+    padding-left: 4px;
+    border-left: 1px solid #5a6b87;
+}
+
+.fronts .list-header__title:first-child {
+    padding-left: 0;
+    border-left: 0;
+}
+
+.fronts .list-picker__title {
+    color: #666;
+}
+
+.fronts .finder__title {
+    color: #666;
+}
+
+.fronts .list-picker__item {
+    color: #214583;
+    font-weight: bold;
+    display: inline-block;
+    padding-right: 5px;
+    margin-right:  5px;
+    border-right:  1px solid #ccc;
+}
+
+.fronts .list-picker__item:last-child {
+    font-weight: bold;
+    display: inline-block;
+    padding-right: 0;
+    margin-right:  0;
+    border-right:  0;
+}
+
+.fronts .lists .connectedList {
+    min-height: 100px;
+    margin: 0 0 20px 0;
+}
+
+.fronts .list-header {
+    background-color: #214583;
+    color: #fff;
+    padding: 7px 7px 0 10px;
+    overflow: auto;
+}
+
+.fronts .list-header a,
+.fronts .list-header a:hover,
+.fronts .list-header a:visited {
+    color: #fff;
+}
+
+.fronts .list-header__meta {
+    color: #fff;
+    font-size: 10px;
+}
+
+.fronts .list-header__meta__last-updated {
+    font-weight: bold;
+}
+
+.fronts .list-header__control {
+    float: right;
+    font-size: 10px;
+    margin: -6px -2px 0 0;
+
+}
+
+.fronts .trailblock {
+    box-sizing:border-box;
+    width: 33.333%;
+    float: left;
+    border-top:  10px solid #fff;
+    border-left: 10px solid #fff;
+}
+
+.fronts .trail {
+    cursor: move;
+    background-color: #fff;
+    padding: 5px 5px 5px 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.fronts .trail:hover {
+    background-color: #eee;
+}
+
+.fronts .ui-sortable-placeholder {
+    height: 10px;
+    background-color: #a1aec4;
+    visibility: visible !important;
+}
+
+.fronts .trail .trail__control {
+    display: none;
+}
+
+.fronts .trailblock .trail:hover .trail__control {
+    display: block;
+    float: right;
+    font-size: 10px;
+    margin: -6px -2px 0 0;
+}
+
+.fronts .trail img {
+    float: left;
+    margin: 2px 10px 10px 0;
+    width: 42%;
+    max-width: 140px;
+    max-height: 84px;    
+    background-color: #eee;
+}
+
+.fronts .trail p {
+    margin: 0;
+    padding: 0;
+}
+
+.fronts .trail h2 {
+    font-family: EgyptianText, georgia, serif;
+    font-size: 16px;
+    line-height: 18px;
+    weight: normal;
+    margin: 0;
+    padding: 0 0 5px 0;
+}
+
+.fronts .trail .trailText {
+    color: #666;
+    font-family: EgyptianText, georgia, serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 18px;
+}
+
+.fronts .trail .date {
+    color: #999;
+    font-family: arial, sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 16px;
+}
+
+.fronts input[type="text"] {
+}
+
+.fronts select {
+    width: 15%;
+    margin: -2px 0 0 0;
+}

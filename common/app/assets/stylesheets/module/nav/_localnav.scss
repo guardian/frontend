@@ -1,0 +1,54 @@
+/* Local navigation - Global container overrides
+========================================================================== */
+#preloads.has-localnav {
+
+    @media (min-width: $tablet) {
+        margin-top: 156px;
+    }
+
+    .parts__body {        
+        @media (min-width: $tablet) {
+            margin-top: 0;
+        }
+    }
+
+
+    .ad-slot-top-banner-ad {
+        padding-top: 5px;
+        background-color: #eee;
+
+        @media (min-width: $tablet) {
+            padding-top: 10px;
+            background-color: #ffffff;
+        }
+    }
+
+    h2.article-zone,
+    .section-head,
+    .front-section:first-child .sub-section-head {
+        display: none;
+
+        @media (min-width: $tablet) {
+            display: block;
+        }
+    }
+
+}
+
+
+/* Local navigation popup
+   ========================================================================== */
+.nav-popup-localnav {
+    top: 172px;
+    border-color: $darkMushroom;
+
+    .nav__link {
+        color: #333333;
+    }
+
+    .is-active .nav__link {
+        font-family: $serifheadline;
+        line-height: 20px;
+        font-weight: bold;
+    }
+}

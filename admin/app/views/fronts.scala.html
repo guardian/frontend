@@ -1,0 +1,107 @@
+@(env: String)
+
+@admin_main("Fronts editor", env, isAuthed = true) {
+
+    <div class="fronts">
+        <div class="list-picker">
+            <span class="list-picker__title">Select a block:</span>
+
+            <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Edition...'"></select>
+
+            <span data-bind="with: $root.selectedEdition()">
+                <select data-bind="options: sections, optionsText: 'id', value: $root.selectedSection, optionsCaption: 'Section...'"></select>
+
+                <span data-bind="with: $root.selectedSection()">
+                    <select data-bind="options: blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Block...'"></select>
+
+                    <span data-bind="with: $root.selectedBlock()">
+                        <a href="#" data-bind="click: $root.displayAllEditions"> &laquo; View in all editions</a>
+                    </span>
+                </span>
+
+            </span>
+        </div>
+
+        <div class="finder">
+            <div class="finder__title">Latest Articles</div>
+            
+            <!--div>
+                <input type="checkbox" name="orderBy" value="" data-bind="checked: latestArticles.mostViewed"/> Most popular
+            </div-->
+
+            <input type="text" placeholder="url or keyword" data-bind='
+                event: {keyup: latestArticles.search, afterpaste: latestArticles.search},
+                value: latestArticles.term,
+                valueUpdate: ["afterkeydown", "afterpaste"]'/>
+
+            <input type="text" placeholder="section" data-bind='
+                event: {keyup: latestArticles.search, afterpaste: latestArticles.search},
+                value: latestArticles.section,
+                valueUpdate: ["afterkeydown", "afterpaste"]'/>
+
+            <div class="connectedList throwAway" data-bind="template: {name: 'template_article', foreach: latestArticles.articles()}"></div>
+        </div>
+
+        <div class="lists" data-bind="foreach: listsDisplayed">
+            <div class="trailblock">
+                <div class="list-header">
+                    <a class="list-header__control" data-bind="click: $parent.dropList">HIDE</a>
+                    <div data-bind="foreach: crumbs">
+                        <span class="list-header__title" data-bind="text: $data"></span> 
+                    </div>
+                    <div class="list-header__meta">
+                        <!-- ko if: lastUpdated -->
+                            updated <span class="list-header__meta__last-updated" data-bind="text: lastUpdated"></span> 
+                            by <a class="list-header__meta__user" data-bind="
+                                text: updatedBy,
+                                attr: {href: 'mailto:' + updatedEmail}
+                                "></a>
+                        <!-- /ko -->
+                        <!-- ko ifnot: lastUpdated -->
+                            Empty
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="connectedList" data-bind="
+                    attr: {'data-list-id': id},
+                    template: {name: 'template_article', foreach: list}"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="template_article">
+        <div class="trail cf" data-bind="attr: {'data-url': id}">
+
+            <a class="trail__control" data-bind="click: $parent.dropItem">
+                <i class="icon-remove"></i>
+            </a>
+
+            <div class="date" data-bind="html: _humanDate"></div>
+            <img data-bind="attr: {src: thumbnail}" />
+
+            <h2 class="webTitle" data-edit="webTitle" data-bind="
+                visible: !_editing_webTitle(),
+                text: webTitle() ? webTitle : '[webTitle]',
+                click: _edit
+                "></h2>
+            <input type="text" placeholder="webTitle" data-bind="
+                visible: _editing_webTitle,
+                value: webTitle,
+                hasfocus: _editing_webTitle
+                "/>
+
+            <h2 class="trailText" data-edit="trailText" data-bind="
+                visible: !_editing_trailText(),
+                html: trailText() ? trailText : '[trailText]',
+                click: _edit
+                "></h2>
+            <textarea type="text" placeholder="trailText" data-bind="
+                visible: _editing_trailText,
+                value: trailText,
+                hasfocus: _editing_trailText
+                "/></textarea>
+        </div>
+    </script>
+    
+    <script src="@routes.Assets.at("javascripts/fronts.js")"></script>
+}

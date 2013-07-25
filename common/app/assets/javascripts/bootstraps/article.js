@@ -1,16 +1,17 @@
 define([
     "common",
-
     "modules/autoupdate",
     "modules/matchnav",
     "modules/analytics/reading",
-    "modules/discussion/discussion"
+    "modules/discussion/discussion",
+    "modules/cricket"
 ], function (
     common,
     AutoUpdate,
     MatchNav,
     Reading,
-    Discussion
+    Discussion,
+    Cricket
 ) {
 
     var modules = {
@@ -38,11 +39,15 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
                     var a = new AutoUpdate({
-                        path: window.location.pathname,
+                        path: function() {
+                            var id = context.querySelector('.article-body .block').id,
+                                path = window.location.pathname;
+                           return path + '.json' + '?lastUpdate=' + id;
+                        },
                         delay: 60000,
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
-                        responseSelector: '.article-body .block'
+                        manipulationType: 'prepend'
                     }).init();
                 }
             });
@@ -60,7 +65,7 @@ define([
             });
         },
 
-        logReading: function(context) {
+        logReading: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 var wordCount = config.page.wordCount;
                 if(wordCount !== "") {
@@ -75,6 +80,24 @@ define([
                     reader.init();
                 }
             });
+        },
+
+        initCricket: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+
+                var cricketMatchRefs = config.referencesOfType('esaCricketMatch');
+
+                if(cricketMatchRefs[0]) {
+                    var options = { url: cricketMatchRefs[0],
+                                loadSummary: true,
+                                loadScorecard: true,
+                                summaryElement: '.article-headline',
+                                scorecardElement: '.article-headline',
+                                summaryManipulation: 'after',
+                                scorecardManipulation: 'after' };
+                    Cricket.cricketArticle(config, context, options);
+                }
+            });
         }
     };
 
@@ -83,9 +106,9 @@ define([
             this.initialised = true;
             modules.matchNav();
             modules.initLiveBlogging();
-            modules.logReading(context);
-
+            modules.logReading();
             modules.initDiscussion();
+            modules.initCricket();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

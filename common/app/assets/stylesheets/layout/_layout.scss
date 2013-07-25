@@ -22,6 +22,31 @@
     left: 0;
     right: 0;
     z-index: 99;
+
+    /* These styles extend the top bars to the screen edges */
+    @media (min-width: $tablet) {
+        &:before,
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            z-index: -10;
+        }
+
+        &:before {
+            top: 0;
+            height: 58px;
+            background-color: $blue;
+        }
+
+        &:after {
+            top: 58px;
+            height: 40px;
+            background-color: #F5F5F2;
+            border-bottom: 1px solid $darkMushroom;
+        }
+    }
 }
     .header__inner {
         background-color: $blue;
@@ -33,6 +58,36 @@
     margin: 20px 0 18px $gutter;
     text-indent: -9999px;
 }
+
+
+/* Columning
+   ========================================================================== */
+
+.monocolumn-wrapper {
+    padding-left: $gutter;
+    padding-right: $gutter;
+
+    .article-zone {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .page-head {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@include mq(tablet) {
+    .monocolumn-wrapper {
+        max-width: gs-span(8);
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .monocolumn-wrapper--no-limit {
+        max-width: none;
+    }
+}
+
 
 /* Layout helpers
    ========================================================================== */
@@ -52,10 +107,15 @@
 .inline-image {
     width: $inArticleInlineImgWidth;
     float: left;
-    margin: 0;
-    margin-right: 10px;
-    margin-bottom: 15px;
-    margin-top: 3px;
+    clear: left;
+    margin: 3px 0 0 0;
+    padding-right: 10px;
+    padding-bottom: 15px;
+    background: white;
+
+    figcaption {
+        word-wrap: break-word;
+    }
 }
 
 .img-tiny.inline-image {

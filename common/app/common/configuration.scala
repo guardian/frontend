@@ -5,9 +5,24 @@ import com.gu.management.{ Manifest => ManifestFile }
 import com.amazonaws.auth.{ BasicAWSCredentials, AWSCredentials }
 import java.net.InetAddress
 import play.api.Play
+import java.io.{FileInputStream, File}
+import org.apache.commons.io.IOUtils
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
+
+  object environment {
+    private val installVars = (new File("/etc/gu/install_vars")) match {
+      case f if f.exists => IOUtils.toString(new FileInputStream(f))
+      case _ => ""
+    }
+
+    private val properties = Properties(installVars)
+
+    def apply(key: String, default: String) = properties.getOrElse(key, default).toLowerCase
+
+    val stage = apply("STAGE", "unknown")
+  }
 
   object switches {
     lazy val configurationUrl = configuration.getStringProperty("switchboard.config.url").getOrElse(
@@ -47,6 +62,12 @@ class GuardianConfiguration(
     }
 
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
+  }
+
+  object frontsApi {
+    lazy val base = configuration.getStringProperty("fronts.api") getOrElse {
+      throw new IllegalStateException("Fronts Api not configured")
+    }
   }
 
   object mongo {
@@ -95,15 +116,18 @@ class GuardianConfiguration(
     }
   }
 
+  object oas {
+    lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse("m.guardian.co.uk")
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
-    // But does not change accross environments
+    // But does not change across environments
     lazy val config: Map[String, String] = Map(
-      "oasUrl" -> "http://oas.guardian.co.uk/RealMedia/ads/",
-      "oasSiteIdHost" -> configuration.getStringProperty("oas.siteId.host").getOrElse("m.guardian.co.uk"),
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
-      "discussionApiUrl" -> "http://discussion.guardianapis.com/discussion-api"
+      "discussionApiUrl" -> "http://discussion.guardianapis.com/discussion-api",
+      "interactiveUrl" -> "http://interactive.guim.co.uk/"
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
@@ -142,6 +166,18 @@ class GuardianConfiguration(
     }
 
     lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
+  }
+  
+  object pingdom {
+    lazy val url = configuration.getStringProperty("pingdom.url").getOrElse(throw new RuntimeException("Pingdom url not set"))
+    lazy val user = configuration.getStringProperty("pingdom.user").getOrElse(throw new RuntimeException("Pingdom user not set"))
+    lazy val password  = configuration.getStringProperty("pingdom.password").getOrElse(throw new RuntimeException("Pingdom password not set"))
+    lazy val apiKey = configuration.getStringProperty("pingdom.apikey").getOrElse(throw new RuntimeException("Pingdom api key not set"))
+  }
+  
+  object riffraff {
+    lazy val url = configuration.getStringProperty("riffraff.url").getOrElse(throw new RuntimeException("RiffRaff url not set"))
+    lazy val apiKey = configuration.getStringProperty("riffraff.apikey").getOrElse(throw new RuntimeException("RiffRaff api key not set"))
   }
 
   // log out Play config on start

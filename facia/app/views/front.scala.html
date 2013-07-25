@@ -1,0 +1,7 @@
+@(front: MetaData, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
+
+@main(front, Switches.all){
+}{
+    @fragments.frontBody(front, trailblocks)
+
+}
