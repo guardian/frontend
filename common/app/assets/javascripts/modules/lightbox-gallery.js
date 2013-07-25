@@ -35,7 +35,7 @@ define(["bean",
         this.init = function(opts) {
             self.opts = opts || {};
 
-            if (config.switches.lightboxGalleries) {
+            if (config.switches.lightboxGalleries || self.opts.overrideSwitch) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl = e.currentTarget.href;
 
@@ -69,13 +69,14 @@ define(["bean",
             bean.on(overlay.bodyNode,    'click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
             bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
+
+            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__img', function() {
+                self.toggleFurniture();
+            });
+
             bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery-item', function(el) {
                 var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
                 self.goTo(index);
-            });
-
-            bean.on(overlay.bodyNode,    'click', '.gallery__img', function() {
-                self.toggleFurniture();
             });
 
             bean.on(window, 'orientationchange', function() {
@@ -271,6 +272,8 @@ define(["bean",
             self.gridModeCta.style.display = 'block';
             self.fullModeCta.style.display = 'none';
 
+            self.layout();
+
             if (e) { e.preventDefault(); }
         };
 
@@ -284,12 +287,16 @@ define(["bean",
             // Make overlay large enough to allow the browser chrome to be hidden
             overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
 
+            // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
+            $images = bonzo(galleryNode.querySelectorAll('.gallery__img'));
+
             if (orientation === 'landscape' && mode === 'fullimage') {
                 // In landscape, size all images to the height of the screen
                 $images.css({'height': window.innerHeight + 'px', 'width': 'auto'});
             } else {
                 $images.removeAttr('style');
             }
+
         };
 
         // Utils
