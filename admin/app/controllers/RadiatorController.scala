@@ -15,7 +15,8 @@ object RadiatorController extends Controller with Logging with AuthLogging {
 
   def render() = AuthAction{ implicit request =>
       val graphs = (CloudWatch.latency filter { _.name == "Router" }) ++ CloudWatch.fastlyStatistics
-      Ok(views.html.radiator(graphs, Configuration.environment.stage))
+      val multilineGraphs = CloudWatch.fastlyHitMissStatistics
+      Ok(views.html.radiator(graphs, multilineGraphs, Configuration.environment.stage))
   }
 
   def pingdom() = AuthAction{ implicit request =>
