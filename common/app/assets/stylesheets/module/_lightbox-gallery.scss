@@ -305,6 +305,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
         width: 100%;
         position: relative;
         display: block;
+        overflow: hidden;
     }
 
     .gallery__nav--prev,
