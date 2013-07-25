@@ -141,12 +141,13 @@ define([
     };
 
     Video.prototype.parseVast = function(xml) {
-        var self = this;
+        var self = this, impressionList;
+
         this.vastData.file = this.getNodeContent(xml.querySelector("MediaFile"));
         if (this.vastData.file) {
             this.vastData.trackingEvents.clickThrough = this.getNodeContent(xml.querySelector("ClickThrough"));
 
-            var impressionList = (xml.querySelector("Impression URL")) ? xml.querySelectorAll("Impression URL") : xml.querySelectorAll("Impression");
+            impressionList = (xml.querySelector("Impression URL")) ? xml.querySelectorAll("Impression URL") : xml.querySelectorAll("Impression");
 
             this.vastData.impressionEvents = common.listToArray(impressionList).map(function(el) {
                 return self.getNodeContent(el);
