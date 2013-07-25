@@ -148,20 +148,17 @@ define([
                     } 
                 }
 
+                listObj.loadIsPending(true);
+
                 reqwest({
                     method: 'post',
                     url: apiBase + '/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
-                }).then(
-                    function(resp) {
-                        listObj.load();
-                    },
-                    function(xhr) { console.log(xhr); } // error
-                );
-
-                listObj.loadIsPending(true);
+                }).always(function(resp) {
+                    listObj.load();
+                });
             }
         };
 
@@ -193,7 +190,7 @@ define([
                     viewModel.editions = resp.editions;
                     if (typeof callback === 'function') { callback(); }
                 },
-                function(xhr) { console.log(xhr); } // error
+                function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
             );
         };
 

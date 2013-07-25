@@ -58,7 +58,6 @@ define([
                 },
                 function(xhr) {
                     self.loadIsPending(false);
-                    console.log(xhr);
                 }
             );
             self.live.remove(item);

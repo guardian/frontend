@@ -60,12 +60,13 @@ function (
 
         this._absUrl(absUrlHost + opts.id);    
 
-        this.addPerformanceCounts();
+        // Performance counts are awaiting a fix to the proxy API endpoint 
+        //this.addPerformanceCounts();
     }
 
     Article.prototype.addPerformanceCounts = function() {
-        //this.addSharedCount();
-        //this.addCommentCount();
+        this.addSharedCount();
+        this.addCommentCount();
     }
 
     Article.prototype.addSharedCount = function() {

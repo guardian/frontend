@@ -715,11 +715,14 @@ a.cta, .cta a {
 }
 
 .fronts .trail .trail__meta a {
-    color: #999;
+    display: none;
 }
 
-.fronts .trail .trail__meta a:hover {
-    color: #333;
+.fronts .trail:hover .trail__meta a {
+    display: inline-block;
+    color: #666;
+    border-left: 1px #ddd solid;
+    padding-left: 4px;
 }
 
 .fronts input[type="text"] {

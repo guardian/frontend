@@ -117,8 +117,8 @@
             </a>
 
             <div class="trail__meta">
-                <span data-bind="html: _humanDate() ? _humanDate : 'Loading...'"></span> &middot;
-                <a data-bind="attr: {href: 'http://m.guardian.co.uk/' + id()}">view</a> &middot;
+                <span data-bind="html: _humanDate() ? _humanDate : 'Loading...'"></span>
+                <a data-bind="attr: {href: 'http://m.guardian.co.uk/' + id()}">view</a>
                 <a data-bind="attr: {href: 'http://dashboard.ophan.co.uk/summary?path=/' + id()}">stats</a>
             </div>
 
@@ -129,18 +129,20 @@
                 text: webTitle() ? webTitle : '',
                 click: _edit
                 "></div>
-            <input type="text" placeholder="webTitle" data-bind="
+
+            <!-- Commented out awaiting decision on whether titles can be overwrittern in this tool -->
+            <!--input type="text" placeholder="webTitle" data-bind="
                 visible: _editing_webTitle,
                 value: webTitle,
                 hasfocus: _editing_webTitle
-                "/>
+                "/-->
 
             <!--div class="trailText" data-edit="trailText" data-bind="
                 visible: !_editing_trailText(),
                 html: trailText() ? trailText : '',
                 click: _edit
-                "></div>
-            <textarea type="text" placeholder="trailText" data-bind="
+                "></div-->
+            <!--textarea type="text" placeholder="trailText" data-bind="
                 visible: _editing_trailText,
                 value: trailText,
                 hasfocus: _editing_trailText
