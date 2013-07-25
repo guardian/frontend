@@ -72,17 +72,6 @@
     @return ($px / $base-font-size) * 1em;
 }
 
-
-// Breakpoints are in pixel for simpler understanding & manipulation
-// they get translated into ems in @media queries
-
-$mq-mobile:  300px  !default;
-$mq-tablet:  600px  !default;
-$mq-desktop: 900px  !default;
-$mq-wide:    1260px !default;
-
-$old-ie: false !default;
-
 // Usage:
 // .element {
 //     @include mq($from: mobile) {

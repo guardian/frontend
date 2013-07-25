@@ -7,7 +7,7 @@
     //For expandables
     position: relative;
     z-index: 1000;
-    @include mq($desktopAd) {
+    @include mq($mq-desktopAd) {
         height: auto;
         min-height: 96px;
     }

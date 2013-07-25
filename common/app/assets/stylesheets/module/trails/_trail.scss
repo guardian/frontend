@@ -222,7 +222,7 @@
         width: 100%;
     }
 
-    @include mq($mobileLandscape) {
+    @include mq($mq-mobileLandscape) {
         .gallerythumbs__item:first-child {
             @include fix-aspect-ratio(5, 3, 67%);
             float: left;

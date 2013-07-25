@@ -7,19 +7,29 @@
  * http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables_
  */
 
+
+/* Support for IE ?
+   ========================================================================== */
+
+$old-ie: false !default;
+
 /* Breakpoints
    ========================================================================== */
 
-$mobile: 18.75em;  //300px
-$tablet: 37.5em;   //600px
-$desktop: 56.25em; //900px
+// Breakpoints are in pixel for simpler understanding & manipulation
+// they get translated into ems in @media queries
+
+$mq-mobile:  300px  !default;
+$mq-tablet:  600px  !default;
+$mq-desktop: 900px  !default;
+$mq-wide:    1260px !default;
 
 
 /* Tweakpoints
    ========================================================================== */
 
-$desktopAd: 810px; // Pixel width for leader board change.
-$mobileLandscape: 480px;
+$mq-desktopAd: 810px;
+$mq-mobileLandscape: 480px;
 
 
 /* Layout dimensions
