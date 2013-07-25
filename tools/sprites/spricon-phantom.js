@@ -81,7 +81,7 @@ function finishUp(){
 
     // write CSS files
     fs.write( cssOutputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
-    if(generatesvg) { fs.write( cssOutputdir + datacss, datacssrules.join( "\n\n" ) ); }
+    if(generatesvg) { fs.write( cssOutputdir + datacss, '@if ($old-ie == false) {' + "\n" + datacssrules.join( "\n\n" ) + "\n" + '}' ); }
 
     // write HTML file
     var tableHTML = tableOpeningHTML + outputHTML.join( "\n" ) + tableClosingHTML;
@@ -120,7 +120,7 @@ function processFile() {
                 //If we want to generate base64 svg css
                 if(generatesvg) {
                     // add rules to svg data css file
-                    datacssrules.push( ".svg-" + cssprefix + filenamenoext +" { background-image: url(" + svgdatauri + "); background-position: 0 0; background-repeat: no-repeat; }\n.svg ." + cssprefix + filenamenoext + " { @extend .svg-" + cssprefix + filenamenoext +"; }" );
+                    datacssrules.push( "    .svg-" + cssprefix + filenamenoext +" { background-image: url(" + svgdatauri + "); background-position: 0 0; background-repeat: no-repeat; }\n    .svg ." + cssprefix + filenamenoext + " { @extend .svg-" + cssprefix + filenamenoext +"; }" );
                 }
 
                 // build HTML table for style guide
