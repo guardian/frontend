@@ -63,18 +63,14 @@
 
 
 .beta {
-    
     display: none;
-
     @include mq(tablet) {
-        
-        margin: 18px 0 0 2px;
+        margin: 18px 0 0 0;
         color:  white;
-        display: inline-block;
         font-size: 10px;
         float:  left;
+        display: inline-block;
         color: #95B1CA;
-
     }
 }
 
