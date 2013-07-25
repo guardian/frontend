@@ -165,3 +165,11 @@
         @content;
     }
 }
+
+@mixin svg {
+    @if ($old-ie == false) {
+        .svg & {
+            @content;
+        }
+    }
+}
