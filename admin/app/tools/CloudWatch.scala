@@ -82,27 +82,28 @@ trait CloudWatch {
   def fastlyHitMissStatistics = fastlyHitMissMetrics.map{ case (graphTitle, region, service) =>
     new FastlyHitMissGraph( graphTitle,
 
-    cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusHours(6).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(120)
-      .withStatistics("Average")
-      .withNamespace("Fastly")
-      .withMetricName("hits")
-      .withDimensions(new Dimension().withName("region").withValue(region),
-                      new Dimension().withName("service").withValue(service)),
-      asyncHandler),
+      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusHours(6).toDate)
+        .withEndTime(new DateTime().toDate)
+        .withPeriod(120)
+        .withStatistics("Average")
+        .withNamespace("Fastly")
+        .withMetricName("hits")
+        .withDimensions(new Dimension().withName("region").withValue(region),
+                        new Dimension().withName("service").withValue(service)),
+        asyncHandler),
 
-    cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusHours(6).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(120)
-      .withStatistics("Average")
-      .withNamespace("Fastly")
-      .withMetricName("miss")
-      .withDimensions(new Dimension().withName("region").withValue(region),
-                      new Dimension().withName("service").withValue(service)),
-      asyncHandler))
+      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusHours(6).toDate)
+        .withEndTime(new DateTime().toDate)
+        .withPeriod(120)
+        .withStatistics("Average")
+        .withNamespace("Fastly")
+        .withMetricName("miss")
+        .withDimensions(new Dimension().withName("region").withValue(region),
+                        new Dimension().withName("service").withValue(service)),
+        asyncHandler)
+    )
   }.toSeq
 
   object asyncHandler extends AsyncHandler[GetMetricStatisticsRequest, GetMetricStatisticsResult] with Logging

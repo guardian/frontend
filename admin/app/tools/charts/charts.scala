@@ -2,12 +2,18 @@ package tools
 
 import collection.JavaConversions._
 import collection.immutable.LongMap
-import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsResult
+import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, Datapoint}
 import java.util.concurrent.Future
-import java.util.UUID
+import java.util.{UUID, Date}
 import org.joda.time.DateTime
 
-case class DataPoint(name: String, values: Seq[Double])
+case class DataPoint(name: String, values: Seq[Double]) {
+
+  def this(date: Date, values: Seq[Double]) =
+  {
+    this((new DateTime(date.getTime)).toString("HH:mm"), values)
+  }
+}
 
 trait Chart {
 
@@ -227,37 +233,24 @@ case class FastlyHitMissGraph(
   override def asDataset = s"[[$labelString], $dataString]"
 
   private def labelString = labels.mkString(",")
-  private def dataString =  datapoints.keys.toList.sortBy{x:Long => x} map { key:Long =>
-    datapointsToString(datapoints(key)) } mkString(",")
+  private def dataString =  datapoints.keys.toList.sorted map { key:Long =>
+    val points = datapoints(key)
+    val data = points._1.values ++ points._2.values mkString(",")
+    s"['${points._1.name}', $data]" } mkString(",")
 
   private lazy val datapoints:LongMap[(DataPoint, DataPoint)] = {
-
-    val hitmap:LongMap[DataPoint] = LongMap(hitResults.get().getDatapoints.map {
-      point =>
-        // Make a list of timestamp-DataPoint pairs.
-        val timestamp = point.getTimestamp.getTime
-        val dateTime = new DateTime(point.getTimestamp.getTime)
-        (timestamp, DataPoint(dateTime.toString("HH:mm"), Seq(point.getAverage)))
+    val hitmap:LongMap[Datapoint] = LongMap(hitResults.get().getDatapoints.map {
+      point => (point.getTimestamp.getTime, point)
     }.toSeq:_*)
 
-    val missMap:LongMap[DataPoint] = LongMap(missResults.get().getDatapoints.map {
-     point =>
-        // Make a list of timestamp-DataPoint pairs.
-        val timestamp = point.getTimestamp.getTime
-        val dateTime = new DateTime(point.getTimestamp.getTime)
-        (timestamp, DataPoint(dateTime.toString("HH:mm"), Seq(point.getAverage)))
+    val missMap:LongMap[Datapoint] = LongMap(missResults.get().getDatapoints.map {
+      point => (point.getTimestamp.getTime, point)
     }.toSeq:_*)
 
-    // Merge both queries into a single Map of data, indexed by timestamp.
-    hitmap.intersectionWith(missMap, (_, valueA:DataPoint, valueB:DataPoint) => (valueA, valueB))
-  }
-
-  private def datapointsToString(points:(DataPoint, DataPoint)):String = {
-    points match {
-      case(pointA, pointB) => {
-        val data = pointA.values ++ pointB.values mkString(",")
-        s"['${pointA.name}', $data]"
-      }
-    }
+    // Merge both queries into a single Map, indexed by timestamp.
+    hitmap.intersectionWith(missMap, (_, valueA:Datapoint, valueB:Datapoint) => {
+      (new DataPoint(valueA.getTimestamp, Seq[Double](valueA.getAverage)),
+       new DataPoint(valueB.getTimestamp, Seq[Double](valueB.getAverage)))
+    })
   }
 }
