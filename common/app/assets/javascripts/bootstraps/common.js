@@ -187,8 +187,6 @@ define([
 
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
-                
-
                 common.mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
                 require(config.page.ophanUrl, function (Ophan) {
@@ -265,7 +263,7 @@ define([
         },
 
         loadVideoAdverts: function(config) {
-            common.mediator.on('page:video:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 if(config.switches.videoAdverts && !config.page.blockAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
