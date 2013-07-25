@@ -7,9 +7,10 @@
         <h2 class="page-head page-head--article">Signin</h2>
 
         @helper.form(action = routes.SigninController.processForm) {
-            @helper.inputText(form("email"))
-            @helper.inputPassword(form("password"))
-            <input />
+            @helper.inputText(form("email"), '_error -> form.error("email"))
+            @helper.inputPassword(form("password"), '_error -> form.error("password"))
+            @helper.checkbox(form("keepMeSignedIn"), '_help -> "Keep me signed in")
+            <input type="submit" name="signin" value="Signin" />
         }
     </div>
 }

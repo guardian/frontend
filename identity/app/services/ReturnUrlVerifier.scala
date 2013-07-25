@@ -9,7 +9,7 @@ class ReturnUrlVerifier {
   val defaultReturnUrl = "http://www.theguardian.com"
 
   def getVerifiedReturnUrl(request: Request[AnyContent]): String = {
-    getVerifiedReturnUrl(request.queryString("returnUrl").headOption)
+    getVerifiedReturnUrl(request.queryString.get("returnUrl").flatMap(_.headOption))
   }
 
   def getVerifiedReturnUrl(returnUrl: Option[String]): String = {

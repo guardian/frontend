@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.mvc._
-import play.api.data.Forms._
+import play.api.data.Forms
 import model.IdentityPage
 import play.api.data.Form
 import common.ExecutionContexts
@@ -15,10 +15,10 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends C
   val page = new IdentityPage("https://profile.theguardian.com/signin", "/signin", "Signin", "signin")
 
   val form = Form(
-    tuple(
-      "email" -> email,
-      "password" -> nonEmptyText(6, 20),
-      "keepMeSignedIn" -> boolean
+    Forms.tuple(
+      "email" -> Forms.email,
+      "password" -> Forms.nonEmptyText(6, 20),
+      "keepMeSignedIn" -> Forms.boolean
     )
   )
 
@@ -29,8 +29,22 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends C
 
   def processForm = Action { implicit request =>
     form.bindFromRequest.fold(
-      formWithErrors => TemporaryRedirect(returnUrlVerifier.getVerifiedReturnUrl(request)),
-      values => BadRequest(views.html.signin(page, form))
+      formWithErrors => BadRequest(views.html.signin(page, form)),
+      { case (email, password, rememberMe) => {
+        TemporaryRedirect(returnUrlVerifier.getVerifiedReturnUrl(request))
+        // call ID API
+        if (true) {
+          // get a cookie back from api client
+
+          Ok("response")
+//            .withCookies(
+//              new Cookie("GU_U", GU_U_val, )
+//            )
+        } else {
+          // invalid username / password
+          Ok("Invalid! email: %s, password: %s, rememberMe: %s".format(email, password, rememberMe.toString))
+        }
+      }}
     )
   }
 }
