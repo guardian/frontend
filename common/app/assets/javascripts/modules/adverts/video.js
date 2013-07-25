@@ -146,7 +146,9 @@ define([
         if (this.vastData.file) {
             this.vastData.trackingEvents.clickThrough = this.getNodeContent(xml.querySelector("ClickThrough"));
 
-            this.vastData.impressionEvents = common.listToArray(xml.querySelectorAll("Impression")).map(function(el) {
+            var impressionList = (xml.querySelector("Impression URL")) ? xml.querySelectorAll("Impression URL") : xml.querySelectorAll("Impression");
+
+            this.vastData.impressionEvents = common.listToArray(impressionList).map(function(el) {
                 return self.getNodeContent(el);
             });
 
