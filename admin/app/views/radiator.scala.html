@@ -14,6 +14,12 @@
         <header>
             <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
         </header>
+        
+        <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
+        <ul id="pingdom"></ul>
+        
+        <h2>Deployments <small>(the last deployment for each RiffRaff project)</small></h2>
+        <ul id="riffraff"></ul>
 
         <h2>Cloudwatch</h2>
         
@@ -36,12 +42,6 @@
         </script>
 
         @charts.map{ chart => <div id="@chart.id" class="charts"></div> }
-
-        <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
-        <ul id="pingdom"></ul>
-        
-        <h2>Deployments <small>(the last deployment for each RiffRaff project)</small></h2>
-        <ul id="riffraff"></ul>
 
         <!-- TODO - add team city & pager duty -->
 
