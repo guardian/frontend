@@ -1,4 +1,4 @@
-@(env: String, charts: Seq[tools.Chart])
+@(env: String, metricsCharts: Seq[tools.Chart], hitMissCharts: Seq[tools.Chart])
 
 @admin_main("Fastly Metrics", env, isAuthed = true) {
 
@@ -8,17 +8,24 @@
     google.setOnLoadCallback(drawCharts);
 
     function drawCharts() {
-    @charts.map{ chart =>
+        @metricsCharts.map{ chart =>
             new google.visualization.LineChart(document.getElementById('@chart.id'))
                     .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
-                title: '@chart.name',
+                        title: '@chart.name',
                         legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
+            });
+        }
+
+        @hitMissCharts.map{ chart =>
+            new google.visualization.LineChart(document.getElementById('@chart.id'))
+                    .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                        title: '@chart.name', @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
             });
         }
     }
 </script>
 
-
-@charts.map{ chart => <div id="@chart.id" style="max-width: 900px"></div> }
+@hitMissCharts.map{ chart => <div id="@chart.id" style="max-width: 900px"></div> }
+@metricsCharts.map{ chart => <div id="@chart.id" style="max-width: 900px"></div> }
 
 }
