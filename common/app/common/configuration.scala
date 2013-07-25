@@ -174,6 +174,11 @@ class GuardianConfiguration(
     lazy val password  = configuration.getStringProperty("pingdom.password").getOrElse(throw new RuntimeException("Pingdom password not set"))
     lazy val apiKey = configuration.getStringProperty("pingdom.apikey").getOrElse(throw new RuntimeException("Pingdom api key not set"))
   }
+  
+  object riffraff {
+    lazy val url = configuration.getStringProperty("riffraff.url").getOrElse(throw new RuntimeException("RiffRaff url not set"))
+    lazy val apiKey = configuration.getStringProperty("riffraff.apikey").getOrElse(throw new RuntimeException("RiffRaff api key not set"))
+  }
 
   // log out Play config on start
   log.info("Play config ----------------------------------------------------------------------------")
