@@ -57,7 +57,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
 //        });
 //
 //        bean.on(body, 'touchend', function() {
-//            hideBtns();
+//            debouncedHideBtns();
 //        });
     }
 
