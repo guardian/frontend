@@ -1,22 +1,26 @@
 @(page: Page)(implicit request: RequestHeader)
 
 @main(page, Switches.all){ } {
-<form class="form" novalidate action="/signin">
-  <ul class="form-fields">
-    <li>
-      <label for="email">Email address</label>
-      <input class="text-input" autocomplete="on" spellcheck="false" type="email" id="email" value="" />
-    </li>
-    <li>
-      <label for="password">Password</label>
-      <input class="text-input" type="password" id="password" />
-      <a class="assistance" href="/id/recover">Forgotten password?</a>
-    </li>
-    <li>
-      <label for="persistent-login" class="check-label">Remember me</label>
-      <input type="checkbox" value="1" id="persistent-login" />
-    </li>
+<form class="form" novalidate action="/identity/signin?error" role="main">
+    <h1 class="section-head zone-color form__heading">Sign in</h1>
+    <ul class="form-fields">
+        <li class="form-field--error">
+            <label for="email">Email address</label>
+            <input class="text-input" autocomplete="on" spellcheck="false" type="email" id="email" value="" />
+
+            <div class="form-field__error text-input__note">Please enter a valid email address
+        </li>
+        <li>
+            <label for="password">Password</label>
+            <input class="text-input" type="password" id="password" />
+            <a class="text-input__note" href="/id/recover">Forgotten password?</a>
+        </li>
+        <li>
+            <button type="submit" class="submit-input">Sign in</button>
+            
+            <label for="persistent-login" class="check-label">Remember me</label>
+            <input type="checkbox" value="1" id="persistent-login" />
+        </li>
   </ul>
-  <button type="submit">Signin</button>
 </form>
 }
