@@ -88,8 +88,8 @@ class Content(
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override lazy val cacheSeconds = {
-    if (isLive) 5
-    else if (lastModified > DateTime.now - 24.hours) 60
+    if (isLive) 30 // live blogs can expect imminent updates
+    else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
 }

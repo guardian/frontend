@@ -1,13 +1,19 @@
 package tools
 
-import java.util.concurrent.Future
-import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsResult
-import java.util.UUID
 import collection.JavaConversions._
+import collection.immutable.LongMap
+import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, Datapoint}
+import java.util.concurrent.Future
+import java.util.{UUID, Date}
 import org.joda.time.DateTime
 
+case class DataPoint(name: String, values: Seq[Double]) {
 
-case class DataPoint(name: String, values: Seq[Double])
+  def this(date: Date, values: Seq[Double]) =
+  {
+    this((new DateTime(date.getTime)).toString("HH:mm"), values)
+  }
+}
 
 trait Chart {
 
@@ -45,7 +51,6 @@ case class LatencyGraph(name: String, private val metrics: Future[GetMetricStati
     )
   )
 }
-
 
 case class Request2xxGraph(name: String, private val metrics: Future[GetMetricStatisticsResult]) extends Chart {
 
@@ -198,5 +203,54 @@ object ActiveUserProportionGraph extends Chart with implicits.Tuples with implic
       println(date.toString("dd/MM") + " -> " + day(date) + " " + month(date))
       DataPoint(date.toString("dd/MM"), Seq(day(date)/monthlyUsers, week(date)/monthlyUsers))
     }
+  }
+}
+
+case class FastlyMetricGraph(
+  name: String,
+  metric: String,
+  metricResults: Future[GetMetricStatisticsResult]) extends Chart {
+
+  override lazy val labels = Seq("Time", metric)
+
+  override lazy val yAxis = Some(metric)
+
+  private lazy val datapoints = metricResults.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
+
+  override lazy val dataset = datapoints.map(d => DataPoint(
+    new DateTime(d.getTimestamp.getTime).toString("HH:mm"), Seq(d.getAverage))
+  )
+}
+
+case class FastlyHitMissGraph(
+   name: String,
+   hitResults: Future[GetMetricStatisticsResult],
+   missResults: Future[GetMetricStatisticsResult]) extends Chart {
+
+  override lazy val labels = Seq("'Time'", "'Hits'", "'Misses'")
+  override lazy val yAxis = None
+  override val dataset = Nil
+  override def asDataset = s"[[$labelString], $dataString]"
+
+  private def labelString = labels.mkString(",")
+  private def dataString =  datapoints.keys.toList.sorted map { key:Long =>
+    val points = datapoints(key)
+    val data = points._1.values ++ points._2.values mkString(",")
+    s"['${points._1.name}', $data]" } mkString(",")
+
+  private lazy val datapoints:LongMap[(DataPoint, DataPoint)] = {
+    val hitmap:LongMap[Datapoint] = LongMap(hitResults.get().getDatapoints.map {
+      point => (point.getTimestamp.getTime, point)
+    }.toSeq:_*)
+
+    val missMap:LongMap[Datapoint] = LongMap(missResults.get().getDatapoints.map {
+      point => (point.getTimestamp.getTime, point)
+    }.toSeq:_*)
+
+    // Merge both queries into a single Map, indexed by timestamp.
+    hitmap.intersectionWith(missMap, (_, valueA:Datapoint, valueB:Datapoint) => {
+      (new DataPoint(valueA.getTimestamp, Seq[Double](valueA.getAverage)),
+       new DataPoint(valueB.getTimestamp, Seq[Double](valueB.getAverage)))
+    })
   }
 }
