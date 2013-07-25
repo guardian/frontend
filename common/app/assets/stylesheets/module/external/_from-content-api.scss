@@ -41,7 +41,7 @@
             line-height: 28px;
             line-height: 2.8rem;
         }
-        @media (min-width: $desktop) {
+        @include mq(desktop) {
             font-size: 22px;
             font-size: 2.2rem;
             line-height: 28px;

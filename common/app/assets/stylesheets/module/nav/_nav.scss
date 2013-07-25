@@ -102,7 +102,7 @@
                 .nav__item { margin: 0; }
             }
 
-            @media (min-width: 78em) {
+            @include mq(1248px) {
                 margin-top: -13px !important;
             }
         }
@@ -220,7 +220,7 @@
     background-color: #ffffff;
     border-bottom: 1px solid $darkMushroom;
 
-    @media only screen and (min-width: $tablet) { display: block; }
+    @include mq(tablet) { display: block; }
 }
 
 .nav--local {
@@ -235,7 +235,7 @@
     background-color: #ffffff;
 
 
-    @media only screen and (min-width: $tablet) { display: block; }
+    @include mq(tablet) { display: block; }
 
     .nav__item {
         float: left;
@@ -274,7 +274,7 @@
     background-color: #fff;
     display: block;
 
-    @media only screen and (min-width: $tablet) { display: none; }
+    @include mq(tablet) { display: none; }
 
     .localnav__cta {
         float: right;

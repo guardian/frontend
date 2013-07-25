@@ -37,7 +37,7 @@ $tabBorderWidth: 2px;
 
 
 
-@media (max-width: 18.75em) {
+@include mq($to: 300px) {
     .tabs li a {
         font-size: 14px;
         font-size: 1.4rem;
@@ -82,7 +82,7 @@ $tabBorderWidth: 2px;
     }
 }
 
-@media (max-width: 40em) {  
+@include mq($to: 640px) {
 
     .tabs-fixable {
         position: relative;

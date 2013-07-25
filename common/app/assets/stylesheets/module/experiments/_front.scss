@@ -11,7 +11,7 @@
     }
 }
 
-@media (min-width: $desktop) {
+@include mq(desktop) {
     .front-container--facia .front-section:nth-child(odd) {
         width: 63.5%;
     }

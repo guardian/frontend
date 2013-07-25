@@ -67,7 +67,7 @@ i.gallery__watermark {
         text-align: center;
     }
 
-    @media (orientation:landscape) {
+    @include mq($and: '(orientation: landscape)') {
         .gallery__img {
             margin: 0 auto;
         }
@@ -183,7 +183,7 @@ i.gallery__watermark {
         display: none; // Hide the caption icon
     }
 
-    @media (orientation:landscape) {
+    @include mq($and: '(orientation: landscape)') {
         position: absolute;
         right: 0;
         bottom: 0;
@@ -239,7 +239,7 @@ i.gallery__watermark {
         display: block;
     }
 
-    @media (orientation:landscape) {
+    @include mq($and: '(orientation: landscape)') {
         position: absolute;
         bottom: 0;
     }

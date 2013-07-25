@@ -138,7 +138,7 @@ span.control__menu.i-menu {
     margin-right: $baseline*2;
     margin-left: $baseline*2;
 
-    @media (min-width: 26.25em) {
+    @include mq(420px) {
         display: inline-block;
     }
 }

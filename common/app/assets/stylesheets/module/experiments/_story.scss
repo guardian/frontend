@@ -314,7 +314,7 @@ $orange: #FF7F00;
         max-height: 400px;
     }
 
-    @media (min-width: $desktop) {
+    @include mq(desktop) {
         max-height: 600px;
     }
 }
