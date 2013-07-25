@@ -14,18 +14,9 @@ import conf.Configuration
 object RadiatorController extends Controller with Logging with AuthLogging {
 
   def render() = AuthAction{ implicit request =>
-      val metadata = new MetaData {
-        def id: String = ""
-        def webTitle: String = "Radiator"
-
-        def section: String = ""
-        def canonicalUrl: Option[String] = None
-        def analyticsName: String = ""
-      }
-
-      val graphs = Seq(PageviewsByDayGraph) ++ (CloudWatch.latency filter { _.name == "Router" })
-
-      Ok(views.html.radiator(graphs, metadata, Switches.all))
+      val graphs = (CloudWatch.latency filter { _.name == "Router" }) ++ CloudWatch.fastlyStatistics
+      val multilineGraphs = CloudWatch.fastlyHitMissStatistics
+      Ok(views.html.radiator(graphs, multilineGraphs, Configuration.environment.stage))
   }
 
   def pingdom() = AuthAction{ implicit request =>
@@ -46,5 +37,3 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   }
 
 }
-
-

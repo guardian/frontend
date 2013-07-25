@@ -21,14 +21,14 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=5, s-maxage=5, stale-while-revalidate=5, stale-if-error=345600")
+    headers("Cache-Control") should be("max-age=30, s-maxage=30, stale-while-revalidate=30, stale-if-error=345600")
   }
 
-  it should "cache content less than 24 hours old for 1 minute" in {
+  it should "cache content less than 1 hour old for 1 minute" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
-    val modifiedAlmost24HoursAgo = (DateTime.now - 23.hours) - 50.minutes
-    val liveContent = content(lastModified = modifiedAlmost24HoursAgo, live = false)
+    val modifiedAlmost1HourAgo = DateTime.now - 58.minutes
+    val liveContent = content(lastModified = modifiedAlmost1HourAgo, live = false)
 
     val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
     val headers = result.header.headers
