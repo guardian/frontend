@@ -32,7 +32,6 @@ define([
 
         this.play = function() {
             if (initialPlay.content === true && initialPlay.advert === true) {
-                console.log('inside conditional');
                 self.execWhenDuration(function() {
                    self.trackUserInteraction("Play", "User clicked play", false);
                        if(video.advertWasRequested) {
@@ -115,7 +114,7 @@ define([
         this.execWhenDuration = function(callback) {
             var duration = this.getDuration();
             if(duration > 0) {
-                callback()
+                callback();
             } else {
                 setTimeout(function() {
                     self.execWhenDuration(callback);
