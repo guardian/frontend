@@ -226,19 +226,6 @@ define([
             });
 
         },
-        
-        betaMessage: function () {
-            var isBeta = /#beta/.test(window.location.hash);
-            if (isBeta) {
-                bonzo(bonzo.create('<div class="message" id="message">Visit <a href="#" id="beta-pref">beta</a> or <a href="#" id="desktop-pref">desktop</a></div>')).insertBefore(common.$g('#preload-1 .parts__head'));
-            
-                /* TODO 
-                 *  - Is user over a certain screen size? 1024px
-                 *  - Attach a cookie write opertion to the desktop & mobile users
-                 *  - Attach a full reload to the desktop, sans the querystring & hash
-                 * */
-            }
-        },
 
         // Temporary - for a user zoom survey
         paragraphSpacing: function () {
@@ -353,7 +340,6 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.paragraphSpacing();
-            modules.betaMessage();
         }
         common.mediator.emit("page:common:ready", config, context);
     };
