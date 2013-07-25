@@ -17,6 +17,7 @@ define(["bean",
 
     function LightboxGallery(config, context) {
         var self = this,
+            pageUrl = '/' + config.page.pageId, // The page url we're starting from
             galleryNode,
             imagesNode,
             currentImage = 1,
@@ -24,13 +25,14 @@ define(["bean",
             mode = 'fullimage',
             overlay,
             swipeActive = false,
+            pushUrlChanges = true,
             $navArrows,
             $images;
 
         this.selector = '.trail--gallery';
         this.galleryEndpoint = '';
 
-        this.init = function() {
+        this.init = function(opts) {
             if (config.switches.lightboxGalleries) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl = e.currentTarget.href;
@@ -50,6 +52,11 @@ define(["bean",
                     self.bindEvents();
                     self.loadGallery();
                 });
+
+                // Disable URL changes when the app-wide swipe is on
+                if(document.body.className.indexOf('has-swipe') != -1) {
+                    pushUrlChanges = false;
+                }
             }
         };
 
@@ -80,24 +87,35 @@ define(["bean",
                 self.layout();
             }));
 
-            common.mediator.on('modules:overlay:close', this.removeOverlay);
+            common.mediator.on('modules:overlay:close', function() {
+                self.removeOverlay();
 
-            bean.one(window, 'popstate', function(event) {
-                // Slight timeout as browsers reset the scroll position on popstate
-                setTimeout(function() {
-                    overlay.hide();
-                    self.removeOverlay();
-                },10);
+                // Go back to the URL that we started on
+                if (pushUrlChanges) {
+                    url.pushUrl({}, document.title, pageUrl);
+                }
+            });
 
-                common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
+            bean.on(window, 'popstate', function(event) {
+                if (event.state && event.state.lightbox) {
+                    // This keeps the back button to navigate back through images
+                    self.goTo(event.state.currentImage);
+
+                } else if (event.state && !event.state.lightbox) {
+                    // This happens when we reach back to the state before the lightbox was opened
+                    // Needs a slight timeout as browsers reset the scroll position on popstate
+                    setTimeout(function() {
+                        overlay.hide();
+                        self.removeOverlay();
+                    },10);
+
+                    common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
+                }
             });
         };
 
         this.loadGallery = function() {
             overlay.showLoading();
-
-            // Save state to preserve back button functionality
-            url.pushUrl({ lightbox: true }, document.title, window.location.href);
 
             ajax({
                 url: self.galleryEndpoint,
@@ -105,6 +123,9 @@ define(["bean",
                 method: 'get',
                 crossOrigin: true,
                 success: function(response) {
+                    self.galleryUrl = '/' + response.config.page.pageId;
+                    self.pushUrlState();
+
                     overlay.setBody(response.html);
 
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
@@ -194,7 +215,7 @@ define(["bean",
             currentImage = index;
             self.imageIndexNode.innerHTML = currentImage;
             self.switchToFullImage();
-            //self.jumpToContent();
+            self.pushUrlState();
         };
 
         this.switchToGrid = function(e) {
@@ -222,7 +243,7 @@ define(["bean",
         this.switchToFullImage = function(e) {
             mode = 'fullimage';
 
-            if (detect.hasTouchScreen()) {
+            if (detect.hasTouchScreen() && !swipeActive) {
                 self.setupSwipe();
             }
 
@@ -281,7 +302,7 @@ define(["bean",
                     speed: 200,
                     continuous: false,
                     callback: function(index, elm) {
-                        self.imageIndexNode.innerHTML = index + 1;
+                        self.goTo(index + 1);
                     }
                 });
 
@@ -298,6 +319,19 @@ define(["bean",
 
             swipeActive = false;
         };
+
+
+        this.pushUrlState = function() {
+            if (pushUrlChanges) {
+                var state = {
+                    lightbox: true,
+                    currentImage: currentImage
+                };
+
+                url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
+            }
+        };
+
     }
 
     return LightboxGallery;
