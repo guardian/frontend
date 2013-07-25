@@ -19,8 +19,8 @@
 }
 
 .trail__headline {
-    @media (min-width: 25em) { @extend %type-4; }
-    @media (min-width: 64em) { @extend %type-5; }
+    @include mq(400px) { @extend %type-4; }
+    @include mq(1024px) { @extend %type-5; }
 }
 
     .trail__headline a,
@@ -57,12 +57,12 @@
     color: #555555;
     text-rendering: optimizeLegibility;
 
-    @media (min-width: 37.5em) {
+    @include mq(tablet) {
         clear: none;
     }
 }
 
-@media (min-width: 53.125em) {
+@include mq(850px) {
     .trail .img img {
         width: 160px;
     }
@@ -222,7 +222,7 @@
         width: 100%;
     }
 
-    @media (min-width: $mobileLandscape) {
+    @include mq($mq-mobileLandscape) {
         .gallerythumbs__item:first-child {
             @include fix-aspect-ratio(5, 3, 67%);
             float: left;

@@ -41,7 +41,7 @@
     }
 }
 
-@media (min-width: $tablet) {
+@include mq(tablet) {
     .sport-summary__score {
         td {
             display: table-cell;
