@@ -1,9 +1,8 @@
 package tools
 
-import frontsapi.model.{UpdateList, Section, Trail, Block}
+import frontsapi.model.{Trail, Block}
 import org.joda.time.DateTime
-import common.{S3, S3FrontsApi}
-import conf.Configuration
+import common.S3FrontsApi
 import play.api.libs.json.Json
 
 trait FrontsApiRead {
@@ -22,12 +21,9 @@ trait FrontsApiWrite {
 object FrontsApi extends FrontsApiRead with FrontsApiWrite {
   implicit val trailRead = Json.reads[Trail]
   implicit val blockRead = Json.reads[Block]
-  implicit val sectionRead = Json.reads[Section]
-  implicit val updateListRead = Json.reads[UpdateList]
 
   implicit val trailWrite = Json.writes[Trail]
   implicit val blockWrite = Json.writes[Block]
-  implicit val sectionWrite = Json.writes[Section]
 
   def getSchema = S3FrontsApi.getSchema
   def getBlock(edition: String, section: String, blockId: String) = for {

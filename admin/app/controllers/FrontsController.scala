@@ -2,7 +2,6 @@ package controllers
 
 import frontsapi.model._
 import frontsapi.model.Block
-import frontsapi.model.Section
 import frontsapi.model.Trail
 import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
@@ -11,28 +10,20 @@ import common.{S3FrontsApi, Logging}
 import org.joda.time.DateTime
 import conf.Configuration
 import tools.FrontsApi
-import scala.Some
 
 
 object FrontsController extends Controller with Logging {
-  implicit val trailRead = Json.reads[Trail]
-  implicit val blockRead = Json.reads[Block]
-  implicit val sectionRead = Json.reads[Section]
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val blockActionRead = Json.reads[BlockAction]
-
-  implicit val trailWrite = Json.writes[Trail]
-  implicit val blockWrite = Json.writes[Block]
-  implicit val sectionWrite = Json.writes[Section]
 
   def index() = AuthAction{ request =>
     Ok(views.html.fronts(Configuration.environment.stage))
   }
 
   def schema = AuthAction{ request =>
-    S3FrontsApi.getSchema.map { json: String =>
+    S3FrontsApi.getSchema map { json: String =>
       Ok(json).as("application/json")
-    }.getOrElse(NotFound)
+    } getOrElse NotFound
   }
 
 
@@ -80,12 +71,10 @@ object FrontsController extends Controller with Logging {
       val trails = updateList(update, block.live)
       newBlock = newBlock.copy(live = trails)
     }
-    if (newBlock.live == newBlock.draft) {
-      newBlock = newBlock.copy(areEqual=true)
-    } else {
-      newBlock = newBlock.copy(areEqual=false)
-    }
-    FrontsApi.putBlock(edition, section, blockId, newBlock) //Don't need pretty, only for us devs
+
+    newBlock = newBlock.copy(areEqual = newBlock.live==newBlock.draft)
+
+    FrontsApi.putBlock(edition, section, blockId, newBlock)
   }
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
@@ -122,12 +111,9 @@ object FrontsController extends Controller with Logging {
             val trails = block.live.filterNot(_.id == update.item)
             newBlock = newBlock.copy(live = trails)
           }
-          if (newBlock.live == newBlock.draft) {
-            newBlock = newBlock.copy(areEqual=true)
-          } else {
-            newBlock = newBlock.copy(areEqual=false)
-          }
-          FrontsApi.putBlock(edition, section, block.id, newBlock) //Don't need pretty, only for us devs
+          newBlock = newBlock.copy(areEqual = newBlock.live==newBlock.draft)
+
+          FrontsApi.putBlock(edition, section, block.id, newBlock)
           Ok
         } getOrElse NotFound("No edition or section") //To be more silent in the future?
       } getOrElse NotFound("Invalid JSON")
