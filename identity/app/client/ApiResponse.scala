@@ -1,0 +1,5 @@
+package client
+
+class ApiResponse {
+
+}
