@@ -89,13 +89,31 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
 
     relabeled
   }
+ 
+  def getPageviewsByOperatingSystemAndBrowser(): Map[String, Long] = {
+    val pageviews: List[(String, String, String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      StaticQuery.queryNA[(String, String, String, String, Long)]( """
+        select os_family, os_version_major, browser_family, browser_version_major, count(*) as total
+        from pageviews
+        group by os_family, os_version_major, browser_family, browser_version_major
+        order by total desc
+        limit 1000
+       """).list()
+    }
+
+    val relabeled: List[(String, Long)] = pageviews map {
+      case (operatingSystem, operatingSystemVersion, browser, browserVersionMajor, total) =>
+        (s"$operatingSystem ${Option(operatingSystemVersion).getOrElse("(unknown)")} $browser ${Option(browserVersionMajor).getOrElse("(unknown)")}".trim, total)
+    }
+
+    relabeled.toMap
+  }
 
   def getPageviewsByOperatingSystem(): Map[String, Long] = {
     val pageviews: List[(String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
       StaticQuery.queryNA[(String, String, Long)]( """
         select os_family, os_version_major, count(*) as total
         from pageviews
-        where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
         group by os_family, os_version_major
         order by total desc
         limit 64
@@ -113,18 +131,17 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
   def getPageviewsByBrowser(): Map[String, Long] = {
     val pageviews: List[(String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
       StaticQuery.queryNA[(String, String, Long)]( """
-        select browser_family, browser_version, count(*) as total
+        select browser_family, browser_version_major, count(*) as total
         from pageviews
-        where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
-        group by browser_family, browser_version
+        group by browser_family, browser_version_major
         order by total desc
         limit 64
        """).list()
     }
 
     val relabeled: List[(String, Long)] = pageviews map {
-      case (browser, browserVersion, total) =>
-        (s"$browser ${Option(browserVersion).getOrElse("(unknown)")}".trim, total)
+      case (browser, browserVersionMajor, total) =>
+        (s"$browser ${Option(browserVersionMajor).getOrElse("(unknown)")}".trim, total)
     }
 
     relabeled.toMap
