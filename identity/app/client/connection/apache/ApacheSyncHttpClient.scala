@@ -1,15 +1,16 @@
 package client.connection.apache
 
-import org.apache.commons.httpclient.{HttpMethod, HttpClient, NameValuePair}
+import org.apache.commons.httpclient.{HttpException, HttpMethod, HttpClient, NameValuePair}
 import scala.io.Source
 import org.apache.commons.httpclient.methods.{DeleteMethod, StringRequestEntity, PostMethod, GetMethod}
 import client.connection.{HttpResponse, Http}
 import client.Parameters
+import java.io.IOException
 
 
 // an implementation using apache http client, note this just uses the default connection manager
 // and does not support multithreaded use.
-trait ApacheSyncHttpClient extends Http {
+class ApacheSyncHttpClient extends Http {
   // provide converter between our Iterable[(String,String)] and the ApacheClient's Array[KeyValuePair]
   implicit object IterStringTupleToArrayNameValuePairs extends (Parameters => Array[NameValuePair]) {
     def apply(iterStringTuple: Parameters) = iterStringTuple.toArray.map { case (k, v) => new NameValuePair(k, v) }
@@ -34,23 +35,33 @@ trait ApacheSyncHttpClient extends Http {
         .getOrElse("")
 
       new HttpResponse(responseBody, statusLine.getStatusCode, statusLine.getReasonPhrase)
+//    } catch {
+//      case e: IOException => {
+//        logger.error("IOException while attempting %s".format(method.getName), e)
+//      }
+//      case e: HttpException => {
+//        logger.error("HttpException while attempting %s".format(method.getName), e)
+//      }
     } finally {
       method.releaseConnection()
     }
   }
 
-  override def GET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
+  override def doGET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
+    // IllegalArgumentException, IllegalStateException
     val method = new GetMethod(url)
     execute(method, urlParameters, headers)
   }
 
-  override def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
+  override def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
+    // IllegalArgumentException, IllegalStateException
     val method = new PostMethod(url)
     method.setRequestEntity(new StringRequestEntity(body, "application/json", "UTF-8"))
     execute(method, urlParameters, headers)
   }
 
-  override def DELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
+  override def doDELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
+    // IllegalArgumentException, IllegalStateException
     val method = if (bodyOpt.isDefined) {
       val deleteWithBody = new DeleteMethodWithBody(url)
       deleteWithBody.setRequestEntity(new StringRequestEntity(bodyOpt.get, "application/json", "UTF-8"))
@@ -59,4 +70,3 @@ trait ApacheSyncHttpClient extends Http {
     execute(method, urlParameters, headers)
   }
 }
-class DefaultApacheSyncHttpClient extends ApacheSyncHttpClient

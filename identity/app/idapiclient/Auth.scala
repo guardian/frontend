@@ -1,7 +1,6 @@
 package idapiclient
 
-import client.auth.Auth
-import client.Parameters
+import client.{Auth, Parameters}
 
 
 class EmailPassword(email: String, password: String) extends Auth {

@@ -8,20 +8,20 @@ import java.io.OutputStreamWriter
 
 
 // an implementation using java.net for Google AppEngine
-trait JavaNetSyncHttp extends Http {
+class JavaNetSyncHttpClient extends Http {
 
-  override def GET(urlString: String, parameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
+  override def doGET(urlString: String, parameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
     val connection = getConnection(urlString, parameters, headers, "GET")
     extractHttpResponse(connection)
   }
 
-  override def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
+  override def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
     val connection = getConnection(url, urlParameters, headers, "POST")
     writeBodyContent(connection, body)
     extractHttpResponse(connection)
   }
 
-  override def DELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
+  override def doDELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
     val connection = getConnection(url, urlParameters, headers, "DELETE")
     bodyOpt.foreach(writeBodyContent(connection, _))
     extractHttpResponse(connection)
@@ -38,6 +38,7 @@ trait JavaNetSyncHttp extends Http {
   }
 
   private def getConnection(url: String, urlParameters: Parameters, headers: Parameters, method: String): HttpURLConnection = {
+    // MalformedURLException
     val connection = new URL(addQueryString(url, urlParameters)).openConnection.asInstanceOf[HttpURLConnection]
     connection.setRequestMethod(method)
     headers.foreach { case (k, v) => connection.setRequestProperty(k, v) }
@@ -53,10 +54,10 @@ trait JavaNetSyncHttp extends Http {
   }
 
   private def extractHttpResponse(connection: HttpURLConnection): HttpResponse = {
+    // IOException
     val src = Source.fromInputStream(connection.getInputStream)
     val responseBody = src.mkString
     src.close()
     new HttpResponse(responseBody, connection.getResponseCode, connection.getResponseMessage)
   }
 }
-class DefaultJavaNetSyncHttp extends JavaNetSyncHttp

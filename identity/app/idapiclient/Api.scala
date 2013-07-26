@@ -2,8 +2,7 @@ package idapiclient
 
 import client.connection.Http
 import com.gu.identity.model.{User, AccessToken}
-import client.auth.{Anonymous, Auth}
-import client.Error
+import client.{Anonymous, Auth, Error}
 import play.mvc.Http.Cookie
 
 
@@ -17,11 +16,10 @@ abstract class Api(apiRootUrl: String, http: Http, jsonBodyParser: IdApiJsonBody
 
   // AUTH
 
-  def authApp(auth: Auth): Response[AccessToken] =
-    {
-      val response = http.GET(apiUrl("auth"), auth.parameters)
-      jsonBodyParser.extract[AccessToken](response)
-    }
+  def authApp(auth: Auth): Response[AccessToken] = {
+    val response = http.GET(apiUrl("auth"), auth.parameters)
+    jsonBodyParser.extract[AccessToken](response)
+  }
 
   def authBrowser(auth: Auth): Response[List[Cookie]] = {
     val params = auth.parameters ++ List(("format", "cookie"))

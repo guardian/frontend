@@ -1,4 +1,4 @@
-package client.auth
+package client
 
 import client.Parameters
 
