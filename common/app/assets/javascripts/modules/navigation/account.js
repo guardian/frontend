@@ -11,7 +11,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         contentUrl: '/identity/fragments/account',
         className: 'js-account-info',
         eventName: 'modules:accountcontrol'
-    }
+    };
 
     /** @type {Element|null} */
     Account.prototype.context = null;
@@ -24,7 +24,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
             url: Account.CONFIG.contentUrl,
             type: 'json'
         }).then(this.emitLoadedEvent, this.emitErrorEvent);
-    }
+    };
 
     /**
      * @param {Element} context
@@ -35,7 +35,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
             self.renderControl(resp);
         });
         this.getAccountFragment();
-    }
+    };
 
     /** */
     Account.prototype.renderControl = function(resp) {
@@ -43,19 +43,19 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
             container = this.context.querySelector('.' + Account.CONFIG.className);
 
         bonzo(container).html(content);
-        
+
         common.mediator.emit(Account.CONFIG.eventName + ':rendered', resp);
-    }
+    };
 
     /**  */
     Account.prototype.emitLoadedEvent = function(resp) {
         common.mediator.emit(Account.CONFIG.eventName + ':loaded', resp);
-    }
+    };
 
     /** */
     Account.prototype.emitErrorEvent = function(resp) {
         common.mediator.emit(Account.CONFIG.eventName + ':error', resp);
-    }
+    };
 
     return Account;
 
