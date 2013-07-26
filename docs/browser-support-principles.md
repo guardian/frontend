@@ -1,12 +1,12 @@
 # Browser Support Principles
-##_We believe that our journalism should be accessible to everyone [theguardian.com](http://www.theguardian.com/?view=mobile) uses [responsive design](http://alistapart.com/article/responsive-web-design) to help us achieve this._
+##_We believe that our journalism should be accessible to everyone: [theguardian.com](http://www.theguardian.com/?view=mobile) uses [responsive design](http://alistapart.com/article/responsive-web-design) to help us achieve this._
 This means each feature of the website needs to consider how it adapts itself to each user's environment. Practically speaking this means thinking a handful of environmental factors when designing and building the frontend, for example...
 
 ### Responsive Design
 One responsive site for all viewports and browsers. This means
 responding intelligently based on device capabilities, rather than a
 single pixel-perfect design. We use media queries to vary CSS at
-different breakpoints.
+different breakpoints and scale up from mobile to desktop views.
 ### Cutting the mustard
 We only serve Javascript to browsers that [Cut
 The Mustard](http://responsivenews.co.uk/post/18948466399/cutting-the-mustard). For browsers that fail that test, we still expect the
