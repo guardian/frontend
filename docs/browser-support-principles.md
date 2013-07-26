@@ -1,5 +1,5 @@
 # Browser Support Principles
-##*We believe that our journalism should be accessible to everyone [theguardian.com](http://www.theguardian.com/?view=mobile) uses [responsive design](http://alistapart.com/article/responsive-web-design) to help us achieve this. *
+##_We believe that our journalism should be accessible to everyone [theguardian.com](http://www.theguardian.com/?view=mobile) uses [responsive design](http://alistapart.com/article/responsive-web-design) to help us achieve this._
 This means each feature of the website needs to consider how it adapts itself to each user's environment. Practically speaking this means thinking a handful of environmental factors when designing and building the frontend, for example. ...
 
 ### Responsive Design
@@ -40,8 +40,8 @@ Examples of what this means in practice:
 Based on these principles and usage stats we have produced a <a
 href="https://docs.google.com/a/guardian.co.uk/spreadsheet/ccc?key=0At1OrgA9hbE_dG95OElVaWV5T1MyRVlySnM2T3RvS2c#gid=0">browser
 support table</a> showing how we only expect the site to fully
-function in browsers that 'Cut the mustard', an edge case is IE 8
-which we will serve a specific style sheet  and Javascript to offer
+function in browsers that 'Cut the mustard', an edge case is IE 8, to
+which we will serve a specific style sheet and Javascript to offer
 some enhanced functionality whilst it continues to have significant
 usage.
 
