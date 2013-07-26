@@ -4,7 +4,8 @@ define([
 
     //Current tests
     'modules/experiments/tests/paragraph-spacing',
-    'modules/experiments/tests/aa'
+    'modules/experiments/tests/aa',
+    'modules/experiments/tests/lightbox-galleries'
 ], function (
     common,
     store,
@@ -54,7 +55,7 @@ define([
         dataLinkTest.push(['AB', test.id + ' test', variantId]. join(' | '));
         common.$g(document.body).attr('data-link-test', dataLinkTest.join(', '));
     }
-        
+
     function getActiveTests() {
         return TESTS.filter(function(test) {
             var expired = (new Date() - new Date(test.expiry)) > 0;
@@ -93,7 +94,7 @@ define([
         if (!isParticipating(test) || !testCanBeRun(test, config)) {
             return false;
         }
-        
+
         var participations = getParticipations(),
             variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
@@ -106,7 +107,7 @@ define([
     }
 
     function bucket(test, config) {
-        
+
         // if user not in test, bucket them
         if (isParticipating(test) || !testCanBeRun(test, config)) {
             return false;
@@ -136,7 +137,7 @@ define([
         addTest: function(test) {
             TESTS.push(test);
         },
-        
+
         clearTests: function() {
             TESTS = [];
         },
@@ -147,7 +148,7 @@ define([
                 bucket(test, config);
             });
         },
-        
+
         run: function(config, context, options) {
             var opts = options || {};
             getActiveTests().forEach(function(test) {
