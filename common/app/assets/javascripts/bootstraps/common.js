@@ -283,6 +283,15 @@ define([
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
         },
+   
+        // let large viewports opt-in to the responsive beta
+        betaOptIn: function () {
+            var isBeta = /#beta/.test(window.location.hash);
+            if (isBeta && window.screen.width >= 900) {
+                var expiryDays = 365;
+                Cookies.add("GU_VIEW", "mobile", expiryDays);
+            }
+        },
 
         initSwipe: function(config) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
@@ -339,6 +348,7 @@ define([
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
+            modules.betaOptIn();
             modules.paragraphSpacing();
         }
         common.mediator.emit("page:common:ready", config, context);
