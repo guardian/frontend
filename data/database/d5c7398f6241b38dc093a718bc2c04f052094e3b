@@ -1,0 +1,3218 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":5825,
+    "startIndex":1,
+    "pageSize":20,
+    "currentPage":1,
+    "pages":292,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/rugbyleague",
+      "type":"keyword",
+      "webTitle":"Rugby league",
+      "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+      "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/2013/jul/24/johnathan-thurston-nrl-asada-visit-instagram",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-24T02:11:11Z",
+      "webTitle":"Johnathan Thurston on Asada's home visit: '#effingtorture'",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/24/johnathan-thurston-nrl-asada-visit-instagram",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/24/johnathan-thurston-nrl-asada-visit-instagram",
+      "fields":{
+        "trailText":"<p>Johnathan Thurston has taken to Instagram to express frustration at an early morning visit to his home by drug testers</p>",
+        "headline":"Johnathan Thurston on Asada's home visit: '#effingtorture'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hgdp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/24/1374631602830/George-Smith-003.jpg",
+        "wordcount":"189",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"technology/instagram",
+        "type":"keyword",
+        "webTitle":"Instagram",
+        "webUrl":"http://www.guardian.co.uk/technology/instagram",
+        "apiUrl":"http://content.guardianapis.com/technology/instagram",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/24/1374631612986/George-Smith-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/24/1374631612986/George-Smith-008.jpg",
+          "source":"AFP/Getty Images ",
+          "photographer":"Mark Graham",
+          "altText":"George Smith",
+          "height":"276",
+          "credit":"Mark Graham/AFP/Getty Images ",
+          "caption":"Johnathan Thurston posted phots of the visit on Instagram.  Photograph: Mark Graham/AFP/Getty Images ",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/24/greg-inglis-online-racism-attack",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-24T00:18:35Z",
+      "webTitle":"Greg Inglis victim of racist online slur",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/24/greg-inglis-online-racism-attack",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/24/greg-inglis-online-racism-attack",
+      "fields":{
+        "trailText":"<p>Greg Inglis says he's grateful for messages of support after he and his wife were targeted by an online racist insult</p>",
+        "headline":"Greg Inglis victim of racist online slur",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hgdf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/30/1369894021138/Greg-Inglis-003.jpg",
+        "wordcount":"212",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/30/1369894031745/Greg-Inglis-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/30/1369894031745/Greg-Inglis-008.jpg",
+          "source":"AAP",
+          "photographer":"Dave Hunt",
+          "altText":"Greg Inglis",
+          "height":"276",
+          "credit":"Dave Hunt/AAP",
+          "caption":"Greg Inglis has appeared in anti-racism campaigns. Photograph: Dave Hunt/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/23/st-george-illawarra-rabbitohs-nrl-match-report",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-22T23:37:30Z",
+      "webTitle":"South Sydney Rabbitohs 18-22 St George Illawarra | NRL match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/23/st-george-illawarra-rabbitohs-nrl-match-report",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/23/st-george-illawarra-rabbitohs-nrl-match-report",
+      "fields":{
+        "trailText":"<p>St George Illawarra conjured up three tries in 13 minutes to stun South Sydney in a golden-point win</p>",
+        "headline":"St George upset NRL leaders South Sydney",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hfka",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/23/1374536126928/George-Burgess-003.jpg",
+        "wordcount":"436",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/23/1374536140157/George-Burgess-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/23/1374536140157/George-Burgess-008.jpg",
+          "source":"AAP Image",
+          "photographer":"Robb Cox",
+          "altText":"George Burgess",
+          "height":"276",
+          "credit":"Robb Cox/AAP Image",
+          "caption":"George Burgess contemplates a tough evening for the Rabbitohs. Photograph: Robb Cox/AAP Image",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/23/st-helens-wigan-warriors",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-22T23:02:36Z",
+      "webTitle":"St Helens 22-16 Wigan | Super League match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/23/st-helens-wigan-warriors",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/23/st-helens-wigan-warriors",
+      "fields":{
+        "trailText":"<p>Wigan's coach, Shaun Wane, was unrepentant after his weakened side were beaten 22-16 by St Helens</p>",
+        "headline":"No regrets for Shaun Wane as weakened Wigan succumb to St Helens",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hfk4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532566455/St-Helens-v-Wigan-Warrior-003.jpg",
+        "wordcount":"453",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sthelens",
+        "type":"keyword",
+        "webTitle":"St Helens",
+        "webUrl":"http://www.guardian.co.uk/sport/sthelens",
+        "apiUrl":"http://content.guardianapis.com/sport/sthelens",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.guardian.co.uk/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532571668/St-Helens-v-Wigan-Warrior-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532571668/St-Helens-v-Wigan-Warrior-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"St Helens v Wigan Warriors - Super League",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"St Helens' Joe Greenwood scores a last minute try to seal the win over arch-rivals Wigan at Langtree Park on Monday. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532563687/St-Helens-v-Wigan-Warrior-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532563687/St-Helens-v-Wigan-Warrior-001.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"St Helens v Wigan Warriors - Super League",
+          "height":"54",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"St Helens' Joe Greenwood scores a last minute try to seal the win over arch-rivals Wigan at Langtree Park on Monday. Photograph: Ed Sykes/Action Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532565392/St-Helens-v-Wigan-Warrior-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532565392/St-Helens-v-Wigan-Warrior-002.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"St Helens v Wigan Warriors - Super League",
+          "height":"130",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"St Helens' Joe Greenwood scores a last minute try to seal the win over arch-rivals Wigan at Langtree Park on Monday. Photograph: Ed Sykes/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532566455/St-Helens-v-Wigan-Warrior-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532566455/St-Helens-v-Wigan-Warrior-003.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"St Helens v Wigan Warriors - Super League",
+          "height":"84",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"St Helens' Joe Greenwood scores a last minute try to seal the win over arch-rivals Wigan at Langtree Park on Monday. Photograph: Ed Sykes/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532567469/St-Helens-v-Wigan-Warrior-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532567469/St-Helens-v-Wigan-Warrior-004.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"St Helens v Wigan Warriors - Super League",
+          "height":"132",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"St Helens' Joe Greenwood scores a last minute try to seal the win over arch-rivals Wigan at Langtree Park on Monday. Photograph: Ed Sykes/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532568525/St-Helens-v-Wigan-Warrior-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532568525/St-Helens-v-Wigan-Warrior-005.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"St Helens v Wigan Warriors - Super League",
+          "height":"168",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"St Helens' Joe Greenwood scores a last minute try to seal the win over arch-rivals Wigan at Langtree Park on Monday. Photograph: Ed Sykes/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532569545/St-Helens-v-Wigan-Warrior-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532569545/St-Helens-v-Wigan-Warrior-006.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"St Helens v Wigan Warriors - Super League",
+          "height":"180",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"St Helens' Joe Greenwood scores a last minute try to seal the win over arch-rivals Wigan at Langtree Park on Monday. Photograph: Ed Sykes/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532570592/St-Helens-v-Wigan-Warrior-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532570592/St-Helens-v-Wigan-Warrior-007.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"St Helens v Wigan Warriors - Super League",
+          "height":"228",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"St Helens' Joe Greenwood scores a last minute try to seal the win over arch-rivals Wigan at Langtree Park on Monday. Photograph: Ed Sykes/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532571668/St-Helens-v-Wigan-Warrior-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/22/1374532571668/St-Helens-v-Wigan-Warrior-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"St Helens v Wigan Warriors - Super League",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"St Helens' Joe Greenwood scores a last minute try to seal the win over arch-rivals Wigan at Langtree Park on Monday. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/22/labyrinth-loyalties-sport-spectators-negotiate",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-22T20:00:00Z",
+      "webTitle":"Letters: Labyrinth of loyalties the sports spectator has to negotiate",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/22/labyrinth-loyalties-sport-spectators-negotiate",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/22/labyrinth-loyalties-sport-spectators-negotiate",
+      "fields":{
+        "trailText":"<strong>Letters:</strong> The desire to feel pride in the exploits of \"plucky Brits\" is undermined by the nature of sponsorship",
+        "headline":"Labyrinth of loyalties the sports spectator has to negotiate",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hfep",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521107137/Team-Sky-with-Chris-Froom-003.jpg",
+        "wordcount":"456",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/tourdefrance",
+        "type":"keyword",
+        "webTitle":"Tour de France",
+        "webUrl":"http://www.guardian.co.uk/sport/tourdefrance",
+        "apiUrl":"http://content.guardianapis.com/sport/tourdefrance",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.guardian.co.uk/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"sport/athletics",
+        "type":"keyword",
+        "webTitle":"Athletics",
+        "webUrl":"http://www.guardian.co.uk/sport/athletics",
+        "apiUrl":"http://content.guardianapis.com/sport/athletics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"tone/letters",
+        "type":"tone",
+        "webTitle":"Letters",
+        "webUrl":"http://www.guardian.co.uk/tone/letters",
+        "apiUrl":"http://content.guardianapis.com/tone/letters",
+        "references":[]
+      },{
+        "id":"sport/cycling",
+        "type":"keyword",
+        "webTitle":"Cycling",
+        "webUrl":"http://www.guardian.co.uk/sport/cycling",
+        "apiUrl":"http://content.guardianapis.com/sport/cycling",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/tour-de-france-2013",
+        "type":"keyword",
+        "webTitle":"Tour de France 2013",
+        "webUrl":"http://www.guardian.co.uk/sport/tour-de-france-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/tour-de-france-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.guardian.co.uk/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521104120/Team-Sky-with-Chris-Froom-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521104120/Team-Sky-with-Chris-Froom-001.jpg",
+          "source":"PA",
+          "photographer":"Tim Ireland",
+          "altText":"Team Sky with Chris Froome",
+          "height":"54",
+          "credit":"Tim Ireland/PA",
+          "caption":"Team Sky cheer as Chris Froome wins the 2013 Tour de France. Photograph: Tim Ireland/PA",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521105821/Team-Sky-with-Chris-Froom-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521105821/Team-Sky-with-Chris-Froom-002.jpg",
+          "source":"PA",
+          "photographer":"Tim Ireland",
+          "altText":"Team Sky with Chris Froome",
+          "height":"130",
+          "credit":"Tim Ireland/PA",
+          "caption":"Team Sky cheer as Chris Froome wins the 2013 Tour de France. Photograph: Tim Ireland/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521107137/Team-Sky-with-Chris-Froom-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521107137/Team-Sky-with-Chris-Froom-003.jpg",
+          "source":"PA",
+          "photographer":"Tim Ireland",
+          "altText":"Team Sky with Chris Froome",
+          "height":"84",
+          "credit":"Tim Ireland/PA",
+          "caption":"Team Sky cheer as Chris Froome wins the 2013 Tour de France. Photograph: Tim Ireland/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521108418/Team-Sky-with-Chris-Froom-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521108418/Team-Sky-with-Chris-Froom-004.jpg",
+          "source":"PA",
+          "photographer":"Tim Ireland",
+          "altText":"Team Sky with Chris Froome",
+          "height":"132",
+          "credit":"Tim Ireland/PA",
+          "caption":"Team Sky cheer as Chris Froome wins the 2013 Tour de France. Photograph: Tim Ireland/PA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521109673/Team-Sky-with-Chris-Froom-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521109673/Team-Sky-with-Chris-Froom-005.jpg",
+          "source":"PA",
+          "photographer":"Tim Ireland",
+          "altText":"Team Sky with Chris Froome",
+          "height":"168",
+          "credit":"Tim Ireland/PA",
+          "caption":"Team Sky cheer as Chris Froome wins the 2013 Tour de France. Photograph: Tim Ireland/PA",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521111031/Team-Sky-with-Chris-Froom-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521111031/Team-Sky-with-Chris-Froom-006.jpg",
+          "source":"PA",
+          "photographer":"Tim Ireland",
+          "altText":"Team Sky with Chris Froome",
+          "height":"180",
+          "credit":"Tim Ireland/PA",
+          "caption":"Team Sky cheer as Chris Froome wins the 2013 Tour de France. Photograph: Tim Ireland/PA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521112377/Team-Sky-with-Chris-Froom-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521112377/Team-Sky-with-Chris-Froom-007.jpg",
+          "source":"PA",
+          "photographer":"Tim Ireland",
+          "altText":"Team Sky with Chris Froome",
+          "height":"228",
+          "credit":"Tim Ireland/PA",
+          "caption":"Team Sky cheer as Chris Froome wins the 2013 Tour de France. Photograph: Tim Ireland/PA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521113700/Team-Sky-with-Chris-Froom-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521113700/Team-Sky-with-Chris-Froom-008.jpg",
+          "source":"PA",
+          "photographer":"Tim Ireland",
+          "altText":"Team Sky with Chris Froome",
+          "height":"276",
+          "credit":"Tim Ireland/PA",
+          "caption":"Team Sky cheer as Chris Froome wins the 2013 Tour de France. Photograph: Tim Ireland/PA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521113700/Team-Sky-with-Chris-Froom-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/22/1374521113700/Team-Sky-with-Chris-Froom-008.jpg",
+          "source":"PA",
+          "photographer":"Tim Ireland",
+          "altText":"Team Sky with Chris Froome",
+          "height":"276",
+          "credit":"Tim Ireland/PA",
+          "caption":"Team Sky cheer as Chris Froome wins the 2013 Tour de France. Photograph: Tim Ireland/PA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/22/hull-warrington-challenge-cup",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-22T18:25:00Z",
+      "webTitle":"Peter Gentle rallies Hull FC for Cup semi-final against Warrington",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/22/hull-warrington-challenge-cup",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/22/hull-warrington-challenge-cup",
+      "fields":{
+        "trailText":"The Hull FC coach, Peter Gentle, has stepped up preparations for the Challenge Cup semi-final against Warrington",
+        "headline":"Peter Gentle rallies Hull FC for Cup semi-final against Warrington",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hftv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516858333/Peter-Gentle-the-Hull-coa-003.jpg",
+        "wordcount":"400",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/challengecup",
+        "type":"keyword",
+        "webTitle":"Challenge Cup",
+        "webUrl":"http://www.guardian.co.uk/sport/challengecup",
+        "apiUrl":"http://content.guardianapis.com/sport/challengecup",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hull-fc",
+        "type":"keyword",
+        "webTitle":"Hull FC",
+        "webUrl":"http://www.guardian.co.uk/sport/hull-fc",
+        "apiUrl":"http://content.guardianapis.com/sport/hull-fc",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/warrington",
+        "type":"keyword",
+        "webTitle":"Warrington",
+        "webUrl":"http://www.guardian.co.uk/sport/warrington",
+        "apiUrl":"http://content.guardianapis.com/sport/warrington",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.guardian.co.uk/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.guardian.co.uk/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516854763/Peter-Gentle-the-Hull-coa-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516854763/Peter-Gentle-the-Hull-coa-001.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief for Warrington",
+          "height":"54",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief going into the Challenge Cup tie against Warrington. Photograph: Anna Gowthorpe/PA",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516856973/Peter-Gentle-the-Hull-coa-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516856973/Peter-Gentle-the-Hull-coa-002.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief for Warrington",
+          "height":"130",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief going into the Challenge Cup tie against Warrington. Photograph: Anna Gowthorpe/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516858333/Peter-Gentle-the-Hull-coa-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516858333/Peter-Gentle-the-Hull-coa-003.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief for Warrington",
+          "height":"84",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief going into the Challenge Cup tie against Warrington. Photograph: Anna Gowthorpe/PA",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516859670/Peter-Gentle-the-Hull-coa-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516859670/Peter-Gentle-the-Hull-coa-004.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief for Warrington",
+          "height":"132",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief going into the Challenge Cup tie against Warrington. Photograph: Anna Gowthorpe/PA",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516860972/Peter-Gentle-the-Hull-coa-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516860972/Peter-Gentle-the-Hull-coa-005.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief for Warrington",
+          "height":"168",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief going into the Challenge Cup tie against Warrington. Photograph: Anna Gowthorpe/PA",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516862344/Peter-Gentle-the-Hull-coa-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516862344/Peter-Gentle-the-Hull-coa-006.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief for Warrington",
+          "height":"180",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief going into the Challenge Cup tie against Warrington. Photograph: Anna Gowthorpe/PA",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516863957/Peter-Gentle-the-Hull-coa-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516863957/Peter-Gentle-the-Hull-coa-007.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief for Warrington",
+          "height":"228",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief going into the Challenge Cup tie against Warrington. Photograph: Anna Gowthorpe/PA",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516865240/Peter-Gentle-the-Hull-coa-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516865240/Peter-Gentle-the-Hull-coa-008.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief for Warrington",
+          "height":"276",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief going into the Challenge Cup tie against Warrington. Photograph: Anna Gowthorpe/PA",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516865240/Peter-Gentle-the-Hull-coa-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/7/22/1374516865240/Peter-Gentle-the-Hull-coa-008.jpg",
+          "source":"PA",
+          "photographer":"Anna Gowthorpe",
+          "altText":"Peter Gentle, the Hull coach, inisists his players have not lost their self-belief for Warrington",
+          "height":"276",
+          "credit":"Anna Gowthorpe/PA",
+          "caption":"Peter Gentle, the Hull FC coach, inisists his players have not lost their self-belief going into the Challenge Cup tie against Warrington. Photograph: Anna Gowthorpe/PA",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jul/21/nrl-five-things-we-learned-this-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-21T14:02:00Z",
+      "webTitle":"NRL: five things we learned this weekend",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/jul/21/nrl-five-things-we-learned-this-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jul/21/nrl-five-things-we-learned-this-weekend",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly: </strong>Brett Stewart's importance to Manly; the next Benji Marshall; and who is NRL's fastest player?</p>",
+        "headline":"NRL: five things we learned this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hekt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/21/1374392719201/NRL-Manly-v-Titans-003.jpg",
+        "wordcount":"1269",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nrl-what-we-learned-this-weekend",
+        "type":"series",
+        "webTitle":"NRL: what we learned this weekend",
+        "webUrl":"http://www.guardian.co.uk/sport/series/nrl-what-we-learned-this-weekend",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nrl-what-we-learned-this-weekend",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.guardian.co.uk/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/21/1374392645872/NRL-Manly-v-Titans-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/21/1374392645872/NRL-Manly-v-Titans-001.jpg",
+          "source":"AAP Image",
+          "photographer":"Renee McKay",
+          "altText":"NRL: Manly v Titans",
+          "height":"276",
+          "credit":"Renee McKay/AAP Image",
+          "caption":"Manly put on a good attacking show on Sunday. Photograph: Renee McKay/AAP Image",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/21/newcastle-knights-penrith-panthers-nrl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-21T06:48:00Z",
+      "webTitle":"Newcastle's Craig Gower wins on return to Penrith Panthers",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/21/newcastle-knights-penrith-panthers-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/21/newcastle-knights-penrith-panthers-nrl",
+      "fields":{
+        "trailText":"<p>Newcastle's Craig Gower enjoyed the perfect homecoming, while Brett Stewart starred in Manly's win over the Titans</p>",
+        "headline":"Newcastle's Craig Gower wins on return to Penrith Panthers",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hek3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/21/1374389079094/Penrith-v-Newcastle-003.jpg",
+        "wordcount":"745",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/penrith-panthers",
+        "type":"keyword",
+        "webTitle":"Penrith Panthers",
+        "webUrl":"http://www.guardian.co.uk/sport/penrith-panthers",
+        "apiUrl":"http://content.guardianapis.com/sport/penrith-panthers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"sport/gold-coast-titans",
+        "type":"keyword",
+        "webTitle":"Gold Coast Titans",
+        "webUrl":"http://www.guardian.co.uk/sport/gold-coast-titans",
+        "apiUrl":"http://content.guardianapis.com/sport/gold-coast-titans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/21/1374389090059/Penrith-v-Newcastle-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/21/1374389090059/Penrith-v-Newcastle-008.jpg",
+          "source":"AAP Image",
+          "photographer":"Robb Cox",
+          "altText":"Penrith v Newcastle",
+          "height":"276",
+          "credit":"Robb Cox/AAP Image",
+          "caption":"Beau Scott is tackled during the Knights' victory over the Panthers Photograph: Robb Cox/AAP Image",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/20/sydney-roosters-cronulla-sharks-nrl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-20T11:40:12Z",
+      "webTitle":"Sydney Roosters run riot against Cronulla Sharks | NRL round-up",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/20/sydney-roosters-cronulla-sharks-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/20/sydney-roosters-cronulla-sharks-nrl",
+      "fields":{
+        "trailText":"<p>Mitchell Pearce led the Roosters to a crushing 40-0 NRL win over Cronulla, while the Raiders beat the Eels at home</p>",
+        "headline":"Sydney Roosters run riot against Cronulla Sharks",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hefg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/20/1374319852513/Rabbitohs-v-Sharks-001.jpg",
+        "wordcount":"428",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/20/1374319798150/Rabbitohs-v-Sharks-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/20/1374319798150/Rabbitohs-v-Sharks-001.jpg",
+          "source":"Getty Images",
+          "photographer":"Renee McKay",
+          "altText":"Rabbitohs v Sharks",
+          "height":"276",
+          "credit":"Renee McKay/Getty Images",
+          "caption":"Roosters celebrate one of Boyd Cordner's two tries. Photograph: Renee McKay/Getty Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/19/super-league-roundup-leeds-wakefield",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-19T22:33:00Z",
+      "webTitle":"Super League round-up: Leeds hang on to beat Wakefield in tense derby",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/19/super-league-roundup-leeds-wakefield",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/19/super-league-roundup-leeds-wakefield",
+      "fields":{
+        "trailText":"<p>Wakefield pushed Leeds all the way before going down 20-18 while Bradford defeated Hull and Catalan Dragons lost to Salford</p>",
+        "headline":"Super League round-up: Leeds hang on to beat Wakefield in tense derby",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hedz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271079800/Ryan-Hall-scores-the-four-003.jpg",
+        "wordcount":"517",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/leedsrhinos",
+        "type":"keyword",
+        "webTitle":"Leeds Rhinos",
+        "webUrl":"http://www.guardian.co.uk/sport/leedsrhinos",
+        "apiUrl":"http://content.guardianapis.com/sport/leedsrhinos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wakefieldtrinity",
+        "type":"keyword",
+        "webTitle":"Wakefield Trinity",
+        "webUrl":"http://www.guardian.co.uk/sport/wakefieldtrinity",
+        "apiUrl":"http://content.guardianapis.com/sport/wakefieldtrinity",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/bradfordbulls",
+        "type":"keyword",
+        "webTitle":"Bradford Bulls",
+        "webUrl":"http://www.guardian.co.uk/sport/bradfordbulls",
+        "apiUrl":"http://content.guardianapis.com/sport/bradfordbulls",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hullkr",
+        "type":"keyword",
+        "webTitle":"Hull KR",
+        "webUrl":"http://www.guardian.co.uk/sport/hullkr",
+        "apiUrl":"http://content.guardianapis.com/sport/hullkr",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/catalans",
+        "type":"keyword",
+        "webTitle":"Catalan Dragons",
+        "webUrl":"http://www.guardian.co.uk/sport/catalans",
+        "apiUrl":"http://content.guardianapis.com/sport/catalans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.guardian.co.uk/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271077145/Ryan-Hall-scores-the-four-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271077145/Ryan-Hall-scores-the-four-001.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time v Wakefield.",
+          "height":"54",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time to clinch victory over Wakefield. Photograph: Ed Sykes/Action Images",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271078749/Ryan-Hall-scores-the-four-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271078749/Ryan-Hall-scores-the-four-002.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time v Wakefield.",
+          "height":"130",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time to clinch victory over Wakefield. Photograph: Ed Sykes/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271079800/Ryan-Hall-scores-the-four-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271079800/Ryan-Hall-scores-the-four-003.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time v Wakefield.",
+          "height":"84",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time to clinch victory over Wakefield. Photograph: Ed Sykes/Action Images",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271080952/Ryan-Hall-scores-the-four-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271080952/Ryan-Hall-scores-the-four-004.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time v Wakefield.",
+          "height":"132",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time to clinch victory over Wakefield. Photograph: Ed Sykes/Action Images",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271082004/Ryan-Hall-scores-the-four-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271082004/Ryan-Hall-scores-the-four-005.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time v Wakefield.",
+          "height":"168",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time to clinch victory over Wakefield. Photograph: Ed Sykes/Action Images",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271083049/Ryan-Hall-scores-the-four-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271083049/Ryan-Hall-scores-the-four-006.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time v Wakefield.",
+          "height":"180",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time to clinch victory over Wakefield. Photograph: Ed Sykes/Action Images",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271084272/Ryan-Hall-scores-the-four-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271084272/Ryan-Hall-scores-the-four-007.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time v Wakefield.",
+          "height":"228",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time to clinch victory over Wakefield. Photograph: Ed Sykes/Action Images",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271085354/Ryan-Hall-scores-the-four-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271085354/Ryan-Hall-scores-the-four-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time v Wakefield.",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time to clinch victory over Wakefield. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271085354/Ryan-Hall-scores-the-four-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/19/1374271085354/Ryan-Hall-scores-the-four-008.jpg",
+          "source":"Action Images",
+          "photographer":"Ed Sykes",
+          "altText":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time v Wakefield.",
+          "height":"276",
+          "credit":"Ed Sykes/Action Images",
+          "caption":"Ryan Hall scores the fourth try for Leeds Rhinos five minutes from time to clinch victory over Wakefield. Photograph: Ed Sykes/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jul/18/state-of-origin-five-things-we-learned",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-18T01:31:18Z",
+      "webTitle":"State of Origin: five things we learned",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/jul/18/state-of-origin-five-things-we-learned",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jul/18/state-of-origin-five-things-we-learned",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly: </strong>Queensland are still hungry for success; NSW have rebuilding to do; and players need to control themselves</p>",
+        "headline":"State of Origin: five things we learned",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3hcze",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/18/1374110750007/Queensland-hold-the-State-003.jpg",
+        "wordcount":"882",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.guardian.co.uk/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/18/1374110760459/Queensland-hold-the-State-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/18/1374110760459/Queensland-hold-the-State-008.jpg",
+          "source":"AAP Image",
+          "photographer":"Dean Lewins",
+          "altText":"Queensland hold the State of Origin shield",
+          "height":"276",
+          "credit":"Dean Lewins/AAP Image",
+          "caption":"Johnathan Thurston (left) and Billy Slater hold the State of Origin shield.  Photograph: Dean Lewins/AAP Image",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/18/state-of-origin-streaker-wati-holmwood",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-18T01:21:00Z",
+      "webTitle":"State of Origin streaker: 'Am I in trouble now?'",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/18/state-of-origin-streaker-wati-holmwood",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/18/state-of-origin-streaker-wati-holmwood",
+      "fields":{
+        "trailText":"<p>Streaker Wati Holmwood has expressed regret after he 'stuffed up Origin' during the dying moments of the series decider</p>",
+        "headline":"State of Origin streaker: 'Am I in trouble now?'",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3hcz8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/18/1374106908307/Ati-Holmwood-the-State-of-003.jpg",
+        "wordcount":"398",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/tomlutz",
+        "type":"contributor",
+        "webTitle":"Tom Lutz",
+        "webUrl":"http://www.guardian.co.uk/profile/tomlutz",
+        "apiUrl":"http://content.guardianapis.com/profile/tomlutz",
+        "bio":"<p>Tom Lutz is a journalist for Guardian sport</p>",
+        "rcsId":"GNL012925",
+        "r2ContributorId":"16533",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/tom_lutz_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":2,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/18/130718streaker_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"Network Nine",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
+          "durationMinutes":"0",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104675742/Streaker-escorted-off-004.jpg",
+          "width":"480",
+          "durationSeconds":"42"
+        },
+        "encodings":[{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/18/130718streaker_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/18/130718streaker_FromGAus-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/18/130718streaker_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/18/130718streaker_FromGAus/130718streaker_FromGAus.m3u8"
+        }]
+      },{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/18/1374106917772/Ati-Holmwood-the-State-of-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/18/1374106917772/Ati-Holmwood-the-State-of-008.jpg",
+          "source":"Matt King",
+          "photographer":"Getty Images",
+          "altText":"Ati Holmwood, the State of Origin streaker",
+          "height":"276",
+          "credit":"Getty Images/Matt King",
+          "caption":"Wati Holmwood feels the fresh air during Wednesday night's State of Origin decider. Photograph: Getty Images/Matt King",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/video/2013/jul/18/streaker-in-state-of-origin-game-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-18T00:11:00Z",
+      "webTitle":"State of Origin streaker causes try to be disallowed - video",
+      "webUrl":"http://www.guardian.co.uk/sport/video/2013/jul/18/streaker-in-state-of-origin-game-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/jul/18/streaker-in-state-of-origin-game-video",
+      "fields":{
+        "trailText":"<p>A streaker invaded the field during the dying minutes of the State of Origin III game at ANZ stadium</p>",
+        "headline":"State of Origin streaker causes try to be disallowed - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hcz4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104686354/Streaker-escorted-off-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/18/130718streaker_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"Network Nine",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
+          "durationMinutes":"0",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104675742/Streaker-escorted-off-004.jpg",
+          "width":"480",
+          "durationSeconds":"42"
+        },
+        "encodings":[{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/18/130718streaker_FromGAus-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/18/130718streaker_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/18/130718streaker_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/18/130718streaker_FromGAus/130718streaker_FromGAus.m3u8"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104686354/Streaker-escorted-off-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104686354/Streaker-escorted-off-009.jpg",
+          "source":"AAPIMAGE",
+          "photographer":"DEAN LEWINS",
+          "altText":"Streaker escorted off",
+          "height":"84",
+          "credit":"DEAN LEWINS/AAPIMAGE",
+          "caption":"A streaker is escorted off the field during Game III of the 2013 State of Origin rugby league series  Photograph: DEAN LEWINS/AAPIMAGE",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104686354/Streaker-escorted-off-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104686354/Streaker-escorted-off-009.jpg",
+          "source":"AAPIMAGE",
+          "photographer":"DEAN LEWINS",
+          "altText":"Streaker escorted off",
+          "height":"84",
+          "credit":"DEAN LEWINS/AAPIMAGE",
+          "caption":"A streaker is escorted off the field during Game III of the 2013 State of Origin rugby league series  Photograph: DEAN LEWINS/AAPIMAGE",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374105511345/Streaker-escorted-off-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374105511345/Streaker-escorted-off-001.jpg",
+          "source":"AAPIMAGE",
+          "photographer":"DEAN LEWINS",
+          "altText":"Streaker escorted off",
+          "height":"360",
+          "credit":"DEAN LEWINS/AAPIMAGE",
+          "caption":"A streaker is escorted off the field during Game III of the 2013 State of Origin rugby league series  Photograph: DEAN LEWINS/AAPIMAGE",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
+          "source":"AAPIMAGE",
+          "photographer":"DEAN LEWINS",
+          "altText":"Streaker escorted off",
+          "height":"90",
+          "credit":"DEAN LEWINS/AAPIMAGE",
+          "caption":"A streaker is escorted off the field during Game III of the 2013 State of Origin rugby league series  Photograph: DEAN LEWINS/AAPIMAGE",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104673095/Streaker-escorted-off-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104673095/Streaker-escorted-off-003.jpg",
+          "source":"AAPIMAGE",
+          "photographer":"DEAN LEWINS",
+          "altText":"Streaker escorted off",
+          "height":"225",
+          "credit":"DEAN LEWINS/AAPIMAGE",
+          "caption":"A streaker is escorted off the field during Game III of the 2013 State of Origin rugby league series  Photograph: DEAN LEWINS/AAPIMAGE",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104675742/Streaker-escorted-off-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104675742/Streaker-escorted-off-004.jpg",
+          "source":"AAPIMAGE",
+          "photographer":"DEAN LEWINS",
+          "altText":"Streaker escorted off",
+          "height":"360",
+          "credit":"DEAN LEWINS/AAPIMAGE",
+          "caption":"A streaker is escorted off the field during Game III of the 2013 State of Origin rugby league series  Photograph: DEAN LEWINS/AAPIMAGE",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/17/keith-mason-huddersfield-giants-super-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-17T22:06:29Z",
+      "webTitle":"Keith Mason wins unlawful dismissal case against Huddersfield Giants",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/17/keith-mason-huddersfield-giants-super-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/17/keith-mason-huddersfield-giants-super-league",
+      "fields":{
+        "trailText":"The Super League prop Keith Mason has won £167,000 in damages from Huddersfield Giants",
+        "headline":"Keith Mason wins unlawful dismissal case against Huddersfield Giants",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hcnj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/SPORT/Pix/pictures/2011/4/5/1301998041638/Keith-Mason-003.jpg",
+        "wordcount":"641",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/huddersfieldgiants",
+        "type":"keyword",
+        "webTitle":"Huddersfield Giants",
+        "webUrl":"http://www.guardian.co.uk/sport/huddersfieldgiants",
+        "apiUrl":"http://content.guardianapis.com/sport/huddersfieldgiants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.guardian.co.uk/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.guardian.co.uk/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/SPORT/Pix/pictures/2011/4/5/1301998045295/Keith-Mason-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/SPORT/Pix/pictures/2011/4/5/1301998045295/Keith-Mason-007.jpg",
+          "source":"Action Images",
+          "photographer":"John Clifton",
+          "altText":"Keith Mason",
+          "height":"276",
+          "credit":"John Clifton/Action Images",
+          "caption":"Keith Mason, right, playing for Huddersfield in 2011. Photograph: John Clifton/Action Images",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/17/state-of-origin-nsw-queensland-match-report",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-17T12:56:35Z",
+      "webTitle":"New South Wales 10-12 Queensland | State of Origin match report",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/17/state-of-origin-nsw-queensland-match-report",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/17/state-of-origin-nsw-queensland-match-report",
+      "fields":{
+        "trailText":"<p>Queensland survived a late comeback from the Blues as they extended their run of series victories to eight</p>",
+        "headline":"State of Origin: Queensland defeat NSW to clinch series",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3hcaj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/17/1374060933034/Queensland-celebrate-001.jpg",
+        "wordcount":"501",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.guardian.co.uk/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/17/1374060945493/Queensland-celebrate-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/17/1374060945493/Queensland-celebrate-006.jpg",
+          "source":"AAP Image",
+          "photographer":"Renee McKay",
+          "altText":"Queensland celebrate",
+          "height":"276",
+          "credit":"Renee McKay/AAP Image",
+          "caption":"Queensland celebrate their opening try. Photograph: Renee McKay/AAP Image",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/17/state-of-origin-nsw-queensland-live",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-17T12:17:36Z",
+      "webTitle":"State of Origin: New South Wales 10-12 Queensland  – as it happened",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/17/state-of-origin-nsw-queensland-live",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/17/state-of-origin-nsw-queensland-live",
+      "fields":{
+        "trailText":"<p><strong>State of Origin:</strong> The Maroons secured an eighth consecutive series triumph after a hard-fought victory </p>",
+        "headline":"State of Origin: New South Wales 10-12 Queensland  – as it happened",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hc3h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374051419695/State-of-Origin-3-005.jpg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/minutebyminute",
+        "type":"tone",
+        "webTitle":"Minute by minutes",
+        "webUrl":"http://www.guardian.co.uk/tone/minutebyminute",
+        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"main",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374051438103/State-of-Origin-3-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/17/1374051438103/State-of-Origin-3-011.jpg",
+          "source":"Composite",
+          "photographer":"",
+          "altText":"State of Origin 3",
+          "height":"372",
+          "credit":"/Composite",
+          "caption":"Ah, the joys of Origin. Photograph: Composite",
+          "width":"620"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/jul/16/state-of-origin-things-to-look-out-for",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-16T12:20:00Z",
+      "webTitle":"State of Origin: what to  look out for",
+      "webUrl":"http://www.guardian.co.uk/sport/blog/2013/jul/16/state-of-origin-things-to-look-out-for",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/jul/16/state-of-origin-things-to-look-out-for",
+      "fields":{
+        "trailText":"<p>Paul Gallen's absence; Cameron Smith's trolling; NSW's defensive abilities; other talking points</p>",
+        "headline":"State of Origin: what to  look out for",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hb98",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/16/1373957318912/James-Maloney-003.jpg",
+        "wordcount":"961",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.guardian.co.uk/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.guardian.co.uk/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.guardian.co.uk/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":2,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/16/130716stateoforigin_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"AAP",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959119288/Mal-Meninga-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959119288/Mal-Meninga-002.jpg",
+          "durationMinutes":"3",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959125267/Mal-Meninga-004.jpg",
+          "width":"480",
+          "durationSeconds":"50"
+        },
+        "encodings":[{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/16/130716stateoforigin_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/16/130716stateoforigin_FromGAus-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/16/130716stateoforigin_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/16/130716stateoforigin_FromGAus/130716stateoforigin_FromGAus.m3u8"
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/video/2013/jul/16/mal-meninga-origin-rugby-queensland-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-16T07:35:33Z",
+      "webTitle":"Mal Meninga: 'Fear of State of Origin failure always there' - video",
+      "webUrl":"http://www.guardian.co.uk/sport/video/2013/jul/16/mal-meninga-origin-rugby-queensland-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/jul/16/mal-meninga-origin-rugby-queensland-video",
+      "fields":{
+        "trailText":"<p>Queensland coach Mal Meninga talks to the press ahead of the State of Origin series decider on Wednesday</p>",
+        "headline":"Mal Meninga: 'Fear of State of Origin failure always there' - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hb9g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959135683/Mal-Meninga-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/state-of-origin",
+        "type":"keyword",
+        "webTitle":"State of Origin",
+        "webUrl":"http://www.guardian.co.uk/sport/state-of-origin",
+        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/16/130716stateoforigin_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"AAP",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959119288/Mal-Meninga-002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959119288/Mal-Meninga-002.jpg",
+          "durationMinutes":"3",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959125267/Mal-Meninga-004.jpg",
+          "width":"480",
+          "durationSeconds":"50"
+        },
+        "encodings":[{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/16/130716stateoforigin_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/16/130716stateoforigin_FromGAus/130716stateoforigin_FromGAus.m3u8"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/16/130716stateoforigin_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/16/130716stateoforigin_FromGAus-16x9.mp4"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959135683/Mal-Meninga-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959135683/Mal-Meninga-009.jpg",
+          "source":"AAP",
+          "altText":"Mal Meninga",
+          "height":"84",
+          "credit":"AAP",
+          "caption":"Queensland Maroons coach Mal Meninga talks to the press ahead of the Origin III Photograph: AAP",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959158017/Mal-Meninga-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959158017/Mal-Meninga-016.jpg",
+          "source":"AAP",
+          "altText":"Mal Meninga",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Queensland Maroons coach Mal Meninga talks to the press ahead of the Origin III Photograph: AAP",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959119288/Mal-Meninga-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959119288/Mal-Meninga-002.jpg",
+          "source":"AAP",
+          "altText":"Mal Meninga",
+          "height":"90",
+          "credit":"AAP",
+          "caption":"Queensland Maroons coach Mal Meninga talks to the press ahead of the Origin III Photograph: AAP",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959121910/Mal-Meninga-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959121910/Mal-Meninga-003.jpg",
+          "source":"AAP",
+          "altText":"Mal Meninga",
+          "height":"225",
+          "credit":"AAP",
+          "caption":"Queensland Maroons coach Mal Meninga talks to the press ahead of the Origin III Photograph: AAP",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959125267/Mal-Meninga-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373959125267/Mal-Meninga-004.jpg",
+          "source":"AAP",
+          "altText":"Mal Meninga",
+          "height":"360",
+          "credit":"AAP",
+          "caption":"Queensland Maroons coach Mal Meninga talks to the press ahead of the Origin III Photograph: AAP",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/video/2013/jul/16/nrl-rugby-highlights-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-16T01:11:06Z",
+      "webTitle":"NRL round 18 highlights – video",
+      "webUrl":"http://www.guardian.co.uk/sport/video/2013/jul/16/nrl-rugby-highlights-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/jul/16/nrl-rugby-highlights-video",
+      "fields":{
+        "trailText":"<p>Monday night saw the severely depleted North Queensland Cowboys, losing four key players to State of Origin call ups, in a match up against the Manly Sea Eagles</p>",
+        "headline":"NRL round 18 highlights – video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hb86",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936137268/Matty-Bowen--009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/16/130713NRL_FromGAus-16x9.mp4",
+        "fields":{
+          "source":"AAP",
+          "embeddable":"true",
+          "blockAds":"false",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936124006/Matty-Bowen--002.jpg",
+          "height":"360",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936124006/Matty-Bowen--002.jpg",
+          "durationMinutes":"2",
+          "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936128491/Matty-Bowen--004.jpg",
+          "width":"480",
+          "durationSeconds":"7"
+        },
+        "encodings":[{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/16/130713NRL_FromGAus_3gpLg16x9.3gp"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/16/130713NRL_FromGAus_3gpSml16x9.3gp"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/16/130713NRL_FromGAus-16x9.mp4"
+        },{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/7/16/130713NRL_FromGAus/130713NRL_FromGAus.m3u8"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936137268/Matty-Bowen--009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936137268/Matty-Bowen--009.jpg",
+          "source":"Guardian",
+          "altText":"Matty Bowen ",
+          "height":"84",
+          "credit":"Guardian",
+          "caption":"Matty Bowen celebrates after scoring a try Photograph: Guardian",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936158281/Matty-Bowen--016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936158281/Matty-Bowen--016.jpg",
+          "source":"Guardian",
+          "altText":"Matty Bowen ",
+          "height":"360",
+          "credit":"Guardian",
+          "caption":"Matty Bowen celebrates after scoring a try Photograph: Guardian",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936124006/Matty-Bowen--002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936124006/Matty-Bowen--002.jpg",
+          "source":"Guardian",
+          "altText":"Matty Bowen ",
+          "height":"90",
+          "credit":"Guardian",
+          "caption":"Matty Bowen celebrates after scoring a try Photograph: Guardian",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936126180/Matty-Bowen--003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936126180/Matty-Bowen--003.jpg",
+          "source":"Guardian",
+          "altText":"Matty Bowen ",
+          "height":"225",
+          "credit":"Guardian",
+          "caption":"Matty Bowen celebrates after scoring a try Photograph: Guardian",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936128491/Matty-Bowen--004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/16/1373936128491/Matty-Bowen--004.jpg",
+          "source":"Guardian",
+          "altText":"Matty Bowen ",
+          "height":"360",
+          "credit":"Guardian",
+          "caption":"Matty Bowen celebrates after scoring a try Photograph: Guardian",
+          "width":"480"
+        }
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/jul/16/wests-tigers-benji-marshall-release-request",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-07-15T23:46:00Z",
+      "webTitle":"Benji Marshall to switch codes and play rugby union",
+      "webUrl":"http://www.guardian.co.uk/sport/2013/jul/16/wests-tigers-benji-marshall-release-request",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/jul/16/wests-tigers-benji-marshall-release-request",
+      "fields":{
+        "trailText":"<p>Benji Marshall's manager Martin Tauber has confirmed the NRL superstar will turn his back on the code and play rugby union</p>",
+        "headline":"Benji Marshall to switch codes and play rugby union",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3hb83",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/22/1371900663032/Benji-Marshall-003.jpg",
+        "wordcount":"501",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/wests-tigers",
+        "type":"keyword",
+        "webTitle":"Wests Tigers",
+        "webUrl":"http://www.guardian.co.uk/sport/wests-tigers",
+        "apiUrl":"http://content.guardianapis.com/sport/wests-tigers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.guardian.co.uk/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.guardian.co.uk/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/super-rugby",
+        "type":"keyword",
+        "webTitle":"Super Rugby",
+        "webUrl":"http://www.guardian.co.uk/sport/super-rugby",
+        "apiUrl":"http://content.guardianapis.com/sport/super-rugby",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.guardian.co.uk/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"body",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/22/1371900679376/Benji-Marshall-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/22/1371900679376/Benji-Marshall-008.jpg",
+          "source":"AAP",
+          "photographer":"Robb Cox",
+          "altText":"Benji Marshall",
+          "height":"276",
+          "credit":"Robb Cox/AAP",
+          "caption":"Benji Marshall is the club's all-time leading scorer.  Photograph: Robb Cox/AAP",
+          "width":"460"
+        }
+      }],
+      "references":[]
+    }],
+    "editorsPicks":[],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-02-12T12:28:37Z",
+      "webTitle":"Australian doping investigators look at six rugby league clubs - video",
+      "webUrl":"http://www.guardian.co.uk/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/feb/12/australian-doping-rugby-league-video",
+      "fields":{
+        "trailText":"<p>National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting</p>",
+        "headline":"Australian doping investigators look at six rugby league clubs - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3dm52",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.guardian.co.uk/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.guardian.co.uk/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.guardian.co.uk/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.guardian.co.uk/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.guardian.co.uk/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.guardian.co.uk/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.guardian.co.uk/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"video",
+        "rel":"body",
+        "index":1,
+        "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/12/130212Ausdope-16x9.mp4",
+        "fields":{
+          "source":"Reuters",
+          "embeddable":"true",
+          "blockAds":"false",
+          "height":"360",
+          "thumbnail":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/2/12/130212Ausdope_7239976.jpg",
+          "durationMinutes":"1",
+          "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/2/12/130212Ausdope_7239976.jpg",
+          "width":"480",
+          "durationSeconds":"5"
+        },
+        "encodings":[{
+          "format":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/130212Ausdope/130212Ausdope.m3u8"
+        },{
+          "format":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/2/12/130212Ausdope-720.mp4"
+        },{
+          "format":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/2/12/130212Ausdope-16x9.mp4"
+        },{
+          "format":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/2/12/130212Ausdope_3gpSml16x9.3gp"
+        },{
+          "format":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/2/12/130212Ausdope_3gpLg16x9.3gp"
+        }]
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670916587/Australian-doping-probe-s-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670916587/Australian-doping-probe-s-001.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"230",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670918097/Australian-doping-probe-s-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670918097/Australian-doping-probe-s-002.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"90",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"120"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670919487/Australian-doping-probe-s-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670919487/Australian-doping-probe-s-003.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"225",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670920754/Australian-doping-probe-s-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670920754/Australian-doping-probe-s-004.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"360",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670922419/Australian-doping-probe-s-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670922419/Australian-doping-probe-s-005.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"360",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"640"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670925668/Australian-doping-probe-s-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670925668/Australian-doping-probe-s-007.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"54",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"54"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670927255/Australian-doping-probe-s-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670927255/Australian-doping-probe-s-008.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"340",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"480"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670928656/Australian-doping-probe-s-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670928656/Australian-doping-probe-s-009.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"130",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670930179/Australian-doping-probe-s-010.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"84",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"140"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670931876/Australian-doping-probe-s-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670931876/Australian-doping-probe-s-011.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"132",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"220"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":11,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670933195/Australian-doping-probe-s-012.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670933195/Australian-doping-probe-s-012.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"168",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"280"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":12,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670934454/Australian-doping-probe-s-013.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670934454/Australian-doping-probe-s-013.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"180",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"300"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":13,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670935828/Australian-doping-probe-s-014.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670935828/Australian-doping-probe-s-014.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"228",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"380"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":14,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670937108/Australian-doping-probe-s-015.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670937108/Australian-doping-probe-s-015.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"276",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"460"
+        }
+      },{
+        "type":"picture",
+        "rel":"alt-size",
+        "index":15,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670938599/Australian-doping-probe-s-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/2/12/1360670938599/Australian-doping-probe-s-016.jpg",
+          "source":"Reuters",
+          "photographer":"Reuters",
+          "altText":"Australian doping probe: six rugby league clubs under investigation",
+          "height":"372",
+          "credit":"Reuters/Reuters",
+          "caption":"National Rugby League chief David Smith says he is unable to comment on the details of a secret meeting regarding six clubs under investigation following a government report in to doping in Australian sport\n Photograph: Reuters",
+          "width":"620"
+        }
+      }],
+      "references":[]
+    }]
+  }
+}
