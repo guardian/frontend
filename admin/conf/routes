@@ -80,6 +80,7 @@ DELETE    /fronts/api/:edition/:section/:block/*trail    controllers.FrontsContr
 # Analytics
 GET     /analytics/kpis                  controllers.AnalyticsController.kpis()
 GET     /analytics/pageviews             controllers.AnalyticsController.pageviews()
+GET     /analytics/browsers              controllers.AnalyticsController.browsers()
 
 # Metrics
 GET     /metrics/loadbalancers           controllers.metrics.DashboardController.render()
