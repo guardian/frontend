@@ -2,7 +2,8 @@ package client.connection.javanet
 
 import java.net.{URLEncoder, HttpURLConnection, URL}
 import scala.io.Source
-import client.connection.{HttpResponse, Http, Parameters}
+import client.connection.{HttpResponse, Http}
+import client.Parameters
 import java.io.OutputStreamWriter
 
 
