@@ -28,6 +28,14 @@ Examples of what this means in practice:
 
 * System fonts vs Guardian web fonts
 
+**Basic version as viewed in IE8**
+
+![IE8 demonstrates basic version](/images/ie8_basic.png "basic version as visible in IE8")
+
+**Full version as visible in Chrome**
+
+![Chrome demonstrates full version](/images/chrome_full.png "full JS version as seen in Chrome")
+
 ### Browser support table
 Based on these principles and usage stats we have produced a <a
 href="https://docs.google.com/a/guardian.co.uk/spreadsheet/ccc?key=0At1OrgA9hbE_dG95OElVaWV5T1MyRVlySnM2T3RvS2c#gid=0">browser
