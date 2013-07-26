@@ -32,7 +32,7 @@ Examples of what this means in practice:
 
 ![IE8 demonstrates basic version](/images/ie8_basic.png "basic version as visible in IE8")
 
-**Full version as visible in Chrome**
+**Progressively enhanced version as visible in Chrome**
 
 ![Chrome demonstrates full version](/images/chrome_full.png "full JS version as seen in Chrome")
 
