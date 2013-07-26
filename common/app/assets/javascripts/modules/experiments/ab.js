@@ -10,12 +10,14 @@ define([
     common,
     store,
     ParagraphSpacing,
-    Aa
+    Aa,
+    LightboxGalleries
     ) {
 
     var TESTS = [
             new ParagraphSpacing(),
-            new Aa()
+            new Aa(),
+            new LightboxGalleries()
         ],
         participationsKey = 'gu.ab.participations';
 
