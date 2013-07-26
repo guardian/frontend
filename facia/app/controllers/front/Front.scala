@@ -5,6 +5,7 @@ import common.{Edition, Logging, AkkaSupport}
 import scala.concurrent.duration._
 
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
+import common.editions.EditionalisedSections._
 
 //Responsible for bootstrapping the front (setting up the refresh schedule)
 class Front extends AkkaSupport with Logging {
@@ -17,7 +18,7 @@ class Front extends AkkaSupport with Logging {
   }
 
   lazy val fronts: Map[String, FrontEdition] = Edition.all.flatMap{ edition =>
-    edition.configuredFrontsFacia.map{
+    edition.configuredFrontsFacia.filter{front => edition == Edition.defaultEdition && !isEditionalised(front._1)}.map{
       case (name, trailblockDescriptions) => name ->  new FrontEdition(edition, trailblockDescriptions)
     }.toMap
   }.toMap
