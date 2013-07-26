@@ -242,15 +242,14 @@ define([
                 // data-link-context was set by a click on a previous page
                 storage.remove(storePrefix + 'linkContext');
             } else {
-<<<<<<< HEAD
+
                 // No data-link-context, so infer the section/tag component from the url,
                 sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
                 sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
-=======
+
                 // No data-link-context, so infer the section from page config
-                sequenceUrl = (config.page && config.page.section) ? config.page.section : null;
-                sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl : '');
->>>>>>> master
+                //sequenceUrl = (config.page && config.page.section) ? config.page.section : null;
+                //sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl : '');
             }
         }
 
@@ -276,7 +275,6 @@ define([
                     len += 1;
                 }
 
-<<<<<<< HEAD
                 sequence = [];
                 sequenceLen = 0;
                 sequenceCache = {};
@@ -288,21 +286,6 @@ define([
                         sequenceCache[s] = {};
                         sequence.push(s);
                         sequenceLen += 1;
-=======
-                    sequence = [];
-                    sequenceLen = 0;
-                    sequenceCache = {};
-
-                    for (i = 0; i < len; i += 1) {
-                        s = stories[i];
-                        // dedupe, while also creating a lookup obj
-                        if(!sequenceCache[s.url]) {
-                            s.pos = sequenceLen;
-                            sequenceCache[s.url] = s;
-                            sequence.push(s);
-                            sequenceLen += 1;
-                        }
->>>>>>> master
                     }
                 }
                 setSequencePos(window.location.pathname);
