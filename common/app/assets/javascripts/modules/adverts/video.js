@@ -1,13 +1,11 @@
 define([
     "common",
     "bean",
-    "ajax",
-    "bonzo"
+    "ajax"
 ], function(
    common,
    bean,
-   ajax,
-   bonzo
+   ajax
 ) {
 
     function Video(config) {
@@ -73,19 +71,30 @@ define([
         this.video.src = this.vastData.file;
         this.video.play();
 
-        if(this.vastData.trackingEvents) {
-            this.initTracking(this.vastData.trackingEvents);
-        }
+        if(this.vastData.trackingEvents) { this.initTracking(this.vastData.trackingEvents); }
+        if(this.vastData.impressionEvents) { this.initImpressions(this.vastData.impressionEvents); }
+
     };
 
-    Video.prototype.initTracking = function(tracking) {
+    Video.prototype.initImpressions = function(impressions) {
         var self = this;
 
-        for(var event in tracking) {
-           this.events[event] = new VideoEvent(tracking[event]);
+        impressions.forEach(function(el) {
+            self.logEvent(new VideoEvent(el));
+        });
+    };
+
+    Video.prototype.initTracking = function(tracking, impressions) {
+        var self = this;
+
+        for(var event in tracking) { this.events[event] = new VideoEvent(tracking[event]); }
+
+        if(impressions && impressions.length) {
+            impressions.forEach(function(el) {
+                self.logEvent(new VideoEvent(el));
+            });
         }
 
-        if(this.events.impression) { this.logEvent(this.events.impression); }
         if(this.events.oasImpression) { this.logEvent(this.events.oasImpression); }
         if(this.events.start) { this.logEvent(this.events.start); }
         if(this.events.clickThrough) {
@@ -132,17 +141,21 @@ define([
     };
 
     Video.prototype.parseVast = function(xml) {
+        var self = this, impressionList;
 
         this.vastData.file = this.getNodeContent(xml.querySelector("MediaFile"));
         if (this.vastData.file) {
-            this.vastData.trackingEvents.impression = this.getNodeContent(xml.querySelector("Impression"));
             this.vastData.trackingEvents.clickThrough = this.getNodeContent(xml.querySelector("ClickThrough"));
 
-            var trackingNodes = xml.querySelectorAll("Tracking");
-            for (var i = 0, j = trackingNodes.length; i<j; ++i) {
-                var ev = trackingNodes[i].getAttribute("event");
-                this.vastData.trackingEvents[ev] = this.trimText(trackingNodes[i].textContent);
-            }
+            impressionList = (xml.querySelector("Impression URL")) ? xml.querySelectorAll("Impression URL") : xml.querySelectorAll("Impression");
+
+            this.vastData.impressionEvents = common.toArray(impressionList).map(function(el) {
+                return self.getNodeContent(el);
+            });
+
+            common.toArray(xml.querySelectorAll("Tracking")).forEach(function(el) {
+                self.vastData.trackingEvents[el.getAttribute("event")] = self.trimText(el.textContent);
+            });
         }
 
     };
