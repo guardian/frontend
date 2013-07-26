@@ -138,7 +138,7 @@ span.control__menu.i-menu {
     margin-right: $baseline*2;
     margin-left: $baseline*2;
 
-    @media (min-width: 26.25em) {
+    @media (min-width: 34em) {
         display: inline-block;
     }
 }
@@ -182,4 +182,54 @@ span.control__menu.i-menu {
     margin-top: $baseline*2;
     margin-left: 6px;
     margin-right: 2px;
+}
+
+
+
+
+/* Account control
+   ========================================================================== */
+.control--account {
+    float: right;
+    height: 28px;
+    padding: 17px 0 13px 0;
+    width: auto;
+
+    &:link,
+    &:active,
+    &:hover,
+    &:visited,
+    &:focus { color: #fff; }
+
+    @media (min-width: $tablet) {
+        position: absolute;
+        top: 0;
+        right: 178px;
+
+        &.control--right {
+            right: 0;
+        }
+
+    }
+
+    span {
+        display: none;
+        height: 28px;
+        vertical-align: top;
+        line-height: 28px;
+        margin-right: $baseline*2;
+        margin-left: $baseline*2;
+
+        @media (min-width: 34em) {
+            display: inline-block;
+        }
+    }
+}
+
+.control--account .i-account {
+    margin: 5px $baseline*4 0 $baseline*2;
+
+    @media (min-width: $tablet) {
+        margin-left: 0;
+    }
 }
