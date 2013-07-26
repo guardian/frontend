@@ -24,7 +24,7 @@ define(["bean",
             totalImages = 0,
             mode = 'fullimage',
             overlay,
-            swipeActive = false,
+            swipeActive,
             pushUrlChanges = true,
             $navArrows,
             $images;
@@ -121,6 +121,7 @@ define(["bean",
         };
 
         this.loadGallery = function() {
+            swipeActive = false;
             overlay.showLoading();
 
             ajax({
