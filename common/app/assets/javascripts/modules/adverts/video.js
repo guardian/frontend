@@ -149,11 +149,11 @@ define([
 
             impressionList = (xml.querySelector("Impression URL")) ? xml.querySelectorAll("Impression URL") : xml.querySelectorAll("Impression");
 
-            this.vastData.impressionEvents = common.listToArray(impressionList).map(function(el) {
+            this.vastData.impressionEvents = common.toArray(impressionList).map(function(el) {
                 return self.getNodeContent(el);
             });
 
-            common.listToArray(xml.querySelectorAll("Tracking")).forEach(function(el) {
+            common.toArray(xml.querySelectorAll("Tracking")).forEach(function(el) {
                 self.vastData.trackingEvents[el.getAttribute("event")] = self.trimText(el.textContent);
             });
         }
