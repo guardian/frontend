@@ -132,7 +132,9 @@ class RunningOrderTrailblockDescription(
     // get the running order from the api
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
     log.info(s"loading running order configuration from: $configUrl")
-    parseResponse(WS.url(s"$configUrl").withTimeout(2000).get())
+    val fu: Future[Response] = WS.url(s"$configUrl").withTimeout(2000).get()
+    //parseResponse(fu)
+    parseContentApiResponse(fu)
   }
 
   private def parseResponse(response: Future[Response]) = {
@@ -154,6 +156,31 @@ class RunningOrderTrailblockDescription(
             })
           else
             None
+        case _ =>
+          log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
+          // NOTE: better way of handling fallback
+          Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition))
+      }
+    }
+
+  }
+
+  private def parseContentApiResponse(response: Future[Response]) = {
+    response.map{ r =>
+      r.status match {
+        case 200 =>
+          (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
+            Some(CustomTrailblockDescription(id, name, numItemsVisible){ContentApi.fetch(query, Map.empty).flatMap { resp =>
+              val ids = (parse(resp) \\ "id") map {_.as[String] } mkString(",")
+              ContentApi.search(edition)
+                .ids(ids)
+                .response map { r =>
+                  r.results.map(new Content(_))
+              }
+            }
+            })
+          } getOrElse None
+          //contentApiQuery
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
           // NOTE: better way of handling fallback
