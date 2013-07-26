@@ -58,8 +58,17 @@ define(["bean",
     };
 
     Overlay.prototype.hide = function() {
+        var self = this;
         bonzo(document.body).removeClass('has-overlay');
-        window.scrollTo(window.pageXOffset, this._savedPos); // Restore previous scroll pos
+
+        // Restore previous scroll pos
+        // Due to how swipe sets the height of the content at set intervals,
+        // we need to wait long enough for that to happen before restoring scroll position
+        var scrollDelay = (document.body.className.indexOf('has-swipe') != -1) ? 1010 : 0;
+        setTimeout(function() {
+            window.scrollTo(window.pageXOffset, self._savedPos);
+        }, scrollDelay);
+
 
         this.node.style.display = 'none';
         common.mediator.emit('modules:overlay:hide', this);
