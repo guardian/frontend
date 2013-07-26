@@ -4,7 +4,7 @@ import org.apache.commons.httpclient.{HttpMethod, HttpClient, NameValuePair}
 import scala.io.Source
 import org.apache.commons.httpclient.methods.{DeleteMethod, StringRequestEntity, PostMethod, GetMethod}
 import client.connection.{HttpResponse, Http}
-import client.connection.Parameters
+import client.Parameters
 
 
 // an implementation using apache http client, note this just uses the default connection manager

@@ -1,6 +1,7 @@
 package client.connection
 
 import scala.io.Codec
+import client.Parameters
 
 
 // Contract for HTTP implementations, fulfilled by the provided lib implementations, or your own
