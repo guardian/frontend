@@ -3,28 +3,41 @@
 @admin_main("Browsers", env, isAuthed = true) {
 
     <h1>Browser usage on theguardian.com</h1>
-    <p>Collected from Ophan data covering March 1, 2013 to present.</p>
+    
+    <p>
+        Collected from Ophan data covering March 1, 2013 to present.
+    </p>
 
+    <p style="background-color:#ffc;padding:1em;">
+        Warning. These statistics only cover the <a href="http://m.guardian.co.uk">mobile site</a>. 
+    </p>
+    
     <h3>By operating system</h3>
-    <p>Page views over 10k broken down by operating system version</p>
+
+    <p>
+        Page views over 10k broken down by operating system version
+    </p>
+    
     <table border="1" cellpadding="5">
-        @defining(os.toList.map{_._2}.sum) { total =>
-            @os.toList.sortBy{_._2}.reverse.filter { _._2 >= 10000 }.zipWithIndex.map { case (row, i) =>
-                    <tr>
-                        <td>@{i+1}</td>
-                        <td>@row._1</td>
-                        <td>@row._2.toInt</td>
-                    </tr>
-                    }
-                }
+        @os.toList.sortBy{_._2}.reverse.filter { _._2 >= 10000 }.zipWithIndex.map { case (row, index) =>
+            <tr>
+                <td>@{index + 1}</td>
+                <td>@row._1</td>
+                <td>@row._2.toInt</td>
+            </tr>
+        }
     </table>
     
     <h2>Browser vendor</h2>
-    <p>Page views over 10k broken down by browser family and version</p>
+    
+    <p>
+        Page views over 10k broken down by browser family and version.
+    </p>
+
     <table border="1" cellpadding="5">
-        @browser.toList.sortBy{_._2}.reverse.filter { _._2 >= 10000 }.zipWithIndex.map { case (row, i) =>
+        @browser.toList.sortBy{_._2}.reverse.filter { _._2 >= 10000 }.zipWithIndex.map { case (row, index) =>
             <tr>
-                <td>@{i+1}</td>
+                <td>@{index + 1}</td>
                 <td>@row._1</td>
                 <td>@row._2.toInt</td>
             </tr>
