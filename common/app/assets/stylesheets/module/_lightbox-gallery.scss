@@ -79,7 +79,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
 
     // This sets a fixed width to the gallery container, so it can be centered
     @for $i from 2 through 8 {
-        @media (min-width: viewportWidth($i)) {
+        @include mq(viewportWidth($i)) {
             .gallery__images {
                 width: gridContainerWidth($i);
             }
