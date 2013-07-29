@@ -158,7 +158,7 @@ object Switches extends Collections {
 
   val IdentityAccountNavigationSwitch = Switch("Feature Switches", "id-account-navigation",
     "ShowsIf this switch is on you will see the link in the topbar taking you through to the users account or sign in..",
-    safeState = On)
+    safeState = Off)
 
 
   // A/B Test Switches
