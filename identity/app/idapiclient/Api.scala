@@ -1,12 +1,12 @@
 package idapiclient
 
-import client.connection.Http
+import client.connection.{SyncronousHttp, Http}
 import com.gu.identity.model.{User, AccessToken}
 import client.{Anonymous, Auth, Response}
 import play.mvc.Http.Cookie
 
 
-abstract class Api(apiRootUrl: String, http: Http, jsonBodyParser: IdApiJsonBodyParser) {
+abstract class Api(apiRootUrl: String, http: SyncronousHttp, jsonBodyParser: IdApiJsonBodyParser) {
 
   private def prependSlashIfMissing(path: String) =
     if (path(0) == '/') path

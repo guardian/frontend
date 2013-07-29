@@ -1,18 +1,16 @@
 package client.connection.apache
 
 import org.apache.commons.httpclient._
-import scala.io.Source
 import org.apache.commons.httpclient.methods.{DeleteMethod, StringRequestEntity, PostMethod, GetMethod}
-import client.connection.Http
+import client.connection.{SyncronousHttp, HttpResponse}
 import client.{Error, Parameters, Response}
 import java.io.IOException
 import java.lang.IllegalArgumentException
-import client.connection.HttpResponse
 
 
 // an implementation using apache http client, note this just uses the default connection manager
 // and does not support multithreaded use.
-class ApacheSyncHttpClient extends Http {
+class ApacheSyncHttpClient extends SyncronousHttp {
   // provide converter between our Iterable[(String,String)] and the ApacheClient's Array[KeyValuePair]
   implicit object IterStringTupleToArrayNameValuePairs extends (Parameters => Array[NameValuePair]) {
     def apply(iterStringTuple: Parameters) = iterStringTuple.toArray.map { case (k, v) => new NameValuePair(k, v) }
@@ -48,7 +46,8 @@ class ApacheSyncHttpClient extends Http {
     }
   }
 
-  override protected def doGET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override def GET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+    logger.trace("GET request %s; params: %s; headers: %s".format(url, formatParams(urlParameters), formatParams(headers)))
     try {
       val method = new GetMethod(url)
       execute(method, urlParameters, headers)
@@ -68,7 +67,8 @@ class ApacheSyncHttpClient extends Http {
     }
   }
 
-  override protected def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+    logger.trace("POST request %s; body: %s; params: %s; headers: %s".format(url, body, formatParams(urlParameters), formatParams(headers)))
     try {
       val method = new PostMethod(url)
       method.setRequestEntity(new StringRequestEntity(body, "application/json", "UTF-8"))
@@ -89,7 +89,8 @@ class ApacheSyncHttpClient extends Http {
     }
   }
 
-  override protected def doDELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override def DELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+    logger.trace("DELETER request %s; body: %s; params: %s; headers: %s".format(url, bodyOpt.toString, formatParams(urlParameters), formatParams(headers)))
     try {
       val method = if (bodyOpt.isDefined) {
         val deleteWithBody = new DeleteMethodWithBody(url)
