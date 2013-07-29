@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
-$old-ie: true;
+$old-ie:        true;
+$mq-responsive: false;
+$svg-support:   false;
 
 @import "head.scss";
 @import "global.scss";

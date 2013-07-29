@@ -1,3 +1,5 @@
+@import "_mq";
+
 //Output based on body font-size being 10px
 @mixin font($family, $weight, $size, $line-height) {
     font-family: $family;
@@ -62,114 +64,10 @@
     overflow: hidden;
 }
 
-@function px2em($px, $base-font-size: 16px) {
-    @if (unitless($px)) {
-        @warn "Assuming #{$px} to be in pixels, attempting to convert it into pixels for you";
-        @return px2em($px + 0px);
-    } @else if (unit($px) == em) {
-        @return $px;
-    }
-    @return ($px / $base-font-size) * 1em;
-}
-
-// Usage:
-// .element {
-//     @include mq($from: mobile) {
-//         color: red;
-//     }
-//     @include mq($to: tablet) {
-//         color: blue;
-//     }
-//     @include mq(mobile, tablet) {
-//         color: green;
-//     }
-//     @include mq($from: tablet, $and: '(orientation: landscape)') {
-//         color: teal;
-//     }
-//     @include mq(950px) {
-//         color: hotpink;
-//     }
-// }
-// Inspired by:
-// - https://github.com/alphagov/govuk_frontend_toolkit/blob/master/stylesheets/_conditionals.scss
-// - http://jakearchibald.github.io/sass-ie/
-
-@mixin mq($from: false, $to: false, $and: false) {
-
-    // Initialize variables
-    $min-width: 0;
-    $max-width: 0;
-    $mediaQuery: '';
-
-    // From: this breakpoint
-    @if (type-of($from) == number) {
-        @if (unit($from) == em) {
-            $min-width: $from;
-        } @else {
-            $min-width: px2em($from);
-        }
-    } @else {
-        @if        (mobile == $from) {
-            $min-width: px2em($mq-mobile);
-        } @else if (tablet == $from) {
-            $min-width: px2em($mq-tablet);
-        } @else if (desktop == $from) {
-            $min-width: px2em($mq-desktop);
-        } @else if (wide == $from) {
-            $min-width: px2em($mq-wide);
-        }
-    }
-    
-    // To: that breakpoint
-    @if (type-of($to) == number) {
-        @if (unit($to) == px) {
-            $max-width: $to;
-        } @else {
-            $max-width: px2em($to);
-        }
-    } @else {
-        @if        (mobile == $to) {
-            $max-width: px2em($mq-mobile - 1px);
-        } @else if (tablet == $to) {
-            $max-width: px2em($mq-tablet - 1px);
-        } @else if (desktop == $to) {
-            $max-width: px2em($mq-desktop - 1px);
-        } @else if (wide == $to) {
-            $max-width: px2em($mq-wide - 1px);
-        }
-    }
-
-    // If this is IE8, output everything and rely on the cascade
-    @if ($old-ie) {
-        // Only if a min-width query is available
-        @if ($from and $to == false) {
-            @content;
-        }
-    } @else {
-        @if $min-width != 0 { $mediaQuery: '#{$mediaQuery} and (min-width: #{$min-width})'; }
-        @if $max-width != 0 { $mediaQuery: '#{$mediaQuery} and (max-width: #{$max-width})'; }
-        @if $and            { $mediaQuery: '#{$mediaQuery} and #{$and}'; }
-
-        // Output @media query
-        $mediaQuery: unquote(#{$mediaQuery});
-
-        @media all #{$mediaQuery} {
-            @content;
-        }
-    }
-}
 
 @mixin old-ie {
     // Only use this content if we're dealing with old IE
     @if $old-ie {
         @content;
-    }
-}
-
-@mixin svg {
-    @if ($old-ie == false) {
-        .svg & {
-            @content;
-        }
     }
 }

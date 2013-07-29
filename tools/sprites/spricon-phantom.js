@@ -81,7 +81,7 @@ function finishUp(){
 
     // write CSS files
     fs.write( cssOutputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
-    if(generatesvg) { fs.write( cssOutputdir + datacss, '@include svg {' + "\n" + datacssrules.join( "\n\n" ) + "\n" + '}' ); }
+    if(generatesvg) { fs.write( cssOutputdir + datacss, '@if ($svg-support) {' + "\n" + datacssrules.join( "\n\n" ) + "\n" + '}' ); }
 
     // write HTML file
     var tableHTML = tableOpeningHTML + outputHTML.join( "\n" ) + tableClosingHTML;

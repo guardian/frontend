@@ -17,32 +17,40 @@
 .is-active .i-menu {
     @extend .i-menu-active;
 
-    @include svg {
-        @extend .svg-i-menu-active;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-menu-active;
+        }
     }
 }
 
 .is-active .i-search {
     @extend .i-search-blue;
 
-    @include svg {
-        @extend .svg-i-search-blue;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-search-blue;
+        }
     }
 }
 
 .is-active .i-top-stories {
     @extend .i-top-stories-active;
 
-    @include svg {
-        @extend .svg-i-top-stories-active;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-top-stories-active;
+        }
     }
 }
 
 .i-date {
-    @include svg {
-        background-size: 100%;
-        width: 10px;
-        height: 10px;
+    @if ($svg-support) {
+        .svg & {
+            background-size: 100%;
+            width: 10px;
+            height: 10px;
+        }
     }
 }
 
@@ -54,16 +62,20 @@ figcaption:before {
     content: '';
     margin-right: 4px;
 
-    @include svg {
-        @extend .svg-i-image;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-image;
+        }
     }
 }
 
 .story-picture__caption:before {
     @extend .i-image-white;
 
-    @include svg {
-        @extend .svg-i-image-white;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-image-white;
+        }
     }
 }
 
@@ -77,8 +89,10 @@ figcaption:before {
     margin: 21px 0 $baseline*2;
     clear: both;
 
-    @include svg {
-        @extend .svg-i-livequote-before;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-livequote-before;
+        }
     }
 }
 
@@ -90,7 +104,9 @@ figcaption:before {
     content: '';
     margin-bottom: 22px;
 
-    @include svg {
-        @extend .svg-i-livequote-after;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-livequote-after;
+        }
     }
 }
