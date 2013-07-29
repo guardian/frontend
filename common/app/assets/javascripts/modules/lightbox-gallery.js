@@ -17,19 +17,25 @@ define(["bean",
 
     function LightboxGallery(config, context) {
         var self = this,
+            pageUrl = '/' + config.page.pageId, // The page url we're starting from
             galleryNode,
+            imagesNode,
             currentImage = 1,
             totalImages = 0,
             mode = 'fullimage',
             overlay,
+            swipeActive,
+            pushUrlChanges = true,
             $navArrows,
             $images;
 
         this.selector = '.trail--gallery';
-        this.galleryEndpoint = '';
+        this.galleryEndpoint = ''; // Hook for tests
 
-        this.init = function() {
-            if (config.switches.lightboxGalleries) {
+        this.init = function(opts) {
+            self.opts = opts || {};
+
+            if (config.switches.lightboxGalleries || self.opts.overrideSwitch) {
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl = e.currentTarget.href;
 
@@ -48,6 +54,11 @@ define(["bean",
                     self.bindEvents();
                     self.loadGallery();
                 });
+
+                // Disable URL changes when the app-wide swipe is on
+                if(document.body.className.indexOf('has-swipe') !== -1) {
+                    pushUrlChanges = false;
+                }
             }
         };
 
@@ -58,38 +69,60 @@ define(["bean",
             bean.on(overlay.bodyNode,    'click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
             bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
-            bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery-item', function(el) {
+
+            bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__img', function() {
+                self.toggleFurniture();
+            });
+
+            bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery__item', function(el) {
                 var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
                 self.goTo(index);
             });
 
             bean.on(window, 'orientationchange', function() {
                 self.layout();
-                self.jumpToContent();
+                if (detect.getOrientation() === 'landscape') {
+                    self.jumpToContent();
+                }
             });
 
             bean.on(window, 'resize', common.debounce(function() {
                 self.layout();
             }));
 
-            common.mediator.on('modules:overlay:close', this.removeOverlay);
+            common.mediator.on('modules:overlay:close', function() {
+                self.removeOverlay();
 
-            bean.one(window, 'popstate', function(event) {
-                // Slight timeout as browsers reset the scroll position on popstate
-                setTimeout(function() {
-                    overlay.hide();
-                    self.removeOverlay();
-                },10);
+                // Go back to the URL that we started on
+                if (pushUrlChanges) {
+                    url.pushUrl({}, document.title, pageUrl);
+                }
+            });
 
-                common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
+            bean.on(window, 'popstate', function(event) {
+
+                if (event.state && event.state.lightbox) {
+                    // This keeps the back button to navigate back through images
+                    self.goTo(event.state.currentImage, {
+                        dontUpdateUrl: true
+                    });
+
+                } else if (event.state && !event.state.lightbox) {
+                    // This happens when we reach back to the state before the lightbox was opened
+                    // Needs a slight timeout as browsers reset the scroll position on popstate
+                    setTimeout(function() {
+                        overlay.hide();
+                        self.removeOverlay();
+                    },10);
+
+                    common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
+                }
             });
         };
 
         this.loadGallery = function() {
+            swipeActive = false;
             overlay.showLoading();
-
-            // Save state to preserve back button functionality
-            url.pushUrl({ lightbox: true }, document.title, window.location.href);
 
             ajax({
                 url: self.galleryEndpoint,
@@ -97,12 +130,19 @@ define(["bean",
                 method: 'get',
                 crossOrigin: true,
                 success: function(response) {
+                    self.galleryUrl = '/' + response.config.page.pageId;
+
                     overlay.setBody(response.html);
 
                     galleryNode  = overlay.bodyNode.querySelector('.gallery--lightbox');
                     $navArrows   = bonzo(galleryNode.querySelectorAll('.gallery__nav'));
                     $images      = bonzo(galleryNode.querySelectorAll('.gallery__img'));
                     totalImages  = parseInt(galleryNode.getAttribute('data-total'), 10);
+
+                    // Keep a copy of the original images markup, so we can
+                    // easily restore it back when removing swipe
+                    imagesNode   = galleryNode.querySelector('.gallery__images');
+                    imagesNode._originalHtml = imagesNode.innerHTML;
 
                     self.layout();
                     self.setupOverlayHeader();
@@ -120,6 +160,7 @@ define(["bean",
             });
         };
 
+        // Overlay methods
         this.setupOverlayHeader = function() {
             var toolbar = '<button class="overlay__cta js-gallery-grid" data-link-name="Gallery grid mode">' +
                           '  <i class="i i-gallery-thumb-icon"></i> ' +
@@ -137,10 +178,14 @@ define(["bean",
             self.fullModeCta    = overlay.headerNode.querySelector('.js-gallery-full');
         };
 
-        this.jumpToContent = function() {
-            window.scrollTo(0, overlay.headerNode.offsetHeight);
-        };
+        this.removeOverlay = common.debounce(function(e){
+            // Needs a delay to give time for analytics to fire before DOM removal
+            overlay.remove();
+            return true;
+        }, 500);
 
+
+        // Gallery methods
         this.prev = function(e) {
             if (e) { e.preventDefault(); }
             self.goTo(currentImage - 1);
@@ -151,7 +196,9 @@ define(["bean",
             self.goTo(currentImage + 1);
         };
 
-        this.goTo = function(index) {
+        this.goTo = function(index, opts) {
+            opts = opts || {};
+
             // Protecting against the boundaries
             if (index > totalImages) {
                 index = 1;
@@ -159,7 +206,7 @@ define(["bean",
                 index = totalImages;
             }
 
-            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery-item'), function(el) {
+            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__item'), function(el) {
                 var itemIndex = parseInt(el.getAttribute('data-index'), 10),
                     captionControlHeight = 35; // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
 
@@ -176,11 +223,20 @@ define(["bean",
             currentImage = index;
             self.imageIndexNode.innerHTML = currentImage;
             self.switchToFullImage();
-            self.jumpToContent();
+
+
+            if (!opts.dontUpdateUrl) {
+                self.pushUrlState();
+            }
         };
 
         this.switchToGrid = function(e) {
             mode = 'grid';
+
+            if (swipeActive) {
+                self.removeSwipe();
+            }
+
             bonzo(galleryNode).removeClass('gallery--fullimage-mode').addClass('gallery--grid-mode');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el) {
@@ -198,6 +254,12 @@ define(["bean",
 
         this.switchToFullImage = function(e) {
             mode = 'fullimage';
+
+            if (detect.hasTouchScreen() && !swipeActive && !self.opts.disableSwipe) {
+                self.setupSwipe();
+            }
+
+
             bonzo(galleryNode).removeClass('gallery--grid-mode').addClass('gallery--fullimage-mode');
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__img'), function(el, i) {
@@ -211,23 +273,23 @@ define(["bean",
             self.gridModeCta.style.display = 'block';
             self.fullModeCta.style.display = 'none';
 
+            self.layout();
+
             if (e) { e.preventDefault(); }
         };
 
         this.toggleFurniture = function() {
             bonzo(galleryNode).toggleClass('gallery--hide-furniture');
-
-            // When the furniture is hidden, hide the browser chrome by jumping to the content
-            if (galleryNode.className.indexOf('gallery--hide-furniture') !== -1) {
-                self.jumpToContent();
-            }
         };
 
         this.layout = function() {
-            var orientation = (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
+            var orientation = detect.getOrientation();
 
             // Make overlay large enough to allow the browser chrome to be hidden
             overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
+
+            // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
+            $images = bonzo(galleryNode.querySelectorAll('.gallery__img'));
 
             if (orientation === 'landscape' && mode === 'fullimage') {
                 // In landscape, size all images to the height of the screen
@@ -235,13 +297,65 @@ define(["bean",
             } else {
                 $images.removeAttr('style');
             }
+
         };
 
-        this.removeOverlay = common.debounce(function(e){
-            // Needs a delay to give time for analytics to fire before DOM removal
-            overlay.remove();
-            return true;
-        }, 500);
+        this.jumpToContent = function() {
+            window.scrollTo(0, overlay.headerNode.offsetHeight);
+        };
+
+
+        // Swipe methods
+        this.setupSwipe = function() {
+            require(['js!swipe'], function() {
+                // set up the swipe actions
+                bonzo(galleryNode).addClass('gallery--swipe');
+
+                self.swipe = new Swipe(galleryNode, {
+                    startSlide: currentImage - 1,
+                    speed: 200,
+                    continuous: false,
+                    callback: function(index, elm) {
+                        var swipeDir = (index + 1 > currentImage) ? 'next' : 'prev';
+                        self.trackInteraction('Gallery swipe - ' + swipeDir);
+
+                        currentImage = index + 1;
+                        self.imageIndexNode.innerHTML = currentImage;
+                    }
+                });
+
+                swipeActive = true;
+            });
+        };
+
+        this.removeSwipe = function() {
+            self.swipe.kill();
+            bonzo(imagesNode).removeAttr('style')
+                             .html(imagesNode._originalHtml);
+
+            bonzo(galleryNode).removeClass('gallery--swipe');
+
+            swipeActive = false;
+        };
+
+
+        this.pushUrlState = function() {
+            if (pushUrlChanges) {
+                var state = {
+                    lightbox: true,
+                    currentImage: currentImage
+                };
+
+                url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
+            }
+        };
+
+
+        // send custom (eg non-link) interactions to omniture
+        this.trackInteraction = function (str) {
+            common.mediator.emit('module:clickstream:interaction', str);
+        };
+
     }
 
     return LightboxGallery;

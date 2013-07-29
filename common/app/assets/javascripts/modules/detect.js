@@ -217,6 +217,10 @@ define(['modules/userPrefs'], function (userPrefs) {
         return false;
     }
 
+    function getOrientation() {
+        return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
+    }
+
     return {
         getLayoutMode: getLayoutMode,
         getMobileOS: getMobileOS,
@@ -228,7 +232,8 @@ define(['modules/userPrefs'], function (userPrefs) {
         getVideoFormatSupport: getVideoFormatSupport,
         hasSvgSupport: hasSvgSupport,
         hasTouchScreen: hasTouchScreen,
-        hasPushStateSupport: hasPushStateSupport
+        hasPushStateSupport: hasPushStateSupport,
+        getOrientation: getOrientation
     };
 
 });
