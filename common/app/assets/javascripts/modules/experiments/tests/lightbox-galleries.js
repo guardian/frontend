@@ -5,7 +5,7 @@ define(['common', 'modules/lightbox-gallery'], function (common, LightboxGallery
     var LightboxGalleries = function () {
 
         this.id = 'LightboxGalleries';
-        this.expiry = '2013-08-08';
+        this.expiry = '2013-08-12';
         this.audience = 1;
         this.description = 'Tests the lightbox gallery variants between no lightbox, lightbox and lightbox with swipe';
         this.canRun = function(config) {
