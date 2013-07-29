@@ -42,6 +42,9 @@ object Switches extends Collections {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = Off)
 
+  val BetaServerSwitch = Switch("Beta", "beta",
+    "If this is switced on users with a #beta in the URL will be messaged",
+    safeState = Off)
 
   // Advertising Switches
 
@@ -175,6 +178,11 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
+  val ABLightboxGalleries = Switch("A/B Tests", "ab-lightbox-galleries",
+    "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
+    safeState = Off)
+
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -211,6 +219,7 @@ object Switches extends Collections {
     SocialSwitch,
     SearchSwitch,
     ImageServerSwitch,
+    BetaServerSwitch,
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,

@@ -57,7 +57,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
       .showFields("all")
       .response.map{ response =>
 
-      val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
+      val articleOption = response.content.filter {c => c.isArticle || c.isSudoku} map { new Article(_) }
       val storyPackage = response.storyPackage map { Content(_, None) }
 
       val model = articleOption.map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id)) }

@@ -18,14 +18,13 @@ trait CloudWatch {
   )
 
   private val fastlyMetrics = List(
-    ("Fastly Errors (Europe)", "errors", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly 5xx (Europe)", "status_5xx", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly Hits (Europe)", "hits", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly Misses (Europe)", "miss", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly Errors (USA)", "errors", "usa", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly 5xx (USA)", "status_5xx", "usa", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly Hits (USA)", "hits", "usa", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly Misses (USA)", "miss", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
+    ("Fastly Errors (Europe) - errors per minute, average", "errors", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
+    ("Fastly Errors (USA) - errors per minute, average", "errors", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
+  )
+
+  private val fastlyHitMissMetrics = List(
+    ("Fastly Hits and Misses (Europe) - per minute, average", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
+    ("Fastly Hits and Misses (USA) - per minute, average", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
   )
 
   lazy val cloudClient = {
@@ -72,6 +71,33 @@ trait CloudWatch {
         .withStatistics("Average")
         .withNamespace("Fastly")
         .withMetricName(metric)
+        .withDimensions(new Dimension().withName("region").withValue(region),
+                        new Dimension().withName("service").withValue(service)),
+        asyncHandler)
+    )
+  }.toSeq
+
+  def fastlyHitMissStatistics = fastlyHitMissMetrics.map{ case (graphTitle, region, service) =>
+    new FastlyHitMissGraph( graphTitle,
+
+      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusHours(6).toDate)
+        .withEndTime(new DateTime().toDate)
+        .withPeriod(120)
+        .withStatistics("Average")
+        .withNamespace("Fastly")
+        .withMetricName("hits")
+        .withDimensions(new Dimension().withName("region").withValue(region),
+                        new Dimension().withName("service").withValue(service)),
+        asyncHandler),
+
+      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusHours(6).toDate)
+        .withEndTime(new DateTime().toDate)
+        .withPeriod(120)
+        .withStatistics("Average")
+        .withNamespace("Fastly")
+        .withMetricName("miss")
         .withDimensions(new Dimension().withName("region").withValue(region),
                         new Dimension().withName("service").withValue(service)),
         asyncHandler)

@@ -1,95 +1,70 @@
-@(charts: Seq[tools.Chart], metadata: MetaData, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
-
-@main(metadata, Switches.all) {
-    <meta http-equiv="refresh" content="60">
-} {
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawCharts);
-
-        function drawCharts() {
-            @charts.map{ chart =>
-                new google.visualization.LineChart(document.getElementById('@chart.id'))
-                    .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
-                    title: '@chart.name',
-                    legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
-                });
-            }
-        }
-    </script>
-
-
-    @charts.map{ chart => <div id="@chart.id" style="max-width: 1200px"></div> }
-
-    <ul id="pingdom"></ul>
-    <ul id="riffraff"></ul>
-
-    <style>
-        .up, .Completed { color: green; } 
-        .down, .Failed { color: red; }
-        .Running { color: orange; }
-    </style>
-    
-    <script src="/assets/javascripts/components/jquery/jquery.js"></script>
-
-    <script type="text/javascript">
-        window.addEventListener('load', function() {
-                
-            var ads = document.querySelectorAll('.ad-slot')
-            for (var i = 0; i < ads.length; i++) {
-                ads[i].className = 'h';
-            }
-
-            // pingdom
-            var pingdom = document.getElementById('pingdom')
-            $.ajax({ url:'/radiator/pingdom', success: function(status) {
-                        JSON.parse(status).checks.filter(function (check) {
-
-                            return /ELB|Host|CDN/.test(check.name);
-
-                            }).forEach(function(check){
-                                var li = document.createElement('li');
-                                li.className = check.status;
-                                li.textContent = check.name;
-                                pingdom.appendChild(li);
-                            })
-                        }})
-
-            // riff raff - requires you to be on the guardian network
+@(charts: Seq[tools.Chart], hitMissCharts: Seq[tools.Chart], env: String)
+<!DOCTYPE html>
+<html>
+  <head>
+        <meta http-equiv="refresh" content="60">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>theguardian.com radiator</title>
+        <link rel="stylesheet" type="text/css" href="/assets/css/radiator.css">
+        <script src="https://www.google.com/jsapi"></script>
+  </head>
+  <body>
+  
+        <header>
+            <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
+        </header>
         
-            $.ajax({
-                        url: 'https://riffraff.gutools.co.uk/api/history?stage=PROD&projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=50', 
-                        dataType: 'jsonp',
-                        success: function(deployments) {
+        <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
+        <ul id="pingdom"></ul>
+        
+        <h2>Deployments <small>(the last deployment for each RiffRaff project)</small></h2>
+        <ul id="riffraff"></ul>
 
-                            // a hash of the last deployment each project 
-                            var latestDeployments = {};
-                            deployments.response.results.filter(function (deployment) {
-                                
-                                    return /^frontend::/.test(deployment.projectName)
+        <h2>Cloudwatch</h2>
+        
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawCharts);
 
-                                }).forEach(function(deploy) {
-                                    
-                                    var project = deploy.projectName;
-                                    if (!latestDeployments.hasOwnProperty(project)) {
-                                        latestDeployments[project] = deploy;
-                                    }
-                                })
+            function drawCharts() {
+                @charts.map{ chart =>
+                    new google.visualization.LineChart(document.getElementById('@chart.id'))
+                        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                        backgroundColor: '#fff',
+                        colors: ['#333'],
+                        height: 120,
+                        fontName: 'Georgia',
+                        titleTextStyle: {color: '#999'},
+                        title: '@chart.name',
+                        hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
+                        legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title", textStyle: {color: '#ccc'}, gridlines: { count: 3, color: '#ccc' }} }
+                    });
+                }
 
-                            // render
-                            Object.keys(latestDeployments).forEach(function (deployment)  {
-                                var d  = latestDeployments[deployment];
-                                var li = document.createElement('li');
-                                li.className = d.status;
-                                li.innerHTML = d.projectName + ' <small>by ' + d.deployer + '</small>';
-                                riffraff.appendChild(li);
-                            });
+                @hitMissCharts.map{ chart =>
+                    new google.visualization.LineChart(document.getElementById('@chart.id'))
+                        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                        title: '@chart.name',
+                        backgroundColor: '#fff',
+                        height: 175,
+                        legend: 'in',
+                        fontName: 'Georgia',
+                        titleTextStyle: {color: '#999'},
+                        hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
+                        vAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 3, color: '#ccc' } }
+                    });
+                }
+            }
+        </script>
 
-                        }})
-        });
+        @charts.map{ chart => <div id="@chart.id" class="charts"></div> }
+        @hitMissCharts.map{ chart => <div id="@chart.id" class="charts"></div> }
 
+        <!-- TODO - add team city & pager duty -->
 
-
-    </script>
-    }
+        <script src="https://www.google.com/jsapi"></script>
+        <script src="/assets/javascripts/components/jquery/jquery.js"></script>
+        <script src="/assets/javascripts/radiator/bootstrap.js"></script>
+  </body>
+</html>
