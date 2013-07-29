@@ -13,12 +13,14 @@ object `package` {
 
   implicit class ApiContent2Is(content: ApiContent) {
     lazy val isArticle: Boolean = content.tags exists { _.id == "type/article" }
+    lazy val isSudoku: Boolean = content.tags exists { _.id == "type/sudoku" }
     lazy val isGallery: Boolean = content.tags exists { _.id == "type/gallery" }
     lazy val isVideo: Boolean = content.tags exists { _.id == "type/video" }
   }
 
   implicit class Content2Is(content: Content) {
     lazy val isArticle: Boolean = content.tags exists { _.id == "type/article" }
+    lazy val isSudoku: Boolean = content.tags exists { _.id == "type/sudoku" }
     lazy val isGallery: Boolean = content.tags exists { _.id == "type/gallery" }
     lazy val isVideo: Boolean = content.tags exists { _.id == "type/video" }
   }

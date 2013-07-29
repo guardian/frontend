@@ -1,4 +1,4 @@
-@(charts: Seq[tools.Chart], env: String)
+@(charts: Seq[tools.Chart], hitMissCharts: Seq[tools.Chart], env: String)
 <!DOCTYPE html>
 <html>
   <head>
@@ -34,14 +34,32 @@
                         backgroundColor: '#fff',
                         colors: ['#333'],
                         height: 120,
+                        fontName: 'Georgia',
+                        titleTextStyle: {color: '#999'},
+                        title: '@chart.name',
                         hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
                         legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title", textStyle: {color: '#ccc'}, gridlines: { count: 3, color: '#ccc' }} }
+                    });
+                }
+
+                @hitMissCharts.map{ chart =>
+                    new google.visualization.LineChart(document.getElementById('@chart.id'))
+                        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                        title: '@chart.name',
+                        backgroundColor: '#fff',
+                        height: 175,
+                        legend: 'in',
+                        fontName: 'Georgia',
+                        titleTextStyle: {color: '#999'},
+                        hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
+                        vAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 3, color: '#ccc' } }
                     });
                 }
             }
         </script>
 
         @charts.map{ chart => <div id="@chart.id" class="charts"></div> }
+        @hitMissCharts.map{ chart => <div id="@chart.id" class="charts"></div> }
 
         <!-- TODO - add team city & pager duty -->
 

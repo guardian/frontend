@@ -26,4 +26,8 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
         PageviewsByOperatingSystemTreeMapGraph
       )))
   }
+  
+  def browsers() = AuthAction { request =>
+      Ok(views.html.browsers("PROD", Analytics.getPageviewsByOperatingSystem(), Analytics.getPageviewsByBrowser()))
+  }
 }

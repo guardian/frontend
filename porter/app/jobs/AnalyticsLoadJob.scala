@@ -36,6 +36,14 @@ class AnalyticsLoadJob extends Job {
       Analytics.getPageviewsByOperatingSystem() map { CSV.write } mkString "\n",
       "text/csv"
     )
+    
+    log.info("Generating analytics for pageviews by operating system and browser and uploading to S3.")
+    S3.putPrivate(
+      s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-by-operating-system-and-browser.csv",
+      Analytics.getPageviewsByOperatingSystemAndBrowser() map { CSV.write } mkString "\n",
+      "text/csv"
+    )
+
 
     log.info("Generating analytics for pageviews by browser and uploading to S3.")
     S3.putPrivate(
