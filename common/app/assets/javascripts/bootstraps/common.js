@@ -14,6 +14,7 @@ define([
     'modules/router',
     'modules/images',
     'modules/navigation/top-stories',
+    'modules/navigation/account',
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
@@ -48,6 +49,7 @@ define([
     Router,
     Images,
     TopStories,
+    Account,
     Sections,
     Search,
     NavControl,
@@ -90,6 +92,7 @@ define([
         initialiseNavigation: function (config) {
             var navControl = new NavControl(),
                 topStories = new TopStories(),
+                account = new Account(header),
                 sections = new Sections(config),
                 search = new Search(config),
                 aus = new Australia(config),
@@ -101,6 +104,7 @@ define([
             sections.init(header);
             navControl.init(header);
             topStories.load(config, header);
+            account.render();
             search.init(header);
             aus.init(header);
 
