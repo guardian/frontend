@@ -41,6 +41,10 @@
         Page views over 10k broken down by operating system version
     </p>
     
+    <p>
+       total views = @{os.map {_._2}.sum}
+    </p>
+    
     <table border="1" cellpadding="5">
         @os.toList.sortBy{_._2}.reverse.filter { _._2 >= 10000 }.zipWithIndex.map { case (row, index) =>
             <tr>
@@ -55,6 +59,10 @@
     
     <p>
         Page views over 10k broken down by browser family and version.
+    </p>
+    
+    <p>
+       total views = @{browser.map {_._2}.sum}
     </p>
 
     <table border="1" cellpadding="5">
