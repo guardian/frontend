@@ -12,7 +12,10 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
      */
     Account.CONFIG = {
         contentUrl: '/identity/fragments/account-nav',
-        className: 'js-account-info',
+        classes: {
+            container: 'control--account',
+            content: 'js-account-info'
+        },
         eventName: 'modules:accountcontrol'
     };
 
@@ -29,11 +32,10 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         }).then(this.emitLoadedEvent, this.emitErrorEvent);
     };
 
-    /**
-     * @param {Element} context
-     */
-    Account.prototype.init = function(context, callback) {
+    /** */
+    Account.prototype.init = function() {
         var self = this;
+        
         common.mediator.on(Account.CONFIG.eventName + ':loaded', function(resp) {
             self.renderControl(resp);
         });
@@ -43,9 +45,11 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
     /** */
     Account.prototype.renderControl = function(resp) {
         var content = resp,
-            container = this.context.querySelector('.' + Account.CONFIG.className);
+            contentElem = this.context.querySelector('.' + Account.CONFIG.classes.content),
+            container = this.context.querySelector('.' + Account.CONFIG.classes.container);
 
-        bonzo(container).html(content);
+        bonzo(container).removeClass('js-hidden');
+        bonzo(contentElem).html(content);
         common.mediator.emit(Account.CONFIG.eventName + ':rendered', resp);
     };
 
