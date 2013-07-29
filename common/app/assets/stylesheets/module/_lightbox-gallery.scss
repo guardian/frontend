@@ -17,7 +17,7 @@ i.gallery__watermark {
 }
 
 .gallery--hide-furniture {
-    .gallery__nav .gallery-arrow-cta,
+    .gallery__nav .gallery__arrow-cta,
     .gallery__watermark,
     .gallerycaption  {
         display: none;
@@ -133,7 +133,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
         outline: none;
     }
 
-    .gallery-arrow-cta {
+    .gallery__arrow-cta {
         position: absolute;
         top: 85px;
     }
@@ -144,7 +144,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     left: 0;
     width: 20%;
 
-    .gallery-arrow-cta {
+    .gallery__arrow-cta {
         left: $gutter;
     }
 }
@@ -153,7 +153,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     right: 0;
     width: 80%;
 
-    .gallery-arrow-cta {
+    .gallery__arrow-cta {
         right: $gutter;
     }
 }
@@ -163,7 +163,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
    Arrow CTAs
    ========================================================================== */
 
-.gallery-arrow-cta {
+.gallery__arrow-cta {
     display: block;
     width: 22px;
     height: 36px;
@@ -175,19 +175,19 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     }
 }
 
-.gallery-arrow-cta--up {
+.gallery__arrow-cta--up {
     @include rotate(-90deg);
 }
 
-.gallery-arrow-cta--down {
+.gallery__arrow-cta--down {
     @include rotate(90deg);
 }
 
-.gallery-arrow-cta--left {
+.gallery__arrow-cta--left {
     @include rotate(180deg);
 }
 
-.gallery-arrow-cta--right {
+.gallery__arrow-cta--right {
     @include rotate(0deg);
 }
 
@@ -253,7 +253,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     display: block;
     padding: 0;
 
-    .gallery-arrow-cta {
+    .gallery__arrow-cta {
         margin: 0 auto;
     }
 }
