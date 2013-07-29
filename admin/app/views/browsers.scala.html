@@ -14,12 +14,6 @@
         Page views over 10k broken down by combined operating system and browser version across mobile and desktop.
     </p>
 
-    <p>
-       total views = @{combined.map {_._2}.sum}
-    </p>
-
-
-
     <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{combined.map {_._2}.sum}">
         <caption>
             <input type="text" class="input-medium search-query" placeholder="Filter...">
@@ -71,10 +65,6 @@
         Page views over 10k broken down by operating system version
     </p>
     
-    <p>
-       total views = @{os.map {_._2}.sum}
-    </p>
-
     <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{os.map {_._2}.sum}">
         <caption>
             <input type="text" class="input-medium search-query" placeholder="Filter...">
@@ -110,10 +100,6 @@
     
     <p>
         Page views over 10k broken down by browser family and version.
-    </p>
-    
-    <p>
-       total views = @{browser.map {_._2}.sum}
     </p>
 
     <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{browser.map {_._2}.sum}">
