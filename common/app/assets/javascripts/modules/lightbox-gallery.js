@@ -317,7 +317,7 @@ define(["bean",
                     continuous: false,
                     callback: function(index, elm) {
                         var swipeDir = (index + 1 > currentImage) ? 'next' : 'prev';
-                        self.trackInteraction('Gallery swipe - ' + swipeDir);
+                        self.trackInteraction('Lightbox gallery swipe - ' + swipeDir);
 
                         currentImage = index + 1;
                         self.imageIndexNode.innerHTML = currentImage;
