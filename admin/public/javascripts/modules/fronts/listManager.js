@@ -47,12 +47,14 @@ define([
         }
 
         function setDisplayedLists(listIDs) {
-            var q = queryParams();
-            q.blocks = listIDs.join(',');
-            q = _.pairs(q).map(function(p){
-                return p[0] + (p[1] ? '=' + p[1] : '');
-            }).join('&');
-            history.pushState({}, "", loc.pathname + '?' + q);
+            var qp = queryParams();
+            qp.blocks = listIDs.join(',');
+            qp = _.pairs(qp)
+                .filter(function(p){ return !!p[0]; })
+                .map(function(p){ return p[0] + (p[1] ? '=' + p[1] : ''); })
+                .join('&');
+
+            history.pushState({}, "", loc.pathname + '?' + qp);
             renderLists();
         }
 
