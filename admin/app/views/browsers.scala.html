@@ -13,9 +13,14 @@
     <p>
         Page views over 10k broken down by combined operating system and browser version across mobile and desktop.
     </p>
-    
+
+    <p>
+       total views = @{combined.map {_._2}.sum}
+    </p>
+
     <table border="1" cellpadding="5">
-        
+
+
         @combined.toList.sortBy{_._2}.reverse.take(300).zipWithIndex.map { case (row, index) =>
             <tr>
                 <td>@{index + 1}</td>
