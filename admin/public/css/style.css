@@ -750,14 +750,21 @@ a.cta, .cta a {
     font-weight: bold;
 }
 
+/** http://localhost:9003/analytics/browsers */
 
+#usage {
+    font-family: Georgia, serif;
+}
+
+#usage h1, #usage h2, #usage h3 {
+    font-weight: normal; 
+}
 
 .browser-table {
-    width: auto;
+    width: 100%;
+    max-width: 600px;
 }
 .browser-table .perc {
-    font-weight: bold;
-    color: #AAA;
     margin-left: 5px;
     float: right;
 }
@@ -769,7 +776,6 @@ a.cta, .cta a {
 
 .browser-table thead,
 .browser-table tfoot{
-    background: #ccc;
     font-weight: bold;
 }
 
@@ -779,14 +785,15 @@ a.cta, .cta a {
 }
 
 .browser-table .total {
-    min-width: 150px;
+    min-width: 170px;
 }
 
-.browser-table .legend {
-    background: #fff;
+table, table th, table td {
+    border-width: 0px !important; 
 }
-.browser-table .legend td {
-    color: #666;
-    font-size: 11px;
-    line-height: 1;
+
+.table-striped tbody td, .table-striped tbody th {
+    background-color: white !important;
+    border-bottom: 1px solid #eee;
+    border-bottom-width: 1px !important;
 }
