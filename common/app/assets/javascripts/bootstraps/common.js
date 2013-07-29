@@ -92,13 +92,13 @@ define([
         initialiseNavigation: function (config) {
             var navControl = new NavControl(),
                 topStories = new TopStories(),
-                account = new Account(header),
                 sections = new Sections(config),
                 search = new Search(config),
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
-                header = document.querySelector('body');
+                header = document.querySelector('body'),
+                account = new Account(header),;
 
 
             sections.init(header);
