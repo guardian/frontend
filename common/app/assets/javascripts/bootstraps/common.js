@@ -98,7 +98,7 @@ define([
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
                 header = document.querySelector('body'),
-                account = new Account(header),;
+                account = new Account(header);
 
 
             sections.init(header);
