@@ -17,31 +17,41 @@
 .is-active .i-menu {
     @extend .i-menu-active;
 
-    .svg & {
-        @extend .svg-i-menu-active;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-menu-active;
+        }
     }
 }
 
 .is-active .i-search {
     @extend .i-search-blue;
 
-    .svg & {
-        @extend .svg-i-search-blue;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-search-blue;
+        }
     }
 }
 
 .is-active .i-top-stories {
     @extend .i-top-stories-active;
 
-    .svg & {
-        @extend .svg-i-top-stories-active;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-top-stories-active;
+        }
     }
 }
 
-.svg .i-date {
-    background-size: 100%;
-    width: 10px;
-    height: 10px;
+.i-date {
+    @if ($svg-support) {
+        .svg & {
+            background-size: 100%;
+            width: 10px;
+            height: 10px;
+        }
+    }
 }
 
 .caption:before,
@@ -52,16 +62,20 @@ figcaption:before {
     content: '';
     margin-right: 4px;
 
-    .svg & {
-        @extend .svg-i-image;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-image;
+        }
     }
 }
 
 .story-picture__caption:before {
     @extend .i-image-white;
 
-    .svg & {
-        @extend .svg-i-image-white;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-image-white;
+        }
     }
 }
 
@@ -75,8 +89,10 @@ figcaption:before {
     margin: 21px 0 $baseline*2;
     clear: both;
 
-    .svg & {
-        @extend .svg-i-livequote-before;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-livequote-before;
+        }
     }
 }
 
@@ -88,7 +104,9 @@ figcaption:before {
     content: '';
     margin-bottom: 22px;
 
-    .svg & {
-        @extend .svg-i-livequote-after;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-livequote-after;
+        }
     }
 }

@@ -15,7 +15,7 @@
     padding-left: 28px; /* aligns with top level comment's body */
     border-left: 8px solid $darkMushroom;
 
-    @media (min-width: 768px) {
+    @include mq(768px) {
         padding-left: 44px;
         border-left-width: 16px;
     }
@@ -42,7 +42,7 @@
         margin-right: 15px;
         margin-bottom: 12px;
 
-        @media (min-width: 768px) {
+        @include mq(768px) {
             width: 60px;
             height: 60px;
         }
@@ -59,7 +59,7 @@
 .d2-username {
     font-family: $serif;
 
-    @media (min-width: 768px) {
+    @include mq(768px) {
         font-size: 1.28571428571em;
     }
 }

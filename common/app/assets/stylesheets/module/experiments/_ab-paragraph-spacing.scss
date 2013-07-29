@@ -25,7 +25,7 @@
             + p {
                 text-indent: 1.5em;
 
-                @media (min-width: $tablet) {
+                @include mq(tablet) {
                     text-indent: 26px;
                     text-indent: 2.6rem;
                 }
@@ -43,7 +43,7 @@
             margin-bottom: 24px;
             margin-bottom: 2.4rem;
 
-            @media (min-width: $tablet) {
+            @include mq(tablet) {
                 margin-bottom: 26px;
                 margin-bottom: 2.6rem;
             }
