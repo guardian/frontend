@@ -52,11 +52,11 @@ var isModern = function() {
 
 The _core_ experience is designed to work on everything, whereas the _modern_ experience is progressively enhanced with JavaScript.
 
-We only serve Javascript to browsers that cut the mustard.
+We only serve JavaScript to browsers that cut the mustard.
 
 For browsers that fail that test, we still expect the content to render, but they will not get enhancements.
 
-This ensures a graceful experience when viewing with a less capable device, or simply when, for whatever reason, the Javascript fails we can
+This ensures a graceful experience when viewing with a less capable device, or simply when, for whatever reason, the JavaScript fails we can
 turn our [escalator into stairs](http://jakearchibald.com/2013/progressive-enhancement-still-important).
 
 Take a look at these screenshots for comparison:- 
