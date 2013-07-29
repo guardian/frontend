@@ -16,7 +16,7 @@ abstract class Api(apiRootUrl: String, http: Http, jsonBodyParser: IdApiJsonBody
   // AUTH
 
   def authApp(auth: Auth): Response[AccessToken] = {
-    val response = http.GET(apiUrl("auth"), auth.parameters)
+    val response = http.GET(apiUrl("auth"), auth.parameters, auth.headers)
     jsonBodyParser.extract[AccessToken](response)
   }
 
@@ -30,13 +30,13 @@ abstract class Api(apiRootUrl: String, http: Http, jsonBodyParser: IdApiJsonBody
 
   def user(userId: String, path: Option[String] = None, auth: Auth = Anonymous): Response[User] = {
     val apiPath = "user/" + userId + path.map(prependSlashIfMissing).getOrElse("")
-    val response = http.GET(apiPath, auth.parameters)
+    val response = http.GET(apiPath, auth.parameters, auth.headers)
     jsonBodyParser.extract[User](response)
   }
 
   def me(auth: Auth, path: Option[String] = None): Response[User] = {
     val apiPath = "user/me" + path.map(prependSlashIfMissing).getOrElse("")
-    val response = http.GET(apiPath, auth.parameters)
+    val response = http.GET(apiPath, auth.parameters, auth.headers)
     jsonBodyParser.extract[User](response)
   }
 
