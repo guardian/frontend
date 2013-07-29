@@ -781,3 +781,12 @@ a.cta, .cta a {
 .browser-table .total {
     min-width: 150px;
 }
+
+.browser-table .legend {
+    background: #fff;
+}
+.browser-table .legend td {
+    color: #666;
+    font-size: 11px;
+    line-height: 1;
+}

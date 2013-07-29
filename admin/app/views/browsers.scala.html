@@ -19,16 +19,29 @@
     </p>
 
 
+
     <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{combined.map {_._2}.sum}">
         <caption>
             <input type="text" class="input-medium search-query" placeholder="Filter...">
-            Windows 5 = XP, Windows 6 = Vista.
         </caption>
         <thead>
             <tr>
                 <td>Total</td>
                 <td></td>
                 <td class="total"></td>
+            </tr>
+            <tr class="legend">
+                <td></td>
+                <td>
+                    5.0 2000<br>
+                    5.1 XP<br>
+                    5.2 Server 2003<br>
+                    6.0 Server 2008 & Vista<br>
+                    6.1 Win 7<br>
+                    6.2 Win 8<br>
+                    6.3 RT<br>
+                </td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
