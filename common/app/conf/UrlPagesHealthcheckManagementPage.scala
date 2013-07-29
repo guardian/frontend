@@ -12,11 +12,11 @@ import scala.concurrent.duration._
 
 class UrlPagesHealthcheckManagementPage(val urls: String*) extends ManagementPage with Logging with ExecutionContexts {
 
-  val path = "/management/healthcheck"
+  override val path = "/management/healthcheck"
 
   val base = "http://localhost:9000"
 
-  def get(req: HttpRequest) = {
+  override def get(req: HttpRequest) = {
     val checks = urls map { base + _ } map { url =>
       log.info(s"Healthcheck: Checking $url")
 

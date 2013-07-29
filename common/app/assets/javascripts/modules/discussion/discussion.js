@@ -24,7 +24,7 @@ define([
             config                = options.config,
             discussionId          = options.id.replace('http://gu.com', ''),
             discussionContainer   = options.discussionContainer || '.article__discussion',
-            articleContainer      = options.articleContainer || '.article__container',
+            articleContainer      = options.articleContainer || '.js-article__container',
             mediaPrimary          = options.mediaPrimary || '.media-primary',
             commentsHaveLoaded    = false,
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
@@ -84,9 +84,9 @@ define([
                                '</div>';
 
                 if(bylineNode.length) {
-                    bylineNode.replaceWith(tabsHtml);
+                    bylineNode.addClass('byline--cloned').after(tabsHtml);
                 } else {
-                    bonzo(context.querySelector('.article__container')).before(tabsHtml);
+                    bonzo(context.querySelector('.js-article__container')).before(tabsHtml);
                 }
                 Array.prototype.forEach.call(context.querySelectorAll(".js-commentcount__number"), function(el) {
                     el.innerHTML = commentCount;

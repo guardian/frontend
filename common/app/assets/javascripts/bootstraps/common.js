@@ -14,11 +14,13 @@ define([
     'modules/router',
     'modules/images',
     'modules/navigation/top-stories',
+    'modules/navigation/account',
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
     'modules/navigation/australia',
     'modules/navigation/edition-switch',
+    'modules/navigation/platform-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
@@ -47,11 +49,13 @@ define([
     Router,
     Images,
     TopStories,
+    Account,
     Sections,
     Search,
     NavControl,
     Australia,
     EditionSwitch,
+    PlatformSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
@@ -92,12 +96,14 @@ define([
                 search = new Search(config),
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
-                header = document.querySelector('body');
-
+                platforms = new PlatformSwitch(),
+                header = document.querySelector('body'),
+                account = new Account(header);
 
             sections.init(header);
             navControl.init(header);
             topStories.load(config, header);
+            account.init();
             search.init(header);
             aus.init(header);
 
@@ -154,6 +160,12 @@ define([
             // Register as a page view
             common.mediator.on('module:lightbox-gallery:loaded', function(config, context) {
                 common.mediator.emit('page:common:deferred:loaded', config, context);
+            });
+        },
+        
+        runAbTests: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                ab.run(config, context);
             });
         },
 
@@ -218,6 +230,28 @@ define([
 
             });
 
+        },
+
+        // Temporary - for a user zoom survey
+        paragraphSpacing: function () {
+            var key = 'paragraphSpacing';
+            common.mediator.on('page:common:ready', function(config, context) {
+                var typographyPrefs = userPrefs.get(key);
+                switch (typographyPrefs) {
+                    case 'none':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing');
+                        break;
+                    case 'indents':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing-indents');
+                        break;
+                    case 'more':
+                        common.$g('body').addClass('test-paragraph-spacing--more-spacing');
+                        break;
+                    case 'clear':
+                        userPrefs.remove(key);
+                        break;
+                }
+            });
         },
 
         loadAdverts: function () {
@@ -297,6 +331,7 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
@@ -309,6 +344,7 @@ define([
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
+            modules.paragraphSpacing();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

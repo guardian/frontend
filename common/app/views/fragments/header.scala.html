@@ -1,5 +1,6 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import conf.Switches.SearchSwitch
+@import conf.Switches.IdentityAccountNavigationSwitch
 
 <header id="header" role="banner" data-link-name="global navigation: header">
     <div class="header__inner gs-container cf">
@@ -36,6 +37,15 @@
             <span>Top stories</span>
             <i class="i i-top-stories"></i>
         </a>
+
+        @if(IdentityAccountNavigationSwitch.isSwitchedOn) {
+        <a href="/identity/signin" data-link-name="User account"
+            class="control control--account js-hidden">
+            <i class="i i-nav-divider"></i>
+            <span class="js-account-info control--account__info">Your account</span>
+            <i class="i i-account"></i>
+        </a>
+        }
 
         <div class="nav-popup-topstories nav-popup nav-popup--box is-off" data-link-context="front-trails/news"></div>
 

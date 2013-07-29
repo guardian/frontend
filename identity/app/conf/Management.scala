@@ -9,10 +9,7 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new ManagementPage {
-      val path: String = "/management/healthcheck"
-      def get(req: HttpRequest): Response = PlainTextResponse("OK")
-    },
+    new UrlPagesHealthcheckManagementPage("/identity/signin"),
     new LogbackLevelPage(applicationName)
   )
 }

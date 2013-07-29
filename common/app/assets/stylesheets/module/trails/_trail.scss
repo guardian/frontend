@@ -7,16 +7,16 @@
     overflow: hidden;
     margin: 0;
     padding: $baseline*3 0 $baseline*3;
-
 }
 
-
-.trail--featured + .trail--thumbnail,
-.trail--thumbnail + .trail--thumbnail {
-    border-top: 1px solid #EDEDE7;
+.trail + .trail {
+    border-top: 1px solid $medianMushroom;
 }
 
-
+.trail + .trail--gallery,
+.trail--gallery + .trail {
+    border-top: none;
+}
 
 .trail__headline {
     @media (min-width: 25em) { @extend %type-4; }

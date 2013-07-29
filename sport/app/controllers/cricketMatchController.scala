@@ -39,6 +39,5 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
           }
       }
     }
-
   }
 }

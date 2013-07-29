@@ -1,3 +1,6 @@
+.svg-i-account { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSI+PGcgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTcuODA0IDYuMjIzaC4wMDljLjcyNC4wMDMgMS40MDUtLjI3MSAxLjg4Ni0uODE0LjQ4Mi0uNTQuNzU3LTEuMzI4Ljc1Ni0yLjMwOC4wMDEtLjk0Ny0uMjU3LTEuNzI0LS43MjktMi4yNjgtLjQ3MS0uNTQ2LTEuMTU0LS44MzYtMS45MDUtLjgzMy0uNzIxLS4wMDMtMS40MDMuMjY5LTEuODg3LjgwOS0uNDgxLjUzOC0uNzU1IDEuMzIxLS43NTQgMi4zIDAgLjk0OC4yNTYgMS43MjguNzI3IDIuMjc3LjQ2OS41NDYgMS4xNDkuODM3IDEuODk3LjgzN3oiLz48cGF0aCBkPSJNMTIuNzMxIDkuMDRoLS4wMDJjLTIuNzE2LTEuNjk3LTcuMTE4LTEuNjk3LTkuODMxIDBoLS4wMDV2LjAxN2wtLjUxOCA0LjkyMy40NTEuNzc4aDkuOTc0bC40NS0uNzc4LS41MTktNC45NHoiLz48L2c+PC9zdmc+); background-position: 0 0; background-repeat: no-repeat; }
+.svg .i-account { @extend .svg-i-account; }
+
 .svg-i-arrow-blue-down { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNy4zMTkiIHdpZHRoPSIxNSI+PHBhdGggZmlsbD0iIzAwNjk5OCIgZD0iTTcuNTg3IDUuMDI5bC03LjU4Ny01LjAyOXYxLjE1OWw3LjU4NyA2LjE2IDcuNDEzLTYuMTZ2LTEuMTU5bC03LjQxMyA1LjAyOXoiLz48L3N2Zz4=); background-position: 0 0; background-repeat: no-repeat; }
 .svg .i-arrow-blue-down { @extend .svg-i-arrow-blue-down; }
 

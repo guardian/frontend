@@ -13,8 +13,8 @@ class TopBarFragments @Inject()(cookieDecoder: FrontendIdentityCookieDecoder) ex
       () => {
         request.cookies.get("GU_U")
           .flatMap(cookie => cookieDecoder.getUserDataForGuU(cookie.value))
-          .map(cookieData => views.html.topbar.signedin(cookieData))
-          .getOrElse(views.html.topbar.notsignedin())
+          .map(cookieData => views.html.fragments.topbar.signedin(cookieData))
+          .getOrElse(views.html.fragments.topbar.notsignedin())
       },
       3600
     )
