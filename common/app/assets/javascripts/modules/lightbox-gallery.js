@@ -81,7 +81,7 @@ define(["bean",
 
             bean.on(window, 'orientationchange', function() {
                 self.layout();
-                if (self.getOrientation() === 'landscape') {
+                if (detect.getOrientation() === 'landscape') {
                     self.jumpToContent();
                 }
             });
@@ -283,7 +283,7 @@ define(["bean",
         };
 
         this.layout = function() {
-            var orientation = self.getOrientation();
+            var orientation = detect.getOrientation();
 
             // Make overlay large enough to allow the browser chrome to be hidden
             overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
@@ -298,11 +298,6 @@ define(["bean",
                 $images.removeAttr('style');
             }
 
-        };
-
-        // Utils
-        this.getOrientation = function() {
-            return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
         };
 
         this.jumpToContent = function() {
