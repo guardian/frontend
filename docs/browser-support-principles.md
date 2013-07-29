@@ -61,8 +61,8 @@ turn our [escalator into stairs](http://jakearchibald.com/2013/progressive-enhan
 
 Take a look at these screenshots for comparison:- 
 
-- [IE 8](/images/ie8_basic.png) - basic version as visible in IE8.
-- [Chrome 28](/images/chrome_full.png) - full JS version as seen in Chrome.
+- [IE 8](/docs/images/ie8_basic.png) - basic version as visible in IE8.
+- [Chrome 28](/docs/images/chrome_full.png) - full JS version as seen in Chrome.
 
 ### Browser support table
 
