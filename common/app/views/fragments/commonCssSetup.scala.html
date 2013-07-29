@@ -4,12 +4,12 @@
     @Html(Head.css)
 </style>
 <!--<![endif]-->
+
+@* any images in head need to go here (or they'll be relative to the page)} *@
 <style type="text/css">
-    /* any images in head need to go here (or they'll be relative to the page) */
     .i,.caption:before,figcaption:before { background-image: url(@Static("images/global/sprite.png")); }
     .is-updating { background-image: url(@Static("images/auto-update-activity.gif")); }
 </style>
-<!--<![endif]-->
 
 <!--[if (lt IE 9) & (!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.min.css")" />
