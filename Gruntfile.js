@@ -28,6 +28,7 @@ module.exports = function (grunt) {
                     debugInfo: (isDev) ? true : false,
                     style: (isDev) ? 'nested' : 'compressed',
                     loadPath: [
+                        'common/app/assets/stylesheets/components/sass-mq',
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
                         'common/app/assets/stylesheets/components/normalize-scss'
                     ]
