@@ -205,24 +205,23 @@ span.control__menu.i-menu {
         position: absolute;
         top: 0;
         right: 178px;
-
-        &.control--right {
-            right: 0;
-        }
-
+        white-space: nowrap;
     }
+}
 
-    span {
-        display: none;
-        height: 28px;
-        vertical-align: top;
-        line-height: 28px;
-        margin-right: $baseline*2;
-        margin-left: $baseline*2;
+.control--account__info {
+    display: none;
+    height: 28px;
+    vertical-align: top;
+    line-height: 28px;
+    margin-right: $baseline*2;
+    margin-left: $baseline*2;
 
-        @media (min-width: 34em) {
-            display: inline-block;
-        }
+    @media (min-width: 34em) {
+        display: inline-block;
+        max-width: 85px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 
