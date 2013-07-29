@@ -74,6 +74,17 @@ object Analytics extends implicits.Dates with implicits.Tuples with implicits.St
 
     parsed.toMap
   }
+  
+  def getPageviewsByOperatingSystemAndBrowser(): Map[String, Long] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/pageviews-by-operating-system-and-browser.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    val parsed: List[(String, Long)] = lines map { CSV.parse } collect {
+      case List(operatingSystemAndBrowserAndVersion, total) => (operatingSystemAndBrowserAndVersion, total.toLong)
+    }
+
+    parsed.toMap
+  }
 
   def getPageviewsPerUserByDay(): Map[DateMidnight, Double] = {
     val uptyped: List[(DateMidnight, Double)] = getPageviewsPerUserByDayDateExpanded collect {
