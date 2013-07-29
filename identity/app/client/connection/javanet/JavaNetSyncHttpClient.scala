@@ -12,18 +12,18 @@ import client.connection.HttpResponse
 // an implementation using java.net for Google AppEngine
 class JavaNetSyncHttpClient extends Http {
 
-  override def doGET(urlString: String, parameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override protected def doGET(urlString: String, parameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
     getConnection(urlString, parameters, headers, "GET")
       .right.flatMap(extractHttpResponse)
   }
 
-  override def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override protected def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
     getConnection(url, urlParameters, headers, "POST").right
       .flatMap(writeBodyContent(_, body)).right
       .flatMap(extractHttpResponse)
   }
 
-  override def doDELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override protected def doDELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
     getConnection(url, urlParameters, headers, "DELETE").right
       .flatMap(connection => {
         bodyOpt.foreach(writeBodyContent(connection, _))
@@ -35,15 +35,19 @@ class JavaNetSyncHttpClient extends Http {
     val separator = if (url.contains("?")) "&" else "?"
     url + {
       if (params.isEmpty) ""
-      else separator + params.map {
+      else params.map {
         case (k, v) => URLEncoder.encode(k, "UTF-8") + "=" + URLEncoder.encode(v, "UTF-8")
       }.mkString(separator, "&", "")
     }
   }
 
-  private def getConnection(url: String, urlParameters: Parameters, headers: Parameters, method: String): Response[HttpURLConnection] = {
+  protected def getURL(url: String): HttpURLConnection = {
+    new URL(url).openConnection.asInstanceOf[HttpURLConnection]
+  }
+
+  def getConnection(url: String, urlParameters: Parameters, headers: Parameters, method: String): Response[HttpURLConnection] = {
     try {
-      val connection = new URL(addQueryString(url, urlParameters)).openConnection.asInstanceOf[HttpURLConnection]
+      val connection = getURL(addQueryString(url, urlParameters))
       connection.setRequestMethod(method)
       headers.foreach { case (k, v) => connection.setRequestProperty(k, v) }
       Right(connection)
@@ -56,10 +60,22 @@ class JavaNetSyncHttpClient extends Http {
         logger.error("ProtocolException", e)
         Left(List(Error("ProtocolException", e.getMessage)))
       }
+      case e: IllegalStateException => {
+        logger.error("IllegalStateException, already connected and attempting to add request header", e)
+        Left(List(Error("IllegalStateException", e.getMessage)))
+      }
+      case e: NullPointerException => {
+        logger.error("NullPointerException", e)
+        Left(List(Error("NullPointerException", e.getMessage)))
+      }
+      case e: IOException => {
+        logger.error("IOException opening connection", e)
+        Left(List(Error("IOException", e.getMessage)))
+      }
     }
   }
 
-  private def writeBodyContent(connection: HttpURLConnection, body: String): Response[HttpURLConnection] = {
+  def writeBodyContent(connection: HttpURLConnection, body: String): Response[HttpURLConnection] = {
     try {
       connection.setDoOutput(true)
       val writer = new OutputStreamWriter(connection.getOutputStream, "UTF-8")
@@ -76,7 +92,7 @@ class JavaNetSyncHttpClient extends Http {
         Left(List(Error("NullPointerException", e.getMessage)))
       }
       case e: IOException => {
-        logger.error("IOException while writing body", e)
+        logger.error("IOException while writing request body", e)
         Left(List(Error("IOException", e.getMessage)))
       }
     }
@@ -90,7 +106,7 @@ class JavaNetSyncHttpClient extends Http {
       Right(new HttpResponse(responseBody, connection.getResponseCode, connection.getResponseMessage))
     } catch {
       case e: IOException => {
-        logger.error("IOException", e)
+        logger.error("IOException while extracting response body", e)
         Left(List(Error("IOException", e.getMessage)))
       }
     }

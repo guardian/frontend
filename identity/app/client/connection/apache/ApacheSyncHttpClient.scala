@@ -31,27 +31,24 @@ class ApacheSyncHttpClient extends Http {
 
       httpClient.executeMethod(method)
 
-      val statusLine = method.getStatusLine
-      val responseBody = Option(method.getResponseBodyAsStream)
-        .map(Source.fromInputStream(_).mkString)
-        .getOrElse("")
+      val responseBody = Option(method.getResponseBodyAsString).getOrElse("")
 
-      Right(new HttpResponse(responseBody, statusLine.getStatusCode, statusLine.getReasonPhrase))
+      Right(new HttpResponse(responseBody, method.getStatusCode, method.getStatusText))
     } catch {
-      case e: IOException => {
-        logger.error("IOException while attempting %s on %s".format(method.getName, method.getURI), e)
-        Left(List(Error("IOException", e.getMessage)))
-      }
       case e: HttpException => {
         logger.error("HttpException while attempting %s on %s".format(method.getName, method.getURI), e)
         Left(List(Error("HttpException", e.getMessage)))
+      }
+      case e: IOException => {
+        logger.error("IOException while attempting %s on %s".format(method.getName, method.getURI), e)
+        Left(List(Error("IOException", e.getMessage)))
       }
     } finally {
       method.releaseConnection()
     }
   }
 
-  override def doGET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override protected def doGET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
     try {
       val method = new GetMethod(url)
       execute(method, urlParameters, headers)
@@ -60,7 +57,7 @@ class ApacheSyncHttpClient extends Http {
         logger.error("IllegalArgumentException (invalid URI) while attempting GET on %s".format(url), e)
         Left(List(Error("IllegalArgumentException", e.getMessage)))
       }
-      case e: IllegalArgumentException => {
+      case e: IllegalStateException => {
         logger.error("IllegalStateException (unrecognised URI protocol) while attempting GET on %s".format(url), e)
         Left(List(Error("IllegalStateException", e.getMessage)))
       }
@@ -71,7 +68,7 @@ class ApacheSyncHttpClient extends Http {
     }
   }
 
-  override def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override protected def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
     try {
       val method = new PostMethod(url)
       method.setRequestEntity(new StringRequestEntity(body, "application/json", "UTF-8"))
@@ -81,7 +78,7 @@ class ApacheSyncHttpClient extends Http {
         logger.error("IllegalArgumentException (invalid URI) while attempting POST on %s".format(url), e)
         Left(List(Error("IllegalArgumentException", e.getMessage)))
       }
-      case e: IllegalArgumentException => {
+      case e: IllegalStateException => {
         logger.error("IllegalStateException (unrecognised URI protocol) while attempting POST on %s".format(url), e)
         Left(List(Error("IllegalStateException", e.getMessage)))
       }
@@ -92,7 +89,7 @@ class ApacheSyncHttpClient extends Http {
     }
   }
 
-  override def doDELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override protected def doDELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
     try {
       val method = if (bodyOpt.isDefined) {
         val deleteWithBody = new DeleteMethodWithBody(url)
@@ -105,7 +102,7 @@ class ApacheSyncHttpClient extends Http {
         logger.error("IllegalArgumentException (invalid URI) while attempting DELETE on %s".format(url), e)
         Left(List(Error("IllegalArgumentException", e.getMessage)))
       }
-      case e: IllegalArgumentException => {
+      case e: IllegalStateException => {
         logger.error("IllegalStateException (unrecognised URI protocol) while attempting DELETE on %s".format(url), e)
         Left(List(Error("IllegalStateException", e.getMessage)))
       }

@@ -12,19 +12,19 @@ trait Http extends Logging {
     case (k, v) => "%s, %s".format(k, v)
   }.mkString(",")
 
-  def doGET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse]
+  protected def doGET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse]
   def GET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
     logger.trace("GET request %s; params: %s; headers: %s".format(url, formatParams(urlParameters), formatParams(headers)))
     doGET(url, urlParameters, headers)
   }
 
-  def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse]
+  protected def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse]
   def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
     logger.trace("POST request %s; body: %s; params: %s; headers: %s".format(url, body, formatParams(urlParameters), formatParams(headers)))
     doPOST(url, body, urlParameters, headers)
   }
 
-  def doDELETE(url: String, body: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse]
+  protected def doDELETE(url: String, body: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse]
   def DELETE(url: String, body: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
     logger.trace("DELETER request %s; body: %s; params: %s; headers: %s".format(url, body.toString, formatParams(urlParameters), formatParams(headers)))
     doDELETE(url, body, urlParameters, headers)
