@@ -174,6 +174,11 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
+  val ABLightboxGalleries = Switch("A/B Tests", "ab-lightbox-galleries",
+    "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
+    safeState = Off)
+
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
