@@ -17,13 +17,13 @@ define(['jquery'], function($) {
 
         // Do basic filtering on the table
         node.on('keyup', '.search-query', _.debounce(function() {
-            var filter = this.value.toLowerCase(),
+            var filter = new RegExp(this.value, "i"), 
                 filteredTotal = 0;
 
             rows.each(function() {
                 var rowValue = this.children[1].innerHTML.toLowerCase();
 
-                if (rowValue.indexOf(filter) !== -1) {
+                if (filter.test(rowValue)) {
                     this.style.display = 'table-row';
                     filteredTotal += parseInt(this.children[2].getAttribute('data-value'), 10);
                 } else {
