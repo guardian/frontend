@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-GET     /identity/signin                               controllers.SigninController.renderForm()
-=======
 GET     /identity/signin                               @controllers.SigninController.renderForm
 POST    /identity/signin                               @controllers.SigninController.processForm
 GET     /identity/fragments/topbar/signin              @controllers.TopBarFragments.signin
->>>>>>> origin/frj-signin-fragment
