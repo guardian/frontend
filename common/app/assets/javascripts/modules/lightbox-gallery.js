@@ -74,7 +74,7 @@ define(["bean",
                 self.toggleFurniture();
             });
 
-            bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery-item', function(el) {
+            bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery__item', function(el) {
                 var index = parseInt(el.currentTarget.getAttribute('data-index'), 10);
                 self.goTo(index);
             });
@@ -206,7 +206,7 @@ define(["bean",
                 index = totalImages;
             }
 
-            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery-item'), function(el) {
+            Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__item'), function(el) {
                 var itemIndex = parseInt(el.getAttribute('data-index'), 10),
                     captionControlHeight = 35; // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
 

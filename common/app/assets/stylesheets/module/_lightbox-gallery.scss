@@ -25,7 +25,7 @@ i.gallery__watermark {
 
 }
 
-.gallery-item {
+.gallery__item {
     cursor: pointer;
 }
 
@@ -54,16 +54,16 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
         display: none;
     }
 
-    .gallery-item {
+    .gallery__item {
         float: left;
         margin: $gutter / 2;
     }
 
-    .gallery-item--portrait {
+    .gallery__item--portrait {
         @include fix-aspect-ratio(3, 4, 140px);
     }
 
-    .gallery-item--landscape {
+    .gallery__item--landscape {
         @include fix-aspect-ratio(5, 3, 140px);
     }
 
@@ -89,7 +89,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
 
 
 .gallery--fullimage-mode {
-    .gallery-item {
+    .gallery__item {
         display: none;
         text-align: center;
     }
@@ -300,7 +300,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
         position: relative;
     }
     
-    .gallery-item {
+    .gallery__item {
         float: left;
         width: 100%;
         position: relative;

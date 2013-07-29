@@ -74,11 +74,12 @@ define(['common',
             expect(document.querySelectorAll('.overlay .gallery').length).toBe(1);
         });
 
+
         it("should start in single image mode", function() {
             expect(document.querySelector('.gallery').className).toContain('gallery--full');
 
             var visibleImages = 0;
-            common.$g('.gallery-item').each(function(e) {
+            common.$g('.gallery__item').each(function(e) {
                 if (e.style.display === 'block') {
                     visibleImages += 1;
                 }
