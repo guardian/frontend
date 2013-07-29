@@ -1,11 +1,13 @@
 package client.connection.apache
 
-import org.apache.commons.httpclient.{HttpException, HttpMethod, HttpClient, NameValuePair}
+import org.apache.commons.httpclient._
 import scala.io.Source
 import org.apache.commons.httpclient.methods.{DeleteMethod, StringRequestEntity, PostMethod, GetMethod}
-import client.connection.{HttpResponse, Http}
-import client.Parameters
+import client.connection.Http
+import client.{Error, Parameters, Response}
 import java.io.IOException
+import java.lang.IllegalArgumentException
+import client.connection.HttpResponse
 
 
 // an implementation using apache http client, note this just uses the default connection manager
@@ -22,7 +24,7 @@ class ApacheSyncHttpClient extends Http {
     httpClient.getHostConfiguration.setProxy(host, port)
   }
 
-  def execute(method: HttpMethod, urlParameters: Parameters, headers: Parameters): HttpResponse = {
+  def execute(method: HttpMethod, urlParameters: Parameters, headers: Parameters): Response[HttpResponse] = {
     try {
       headers.foreach { case (k, v) => method.addRequestHeader(k, v) }
       method.setQueryString(urlParameters)
@@ -34,39 +36,83 @@ class ApacheSyncHttpClient extends Http {
         .map(Source.fromInputStream(_).mkString)
         .getOrElse("")
 
-      new HttpResponse(responseBody, statusLine.getStatusCode, statusLine.getReasonPhrase)
-//    } catch {
-//      case e: IOException => {
-//        logger.error("IOException while attempting %s".format(method.getName), e)
-//      }
-//      case e: HttpException => {
-//        logger.error("HttpException while attempting %s".format(method.getName), e)
-//      }
+      Right(new HttpResponse(responseBody, statusLine.getStatusCode, statusLine.getReasonPhrase))
+    } catch {
+      case e: IOException => {
+        logger.error("IOException while attempting %s on %s".format(method.getName, method.getURI), e)
+        Left(List(Error("IOException", e.getMessage)))
+      }
+      case e: HttpException => {
+        logger.error("HttpException while attempting %s on %s".format(method.getName, method.getURI), e)
+        Left(List(Error("HttpException", e.getMessage)))
+      }
     } finally {
       method.releaseConnection()
     }
   }
 
-  override def doGET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
-    // IllegalArgumentException, IllegalStateException
-    val method = new GetMethod(url)
-    execute(method, urlParameters, headers)
+  override def doGET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+    try {
+      val method = new GetMethod(url)
+      execute(method, urlParameters, headers)
+    } catch {
+      case e: IllegalArgumentException => {
+        logger.error("IllegalArgumentException (invalid URI) while attempting GET on %s".format(url), e)
+        Left(List(Error("IllegalArgumentException", e.getMessage)))
+      }
+      case e: IllegalArgumentException => {
+        logger.error("IllegalStateException (unrecognised URI protocol) while attempting GET on %s".format(url), e)
+        Left(List(Error("IllegalStateException", e.getMessage)))
+      }
+      case e: URIException => {
+        logger.error("URIException (URI cannot be set) while attempting GET on %s".format(url), e)
+        Left(List(Error("URIException", e.getMessage)))
+      }
+    }
   }
 
-  override def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
-    // IllegalArgumentException, IllegalStateException
-    val method = new PostMethod(url)
-    method.setRequestEntity(new StringRequestEntity(body, "application/json", "UTF-8"))
-    execute(method, urlParameters, headers)
+  override def doPOST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+    try {
+      val method = new PostMethod(url)
+      method.setRequestEntity(new StringRequestEntity(body, "application/json", "UTF-8"))
+      execute(method, urlParameters, headers)
+    } catch {
+      case e: IllegalArgumentException => {
+        logger.error("IllegalArgumentException (invalid URI) while attempting POST on %s".format(url), e)
+        Left(List(Error("IllegalArgumentException", e.getMessage)))
+      }
+      case e: IllegalArgumentException => {
+        logger.error("IllegalStateException (unrecognised URI protocol) while attempting POST on %s".format(url), e)
+        Left(List(Error("IllegalStateException", e.getMessage)))
+      }
+      case e: URIException => {
+        logger.error("URIException (URI cannot be set) while attempting POST on %s".format(url), e)
+        Left(List(Error("URIException", e.getMessage)))
+      }
+    }
   }
 
-  override def doDELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): HttpResponse = {
-    // IllegalArgumentException, IllegalStateException
-    val method = if (bodyOpt.isDefined) {
-      val deleteWithBody = new DeleteMethodWithBody(url)
-      deleteWithBody.setRequestEntity(new StringRequestEntity(bodyOpt.get, "application/json", "UTF-8"))
-      deleteWithBody
-    } else new DeleteMethod(url)
-    execute(method, urlParameters, headers)
+  override def doDELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+    try {
+      val method = if (bodyOpt.isDefined) {
+        val deleteWithBody = new DeleteMethodWithBody(url)
+        deleteWithBody.setRequestEntity(new StringRequestEntity(bodyOpt.get, "application/json", "UTF-8"))
+        deleteWithBody
+      } else new DeleteMethod(url)
+      execute(method, urlParameters, headers)
+    } catch {
+      case e: IllegalArgumentException => {
+        logger.error("IllegalArgumentException (invalid URI) while attempting DELETE on %s".format(url), e)
+        Left(List(Error("IllegalArgumentException", e.getMessage)))
+      }
+      case e: IllegalArgumentException => {
+        logger.error("IllegalStateException (unrecognised URI protocol) while attempting DELETE on %s".format(url), e)
+        Left(List(Error("IllegalStateException", e.getMessage)))
+      }
+      case e: URIException => {
+        logger.error("URIException (URI cannot be set) while attempting DELETE on %s".format(url), e)
+        Left(List(Error("URIException", e.getMessage)))
+      }
+    }
   }
 }

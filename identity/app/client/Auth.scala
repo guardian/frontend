@@ -1,6 +1,5 @@
 package client
 
-import client.Parameters
 
 trait Auth {
   def parameters: Parameters

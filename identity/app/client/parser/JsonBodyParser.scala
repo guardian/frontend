@@ -3,7 +3,7 @@ package client.parser
 import net.liftweb.json.{MappingException, DefaultFormats}
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.JsonParser._
-import client.{Logging, Error}
+import client.{Logging, Error, Response}
 import client.connection.HttpResponse
 
 trait JsonBodyParser extends Logging {
@@ -12,9 +12,11 @@ trait JsonBodyParser extends Logging {
   def responseIsError(json: JValue, statusCode: Int): Boolean = statusCode > 299
   def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error]
 
-  def extract[T](httpResponse: HttpResponse)(implicit man: Manifest[T]): Either[List[Error], T] = {
+  def extract[T](httpResponse: Response[HttpResponse])(implicit man: Manifest[T]): Response[T] = {
     try {
-      extractJsonOrError(httpResponse).right.map { _.extract[T] }
+      httpResponse.right.flatMap(response => {
+        extractJsonOrError(response).right.map { _.extract[T] }
+      })
     } catch {
       case e: MappingException => {
         logger.error("JSON mapping exception", e)
@@ -23,7 +25,7 @@ trait JsonBodyParser extends Logging {
     }
   }
 
-  def extractJsonOrError(httpResponse: HttpResponse): Either[List[Error], JValue] = {
+  def extractJsonOrError(httpResponse: HttpResponse): Response[JValue] = {
     try {
       val json = parse(httpResponse.body)
       if (responseIsError(json, httpResponse.statusCode)) Left(extractErrorFromResponse(json, httpResponse.statusCode))
