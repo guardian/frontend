@@ -1,3 +1,6 @@
+/**
+ * TODO(james): Make this use JSON when the controller supports it
+ */
 define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
     function Account(context) {
@@ -8,7 +11,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
      * @enum {string}
      */
     Account.CONFIG = {
-        contentUrl: '/identity/fragments/account',
+        contentUrl: '/identity/fragments/account-nav',
         className: 'js-account-info',
         eventName: 'modules:accountcontrol'
     };
@@ -22,14 +25,14 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
     Account.prototype.getAccountFragment = function() {
         return ajax({
             url: Account.CONFIG.contentUrl,
-            type: 'json'
+            type: 'html'
         }).then(this.emitLoadedEvent, this.emitErrorEvent);
     };
 
     /**
      * @param {Element} context
      */
-    Account.prototype.render = function(context, callback) {
+    Account.prototype.init = function(context, callback) {
         var self = this;
         common.mediator.on(Account.CONFIG.eventName + ':loaded', function(resp) {
             self.renderControl(resp);
@@ -39,11 +42,10 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
     /** */
     Account.prototype.renderControl = function(resp) {
-        var content = resp.html,
+        var content = resp,
             container = this.context.querySelector('.' + Account.CONFIG.className);
 
         bonzo(container).html(content);
-
         common.mediator.emit(Account.CONFIG.eventName + ':rendered', resp);
     };
 

@@ -11,7 +11,7 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 #Identity
 GET     /identity/signin                               @controllers.SigninController.renderForm
 POST    /identity/signin                               @controllers.SigninController.processForm
-GET     /identity/fragments/topbar/signin              @controllers.TopBarFragments.signin
+GET     /identity/fragments/account-nav                @controllers.TopBarFragments.signin
 
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)

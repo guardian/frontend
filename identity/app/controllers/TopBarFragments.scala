@@ -10,8 +10,8 @@ class TopBarFragments @Inject()(cookieDecoder: FrontendIdentityCookieDecoder) ex
   def signin = Action { implicit request =>
     request.cookies.get("GU_U")
       .flatMap(cookie => cookieDecoder.getUserDataForGuU(cookie.value))
-      .map(cookieData => Ok(views.html.topbar.signedin(cookieData)))
-      .getOrElse(Ok(views.html.topbar.notsignedin()))
+      .map(cookieData => Ok(views.html.fragments.topbar.signedin(cookieData)))
+      .getOrElse(Ok(views.html.fragments.topbar.notsignedin()))
 
   }
 

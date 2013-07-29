@@ -100,11 +100,10 @@ define([
                 header = document.querySelector('body'),
                 account = new Account(header);
 
-
             sections.init(header);
             navControl.init(header);
             topStories.load(config, header);
-            account.render();
+            account.init();
             search.init(header);
             aus.init(header);
 
