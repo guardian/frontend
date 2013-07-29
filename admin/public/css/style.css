@@ -749,3 +749,35 @@ a.cta, .cta a {
 .fronts .needs-more__num {
     font-weight: bold;
 }
+
+
+
+.browser-table {
+    width: auto;
+}
+.browser-table .perc {
+    font-weight: bold;
+    color: #AAA;
+    margin-left: 5px;
+    float: right;
+}
+
+.browser-table caption {
+    margin: 5px 0;
+    text-align: left;
+}
+
+.browser-table thead,
+.browser-table tfoot{
+    background: #ccc;
+    font-weight: bold;
+}
+
+.browser-table thead .perc,
+.browser-table tfoot .perc {
+    color: #000;
+}
+
+.browser-table .total {
+    min-width: 150px;
+}

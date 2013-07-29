@@ -18,22 +18,39 @@
        total views = @{combined.map {_._2}.sum}
     </p>
 
-    <table border="1" cellpadding="5">
 
-
+    <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{combined.map {_._2}.sum}">
+        <caption>
+            <input type="text" class="input-medium search-query" placeholder="Filter...">
+            Windows 5 = XP, Windows 6 = Vista.
+        </caption>
+        <thead>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td class="total"></td>
+            </tr>
+        </thead>
+        <tbody>
         @combined.toList.sortBy{_._2}.reverse.take(300).zipWithIndex.map { case (row, index) =>
             <tr>
                 <td>@{index + 1}</td>
                 <td>@row._1</td>
-                <td>@row._2.toInt</td>
+                <td class="format-number" data-value="@row._2.toInt">@row._2.toInt</td>
             </tr>
         }
-        
-        <caption>
-            Windows 5 = XP, Windows 6 = Vista.
-        </caption>
-
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td class="total"></td>
+            </tr>
+        </tfoot>
     </table>
+
+
+
     
     <h3>By operating system</h3>
 
@@ -44,17 +61,38 @@
     <p>
        total views = @{os.map {_._2}.sum}
     </p>
-    
-    <table border="1" cellpadding="5">
+
+    <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{os.map {_._2}.sum}">
+        <caption>
+            <input type="text" class="input-medium search-query" placeholder="Filter...">
+        </caption>
+        <thead>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td class="total"></td>
+            </tr>
+        </thead>
+        <tbody>
         @os.toList.sortBy{_._2}.reverse.filter { _._2 >= 10000 }.zipWithIndex.map { case (row, index) =>
             <tr>
                 <td>@{index + 1}</td>
                 <td>@row._1</td>
-                <td>@row._2.toInt</td>
+                <td class="format-number" data-value="@row._2.toInt">@row._2.toInt</td>
             </tr>
         }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td class="total"></td>
+            </tr>
+        </tfoot>
     </table>
-    
+
+
+
     <h2>Browser vendor</h2>
     
     <p>
@@ -65,13 +103,37 @@
        total views = @{browser.map {_._2}.sum}
     </p>
 
-    <table border="1" cellpadding="5">
+    <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{browser.map {_._2}.sum}">
+        <caption>
+            <input type="text" class="input-medium search-query" placeholder="Filter...">
+        </caption>
+        <thead>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td class="total"></td>
+            </tr>
+        </thead>
+        <tbody>
         @browser.toList.sortBy{_._2}.reverse.filter { _._2 >= 10000 }.zipWithIndex.map { case (row, index) =>
             <tr>
                 <td>@{index + 1}</td>
                 <td>@row._1</td>
-                <td>@row._2.toInt</td>
+                <td class="format-number" data-value="@row._2.toInt">@row._2.toInt</td>
             </tr>
         }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td class="total"></td>
+            </tr>
+        </tfoot>
     </table>
+    </table>
+
+    <script>
+        curl(['modules/BrowserStats']);
+    </script>
 }
