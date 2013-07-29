@@ -11,10 +11,11 @@
     <h3>By operating system and browser</h3>
 
     <p>
-        Page views over 10k broken down by combined operating system and browser version
+        Page views over 10k broken down by combined operating system and browser version across mobile and desktop.
     </p>
-
+    
     <table border="1" cellpadding="5">
+        
         @combined.toList.sortBy{_._2}.reverse.take(300).zipWithIndex.map { case (row, index) =>
             <tr>
                 <td>@{index + 1}</td>
@@ -22,6 +23,11 @@
                 <td>@row._2.toInt</td>
             </tr>
         }
+        
+        <caption>
+            Windows 5 = XP, Windows 6 = Vista.
+        </caption>
+
     </table>
     
     <h3>By operating system</h3>
