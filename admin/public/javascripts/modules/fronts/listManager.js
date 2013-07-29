@@ -14,8 +14,9 @@ define([
     LatestArticles
 ) {
     var apiBase = '/fronts/api',
-        maxDisplayedLists = 3,
-        dragging = false;
+        maxDisplayableLists = 3,
+        dragging = false,
+        loc = window.location;
 
     return function(selector) {
 
@@ -23,48 +24,58 @@ define([
             schemaLookUp = {},
             self = this;
 
-        function getHashLists() {
-            return window.location.hash ? window.location.hash.slice(1).split(",") : [];
+        function queryParams() {
+            return _.object(loc.search.substring(1).split('&').map(function(keyVal){
+                return keyVal.split('=').map(function(s){
+                    return decodeURIComponent(s);
+                });
+            }));
         }
 
-        function renderLists() {
-            viewModel.listsDisplayed.removeAll();
-            getHashLists().forEach(function(id){
-                viewModel.listsDisplayed.push(new List(id, schemaLookUp[id]));
-            });
-            connectSortableLists();
+        function chosenLists() {
+            return [].concat(_.filter((queryParams().blocks || "").split(","), function(str){ return !!str; }));
         }
 
         function addList(id) {
-            var ids = getHashLists().slice(1 - maxDisplayedLists);
-            if(ids.indexOf(id) === -1) {
-                ids.push(id);
-                window.location.hash = ids.join(',');
+            if(chosenLists().indexOf(id) === -1) {
+                setDisplayedLists(chosenLists().slice(1 - maxDisplayableLists).concat(id));
             }
-        }
-
-        function displayAllEditions() {
-            window.location.hash = viewModel.editions.map(function(edition){
-                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
-            }).join(',');
         }
 
         function dropList(list) {
-            var ids = getHashLists(),
-                id = list.id || list,
-                pos = ids.indexOf(id);
-
-            if (pos > -1) {
-                ids.splice(pos, 1);
-                window.location.hash = ids.join(',');
-            }
+            setDisplayedLists(_.reject(chosenLists(), function(id){ return id === list.id; }));
         }
 
-        function limitListsDisplayed(max) {
-            if(viewModel.listsDisplayed().length > max) {
-                viewModel.listsDisplayed.shift();
-                limitListsDisplayed(max);
-            }
+        function setDisplayedLists(listIDs) {
+            var q = queryParams();
+            q.blocks = listIDs.join(',');
+            q = _.pairs(q).map(function(p){
+                return p[0] + (p[1] ? '=' + p[1] : '');
+            }).join('&');
+            history.pushState({}, "", loc.pathname + '?' + q);
+            renderLists();
+        }
+
+        function displayAllEditions() {
+            setDisplayedLists(viewModel.editions.map(function(edition){
+                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
+            }));
+        }
+
+        function renderLists() {
+            var chosen = chosenLists();
+            viewModel.listsDisplayed.remove(function(list){
+                if (chosen.indexOf(list.id) === -1) {
+                    return true;
+                } else {
+                    chosen = _.without(chosen, list.id);
+                    return false;
+                }    
+            });
+            chosen.forEach(function(id){
+                viewModel.listsDisplayed.push(new List(id, schemaLookUp[id]));
+            });
+            connectSortableLists();
         }
 
         function connectSortableLists() {
@@ -231,7 +242,7 @@ define([
                 knockout.applyBindings(viewModel);
 
                 renderLists();
-                window.onhashchange = renderLists;
+                window.onpopstate = renderLists;
 
                 startPoller();
                 viewModel.latestArticles.search();
