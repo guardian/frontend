@@ -74,8 +74,8 @@ Here are the browsers and devices we currently regularly test on:-
 
 -  IE 10
 -  IE 9
--  Firefox 15+
--  Chrome 
+-  Firefox (latest stable)
+-  Chrome (latest stable)
 -  Safari 5+
 
 ### Mobile / Tablet
