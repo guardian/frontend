@@ -2,9 +2,9 @@
 body { background-color: #fff; margin: 0 auto; max-width: 90%; padding-top: 30px; padding-bottom: 1000px; }
 
 .charts {
-    max-width: 100%;
-    margin-left: -40px;
+    width: 50%;
     margin-bottom: 50px;
+    float: left;
 }
 
 header {
