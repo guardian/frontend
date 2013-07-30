@@ -22,7 +22,7 @@ define(['common', 'ajax', 'bonzo'], function(common, ajax, bonzo) {
      * @return {Reqwest} the reqwest promise
      */
     Profile.prototype.getNavigationFragment = function() {
-        return t = ajax({
+        return ajax({
             url: Profile.CONFIG.contentUrl,
             type: 'json'
         }).then(this.emitLoadedEvent, this.emitErrorEvent);
