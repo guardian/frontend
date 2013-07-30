@@ -40,11 +40,8 @@ define([
         this.load();
     }
 
-    List.prototype.asObservableProps = function(props, obj) {
+    List.prototype.asObservableProps = function(props) {
         return _.object(props.map(function(prop){
-            if (obj) {
-                obj[prop] = ko.observable();
-            }
             return [prop, ko.observable()];
         }));
     };
