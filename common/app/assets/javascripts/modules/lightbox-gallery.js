@@ -280,7 +280,7 @@ define(["bean",
                     el.src = el.getAttribute('data-fullsrc');
                 }
             });
-        }
+        };
 
         this.toggleFurniture = function() {
             bonzo(galleryNode).toggleClass('gallery--hide-furniture');
