@@ -54,6 +54,10 @@ define(['common', 'bonzo', 'ajax'], function (common, bonzo, ajax) {
             return;
         }
 
+        if (!config.switches.liveCricket) {
+            return;
+        }
+
         var firstCricketBlock = bonzo(cricketElement);
 
         ajax({

@@ -24,7 +24,7 @@ class Parser {
     mapTeamsWithIds( xml \ "PlayerDetail" \ "Team" )
 
     Match(
-      parseTeams( xml \ "PlayerDetail" \ "Team"),
+      parseTeams(xml),
       parseInnings( xml \ "Innings"),
       matchDetail.competitionName,
       matchDetail.description,
@@ -70,9 +70,9 @@ class Parser {
   {
     // Construct a string consisting of the team name and an innings index.
     inningsId match {
-      case 1 => s"${teams(battingTeamId)} 1st Innings"
-      case 2 => s"${teams(battingTeamId)} 1st Innings"
-      case _ => s"${teams(battingTeamId)} 2nd Innings"
+      case 1 => s"${teams(battingTeamId)} first innings"
+      case 2 => s"${teams(battingTeamId)} first innings"
+      case _ => s"${teams(battingTeamId)} second innings"
     }
   }
 
@@ -86,13 +86,25 @@ class Parser {
     parseOfficials(matchDetail \ "Officials")
   )
 
-  private def parseTeams(teams: NodeSeq) :List[Team] =
-    teams.map { team =>
-      Team( (team \ "@team_name").text,
-            (team \ "@team_id").text.toInt,
-            (team \ "@home_or_away").text,
-            parseTeamLineup(team \ "Player"))
-    }.toList
+  private def parseTeams(matchSummary: NodeSeq) :List[Team] =
+    // It is possible for the feed to return a match summary with no Player Detail.
+    // In this case, use the match detail to generate a hollow team.
+    (matchSummary \ "PlayerDetail" \ "Team") match {
+      case empty if (empty.isEmpty ) => List(
+                                            Team( (matchSummary \ "MatchDetail" \ "@home_team").text,
+                                                  (matchSummary \ "MatchDetail" \ "@home_team_id").text.toInt,
+                                                  "home",Nil),
+                                            Team( (matchSummary \ "MatchDetail" \ "@away_team").text,
+                                                  (matchSummary \ "MatchDetail" \ "@away_team_id").text.toInt,
+                                                  "away",Nil))
+      case teams => teams.map { team =>
+                      Team( (team \ "@team_name").text,
+                        (team \ "@team_id").text.toInt,
+                        (team \ "@home_or_away").text,
+                        parseTeamLineup(team \ "Player"))
+                    }.toList
+
+    }
 
   private def parseTeamLineup(lineup: NodeSeq) :List[String] =
     lineup.map { player => player \ "@player_name" text }.toList
@@ -157,9 +169,14 @@ class Parser {
     }.toList
 
   private def parseOfficials(officials: NodeSeq) :List[String]=
-    List(s"${(officials \ "@official_1_first_name").text} ${(officials \ "@official_1_last_name").text}",
-         s"${(officials \ "@official_2_first_name").text} ${(officials \ "@official_2_last_name").text}",
-         s"${(officials \ "@official_3_first_name").text} ${(officials \ "@official_3_last_name").text}",
-         s"${(officials \ "@official_4_first_name").text} ${(officials \ "@official_4_last_name").text}",
-         s"${(officials \ "@official_5_first_name").text} ${(officials \ "@official_5_last_name").text}")
+    // If the feed has empty string officials, just return  default string
+    (officials \ "@official_1_id").text match {
+      case empty:String if (empty.isEmpty) => List("Umpires yet to be announced")
+      case _ =>
+        List(s"${(officials \ "@official_1_first_name").text} ${(officials \ "@official_1_last_name").text}",
+             s"${(officials \ "@official_2_first_name").text} ${(officials \ "@official_2_last_name").text}",
+             s"${(officials \ "@official_3_first_name").text} ${(officials \ "@official_3_last_name").text}",
+             s"${(officials \ "@official_4_first_name").text} ${(officials \ "@official_4_last_name").text}",
+             s"${(officials \ "@official_5_first_name").text} ${(officials \ "@official_5_last_name").text}")
+    }
 }

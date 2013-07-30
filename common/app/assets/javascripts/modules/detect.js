@@ -206,8 +206,7 @@ define(['modules/userPrefs'], function (userPrefs) {
         os = getMobileOS();
         // iOS
         if (os.name === 'iOS' && os.version >= 6) {
-            // This'll be true only for iPhone5:
-            return window.devicePixelRatio >= 2 && screen.availHeight === 548;
+            return true;
         }
         /*
         // Android
@@ -216,6 +215,10 @@ define(['modules/userPrefs'], function (userPrefs) {
         }
         */
         return false;
+    }
+
+    function getOrientation() {
+        return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
     return {
@@ -229,7 +232,8 @@ define(['modules/userPrefs'], function (userPrefs) {
         getVideoFormatSupport: getVideoFormatSupport,
         hasSvgSupport: hasSvgSupport,
         hasTouchScreen: hasTouchScreen,
-        hasPushStateSupport: hasPushStateSupport
+        hasPushStateSupport: hasPushStateSupport,
+        getOrientation: getOrientation
     };
 
 });

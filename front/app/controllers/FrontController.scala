@@ -9,11 +9,14 @@ import model.Trailblock
 import Switches.EditionRedirectSwitch
 
 // TODO, this needs a rethink, does not seem elegant
+
+abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
+
 object FrontPage {
 
   private val fronts = Seq(
 
-    new MetaData {
+    new FrontPage(isNetworkFront = false) {
       override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
       override val id = "australia"
       override val section = "australia"
@@ -26,7 +29,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
+    new FrontPage(isNetworkFront = false) {
       override val canonicalUrl = Some("http://www.guardian.co.uk/sport")
       override val id = "sport"
       override val section = "sport"
@@ -40,7 +43,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
+    new FrontPage(isNetworkFront = false) {
       override val canonicalUrl = Some("http://www.guardian.co.uk/money")
       override val id = "money"
       override val section = "money"
@@ -54,7 +57,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
+    new FrontPage(isNetworkFront = false) {
       override val canonicalUrl = Some("http://www.guardian.co.uk/commentisfree")
       override val id = "commentisfree"
       override val section = "commentisfree"
@@ -68,7 +71,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
+    new FrontPage(isNetworkFront = false) {
       override val canonicalUrl = Some("http://www.guardian.co.uk/business")
       override val id = "business"
       override val section = "business"
@@ -82,7 +85,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
+    new FrontPage(isNetworkFront = false) {
       override val canonicalUrl = Some("http://www.guardian.co.uk/culture")
       override val id = "culture"
       override val section = "culture"
@@ -97,7 +100,7 @@ object FrontPage {
     },
 
     //TODO important this one is last for matching purposes
-    new MetaData {
+    new FrontPage(isNetworkFront = true) {
       override val canonicalUrl = Some("http://www.guardian.co.uk")
       override val id = ""
       override val section = ""
@@ -111,7 +114,7 @@ object FrontPage {
     }
   )
 
-  def apply(path: String): Option[MetaData] = fronts.find(f => path.startsWith(f.id))
+  def apply(path: String): Option[FrontPage] = fronts.find(f => path.startsWith(f.id))
 
 }
 

@@ -42,6 +42,9 @@ object Switches extends Collections {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = Off)
 
+  val BetaServerSwitch = Switch("Beta", "beta",
+    "If this is switced on users with a #beta in the URL will be messaged",
+    safeState = Off)
 
   // Advertising Switches
 
@@ -156,6 +159,10 @@ object Switches extends Collections {
     "If this switch is on, editionalised pages will redirect from the root to the appropriate edition, e.g. culture -> uk/culture (only on www.theguardian.com)",
     safeState = Off)
 
+  val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
+    "ShowsIf this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
+    safeState = Off)
+
 
   // A/B Test Switches
 
@@ -170,6 +177,11 @@ object Switches extends Collections {
   val ABAa = Switch("A/B Tests", "ab-aa",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
+
+  val ABLightboxGalleries = Switch("A/B Tests", "ab-lightbox-galleries",
+    "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
+    safeState = Off)
+
 
   // Sport Switch
 
@@ -207,6 +219,7 @@ object Switches extends Collections {
     SocialSwitch,
     SearchSwitch,
     ImageServerSwitch,
+    BetaServerSwitch,
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
@@ -216,7 +229,8 @@ object Switches extends Collections {
     ABAa,
     LightboxGalleriesSwitch,
     EditionRedirectSwitch,
-    LiveCricketSwitch
+    LiveCricketSwitch,
+    IdentityProfileNavigationSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
