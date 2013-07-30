@@ -174,7 +174,7 @@ define([
             }
         };
 
-        function startPoller() {
+        function _startPoller() {
             setInterval(function(){
                 viewModel.listsDisplayed().forEach(function(list){
                     if (!dragging) {
@@ -183,6 +183,7 @@ define([
                 });
             }, 5000);
         }
+        var startPoller = _.once(_startPoller);
 
         function fetchSchema(callback) {
             reqwest({
