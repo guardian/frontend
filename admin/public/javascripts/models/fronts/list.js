@@ -12,7 +12,7 @@ define([
     ContentApi
 ) {
 
-    function List(id, opts) {
+    function List(id) {
         var self = this;
 
         this.id = id;
@@ -171,6 +171,7 @@ define([
             }
         });
 
+        // Only refresh config properties if they're not currently being edited
         if (!this.state.editingConfig()) {
             _.keys(this.config).forEach(function(key){
                 self.config[key](opts[key]);

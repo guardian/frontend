@@ -20,7 +20,6 @@ define([
     return function(selector) {
 
         var viewModel = {},
-            schemaLookUp = {},
             self = this;
 
         function queryParams() {
@@ -74,7 +73,7 @@ define([
                 }    
             });
             chosen.forEach(function(id){
-                viewModel.listsDisplayed.push(new List(id, schemaLookUp[id]));
+                viewModel.listsDisplayed.push(new List(id));
             });
             connectSortableLists();
         }
@@ -191,15 +190,6 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    // Make a flat version of schema for lookup by id path, e.g. "uk/news/top-stories" 
-                    [].concat(resp.editions).forEach(function(edition){
-                        [].concat(edition.sections).forEach(function(section){
-                            [].concat(section.blocks).forEach(function(block){
-                                schemaLookUp[edition.id + '/' + section.id + '/' + block.id] = block;
-                            });
-                        });
-                    });
-
                     viewModel.editions = resp.editions;
                     if (typeof callback === 'function') { callback(); }
                 },
