@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
+import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Asset }
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.Reference
@@ -23,8 +23,13 @@ class Content(
     .filter(_.safeFields.isDefinedAt("stillImageUrl"))
     .map { videoAsset => Image(videoAsset.copy(file = videoAsset.safeFields.get("stillImageUrl"))) }
 
-  lazy val videoAssets: Seq[MediaAsset] = delegate.mediaAssets.filter { m: MediaAsset => m.`type` == "video" }
-  lazy val blockAds: Boolean = videoAssets.exists(_.safeFields.get("blockAds").map(_.toBoolean).getOrElse(false))
+  lazy val videoAssets: Seq[Asset] = videoElementAssets filter { _.assetType == "video" }
+  lazy val blockAds: Boolean = videoElementAssets.exists(_.typeData.get("blockAds").map(_.toBoolean).getOrElse(false))
+
+  private lazy val videoElementAssets: Seq[Asset] = {
+    val elementKey = s"gu-video-${delegate.safeFields("internalContentCode")}"
+      delegate.elements map{_(elementKey).assets} getOrElse(Nil)
+  }
 
   lazy val id: String = delegate.id
   lazy val sectionName: String = delegate.sectionName.getOrElse("")
@@ -124,10 +129,15 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   private implicit val ordering = EncodingOrdering
 
-  private val videoAsset: Option[MediaAsset] = videoAssets.headOption
-  lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil).sorted
+  lazy val encodings: Seq[Encoding] = {
+    videoAssets.toList.flatMap {
+      case Asset(_,Some(mimeType),Some(file),_) => Some(Encoding(file, mimeType))
+      case _ => None
+    }.sorted
+  }
+
   lazy val contentType = "Video"
-  lazy val source: Option[String] = videoAsset.flatMap(_.safeFields.get("source"))
+  lazy val source: Option[String] = videoAssets.headOption.flatMap(_.typeData.get("source"))
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))
