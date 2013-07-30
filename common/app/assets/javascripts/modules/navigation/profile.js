@@ -1,13 +1,17 @@
 define(['common', 'ajax', 'bonzo'], function(common, ajax, bonzo) {
 
     /** @constructor */
-    function Profile(context) {
+    function Profile(config, context) {
+        // TODO(James): Wondering about passing the whole config
+        // Couples it a lot if we decide to use other bits
+        // We should perhaps be a little more specific
+        // i.e. pass the argument contentUrl
         this.context = context;
+        this.url = config.page.idUrl;
     }
 
     /** @type {Object.<string.*>} */
     Profile.CONFIG = {
-        contentUrl: '/identity/fragments/profile-nav.json',
         eventName: 'modules:profilenav',
         classes: {
             container: 'control--profile',
@@ -18,12 +22,16 @@ define(['common', 'ajax', 'bonzo'], function(common, ajax, bonzo) {
     /** @type {Element|null} */
     Profile.prototype.context = null;
 
+    /** @type {string|null} */
+    Profile.prototype.apiUrl = null;
+
     /**
      * @return {Reqwest} the reqwest promise
      */
     Profile.prototype.getNavigationFragment = function() {
+        var url = this.url + '/fragments/profile-nav.json';
         return ajax({
-            url: Profile.CONFIG.contentUrl,
+            url: url,
             type: 'json'
         }).then(this.emitLoadedEvent, this.emitErrorEvent);
     };
