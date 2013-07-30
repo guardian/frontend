@@ -162,7 +162,7 @@ define([
                     } 
                 }
 
-                listObj.loadIsPending(true);
+                listObj.state.loadIsPending(true);
 
                 reqwest({
                     method: 'post',

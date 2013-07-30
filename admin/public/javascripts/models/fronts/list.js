@@ -23,66 +23,44 @@ define([
         this.live         = ko.observableArray();
         this.draft        = ko.observableArray();
 
-        this.meta = {
-            lastUpdated: ko.observable(),
-            updatedBy: ko.observable(),
-            updatedEmail: ko.observable()
-        };
+        this.meta   = this.asObservableProps(['lastUpdated', 'updatedBy', 'updatedEmail']);
+        this.config = this.asObservableProps(['contentApiQuery', 'min', 'max']);
+        this.state  = this.asObservableProps(['liveMode', 'hasUnPublishedEdits', 'loadIsPending', 'editingConfig', 'timeAgo']);
 
-        this.config = {
-            contentApiQuery: ko.observable(),
-            min: ko.observable(),
-            max: ko.observable()      
-        };
-
-        this.timeAgo = ko.observable();
-        this.liveMode     = ko.observable(defaultToLiveMode);
-        this.hasUnPublishedEdits = ko.observable();
-        this.loadIsPending = ko.observable(false);
-        this.editingConfig  = ko.observable(false);
+        this.state.liveMode(defaultToLiveMode);
 
         this.needsMore = ko.computed(function() {
-            if (self.liveMode()  && self.live().length  < self.config.min()) { return true; }
-            if (!self.liveMode() && self.draft().length < self.config.min()) { return true; }
+            if (self.state.liveMode()  && self.live().length  < self.config.min()) { return true; }
+            if (!self.state.liveMode() && self.draft().length < self.config.min()) { return true; }
             return false;
         });
 
-        this.toggleShowSettings = function(){
-            this.editingConfig(!this.editingConfig());
-        };
-
         this.dropItem = function(item) {
-            reqwest({
-                method: 'delete',
-                url: apiBase + '/' + self.id,
-                type: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    item: item.id(),
-                    live: self.liveMode(),
-                    draft: true
-                })
-            }).then(
-                function(resp) {
-                    self.load();
-                },
-                function(xhr) {
-                    self.loadIsPending(false);
-                }
-            );
-            self.live.remove(item);
-            self.loadIsPending(true);
-        }
+            self.drop(item);
+        };
 
         this.load();
     }
 
+    List.prototype.asObservableProps = function(props, obj) {
+        return _.object(props.map(function(prop){
+            if (obj) {
+                obj[prop] = ko.observable();
+            }
+            return [prop, ko.observable()];
+        }));
+    };
+
+    List.prototype.toggleShowSettings = function() {
+        this.state.editingConfig(!this.state.editingConfig());
+    };
+
     List.prototype.setLiveMode = function() {
-        this.liveMode(true);
+        this.state.liveMode(true);
     };
 
     List.prototype.setDraftMode = function() {
-        this.liveMode(false);
+        this.state.liveMode(false);
     };
 
     List.prototype.publishDraft = function() {
@@ -94,33 +72,54 @@ define([
     };
 
     List.prototype.processDraft = function(publish) {
-        var self = this,
-            data = {};
+        var self = this;
 
-        data[publish ? 'publish' : 'discard'] = true;
         reqwest({
             url: apiBase + '/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
-            data: JSON.stringify(data)
+            data: JSON.stringify(publish ? {publish: true} : {discard: true})
         }).then(
             function(resp) {
                 self.load({
-                    callback: function(){ self.liveMode(true); }
+                    callback: function(){ self.state.liveMode(true); }
                 });
             },
             function(xhr) {
-                self.loadIsPending(false);
+                self.state.loadIsPending(false);
             }
         );
-        this.hasUnPublishedEdits(false);
-        this.loadIsPending(true);
+        this.state.hasUnPublishedEdits(false);
+        this.state.loadIsPending(true);
+    };
+
+    List.prototype.drop = function(item) {
+        var self = this;
+        self.live.remove(item);
+        self.state.loadIsPending(true);
+        reqwest({
+            method: 'delete',
+            url: apiBase + '/' + self.id,
+            type: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                item: item.id(),
+                live: self.state.liveMode(),
+                draft: true
+            })
+        }).then(
+            function(resp) {
+                self.load();
+            },
+            function(xhr) {
+                self.state.loadIsPending(false);
+            }
+        );
     };
 
     List.prototype.load = function(opts) {
         var self = this;
-
         opts = opts || {};
         reqwest({
             url: apiBase + '/' + this.id,
@@ -128,28 +127,30 @@ define([
         }).always(
             function(resp) {
                 self.populateMeta(resp);
-                if (opts.isRefresh && (self.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
+                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
                     return;
                 }
                 self.populateData(resp);
                 if (typeof opts.callback === 'function') { opts.callback(); } 
-                self.loadIsPending(false);
+                self.state.loadIsPending(false);
             }
         );
     };
 
     List.prototype.populateMeta = function(opts) {
         var self = this;
+        opts = opts || {};
         _.keys(this.meta).forEach(function(key){
             self.meta[key](opts[key]);
         });
-        this.timeAgo(this.getTimeAgo(opts.lastUpdated));
+        this.state.timeAgo(this.getTimeAgo(opts.lastUpdated));
     }
 
     List.prototype.populateData = function(opts) {
         var self = this;
 
         if (globals.uiBusy) { return; }
+        opts = opts || {};
 
         // Knockout doesn't seem to empty elements dragged into
         // a container when it regenerates its DOM content. So empty it first.
@@ -172,17 +173,17 @@ define([
             }
         });
 
-        if (!this.editingConfig()) {
+        if (!this.state.editingConfig()) {
             _.keys(this.config).forEach(function(key){
                 self.config[key](opts[key]);
             });
         }
 
-        this.hasUnPublishedEdits(opts.areEqual === false);
+        this.state.hasUnPublishedEdits(opts.areEqual === false);
     };
 
     List.prototype.refresh = function() {
-        if (globals.uiBusy || this.loadIsPending()) { return; }
+        if (globals.uiBusy || this.state.loadIsPending()) { return; }
         this.load({
             isRefresh: true
         });
@@ -203,7 +204,7 @@ define([
                 }
             })
         }).always(function(){
-            self.editingConfig(false);
+            self.state.editingConfig(false);
         });
     };
 
