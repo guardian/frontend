@@ -1,13 +1,17 @@
-define(['common', 'ajax', 'bonzo'], function(common, ajax, bonzo) {
+define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, Id) {
 
-    /** @constructor */
-    function Profile(config, context) {
+    /**
+     * @param {Object} config
+     * @param {Element} context
+     * @constructor
+     */
+    function Profile(context, config) {
         // TODO(James): Wondering about passing the whole config
         // Couples it a lot if we decide to use other bits
         // We should perhaps be a little more specific
         // i.e. pass the argument contentUrl
         this.context = context;
-        this.url = config.page.idUrl;
+        this.config = common.extend(config, this.config);
     }
 
     /** @type {Object.<string.*>} */
@@ -19,11 +23,29 @@ define(['common', 'ajax', 'bonzo'], function(common, ajax, bonzo) {
         }
     };
 
+    /** @type {Object.<string.*>} */
+    Profile.prototype.config = {
+        url: 'https://profile.theguardian.com',
+        useCookie: true
+    };
+
     /** @type {Element|null} */
     Profile.prototype.context = null;
 
-    /** @type {string|null} */
-    Profile.prototype.apiUrl = null;
+    /** */
+    Profile.prototype.init = function() {
+        var self = this;
+        
+        common.mediator.on(Profile.CONFIG.eventName + ':loaded', function(resp) {
+            self.renderControl(resp);
+        });
+
+        if (this.config.useCookie) {
+            this.setFragmentFromCookie();
+        } else {
+            this.getNavigationFragment();
+        }
+    };
 
     /**
      * @return {Reqwest} the reqwest promise
@@ -38,32 +60,38 @@ define(['common', 'ajax', 'bonzo'], function(common, ajax, bonzo) {
         }).then(this.emitLoadedEvent, this.emitErrorEvent);
     };
 
-    /**
-     * @return {Reqwest} the reqwest promise
-     */
-    Profile.prototype.init = function() {
-        var self = this;
-        
-        common.mediator.on(Profile.CONFIG.eventName + ':loaded', function(resp) {
-            self.renderControl(resp);
-        });
-        return this.getNavigationFragment();
+    Profile.prototype.setFragmentFromCookie = function() {
+        var user = Id.getUserFromCookie(),
+            resp = { html: user ? user.displayName : 'Sign in' };
+
+        this.emitLoadedEvent(resp);
     };
 
+    /**
+     * @param {Object} resp response from the server
+     */
     Profile.prototype.renderControl = function(resp) {
         var content = resp.html,
             contentElem = this.context.querySelector('.' + Profile.CONFIG.classes.content),
             container = this.context.querySelector('.' + Profile.CONFIG.classes.container);
+
+        console.log(content, contentElem, container);
 
         bonzo(container).removeClass('js-hidden');
         bonzo(contentElem).html(content);
         common.mediator.emit(Profile.CONFIG.eventName + ':rendered', content);
     };
 
+    /**
+     * @param {Object} resp response from the server
+     */
     Profile.prototype.emitLoadedEvent = function(resp) {
         common.mediator.emit(Profile.CONFIG.eventName + ':loaded', resp);
     };
     
+    /**
+     * @param {Object} resp response from the server
+     */
     Profile.prototype.emitErrorEvent = function(resp) {
         common.mediator.emit(Profile.CONFIG.eventName + ':error', resp);
     };

@@ -20,9 +20,23 @@ define(function () {
         document.cookie = name + "=" + value + "; path=/; expires=" + expires.toUTCString() + ";";
     }
 
+    function get(name) {
+        var nameEq = name + '=',
+            cookieVals = document.cookie.split(';'),
+            val;
+
+        for (var i = 0; i < cookieVals.length; i++) {
+            val = cookieVals[i];
+            while (val.charAt(0) == ' ') val = val.substring(1, val.length);
+            if (val.indexOf(nameEq) == 0) return val.substring(nameEq.length, val.length);
+        }
+        return null;
+    };
+
     return {
         cleanUp: cleanUp,
-        add: add
+        add: add,
+        get: get
     };
 
 });

@@ -101,7 +101,9 @@ define([
                 profile;
 
             if (config.switches.idProfileNavigation) {
-                profile = new Profile(config, header);
+                profile = new Profile(header, {
+                    url: config.idUrl
+                });
                 profile.init();
             }
 
