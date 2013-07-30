@@ -13,8 +13,7 @@ define([
     Article,
     LatestArticles
 ) {
-    var apiBase = '/fronts/api',
-        maxDisplayableLists = 3,
+    var maxDisplayableLists = 3,
         dragging = false,
         loc = window.location;
 
@@ -166,7 +165,7 @@ define([
 
                 reqwest({
                     method: 'post',
-                    url: apiBase + '/' + listId,
+                    url: globals.apiBase + '/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
@@ -188,7 +187,7 @@ define([
 
         function fetchSchema(callback) {
             reqwest({
-                url: apiBase,
+                url: globals.apiBase,
                 type: 'json'
             }).then(
                 function(resp) {

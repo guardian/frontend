@@ -11,8 +11,6 @@ define([
     Article,
     ContentApi
 ) {
-    var defaultToLiveMode = true,
-        apiBase = '/fronts/api';
 
     function List(id, opts) {
         var self = this;
@@ -20,14 +18,14 @@ define([
         this.id = id;
         this.crumbs = id.split(/\//g);
 
-        this.live         = ko.observableArray();
-        this.draft        = ko.observableArray();
+        this.live   = ko.observableArray();
+        this.draft  = ko.observableArray();
 
         this.meta   = this.asObservableProps(['lastUpdated', 'updatedBy', 'updatedEmail']);
         this.config = this.asObservableProps(['contentApiQuery', 'min', 'max']);
         this.state  = this.asObservableProps(['liveMode', 'hasUnPublishedEdits', 'loadIsPending', 'editingConfig', 'timeAgo']);
 
-        this.state.liveMode(defaultToLiveMode);
+        this.state.liveMode(globals.defaultToLiveMode);
 
         this.needsMore = ko.computed(function() {
             if (self.state.liveMode()  && self.live().length  < self.config.min()) { return true; }
@@ -75,7 +73,7 @@ define([
         var self = this;
 
         reqwest({
-            url: apiBase + '/' + this.id,
+            url: globals.apiBase + '/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
@@ -100,7 +98,7 @@ define([
         self.state.loadIsPending(true);
         reqwest({
             method: 'delete',
-            url: apiBase + '/' + self.id,
+            url: globals.apiBase + '/' + self.id,
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -122,7 +120,7 @@ define([
         var self = this;
         opts = opts || {};
         reqwest({
-            url: apiBase + '/' + this.id,
+            url: globals.apiBase + '/' + this.id,
             type: 'json'
         }).always(
             function(resp) {
@@ -192,7 +190,7 @@ define([
     List.prototype.saveConfig = function(key, val) {
         var self = this;
         reqwest({
-            url: apiBase + '/' + this.id,
+            url: globals.apiBase + '/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
