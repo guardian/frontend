@@ -28,7 +28,7 @@ class Content(
 
   private lazy val videoElementAssets: Seq[Asset] = {
     val elementKey = s"gu-video-${delegate.safeFields("internalContentCode")}"
-      delegate.elements map{_(elementKey).assets} getOrElse(Nil)
+    delegate.elements map{_(elementKey).assets} getOrElse(Nil)
   }
 
   lazy val id: String = delegate.id
@@ -130,9 +130,8 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
   private implicit val ordering = EncodingOrdering
 
   lazy val encodings: Seq[Encoding] = {
-    videoAssets.toList.flatMap {
-      case Asset(_,Some(mimeType),Some(file),_) => Some(Encoding(file, mimeType))
-      case _ => None
+    videoAssets.toList.collect {
+      case Asset(_,Some(mimeType),Some(file),_) => Encoding(file, mimeType)
     }.sorted
   }
 
