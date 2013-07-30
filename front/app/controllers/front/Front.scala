@@ -4,8 +4,6 @@ import model.Trailblock
 import common.{Edition, Logging, AkkaSupport}
 import scala.concurrent.duration._
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
-
 //Responsible for bootstrapping the front (setting up the refresh schedule)
 class Front extends AkkaSupport with Logging {
 
