@@ -1,3 +1,4 @@
+/*global escape:true */
 define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, Id) {
 
     /**
@@ -74,8 +75,6 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
         var content = resp.html,
             contentElem = this.context.querySelector('.' + Profile.CONFIG.classes.content),
             container = this.context.querySelector('.' + Profile.CONFIG.classes.container);
-
-        console.log(content, contentElem, container);
 
         bonzo(container).removeClass('js-hidden');
         bonzo(contentElem).html(content);
