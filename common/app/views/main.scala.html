@@ -1,6 +1,6 @@
 @(metaData: MetaData, switches: Seq[com.gu.management.Switchable])(head: Html)(body: Html)(implicit request: RequestHeader)
 
-<!doctype html>
+<!DOCTYPE html>
 <html class="js-off">
 <head>
     <title>@Html(metaData.webTitle)</title>
@@ -37,7 +37,9 @@
 
     @fragments.footer(metaData)
 
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.min.css")" />
+    <!--[if (gt IE 8) | (IEMobile)]><!-->
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.min.css")" />
+    <!--<![endif]-->
 
     @fragments.analytics(metaData)
     @fragments.debug()
