@@ -6,7 +6,7 @@ define([
     'models/fronts/contentApi'
 ], function(
     reqwest,
-    knockout,
+    ko,
     globals,
     Article,
     ContentApi
@@ -20,26 +20,36 @@ define([
         this.id = id;
         this.crumbs = id.split(/\//g);
 
-        this.live         = knockout.observableArray();
-        this.draft        = knockout.observableArray();
+        this.live         = ko.observableArray();
+        this.draft        = ko.observableArray();
 
-        this.lastUpdated  = knockout.observable();
-        this.timeAgo      = knockout.observable();
-        this.updatedBy    = knockout.observable();
-        this.updatedEmail = knockout.observable();
+        this.meta = {
+            lastUpdated: ko.observable(),
+            updatedBy: ko.observable(),
+            updatedEmail: ko.observable()
+        };
 
-        this.min          = knockout.observable(opts.min || 1);
-        this.max          = knockout.observable(opts.max || 50);
+        this.config = {
+            contentApiQuery: ko.observable(),
+            min: ko.observable(),
+            max: ko.observable()      
+        };
 
-        this.liveMode     = knockout.observable(defaultToLiveMode);
-        this.hasUnPublishedEdits = knockout.observable();
-        this.loadIsPending = knockout.observable(false);
+        this.timeAgo = ko.observable();
+        this.liveMode     = ko.observable(defaultToLiveMode);
+        this.hasUnPublishedEdits = ko.observable();
+        this.loadIsPending = ko.observable(false);
+        this.editingConfig  = ko.observable(false);
 
-        this.needsMore = knockout.computed(function() {
-            if (self.liveMode()  && self.live().length  < self.min()) { return true; }
-            if (!self.liveMode() && self.draft().length < self.min()) { return true; }
+        this.needsMore = ko.computed(function() {
+            if (self.liveMode()  && self.live().length  < self.config.min()) { return true; }
+            if (!self.liveMode() && self.draft().length < self.config.min()) { return true; }
             return false;
         });
+
+        this.toggleShowSettings = function(){
+            this.editingConfig(!this.editingConfig());
+        };
 
         this.dropItem = function(item) {
             reqwest({
@@ -117,14 +127,58 @@ define([
             type: 'json'
         }).always(
             function(resp) {
-                if (opts.isRefresh && (self.loadIsPending() || resp.lastUpdated === self.lastUpdated())) { 
+                self.populateMeta(resp);
+                if (opts.isRefresh && (self.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
                     return;
                 }
-                self.populateLists(resp || {});
+                self.populateData(resp);
                 if (typeof opts.callback === 'function') { opts.callback(); } 
                 self.loadIsPending(false);
             }
         );
+    };
+
+    List.prototype.populateMeta = function(opts) {
+        var self = this;
+        _.keys(this.meta).forEach(function(key){
+            self.meta[key](opts[key]);
+        });
+        this.timeAgo(this.getTimeAgo(opts.lastUpdated));
+    }
+
+    List.prototype.populateData = function(opts) {
+        var self = this;
+
+        if (globals.uiBusy) { return; }
+
+        // Knockout doesn't seem to empty elements dragged into
+        // a container when it regenerates its DOM content. So empty it first.
+        this.containerEl = this.containerEl || $('[data-list-id="' + this.id + '"]');
+        if (this.containerEl) {
+            this.containerEl.empty();
+        }
+
+        ['live', 'draft'].forEach(function(list){
+            if (self[list]) {
+                self[list].removeAll();
+            }
+            if (opts[list] && opts[list].length) {
+                opts[list].forEach(function(item) {
+                    self[list].push(new Article({
+                        id: item.id
+                    }));
+                });
+                ContentApi.decorateItems(self[list]());
+            }
+        });
+
+        if (!this.editingConfig()) {
+            _.keys(this.config).forEach(function(key){
+                self.config[key](opts[key]);
+            });
+        }
+
+        this.hasUnPublishedEdits(opts.areEqual === false);
     };
 
     List.prototype.refresh = function() {
@@ -134,45 +188,23 @@ define([
         });
     };
 
-    List.prototype.populateLists = function(opts) {
+    List.prototype.saveConfig = function(key, val) {
         var self = this;
-
-        if (globals.uiBusy) { return; }
-
-        this.lastUpdated(opts.lastUpdated);
-        this.timeAgo(this.getTimeAgo(opts.lastUpdated));
-        this.updatedBy(opts.updatedBy);
-        this.updatedEmail(opts.updatedEmail);
-
-        // Knockout doesn't seem to empty elements dragged into
-        // a container when it regenerates its DOM content. So empty it first.
-        this.containerEl = this.containerEl || $('[data-list-id="' + this.id + '"]');
-        if (this.containerEl) {
-            this.containerEl.empty();
-        }
-
-        this.live.removeAll();
-        if (opts.live && opts.live.length) {
-            opts.live.forEach(function(item) {
-                self.live.push(new Article({
-                    id: item.id
-                }));
-            });
-        }
-
-        this.draft.removeAll();
-        if (opts.draft && opts.draft.length) {
-            opts.draft.forEach(function(item) {
-                self.draft.push(new Article({
-                    id: item.id
-                }));
-            });
-        }
-
-        ContentApi.decorateItems(this.live());
-        ContentApi.decorateItems(this.draft());
-
-        this.hasUnPublishedEdits(opts.areEqual === false);
+        reqwest({
+            url: apiBase + '/' + this.id,
+            method: 'post',
+            type: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ 
+                config: {
+                    contentApiQuery: this.config.contentApiQuery(),
+                    min: parseInt(this.config.min(), 10) || undefined,
+                    max: parseInt(this.config.max(), 10) || undefined
+                }
+            })
+        }).always(function(){
+            self.editingConfig(false);
+        });
     };
 
     List.prototype.getTimeAgo = function(date) {

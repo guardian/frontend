@@ -58,8 +58,8 @@
                         <!-- ko if: timeAgo -->
                             updated <span class="list-header__meta__last-updated" data-bind="text: timeAgo"></span> 
                             by <a class="list-header__meta__user" data-bind="
-                                text: updatedBy,
-                                attr: {href: 'mailto:' + updatedEmail}
+                                text: meta.updatedBy,
+                                attr: {href: 'mailto:' + meta.updatedEmail}
                                 "></a>
                         <!-- /ko -->
                         <!-- ko ifnot: timeAgo -->
@@ -100,7 +100,27 @@
                     template: {name: 'template_article', foreach: liveMode() ? live : draft}"></div>
 
                 <div class="needs-more" data-bind="if: needsMore">
-                    Needs at least <span class="needs-more__num" data-bind="text: min"></span> articles
+                    Needs at least <span class="needs-more__num" data-bind="text: config.min"></span> 
+                    article<span data-bind="text: config.min() > 1 ? 's' : ''"></span>
+                </div>
+                <div class="list-footer" data-bind="css: {editable: editingConfig}">
+                    <a data-bind="click: toggleShowSettings">Settings</a>
+                    <div data-bind="visible: editingConfig" class="settings">
+                        <div>
+                            Number of articles:
+                        </div>
+                        <div>
+                            <input type="text" class="tiny" data-bind="value: config.min"/> Minumum
+                        </div>
+                        <div>
+                            <input type="text" class="tiny" data-bind="value: config.max"/> Maximum
+                        </div>
+                        <div>
+                            ContentApi query for trail automation:
+                            <input type="text" data-bind="value: config.contentApiQuery"/>
+                        </div>
+                        <input type="submit" class="btn" value="Save Settings" data-bind="click: saveConfig"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,7 +129,7 @@
     <script type="text/html" id="template_article">
         <div class="trail cf" data-bind="
                 attr: {'data-url': id},
-                css: {redundant: $parent.max ? (0 + $index()) >= (0 + $parent.max()) : false}
+                css: {redundant: $parent.config && $parent.config.max ? (0 + $index()) >= (0 + $parent.config.max()) : false}
             ">
 
             <a class="trail__control" data-bind="click: $parent.dropItem">

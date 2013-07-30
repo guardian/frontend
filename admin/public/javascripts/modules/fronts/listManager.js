@@ -90,6 +90,7 @@ define([
 
             sortables.sortable({
                 helper: 'clone',
+                opacity: 0.9,
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
