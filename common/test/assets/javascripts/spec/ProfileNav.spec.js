@@ -8,7 +8,7 @@ define(['common', 'fixtures', 'ajax', 'modules/navigation/profile'], function(co
             controlFixtures = {
                 id: containerId,
                 fixtures: [
-                    '<div class="' + Profile.CONFIG.className + '"></div>'
+                    '<div class="' + Profile.CONFIG.classes.content + '"></div>'
                 ]
             };
 
@@ -77,14 +77,14 @@ define(['common', 'fixtures', 'ajax', 'modules/navigation/profile'], function(co
                 server.respondWith([200, {}, '{ "html": "' + content + '" }']);
 
                 common.mediator.on('modules:profilenav:rendered', callback);
-                control.render();
+                control.init();
 
                 waitsFor(function() {
                     return callback.calledOnce === true;
                 }, 'Render to fetch content', 500);
 
                 runs(function() {
-                     expect(context.querySelector('.' + Profile.CONFIG.className).innerHTML).toEqual(content);
+                     expect(context.querySelector('.' + Profile.CONFIG.classes.content).innerHTML).toEqual(content);
                 });
             });
 
