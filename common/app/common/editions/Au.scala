@@ -100,9 +100,9 @@ object Au extends Edition(
 
   val configuredFronts = Map(
     Editionalise("", Au) -> Seq(
-      ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = false),
-      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = false),
-      ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Thumbnail), showMore = false),
+      ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       Au.cultureCustomBlock,
       Au.commentCustomBlock,
       ItemTrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
