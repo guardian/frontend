@@ -30,9 +30,11 @@ define(['common', 'ajax', 'bonzo'], function(common, ajax, bonzo) {
      */
     Profile.prototype.getNavigationFragment = function() {
         var url = this.url + '/fragments/profile-nav.json';
+
         return ajax({
             url: url,
-            type: 'json'
+            method: 'get',
+            crossOrigin: true
         }).then(this.emitLoadedEvent, this.emitErrorEvent);
     };
 

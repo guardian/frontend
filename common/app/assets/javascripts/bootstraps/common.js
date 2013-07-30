@@ -98,11 +98,11 @@ define([
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
                 header = document.querySelector('body'),
-                account;
+                profile;
 
             if (config.switches.idProfileNavigation) {
-                account = new Profile(config, header);
-                account.init();
+                profile = new Profile(config, header);
+                profile.init();
             }
 
             sections.init(header);
