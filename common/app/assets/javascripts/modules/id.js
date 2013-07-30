@@ -1,3 +1,4 @@
+/*global escape:true */
 define(['common', 'modules/cookies'], function(common, Cookies) {
     /**
      * Left this as an object as there are onlty static methods

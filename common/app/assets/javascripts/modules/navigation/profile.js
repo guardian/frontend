@@ -1,4 +1,3 @@
-/*global escape:true */
 define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, Id) {
 
     /**
