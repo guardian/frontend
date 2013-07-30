@@ -187,9 +187,9 @@ span.control__menu.i-menu {
 
 
 
-/* Account control
+/* Profile control
    ========================================================================== */
-.control--account {
+.control--profile {
     float: right;
     height: 28px;
     padding: 17px 0 13px 0;
@@ -209,7 +209,7 @@ span.control__menu.i-menu {
     }
 }
 
-.control--account__info {
+.control--profile__info {
     display: none;
     height: 28px;
     vertical-align: top;
@@ -219,13 +219,13 @@ span.control__menu.i-menu {
 
     @media (min-width: 34em) {
         display: inline-block;
-        max-width: 85px;
+        max-width: 110px;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 }
 
-.control--account .i-account {
+.control--profile .i-profile {
     margin: 5px $baseline*4 0 $baseline*2;
 
     @media (min-width: $tablet) {

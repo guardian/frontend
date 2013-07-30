@@ -14,7 +14,7 @@ define([
     'modules/router',
     'modules/images',
     'modules/navigation/top-stories',
-    'modules/navigation/account',
+    'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
@@ -49,7 +49,7 @@ define([
     Router,
     Images,
     TopStories,
-    Account,
+    Profile,
     Sections,
     Search,
     NavControl,
@@ -98,7 +98,7 @@ define([
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
                 header = document.querySelector('body'),
-                account = new Account(header);
+                account = new Profile(header);
 
             sections.init(header);
             navControl.init(header);

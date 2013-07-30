@@ -1,14 +1,14 @@
-define(['common', 'fixtures', 'ajax', 'modules/navigation/account'], function(common, fixtures, ajax, Account) {
+define(['common', 'fixtures', 'ajax', 'modules/navigation/profile'], function(common, fixtures, ajax, Profile) {
 
-    describe('Account Control', function() {
+    describe('Profile navigation', function() {
         var context,
-            control = new Account(),
+            control = new Profile(),
             server = sinon.fakeServer.create(),
-            containerId = 'account-control-container',
+            containerId = 'profile-control-container',
             controlFixtures = {
                 id: containerId,
                 fixtures: [
-                    '<div class="' + Account.CONFIG.className + '"></div>'
+                    '<div class="' + Profile.CONFIG.className + '"></div>'
                 ]
             };
 
@@ -21,7 +21,7 @@ define(['common', 'fixtures', 'ajax', 'modules/navigation/account'], function(co
         context = document.getElementById(containerId);
 
         describe('Fetching the HTML fragment', function() {
-            control = new Account();
+            control = new Profile();
 
             beforeEach(function() {
                 server = sinon.fakeServer.create();
@@ -34,32 +34,32 @@ define(['common', 'fixtures', 'ajax', 'modules/navigation/account'], function(co
 
             it('Fires a loaded event once the HTML has been fetched', function() {
                 var callback = sinon.stub();
-                common.mediator.on('modules:accountcontrol:loaded', callback);
+                common.mediator.on('modules:profilenav:loaded', callback);
 
-                server.respondWith([200, {}, '{ "html": "<i>Account fragment</i>" }']);
-                control.getAccountFragment();
+                server.respondWith([200, {}, '{ "html": "<i>Profile fragment</i>" }']);
+                control.getNavigationFragment();
 
                 waitsFor(function() {
                     return callback.calledOnce === true;
-                }, 'Account control to fetch HTML fragment', 500);
+                }, 'Profile control to fetch HTML fragment', 500);
             });
 
             it('Fires an error event when server responds badly', function() {
                 var callback = sinon.stub();
-                common.mediator.on('modules:accountcontrol:error', callback);
+                common.mediator.on('modules:profilenav:error', callback);
 
                 server.respondWith([500, {}, '{ "error": "Server did a bad bad thing" }']);
-                control.getAccountFragment();
+                control.getNavigationFragment();
 
                 waitsFor(function() {
                     return callback.calledOnce === true;
-                }, 'Account control to throw error', 500);
+                }, 'Profile control to throw error', 500);
             });
 
         });
 
         describe('Rendering the HTML fragment', function() {
-            control = new Account(context);
+            control = new Profile(context);
             
             beforeEach(function() {
                 server = sinon.fakeServer.create();
@@ -76,7 +76,7 @@ define(['common', 'fixtures', 'ajax', 'modules/navigation/account'], function(co
 
                 server.respondWith([200, {}, '{ "html": "' + content + '" }']);
 
-                common.mediator.on('modules:accountcontrol:rendered', callback);
+                common.mediator.on('modules:profilenav:rendered', callback);
                 control.render();
 
                 waitsFor(function() {
@@ -84,7 +84,7 @@ define(['common', 'fixtures', 'ajax', 'modules/navigation/account'], function(co
                 }, 'Render to fetch content', 500);
 
                 runs(function() {
-                     expect(context.querySelector('.' + Account.CONFIG.className).innerHTML).toEqual(content);
+                     expect(context.querySelector('.' + Profile.CONFIG.className).innerHTML).toEqual(content);
                 });
             });
 

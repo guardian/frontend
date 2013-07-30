@@ -159,9 +159,9 @@ object Switches extends Collections {
     "If this switch is on, editionalised pages will redirect from the root to the appropriate edition, e.g. culture -> uk/culture (only on www.theguardian.com)",
     safeState = Off)
 
-  val IdentityAccountNavigationSwitch = Switch("Feature Switches", "id-account-navigation",
-    "ShowsIf this switch is on you will see the link in the topbar taking you through to the users account or sign in..",
-    safeState = Off)
+  val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
+    "ShowsIf this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
+    safeState = On)
 
 
   // A/B Test Switches
@@ -230,7 +230,7 @@ object Switches extends Collections {
     LightboxGalleriesSwitch,
     EditionRedirectSwitch,
     LiveCricketSwitch,
-    IdentityAccountNavigationSwitch
+    IdentityProfileNavigationSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
