@@ -6,7 +6,7 @@
     clear: both;
     margin: 58px auto 0;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         margin-top: 104px;
     }
 }
@@ -24,7 +24,7 @@
     z-index: 99;
 
     /* These styles extend the top bars to the screen edges */
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         &:before,
         &:after {
             content: "";
