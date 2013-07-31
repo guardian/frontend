@@ -149,7 +149,7 @@ span.control__menu.i-menu {
     }
 
 .control--topstories .i-top-stories {
-    margin: 5px $baseline*4 0 $baseline*2;
+    margin: 5px $gutter 0 $gutter/2;
 
     @media (min-width: $tablet) {
         margin-left: 0;
@@ -226,7 +226,7 @@ span.control__menu.i-menu {
 }
 
 .control--profile .i-profile {
-    margin: 5px $baseline*4 0 $baseline*2;
+    margin: 5px $gutter 0 $gutter/2;
 
     @media (min-width: $tablet) {
         margin-left: 0;
