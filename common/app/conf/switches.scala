@@ -155,6 +155,10 @@ object Switches extends Collections {
     "If this switch is on, gallery trails are opened in a lightbox.",
     safeState = Off)
 
+  val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
+    "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -219,7 +223,9 @@ object Switches extends Collections {
     LocalNavSwitch,
     ABAa,
     LightboxGalleriesSwitch,
-    LiveCricketSwitch
+    IdentityProfileNavigationSwitch,
+    LiveCricketSwitch,
+    ABLightboxGalleries
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

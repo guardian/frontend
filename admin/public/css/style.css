@@ -414,7 +414,7 @@ a.cta, .cta a {
 }
 
 .fronts .lists .connectedList {
-    min-height: 100px;
+    min-height: 50px;
 }
 
 .fronts .lists .connectedList.pending {
@@ -629,8 +629,8 @@ a.cta, .cta a {
 }
 
 .fronts .needs-more {
+    padding: 0 0 0 10px;
     color: #d61d00;
-    padding: 5px 0 0 10px;
     font-size: 12px;
     text-transform: uppercase;    
 }
@@ -638,3 +638,75 @@ a.cta, .cta a {
 .fronts .needs-more__num {
     font-weight: bold;
 }
+
+.fronts .list-footer {
+    padding: 2px 10px 10px 10px;
+    font-size: 10px;    
+    border-top: 3px solid #ccc;
+}
+
+.fronts .list-footer.editable {
+    background-color: #eee;
+}
+
+.fronts .list-footer a {
+    color: #666;
+    cursor: pointer;
+}
+
+.fronts .list-footer .settings input {
+}
+
+.fronts .list-footer .settings input.tiny {
+    width: 40px;
+    text-align: right;
+}
+
+/** http://localhost:9003/analytics/browsers */
+
+#usage {
+    font-family: Georgia, serif;
+}
+
+#usage h1, #usage h2, #usage h3 {
+    font-weight: normal; 
+}
+
+.browser-table {
+    width: 100%;
+    max-width: 600px;
+}
+.browser-table .perc {
+    margin-left: 5px;
+    float: right;
+}
+
+.browser-table caption {
+    margin: 5px 0;
+    text-align: left;
+}
+
+.browser-table thead,
+.browser-table tfoot{
+    font-weight: bold;
+}
+
+.browser-table thead .perc,
+.browser-table tfoot .perc {
+    color: #000;
+}
+
+.browser-table .total {
+    min-width: 170px;
+}
+
+table.browser-table, table.browser-table th, table.browser-table td {
+    border-width: 0px !important; 
+}
+
+.table-striped tbody td, .table-striped tbody th {
+    background-color: white !important;
+    border-bottom: 1px solid #eee;
+    border-bottom-width: 1px !important;
+}
+

@@ -138,7 +138,7 @@ span.control__menu.i-menu {
     margin-right: $baseline*2;
     margin-left: $baseline*2;
 
-    @include mq(420px) {
+    @include mq(544px) {
         display: inline-block;
     }
 }
@@ -149,7 +149,7 @@ span.control__menu.i-menu {
     }
 
 .control--topstories .i-top-stories {
-    margin: 5px $baseline*4 0 $baseline*2;
+    margin: 5px $gutter 0 $gutter/2;
 
     @include mq(tablet) {
         margin-left: 0;
@@ -182,4 +182,53 @@ span.control__menu.i-menu {
     margin-top: $baseline*2;
     margin-left: 6px;
     margin-right: 2px;
+}
+
+
+
+
+/* Profile control
+   ========================================================================== */
+.control--profile {
+    float: right;
+    height: 28px;
+    padding: 17px 0 13px 0;
+    width: auto;
+
+    &:link,
+    &:active,
+    &:hover,
+    &:visited,
+    &:focus { color: #fff; }
+
+    @include mq(tablet) {
+        position: absolute;
+        top: 0;
+        right: 178px;
+        white-space: nowrap;
+    }
+}
+
+.control--profile__info {
+    display: none;
+    height: 28px;
+    vertical-align: top;
+    line-height: 28px;
+    margin-right: $baseline*2;
+    margin-left: $baseline*2;
+
+    @include mq(544px) {
+        display: inline-block;
+        max-width: 110px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.control--profile .i-profile {
+    margin: 5px $gutter 0 $gutter/2;
+
+    @include mq(tablet) {
+        margin-left: 0;
+    }
 }
