@@ -196,18 +196,18 @@ class RunningOrderTrailblockDescription(
     response.map{ r =>
       r.status match {
         case 200 =>
-          (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
-            Some(CustomTrailblockDescription(id, name, numItemsVisible){
-              val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
-                (trail \ "id").as[String]
-              }
-              val idSearch = {ContentApi.search(edition)
-                .ids(articles.mkString(","))
-                .response map { r =>
-                r.results.map(new Content(_)).sortBy(t => articles.indexWhere(_.equals(t.id)))
-              }}.fallbackTo(Future(Nil))
+          Some(CustomTrailblockDescription(id, name, numItemsVisible){
+            val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
+              (trail \ "id").as[String]
+            }
+            val idSearch = {ContentApi.search(edition)
+              .ids(articles.mkString(","))
+              .response map { r =>
+              r.results.map(new Content(_)).sortBy(t => articles.indexWhere(_.equals(t.id)))
+            }}.fallbackTo(Future(Nil))
 
-              val defaultSearch = ContentApi.fetch("http://content.guardianapis.com/search", Map("edition" -> "uk")).flatMap { resp =>
+            val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
+              ContentApi.fetch("http://content.guardianapis.com/search", Map("edition" -> "uk")).flatMap { resp =>
               val ids = (parse(resp) \\ "id") map {_.as[String] } mkString(",")
               ContentApi.search(edition)
                 .ids(ids)
@@ -215,15 +215,14 @@ class RunningOrderTrailblockDescription(
                   r.results.map(new Content(_))
                 }
               }.fallbackTo(Future(Nil))
+            } getOrElse Future(Nil)
 
-              for {
+            for {
                 idSearchResults <- idSearch
-                defaultSearchResults <- defaultSearch
-              } yield idSearchResults ++ defaultSearchResults
+                contentApiResults <- contentApiQuery
+            } yield idSearchResults ++ contentApiResults
 
-            })
-          } getOrElse None
-          //contentApiQuery
+          })
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
           // NOTE: better way of handling fallback
