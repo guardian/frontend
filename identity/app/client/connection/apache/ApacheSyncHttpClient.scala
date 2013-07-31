@@ -1,11 +1,12 @@
 package client.connection.apache
 
-import org.apache.commons.httpclient._
-import org.apache.commons.httpclient.methods.{DeleteMethod, StringRequestEntity, PostMethod, GetMethod}
-import client.connection.{SyncronousHttp, HttpResponse}
-import client.{Error, Parameters, Response}
 import java.io.IOException
 import java.lang.IllegalArgumentException
+import org.apache.commons.httpclient.methods.{DeleteMethod, StringRequestEntity, PostMethod, GetMethod}
+import org.apache.commons.httpclient.{HttpException, HttpMethod, HttpClient, NameValuePair, URIException}
+import client.connection.{SyncronousHttp, HttpResponse}
+import client.{Error, Parameters, Response}
+import client.connection.Proxy
 
 
 // an implementation using apache http client, note this just uses the default connection manager
@@ -15,12 +16,10 @@ class ApacheSyncHttpClient extends SyncronousHttp {
   implicit object IterStringTupleToArrayNameValuePairs extends (Parameters => Array[NameValuePair]) {
     def apply(iterStringTuple: Parameters) = iterStringTuple.toArray.map { case (k, v) => new NameValuePair(k, v) }
   }
+  val proxy: Option[Proxy] = None
 
   val httpClient = new HttpClient
-
-  def setProxy(host: String, port: Int) {
-    httpClient.getHostConfiguration.setProxy(host, port)
-  }
+  proxy.foreach(p => httpClient.getHostConfiguration.setProxy(p.host, p.port))
 
   def execute(method: HttpMethod, urlParameters: Parameters, headers: Parameters): Response[HttpResponse] = {
     try {
