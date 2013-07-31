@@ -114,8 +114,6 @@ trait ConfiguredTrailblockDescription extends TrailblockDescription {
   }
 
   def configuredQuery(): Future[Option[TrailblockDescription]]
-
-  def defaultContentApiQuery(): Future[Option[TrailblockDescription]]
 }
 
 class RunningOrderTrailblockDescription(
@@ -135,51 +133,15 @@ class RunningOrderTrailblockDescription(
     // get the running order from the api
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
     log.info(s"loading running order configuration from: $configUrl")
-    val fu: Future[Response] = WS.url(s"$configUrl").withTimeout(2000).get()
-    parseContentApiResponse(fu)
-  }
-
-  def defaultContentApiQuery() = {
-    // get the running order from the api
-    val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
-    log.info(s"loading running order configuration from: $configUrl")
-    val fu: Future[Response] = WS.url(s"$configUrl").withTimeout(2000).get()
-    parseContentApiResponse(fu)
+    parseResponse(WS.url(s"$configUrl").withTimeout(2000).get())
   }
 
   private def parseResponse(response: Future[Response]): Future[Option[TrailblockDescription]] = {
     response.map{ r =>
       r.status match {
         case 200 =>
-          // extract the articles
-          val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
-            (trail \ "id").as[String]
-          }
-          // only make content api request if we have articles
-          if (articles.nonEmpty)
-            Some(CustomTrailblockDescription(id, name, numItemsVisible){
-              ContentApi.search(edition)
-                .ids(articles.mkString(","))
-                .response map { r =>
-                  r.results.map(new Content(_)).sortBy(t => articles.indexWhere(_.equals(t.id)))
-                }
-            })
-          else
-            None
-        case _ =>
-          log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
-          // NOTE: better way of handling fallback
-          Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition))
-      }
-    }
-
-  }
-
-  private def parseContentApiResponse(response: Future[Response]) = {
-    response.map{ r =>
-      r.status match {
-        case 200 =>
           Some(CustomTrailblockDescription(id, name, numItemsVisible){
+            // extract the articles
             val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
               (trail \ "id").as[String]
             }
@@ -214,7 +176,6 @@ class RunningOrderTrailblockDescription(
           Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition))
       }
     }
-
   }
 
 }
