@@ -76,7 +76,7 @@ java -Xmx4096M -XX:MaxPermSize=2048m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
   -Djava.awt.headless=true \
   $DEBUG_PARAMS \
-  -DAPP_SECRET="myKV8HQkjcaxygbDyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS" \
+  -DAPP_SECRET="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS" \
   $BUILD_PARAMS \
   $IVY_PARAMS \
   $SBT_EXTRA_PARAMS \
