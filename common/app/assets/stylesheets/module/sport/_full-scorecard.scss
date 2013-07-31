@@ -113,7 +113,7 @@
     }
 }
 
-@media (min-width: $tablet) {
+@include mq(tablet) {
     .sport-fullscorecard__thead {
         .sport-fullscorecard__additional {
             display: table-cell;

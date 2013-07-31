@@ -85,7 +85,7 @@
         display: none;
     }
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         margin-left: 0;
         margin-right: 0;
     }

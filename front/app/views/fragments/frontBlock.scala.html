@@ -1,4 +1,4 @@
-@(block: Trailblock)(implicit request: RequestHeader)
+@(block: Trailblock, page: FrontPage)(implicit request: RequestHeader)
 
 <section 
     class="front-section zone-@block.description.section" 
@@ -9,7 +9,7 @@
 	    @if("/" + block.description.id == request.path) {
             @fragments.headers.sectionHead(block.description.name)
 	    } else {
-	       @fragments.headers.frontSectionHead(block.description, Some(Edition(request)))
+	       @fragments.headers.frontSectionHead(block.description, page.isNetworkFront, Some(Edition(request)))
         } 
 	}
 

@@ -69,7 +69,10 @@ define(['common', 'modules/overlay', 'bean'], function(common, Overlay, bean) {
             window.scrollTo(0,100);
             overlay.show();
             bean.fire(document.querySelector('.js-overlay-close'), 'click');
-            expect(window.pageYOffset).toBe(100);
+            waits(200);
+            runs(function() {
+                expect(window.pageYOffset).toBe(100);
+            });
         });
 
         it("should fire the appropriate mediator events (show/hide/close)", function() {

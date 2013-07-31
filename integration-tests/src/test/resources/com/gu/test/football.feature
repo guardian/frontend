@@ -112,14 +112,14 @@ Feature: Football fixtures
         
         Examples:
             | page     | edition | url                                                                |
-            | table    | UK      | http://www.guardian.co.uk/football/matches?mobile-redirect=false   |
-            | table    | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
-            | live     | UK      | http://www.guardian.co.uk/football/matches?mobile-redirect=false   |
-            | live     | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
-            | fixtures | UK      | http://www.guardian.co.uk/football/matches?mobile-redirect=false   |
-            | fixtures | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
-            | results  | UK      | http://www.guardian.co.uk/football/matches?mobile-redirect=false   |
-            | results  | US      | http://www.guardiannews.com/football/matches?mobile-redirect=false |
+            | table    | UK      | http://www.guardian.co.uk/football/matches?view=desktop   |
+            | table    | US      | http://www.guardiannews.com/football/matches?view=desktop |
+            | live     | UK      | http://www.guardian.co.uk/football/matches?view=desktop   |
+            | live     | US      | http://www.guardiannews.com/football/matches?view=desktop |
+            | fixtures | UK      | http://www.guardian.co.uk/football/matches?view=desktop   |
+            | fixtures | US      | http://www.guardiannews.com/football/matches?view=desktop |
+            | results  | UK      | http://www.guardian.co.uk/football/matches?view=desktop   |
+            | results  | US      | http://www.guardiannews.com/football/matches?view=desktop |
             
     @scala-test
     Scenario Outline: Matches are ordered by start time, then alphabet

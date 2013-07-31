@@ -1,10 +1,21 @@
 @()
-
+<!--[if (gt IE 8) | (IEMobile)]><!-->
 <style type="text/css">
     @Html(Head.css)
-    /* any images in  head need to go here (or they'll be relative to the page) */
+</style>
+<!--<![endif]-->
+<!--[if (lt IE 9) & (!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.head.min.css")" />
+<![endif]-->
+
+@* any images in head need to go here (or they'll be relative to the page)} *@
+<style type="text/css">
     .i,.caption:before,figcaption:before { background-image: url(@Static("images/global/sprite.png")); }
     .is-updating { background-image: url(@Static("images/auto-update-activity.gif")); }
 </style>
+
+<!--[if (lt IE 9) & (!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.global.min.css")" />
+<![endif]-->
 
 <style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.js")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.js")"></style>
