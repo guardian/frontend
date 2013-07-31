@@ -53,7 +53,7 @@
     height: 28px;
     padding: 15px $gutter 15px 0;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         position: absolute;
         right: 0;
         top: 58px;
@@ -75,7 +75,7 @@ span.control__menu.i-menu {
     display: inline-block;
     margin-left: 6px;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         display: none;
     }
 }
@@ -83,14 +83,14 @@ span.control__menu.i-menu {
 .control--sections .i-menu-active {
     display: none;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         margin-top: $baseline*2;
         display: inline-block;
     }
 }
 
 .control--sections .i-nav-divider {
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         margin-right: $baseline*3;
         border-color: #BBBBBB;
         background-color: #E3E3DB;
@@ -116,7 +116,7 @@ span.control__menu.i-menu {
             color: $blue;
         }
 
-        @media (min-width: $tablet) {
+        @include mq(tablet) {
             position: absolute;
             top: 0;
             right: 48px;
@@ -138,7 +138,7 @@ span.control__menu.i-menu {
     margin-right: $baseline*2;
     margin-left: $baseline*2;
 
-    @media (min-width: 26.25em) {
+    @include mq(420px) {
         display: inline-block;
     }
 }
@@ -151,7 +151,7 @@ span.control__menu.i-menu {
 .control--topstories .i-top-stories {
     margin: 5px $baseline*4 0 $baseline*2;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         margin-left: 0;
     }
 }
@@ -171,7 +171,7 @@ span.control__menu.i-menu {
     padding: 15px $baseline*4 15px 0;
     border: none;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         position: absolute;
         top: 0;
         right: 0;

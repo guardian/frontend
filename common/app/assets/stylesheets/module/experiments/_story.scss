@@ -310,11 +310,11 @@ $orange: #FF7F00;
     max-width: 100%;
     max-height: 200px;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         max-height: 400px;
     }
 
-    @media (min-width: $desktop) {
+    @include mq(desktop) {
         max-height: 600px;
     }
 }

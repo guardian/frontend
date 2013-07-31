@@ -11,7 +11,7 @@ i.gallery__watermark {
     top: $baseline * 2;
     left: $gutter;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         display: block;
     }
 }
@@ -79,7 +79,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
 
     // This sets a fixed width to the gallery container, so it can be centered
     @for $i from 2 through 8 {
-        @media (min-width: viewportWidth($i)) {
+        @include mq(viewportWidth($i)) {
             .gallery__images {
                 width: gridContainerWidth($i);
             }
@@ -94,7 +94,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
         text-align: center;
     }
 
-    @media (orientation:landscape) {
+    @include mq($and: '(orientation: landscape)') {
         .gallery__img {
             margin: 0 auto;
         }
@@ -209,7 +209,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
         display: none; // Hide the caption icon
     }
 
-    @media (orientation:landscape) {
+    @include mq($and: '(orientation: landscape)') {
         position: absolute;
         right: 0;
         bottom: 0;
@@ -265,7 +265,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
         display: block;
     }
 
-    @media (orientation:landscape) {
+    @include mq($and: '(orientation: landscape)') {
         position: absolute;
         bottom: 0;
     }
