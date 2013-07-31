@@ -525,7 +525,7 @@ a.cta, .cta a {
 }
 
 .fronts .lists .connectedList {
-    min-height: 100px;
+    min-height: 50px;
 }
 
 .fronts .lists .connectedList.pending {
@@ -740,14 +740,37 @@ a.cta, .cta a {
 }
 
 .fronts .needs-more {
+    padding: 0 0 0 10px;
     color: #d61d00;
-    padding: 5px 0 0 10px;
     font-size: 12px;
     text-transform: uppercase;    
 }
 
 .fronts .needs-more__num {
     font-weight: bold;
+}
+
+.fronts .list-footer {
+    padding: 2px 10px 10px 10px;
+    font-size: 10px;    
+    border-top: 3px solid #ccc;
+}
+
+.fronts .list-footer.editable {
+    background-color: #eee;
+}
+
+.fronts .list-footer a {
+    color: #666;
+    cursor: pointer;
+}
+
+.fronts .list-footer .settings input {
+}
+
+.fronts .list-footer .settings input.tiny {
+    width: 40px;
+    text-align: right;
 }
 
 /** http://localhost:9003/analytics/browsers */
@@ -788,7 +811,7 @@ a.cta, .cta a {
     min-width: 170px;
 }
 
-table, table th, table td {
+table.browser-table, table.browser-table th, table.browser-table td {
     border-width: 0px !important; 
 }
 
@@ -797,3 +820,4 @@ table, table th, table td {
     border-bottom: 1px solid #eee;
     border-bottom-width: 1px !important;
 }
+

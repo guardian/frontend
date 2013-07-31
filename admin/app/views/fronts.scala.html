@@ -55,36 +55,36 @@
                         <span class="list-header__title__part" data-bind="text: $data"></span> 
                     </div>
                     <div class="list-header__meta">
-                        <!-- ko if: timeAgo -->
-                            updated <span class="list-header__meta__last-updated" data-bind="text: timeAgo"></span> 
+                        <!-- ko if: state.timeAgo -->
+                            updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span> 
                             by <a class="list-header__meta__user" data-bind="
-                                text: updatedBy,
-                                attr: {href: 'mailto:' + updatedEmail}
+                                text: meta.updatedBy,
+                                attr: {href: 'mailto:' + meta.updatedEmail}
                                 "></a>
                         <!-- /ko -->
-                        <!-- ko ifnot: timeAgo -->
+                        <!-- ko ifnot: state.timeAgo -->
                             Empty
                         <!-- /ko -->
                     </div>
                     <div class="list-header__status">
                         <div class="list-header__status__live" data-bind="
                             css: {
-                                active: liveMode()
+                                active: state.liveMode()
                             }">
                             <span class="list-header__status__live__title" data-bind="click: setLiveMode">LIVE</span>
                         </div>                    
                         <div class="list-header__status__draft" data-bind="
                             css: {
-                                active: !liveMode(),
-                                hasUnPublishedEdits: hasUnPublishedEdits()
+                                active: !state.liveMode(),
+                                hasUnPublishedEdits: state.hasUnPublishedEdits()
                             }">
                             <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
                                 DRAFT
-                                <span data-bind="if: hasUnPublishedEdits()">
+                                <span data-bind="if: state.hasUnPublishedEdits()">
                                     has edits
                                 </span>
                             </span>
-                            <span data-bind="if: !liveMode() && hasUnPublishedEdits()">
+                            <span data-bind="if: !state.liveMode() && state.hasUnPublishedEdits()">
                                 &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
                                 &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
                             </span>
@@ -94,13 +94,33 @@
                 <div class="connectedList" data-bind="
                     attr: {
                         'data-list-id': id,
-                        'data-live-edit': liveMode()
+                        'data-live-edit': state.liveMode()
                     },
-                    css: {pending: loadIsPending},
-                    template: {name: 'template_article', foreach: liveMode() ? live : draft}"></div>
+                    css: {pending: state.loadIsPending},
+                    template: {name: 'template_article', foreach: state.liveMode() ? live : draft}"></div>
 
                 <div class="needs-more" data-bind="if: needsMore">
-                    Needs at least <span class="needs-more__num" data-bind="text: min"></span> articles
+                    Needs at least <span class="needs-more__num" data-bind="text: config.min"></span> 
+                    article<span data-bind="text: config.min() > 1 ? 's' : ''"></span>
+                </div>
+                <div class="list-footer" data-bind="css: {editable: state.editingConfig}">
+                    <a data-bind="click: toggleShowSettings">Settings</a>
+                    <div data-bind="visible: state.editingConfig" class="settings">
+                        <div>
+                            Number of articles:
+                        </div>
+                        <div>
+                            <input type="text" class="tiny" data-bind="value: config.min"/> Minumum
+                        </div>
+                        <div>
+                            <input type="text" class="tiny" data-bind="value: config.max"/> Maximum
+                        </div>
+                        <div>
+                            ContentApi query for trail automation:
+                            <input type="text" data-bind="value: config.contentApiQuery"/>
+                        </div>
+                        <input type="submit" class="btn" value="Save Settings" data-bind="click: saveConfig"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,7 +129,7 @@
     <script type="text/html" id="template_article">
         <div class="trail cf" data-bind="
                 attr: {'data-url': id},
-                css: {redundant: $parent.max ? (0 + $index()) >= (0 + $parent.max()) : false}
+                css: {redundant: $parent.config && $parent.config.max ? (0 + $index()) >= (0 + $parent.config.max()) : false}
             ">
 
             <a class="trail__control" data-bind="click: $parent.dropItem">

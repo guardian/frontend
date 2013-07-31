@@ -256,6 +256,27 @@ object Analytics extends implicits.Dates with implicits.Tuples with implicits.St
     }
   }
 
+  def getWeeklyDaysSeenByDay(): Map[Int, Map[DateMidnight, Long]] = {
+    getWeeklyDaysSeenByDayDateExpanded mapValues { dateExpanded =>
+      val uptyped: List[(DateMidnight, Long)] = dateExpanded collect {
+        case (year, month, day, count) => (new DateMidnight(year, month, day), count)
+      }
+
+      uptyped.toMap
+    }
+  }
+
+  def getWeeklyDaysSeenByDayDateExpanded(): Map[Int, List[(Int, Int, Int, Long)]] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/weekly-days-seen-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    val uptyped = lines map { CSV.parse } collect {
+      case List(days, year, month, day, count) => (days.toInt, (year.toInt, month.toInt, day.toInt, count.toLong))
+    }
+
+    uptyped groupBy { _.first } mapValues { _ map { _.second }}
+  }
+
   def getFourWeeklyDaysSeenPerUserByDay(): Map[DateMidnight, Double] = {
     val uptyped: List[(DateMidnight, Double)] = getFourWeeklyDaysSeenPerUserByDayDateExpanded collect {
       case (year, month, day, average) => (new DateMidnight(year, month, day), average)
@@ -271,5 +292,26 @@ object Analytics extends implicits.Dates with implicits.Tuples with implicits.St
     lines map { CSV.parse } collect {
       case List(year, month, day, average) => (year.toInt, month.toInt, day.toInt, average.toDouble)
     }
+  }
+
+  def getFourWeeklyDaysSeenByDay(): Map[Int, Map[DateMidnight, Long]] = {
+    getFourWeeklyDaysSeenByDayDateExpanded mapValues { dateExpanded =>
+      val uptyped: List[(DateMidnight, Long)] = dateExpanded collect {
+        case (year, month, day, count) => (new DateMidnight(year, month, day), count)
+      }
+
+      uptyped.toMap
+    }
+  }
+
+  def getFourWeeklyDaysSeenByDayDateExpanded(): Map[Int, List[(Int, Int, Int, Long)]] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/four-weekly-days-seen-by-day.csv")
+    val lines = data.toList flatMap { _.split("\n") }
+
+    val uptyped = lines map { CSV.parse } collect {
+      case List(days, year, month, day, count) => (days.toInt, (year.toInt, month.toInt, day.toInt, count.toLong))
+    }
+
+    uptyped groupBy { _.first } mapValues { _ map { _.second }}
   }
 }

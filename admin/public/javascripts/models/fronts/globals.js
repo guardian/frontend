@@ -1,11 +1,8 @@
-define([
-    'knockout'
-], function(
-    knockout
-) {
-    var globals = {
-        activeInteraction: false
+define([], function() {
+    return {
+        // Configuration
+        apiBase: '/fronts/api',
+        apiSearchBase: '/api/proxy/search',
+        defaultToLiveMode: true
     };
-
-    return globals;
 });

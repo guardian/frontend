@@ -15,6 +15,7 @@ define(['common',
 
         var $ = common.$g,
             server,
+            historyStub,
             gallery,
             conf = {
                 id: 'lightbox-gallery',
@@ -34,6 +35,9 @@ define(['common',
 
         // fake config
         var config = {
+            page: {
+                pageId: 'path/to/page'
+            },
             switches: {
                 lightboxGalleries: true
             }
@@ -46,7 +50,7 @@ define(['common',
             server.autoRespond = true;
             server.respondWith(galleryResponse);
 
-
+            historyStub = sinon.stub(history, 'pushState');
             sinon.spy(common.mediator, 'emit');
 
             fixtures.render(conf);
@@ -61,6 +65,7 @@ define(['common',
 
         afterEach(function() {
             server.restore();
+            historyStub.restore();
             common.mediator.emit.restore();
         });
 
@@ -69,11 +74,12 @@ define(['common',
             expect(document.querySelectorAll('.overlay .gallery').length).toBe(1);
         });
 
+
         it("should start in single image mode", function() {
             expect(document.querySelector('.gallery').className).toContain('gallery--full');
 
             var visibleImages = 0;
-            common.$g('.gallery-item').each(function(e) {
+            common.$g('.gallery__item').each(function(e) {
                 if (e.style.display === 'block') {
                     visibleImages += 1;
                 }
@@ -167,6 +173,19 @@ define(['common',
             expect(common.mediator.emit).toHaveBeenCalledWith('module:lightbox-gallery:loaded');
         });
 
+        it("should register a pushState on open", function() {
+            expect(historyStub).toHaveBeenCalled();
+            expect(historyStub.lastCall.args[2]).toContain('index=1');
+        });
+
+        it("should register a pushState to current state when opened on a particular image", function() {
+            bean.fire(document.querySelector('.trail--gallery .link-to-image'), 'click');
+            waits(100);
+            runs(function() {
+                expect(historyStub).toHaveBeenCalled();
+                expect(historyStub.lastCall.args[2]).toContain('index=4');
+            })
+        });
 
 
     });
