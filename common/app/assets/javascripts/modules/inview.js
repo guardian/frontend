@@ -1,6 +1,6 @@
 define(["common", "bean", "bonzo"], function (common, bean, bonzo) {
 
-    function Inview(context, selector) {
+    function Inview(selector, context) {
         var self = this;
 
         this.selector = selector || '.js-inview';
@@ -22,7 +22,6 @@ define(["common", "bean", "bonzo"], function (common, bean, bonzo) {
             visibleBottom = visibleTop + window.innerHeight;
 
         Array.prototype.forEach.call(this.inviewNodes, function(el) {
-            //console.log(visibleTop, visibleBottom, el.offsetTop, bonzo(el).offset().top, el.getAttribute('data-link-name'));
             var offsetTop = bonzo(el).offset().top;
 
             if (!el._inviewHasFired &&
