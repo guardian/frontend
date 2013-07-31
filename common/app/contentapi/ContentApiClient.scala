@@ -42,16 +42,17 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   }
 }
 
-trait ApiQueryDefaults extends QueryDefaults with implicits.Collections {
-  self: Api[Future] =>
+trait ApiQueryDefaults extends QueryDefaults with implicits.Collections { self: Api[Future] =>
 
-  def item(id: String, edition: Edition): ItemQuery = item.itemId(id)
-  .edition(edition.id)
+  def item (id: String, edition: Edition): ItemQuery = item(id, edition.id)
+
+  //common fields that we use across most queries.
+  def item(id: String, edition: String): ItemQuery = item.itemId(id)
+  .edition(edition)
   .showTags("all")
   .showFields(trailFields)
   .showInlineElements(inlineElements)
-  .showMedia("audio,interactive,picture")
-  .showElements("video")
+  .showMedia("all")
   .showReferences(references)
   .showStoryPackage(true)
   .tag(supportedTypes)
@@ -63,9 +64,9 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections {
   .showInlineElements(inlineElements)
   .showReferences(references)
   .showFields(trailFields)
-  .showMedia("audio,interactive,picture")
-  .showElements("video")
+  .showMedia("all")
   .tag(supportedTypes)
+
 }
 
 class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
@@ -81,11 +82,13 @@ class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsync
   }
 
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
-    //you cannot editionalize tag queries
+    //you cannot editionalize tag queries                                                                                                                                  super.G
     if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
       s"You should never, Never, NEVER create a query that does not include the edition. EVER: $url"
     )
   }
 
   private def isTagQuery(url: String) = url.endsWith("/tags")
+
+
 }

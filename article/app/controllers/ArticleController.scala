@@ -1,7 +1,6 @@
 package controllers
 
 import common._
-import concurrent.Future
 import conf._
 import model._
 import play.api.mvc.{ Content => _, _ }
@@ -9,6 +8,7 @@ import views.support._
 import org.jsoup.nodes.Document
 import collection.JavaConversions._
 import views.BodyCleaner
+
 
 case class ArticlePage(article: Article, storyPackage: List[Trail])
 
@@ -48,11 +48,12 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     }
   }.getOrElse(render(path))
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticlePage,Result]] = {
+  private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}")
     ContentApi.item(path, edition)
       .showExpired(true)
+      .showTags("all")
       .showFields("all")
       .response.map{ response =>
 
