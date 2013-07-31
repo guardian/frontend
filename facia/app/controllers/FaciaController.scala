@@ -87,23 +87,27 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
   def render(path: String) = Action { implicit request =>
 
-    // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
-    // go live
-    val realPath = editionPath(path, Edition(request))
+    if (Switches.FilmFrontFacia.isSwitchedOn) {
+      // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
+      // go live
+      val realPath = editionPath(path, Edition(request))
 
-    FrontPage(realPath).map { frontPage =>
+      FrontPage(realPath).map { frontPage =>
 
-      // get the trailblocks
-      val trailblocks: Seq[Trailblock] = front(realPath)
+        // get the trailblocks
+        val trailblocks: Seq[Trailblock] = front(realPath)
 
-      if (trailblocks.isEmpty) {
-        InternalServerError
-      } else {
-        val htmlResponse = () => views.html.front(frontPage, trailblocks)
-        val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
-        renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
-      }
-    }.getOrElse(NotFound) //TODO is 404 the right thing here
+        if (trailblocks.isEmpty) {
+          InternalServerError
+        } else {
+          val htmlResponse = () => views.html.front(frontPage, trailblocks)
+          val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
+          renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+        }
+      }.getOrElse(NotFound) //TODO is 404 the right thing here
+    }
+    else
+      Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film")
   }
 
   def renderTrails(path: String) = Action { implicit request =>

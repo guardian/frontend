@@ -190,6 +190,11 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
+  //Fronts film switch
+  val FilmFrontFacia = Switch("Facia", "facia-film-switch",
+    "Switch to redirect traffic to the facia film front instead of front film front",
+    safeState = Off)
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -225,7 +230,8 @@ object Switches extends Collections {
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     LiveCricketSwitch,
-    ABLightboxGalleries
+    ABLightboxGalleries,
+    FilmFrontFacia
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
