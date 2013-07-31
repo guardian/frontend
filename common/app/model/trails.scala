@@ -9,10 +9,10 @@ import common._
 import contentapi.QueryDefaults
 import play.api.libs.ws.WS
 import play.api.libs.json.Json._
-import play.api.libs.json.JsValue
 import play.api.libs.ws.Response
 import scala.Some
 import play.api.libs.json.JsObject
+import java.net.URLDecoder
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -43,6 +43,24 @@ trait Trail extends Images with Tags {
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
+
+object QueryParams {
+  import scala.language.postfixOps
+
+  def get(enc: String) : Map[String, Seq[String]] = {
+    def decode(raw: String) = URLDecoder.decode(raw, "UTF-8")
+    val params = enc.dropWhile('?'!=).dropWhile('?'==)
+    val pairs: Seq[(String,String)] = params.split('&').flatMap {
+      _.split('=') match {
+        case Array(key, value) => List((decode(key), decode(value)))
+        case Array(key) if key != "" => List((decode(key), ""))
+        case _ => Nil
+      }
+    }
+    pairs.groupBy(_._1).map(t => (t._1, t._2.map(_._2))).toMap.withDefault { _ => Nil }
+  }
+
+}
 
 trait TrailblockDescription extends ExecutionContexts {
   val id: String
@@ -113,6 +131,8 @@ trait ConfiguredTrailblockDescription extends TrailblockDescription {
   }
 
   def configuredQuery(): Future[Option[TrailblockDescription]]
+
+  def defaultContentApiQuery(): Future[Option[TrailblockDescription]]
 }
 
 class RunningOrderTrailblockDescription(
@@ -133,11 +153,18 @@ class RunningOrderTrailblockDescription(
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
     log.info(s"loading running order configuration from: $configUrl")
     val fu: Future[Response] = WS.url(s"$configUrl").withTimeout(2000).get()
-    //parseResponse(fu)
     parseContentApiResponse(fu)
   }
 
-  private def parseResponse(response: Future[Response]) = {
+  def defaultContentApiQuery() = {
+    // get the running order from the api
+    val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
+    log.info(s"loading running order configuration from: $configUrl")
+    val fu: Future[Response] = WS.url(s"$configUrl").withTimeout(2000).get()
+    parseContentApiResponse(fu)
+  }
+
+  private def parseResponse(response: Future[Response]): Future[Option[TrailblockDescription]] = {
     response.map{ r =>
       r.status match {
         case 200 =>
@@ -170,14 +197,30 @@ class RunningOrderTrailblockDescription(
       r.status match {
         case 200 =>
           (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
-            Some(CustomTrailblockDescription(id, name, numItemsVisible){ContentApi.fetch(query, Map.empty).flatMap { resp =>
+            Some(CustomTrailblockDescription(id, name, numItemsVisible){
+              val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
+                (trail \ "id").as[String]
+              }
+              val idSearch = {ContentApi.search(edition)
+                .ids(articles.mkString(","))
+                .response map { r =>
+                r.results.map(new Content(_)).sortBy(t => articles.indexWhere(_.equals(t.id)))
+              }}.fallbackTo(Future(Nil))
+
+              val defaultSearch = ContentApi.fetch("http://content.guardianapis.com/search", Map("edition" -> "uk")).flatMap { resp =>
               val ids = (parse(resp) \\ "id") map {_.as[String] } mkString(",")
               ContentApi.search(edition)
                 .ids(ids)
                 .response map { r =>
                   r.results.map(new Content(_))
-              }
-            }
+                }
+              }.fallbackTo(Future(Nil))
+
+              for {
+                idSearchResults <- idSearch
+                defaultSearchResults <- defaultSearch
+              } yield idSearchResults ++ defaultSearchResults
+
             })
           } getOrElse None
           //contentApiQuery
