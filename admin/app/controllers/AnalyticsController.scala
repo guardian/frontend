@@ -29,6 +29,10 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
   }
   
   def browsers() = AuthAction { request =>
-      Ok(views.html.browsers("PROD", Analytics.getPageviewsByOperatingSystem(), Analytics.getPageviewsByBrowser()))
+      Ok(views.html.browsers("PROD",
+          Analytics.getPageviewsByOperatingSystem(),
+          Analytics.getPageviewsByBrowser(),
+          Analytics.getPageviewsByOperatingSystemAndBrowser()
+        ))
   }
 }
