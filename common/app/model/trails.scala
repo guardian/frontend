@@ -13,6 +13,7 @@ import play.api.libs.ws.Response
 import scala.Some
 import play.api.libs.json.JsObject
 import java.net.URLDecoder
+import tools.QueryParams
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -43,24 +44,6 @@ trait Trail extends Images with Tags {
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
-
-object QueryParams {
-  import scala.language.postfixOps
-
-  def get(enc: String) : Map[String, Seq[String]] = {
-    def decode(raw: String) = URLDecoder.decode(raw, "UTF-8")
-    val params = enc.dropWhile('?'!=).dropWhile('?'==)
-    val pairs: Seq[(String,String)] = params.split('&').flatMap {
-      _.split('=') match {
-        case Array(key, value) => List((decode(key), decode(value)))
-        case Array(key) if key != "" => List((decode(key), ""))
-        case _ => Nil
-      }
-    }
-    pairs.groupBy(_._1).map(t => (t._1, t._2.map(_._2))).toMap.withDefault { _ => Nil }
-  }
-
-}
 
 trait TrailblockDescription extends ExecutionContexts {
   val id: String
@@ -207,7 +190,9 @@ class RunningOrderTrailblockDescription(
             }}.fallbackTo(Future(Nil))
 
             val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
-              ContentApi.fetch("http://content.guardianapis.com/search", Map("edition" -> "uk")).flatMap { resp =>
+              val queryParams: Map[String, String] = QueryParams.get(query).mapValues{_.mkString("")}
+              val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
+              ContentApi.fetch(Configuration.contentApi.host + "/search", queryParamsWithEdition).flatMap { resp =>
               val ids = (parse(resp) \\ "id") map {_.as[String] } mkString(",")
               ContentApi.search(edition)
                 .ids(ids)
