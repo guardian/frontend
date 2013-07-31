@@ -184,9 +184,11 @@ define([
                             }).init();
                         }
                     });
-                });
 
-                var advertsAnalytics = new AdvertsAnalytics(config, context);
+                    if (config.switches.adslotImpressionStats) {
+                        var advertsAnalytics = new AdvertsAnalytics(config, context);
+                    }
+                });
             });
 
             common.mediator.on('page:common:deferred:loaded', function(config, context) {

@@ -75,6 +75,10 @@ object Switches extends Collections {
     "Initialise Omniture on dom-ready, rather than on page-load.",
     safeState = Off)
 
+  val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
+    "Track when adslots (and possible ad slots) are scrolled into view.",
+    safeState = Off)
+
 
   // Discussion Switches
 
@@ -225,7 +229,8 @@ object Switches extends Collections {
     ABAa,
     LightboxGalleriesSwitch,
     EditionRedirectSwitch,
-    LiveCricketSwitch
+    LiveCricketSwitch,
+    AdSlotImpressionStatsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
