@@ -2,7 +2,7 @@
 
 @main(page, Switches.all){ } {
 <form class="form" novalidate action="/identity/signin?error" role="main">
-    <h1 class="section-head zone-color form__heading">Sign in</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
     <ul class="form-fields">
         <li class="form-field--error">
             <label for="email">Email address</label>
@@ -13,13 +13,15 @@
         <li>
             <label for="password">Password</label>
             <input class="text-input" type="password" id="password" />
-            <!-- <a class="text-input__note" href="/identity/recover">Forgotten password?</a> -->
+            <div class="text-input__note"><a href="/identity/recover">Forgotten your password?</a></div>
         </li>
         <li>
             <button type="submit" class="submit-input">Sign in</button>
             
-            <input type="checkbox" value="1" id="persistent-login" />
-            <label for="persistent-login" class="check-label">Remember me</label>
+            <label class="check-label check-label--helper">
+                <input type="checkbox" value="1" />
+                Remember me
+            </label>
         </li>
   </ul>
 </form>
