@@ -1,4 +1,4 @@
-define(['jquery'], function($) {
+define([], function() {
 
     $('.browser-table').each(function() {
         var node  = $(this),

@@ -224,7 +224,8 @@ object Switches extends Collections {
     ABAa,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
-    LiveCricketSwitch
+    LiveCricketSwitch,
+    ABLightboxGalleries
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
