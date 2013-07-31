@@ -1,46 +1,138 @@
-@(env: String, os: Map[String, Long], browser: Map[String, Long])
+@(env: String, os: Map[String, Long], browser: Map[String, Long], combined: Map[String, Long])
 
 @admin_main("Browsers", env, isAuthed = true) {
 
-    <h1>Browser usage on theguardian.com</h1>
+  <section id="usage">
+
+    <h1>Browser usage</h1>
     
     <p>
         Collected from Ophan data covering March 1, 2013 to present.
     </p>
 
-    <p style="background-color:#ffc;padding:1em;">
-        Warning. These statistics only cover the <a href="http://m.guardian.co.uk">mobile site</a>. 
+    <p>
+        Data is available by <a href="#combined">operating system and browser combined</a>, or individually by <a href="#browser">browser vendor</a>
+        or by <a href="#os">operating system</a>.
     </p>
+
+    <p>
+        Confusingly, the Windows family versions are grouped together under their largely unknown major version numbers. Here is the key to that
+        data.
+    </p>
+    <ul>
+        <li>Windows 5.0 - 2000
+        <li>Windows 5.1 - XP
+        <li>Windows 5.2 - Server 2003
+        <li>Windows 6.0 - Server 2008 &amp; Vista
+        <li>Windows 6.1 - Win 7
+        <li>Windows 6.2 - Win 8
+        <li>Windows 6.3 - RT
+    </ul>
     
-    <h3>By operating system</h3>
+    <h3 id="combined">By operating system and browser</h3>
+
+    <p>
+        Page views over 10k broken down by combined operating system and browser version across mobile and desktop.
+    </p>
+
+    <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{combined.map {_._2}.sum}">
+        <caption>
+            <input type="text" class="input-medium search-query" placeholder="Filter...">
+        </caption>
+        <thead>
+            <tr>
+                <td colspan="2">Total</td>
+                <td class="total"></td>
+            </tr>
+
+        </thead>
+        <tbody>
+        @combined.toList.sortBy{_._2}.reverse.take(300).zipWithIndex.map { case (row, index) =>
+            <tr>
+                <td>@{index + 1}</td>
+                <td>@row._1</td>
+                <td class="format-number" data-value="@row._2.toInt">@row._2.toInt</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">Total</td>
+                <td class="total"></td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    <h3 id="os">By operating system</h3>
 
     <p>
         Page views over 10k broken down by operating system version
     </p>
     
-    <table border="1" cellpadding="5">
+    <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{os.map {_._2}.sum}">
+        <caption>
+            <input type="text" class="input-medium search-query" placeholder="Filter...">
+        </caption>
+        <thead>
+            <tr>
+                <td colspan="2">Total</td>
+                <td class="total"></td>
+            </tr>
+        </thead>
+        <tbody>
         @os.toList.sortBy{_._2}.reverse.filter { _._2 >= 10000 }.zipWithIndex.map { case (row, index) =>
             <tr>
                 <td>@{index + 1}</td>
                 <td>@row._1</td>
-                <td>@row._2.toInt</td>
+                <td class="format-number" data-value="@row._2.toInt">@row._2.toInt</td>
             </tr>
         }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">Total</td>
+                <td class="total"></td>
+            </tr>
+        </tfoot>
     </table>
-    
-    <h2>Browser vendor</h2>
+
+    <h3 id="browser">Browser vendor</h3>
     
     <p>
         Page views over 10k broken down by browser family and version.
     </p>
 
-    <table border="1" cellpadding="5">
+    <table class="table table-bordered table-striped table-condensed browser-table" data-total="@{browser.map {_._2}.sum}">
+        <caption>
+            <input type="text" class="input-medium search-query" placeholder="Filter...">
+        </caption>
+        <thead>
+            <tr>
+                <td colspan="2">Total</td>
+                <td class="total"></td>
+            </tr>
+        </thead>
+        <tbody>
         @browser.toList.sortBy{_._2}.reverse.filter { _._2 >= 10000 }.zipWithIndex.map { case (row, index) =>
             <tr>
                 <td>@{index + 1}</td>
                 <td>@row._1</td>
-                <td>@row._2.toInt</td>
+                <td class="format-number" data-value="@row._2.toInt">@row._2.toInt</td>
             </tr>
         }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">Total</td>
+                <td class="total"></td>
+            </tr>
+        </tfoot>
     </table>
+    </table>
+
+    <script>
+        curl(['modules/BrowserStats']);
+    </script>
+    
+  </section>    
 }
