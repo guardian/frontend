@@ -223,13 +223,8 @@ object Switches extends Collections {
     LocalNavSwitch,
     ABAa,
     LightboxGalleriesSwitch,
-<<<<<<< HEAD
-    EditionRedirectSwitch,
-    LiveCricketSwitch,
-    IdentityProfileNavigationSwitch
-=======
+    IdentityProfileNavigationSwitch,
     LiveCricketSwitch
->>>>>>> origin/master
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
