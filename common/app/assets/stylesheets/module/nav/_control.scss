@@ -201,7 +201,7 @@ span.control__menu.i-menu {
     &:visited,
     &:focus { color: #fff; }
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         position: absolute;
         top: 0;
         right: 178px;
@@ -228,7 +228,7 @@ span.control__menu.i-menu {
 .control--profile .i-profile {
     margin: 5px $gutter 0 $gutter/2;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         margin-left: 0;
     }
 }
