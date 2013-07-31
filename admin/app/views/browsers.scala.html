@@ -131,7 +131,9 @@
     </table>
 
     <script>
-        curl(['modules/BrowserStats']);
+        window.addEventListener('load', function () { 
+            curl(['modules/BrowserStats']);
+        });
     </script>
     
   </section>    
