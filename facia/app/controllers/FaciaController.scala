@@ -85,9 +85,15 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     case _ => Editionalise(path, edition)
   }
 
-  def render(path: String) = Action { implicit request =>
+  def renderFilm() = {
+    if (Switches.FilmFrontFacia.isSwitchedOn)
+      render("film")
+    else
+      Action { Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film") }
+  }
 
-    if (Switches.FilmFrontFacia.isSwitchedOn) {
+
+  def render(path: String) = Action { implicit request =>
       // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
       // go live
       val realPath = editionPath(path, Edition(request))
@@ -105,9 +111,6 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
           renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
-    }
-    else
-      Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film")
   }
 
   def renderTrails(path: String) = Action { implicit request =>
