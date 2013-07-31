@@ -7,6 +7,10 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
         isVisible = false,
         btns = [];
 
+    function titleCase(str) {
+        return str.charAt(0).toUpperCase() + str.substr(1);
+    }
+
     function generateBtn(dir) {
         var btn = document.createElement('button');
         btn.className = ['js-' + btnClassName, btnClassName, btnClassName + '--' + dir, 'is-hidden'].join(' ');
@@ -14,10 +18,6 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
         btn.setAttribute('data-link-name', 'swipe ear ' + dir);
         btn.innerHTML = '<i class="i i-swipe-arrow i-swipe-arrow--' + dir +'">' + titleCase(dir) + '</i>';
         return btn;
-    }
-
-    function titleCase(str) {
-        return str.charAt(0).toUpperCase() + str.substr(1);
     }
 
     function showBtns() {
@@ -34,7 +34,6 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
 
     function bindListeners() {
         bean.on(body, 'click', '.js-' + btnClassName, function(e) {
-            console.log(e.target.getAttribute(dataAttribute));
             var dir = (e.target.getAttribute(dataAttribute) === 'left') ? 'prev' : 'next';
             common.mediator.emit('module:swipenav:navigate:' + dir);
         });
@@ -50,10 +49,6 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
 
     }
 
-    function appendToDom(frag) {
-        body.appendChild(frag);
-    }
-
     function init() {
         var frag = document.createDocumentFragment();
 
@@ -63,7 +58,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
             btns.push(btn);
         });
 
-        appendToDom(frag);
+        body.appendChild(frag);
         bindListeners();
     }
 
