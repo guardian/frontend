@@ -1,21 +1,23 @@
 define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
 
-    var self = this,
-        btnClassName = 'swipe-ear',
+    var btnClassName = 'swipe-ear',
         dataAttribute = 'data-direction',
         directions = ['right', 'left'],
         body = document.body,
         isVisible = false,
-        btns = [],
-        timeout;
+        btns = [];
 
     function generateBtn(dir) {
         var btn = document.createElement('button');
         btn.className = ['js-' + btnClassName, btnClassName, btnClassName + '--' + dir, 'is-hidden'].join(' ');
         btn.setAttribute(dataAttribute, dir);
         btn.setAttribute('data-link-name', 'swipe ear ' + dir);
-        btn.innerHTML = dir.charAt(0).toUpperCase() + dir.substr(1);
+        btn.innerHTML = '<i class="i i-swipe-arrow i-swipe-arrow--' + dir +'">' + titleCase(dir) + '</i>';
         return btn;
+    }
+
+    function titleCase(str) {
+        return str.charAt(0).toUpperCase() + str.substr(1);
     }
 
     function showBtns() {
@@ -41,24 +43,11 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
             hideBtns();
         }, 1000);
 
-//        bean.on(window, 'scroll', function() {
-//            showBtns();
-//            debouncedHideBtns();
-//        });
-
         bean.on(body, 'touchmove', function() {
-            console.log('fired');
             showBtns();
             debouncedHideBtns();
         });
 
-//        bean.on(body, 'touchstart', function() {
-//            showBtns();
-//        });
-//
-//        bean.on(body, 'touchend', function() {
-//            debouncedHideBtns();
-//        });
     }
 
     function appendToDom(frag) {

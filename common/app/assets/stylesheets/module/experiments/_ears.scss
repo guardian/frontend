@@ -1,23 +1,27 @@
 .swipe-ear {
-  display: block;
-  position: fixed;
-  top: 50%;
-  height: 36px;
-  width: 22px;
-  border: none;
-  background-color: #F9F9F7;
-  background-color: rgba(149, 149, 147, 0.9);
+    display: block;
+    position: fixed;
+    top: 50%;
+    padding: $baseline*3 $baseline*2;
+    border: none;
+    background-color: #F9F9F7;
+    background-color: rgba(149, 149, 147, 0.25);
 
-  //For fading
-  opacity: 1;
-  transition: opacity 0.5s ease-out;
-  -moz-transition: opacity 0.5s ease-out;
-  -webkit-transition: opacity 0.5s ease-out;
+    //For fading
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+    -moz-transition: opacity 0.5s ease-out;
+    -webkit-transition: opacity 0.5s ease-out;
 
-  &.is-hidden {
-    opacity: 0;
-  }
+    i { text-indent: -9999px; }
+
+    &.is-hidden {
+        opacity: 0;
+    }
 }
 
 .swipe-ear--right { right: 0; }
-.swipe-ear--left { left: 0; }
+.swipe-ear--left {
+  left: 0;
+  i { @include rotate(180deg); }
+}
