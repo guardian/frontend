@@ -21,16 +21,16 @@ define(function () {
     }
 
     function get(name) {
-        var nameEq = name + '=',
-            cookieVals = document.cookie.split(';'),
-            val;
+        var cookieVal,
+            nameEq = name + '=',
+            cookies = document.cookie.split(';');
 
-        for (var i = 0; i < cookieVals.length; i++) {
-            val = cookieVals[i];
-            while (val.charAt(0) === ' ') { val = val.substring(1, val.length); }
-            if (val.indexOf(nameEq) === 0) { return val.substring(nameEq.length, val.length); }
-        }
-        return null;
+        cookies.forEach(function(cookie, i) {
+            while (cookie.charAt(0) === ' ') { cookie = cookie.substring(1, cookie.length); }
+            if (cookie.indexOf(nameEq) === 0) { cookieVal = cookie.substring(nameEq.length, cookie.length); return cookieVal; }
+        });
+
+        return cookieVal;
     }
 
     return {
