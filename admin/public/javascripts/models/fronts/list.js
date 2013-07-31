@@ -121,12 +121,16 @@ define([
             type: 'json'
         }).always(
             function(resp) {
-                self.populateMeta(resp);
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
+                if (resp.lastUpdated !== self.meta.lastUpdated()) {
+                    self.populateMeta(resp);
+                }
+
+                if (opts.isRefresh && self.state.loadIsPending()) { 
                     return;
                 }
+
                 self.populateData(resp);
-                if (typeof opts.callback === 'function') { opts.callback(); } 
+                if (_.isFunction(opts.callback)) { opts.callback(); } 
                 self.state.loadIsPending(false);
             }
         );
@@ -143,7 +147,6 @@ define([
 
     List.prototype.populateData = function(opts) {
         var self = this;
-
         if (globals.uiBusy) { return; }
         opts = opts || {};
 

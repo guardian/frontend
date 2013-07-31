@@ -619,11 +619,15 @@ a.cta, .cta a {
     color: #000;
 }
 
+.fronts .list-header__showSettings {
+    float: right;
+    margin: 0 2px 0 0;
+}
+
 .fronts .list-header__hide {
     float: right;
     font-size: 9px;
-    margin: 0 5px 0 0;
-
+    margin: 0 2px 0 0;
 }
 
 .fronts .trailblock {
@@ -740,7 +744,7 @@ a.cta, .cta a {
 }
 
 .fronts .needs-more {
-    padding: 0 0 0 10px;
+    padding: 5px 0 0 10px;
     color: #d61d00;
     font-size: 12px;
     text-transform: uppercase;    
@@ -750,25 +754,26 @@ a.cta, .cta a {
     font-weight: bold;
 }
 
-.fronts .list-footer {
-    padding: 2px 10px 10px 10px;
-    font-size: 10px;    
-    border-top: 3px solid #ccc;
+.fronts .list-config {
+    padding: 2px 7px 7px 7px;
+    font-size: 10px;
+    background: #666;
+    color: #fff;
 }
 
-.fronts .list-footer.editable {
+.fronts .list-config.editable {
     background-color: #eee;
 }
 
-.fronts .list-footer a {
+.fronts .list-config a {
     color: #666;
     cursor: pointer;
 }
 
-.fronts .list-footer .settings input {
+.fronts .list-config input {
 }
 
-.fronts .list-footer .settings input.tiny {
+.fronts .list-config input.tiny {
     width: 40px;
     text-align: right;
 }
