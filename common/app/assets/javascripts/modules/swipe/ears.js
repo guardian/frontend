@@ -21,7 +21,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     }
 
     function showBtns() {
-        if(!isVisible) {
+        if(!isVisible && document.body.className.indexOf('has-gallery') === -1) {
             btns.forEach(function(el){ bonzo(el).removeClass('is-hidden'); });
             isVisible = true;
         }
