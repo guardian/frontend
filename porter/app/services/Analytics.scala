@@ -579,6 +579,60 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
     case (day, days_seen) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, days_seen)
   }
 
+  def getWeeklyDaysSeenByDay(): Map[Int, Map[DateMidnight, Long]] = {
+    val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
+        with day as (
+          select year, month, day_of_month, days_since_epoch, ophan
+          from pageviews
+          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          group by year, month, day_of_month, days_since_epoch, ophan
+        )
+        select year, month, day_of_month, user_days_seen_for_week, count(*) as count
+        from (
+          select d1.year, d1.month, d1.day_of_month, d1.ophan, count(*) as user_days_seen_for_week
+          from day d1
+          inner join day d2
+          on d1.ophan = d2.ophan
+          where d1.days_since_epoch >= d2.days_since_epoch
+          and d2.days_since_epoch > d1.days_since_epoch - 7
+          group by d1.year, d1.month, d1.day_of_month, d1.ophan
+        )
+        group by year, month, day_of_month, user_days_seen_for_week
+      """).list()
+
+      data map {
+        case (year, month, day, daysSeen, count) => (new DateMidnight(year, month, day), daysSeen, count)
+      }
+    }
+
+    val reshaped: List[(Int, (DateMidnight, Long))] = daysSeen map { case (date, days, count) => (days, (date, count)) }
+    val groupedByDays: Map[Int, List[(Int,(DateMidnight, Long))]] = reshaped groupBy { _.first }
+    val reshapedValues: Map[Int, List[(DateMidnight, Long)]] = groupedByDays mapValues { _.map { _.second } }
+    val collated: Map[Int, Map[DateMidnight, Long]] = reshapedValues mapValues { _.toMap }
+
+    collated map { case (days, daysSeen) =>
+      val daysSeenPerUserWithZeros = {
+        val withZeros = daysSeen.withDefaultValue(0L)
+        val dateRange = daysSeen.keySet.min.dayOfEpoch to daysSeen.keySet.max.dayOfEpoch
+        dateRange map { Epoch.day } toMapWith { withZeros.apply }
+      }
+
+      (days, daysSeenPerUserWithZeros)
+    }
+  }
+
+  def getWeeklyDaysSeenByDayDateExpanded(): List[(Int, Int, Int, Int, Long)] = {
+    val reshaped: List[(Int, List[(DateMidnight, Long)])] = (getWeeklyDaysSeenByDay() mapValues { _.toList }).toList
+    val flattened: List[(Int, DateMidnight, Long)] = reshaped flatMap { case (days, values) =>
+      for (value <- values) yield (days, value.first, value.second)
+    }
+
+    flattened map {
+      case (days, day, count) => (days, day.year.get, day.monthOfYear.get, day.dayOfMonth.get, count)
+    }
+  }
+
   def getFourWeeklyDaysSeenPerUserByDay(): Map[DateMidnight, Double] = {
     val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
@@ -626,5 +680,59 @@ object Analytics extends AkkaSupport with Logging with implicits.Dates with impl
 
   def getFourWeeklyDaysSeenPerUserByDayDateExpanded(): List[(Int, Int, Int, Double)] = getFourWeeklyDaysSeenPerUserByDay().toList map {
     case (day, days_seen) => (day.year.get, day.monthOfYear.get, day.dayOfMonth.get, days_seen)
+  }
+
+  def getFourWeeklyDaysSeenByDay(): Map[Int, Map[DateMidnight, Long]] = {
+    val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+      val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
+        with day as (
+          select year, month, day_of_month, days_since_epoch, ophan
+          from pageviews
+          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          group by year, month, day_of_month, days_since_epoch, ophan
+        )
+        select year, month, day_of_month, user_days_seen_for_four_weeks, count(*) as count
+        from (
+          select d1.year, d1.month, d1.day_of_month, d1.ophan, count(*) as user_days_seen_for_four_weeks
+          from day d1
+          inner join day d2
+          on d1.ophan = d2.ophan
+          where d1.days_since_epoch >= d2.days_since_epoch
+          and d2.days_since_epoch > d1.days_since_epoch - 28
+          group by d1.year, d1.month, d1.day_of_month, d1.ophan
+        )
+        group by year, month, day_of_month, user_days_seen_for_four_weeks
+      """).list()
+
+      data map {
+        case (year, month, day, daysSeen, count) => (new DateMidnight(year, month, day), daysSeen, count)
+      }
+    }
+
+    val reshaped: List[(Int, (DateMidnight, Long))] = daysSeen map { case (date, days, count) => (days, (date, count)) }
+    val groupedByDays: Map[Int, List[(Int,(DateMidnight, Long))]] = reshaped groupBy { _.first }
+    val reshapedValues: Map[Int, List[(DateMidnight, Long)]] = groupedByDays mapValues { _.map { _.second } }
+    val collated: Map[Int, Map[DateMidnight, Long]] = reshapedValues mapValues { _.toMap }
+
+    collated map { case (days, daysSeen) =>
+      val daysSeenPerUserWithZeros = {
+        val withZeros = daysSeen.withDefaultValue(0L)
+        val dateRange = daysSeen.keySet.min.dayOfEpoch to daysSeen.keySet.max.dayOfEpoch
+        dateRange map { Epoch.day } toMapWith { withZeros.apply }
+      }
+
+      (days, daysSeenPerUserWithZeros)
+    }
+  }
+
+  def getFourWeeklyDaysSeenByDayDateExpanded(): List[(Int, Int, Int, Int, Long)] = {
+    val reshaped: List[(Int, List[(DateMidnight, Long)])] = (getFourWeeklyDaysSeenByDay() mapValues { _.toList }).toList
+    val flattened: List[(Int, DateMidnight, Long)] = reshaped flatMap { case (days, values) =>
+      for (value <- values) yield (days, value.first, value.second)
+    }
+
+    flattened map {
+      case (days, day, count) => (days, day.year.get, day.monthOfYear.get, day.dayOfMonth.get, count)
+    }
   }
 }

@@ -38,7 +38,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
     scenario("Load the network front") {
 
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
 
@@ -50,40 +50,40 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     scenario("Section navigation") {
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
 
           Then("I should see the link for section navigation")
-          findFirst(".control--sections").href should endWith("/#footer-nav")
+          findFirst(".control--sections").href should endWith("/uk#footer-nav")
       }
     }
 
     scenario("Link to desktop version for UK edition") {
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst("[data-link-name='desktop version UK full site']").href should endWith("http://www.guardian.co.uk/fullsite")
+          findFirst(".main-site-link").href should endWith("/uk?view=desktop")
       }
     }
 
     scenario("Link to desktop version for US edition") {
       Given("I visit the network front")
-      HtmlUnit.US("/") {
+      HtmlUnit.US("/us") {
         browser =>
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst("[data-link-name='desktop version US full site']").href should endWith("http://www.guardiannews.com/fullsite")
+          findFirst(".main-site-link").href should endWith("/us?view=desktop")
       }
     }
 
     scenario("Copyright") {
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
 
@@ -95,7 +95,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     scenario("Link tracking") {
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
           Then("All links should be tracked")

@@ -155,11 +155,6 @@ object Switches extends Collections {
     "If this switch is on, gallery trails are opened in a lightbox.",
     safeState = Off)
 
-  val EditionRedirectSwitch = Switch("Feature Switches", "edition-redirects",
-    "If this switch is on, editionalised pages will redirect from the root to the appropriate edition, e.g. culture -> uk/culture (only on www.theguardian.com)",
-    safeState = Off)
-
-
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -224,7 +219,6 @@ object Switches extends Collections {
     LocalNavSwitch,
     ABAa,
     LightboxGalleriesSwitch,
-    EditionRedirectSwitch,
     LiveCricketSwitch,
     ABLightboxGalleries
   )
