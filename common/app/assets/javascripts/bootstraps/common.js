@@ -27,6 +27,7 @@ define([
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
+    'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
     'modules/swipenav',
@@ -61,6 +62,7 @@ define([
     Adverts,
     Cookies,
     OmnitureMedia,
+    AdvertsAnalytics,
     Debug,
     ab,
     swipeNav,
@@ -186,6 +188,11 @@ define([
             });
 
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
+                var advertsAnalytics = new AdvertsAnalytics({
+                    context: context,
+                    config:  config
+                });
+
 
                 common.mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
