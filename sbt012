@@ -71,6 +71,8 @@ export GRUNT_ISDEV=1
 
 java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
+  -XX:+UseConcMarkSweepGC \
+  -XX:+CMSIncrementalMode \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
   -Djava.awt.headless=true \
   $DEBUG_PARAMS \
