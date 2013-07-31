@@ -1,4 +1,4 @@
-@media (min-width: $tablet) {
+@include mq(tablet) {
     .front-container--facia .front-section:nth-child(odd) {
         float: left;
         clear: left;
@@ -11,7 +11,7 @@
     }
 }
 
-@media (min-width: $desktop) {
+@include mq(desktop) {
     .front-container--facia .front-section:nth-child(odd) {
         width: 63.5%;
     }
