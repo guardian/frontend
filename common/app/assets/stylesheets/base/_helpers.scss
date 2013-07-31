@@ -40,7 +40,7 @@
 }
 
 .mobile-only {
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         display: none !important;
     }
 }
@@ -48,7 +48,7 @@
 .tablet-only {
     display: none !important;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         display: block !important;
     }
 }

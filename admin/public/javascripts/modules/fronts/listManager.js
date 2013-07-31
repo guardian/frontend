@@ -1,38 +1,63 @@
 define([
     'Reqwest',
     'knockout',
+    'models/fronts/globals',
     'models/fronts/list',
     'models/fronts/article',
     'models/fronts/latestArticles'
 ], function(
     reqwest,
     knockout,
+    globals,
     List,
     Article,
     LatestArticles
 ) {
     var apiBase = '/fronts/api',
-        maxDisplayedLists = 3;
+        maxDisplayedLists = 3,
+        dragging = false;
 
     return function(selector) {
 
         var viewModel = {},
-            poller,
+            schemaLookUp = {},
             self = this;
 
-        function showList(id) {
-            dropList(id);
-            viewModel.listsDisplayed.push(new List(id));
-            limitListsDisplayed(maxDisplayedLists);
-            connectSortableLists();
-            startPoller();
+        function getHashLists() {
+            return window.location.hash ? window.location.hash.slice(1).split(",") : [];
         }
 
-        function dropList(id) {
-            id = id.id || id;
-            viewModel.listsDisplayed.remove(function(item) {
-                return item.id === id;
-            })
+        function renderLists() {
+            viewModel.listsDisplayed.removeAll();
+            getHashLists().forEach(function(id){
+                viewModel.listsDisplayed.push(new List(id, schemaLookUp[id]));
+            });
+            connectSortableLists();
+        }
+
+        function addList(id) {
+            var ids = getHashLists().slice(1 - maxDisplayedLists);
+            if(ids.indexOf(id) === -1) {
+                ids.push(id);
+                window.location.hash = ids.join(',');
+            }
+        }
+
+        function displayAllEditions() {
+            window.location.hash = viewModel.editions.map(function(edition){
+                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
+            }).join(',');
+        }
+
+        function dropList(list) {
+            var ids = getHashLists(),
+                id = list.id || list,
+                pos = ids.indexOf(id);
+
+            if (pos > -1) {
+                ids.splice(pos, 1);
+                window.location.hash = ids.join(',');
+            }
         }
 
         function limitListsDisplayed(max) {
@@ -47,6 +72,7 @@ define([
                 sortables = $(selector),
                 item,
                 fromList,
+                fromListObj,
                 toList;
 
             sortables.sortable({
@@ -54,17 +80,21 @@ define([
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
+                    globals.uiBusy = true;
 
-                    // Display the source trail. (The clone gets dragged.) 
+                    // Display the source item. (The clone gets dragged.) 
                     sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    stopPoller();
+                    fromListObj = knockout.dataFor(fromList[0]);
+                    
                 },
                 stop: function(event, ui) {
                     var index,
                         clone;
+
+                    globals.uiBusy = false;
 
                     // If we move between lists, effect a copy by cloning
                     if(toList !== fromList) {
@@ -76,7 +106,6 @@ define([
                     }
 
                     saveListDelta(item.data('url'), toList);
-                    startPoller();
                 },
                 change: function(event, ui) {
                     if(ui.sender) toList = ui.placeholder.parent();
@@ -88,18 +117,24 @@ define([
         function saveListDelta(id, list) {
             var listId,
                 inList,
+                listObj,
                 position,
                 delta;
                 
             if (list.hasClass('throwAway')) { return; }
 
+            listObj = knockout.dataFor(list[0]);
+
             listId = list.attr('data-list-id');
             if (!listId) { return; }
 
             inList = $("[data-url='" + id + "']", list);
+
             if (inList.length) {
                 delta = {
-                    item: id
+                    item: id,
+                    draft: true,
+                    live: !!list.attr('data-live-edit')
                 };
 
                 position = inList.next().data('url');
@@ -113,52 +148,49 @@ define([
                     } 
                 }
 
+                listObj.loadIsPending(true);
+
                 reqwest({
                     method: 'post',
                     url: apiBase + '/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
+                }).always(function(resp) {
+                    listObj.load();
                 });
             }
         };
 
         function startPoller() {
-            stopPoller();
-            poller = setInterval(function(){
+            setInterval(function(){
                 viewModel.listsDisplayed().forEach(function(list){
-                    list.load();
+                    if (!dragging) {
+                        list.refresh();
+                    }
                 });
-            }, 3000);
+            }, 5000);
         }
 
-        function stopPoller() {
-            clearInterval(poller);
-            poller = false;
-        }
-
-        function displayAllEditions() {
-            viewModel.editions.forEach(function(edition){
-                var id = edition.id + '/' +
-                    viewModel.selectedSection().id + '/' + 
-                    viewModel.selectedBlock().id; 
-
-                showList(id);
-            });
-        }
-
-        function fetchSchema() {
+        function fetchSchema(callback) {
             reqwest({
                 url: apiBase,
                 type: 'json'
             }).then(
                 function(resp) {
-                    viewModel.editions = resp.editions;                    
-                    // Render the page
-                    knockout.applyBindings(viewModel);
-                    connectSortableLists();
+                    // Make a flat version of schema for lookup by id path, e.g. "uk/news/top-stories" 
+                    [].concat(resp.editions).forEach(function(edition){
+                        [].concat(edition.sections).forEach(function(section){
+                            [].concat(section.blocks).forEach(function(block){
+                                schemaLookUp[edition.id + '/' + section.id + '/' + block.id] = block;
+                            });
+                        });
+                    });
+
+                    viewModel.editions = resp.editions;
+                    if (typeof callback === 'function') { callback(); }
                 },
-                function(xhr) { console.log(xhr); } // error
+                function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
             );
         };
 
@@ -172,32 +204,39 @@ define([
             viewModel.dropList           = dropList;
             viewModel.displayAllEditions = displayAllEditions;
 
-            fetchSchema();
-
             viewModel.selectedEdition.subscribe(function(edition) {
-                viewModel.selectedSection('');
-                viewModel.selectedBlock('');
+                viewModel.selectedSection(undefined);
+                viewModel.selectedBlock(undefined);
             });
 
             viewModel.selectedSection.subscribe(function(section) {
-                console
-                viewModel.selectedBlock('');
+                viewModel.selectedBlock(undefined);
                 if (section && section.id) {
-                    viewModel.latestArticles.section(section.id);
+                    viewModel.latestArticles.section(section.sectionSearch || section.id);
                 }
             });
 
             viewModel.selectedBlock.subscribe(function(block) {
+                var id;
                 if(block && block.id) {
-                    var id = viewModel.selectedEdition().id + '/' +
-                             viewModel.selectedSection().id + '/' + 
-                             block.id;
+                    id = viewModel.selectedEdition().id + '/' +
+                         viewModel.selectedSection().id + '/' + 
+                         block.id;
 
-                    showList(id);
+                    addList(id);
                 }
             });
 
-            viewModel.latestArticles.search();
+            fetchSchema(function(){
+                knockout.applyBindings(viewModel);
+
+                renderLists();
+                window.onhashchange = renderLists;
+
+                startPoller();
+                viewModel.latestArticles.search();
+                viewModel.latestArticles.startPoller();
+            });
         };
 
     };

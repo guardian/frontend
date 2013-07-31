@@ -64,8 +64,8 @@ class GuardianConfiguration(
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
-  object frontsApi {
-    lazy val base = configuration.getStringProperty("fronts.api") getOrElse {
+  object frontend {
+    lazy val store = configuration.getStringProperty("frontend.store") getOrElse {
       throw new IllegalStateException("Fronts Api not configured")
     }
   }
@@ -166,6 +166,18 @@ class GuardianConfiguration(
     }
 
     lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
+  }
+  
+  object pingdom {
+    lazy val url = configuration.getStringProperty("pingdom.url").getOrElse(throw new RuntimeException("Pingdom url not set"))
+    lazy val user = configuration.getStringProperty("pingdom.user").getOrElse(throw new RuntimeException("Pingdom user not set"))
+    lazy val password  = configuration.getStringProperty("pingdom.password").getOrElse(throw new RuntimeException("Pingdom password not set"))
+    lazy val apiKey = configuration.getStringProperty("pingdom.apikey").getOrElse(throw new RuntimeException("Pingdom api key not set"))
+  }
+  
+  object riffraff {
+    lazy val url = configuration.getStringProperty("riffraff.url").getOrElse(throw new RuntimeException("RiffRaff url not set"))
+    lazy val apiKey = configuration.getStringProperty("riffraff.apikey").getOrElse(throw new RuntimeException("RiffRaff api key not set"))
   }
 
   // log out Play config on start

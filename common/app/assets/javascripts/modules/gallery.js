@@ -21,6 +21,9 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
             // runs on domready
             bindGallery: function () {
 
+                //Reset counter
+                context.querySelector('.js-gallery-index').innerHTML = urlParams.index || 1;
+
                 if (detect.hasTouchScreen()) { // only enable swiping for touch devices, duh.
 
                     view.galleryConfig.inSwipeMode = true;
@@ -110,33 +113,35 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
 
                 }
 
-                // this means the user used the back/forward buttons
-                // so we should change gallery state to match
-                window.onpopstate = function(event) {
-                    if (event.state && event.state.index && (event.state.index !== view.galleryConfig.currentIndex)) {
+                if(!detect.canSwipe()) {
+                    // this means the user used the back/forward buttons
+                    // so we should change gallery state to match
+                    window.onpopstate = function(event) {
+                        if (event.state && event.state.index && (event.state.index !== view.galleryConfig.currentIndex)) {
 
-                        // if it's swipe we need to animate the slider
-                        // so first we work out which direction to move in
-                        if (view.galleryConfig.inSwipeMode) {
+                            // if it's swipe we need to animate the slider
+                            // so first we work out which direction to move in
+                            if (view.galleryConfig.inSwipeMode) {
 
-                            var currentSlide = context.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
-                            var currentIndex = parseInt(currentSlide.getAttribute('data-index'), 10);
+                                var currentSlide = context.getElementsByClassName(view.galleryConfig.currentSlideClassName)[0];
+                                var currentIndex = parseInt(currentSlide.getAttribute('data-index'), 10);
 
-                            // we don't need to manually update URLs as popstate does it for us
-                            view.galleryConfig.stopUpdatingURL = true;
+                                // we don't need to manually update URLs as popstate does it for us
+                                view.galleryConfig.stopUpdatingURL = true;
 
-                            if (currentIndex <= event.state.index) {
-                                view.galleryConfig.gallerySwipe.next();
+                                if (currentIndex <= event.state.index) {
+                                    view.galleryConfig.gallerySwipe.next();
+                                } else {
+                                    view.galleryConfig.gallerySwipe.prev();
+                                }
+
                             } else {
-                                view.galleryConfig.gallerySwipe.prev();
+                                // in non-touch mode, so just move to a specific slide
+                                view.advanceGallery(null, event.state.index);
                             }
-
-                        } else {
-                            // in non-touch mode, so just move to a specific slide
-                            view.advanceGallery(null, event.state.index);
                         }
-                    }
-                };
+                    };
+                }
 
             },
 
@@ -201,7 +206,7 @@ define(["bean", "swipe", "common", "modules/detect", "modules/url", "bonzo"], fu
                 // we don't need to do this when using customItemIndexToShow
                 // as popState does this for us
                 if (!customItemIndexToShow) {
-                    if (!view.galleryConfig.stopUpdatingURL) {
+                    if (!view.galleryConfig.stopUpdatingURL && !detect.canSwipe()) {
                         view.updateURL('index=' + newSlideIndex, newSlideIndex);
                     } else {
                         // reset this so other things can update URLs

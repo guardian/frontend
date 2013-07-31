@@ -16,6 +16,7 @@
         <ul>
             <li><a href="@routes.AnalyticsController.kpis()">KPIs</a></li>
             <li><a href="@routes.AnalyticsController.pageviews()">Pageviews</a></li>
+            <li><a href="@routes.AnalyticsController.browsers()">Browser support tables</a></li>
         </ul>
     </div>
     <div class="row">
@@ -26,10 +27,18 @@
         </ul>
     </div>
     <div class="row">
-    <h3>Metrics</h3>
+        <h3>Metrics</h3>
         <p class="muted">Ops metrics (is the site healthy?)</p>
         <ul>
             <li><a href="@controllers.metrics.routes.DashboardController.render()">Load Balancers</a></li>
+            <li><a href="@controllers.metrics.routes.FastlyController.render()">Fastly</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <h3>Radiator</h3>
+        <p class="muted">Big screen display.</p>
+        <ul>
+            <li><a href="@controllers.routes.RadiatorController.render()">Radiator</a></li>
         </ul>
     </div>
 }

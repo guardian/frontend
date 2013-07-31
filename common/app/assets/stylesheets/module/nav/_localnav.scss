@@ -2,12 +2,12 @@
 ========================================================================== */
 #preloads.has-localnav {
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         margin-top: 156px;
     }
 
     .parts__body {        
-        @media (min-width: $tablet) {
+        @include mq(tablet) {
             margin-top: 0;
         }
     }
@@ -17,7 +17,7 @@
         padding-top: 5px;
         background-color: #eee;
 
-        @media (min-width: $tablet) {
+        @include mq(tablet) {
             padding-top: 10px;
             background-color: #ffffff;
         }
@@ -28,7 +28,7 @@
     .front-section:first-child .sub-section-head {
         display: none;
 
-        @media (min-width: $tablet) {
+        @include mq(tablet) {
             display: block;
         }
     }

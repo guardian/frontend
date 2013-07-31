@@ -189,8 +189,6 @@ define([
 
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
-                
-
                 common.mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
                 require(config.page.ophanUrl, function (Ophan) {
@@ -267,7 +265,7 @@ define([
         },
 
         loadVideoAdverts: function(config) {
-            common.mediator.on('page:video:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 if(config.switches.videoAdverts && !config.page.blockAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
@@ -286,6 +284,15 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+   
+        // let large viewports opt-in to the responsive beta
+        betaOptIn: function () {
+            var isBeta = /#beta/.test(window.location.hash);
+            if (isBeta && window.screen.width >= 900) {
+                var expiryDays = 365;
+                Cookies.add("GU_VIEW", "mobile", expiryDays);
+            }
         },
 
         initSwipe: function(config) {
@@ -346,6 +353,7 @@ define([
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
+            modules.betaOptIn();
             modules.paragraphSpacing();
         }
         common.mediator.emit("page:common:ready", config, context);
