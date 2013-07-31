@@ -1,7 +1,6 @@
 package implicits
 
 import play.api.mvc.RequestHeader
-import common.Site
 
 trait Requests {
   implicit class Request2rich(r: RequestHeader) {
@@ -11,9 +10,6 @@ trait Requests {
     def getIntParameter(name: String): Option[Int] = getParameter(name).map(_.toInt)
 
     def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
-
-    // TODO only needed till we are live in www.theguardian.com
-    lazy val isSingleDomain = !Site(r).isDefined
 
     lazy val isJson = r.getQueryString("callback").isDefined || r.headers.get("Accept").exists{ header =>
       header.contains("application/json") ||

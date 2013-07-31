@@ -228,7 +228,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see a link to the corresponding desktop article")
-        findFirst("#main-site").getAttribute("href") should be("http://www.guardian.co.uk/environment/2012/feb/22/capitalise-low-carbon-future?mobile-redirect=false")
+        findFirst(".main-site-link").getAttribute("href") should be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
       }
     }
 
@@ -239,8 +239,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see a link to the corresponding desktop article")
-        findFirst("#main-site").getAttribute("href") should
-          be("http://www.guardiannews.com/environment/2012/feb/22/capitalise-low-carbon-future?mobile-redirect=false")
+        findFirst(".main-site-link").getAttribute("href") should
+          be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
       }
     }
 
