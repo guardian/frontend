@@ -22,13 +22,6 @@ class EditionTest extends FlatSpec with ShouldMatchers {
     Edition(request) should be(Us)
   }
 
-  it should "resolve correct edition from site" in {
-
-    val request = FakeRequest().withHeaders("host" -> "m.guardiannews.com")
-
-    Edition(request) should be(Us)
-  }
-
   it should "resolve correct edition from cookie" in {
 
     val request = FakeRequest().withCookies(Cookie("GU_EDITION", "uS"))
