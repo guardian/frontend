@@ -15,7 +15,8 @@
         "isDev": @play.Play.isDev(),
         "oasHost": "oas.theguardian.com",
         "oasUrl": "http://oas.theguardian.com/RealMedia/ads/",
-        "oasSiteIdHost": "www.theguardian.com"
+        "oasSiteIdHost": "www.theguardian.com",
+        "idUrl": "@Configuration.id.url"
     },
     "switches" : { @{Html(switches.map{ switch =>
             s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""

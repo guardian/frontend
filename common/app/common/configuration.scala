@@ -98,6 +98,10 @@ class GuardianConfiguration(
     lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin")
   }
 
+  object id {
+    lazy val url = configuration.getStringProperty("id.url").getOrElse("")
+  }
+
   object static {
     lazy val path = configuration.getStringProperty("static.path").getOrElse {
       throw new IllegalStateException("Static path not configured")
