@@ -12,7 +12,7 @@ object ModelOrResult extends Results {
         case a if a.isArticle => internalRedirect("type/article", a.id)
         case v if v.isVideo => internalRedirect("type/video", v.id)
         case g if g.isGallery => internalRedirect("type/gallery", g.id)
-        case unsupportedContent => Right(Redirect(unsupportedContent.webUrl, Map("mobile-redirect" -> Seq("false"))))
+        case unsupportedContent => Right(Redirect(unsupportedContent.webUrl, Map("view" -> Seq("desktop"))))
       }
         .orElse(response.tag.map(t => internalRedirect("type/tag", t.id)))
         .orElse(response.section.map(s => internalRedirect("type/section", s.id)))

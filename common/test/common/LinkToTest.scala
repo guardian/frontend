@@ -132,7 +132,7 @@ class LinkToTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "not resolve comment links" in {
-    LinkTo("http://www.guardian.co.uk/commentisfree/2013/jan/13/obama-foreign-policy-lessons-iraq?mobile-redirect=false#comment-20590999", edition) should
-      be("http://www.guardian.co.uk/commentisfree/2013/jan/13/obama-foreign-policy-lessons-iraq?mobile-redirect=false#comment-20590999")
+    LinkTo("http://www.guardian.co.uk/commentisfree/2013/jan/13/obama-foreign-policy-lessons-iraq?view=desktop#comment-20590999", edition) should
+      be("http://www.guardian.co.uk/commentisfree/2013/jan/13/obama-foreign-policy-lessons-iraq?view=desktop#comment-20590999")
   }
 }

@@ -77,8 +77,8 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/football/results") { browser =>
         import browser._
 
-        Then("the 'Desktop version' link should point to 'http://www.guardian.co.uk/football/matches?mobile-redirect=false'")
-        findFirst("#main-site").getAttribute("href") should be("http://www.guardian.co.uk/football/matches?mobile-redirect=false")
+        Then("the 'Desktop version' link should point to '/football/results?view=desktop'")
+        findFirst(".main-site-link").getAttribute("href") should be("http://localhost:9000/football/results?view=desktop")
       }
 
       Given("I visit the results page")
@@ -86,8 +86,8 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit.US("/football/results") { browser =>
         import browser._
 
-        Then("the 'Desktop version' link should point to 'http://www.guardiannews.com/football/matches?mobile-redirect=false'")
-        findFirst("#main-site").getAttribute("href") should be("http://www.guardiannews.com/football/matches?mobile-redirect=false")
+        Then("the 'Desktop version' link should point to '/football/results?view=desktop'")
+        findFirst(".main-site-link").getAttribute("href") should be("http://localhost:9000/football/results?view=desktop")
       }
 
     }
