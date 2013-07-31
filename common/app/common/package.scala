@@ -76,6 +76,10 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     else
       Ok(htmlResponse())
   }
+
+  def renderFormat(html: () => Html, cacheTime: Integer)(implicit request: RequestHeader): Result = {
+    renderFormat(html, html, cacheTime)(request)
+  }
 }
 
 object Reference {

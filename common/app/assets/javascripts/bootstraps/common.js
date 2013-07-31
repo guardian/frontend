@@ -14,6 +14,7 @@ define([
     'modules/router',
     'modules/images',
     'modules/navigation/top-stories',
+    'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
@@ -48,6 +49,7 @@ define([
     Router,
     Images,
     TopStories,
+    Profile,
     Sections,
     Search,
     NavControl,
@@ -95,8 +97,15 @@ define([
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
-                header = document.querySelector('body');
+                header = document.querySelector('body'),
+                profile;
 
+            if (config.switches.idProfileNavigation) {
+                profile = new Profile(header, {
+                    url: config.idUrl
+                });
+                profile.init();
+            }
 
             sections.init(header);
             navControl.init(header);
