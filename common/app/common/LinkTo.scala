@@ -7,7 +7,7 @@ object LinkTo extends Logging {
 
   //all content types except article (they do not have the word "article" in the url)
   val supportedContentTypes = Seq("gallery", "video")
-  val unSupportedContentTypes = Seq("audio", "interactive", "poll", "quiz", "picture", "sudoku",
+  val unSupportedContentTypes = Seq("audio", "interactive", "poll", "quiz", "picture",
     "crossword", "competition", "podcast", "signup", "cartoon", "table", "graphic", "audioslideshow", "data",
     "document")
 
@@ -67,7 +67,7 @@ object LinkTo extends Logging {
   }
 
   private def paramsOk(queryString: String, url: String) = {
-    if (queryString.contains("mobile-redirect=false")) {
+    if (queryString.contains("view=desktop")) {
       log.debug("unsupported: url %s was a mobile redirect" format (url))
       false
     } else {

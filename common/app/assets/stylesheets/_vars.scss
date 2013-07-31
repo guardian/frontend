@@ -8,10 +8,12 @@
  */
 
 
-/* Support for IE ?
+/* Support
    ========================================================================== */
 
-$old-ie: false !default;
+$old-ie:      false !default;
+$svg-support: true !default;
+
 
 /* Breakpoints
    ========================================================================== */
@@ -19,17 +21,16 @@ $old-ie: false !default;
 // Breakpoints are in pixel for simpler understanding & manipulation
 // they get translated into ems in @media queries
 
-$mq-mobile:  300px  !default;
-$mq-tablet:  600px  !default;
-$mq-desktop: 900px  !default;
-$mq-wide:    1260px !default;
+$mq-breakpoints: (
+    (mobile  300px)
+    (tablet  600px)
+    (desktop 900px)
+    (wide    1260px)
 
-
-/* Tweakpoints
-   ========================================================================== */
-
-$mq-desktopAd: 810px;
-$mq-mobileLandscape: 480px;
+    // Tweakpoints
+    (desktopAd 810px)
+    (mobileLandscape 480px)
+);
 
 
 /* Layout dimensions

@@ -19,9 +19,7 @@ trait CloudWatch {
 
   private val fastlyMetrics = List(
     ("Fastly Errors (Europe) - errors per minute, average", "errors", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly 5xx (Europe) - 5xxs per minute, average", "status_5xx", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly Errors (USA) - errors per minute, average", "errors", "usa", "2eYr6Wx3ZCUoVPShlCM61l"),
-    ("Fastly 5xx (USA) - 5xxs per minute, average", "status_5xx", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
+    ("Fastly Errors (USA) - errors per minute, average", "errors", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
   )
 
   private val fastlyHitMissMetrics = List(

@@ -18,7 +18,8 @@ module.exports = function (grunt) {
                     'common/app/assets/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
                     'common/app/assets/stylesheets/story.min.css': 'common/app/assets/stylesheets/story.scss',
                     'common/app/assets/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
-                    'common/app/assets/stylesheets/old-ie.min.css': 'common/app/assets/stylesheets/old-ie.scss',
+                    'common/app/assets/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
+                    'common/app/assets/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss',
                     'style-guide/app/assets/stylesheets/styleguide.min.css': 'style-guide/app/assets/stylesheets/styleguide.scss'
                 },
                 options: {
@@ -28,6 +29,7 @@ module.exports = function (grunt) {
                     debugInfo: (isDev) ? true : false,
                     style: (isDev) ? 'nested' : 'compressed',
                     loadPath: [
+                        'common/app/assets/stylesheets/components/sass-mq',
                         'common/app/assets/stylesheets/components/pasteup/sass/layout',
                         'common/app/assets/stylesheets/components/normalize-scss'
                     ]

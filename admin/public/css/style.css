@@ -31,7 +31,8 @@ input.invalid {
 
 fieldset, 
 input[type=text] {
-    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 input[type=text] {
@@ -461,13 +462,15 @@ a.cta, .cta a {
 .cf{zoom:1}
 
 .fronts .finder {
-    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: left;
     width: 25%;
 }
 
 .fronts .lists {
-    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: left;
     width: 75%;
 }
@@ -487,31 +490,20 @@ a.cta, .cta a {
     float: right;
     width: 75%;
     border-left: 10px solid #fff;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 .fronts .list-picker__title,
-.fronts .finder__title,
-.fronts .list-header__title {
+.fronts .finder__title {
     font-size: 18px;
 }
 
-.fronts .list-header__title {
-    display: inline-block;
-    padding-left: 4px;
-    border-left: 1px solid #5a6b87;
-}
-
-.fronts .list-header__title:first-child {
-    padding-left: 0;
-    border-left: 0;
-}
-
-.fronts .list-picker__title {
+.fronts .finder__title {
     color: #666;
 }
 
-.fronts .finder__title {
+.fronts .list-picker__title {
     color: #666;
 }
 
@@ -533,14 +525,18 @@ a.cta, .cta a {
 }
 
 .fronts .lists .connectedList {
-    min-height: 100px;
-    margin: 0 0 20px 0;
+    min-height: 50px;
+}
+
+.fronts .lists .connectedList.pending {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .fronts .list-header {
-    background-color: #214583;
+    background-color: #666;
     color: #fff;
-    padding: 7px 7px 0 10px;
+    padding: 0;
     overflow: auto;
 }
 
@@ -550,8 +546,25 @@ a.cta, .cta a {
     color: #fff;
 }
 
+.fronts .list-header__title {
+    font-size: 18px;
+    padding: 3px 0 0 6px;
+}
+
+.fronts .list-header__title__part {
+    font-size: 18px;
+    display: inline-block;
+    padding-left: 4px;
+    border-left: 1px solid #ccc;
+}
+
+.fronts .list-header__title__part:first-child {
+    padding-left: 0;
+    border-left: 0;
+}
+
 .fronts .list-header__meta {
-    color: #fff;
+    padding: 0 6px;
     font-size: 10px;
 }
 
@@ -559,15 +572,63 @@ a.cta, .cta a {
     font-weight: bold;
 }
 
-.fronts .list-header__control {
-    float: right;
+.fronts .list-header__status {
+}
+
+.fronts .list-header__status__live,
+.fronts .list-header__status__draft {
+    font-size: 12px;
+    float: left;
+    padding: 0 6px;    
+    margin: 2px 0 0 3px;
+    background-color: #ccc;    
+    cursor: pointer;
+}
+
+.fronts .list-header__status__live.active {
+    color: #d61d00;
+    background-color: #fff;    
+}
+
+.fronts .list-header__status__draft.hasUnPublishedEdits {
+    background-color: #f89406;
+}
+
+.fronts .list-header__status__draft.active {
+    color: #000;
+    background-color: #fff;    
+}
+
+.fronts .list-header__status__live__title,
+.fronts .list-header__status__draft__title {
+    font-weight: bold;
+}
+
+.fronts a.list-header__status__control {
+    color: #f89406;
+    cursor: pointer;
+    text-transform: uppercase;
     font-size: 10px;
-    margin: -6px -2px 0 0;
+    line-height: 10px;
+    font-weight: bold;
+    padding: 0 2px;
+}
+
+.fronts a.list-header__status__control:hover,
+.fronts a.list-header__status__control:visited {
+    color: #000;
+}
+
+.fronts .list-header__hide {
+    float: right;
+    font-size: 9px;
+    margin: 0 5px 0 0;
 
 }
 
 .fronts .trailblock {
-    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     width: 33.333%;
     float: left;
     border-top:  10px solid #fff;
@@ -581,13 +642,19 @@ a.cta, .cta a {
     border-bottom: 1px solid #ccc;
 }
 
+.fronts .trail.redundant {
+    opacity: 0.2;
+}
+
 .fronts .trail:hover {
     background-color: #eee;
 }
 
 .fronts .ui-sortable-placeholder {
     height: 10px;
-    background-color: #a1aec4;
+    border-top: 3px solid #666;
+    border-bottom: 3px solid #666;
+    background-color: #DFF0D8;
     visibility: visible !important;
 }
 
@@ -603,12 +670,18 @@ a.cta, .cta a {
 }
 
 .fronts .trail img {
+    display: none;
     float: left;
     margin: 2px 10px 10px 0;
     width: 42%;
-    max-width: 140px;
-    max-height: 84px;    
+    width: 140px;
+    height: 84px;    
     background-color: #eee;
+}
+
+.fronts .trailblock .trail img,
+.fronts .trail:hover img {
+    display: block;    
 }
 
 .fronts .trail p {
@@ -616,11 +689,11 @@ a.cta, .cta a {
     padding: 0;
 }
 
-.fronts .trail h2 {
+.fronts .trail .webTitle {
     font-family: EgyptianText, georgia, serif;
-    font-size: 16px;
-    line-height: 18px;
-    weight: normal;
+    font-size: 15px;
+    line-height: 17px;
+    font-weight: bold;
     margin: 0;
     padding: 0 0 5px 0;
 }
@@ -633,7 +706,7 @@ a.cta, .cta a {
     line-height: 18px;
 }
 
-.fronts .trail .date {
+.fronts .trail .trail__meta {
     color: #999;
     font-family: arial, sans-serif;
     font-size: 11px;
@@ -641,10 +714,61 @@ a.cta, .cta a {
     line-height: 16px;
 }
 
+.fronts .trail .trail__meta a {
+    display: none;
+}
+
+.fronts .trail:hover .trail__meta a {
+    display: inline-block;
+    color: #666;
+    border-left: 1px #ddd solid;
+    padding-left: 4px;
+}
+
 .fronts input[type="text"] {
 }
 
 .fronts select {
-    width: 15%;
+    width: 20%;
     margin: -2px 0 0 0;
+}
+
+.fronts .clipboard {
+    min-height: 20px;
+    margin: 5px 0 10px 0;
+    background: #ddd;
+}
+
+.fronts .needs-more {
+    padding: 0 0 0 10px;
+    color: #d61d00;
+    font-size: 12px;
+    text-transform: uppercase;    
+}
+
+.fronts .needs-more__num {
+    font-weight: bold;
+}
+
+.fronts .list-footer {
+    padding: 2px 10px 10px 10px;
+    font-size: 10px;    
+    border-top: 3px solid #ccc;
+}
+
+.fronts .list-footer.editable {
+    background-color: #eee;
+}
+
+.fronts .list-footer a {
+    color: #666;
+    cursor: pointer;
+}
+
+.fronts .list-footer .settings input {
+}
+
+.fronts .list-footer .settings input.tiny {
+    width: 40px;
+    text-align: right;
 }
