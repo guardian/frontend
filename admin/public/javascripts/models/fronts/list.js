@@ -128,18 +128,18 @@ define([
             function(resp) {
                 self.state.loadIsPending(false);
 
+                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
+                    // noop    
+                } else {
+                    self.populateLists(resp);
+                }
+
                 if (resp.lastUpdated !== self.meta.lastUpdated()) {
                     self.populateMeta(resp);
                 }
 
                 if (!self.state.editingConfig()) {
                     self.populateConfig(resp);
-                }
-
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
-                    // noop    
-                } else {
-                    self.populateLists(resp);
                 }
 
                 if (_.isFunction(opts.callback)) { opts.callback(); } 
