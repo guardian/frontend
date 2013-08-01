@@ -14,14 +14,14 @@ define(["common", "bean", "bonzo"], function (common, bean, bonzo) {
     }
 
     Inview.prototype.refresh = function() {
-        this.inviewNodes = this.context.querySelectorAll(this.selector);
+        this.inviewNodes = common.toArray(this.context.querySelectorAll(this.selector));
     };
 
     Inview.prototype.checkForVisibleNodes = function() {
         var visibleTop    = window.pageYOffset,
             visibleBottom = visibleTop + window.innerHeight;
 
-        Array.prototype.forEach.call(this.inviewNodes, function(el) {
+        this.inviewNodes.forEach(function(el) {
             var offsetTop = bonzo(el).offset().top;
 
             if (!el._inviewHasFired &&
