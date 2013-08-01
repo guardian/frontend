@@ -2,35 +2,39 @@ package client.connection.javanet
 
 import java.net._
 import scala.io.Source
-import client.connection.{SyncronousHttp, HttpResponse}
+import client.connection.{Http, HttpResponse}
 import client.{Error, Parameters, Response}
 import java.io.{IOException, OutputStreamWriter}
 import java.lang.NullPointerException
+import scala.concurrent.{Future, Promise}
 
 
 // an implementation using java.net for Google AppEngine
-class JavaNetSyncHttpClient extends SyncronousHttp {
+class JavaNetSyncHttpClient extends Http {
 
-  override def GET(urlString: String, parameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override def GET(urlString: String, parameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
     logger.trace("GET request %s; params: %s; headers: %s".format(urlString, formatParams(parameters), formatParams(headers)))
-    getConnection(urlString, parameters, headers, "GET")
+    val response = getConnection(urlString, parameters, headers, "GET")
       .right.flatMap(extractHttpResponse)
+    Promise.successful(response).future
   }
 
-  override def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
     logger.trace("POST request %s; body: %s; params: %s; headers: %s".format(url, body, formatParams(urlParameters), formatParams(headers)))
-    getConnection(url, urlParameters, headers, "POST").right
+    val response = getConnection(url, urlParameters, headers, "POST").right
       .flatMap(writeBodyContent(_, body)).right
       .flatMap(extractHttpResponse)
+    Promise.successful(response).future
   }
 
-  override def DELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override def DELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
     logger.trace("DELETER request %s; body: %s; params: %s; headers: %s".format(url, bodyOpt.toString, formatParams(urlParameters), formatParams(headers)))
-    getConnection(url, urlParameters, headers, "DELETE").right
+    val response = getConnection(url, urlParameters, headers, "DELETE").right
       .flatMap(connection => {
         bodyOpt.foreach(writeBodyContent(connection, _))
         extractHttpResponse(connection)
       })
+    Promise.successful(response).future
   }
 
   private def addQueryString(url: String, params: Parameters): String = {

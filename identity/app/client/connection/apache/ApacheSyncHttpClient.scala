@@ -4,14 +4,15 @@ import java.io.IOException
 import java.lang.IllegalArgumentException
 import org.apache.commons.httpclient.methods.{DeleteMethod, StringRequestEntity, PostMethod, GetMethod}
 import org.apache.commons.httpclient.{HttpException, HttpMethod, HttpClient, NameValuePair, URIException}
-import client.connection.{SyncronousHttp, HttpResponse}
+import client.connection.{Http, HttpResponse}
 import client.{Error, Parameters, Response}
 import client.connection.Proxy
+import scala.concurrent.{Future, Promise}
 
 
 // an implementation using apache http client, note this just uses the default connection manager
 // and does not support multithreaded use.
-class ApacheSyncHttpClient extends SyncronousHttp {
+class ApacheSyncHttpClient extends Http {
   // provide converter between our Iterable[(String,String)] and the ApacheClient's Array[KeyValuePair]
   implicit object IterStringTupleToArrayNameValuePairs extends (Parameters => Array[NameValuePair]) {
     def apply(iterStringTuple: Parameters) = iterStringTuple.toArray.map { case (k, v) => new NameValuePair(k, v) }
@@ -45,9 +46,9 @@ class ApacheSyncHttpClient extends SyncronousHttp {
     }
   }
 
-  override def GET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override def GET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
     logger.trace("GET request %s; params: %s; headers: %s".format(url, formatParams(urlParameters), formatParams(headers)))
-    try {
+    val response = try {
       val method = new GetMethod(url)
       execute(method, urlParameters, headers)
     } catch {
@@ -64,11 +65,12 @@ class ApacheSyncHttpClient extends SyncronousHttp {
         Left(List(Error("URIException", e.getMessage)))
       }
     }
+    Promise.successful(response).future
   }
 
-  override def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
     logger.trace("POST request %s; body: %s; params: %s; headers: %s".format(url, body, formatParams(urlParameters), formatParams(headers)))
-    try {
+    val response = try {
       val method = new PostMethod(url)
       method.setRequestEntity(new StringRequestEntity(body, "application/json", "UTF-8"))
       execute(method, urlParameters, headers)
@@ -86,11 +88,12 @@ class ApacheSyncHttpClient extends SyncronousHttp {
         Left(List(Error("URIException", e.getMessage)))
       }
     }
+    Promise.successful(response).future
   }
 
-  override def DELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Response[HttpResponse] = {
+  override def DELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
     logger.trace("DELETER request %s; body: %s; params: %s; headers: %s".format(url, bodyOpt.toString, formatParams(urlParameters), formatParams(headers)))
-    try {
+    val response = try {
       val method = if (bodyOpt.isDefined) {
         val deleteWithBody = new DeleteMethodWithBody(url)
         deleteWithBody.setRequestEntity(new StringRequestEntity(bodyOpt.get, "application/json", "UTF-8"))
@@ -111,5 +114,6 @@ class ApacheSyncHttpClient extends SyncronousHttp {
         Left(List(Error("URIException", e.getMessage)))
       }
     }
+    Promise.successful(response).future
   }
 }

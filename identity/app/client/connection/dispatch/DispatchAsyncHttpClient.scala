@@ -5,10 +5,10 @@ import dispatch.{Req, FunctionHandler, EnrichedFuture, url}
 import com.ning.http.client.{AsyncHttpClient, AsyncHttpClientConfig, ProxyServer}
 import com.ning.http.client.providers.netty.{NettyAsyncHttpProvider, NettyConnectionsPool}
 import client.{Error, Parameters, Response}
-import client.connection.{AsyncronousHttp, Proxy, HttpResponse}
+import client.connection.{Http, Proxy, HttpResponse}
 
 
-trait DispatchAsyncHttpClient extends AsyncronousHttp {
+trait DispatchAsyncHttpClient extends Http {
 
   lazy val maxConnections: Int = 20
   lazy val maxConnectionsPerHost: Int = 20
