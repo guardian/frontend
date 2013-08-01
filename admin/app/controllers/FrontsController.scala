@@ -58,7 +58,7 @@ object FrontsController extends Controller with Logging {
                 contentApiQuery = update.config.contentApiQuery orElse block.contentApiQuery,
                 //These defaults will move somewhere better during refactor
                 min = update.config.min orElse Some(0),
-                max = update.config.max orElse Some(0)
+                max = update.config.max orElse Some(20)
               )
               FrontsApi.putBlock(edition, section, newBlock)
               Ok

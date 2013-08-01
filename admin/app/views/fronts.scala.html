@@ -105,7 +105,9 @@
                         <input type="text" class="tiny" data-bind="value: config.max"/> Maximum
                     </div>
                     <div>ContentApi query for trail automation:</div>
-                    <input type="text" data-bind="value: config.contentApiQuery"/>
+                    <div>
+                        <input type="text" data-bind="value: config.contentApiQuery"/>
+                    </div>
                     <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
                     <button class="btn" value="Cancel" data-bind="click: stopEditingConfig">Cancel</button>
                 </div>
