@@ -127,6 +127,18 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             });
         });
 
+        it("should log an ad impression event", function() {
+            var o = new Omniture(s).go(config);
+            waits(100);
+            runs(function() {
+                common.mediator.emit('module:analytics:adimpression', 'top banner');
+                expect(s.linkTrackVars).toBe('eVar73,events');
+                expect(s.linkTrackEvents).toBe('event29');
+                expect(s.events).toBe('event29');
+                expect(s.eVar73).toBe('top banner');
+            });
+        });
+
         it("should log a clickstream event", function() {
 
             var o = new Omniture(s),
