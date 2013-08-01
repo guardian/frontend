@@ -10,7 +10,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         }
 
         beforeEach(function(){
-            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name', isDotcom: false };
+            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' };
             config.switches = {};
 
             s = { t: function(){}, tl: function(){}, apl: function(){} };
@@ -61,8 +61,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                     buildNumber: "build-73",
                     edition: "US",
                     webPublicationDate: "2012-02-22T16:58:00.000Z",
-                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long",
-                    isDotcom: false
+                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long"
             };
 
             var o = new Omniture(s, w);
@@ -96,9 +95,6 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         it("should correctly set omniture domain if it is www.theguardian.com", function(){
 
             s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk'
-            config.page = {
-                isDotcom: true
-            };
 
             var o = new Omniture(s, w);
             o.go(config);

@@ -68,7 +68,7 @@
     font-weight: bold;
 }
 
-@media (min-width: 40.0625em) {
+@include mq(641px) {
 
     .table-football th,
     .table-football td {
@@ -121,17 +121,17 @@
 .stats-3 {
     display: none;
 }
-@media (min-width: 25em) {
+@include mq(400px) {
     .stats-1 {
         display: table-cell;
     }
 }
-@media (min-width: 40.0625em) {
+@include mq(641px) {
     .stats-2 {
         display: table-cell;
     }
 }
-@media (min-width: 53.125em) {
+@include mq(850px) {
     .stats-3 {
         display: table-cell;
     }

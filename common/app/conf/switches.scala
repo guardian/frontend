@@ -159,10 +159,9 @@ object Switches extends Collections {
     "If this switch is on, gallery trails are opened in a lightbox.",
     safeState = Off)
 
-  val EditionRedirectSwitch = Switch("Feature Switches", "edition-redirects",
-    "If this switch is on, editionalised pages will redirect from the root to the appropriate edition, e.g. culture -> uk/culture (only on www.theguardian.com)",
+  val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
+    "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = Off)
-
 
   // A/B Test Switches
 
@@ -193,6 +192,11 @@ object Switches extends Collections {
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
     "Switch that is only used while running tests. You never need to change this switch.",
+    safeState = Off)
+
+  //Fronts film switch
+  val FilmFrontFacia = Switch("Facia", "facia-film-switch",
+    "Switch to redirect traffic to the facia film front instead of front film front",
     safeState = Off)
 
   val all: List[Switch] = List(
@@ -228,8 +232,10 @@ object Switches extends Collections {
     LocalNavSwitch,
     ABAa,
     LightboxGalleriesSwitch,
-    EditionRedirectSwitch,
+    IdentityProfileNavigationSwitch,
     LiveCricketSwitch,
+    ABLightboxGalleries,
+    FilmFrontFacia,
     AdSlotImpressionStatsSwitch
   )
 
