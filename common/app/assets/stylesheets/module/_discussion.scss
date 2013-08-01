@@ -307,17 +307,22 @@ $keylineSize: 1px;
    ========================================================================== */
 
 .d-actions .top {
-    color: #808080;
-    background-color: #fff;
     border: 1px solid #bbb;
     position: relative;
-    padding-left: $gutter*2;
+    padding: $baseline*2 $gutter $baseline*2 $gutter*2;
+    width: 100%;
+    color: #808080;
+    background-color: #fff;
+    text-align: left;
+    font: normal 14px/20px $sans-serif;
+    font-size: 1.4rem;
+    line-height: 20px;
 }
 
 .d-actions .top:before {
     @extend .i-filter-arrow-right;
-    position:absolute;
-    top:10px;
+    position: absolute;
+    top: 10px;
     left: 10px;
     content: ' ';
     display: inline-block;
