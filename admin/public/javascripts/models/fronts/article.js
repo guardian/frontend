@@ -71,16 +71,13 @@ function (
     }
 
     Article.prototype.saveTweaks = function(item) {
-        var hasWebTitleOverride,
-            data = {};
-
+        // Needs more work!
         item.webTitleOverride(common.util.fullTrim(item.webTitleOverride()));
-
         hasWebTitleOverride = item.webTitleOverride() && (item.webTitleOverride() !== item.webTitle());
-
         data.webTitleOverride = hasWebTitleOverride ? item.webTitleOverride() : undefined;
 
-        console.log(JSON.stringify(data));
+        // Save to server here
+        //console.log(JSON.stringify(data));
         this.stopEditingTweaks();
     }
 
