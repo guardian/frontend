@@ -1,0 +1,109 @@
+// To enable support for browsers that do not support @media queries,
+// (IE <= 8, Firefox <= 3, Opera <= 9) set $mq-responsive to false
+// Create a separate stylesheet served exclusively to these browsers,
+// meaning @media queries will be rasterized, relying on the cascade itself
+$mq-responsive: true !default;
+
+// Name your breakpoints in a way that creates a ubiquitous language
+// across team members. It will improve communication between
+// stakeholders, designers, developers, and testers.
+$mq-breakpoints: (
+    (mobile  300px)
+    (tablet  600px)
+    (desktop 900px)
+    (wide    1260px)
+
+    // Tweakpoints
+    (desktopAd 810px)
+    (mobileLandscape 480px)
+) !default;
+
+
+@function px2em($px, $base-font-size: 16px) {
+    @if (unitless($px)) {
+        @warn "Assuming #{$px} to be in pixels, attempting to convert it into pixels for you";
+        @return px2em($px + 0px); // That may fail.
+    } @else if (unit($px) == em) {
+        @return $px;
+    }
+    @return ($px / $base-font-size) * 1em;
+}
+
+@function retrieve-breakpoint-width($name) {
+    @each $breakpoint in $mq-breakpoints {
+        $breakpoint-name:  nth($breakpoint, 1);
+        $breakpoint-width: nth($breakpoint, 2);
+
+        @if $name == $breakpoint-name {
+            @return $breakpoint-width;
+        }
+    }
+    @return 'Breakpoint #{$name} does not exist';
+}
+
+// Media Query mixin
+// Usage:
+// .element {
+//     @include mq($from: mobile) {
+//         color: red;
+//     }
+//     @include mq($to: tablet) {
+//         color: blue;
+//     }
+//     @include mq(mobile, tablet) {
+//         color: green;
+//     }
+//     @include mq($from: tablet, $and: '(orientation: landscape)') {
+//         color: teal;
+//     }
+//     @include mq(950px) {
+//         color: hotpink;
+//     }
+// }
+
+@mixin mq($from: false, $to: false, $and: false) {
+
+    // Initialize variables
+    $min-width: 0;
+    $max-width: 0;
+    $mediaQuery: '';
+
+    // From: this breakpoint
+    @if $from {
+        @if type-of($from) == number {
+            $min-width: px2em($from);
+        } @else {
+            $min-width: px2em(retrieve-breakpoint-width($from));
+        }
+    }
+
+    // To: that breakpoint
+    @if $to {
+        @if type-of($to) == number {
+            $max-width: px2em($to);
+        } @else {
+            $max-width: px2em(retrieve-breakpoint-width($to) - 1px);
+        }
+    }
+
+    // Responsive support is disabled, rasterize the output outside @media blocks
+    // The browser will rely on the cascade itself.
+    @if ($mq-responsive == false) {
+        // Output rules in min-width statements only
+        @if ($from and $to == false and $and == false) {
+            @content;
+        }
+    }
+    // Responsive support is enabled, output rules inside @media queries
+    @else {
+        @if $min-width != 0 { $mediaQuery: '#{$mediaQuery} and (min-width: #{$min-width})'; }
+        @if $max-width != 0 { $mediaQuery: '#{$mediaQuery} and (max-width: #{$max-width})'; }
+        @if $and            { $mediaQuery: '#{$mediaQuery} and #{$and}'; }
+
+        $mediaQuery: unquote(#{$mediaQuery});
+
+        @media all #{$mediaQuery} {
+            @content;
+        }
+    }
+}

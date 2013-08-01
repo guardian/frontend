@@ -79,7 +79,7 @@ class ModelOrResultTest extends FlatSpec with ShouldMatchers {
     ).right.get
 
     status(redirectedToDesktop) should be(303)
-    headers(redirectedToDesktop).get("Location").get should be("http://www.guardian.co.uk/canonical?mobile-redirect=false")
+    headers(redirectedToDesktop).get("Location").get should be("http://www.guardian.co.uk/canonical?view=desktop")
   }
 
   it should "internal redirect to a tag if it has shown up at the wrong server" in {

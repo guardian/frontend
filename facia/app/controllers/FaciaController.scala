@@ -13,7 +13,6 @@ object FrontPage {
   private val fronts = Seq(
 
     new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
       override val id = "australia"
       override val section = "australia"
       override val webTitle = "The Guardian"
@@ -26,7 +25,6 @@ object FrontPage {
     },
 
     new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/sport")
       override val id = "sport"
       override val section = "sport"
       override val webTitle = "Sport"
@@ -40,7 +38,6 @@ object FrontPage {
     },
 
     new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/culture")
       override val id = "culture"
       override val section = "culture"
       override val webTitle = "Culture"
@@ -55,7 +52,6 @@ object FrontPage {
 
     //TODO important this one is last for matching purposes
     new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk")
       override val id = ""
       override val section = ""
       override val webTitle = "The Guardian"
@@ -85,25 +81,32 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     case _ => Editionalise(path, edition)
   }
 
+  def renderFilm() = {
+    if (Switches.FilmFrontFacia.isSwitchedOn)
+      render("film")
+    else
+      Action { Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film/film") }
+  }
+
+
   def render(path: String) = Action { implicit request =>
+      // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
+      // go live
+      val realPath = editionPath(path, Edition(request))
 
-    // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
-    // go live
-    val realPath = editionPath(path, Edition(request))
+      FrontPage(realPath).map { frontPage =>
 
-    FrontPage(realPath).map { frontPage =>
+        // get the trailblocks
+        val trailblocks: Seq[Trailblock] = front(realPath)
 
-      // get the trailblocks
-      val trailblocks: Seq[Trailblock] = front(realPath)
-
-      if (trailblocks.isEmpty) {
-        InternalServerError
-      } else {
-        val htmlResponse = () => views.html.front(frontPage, trailblocks)
-        val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
-        renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
-      }
-    }.getOrElse(NotFound) //TODO is 404 the right thing here
+        if (trailblocks.isEmpty) {
+          InternalServerError
+        } else {
+          val htmlResponse = () => views.html.front(frontPage, trailblocks)
+          val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
+          renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+        }
+      }.getOrElse(NotFound) //TODO is 404 the right thing here
   }
 
   def renderTrails(path: String) = Action { implicit request =>

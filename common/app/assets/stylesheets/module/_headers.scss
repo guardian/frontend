@@ -45,7 +45,7 @@
     @include box-sizing(border-box);
 
     &.zone-color {
-        @media (min-width: $tablet) {
+        @include mq(tablet) {
             border-top: none;
         }
     }

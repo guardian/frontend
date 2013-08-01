@@ -11,13 +11,13 @@ i.gallery__watermark {
     top: $baseline * 2;
     left: $gutter;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         display: block;
     }
 }
 
 .gallery--hide-furniture {
-    .gallery__nav .gallery-arrow-cta,
+    .gallery__nav .gallery__arrow-cta,
     .gallery__watermark,
     .gallerycaption  {
         display: none;
@@ -25,55 +25,81 @@ i.gallery__watermark {
 
 }
 
-.gallery-item {
+.gallery__item {
     cursor: pointer;
 }
 
 /* ==========================================================================
    Thumbnail/Single Full image modes
    ========================================================================== */
+
+$thumbnailOuterWidth: 156px; // 140px + 16px margins
+
+@function gridContainerWidth($n-thumbnails) {
+    @return $n-thumbnails * $thumbnailOuterWidth;
+}
+
+@function viewportWidth($n-thumbnails) {
+    $gridContainerWidth: gridContainerWidth($n-thumbnails);
+    @return $gridContainerWidth;
+}
+
+
 .gallery--grid-mode {
 
     .gallery__watermark,
     .gallerycaption,
-    .captioncontrol,
+    .captioncontrol.captioncontrol--show,
     .gallery__nav {
         display: none;
     }
 
-    .gallery-item {
+    .gallery__item {
         float: left;
         margin: $gutter / 2;
     }
 
-    .gallery-item--portrait {
+    .gallery__item--portrait {
         @include fix-aspect-ratio(3, 4, 140px);
     }
 
-    .gallery-item--landscape {
+    .gallery__item--landscape {
         @include fix-aspect-ratio(5, 3, 140px);
     }
 
     .gallery__img {
-        position: absolute;;
+        position: absolute;
     }
 
+    .gallery__images {
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+    }
+
+    // This sets a fixed width to the gallery container, so it can be centered
+    @for $i from 2 through 8 {
+        @include mq(viewportWidth($i)) {
+            .gallery__images {
+                width: gridContainerWidth($i);
+            }
+        }
+    }
 }
 
 
 .gallery--fullimage-mode {
-    .gallery-item {
+    .gallery__item {
         display: none;
         text-align: center;
     }
 
-    @media (orientation:landscape) {
+    @include mq($and: '(orientation: landscape)') {
         .gallery__img {
             margin: 0 auto;
         }
     }
 }
-
 
 
 
@@ -107,7 +133,7 @@ i.gallery__watermark {
         outline: none;
     }
 
-    .gallery-arrow-cta {
+    .gallery__arrow-cta {
         position: absolute;
         top: 85px;
     }
@@ -118,7 +144,7 @@ i.gallery__watermark {
     left: 0;
     width: 20%;
 
-    .gallery-arrow-cta {
+    .gallery__arrow-cta {
         left: $gutter;
     }
 }
@@ -127,7 +153,7 @@ i.gallery__watermark {
     right: 0;
     width: 80%;
 
-    .gallery-arrow-cta {
+    .gallery__arrow-cta {
         right: $gutter;
     }
 }
@@ -137,7 +163,7 @@ i.gallery__watermark {
    Arrow CTAs
    ========================================================================== */
 
-.gallery-arrow-cta {
+.gallery__arrow-cta {
     display: block;
     width: 22px;
     height: 36px;
@@ -149,19 +175,19 @@ i.gallery__watermark {
     }
 }
 
-.gallery-arrow-cta--up {
+.gallery__arrow-cta--up {
     @include rotate(-90deg);
 }
 
-.gallery-arrow-cta--down {
+.gallery__arrow-cta--down {
     @include rotate(90deg);
 }
 
-.gallery-arrow-cta--left {
+.gallery__arrow-cta--left {
     @include rotate(180deg);
 }
 
-.gallery-arrow-cta--right {
+.gallery__arrow-cta--right {
     @include rotate(0deg);
 }
 
@@ -183,7 +209,7 @@ i.gallery__watermark {
         display: none; // Hide the caption icon
     }
 
-    @media (orientation:landscape) {
+    @include mq($and: '(orientation: landscape)') {
         position: absolute;
         right: 0;
         bottom: 0;
@@ -227,7 +253,7 @@ i.gallery__watermark {
     display: block;
     padding: 0;
 
-    .gallery-arrow-cta {
+    .gallery__arrow-cta {
         margin: 0 auto;
     }
 }
@@ -239,7 +265,7 @@ i.gallery__watermark {
         display: block;
     }
 
-    @media (orientation:landscape) {
+    @include mq($and: '(orientation: landscape)') {
         position: absolute;
         bottom: 0;
     }
@@ -260,5 +286,31 @@ i.gallery__watermark {
 
 .gallery__counter--current-image {
     color: #FFFFFF;
+}
+
+
+/* ==========================================================================
+   Swipe styles
+   ========================================================================== */
+.gallery--swipe {
+    overflow: hidden;
+
+    .gallery__images {
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .gallery__item {
+        float: left;
+        width: 100%;
+        position: relative;
+        display: block;
+        overflow: hidden;
+    }
+
+    .gallery__nav--prev,
+    .gallery__nav--next {
+        display: none;
+    }
 }
 

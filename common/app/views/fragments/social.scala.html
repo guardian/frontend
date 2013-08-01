@@ -2,7 +2,7 @@
 
 @if(Switches.SocialSwitch.isSwitchedOn) {
 
-@defining(page.canonicalUrl.getOrElse(s"http://${request.host}${request.path}")){ url =>
+@defining(s"http://${request.host}${request.path}"){ url =>
     <div class="social-wrapper">
         <ul class="social unstyled">
             <li class="social__item--mail social__item">

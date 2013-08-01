@@ -16,7 +16,7 @@ case class CommentPage(
   contentUrl: String,
   currentPage: Int,
   pages: Int
-) extends Page(canonicalUrl = None, id = id, section = "Global", webTitle = title, analyticsName = s"GFE:Article:Comment discussion page $currentPage") {
+) extends Page(id = id, section = "Global", webTitle = title, analyticsName = s"GFE:Article:Comment discussion page $currentPage") {
   lazy val hasMore: Boolean = currentPage < pages
 }
 

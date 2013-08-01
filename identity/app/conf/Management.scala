@@ -9,7 +9,7 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage("/identity/signin"),
+    new UrlPagesHealthcheckManagementPage("/signin"),
     new LogbackLevelPage(applicationName)
   )
 }
