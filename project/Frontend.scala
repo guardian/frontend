@@ -101,6 +101,7 @@ object Frontend extends Build with Prototypes {
 
   val dev = base("dev-build")
     .dependsOn(front)
+    .dependsOn(facia)
     .dependsOn(article)
     .dependsOn(applications)
     .dependsOn(event)
