@@ -30,7 +30,7 @@ object RelatedController extends Controller with Logging with ExecutionContexts 
       .showRelated(true)
       .response.map {response =>
       val heading = "Related content"
-      val related = SupportedContentFilter(response.relatedContent map { Content(_,None) })
+      val related = SupportedContentFilter(response.relatedContent map { Content(_) })
 
       Some(Related(heading, related))
     }.recover{ case ApiError(404, message) =>
