@@ -41,7 +41,7 @@ public class NavigationSteps {
     	if (menuState.equals("open")) {
     	    webDriver.waitForVisible(By.className(menuId));
     	} else {
-    	    webDriver.waitForHidden(By.className(menuId)); 
+    	    webDriver.waitForHidden(By.className(menuId));
     	}
     }
     
