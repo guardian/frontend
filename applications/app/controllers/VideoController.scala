@@ -28,7 +28,7 @@ object VideoController extends Controller with Logging with ExecutionContexts {
       .showFields("all")
       .response.map{response =>
         val videoOption = response.content.filter { _.isVideo } map { new Video(_) }
-        val storyPackage = response.storyPackage map { new Content(_) }
+        val storyPackage = response.storyPackage map {Content(_) }
 
         val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
         ModelOrResult(model, response)

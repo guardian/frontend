@@ -8,7 +8,7 @@ import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 
-class Content(
+class Content protected (
     delegate: ApiContent) extends Trail with Tags with MetaData {
   private lazy val fields = delegate.safeFields
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
@@ -100,10 +100,10 @@ object Content {
 
   def apply(delegate: ApiContent): Content = {
     delegate match {
-      case gallery if delegate.isGallery => new Gallery(delegate)
-      case video if delegate.isVideo => new Video(delegate)
-      case article if delegate.isArticle => new Article(delegate)
-      case d => new Content(d)
+      case gallery if delegate.isGallery => new Gallery(delegate, storyItems)
+      case video if delegate.isVideo => new Video(delegate, storyItems)
+      case article if delegate.isArticle => new Article(delegate, storyItems)
+      case _ => new Content(delegate, storyItems)
     }
   }
 

@@ -37,7 +37,7 @@ object MoreStoriesController extends Controller with Logging {
       ContentApi.item(path, edition)
         .showMostViewed(true)
         .response.map{ response =>
-          SupportedContentFilter(response.mostViewed map { new Content(_) }) match {
+          SupportedContentFilter(response.mostViewed map { Content(_) }) match {
             case Nil => MostPopularAgent.mostPopular(edition)
             case mostViewedForSection => mostViewedForSection
           }
@@ -50,9 +50,9 @@ object MoreStoriesController extends Controller with Logging {
     ContentApi.item(path, edition)
       .showEditorsPicks(true)
       .response.map {response =>
-          val editorsPicks = response.editorsPicks map { new Content(_) }
+          val editorsPicks = response.editorsPicks map { Content(_) }
           val editorsPicksIds = editorsPicks map { _.id }
-          val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+          val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
           editorsPicks ++ latestContent
       }.recover{
         case t: Throwable =>

@@ -29,11 +29,11 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
         val leadContentCutOff = DateTime.now.toDateMidnight - leadContentMaxAge
 
-        var results = r.results.map(new Content(_))
-        var editorsPicks = r.editorsPicks.map(new Content(_))
+        var results = r.results.map(Content(_))
+        var editorsPicks = r.editorsPicks.map(Content(_))
 
         val leadContent = if (editorsPicks.isEmpty)
-            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff).map(new Content(_)).take(1)
+            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff).map(Content(_)).take(1)
           else
             Nil
 
