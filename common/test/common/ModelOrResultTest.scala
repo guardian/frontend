@@ -29,7 +29,7 @@ class ModelOrResultTest extends FlatSpec with ShouldMatchers {
   val testSection = new Section("water", "Water", "http://foo.bar", "http://foo.bar")
 
   // FML
-  val stubResponse = new ItemResponse("ok", "top_tier", None, None, None, None, None, None, None, None, None, Nil, Nil, Nil, Nil, Nil, Nil)
+  val stubResponse = new ItemResponse("ok", "top_tier", None, None, None, None, None, None, None, None, None, None, Nil, Nil, Nil, Nil, Nil, Nil)
 
   "ModelOrNotFound" should "return the model if it exists" in {
     ModelOrResult(
