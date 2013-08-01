@@ -15,6 +15,8 @@ import tools.FrontsApi
 object FrontsController extends Controller with Logging {
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val blockActionRead = Json.reads[BlockAction]
+  implicit val updateMetaRead = Json.reads[UpdateTrailblockConfig]
+  implicit val updateTrailblockRead = Json.reads[UpdateTrailblock]
 
   def index() = AuthAction{ request =>
     Ok(views.html.fronts(Configuration.environment.stage))
@@ -49,8 +51,19 @@ object FrontsController extends Controller with Logging {
                 Created
               }
             }
+        } orElse json.asOpt[UpdateTrailblock]
+          .map {update =>
+            FrontsApi.getBlock(edition, section, blockId).map { block =>
+              val newBlock = block.copy(
+                contentApiQuery = update.config.contentApiQuery orElse block.contentApiQuery,
+                min = update.config.min orElse block.min,
+                max = update.config.max orElse block.max
+              )
+              FrontsApi.putBlock(edition, section, newBlock)
+              Ok
+            } getOrElse NotFound
         } orElse json.asOpt[BlockAction]
-        .map {blockAction => blockAction
+          .map {blockAction => blockAction
           blockAction.publish.filter {_ == true}
             .map { _ => FrontsApi.publishBlock(edition, section, blockId) }
             .orElse {
@@ -87,7 +100,7 @@ object FrontsController extends Controller with Logging {
   }
 
   private def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-      FrontsApi.putBlock(edition, section, block, Block(block, None, List(Trail(update.item, None, None, None)), List(Trail(update.item, None, None, None)), areEqual=true, DateTime.now.toString, identity.fullName, identity.email))
+      FrontsApi.putBlock(edition, section, block, Block(block, None, List(Trail(update.item, None, None, None)), List(Trail(update.item, None, None, None)), areEqual=true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
   }
   /**
    * @todo
