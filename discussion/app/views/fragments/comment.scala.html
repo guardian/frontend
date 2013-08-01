@@ -35,8 +35,8 @@
         <div class="d-comment__main">
             <div class="d-comment__body">
                 @if(comment.isBlocked){
-                    This comment was removed by a moderator because it didn't abide by our <a href="http://www.guardian.co.uk/community-standards" data-link-name="community standards">community standards</a>.
-                    Replies may also be deleted. For more detail see <a href="http://www.guardian.co.uk/community-faqs" data-link-name="FAQs">our FAQs</a>.
+                    This comment was removed by a moderator because it didn't abide by our <a href="http://www.theguardian.com/community-standards" data-link-name="community standards">community standards</a>.
+                    Replies may also be deleted. For more detail see <a href="http://www.theguardian.com/community-faqs" data-link-name="FAQs">our FAQs</a>.
                 }else{
                     @withJsoup(BulletCleaner(comment.body))(
                         InBodyLinkCleaner("in body link")(Edition(request))
@@ -46,7 +46,7 @@
             @if(!comment.isBlocked){
                 <div class="d-comment__actions">
                     <div class="d-comment__actions__main">
-                        <a href="http://discussion.guardian.co.uk/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
+                        <a href="http://discussion.theguardian.com/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
                     </div>
                 </div>
             }

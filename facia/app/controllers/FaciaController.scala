@@ -13,7 +13,6 @@ object FrontPage {
   private val fronts = Seq(
 
     new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
       override val id = "australia"
       override val section = "australia"
       override val webTitle = "The Guardian"
@@ -26,7 +25,6 @@ object FrontPage {
     },
 
     new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/sport")
       override val id = "sport"
       override val section = "sport"
       override val webTitle = "Sport"
@@ -40,7 +38,6 @@ object FrontPage {
     },
 
     new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/culture")
       override val id = "culture"
       override val section = "culture"
       override val webTitle = "Culture"
@@ -55,7 +52,6 @@ object FrontPage {
 
     //TODO important this one is last for matching purposes
     new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk")
       override val id = ""
       override val section = ""
       override val webTitle = "The Guardian"
