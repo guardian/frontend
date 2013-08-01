@@ -1,4 +1,4 @@
-define(["common", "bean", "bonzo"], function (common, bean, bonzo) {
+define(["common", "bean"], function (common, bean) {
 
     function Inview(selector, context) {
         var self = this;
@@ -18,22 +18,22 @@ define(["common", "bean", "bonzo"], function (common, bean, bonzo) {
     };
 
     Inview.prototype.checkForVisibleNodes = function() {
-        var visibleTop    = window.pageYOffset,
-            visibleBottom = visibleTop + window.innerHeight;
-
+        var self = this;
         this.inviewNodes.forEach(function(el) {
-            var offsetTop = bonzo(el).offset().top;
-
-            if (!el._inviewHasFired &&
-                el.style.display !== 'none' &&
-                visibleTop <= offsetTop &&
-                visibleBottom >= offsetTop) {
-                    // Element is visible
-                    bean.fire(el, 'inview');
-                    common.mediator.emit('modules:inview:visible', el);
-                    el._inviewHasFired = true;
+            if (!el._inviewHasFired && self.isVisible(el)) {
+                // Element is visible
+                bean.fire(el, 'inview');
+                common.mediator.emit('modules:inview:visible', el);
+                el._inviewHasFired = true;
             }
         });
+    };
+
+    Inview.prototype.isVisible = function(el) {
+        var rect = el.getBoundingClientRect();
+        return el.style.display !== 'none' &&
+               rect.top < (window.innerHeight || document.body.clientHeight) &&
+               rect.left < (window.innerWidth || document.body.clientWidth);
     };
 
     return Inview;
