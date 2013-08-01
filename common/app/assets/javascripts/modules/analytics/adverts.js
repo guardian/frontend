@@ -6,7 +6,7 @@ define(['common', 'bean', 'modules/inview'], function (common, bean, Inview) {
         bean.on(context, 'inview', function(e) {
             var inviewName = e.target.getAttribute('data-inview-name');
 
-            common.mediator.emit('module:analytics:event:adimpression', inviewName);
+            common.mediator.emit('module:analytics:adimpression', inviewName);
         });
 
         // Label up ad slots

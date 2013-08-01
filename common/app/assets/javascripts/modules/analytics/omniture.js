@@ -211,7 +211,7 @@ define([
             }
         };
 
-        common.mediator.on('module:analytics:event:adimpression', that.trackAdImpression );
+        common.mediator.on('module:analytics:adimpression', that.trackAdImpression );
 
         common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
 
