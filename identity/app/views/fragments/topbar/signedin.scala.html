@@ -1,3 +1,8 @@
 @(cookieData: com.gu.identity.cookie.GuUCookieData)
 
-@cookieData.user.publicFields.displayName
+<a href="/signout" data-link-name="User profile"
+    class="control control--profile js-hidden">
+    <i class="i i-nav-divider"></i>
+    <span class="js-profile-info control--profile__info">@cookieData.user.publicFields.displayName</span>
+    <i class="i i-profile"></i>
+</a>

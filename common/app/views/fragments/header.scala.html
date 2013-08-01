@@ -41,16 +41,20 @@
         </a>
 
         @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-        <a href="/signin" data-link-name="User profile"
-            class="control control--profile js-hidden">
-            <i class="i i-nav-divider"></i>
-            <span class="js-profile-info control--profile__info">Your profile</span>
-            <i class="i i-profile"></i>
-        </a>
+        <div class="js-profile-nav js-hidden">
+            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-control-for="nav-popup-profile-nav"
+                class="control control--profile">
+                <i class="i i-nav-divider"></i>
+                <span class="js-profile-info control--profile__info">Your profile</span>
+                <i class="i i-profile"></i>
+            </a>
+        </div>
         }
 
         <div class="nav-popup-topstories nav-popup nav-popup--box is-off" data-link-context="front-trails/news"></div>
-
+        @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+        <div class="nav-popup-profile-nav js-profile-nav-popup nav-popup nav-popup--box is-off"></div>
+        }
         <div class="nav-popup-search nav-popup nav-popup--box is-off"></div>
 
         <div class="nav-popup-sections nav-popup nav-popup--small is-off">

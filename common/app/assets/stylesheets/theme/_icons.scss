@@ -44,6 +44,16 @@
     }
 }
 
+.is-active .i-profile {
+    @extend .i-profile-active;
+
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-profile-active;
+        }
+    }
+}
+
 .i-date {
     @if ($svg-support) {
         .svg & {

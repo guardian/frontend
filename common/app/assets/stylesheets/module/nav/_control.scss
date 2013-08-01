@@ -199,7 +199,8 @@ span.control__menu.i-menu {
     &:active,
     &:hover,
     &:visited,
-    &:focus { color: #fff; }
+    &:focus     { color: #fff; }
+    &.is-active { color: $blue; }
 
     @include mq(tablet) {
         position: absolute;
