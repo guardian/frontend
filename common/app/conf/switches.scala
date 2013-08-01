@@ -87,29 +87,6 @@ object Switches extends Collections {
     safeState = Off)
 
 
-  // Storytelling Switches
-
-  val ExperimentStoryModule01Switch = Switch("Storytelling", "experiment-story-module-01",
-    "Enable storified articles.",
-    safeState = Off)
-
-  val StoryFrontTrails = Switch("Storytelling", "story-front-trails",
-    "Switch on to enable front trails for latest stories.",
-    safeState = Off)
-
-  val StoryVersionBSwitch = Switch("Storytelling", "story-version-b",
-    "Switch to enable version B of story page.",
-    safeState = Off)
-
-  val ABStoryArticleSwapV2 = Switch("Storytelling", "ab-story-article-swap-v2",
-    "If this switch is on, swaps the latest article in a story for the story.",
-    safeState = Off)
-
-  val StoryArticleSwap = Switch("Storytelling", "story-article-swap",
-    "If this switch is on, for the latest story, swaps it in in place of the latest article in that story. Confused?",
-    safeState = Off)
-
-
   // Swipe Switches
 
   val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
@@ -201,11 +178,6 @@ object Switches extends Collections {
     OmnitureDomReadySwitch,
     DiscussionSwitch,
     ShortDiscussionSwitch,
-    ExperimentStoryModule01Switch,
-    StoryFrontTrails,
-    StoryVersionBSwitch,
-    ABStoryArticleSwapV2,
-    StoryArticleSwap,
     SwipeNav,
     SwipeNavOnClick,
     FontSwitch,
