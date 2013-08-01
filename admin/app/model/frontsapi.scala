@@ -8,7 +8,10 @@ case class Block(
                   areEqual: Boolean,
                   lastUpdated: String,
                   updatedBy: String,
-                  updatedEmail: String
+                  updatedEmail: String,
+                  max: Option[Int],
+                  min: Option[Int],
+                  contentApiQuery: Option[String]
                   )
 
 case class Trail(
@@ -20,3 +23,6 @@ case class Trail(
 
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean)
 case class BlockAction(publish: Option[Boolean], discard: Option[Boolean])
+
+case class UpdateTrailblock(config: UpdateTrailblockConfig)
+case class UpdateTrailblockConfig(contentApiQuery: Option[String], max: Option[Int], min: Option[Int])
