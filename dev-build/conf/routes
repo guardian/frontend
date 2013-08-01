@@ -41,14 +41,6 @@ GET    /front-trails.json                                   controllers.MoreStor
 GET    /front-trails/*path.json                             controllers.MoreStoriesController.renderFrontTrails(path)
 GET    /front-trails/*path                                  controllers.MoreStoriesController.renderFrontTrails(path)
 
-#Stories
-GET    /stories                                             controllers.StoryController.latest()
-GET    /stories.json                                        controllers.StoryController.latestJson()
-GET    /stories/articles                                    controllers.StoryController.latestWithContent()
-GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
-GET    /stories/*id.json                                    controllers.StoryController.byId(id)
-GET    /stories/*id                                         controllers.StoryController.byId(id)
-
 #Style-guide
 GET     /style-guide                                        controllers.StyleGuideController.renderIndex
 GET     /style-guide/zones                                  controllers.StyleGuideController.renderZones
