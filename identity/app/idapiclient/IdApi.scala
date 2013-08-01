@@ -7,23 +7,28 @@ import client.{Anonymous, Auth, Response}
 import client.connection.Http
 import client.util.{Monad, MonadInstances, Id}
 import scala.concurrent.{Future, ExecutionContext}
+import client.parser.JsonBodyParser
+import idapiclient.responses.AccessTokenResponse
 
 
-abstract class IdApi[F[_]](apiRootUrl: String, http: Http[F], jsonBodyParser: IdApiJsonBodyParser) {
+abstract class IdApi[F[_]](apiRootUrl: String, http: Http[F], jsonBodyParser: JsonBodyParser) {
   import client.util.MonadOps._
 
   implicit def M: Monad[F]
 
-  private def prependSlashIfMissing(path: String) =
-    if (path(0) == '/') path
-    else "/" + path
-  private def apiUrl(path: String) = apiRootUrl + "/" + path
+  protected def apiUrl(path: String) = urlJoin(apiRootUrl, path)
+
+  protected def urlJoin(pathParts: String*) = {
+    pathParts.filter(_.nonEmpty).map(slug => {
+      slug.stripPrefix("/").stripSuffix("/")
+    }) mkString "/"
+  }
 
   // AUTH
 
-  def authApp(auth: Auth): F[Response[AccessToken]] = {
+  def authApp(auth: Auth): F[Response[AccessTokenResponse]] = {
     val response = http.GET(apiUrl("auth"), auth.parameters, auth.headers)
-    response map jsonBodyParser.extract[AccessToken]
+    response map jsonBodyParser.extract[AccessTokenResponse]
   }
 
   def authBrowser(auth: Auth): F[Response[List[Cookie]]] = {
@@ -35,19 +40,19 @@ abstract class IdApi[F[_]](apiRootUrl: String, http: Http[F], jsonBodyParser: Id
   // USERS
 
   def user(userId: String, path: Option[String] = None, auth: Auth = Anonymous): F[Response[User]] = {
-    val apiPath = "user/" + userId + path.map(prependSlashIfMissing).getOrElse("")
-    val response = http.GET(apiPath, auth.parameters, auth.headers)
+    val apiPath = urlJoin("user", userId, path.getOrElse(""))
+    val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
     response map jsonBodyParser.extract[User]
   }
 
   def me(auth: Auth, path: Option[String] = None): F[Response[User]] = {
-    val apiPath = "user/me" + path.map(prependSlashIfMissing).getOrElse("")
-    val response = http.GET(apiPath, auth.parameters, auth.headers)
+    val apiPath = urlJoin("user", "me", path.getOrElse(""))
+    val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
     response map jsonBodyParser.extract[User]
   }
 
   def register(userData: String): F[Response[User]] = {
-    val response = http.POST("user", userData)
+    val response = http.POST(apiUrl("user"), userData)
     response map jsonBodyParser.extract[User]
   }
 
@@ -63,14 +68,14 @@ abstract class IdApi[F[_]](apiRootUrl: String, http: Http[F], jsonBodyParser: Id
 }
 
 /** Base class for blocking clients */
-abstract class SyncIdApi(apiRootUrl: String, http: Http[Id], jsonBodyParser: IdApiJsonBodyParser)
+class SyncIdApi(apiRootUrl: String, http: Http[Id], jsonBodyParser: JsonBodyParser)
   extends IdApi[Id](apiRootUrl, http, jsonBodyParser) {
 
   implicit val M = MonadInstances.idMonad
 }
 
 /** Base class for Future-based async clients */
-abstract class AsyncIdApi(apiRootUrl: String, http: Http[Future], jsonBodyParser: IdApiJsonBodyParser)
+abstract class AsyncIdApi(apiRootUrl: String, http: Http[Future], jsonBodyParser: JsonBodyParser)
   extends IdApi[Future](apiRootUrl, http, jsonBodyParser) {
 
   implicit def executionContext: ExecutionContext
