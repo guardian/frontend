@@ -72,9 +72,9 @@ function (
 
     Article.prototype.saveTweaks = function(item) {
         // Needs more work!
-        item.webTitleOverride(common.util.fullTrim(item.webTitleOverride()));
-        hasWebTitleOverride = item.webTitleOverride() && (item.webTitleOverride() !== item.webTitle());
-        data.webTitleOverride = hasWebTitleOverride ? item.webTitleOverride() : undefined;
+        //item.webTitleOverride(common.util.fullTrim(item.webTitleOverride()));
+        //hasWebTitleOverride = item.webTitleOverride() && (item.webTitleOverride() !== item.webTitle());
+        //data.webTitleOverride = hasWebTitleOverride ? item.webTitleOverride() : undefined;
 
         // Save to server here
         //console.log(JSON.stringify(data));
