@@ -9,8 +9,8 @@ case class Block(
                   lastUpdated: String,
                   updatedBy: String,
                   updatedEmail: String,
-                  max: Option[String],
-                  min: Option[String],
+                  max: Option[Int],
+                  min: Option[Int],
                   contentApiQuery: Option[String]
                   )
 
@@ -25,4 +25,4 @@ case class UpdateList(item: String, position: Option[String], after: Option[Bool
 case class BlockAction(publish: Option[Boolean], discard: Option[Boolean])
 
 case class UpdateTrailblock(config: UpdateTrailblockConfig)
-case class UpdateTrailblockConfig(contentApiQuery: Option[String], max: Option[String], min: Option[String])
+case class UpdateTrailblockConfig(contentApiQuery: Option[String], max: Option[Int], min: Option[Int])
