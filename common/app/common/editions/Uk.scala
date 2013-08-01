@@ -135,9 +135,7 @@ object Uk extends Edition(
     )),
 
     (Editionalise("film", Uk), Seq(
-      RunningOrderTrailblockDescription("film", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("film", "features", "Features", 5),
-      RunningOrderTrailblockDescription("film", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("film", "top-stories", "Film", 15)
     ))
   )
 }
