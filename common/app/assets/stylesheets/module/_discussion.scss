@@ -306,7 +306,7 @@ $keylineSize: 1px;
 /* CTAs
    ========================================================================== */
 
-.d-actions .top {
+.top {
     border: 1px solid #bbb;
     position: relative;
     padding: $baseline*2 $gutter $baseline*2 $gutter*2;
@@ -317,16 +317,15 @@ $keylineSize: 1px;
     font: normal 14px/20px $sans-serif;
     font-size: 1.4rem;
     line-height: 20px;
-}
-
-.d-actions .top:before {
-    @extend .i-filter-arrow-right;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    content: ' ';
-    display: inline-block;
-    @include rotate(-90deg);
+    &:before {
+        @extend .i-filter-arrow-right;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        content: ' ';
+        display: inline-block;
+        @include rotate(-90deg);
+    }
 }
 
 .d-actions__link,
