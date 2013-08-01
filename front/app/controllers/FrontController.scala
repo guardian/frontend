@@ -16,7 +16,6 @@ object FrontPage {
   private val fronts = Seq(
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
       override val id = "australia"
       override val section = "australia"
       override val webTitle = "The Guardian"
@@ -29,7 +28,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/sport")
       override val id = "sport"
       override val section = "sport"
       override val webTitle = "Sport"
@@ -43,7 +41,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/money")
       override val id = "money"
       override val section = "money"
       override val webTitle = "Money"
@@ -57,7 +54,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/commentisfree")
       override val id = "commentisfree"
       override val section = "commentisfree"
       override val webTitle = "commentisfree"
@@ -71,7 +67,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/business")
       override val id = "business"
       override val section = "business"
       override val webTitle = "business"
@@ -85,7 +80,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/culture")
       override val id = "culture"
       override val section = "culture"
       override val webTitle = "Culture"
@@ -100,7 +94,6 @@ object FrontPage {
 
     //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk")
       override val id = ""
       override val section = ""
       override val webTitle = "The Guardian"

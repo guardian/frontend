@@ -8,7 +8,6 @@ import conf._
 import concurrent.Future
 
 case class StoriesPage(stories: Seq[Story]) extends Page(
-  canonicalUrl = None,
   "stories",
   "news", "stories",
   "GFE:story:stories") {
@@ -16,7 +15,6 @@ case class StoriesPage(stories: Seq[Story]) extends Page(
 }
 
 case class StoryPage(story: Story) extends Page(
-  canonicalUrl = None,
   s"stories/${story.id}",
   "news", story.title,
   s"GFE:story:${story.title}") {

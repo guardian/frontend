@@ -85,23 +85,8 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop19).toBe("frontend");
             expect(s.eVar19).toBe("frontend");
             expect(s.cookieDomainPeriods).toBe("2")
-
-            //check we have not overridden these
-            expect(s.trackingServer).toBe(undefined);
-            expect(s.trackingServerSecure).toBe(undefined);
-
-        });
-
-        it("should correctly set omniture domain if it is www.theguardian.com", function(){
-
-            s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk'
-
-            var o = new Omniture(s, w);
-            o.go(config);
-
-            expect(s.trackingServer).toBe('hits.theguardian.com');
+            expect(s.trackingServer).toBe("hits.theguardian.com");
             expect(s.trackingServerSecure).toBe('hits-secure.theguardian.com');
-            expect(s.cookieDomainPeriods).toBe('2');
 
         });
 
@@ -116,7 +101,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             var o = new Omniture(s, w);
             o.go(config);
 
-            expect(s.cookieDomainPeriods).toBe("3")
+            expect(s.cookieDomainPeriods).toBe("2")
         });
 
         it("should log a page view event", function() {
