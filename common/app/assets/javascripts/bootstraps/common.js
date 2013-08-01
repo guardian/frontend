@@ -103,8 +103,9 @@ define([
                 profile;
 
             if (config.switches.idProfileNavigation) {
+                console.log(config.page.idUrl)
                 profile = new Profile(header, {
-                    url: config.idUrl
+                    url: config.page.idUrl
                 });
                 profile.init();
             }

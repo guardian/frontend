@@ -11,7 +11,7 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
         // We should perhaps be a little more specific
         // i.e. pass the argument contentUrl
         this.context = context;
-        this.config = common.extend(config, this.config);
+        this.config = common.extend(this.config, config);
     }
 
     /** @type {Object.<string.*>} */
@@ -26,7 +26,7 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
     /** @type {Object.<string.*>} */
     Profile.prototype.config = {
         url: 'https://profile.theguardian.com',
-        useCookie: true
+        useCookie: false
     };
 
     /** @type {Element|null} */
@@ -51,7 +51,7 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
      * @return {Reqwest} the reqwest promise
      */
     Profile.prototype.getNavigationFragment = function() {
-        var url = this.url + '/fragments/profile-nav.json';
+        var url = this.config.url + '/fragments/profile-nav.json';
 
         return ajax({
             url: url,
