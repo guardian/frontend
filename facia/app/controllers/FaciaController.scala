@@ -89,7 +89,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     if (Switches.FilmFrontFacia.isSwitchedOn)
       render("film")
     else
-      Action { Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film") }
+      Action { Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film/film") }
   }
 
 
