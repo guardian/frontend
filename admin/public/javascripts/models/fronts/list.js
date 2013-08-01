@@ -1,13 +1,13 @@
 define([
     'Reqwest',
     'knockout',
-    'models/fronts/globals',
+    'models/fronts/common',
     'models/fronts/article',
     'models/fronts/contentApi'
 ], function(
     reqwest,
     ko,
-    globals,
+    common,
     Article,
     ContentApi
 ) {
@@ -25,7 +25,7 @@ define([
         this.config = this.asObservableProps(['contentApiQuery', 'min', 'max']);
         this.state  = this.asObservableProps(['liveMode', 'hasUnPublishedEdits', 'loadIsPending', 'editingConfig', 'timeAgo']);
 
-        this.state.liveMode(globals.defaultToLiveMode);
+        this.state.liveMode(common.config.defaultToLiveMode);
 
         this.needsMore = ko.computed(function() {
             if (self.state.liveMode()  && self.live().length  < self.config.min()) { return true; }
@@ -46,8 +46,12 @@ define([
         }));
     };
 
-    List.prototype.toggleShowSettings = function() {
-        this.state.editingConfig(!this.state.editingConfig());
+    List.prototype.startEditingConfig = function() {
+        this.state.editingConfig(true);
+    };
+
+    List.prototype.stopEditingConfig = function() {
+        this.state.editingConfig(false);
     };
 
     List.prototype.setLiveMode = function() {
@@ -70,7 +74,7 @@ define([
         var self = this;
 
         reqwest({
-            url: globals.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
@@ -95,7 +99,7 @@ define([
         self.state.loadIsPending(true);
         reqwest({
             method: 'delete',
-            url: globals.apiBase + '/' + self.id,
+            url: common.config.apiBase + '/' + self.id,
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -116,22 +120,29 @@ define([
     List.prototype.load = function(opts) {
         var self = this;
         opts = opts || {};
+
         reqwest({
-            url: globals.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/' + this.id,
             type: 'json'
         }).always(
             function(resp) {
+                self.state.loadIsPending(false);
+
                 if (resp.lastUpdated !== self.meta.lastUpdated()) {
                     self.populateMeta(resp);
                 }
 
-                if (opts.isRefresh && self.state.loadIsPending()) { 
-                    return;
+                if (!self.state.editingConfig()) {
+                    self.populateConfig(resp);
                 }
 
-                self.populateData(resp);
+                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
+                    // noop    
+                } else {
+                    self.populateLists(resp);
+                }
+
                 if (_.isFunction(opts.callback)) { opts.callback(); } 
-                self.state.loadIsPending(false);
             }
         );
     };
@@ -139,16 +150,27 @@ define([
     List.prototype.populateMeta = function(opts) {
         var self = this;
         opts = opts || {};
+
         _.keys(this.meta).forEach(function(key){
             self.meta[key](opts[key]);
         });
         this.state.timeAgo(this.getTimeAgo(opts.lastUpdated));
     }
 
-    List.prototype.populateData = function(opts) {
+    List.prototype.populateConfig = function(opts) {
         var self = this;
-        if (globals.uiBusy) { return; }
         opts = opts || {};
+
+        _.keys(this.config).forEach(function(key){
+            self.config[key](opts[key]);
+        });
+    };
+
+    List.prototype.populateLists = function(opts) {
+        var self = this;
+        opts = opts || {};
+
+        if (common.state.uiBusy) { return; }
 
         // Knockout doesn't seem to empty elements dragged into
         // a container when it regenerates its DOM content. So empty it first.
@@ -164,25 +186,19 @@ define([
             if (opts[list] && opts[list].length) {
                 opts[list].forEach(function(item) {
                     self[list].push(new Article({
-                        id: item.id
+                        id: item.id,
+                        webTitleOverride: item.webTitleOverride
                     }));
                 });
                 ContentApi.decorateItems(self[list]());
             }
         });
 
-        // Only refresh config properties if they're not currently being edited
-        if (!this.state.editingConfig()) {
-            _.keys(this.config).forEach(function(key){
-                self.config[key](opts[key]);
-            });
-        }
-
         this.state.hasUnPublishedEdits(opts.areEqual === false);
     };
 
     List.prototype.refresh = function() {
-        if (globals.uiBusy || this.state.loadIsPending()) { return; }
+        if (common.state.uiBusy || this.state.loadIsPending()) { return; }
         this.load({
             isRefresh: true
         });
@@ -191,7 +207,7 @@ define([
     List.prototype.saveConfig = function(key, val) {
         var self = this;
         reqwest({
-            url: globals.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
@@ -203,7 +219,7 @@ define([
                 }
             })
         }).always(function(){
-            self.state.editingConfig(false);
+            self.stopEditingConfig();
         });
     };
 

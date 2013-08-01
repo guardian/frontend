@@ -662,15 +662,19 @@ a.cta, .cta a {
     visibility: visible !important;
 }
 
-.fronts .trail .trail__control {
-    display: none;
+.fronts .trail .trail__controls {
 }
 
-.fronts .trailblock .trail:hover .trail__control {
+.fronts .trailblock .trail .trail__controls {
     display: block;
     float: right;
     font-size: 10px;
     margin: -6px -2px 0 0;
+}
+
+.fronts .trail__controls a.trail__control {
+    font-size: 9px;
+    margin: 0 2px 0 0;
 }
 
 .fronts .trail img {
@@ -702,6 +706,10 @@ a.cta, .cta a {
     padding: 0 0 5px 0;
 }
 
+.fronts .trail .webTitle--override {
+    color: #f89406;
+}
+
 .fronts .trail .trailText {
     color: #666;
     font-family: EgyptianText, georgia, serif;
@@ -727,6 +735,12 @@ a.cta, .cta a {
     color: #666;
     border-left: 1px #ddd solid;
     padding-left: 4px;
+    cursor: pointer;
+}
+
+.fronts .trail_tweaks {
+    clear: both;
+    margin: 0 0 10px 0;
 }
 
 .fronts input[type="text"] {
@@ -777,3 +791,5 @@ a.cta, .cta a {
     width: 40px;
     text-align: right;
 }
+
+

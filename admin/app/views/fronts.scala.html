@@ -50,7 +50,7 @@
         <div class="lists" data-bind="foreach: listsDisplayed">
             <div class="trailblock">
                 <div class="list-header">
-                    <a data-bind="click: toggleShowSettings" class="list-header__showSettings"><i class="icon-cog icon-white"></i></a>
+                    <a data-bind="click: startEditingConfig" class="list-header__showSettings"><i class="icon-cog icon-white"></i></a>
                     <a data-bind="click: $parent.dropList" class="list-header__hide">HIDE</a>
                     <div class="list-header__title" data-bind="foreach: crumbs">
                         <span class="list-header__title__part" data-bind="text: $data"></span> 
@@ -108,7 +108,8 @@
                         ContentApi query for trail automation:
                         <input type="text" data-bind="value: config.contentApiQuery"/>
                     </div>
-                    <input type="submit" class="btn" value="Save Settings" data-bind="click: saveConfig"/>
+                    <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
+                    <button class="btn" value="Cancel" data-bind="click: stopEditingConfig">Cancel</button>
                 </div>
                 <div class="needs-more" data-bind="if: needsMore">
                     Needs at least <span class="needs-more__num" data-bind="text: config.min"></span> 
@@ -131,41 +132,31 @@
                 css: {redundant: $parent.config && $parent.config.max ? (0 + $index()) >= (0 + $parent.config.max()) : false}
             ">
 
-            <a class="trail__control" data-bind="click: $parent.dropItem">
-                <i class="icon-remove"></i>
-            </a>
-
             <div class="trail__meta">
-                <span data-bind="html: _humanDate() ? _humanDate : 'Loading...'"></span>
+                <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
                 <a data-bind="attr: {href: 'http://m.guardian.co.uk/' + id()}">view</a>
                 <a data-bind="attr: {href: 'http://dashboard.ophan.co.uk/summary?path=/' + id()}">stats</a>
+                <a data-bind="click: startEditingTweaks">tweak</a>
+                <a data-bind="click: $parent.dropItem">remove</a>
+            </div>
+
+            <div class="trail_tweaks cf" data-bind="visible: editingTweaks">
+                <div>
+                    Headline override:
+                    <input type="text" data-bind="value: webTitleOverride"/>
+                </div>
+                <input type="submit" class="btn" value="Save" data-bind="click: saveTweaks"/>
+                <button class="btn" value="Cancel" data-bind="click: stopEditingTweaks">Cancel</button>
             </div>
 
             <img data-bind="attr: {src: thumbnail}" />
 
-            <div class="webTitle" data-edit="webTitle" data-bind="
-                visible: !_editing_webTitle(),
-                text: webTitle() ? webTitle : '',
-                click: _edit
-                "></div>
-
-            <!-- Commented out awaiting decision on whether titles can be overwrittern in this tool -->
-            <!--input type="text" placeholder="webTitle" data-bind="
-                visible: _editing_webTitle,
-                value: webTitle,
-                hasfocus: _editing_webTitle
-                "/-->
-
-            <!--div class="trailText" data-edit="trailText" data-bind="
-                visible: !_editing_trailText(),
-                html: trailText() ? trailText : '',
-                click: _edit
-                "></div-->
-            <!--textarea type="text" placeholder="trailText" data-bind="
-                visible: _editing_trailText,
-                value: trailText,
-                hasfocus: _editing_trailText
-                "/></textarea-->
+            <!-- ko if: (webTitle() === webTitleOverride()) -->
+            <div class="webTitle" data-bind="text: webTitle"></div>
+            <!-- /ko -->
+            <!-- ko if: (webTitle() !== webTitleOverride()) -->
+            <div class="webTitle webTitle--override" data-bind="text: webTitleOverride"></div>
+            <!-- /ko -->
 
         </div>
     </script>
