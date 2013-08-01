@@ -121,7 +121,7 @@ class GuardianConfiguration(
   }
 
   object oas {
-    lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse("m.guardian.co.uk")
+    lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
   }
 
   object javascript {

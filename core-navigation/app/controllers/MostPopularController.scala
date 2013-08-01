@@ -11,7 +11,6 @@ import concurrent.Future
 object MostPopularController extends Controller with Logging with ExecutionContexts {
 
   val page = new Page(
-    Some("http://www.guardian.co.uk/"),
     "most-read",
     "most-read",
     "Most read",

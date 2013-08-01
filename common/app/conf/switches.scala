@@ -75,6 +75,10 @@ object Switches extends Collections {
     "Initialise Omniture on dom-ready, rather than on page-load.",
     safeState = Off)
 
+  val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
+    "Track when adslots (and possible ad slots) are scrolled into view.",
+    safeState = Off)
+
 
   // Discussion Switches
 
@@ -167,6 +171,11 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
+  //Fronts film switch
+  val FilmFrontFacia = Switch("Facia", "facia-film-switch",
+    "Switch to redirect traffic to the facia film front instead of front film front",
+    safeState = Off)
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -197,7 +206,9 @@ object Switches extends Collections {
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     LiveCricketSwitch,
-    ABLightboxGalleries
+    ABLightboxGalleries,
+    FilmFrontFacia,
+    AdSlotImpressionStatsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

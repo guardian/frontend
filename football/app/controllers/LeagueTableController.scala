@@ -27,7 +27,6 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def render() = Action { implicit request =>
 
     val page = new Page(
-      canonicalUrl = None,
       "football/tables",
       "football",
       "All tables",
@@ -52,7 +51,6 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def renderTeamlist() = Action { implicit request =>
 
     val page = new Page(
-      Some("http://www.guardian.co.uk/football/clubs"),
       "football/teams",
       "football",
       "All teams",
@@ -75,7 +73,6 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     loadTables.find(_.competition.url.endsWith(s"/$competition")).map { table =>
 
       val page = new Page(
-        Some(s"http://www.guardian.co.uk/football/$competition/tables"),
         "football/tables",
         "football",
         s"${table.competition.fullName} table",

@@ -28,6 +28,7 @@ define([
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
+    'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
     'modules/swipenav',
@@ -63,6 +64,7 @@ define([
     Adverts,
     Cookies,
     OmnitureMedia,
+    AdvertsAnalytics,
     Debug,
     ab,
     swipeNav,
@@ -191,6 +193,10 @@ define([
                             }).init();
                         }
                     });
+
+                    if (config.switches.adslotImpressionStats) {
+                        var advertsAnalytics = new AdvertsAnalytics(config, context);
+                    }
                 });
             });
 
