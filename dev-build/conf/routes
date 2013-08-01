@@ -9,7 +9,10 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 #Note the order of these is important
 
 #Identity
-GET     /identity/signin                               controllers.SigninController.signin()
+GET     /identity/signin                                    @controllers.SigninController.renderForm
+POST    /identity/signin                                    @controllers.SigninController.processForm
+GET     /identity/fragments/profile-nav                     @controllers.TopBarFragments.signin
+GET     /identity/fragments/profile-nav.json                @controllers.TopBarFragments.signin2
 
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)

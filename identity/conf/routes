@@ -1,1 +1,4 @@
-GET     /identity/signin                               controllers.SigninController.signin()
+GET     /signin                               @controllers.SigninController.renderForm
+POST    /signin                               @controllers.SigninController.processForm
+GET     /fragments/profile-nav                @controllers.TopBarFragments.signin
+GET     /fragments/profile-nav.json           @controllers.TopBarFragments.signin2

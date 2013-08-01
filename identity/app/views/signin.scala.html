@@ -1,4 +1,4 @@
-@(page: Page)(implicit request: RequestHeader)
+@(page: MetaData, form: Form[(String, String, Boolean)])(implicit request: RequestHeader)
 
 @main(page, Switches.all){ } {
 <form class="form" novalidate action="/identity/signin?error" role="main">

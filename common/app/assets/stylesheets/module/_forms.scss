@@ -34,7 +34,8 @@ form,
         color: $newsRed;
     }
 
-    .text-input {
+    .text-input,
+    .text-input:focus {
         border-color: $newsRed;
     }   
 }
@@ -52,12 +53,20 @@ label,
 }
 
 .text-input {
-    border: 1px solid $darkMushroom;
+    border: 1px solid $grey;
     box-sizing: border-box;
+    color: #545454;
     display: inline-block;
     font-family: $sans-serif;
+    font-size: 13px;
+    font-size: 1.3rem;
+    line-height: 1.4;
     padding: $baseline*2;
     width: 100%;
+
+    &:focus {
+        border-color: $darkGrey;
+    }
 }
 
 .submit-input {
