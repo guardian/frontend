@@ -67,7 +67,7 @@ object Au extends Edition(
       .tag(s"world/australia")
       .response
 
-    promiseOfAustralianVideo.map(_.results.map(new Content(_)))
+    promiseOfAustralianVideo.map(_.results.map(Content(_)))
   }
 
 

@@ -24,7 +24,7 @@ class ContentTest extends FlatSpec with ShouldMatchers {
       elements = None
     )
 
-    val trail: Trail = new Content(content)
+    val trail: Trail = Content(content)
 
     trail.linkText should be("Some article")
     trail.url should be("/foo/2012/jan/07/bar")

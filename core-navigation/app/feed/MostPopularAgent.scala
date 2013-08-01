@@ -27,7 +27,7 @@ object MostPopularAgent extends AkkaSupport with Logging with ExecutionContexts 
 
   private def refresh(edition: Edition) {
     ContentApi.item("/", edition).showMostViewed(true).response.foreach{ response =>
-      val mostViewed = response.mostViewed map { new Content(_) } take (10)
+      val mostViewed = response.mostViewed map { Content(_) } take (10)
       agent.send{ old =>
         old + (edition.id -> mostViewed)
       }
