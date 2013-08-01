@@ -202,18 +202,6 @@ public class ArticleSteps {
 		assertTrue(webDriver.waitForCss(By.cssSelector(".related-trails .panel"), "max-height", expectedTrailblockHeight));
 	}
 
-	@When("^Back to top is selected$")
-	public void Back_to_top_is_selected() throws Throwable {
-
-	}
-
-	@Then("^page scrolls to the top$")
-	public void article_page_scrolls_to_the_top() throws Throwable {
-		//get href value of the element (back to the top) to locate for example "top" div is show above the container as a way for confirming the Back to the top will work
-		String var = webDriver.findElement(By.linkText("Back to top")).getAttribute("href");
-		assertTrue(webDriver.findElements(By.id(var.substring(var.indexOf("#")+1))).size() > 0);
-	}
-
 	@When("^I click footer links \\(Desktop version, Help, Contact us, Feedback, T&C's and Pricacy policy\\)$")
 	public void I_click_footer_links_Desktop_version_Help_Contact_us_Feedback_T_C_s_and_Pricacy_policy() throws Throwable {
 
