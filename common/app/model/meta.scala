@@ -3,11 +3,6 @@ package model
 import common.ManifestData
 
 trait MetaData {
-  // indicates the absolute url of this page (the one to be used for search engine indexing)
-  // see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
-  // never give this a default value, we need people to think each time before using it
-  def canonicalUrl: Option[String]
-
   def id: String
   def section: String
   def webTitle: String
@@ -27,13 +22,12 @@ trait MetaData {
     "web-title" -> webTitle,
     "build-number" -> buildNumber,
     "analytics-name" -> analyticsName
-  ) ++ canonicalUrl.map { url => Map("canonical-url" -> url) }.getOrElse(Map.empty)
+  )
 
   def cacheSeconds = 60
 }
 
 class Page(
-  val canonicalUrl: Option[String],
   val id: String,
   val section: String,
   val webTitle: String,
@@ -41,11 +35,10 @@ class Page(
 
 object Page {
   def apply(
-    canonicalUrl: Option[String],
     id: String,
     section: String,
     webTitle: String,
-    analyticsName: String) = new Page(canonicalUrl, id, section, webTitle, analyticsName)
+    analyticsName: String) = new Page(id, section, webTitle, analyticsName)
 }
 
 trait Images {
