@@ -47,7 +47,7 @@
 
 .collapsible {
     // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
-    padding: 9px $gutter*2 9px $baseline*2; // double space on right to avoid icon
+    padding: 9px $gutter*2 9px $gutter/2; // double space on right to avoid icon
     position: relative;
     cursor: pointer;
 }
@@ -78,7 +78,7 @@
     display:block;
     background-color: $mushroom;
     margin-bottom: $baseline*4;
-    padding: 0 0 0 $baseline*2;
+    padding: 0 0 0 $gutter/2;
     overflow: hidden;
 
     &.hidden {
