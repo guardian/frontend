@@ -25,7 +25,7 @@ define(["common", "bean", "bonzo"], function (common, bean, bonzo) {
             var offsetTop = bonzo(el).offset().top;
 
             if (!el._inviewHasFired &&
-                el.style.display != 'none' &&
+                el.style.display !== 'none' &&
                 visibleTop <= offsetTop &&
                 visibleBottom >= offsetTop) {
                     // Element is visible
