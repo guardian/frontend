@@ -92,6 +92,19 @@ object FrontPage {
       )
     },
 
+    new FrontPage(isNetworkFront = false) {
+      override val id = "film"
+      override val section = "film"
+      override val webTitle = "Film"
+      override lazy val analyticsName = "GFE:film"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Film",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
     //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
       override val id = ""
