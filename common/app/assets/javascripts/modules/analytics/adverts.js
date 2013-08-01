@@ -16,9 +16,8 @@ define(['common', 'bean', 'modules/inview'], function (common, bean, Inview) {
 
         // Label up paragraphs
         if (config.page.contentType === 'Article') {
-            common.$g('.article-body p:nth-of-type(3n)', context).attr('data-inview-name','every 3rd para');
             common.$g('.article-body p:nth-of-type(5n)', context).attr('data-inview-name','every 5th para');
-            common.$g('.article-body p:nth-of-type(7n)', context).attr('data-inview-name','every 7th para');
+            common.$g('.article-body p:nth-of-type(10n)', context).attr('data-inview-name','every 10th para');
         }
 
 
