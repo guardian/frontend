@@ -13,6 +13,10 @@ public class TrailBlockEditors extends ActorManager {
 		addContext(ctx);
 	}
 
+	@Override
+	public TrailBlockEditor getActor(String actorLabel) {
+		return (TrailBlockEditor) super.getActor(actorLabel);
+	}
 
 	public TrailBlockEditor anyone() {
 		return (TrailBlockEditor) lastActor();

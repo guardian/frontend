@@ -1,5 +1,11 @@
-package com.gu.fronts.endtoend.engine;
+package com.gu.fronts.endtoend;
 
+import com.gu.fronts.endtoend.engine.Stories;
+import com.gu.fronts.endtoend.engine.Story;
+import com.gu.fronts.endtoend.engine.TrailBlock;
+import com.gu.fronts.endtoend.engine.TrailBlockEditor;
+import com.gu.fronts.endtoend.engine.TrailBlockEditors;
+import com.gu.fronts.endtoend.engine.TrailBlocks;
 import com.gu.fronts.endtoend.engine.actions.AddStoryToTrailBlockAction;
 import cucumber.api.java.en.When;
 import hu.meza.aao.Actor;
@@ -49,4 +55,18 @@ public class PutSteps {
 												storyALabel);
 	}
 
+	@When("^([\\w]*) copies ([\\w]*) to ([\\w]*)$")
+	public void copiesStoryAToTrailblock(String actorLabel, String storyLabel, String trailBlockLabel) {
+		TrailBlockEditor editor = editors.getActor(actorLabel);
+
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
+		context.setSubject(trailBlock);
+
+		Story story = stories.get(storyLabel);
+
+		AddStoryToTrailBlockAction action = new AddStoryToTrailBlockAction(story, trailBlock);
+
+		editor.execute(action);
+
+	}
 }

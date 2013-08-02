@@ -3,6 +3,7 @@ package com.gu.fronts.endtoend.engine.actions;
 import com.gu.fronts.endtoend.engine.Story;
 import com.gu.fronts.endtoend.engine.TrailBlock;
 import com.gu.fronts.endtoend.engine.TrailBlockAction;
+import com.gu.fronts.endtoend.engine.TrailBlockMode;
 import hu.meza.tools.HttpCall;
 import hu.meza.tools.HttpClientWrapper;
 import org.apache.http.HttpRequest;
@@ -13,13 +14,19 @@ import org.apache.http.cookie.Cookie;
 public class RemoveStoryFromTrailBlockAction implements TrailBlockAction {
 
 	private final Story story;
+	private final TrailBlockMode mode;
 	private final TrailBlock trailblock;
 	private HttpClientWrapper client;
 	private HttpCall httpCall;
 
 	public RemoveStoryFromTrailBlockAction(Story story, TrailBlock trailblock) {
+		this(story, trailblock, TrailBlockMode.LIVE);
+	}
+
+	public RemoveStoryFromTrailBlockAction(Story story, TrailBlock trailBlock, TrailBlockMode mode) {
 		this.story = story;
-		this.trailblock = trailblock;
+		this.mode = mode;
+		this.trailblock = trailBlock;
 	}
 
 	@Override
@@ -42,7 +49,7 @@ public class RemoveStoryFromTrailBlockAction implements TrailBlockAction {
 		String data = "{" +
 					  "\"item\":\"%s\"" +
 					  ",\"draft\":true" +
-					  ",\"live\":true" +
+					  ",\"live\":" + isLive() +
 					  "}";
 
 		final String requestUrl = String.format("/fronts/api/%s", trailblock.URI());
@@ -50,8 +57,8 @@ public class RemoveStoryFromTrailBlockAction implements TrailBlockAction {
 	}
 
 	@Override
-	public AddStoryToTrailBlockAction copyOf() {
-		return new AddStoryToTrailBlockAction(story, trailblock);
+	public RemoveStoryFromTrailBlockAction copyOf() {
+		return new RemoveStoryFromTrailBlockAction(story, trailblock, mode);
 	}
 
 	@Override
@@ -62,5 +69,9 @@ public class RemoveStoryFromTrailBlockAction implements TrailBlockAction {
 	@Override
 	public HttpResponse responseData() {
 		return httpCall.response();
+	}
+
+	private String isLive() {
+		return mode == TrailBlockMode.LIVE ? "true" : "false";
 	}
 }

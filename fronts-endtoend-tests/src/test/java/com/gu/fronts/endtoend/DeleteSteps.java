@@ -5,8 +5,11 @@ import com.gu.fronts.endtoend.engine.Story;
 import com.gu.fronts.endtoend.engine.TrailBlock;
 import com.gu.fronts.endtoend.engine.TrailBlockEditor;
 import com.gu.fronts.endtoend.engine.TrailBlockEditors;
+import com.gu.fronts.endtoend.engine.TrailBlockMode;
 import com.gu.fronts.endtoend.engine.TrailBlocks;
+import com.gu.fronts.endtoend.engine.actions.DiscardDraftAction;
 import com.gu.fronts.endtoend.engine.actions.RemoveStoryFromTrailBlockAction;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import hu.meza.aao.DefaultScenarioContext;
 
@@ -26,9 +29,27 @@ public class DeleteSteps {
 		this.context = context;
 	}
 
-	@When("^(.*) deletes (.*) from (.*)$")
+
+	@When("^([\\w]*) deletes ([\\w]*) from the draft of ([\\w]*)$")
+	public void deletesStoryFromTrailBlockDraft(
+		String actorLabel, String storyLabel, String trailBlockLabel
+	) {
+		TrailBlockEditor editor = editors.getActor(actorLabel);
+
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
+		context.setSubject(trailBlock);
+
+		Story story = stories.get(storyLabel);
+
+		RemoveStoryFromTrailBlockAction action =
+			new RemoveStoryFromTrailBlockAction(story, trailBlock, TrailBlockMode.DRAFT);
+
+		editor.execute(action);
+	}
+
+	@When("^([\\w]*) deletes ([\\w]*) from ([\\w]*)$")
 	public void deletesStoryFromTrailBlock(String actorLabel, String storyLabel, String trailBlockLabel) {
-		TrailBlockEditor editor = (TrailBlockEditor) editors.getActor(actorLabel);
+		TrailBlockEditor editor = editors.getActor(actorLabel);
 
 		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
 		context.setSubject(trailBlock);
@@ -41,4 +62,15 @@ public class DeleteSteps {
 
 	}
 
+	@And("^([\\w]*) discards the draft of ([\\w]*)$")
+	public void discardsTheDraftOfTrailBlock(String actorLabel, String trailBlockLabel) {
+		TrailBlockEditor editor = editors.getActor(actorLabel);
+
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
+		context.setSubject(trailBlock);
+
+		DiscardDraftAction action = new DiscardDraftAction(trailBlock);
+
+		editor.execute(action);
+	}
 }

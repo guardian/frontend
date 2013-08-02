@@ -5,7 +5,7 @@ Feature: As an editor I want to be able to copy storyA from trailblockX to trail
     And trailblockX is an existing trailblock
     And trailblockY is an existing trailblock
     And trailblockZ is an existing trailblock
-    And storyA is not part of trailblockX
+    And storyA is part of trailblockX
     When Bob copies storyA to trailblockY
     And he copies storyA to trailblockZ
     Then trailblockX should contain storyA
