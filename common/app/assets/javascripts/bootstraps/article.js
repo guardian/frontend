@@ -4,14 +4,16 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
-    "modules/cricket"
+    "modules/cricket",
+    "modules/inline-link-card"
 ], function (
     common,
     AutoUpdate,
     MatchNav,
     Reading,
     Discussion,
-    Cricket
+    Cricket,
+    InlineLinkCard
 ) {
 
     var modules = {
@@ -98,6 +100,14 @@ define([
                     Cricket.cricketArticle(config, context, options);
                 }
             });
+        },
+        initInlineLinkCard: function() {
+            common.mediator.on('page:article:ready', function() {
+                var linkToCardify = document.querySelectorAll('.article-body p a[href^="/"]')[0];
+                if (linkToCardify) {
+                    new InlineLinkCard(linkToCardify).init();
+                }
+            });
         }
     };
 
@@ -109,6 +119,7 @@ define([
             modules.logReading();
             modules.initDiscussion();
             modules.initCricket();
+            modules.initInlineLinkCard();
         }
         common.mediator.emit("page:article:ready", config, context);
     };
