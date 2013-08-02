@@ -81,34 +81,3 @@ $tabBorderWidth: 2px;
         border-left: none;
     }
 }
-
-@include mq($to: 640px) {
-
-    .tabs-fixable {
-        position: relative;
-    }  
-
-    .tabs-fixable .tabs {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 42px;
-        padding: 0 $gutter;
-        z-index: 2;
-    }  
-
-    .tabs-fixable .tabs.tabs-fixed {
-        position: fixed;
-        @include box-shadow(0 8px 6px -6px #999);
-    }  
-
-    .tabs-fixable .tabs li {
-        height: 42px;
-    }  
-
-    .tabs-fixable .tabs-content {
-        padding-top: 42px;
-    }
-
-}

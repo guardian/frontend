@@ -5,88 +5,6 @@
 # For dev machines
 GET     /assets/*file                         controllers.Assets.at(path="/public", file)
 
-
-#Note the order of these is important
-GET     /login                      controllers.Login.login
-POST    /login                      controllers.Login.loginPost
-GET     /openIDCallback             controllers.Login.openIDCallback
-GET     /logout                     controllers.Login.logout
-
-# static files
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
-
-##################### NOTE ############################
-#all endpoints below this line should be authenticated#
-#######################################################
-
-#Index page
-GET /                                    controllers.IndexController.index()
-GET /admin                               controllers.IndexController.admin()
-
-# Admin endpoints
-GET     /admin/feature-trailblock        controllers.FeatureTrailblockController.edit()
-POST    /admin/feature-trailblock        controllers.FeatureTrailblockController.save()
-
-# API endpoint proxying for https
-GET     /api/proxy/*path                 controllers.Api.proxy(path, callback)
-GET     /api/tag                         controllers.Api.tag(q, callback)
-GET     /api/item/*path                  controllers.Api.item(path, callback)
-GET     /json/proxy/*absUrl              controllers.Api.json(absUrl)
-
-#Development endpoints
-GET     /dev/switchboard                 controllers.SwitchboardController.render()
-POST    /dev/switchboard                 controllers.SwitchboardController.save()
-
-#Events
-GET     /events                          controllers.event.EventController.render()
-POST    /events                          controllers.event.EventController.create()
-
-GET     /events/list                     controllers.event.EventController.find()
-
-GET     /events*eventId                  controllers.event.EventController.read(eventId)
-POST    /events*eventId                  controllers.event.EventController.update(eventId)
-DELETE  /events*eventId                  controllers.event.EventController.delete(eventId)
-
-#Stories
-GET     /story*storyId                   controllers.event.StoryController.read(storyId)
-DELETE  /story*storyId                   controllers.event.StoryController.delete(storyId)
-
-GET     /story                           controllers.event.StoryController.find(title: String ?= "")
-POST    /story                           controllers.event.StoryController.create()
-POST    /story*storyId                   controllers.event.StoryController.update(storyId)
-
-#Entities
-GET     /entity*entityId                 controllers.event.EntityController.read(entityId, rdfType: String = "")
-DELETE  /entity*entityId                 controllers.event.EntityController.delete(entityId)
-
-GET     /entity                          controllers.event.EntityController.find(id: String ?= "")
-POST    /entity                          controllers.event.EntityController.create()
-POST    /entity*entityId                 controllers.event.EntityController.update(entityId)
-
-# Public face of typed entities
-GET     /people                          controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Person")
-GET     /people*id                       controllers.event.EntityController.read(id, rdfType = "http://schema.org/Person")
-GET     /places                          controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Place")
-GET     /places*id                       controllers.event.EntityController.read(id, rdfType = "http://schema.org/Place")
-GET     /countries                       controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Country")
-GET     /countries*id                    controllers.event.EntityController.read(id, rdfType = "http://schema.org/Country")
-GET     /organisations                   controllers.event.EntityController.findByType(rdfType: String = "http://schema.org/Organization")
-GET     /organisations*id                controllers.event.EntityController.read(id, rdfType = "http://schema.org/Organization")
-
-# Fronts
-GET     /fronts                          controllers.FrontsController.index()
-
-
-#Metrics
-
-GET /metrics/loadbalancers               controllers.metrics.DashboardController.render()
-
-# Fronts Api
-GET     /frontsapi/lists                                    controllers.FrontsApiController.getLists
-GET     /frontsapi/list/:listName                           controllers.FrontsApiController.getList(listName)
-POST    /frontsapi/listitem/:listName                       controllers.FrontsApiController.updateList(listName)
-GET     /frontsapi/bootstrap                                controllers.FrontsApiController.bootStrap
-
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)
 GET     /discussion/comment-counts.json                     controllers.CommentCountController.render(shortUrls: String)
@@ -168,13 +86,11 @@ GET     /football/match/:matchId.json                                           
 GET     /football/match/:matchId                                                        controllers.MatchController.renderMatchId(matchId)
 
 #Front
-GET     /$path<(\w\w-edition)?>                                         controllers.FrontController.render(path)
-GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
-
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>                     controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>.json                controllers.FrontController.render(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails              controllers.FrontController.renderTrails(path)
-GET     /$path<(culture|sport|australia)(/\w\w-edition)?>/trails.json         controllers.FrontController.renderTrails(path)
+GET     /$path<(us|uk|au)?>                                                                        controllers.FaciaController.render(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>                controllers.FaciaController.render(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>.json           controllers.FaciaController.render(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>/trails         controllers.FaciaController.renderTrails(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>/trails.json    controllers.FaciaController.renderTrails(path)
 
 #Video
 GET     /$path<[\w\d-]*/video/.*>.json              controllers.VideoController.render(path)

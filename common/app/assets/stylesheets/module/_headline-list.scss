@@ -47,7 +47,7 @@
     color: #333;
     margin: 0 $gutter $baseline;
     border-bottom: 1px solid #ddd;
-    padding: $baseline $baseline $baseline*3 0;
+    padding: $baseline $gutter/4 $baseline*3 0;
 
     @include mq(420px) {
         display: none;

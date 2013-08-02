@@ -71,74 +71,6 @@ input[type=checkbox].status {
     cursor: pointer;
 }
 
-
-/** Events Editor */
-
-.storify {
-    font-size: 12px;
-}
-
-.story-wrap {
-    margin: 0 0 10px 0;
-}
-
-/** Events */
-
-.scrollable {
-    margin: 10px 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 72vh;
-    padding: 0 8px 0 0;
-}
-
-@media all and (min-height: 800px) {
-    .scrollable { max-height: 78vh; }
-}
-
-.events {
-    margin: 0 0 0 14px;
-}
-
-.event {
-    padding: 4px 0 4px 4px;
-}
-
-.eventwell {
-    background-color: #F4F4EE;
-}
-
-.event-title {
-    cursor: pointer;
-}
-
-.event-parent {
-    color: #ccc;
-    font-weight: bold;
-}
-
-.event-form-toggler {
-    margin: 20px 0;    
-}
-
-.editing .event-form-toggler {
-    display: none;
-}
-
-textarea.event-explainer {
-    width: 100%;
-    max-width: 400px;
-    height: 100px;
-}
-
-.icon-star-empty {
-    opacity: 0.2;
-}
-
-.event-innards {
-    margin: 0 0 0 18px;
-}
-
 /** articles, in all uses */
 
 .article {
@@ -180,21 +112,7 @@ textarea.event-explainer {
     line-height: 1.2em;
 }
 
-.event-articles {margin: 0 0 0 2px;}
-
-.event-articles .meta {margin: 2px 0 0 18px;}
-
 /** search results */
-
-.storify-articles {
-    padding: 0 8px; 
-    background-color: #f4f4ee;
-}
-
-.storify-articles .article {
-    cursor: move;
-    padding-left: 4px;
-}
 
 .article .cta {
     display: none;
@@ -213,35 +131,6 @@ textarea.event-explainer {
 .article:hover .performance {
     display: none;
 }
-
-/** scaffolding */
-.storify * {
-    font-family: 'Merriweather', serif;
-}
-
-.storify h3 {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 1.4em;
-    color: #666;
-    padding-left: 2px;
-    text-shadow: 1px 1px #fff;
-}
-
-.storify {
-    overflow: hidden;
-    display: table;
-}
-
-.storify input{
-    background-color: #fff;
-    color: #000;
-    padding: 0 2px;
-    margin: 0;
-    font-size: 12px;
-}
-
 
 /* Agents & Places */
 
