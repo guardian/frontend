@@ -8,11 +8,14 @@ import play.api.mvc._
 import scala.Some
 
 // TODO, this needs a rethink, does not seem elegant
+
+abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
+
 object FrontPage {
 
   private val fronts = Seq(
 
-    new MetaData {
+    new FrontPage(isNetworkFront = false) {
       override val id = "australia"
       override val section = "australia"
       override val webTitle = "The Guardian"
@@ -24,7 +27,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
+    new FrontPage(isNetworkFront = false) {
       override val id = "sport"
       override val section = "sport"
       override val webTitle = "Sport"
@@ -37,7 +40,46 @@ object FrontPage {
       )
     },
 
-    new MetaData {
+    new FrontPage(isNetworkFront = false) {
+      override val id = "money"
+      override val section = "money"
+      override val webTitle = "Money"
+      override lazy val analyticsName = "GFE:money"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Money",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "commentisfree"
+      override val section = "commentisfree"
+      override val webTitle = "commentisfree"
+      override lazy val analyticsName = "GFE:commentisfree"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Comment is free",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "business"
+      override val section = "business"
+      override val webTitle = "business"
+      override lazy val analyticsName = "GFE:business"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Business",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
       override val id = "culture"
       override val section = "culture"
       override val webTitle = "Culture"
@@ -50,8 +92,21 @@ object FrontPage {
       )
     },
 
+    new FrontPage(isNetworkFront = false) {
+      override val id = "film"
+      override val section = "film"
+      override val webTitle = "Film"
+      override lazy val analyticsName = "GFE:film"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Film",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
     //TODO important this one is last for matching purposes
-    new MetaData {
+    new FrontPage(isNetworkFront = true) {
       override val id = ""
       override val section = ""
       override val webTitle = "The Guardian"
@@ -64,7 +119,7 @@ object FrontPage {
     }
   )
 
-  def apply(path: String): Option[MetaData] = fronts.find(f => path.startsWith(f.id))
+  def apply(path: String): Option[FrontPage] = fronts.find(f => path.startsWith(f.id))
 
 }
 

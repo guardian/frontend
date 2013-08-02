@@ -79,8 +79,6 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val frontsApi = application("fronts-api").dependsOn(commonWithTests)
-
   val identityLibVersion = "3.20"
   val identity = application("identity").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
@@ -113,9 +111,7 @@ object Frontend extends Build with Prototypes {
     .dependsOn(identity)
 
   val faciaDev = application("facia-dev-build")
-    .dependsOn(admin)
     .dependsOn(facia)
-    .dependsOn(frontsApi)
     .dependsOn(article)
     .dependsOn(applications)
     .dependsOn(football)
@@ -140,7 +136,6 @@ object Frontend extends Build with Prototypes {
     styleGuide,
     admin,
     porter,
-    frontsApi,
     identity
   )
 }
