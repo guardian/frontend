@@ -1,5 +1,7 @@
 @(page: MetaData, form: Form[(String, String, Boolean)])(implicit request: RequestHeader)
 
+@main(page, Switches.all){
+}{
 <form class="form" novalidate action="/signin?error" role="main">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
     <ul class="form-fields">
