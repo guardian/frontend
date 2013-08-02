@@ -41,6 +41,7 @@ public class TrailBlockEditor extends RestfulActor {
 
 	public void execute(TrailBlockAction action) {
 		action.useClient(client);
+		action.setAuthenticationData(authenticationData());
 		super.execute(action);
 	}
 }

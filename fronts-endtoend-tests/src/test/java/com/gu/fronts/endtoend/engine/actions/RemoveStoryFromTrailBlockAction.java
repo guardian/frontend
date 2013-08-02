@@ -6,8 +6,6 @@ import com.gu.fronts.endtoend.engine.TrailBlockAction;
 import com.gu.fronts.endtoend.engine.TrailBlockMode;
 import hu.meza.tools.HttpCall;
 import hu.meza.tools.HttpClientWrapper;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.cookie.Cookie;
 
@@ -36,12 +34,12 @@ public class RemoveStoryFromTrailBlockAction implements TrailBlockAction {
 
 	@Override
 	public boolean success() {
-		return HttpStatus.SC_OK == responseData().getStatusLine().getStatusCode();
+		return HttpStatus.SC_OK == httpCall.response().getStatusLine().getStatusCode();
 	}
 
 	@Override
-	public <T> void setAuthenticationData(T data) {
-		client.addCookie((Cookie) data);
+	public void setAuthenticationData(Cookie cookie) {
+		client.addCookie(cookie);
 	}
 
 	@Override
@@ -59,16 +57,6 @@ public class RemoveStoryFromTrailBlockAction implements TrailBlockAction {
 	@Override
 	public RemoveStoryFromTrailBlockAction copyOf() {
 		return new RemoveStoryFromTrailBlockAction(story, trailblock, mode);
-	}
-
-	@Override
-	public HttpRequest requestData() {
-		return httpCall.request();
-	}
-
-	@Override
-	public HttpResponse responseData() {
-		return httpCall.response();
 	}
 
 	private String isLive() {

@@ -4,8 +4,7 @@ import com.gu.fronts.endtoend.engine.TrailBlock;
 import com.gu.fronts.endtoend.engine.TrailBlockAction;
 import hu.meza.tools.HttpCall;
 import hu.meza.tools.HttpClientWrapper;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.cookie.Cookie;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,12 +29,12 @@ public class ViewTrailBlockAction implements TrailBlockAction {
 
 	@Override
 	public boolean success() {
-		return false;  //To change body of implemented methods use File | Settings | File Templates.
+		return HttpStatus.SC_OK == httpCall.response().getStatusLine().getStatusCode();
 	}
 
 	@Override
-	public <T> void setAuthenticationData(T data) {
-		client.addCookie((Cookie) data);
+	public void setAuthenticationData(Cookie cookie) {
+		client.addCookie(cookie);
 	}
 
 	@Override
@@ -49,26 +48,16 @@ public class ViewTrailBlockAction implements TrailBlockAction {
 		return new ViewTrailBlockAction(trailBlock);
 	}
 
-	@Override
-	public HttpRequest requestData() {
-		return httpCall.request();
-	}
-
-	@Override
-	public HttpResponse responseData() {
-		return httpCall.response();
-	}
-
-	public String responseBody() {
-		return httpCall.body();
-	}
-
 	public List<String> liveStories() {
 		return getStories("live");
 	}
 
 	public List<String> draftStories() {
 		return getStories("draft");
+	}
+
+	private String responseBody() {
+		return httpCall.body();
 	}
 
 	private List<String> getStories(String mode) {

@@ -4,8 +4,6 @@ import com.gu.fronts.endtoend.engine.TrailBlock;
 import com.gu.fronts.endtoend.engine.TrailBlockAction;
 import hu.meza.tools.HttpCall;
 import hu.meza.tools.HttpClientWrapper;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.cookie.Cookie;
 
@@ -19,8 +17,8 @@ public class TrailBlockCreateAction implements TrailBlockAction {
 	}
 
 	@Override
-	public <T> void setAuthenticationData(T data) {
-		client.addCookie((Cookie) data);
+	public void setAuthenticationData(Cookie cookie) {
+		client.addCookie(cookie);
 	}
 
 	@Override
@@ -36,16 +34,6 @@ public class TrailBlockCreateAction implements TrailBlockAction {
 	}
 
 	@Override
-	public HttpRequest requestData() {
-		return httpCall.request();
-	}
-
-	@Override
-	public HttpResponse responseData() {
-		return httpCall.response();
-	}
-
-	@Override
 	public TrailBlockCreateAction copyOf() {
 		return new TrailBlockCreateAction(trailBlock);
 	}
@@ -57,7 +45,7 @@ public class TrailBlockCreateAction implements TrailBlockAction {
 
 	@Override
 	public boolean success() {
-		int statusCode = responseData().getStatusLine().getStatusCode();
+		int statusCode = httpCall.response().getStatusLine().getStatusCode();
 
 		if (statusCode != HttpStatus.SC_CREATED && statusCode != HttpStatus.SC_OK) {
 			return false;

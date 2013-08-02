@@ -4,8 +4,6 @@ import com.gu.fronts.endtoend.engine.TrailBlock;
 import com.gu.fronts.endtoend.engine.TrailBlockAction;
 import hu.meza.tools.HttpCall;
 import hu.meza.tools.HttpClientWrapper;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.cookie.Cookie;
 
@@ -25,12 +23,12 @@ public class DiscardDraftAction implements TrailBlockAction {
 
 	@Override
 	public boolean success() {
-		return HttpStatus.SC_OK == responseData().getStatusLine().getStatusCode();
+		return HttpStatus.SC_OK == httpCall.response().getStatusLine().getStatusCode();
 	}
 
 	@Override
-	public <T> void setAuthenticationData(T data) {
-		client.addCookie((Cookie) data);
+	public void setAuthenticationData(Cookie cookie) {
+		client.addCookie(cookie);
 	}
 
 	@Override
@@ -46,13 +44,4 @@ public class DiscardDraftAction implements TrailBlockAction {
 		return new DiscardDraftAction(trailBlock);
 	}
 
-	@Override
-	public HttpRequest requestData() {
-		return httpCall.request();
-	}
-
-	@Override
-	public HttpResponse responseData() {
-		return httpCall.response();
-	}
 }
