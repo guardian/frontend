@@ -77,7 +77,7 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
      * @param {Object} resp response from the server
      */
     Profile.prototype.emitErrorEvent = function() {
-        common.mediator.emit(Profile.CONFIG.eventName + ':error', user);
+        common.mediator.emit(Profile.CONFIG.eventName + ':error');
     };
 
     return Profile;
