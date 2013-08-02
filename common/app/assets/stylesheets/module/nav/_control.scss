@@ -227,7 +227,7 @@ span.control__menu.i-menu {
 }
 
 .control--profile .i-profile {
-    margin: 5px $gutter 0 $gutter/2;
+    margin: 5px $gutter 0 $gutter/4;
 
     @include mq(tablet) {
         margin-left: 0;
