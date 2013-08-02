@@ -13,6 +13,9 @@ GET     /identity/signin                                    @controllers.SigninC
 POST    /identity/signin                                    @controllers.SigninController.processForm
 GET     /identity/fragments/profile-nav                     @controllers.TopBarFragments.signin
 GET     /identity/fragments/profile-nav.json                @controllers.TopBarFragments.signin2
+GET     /identity/reset-password                            @controllers.ResetPasswordController.renderForm
+POST    /identity/reset-password                            @controllers.ResetPasswordController.processForm
+
 
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)

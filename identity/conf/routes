@@ -2,3 +2,5 @@ GET     /identity/signin                               @controllers.SigninContro
 POST    /identity/signin                               @controllers.SigninController.processForm
 GET     /identity/fragments/profile-nav                @controllers.TopBarFragments.signin
 GET     /identity/fragments/profile-nav.json           @controllers.TopBarFragments.signin2
+GET     /identity/resetpassword                        @controllers.ResetPasswordController.renderForm
+POST    /identity/resetpassword                        @controllers.ResetPasswordController.processForm
