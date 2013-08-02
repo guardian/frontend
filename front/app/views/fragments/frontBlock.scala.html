@@ -1,4 +1,5 @@
-@(block: Trailblock, page: FrontPage)(implicit request: RequestHeader)
+@(block: Trailblock, page: FrontPage, index: Int)(implicit request: RequestHeader)
+@import model.Trailblock
 
 <section 
     class="front-section zone-@block.description.section" 
@@ -6,9 +7,8 @@
     data-link-context="front-trails/@block.description.section">
 
     @if(block.description.id != "") {
-	    @if("/" + block.description.id == request.path ||
-            LinkTo("/" + block.description.id, Edition(request)) == request.path) {
-                @fragments.headers.sectionHead(block.description.name)
+	    @if(index == 0 && !page.isNetworkFront) {
+           @fragments.headers.sectionHead(block.description.name)
 	    } else {
 	       @fragments.headers.frontSectionHead(block.description, page.isNetworkFront, Some(Edition(request)))
         } 
