@@ -3,7 +3,7 @@ package common.editions
 import common._
 import org.joda.time.DateTimeZone
 import model.{RunningOrderTrailblockDescription, ItemTrailblockDescription, MetaData}
-import views.support.{Headline, Thumbnail, Featured}
+import views.support.{Headline, Thumbnail, Featured, SectionFront}
 import scala.Some
 import common.NavItem
 
@@ -135,7 +135,7 @@ object Uk extends Edition(
     )),
 
     (Editionalise("film", Uk), Seq(
-      RunningOrderTrailblockDescription("film", "top-stories", "Film", 15)
+      RunningOrderTrailblockDescription("film", "top-stories", "Film", 15, style = Some(SectionFront))
     ))
   )
 }
