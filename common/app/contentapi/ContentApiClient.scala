@@ -1,7 +1,6 @@
 package contentapi
 
 import com.gu.openplatform.contentapi.{FutureAsyncApi, Api}
-import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy}
 import conf.Configuration
 import scala.concurrent.Future
 import common.{ExecutionContexts, Edition, Logging, GuardianConfiguration}
@@ -50,8 +49,8 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections {
   .showTags("all")
   .showFields(trailFields)
   .showInlineElements(inlineElements)
-  .showMedia("audio,interactive,picture")
-  .showElements("video")
+  .showMedia("picture")
+  .showElements("all")
   .showReferences(references)
   .showStoryPackage(true)
   .tag(supportedTypes)
@@ -63,8 +62,8 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections {
   .showInlineElements(inlineElements)
   .showReferences(references)
   .showFields(trailFields)
-  .showMedia("audio,interactive,picture")
-  .showElements("video")
+  .showMedia("picture")
+  .showElements("all")
   .tag(supportedTypes)
 }
 

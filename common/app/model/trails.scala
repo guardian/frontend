@@ -15,7 +15,7 @@ import play.api.libs.json.JsObject
 import java.net.URLDecoder
 import tools.QueryParams
 
-trait Trail extends Images with Tags {
+trait Trail extends Elements with Tags {
   def webPublicationDate: DateTime
   def linkText: String
   def headline: String
