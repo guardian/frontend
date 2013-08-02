@@ -54,7 +54,12 @@ define([
         if (currentDataLinkTest) {
             dataLinkTest.push(currentDataLinkTest);
         }
-        dataLinkTest.push(['AB', test.id + ' test', variantId]. join(' | '));
+
+        var testName = ['AB', test.id + ' test', variantId]. join(' | ');
+        if (!currentDataLinkTest || currentDataLinkTest.indexOf(testName) === -1) {
+            dataLinkTest.push(testName);
+        }
+
         common.$g(document.body).attr('data-link-test', dataLinkTest.join(', '));
     }
 
