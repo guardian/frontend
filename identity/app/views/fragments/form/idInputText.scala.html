@@ -8,5 +8,5 @@
 @updatedArgs = @{ args ++ Seq('_showConstraints -> false) }
 
 @input(field, updatedArgs.filter(_._1 != 'type):_*) { (id, name, value, htmlArgs) =>
-  <input class="@cls" type="@inputType" id="@id" name="@name" value="@value" @toHtmlArgs(htmlArgs)>
+  <input class="@cls" type="@inputType" id="@id" name="@name" value="@value" @toHtmlArgs(htmlArgs) />
 }
