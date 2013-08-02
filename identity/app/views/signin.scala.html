@@ -1,20 +1,17 @@
-@(page: MetaData, form: Form[(String, String, Boolean)])(implicit request: RequestHeader)
+@(page: MetaData, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
+
+@import form.IdFormHelpers._
+@import views.html.fragments.form.{idInputEmail, idInputPassword}
 
 @main(page, Switches.all){
 }{
 <form class="form" novalidate action="/signin?error" role="main">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
     <ul class="form-fields">
-        <li class="form-field--error">
-            <label for="email">Email address</label>
-            <input class="text-input" autocomplete="on" spellcheck="false" type="email" id="email" value="" />
-            <div class="form-field__error text-input__note">Please enter a valid email address</div>
-        </li>
-        <li>
-            <label for="password">Password</label>
-            <input class="text-input" type="password" id="password" />
-            <div class="text-input__note"><a href="/identity/recover">Forgotten your password?</a></div>
-        </li>
+
+        @idInputEmail(signinForm("email"), '_label -> "Email address")
+        @idInputPassword(signinForm("password"), '_label -> "Password", '_help -> "<a href='/identity/recover'>Forgotten your password?</a>")
+
         <li>
             <button type="submit" class="submit-input">Sign in</button>
             
