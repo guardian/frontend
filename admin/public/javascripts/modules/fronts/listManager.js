@@ -91,8 +91,7 @@ define([
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    fromListObj = knockout.dataFor(fromList[0]);
-                    
+                    fromListObj = knockout.dataFor(fromList[0]);                    
                 },
                 stop: function(event, ui) {
                     var index,
@@ -124,8 +123,8 @@ define([
                 listObj,
                 position,
                 delta;
-                
-            if (list.hasClass('throwAway')) { return; }
+
+            if (!list.hasClass('persisted')) { return; }
 
             listObj = knockout.dataFor(list[0]);
 

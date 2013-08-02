@@ -14,7 +14,8 @@ define([
 
         var self = this,
             deBounced,
-            opts = opts || {};
+            opts = opts || {},
+            container = document.querySelector('#latest-articles');
 
         this.articles   = ko.observableArray();
         this.term       = ko.observable(common.util.queryParams().q || '');
@@ -56,11 +57,11 @@ define([
                     success: function(resp) {
                         var rawArticles = resp.response && resp.response[propName] ? resp.response[propName] : [];
 
-                        // Make sure it's an array 
-                        rawArticles = [].concat(rawArticles);
-
                         self.articles.removeAll();
-                        rawArticles.map(function(a){
+                        // clean up any dragged-in articles 
+                        container.innerHTML = ''; 
+
+                        ([].concat(rawArticles)).map(function(a){
                             self.articles.push(new Article(a));
                         })
                     },

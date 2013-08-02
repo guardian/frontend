@@ -14,11 +14,11 @@ function (
         var fetch = [];
 
         items.forEach(function(item){
-            var article = cache[item.id()];
+            var article = cache[item.meta.id()];
             if(article) {
                 decorateItem(article, item);
             } else {
-                fetch.push(item.id());
+                fetch.push(item.meta.id());
             }
         });
 
@@ -27,7 +27,7 @@ function (
                 if (result.id) {
                     cache[result.id] = result;
                     _.filter(items,function(item){
-                        return item.id() === result.id;
+                        return item.meta.id() === result.id;
                     }).forEach(function(item){
                         decorateItem(result, item);
                     });

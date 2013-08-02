@@ -9,76 +9,72 @@ function (
     common,
     Editable,
     ko,
-    Reqwest
+    reqwest
 ){
     var absUrlHost = 'http://m.guardian.co.uk/';
 
     function Article(opts) {
-        this.id                 = ko.observable();
-        this.webTitle           = ko.observable();
-        this.webPublicationDate = ko.observable();
-        this.thumbnail          = ko.observable();
-        this.trailText          = ko.observable();
-        this.shortId            = ko.observable();
 
-        this.webTitleOverride   = ko.observable();
+        this.meta = common.util.asObservableProps([
+            'id',
+            'webTitle',
+            'webPublicationDate']);
 
-        // Performance stats
-        this.shares             = ko.observable();
-        this.comments           = ko.observable();
+        this.fields = common.util.asObservableProps([
+            'thumbnail',
+            'trailText',
+            'shortId']);
 
-        // Temp vars
-        this.editingTweaks      = ko.observable();
+        this.config = common.util.asObservableProps([
+            'webTitle']);
+
+        this.state = common.util.asObservableProps([
+            'editingConfig',
+            'shares',
+            'comments']);
 
         // Computeds
         this.humanDate = ko.computed(function(){
-            return this.webPublicationDate() ? humanized_time_span(this.webPublicationDate()) : '&nbsp;';
+            return this.meta.webPublicationDate() ? humanized_time_span(this.meta.webPublicationDate()) : '&nbsp;';
         }, this);
 
         this.init(opts);
     };
 
     Article.prototype.init = function(opts) {
-        var opts = opts || {},
-            self = this;
-
-        this.id(opts.id);
-        this.webTitle(opts.webTitle);
-        this.webPublicationDate(opts.webPublicationDate);
-
-        // Overrides
-        this.webTitleOverride(opts.webTitleOverride || opts.webTitle);
-
-        if (opts.fields) {
-            this.thumbnail(opts.fields.thumbnail);
-            this.trailText(opts.fields.trailText);
-            this.shortId(opts.fields.shortUrl.match(/[^\/]+$/)[0]);
-        }
-
-        this.shares(opts.shares);
-        this.comments(opts.comments);
-
-        // Performance counts are awaiting a fix to the proxy API endpoint 
-        //this.addPerformanceCounts();
+        var opts = opts || {};
+        common.util.populateObservables(this.meta, opts)
+        common.util.populateObservables(this.fields, opts.fields)
+        common.util.populateObservables(this.config, opts)
     }
 
-    Article.prototype.startEditingTweaks = function() {
-        this.editingTweaks(true);
+    Article.prototype.toggleEditingConfig = function() {
+        this.state.editingConfig(!this.state.editingConfig());
     }
 
-    Article.prototype.stopEditingTweaks = function() {
-        this.editingTweaks(false);
+    Article.prototype.stopEditingConfig = function() {
+        this.state.editingConfig(false);
     }
 
-    Article.prototype.saveTweaks = function(item) {
-        // Needs more work!
-        //item.webTitleOverride(common.util.fullTrim(item.webTitleOverride()));
-        //hasWebTitleOverride = item.webTitleOverride() && (item.webTitleOverride() !== item.webTitle());
-        //data.webTitleOverride = hasWebTitleOverride ? item.webTitleOverride() : undefined;
-
-        // Save to server here
-        //console.log(JSON.stringify(data));
-        this.stopEditingTweaks();
+    Article.prototype.saveConfig = function(listId) {
+        var self = this;
+        // If a config property (a) is set and (b) differs from the meta value, include it in post.
+        reqwest({
+            url: common.config.apiBase + '/' + listId + '/' + this.meta.id(),
+            method: 'post',
+            type: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                config: _.chain(this.config)
+                        .pairs()
+                        .filter(function(p){ return p[1]() && p[1]() !== self.meta[p[0]](); })
+                        .map(function(p){ return [p[0], p[1]()]; })
+                        .object()
+                        .value()
+            })
+        }).always(function(){
+            self.stopEditingConfig();
+        });
     }
 
     Article.prototype.addPerformanceCounts = function() {
@@ -89,7 +85,7 @@ function (
     Article.prototype.addSharedCount = function() {
         var url = 'http://api.sharedcount.com/?url=http://www.guardian.co.uk/' + this.id(),
             self = this;
-        Reqwest({
+        reqwest({
             url: '/json/proxy/' + url,
             type: 'json',
             success: function(resp) {
@@ -105,7 +101,7 @@ function (
             this.shortId() + '/comments/count',
             self = this;
         if(this.shortId()) {
-            Reqwest({
+            reqwest({
                 url: '/json/proxy/' + url,
                 type: 'json',
                 success: function(resp) {

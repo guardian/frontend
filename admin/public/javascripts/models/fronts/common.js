@@ -1,7 +1,7 @@
 define([
-
+    'knockout'
 ], function(
-
+    ko
 ) {
     return {
 
@@ -24,6 +24,19 @@ define([
 
             fullTrim: function(str){
                 return str ? str.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ') : undefined;
+            },
+
+            asObservableProps: function(props) {
+                return _.object(props.map(function(prop){
+                    return [prop, ko.observable()];
+                }));
+            },
+
+            populateObservables: function(target, opts) {
+                if (!_.isObject(target) || !_.isObject(opts)) { return; };
+                _.keys(target).forEach(function(key){
+                    target[key](opts[key]);
+                });
             }
         }
 

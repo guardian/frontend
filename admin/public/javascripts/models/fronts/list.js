@@ -21,9 +21,20 @@ define([
         this.live   = ko.observableArray();
         this.draft  = ko.observableArray();
 
-        this.meta   = this.asObservableProps(['lastUpdated', 'updatedBy', 'updatedEmail']);
-        this.config = this.asObservableProps(['contentApiQuery', 'min', 'max']);
-        this.state  = this.asObservableProps(['liveMode', 'hasUnPublishedEdits', 'loadIsPending', 'editingConfig', 'timeAgo']);
+        this.meta   = common.util.asObservableProps([
+            'lastUpdated',
+            'updatedBy',
+            'updatedEmail']);
+        this.config = common.util.asObservableProps([
+            'contentApiQuery',
+            'min',
+            'max']);
+        this.state  = common.util.asObservableProps([
+            'liveMode',
+            'hasUnPublishedEdits',
+            'loadIsPending',
+            'editingConfig',
+            'timeAgo']);
 
         this.state.liveMode(common.config.defaultToLiveMode);
 
@@ -37,17 +48,20 @@ define([
             self.drop(item);
         };
 
+        this.saveItemConfig = function(item) {
+            item.saveConfig(self.id);
+            self.load();
+        }
+
+        this.forceRefresh = function() {
+            self.load();
+        }
+
         this.load();
     }
 
-    List.prototype.asObservableProps = function(props) {
-        return _.object(props.map(function(prop){
-            return [prop, ko.observable()];
-        }));
-    };
-
-    List.prototype.startEditingConfig = function() {
-        this.state.editingConfig(true);
+    List.prototype.toggleEditingConfig = function() {
+        this.state.editingConfig(!this.state.editingConfig());
     };
 
     List.prototype.stopEditingConfig = function() {
@@ -148,22 +162,12 @@ define([
     };
 
     List.prototype.populateMeta = function(opts) {
-        var self = this;
-        opts = opts || {};
-
-        _.keys(this.meta).forEach(function(key){
-            self.meta[key](opts[key]);
-        });
+        common.util.populateObservables(this.meta, opts)
         this.state.timeAgo(this.getTimeAgo(opts.lastUpdated));
     }
 
     List.prototype.populateConfig = function(opts) {
-        var self = this;
-        opts = opts || {};
-
-        _.keys(this.config).forEach(function(key){
-            self.config[key](opts[key]);
-        });
+        common.util.populateObservables(this.config, opts)
     };
 
     List.prototype.populateLists = function(opts) {
@@ -204,7 +208,7 @@ define([
         });
     };
 
-    List.prototype.saveConfig = function(key, val) {
+    List.prototype.saveConfig = function() {
         var self = this;
         reqwest({
             url: common.config.apiBase + '/' + this.id,
@@ -213,7 +217,7 @@ define([
             contentType: 'application/json',
             data: JSON.stringify({ 
                 config: {
-                    contentApiQuery: this.config.contentApiQuery(),
+                    contentApiQuery: this.config.contentApiQuery() || undefined,
                     min: parseInt(this.config.min(), 10) || undefined,
                     max: parseInt(this.config.max(), 10) || undefined
                 }
