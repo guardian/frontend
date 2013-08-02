@@ -52,30 +52,34 @@ trait TestSettings {
  */
 class EditionalisedHtmlUnit extends TestSettings {
 
-  val ukHost = "http://localhost:9000"
-  val usHost = "http://127.0.0.1:9000"
+  val host = "http://localhost:9000"
+
 
   val Port = """.*:(\d*)$""".r
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
-  def UK[T](path: String)(block: TestBrowser => T): T = goTo(path, ukHost)(block)
+  def UK[T](path: String)(block: TestBrowser => T): T = goTo(path, host)(block)
 
-  def US[T](path: String)(block: TestBrowser => T): T = goTo(path, usHost)(block)
+  def US[T](path: String)(block: TestBrowser => T): T = {
+    val editionPath = if (path.contains("?")) s"$path&_edition=US" else s"$path?_edition=US"
+    goTo(editionPath, host)(block)
+  }
 
   def connection[T](path: String)(block: HttpURLConnection => T): T = {
     connectionUK(path)(block)
   }
 
   def connectionUK[T](path: String)(block: HttpURLConnection => T): T = {
-    testConnection(ukHost, path)(block)
+    testConnection(path)(block)
   }
 
   def connectionUS[T](path: String)(block: HttpURLConnection => T): T = {
-    testConnection(usHost, path)(block)
+    val editionPath = if (path.contains("?")) s"$path&_edition=US" else s"$path?_edition=US"
+    testConnection(editionPath)(block)
   }
 
-  protected def testConnection[T](host: String, path: String)(block: HttpURLConnection => T): T = {
+  protected def testConnection[T](path: String)(block: HttpURLConnection => T): T = {
 
     val port = host match {
       case Port(p) => p.toInt

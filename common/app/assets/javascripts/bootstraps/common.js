@@ -98,12 +98,18 @@ define([
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
                 header = document.querySelector('body'),
-                account = new Profile(header);
+                profile;
+
+            if (config.switches.idProfileNavigation) {
+                profile = new Profile(header, {
+                    url: config.idUrl
+                });
+                profile.init();
+            }
 
             sections.init(header);
             navControl.init(header);
             topStories.load(config, header);
-            account.init();
             search.init(header);
             aus.init(header);
 

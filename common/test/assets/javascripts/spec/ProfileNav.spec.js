@@ -2,9 +2,12 @@ define(['common', 'fixtures', 'ajax', 'modules/navigation/profile'], function(co
 
     describe('Profile navigation', function() {
         var context,
-            control = new Profile(),
+            control,
             server = sinon.fakeServer.create(),
             containerId = 'profile-control-container',
+            config = {page: {
+                idUrl: 'https://profile.theguardian.co.uk'
+            }},
             controlFixtures = {
                 id: containerId,
                 fixtures: [
@@ -21,7 +24,7 @@ define(['common', 'fixtures', 'ajax', 'modules/navigation/profile'], function(co
         context = document.getElementById(containerId);
 
         describe('Fetching the HTML fragment', function() {
-            control = new Profile();
+            control = new Profile(config, context);
 
             beforeEach(function() {
                 server = sinon.fakeServer.create();
@@ -59,7 +62,7 @@ define(['common', 'fixtures', 'ajax', 'modules/navigation/profile'], function(co
         });
 
         describe('Rendering the HTML fragment', function() {
-            control = new Profile(context);
+            control = new Profile(config, context);
             
             beforeEach(function() {
                 server = sinon.fakeServer.create();

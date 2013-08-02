@@ -2,7 +2,7 @@
     word-wrap: break-word;
     line-height: 1.4;
 
-    @media (min-width: 768px) {
+    @include mq(768px) {
         line-height: 22px;
     }
 

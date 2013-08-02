@@ -13,7 +13,7 @@
     @extend %type-6;
     color: #333;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         font-size: 18px;
         font-size: 1.8rem;
         line-height: 26px;
@@ -35,13 +35,13 @@
         color: #333;
         margin-bottom: $baseline;
 
-        @media (min-width: $tablet) {
+        @include mq(tablet) {
             font-size: 22px;
             font-size: 2.2rem;
             line-height: 28px;
             line-height: 2.8rem;
         }
-        @media (min-width: $desktop) {
+        @include mq(desktop) {
             font-size: 22px;
             font-size: 2.2rem;
             line-height: 28px;
@@ -58,7 +58,7 @@
 
 .article blockquote,
 .article blockquote p {
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         font-size: 18px;
         font-size: 1.8rem;
         line-height: 26px;

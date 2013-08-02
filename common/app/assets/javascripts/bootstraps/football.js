@@ -163,8 +163,7 @@ define([
                 }
                 break;
         }
-    
-        modules.showHomescreen(config);
+
     };
 
     return {
