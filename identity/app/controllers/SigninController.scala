@@ -29,7 +29,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends C
 
   def processForm = Action { implicit request =>
     form.bindFromRequest.fold(
-      formWithErrors => BadRequest(views.html.signin(page, form)),
+      formWithErrors => BadRequest(views.html.signin(page, formWithErrors)),
       { case (email, password, rememberMe) => {
         TemporaryRedirect(returnUrlVerifier.getVerifiedReturnUrl(request))
         // call ID API
