@@ -4,6 +4,12 @@ Feature: As an editor I want my changes to live trailblockX to be reflected in t
   Scenario: managing conflicts
     Given Bob is a trailblock editor
     And trailblockX is an existing trailblock
-    When Bob edits the draft of trailblockX
-    And he edits the live trailblockX
-    Then the draft of trailblockX should reflect both modifications
+    And StoryA is not part of it
+    And StoryB is not part of it
+
+    When he adds StoryB to the draft of trailblockX
+    And he adds StoryA to trailblockX
+
+    Then trailblockX draft should contain StoryA
+    Then trailblockX draft should contain StoryB
+    Then trailblockX should not contain StoryB

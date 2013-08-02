@@ -8,6 +8,7 @@ import com.gu.fronts.endtoend.engine.TrailBlockEditors;
 import com.gu.fronts.endtoend.engine.TrailBlockMode;
 import com.gu.fronts.endtoend.engine.TrailBlocks;
 import com.gu.fronts.endtoend.engine.actions.AddStoryToTrailBlockAction;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import hu.meza.aao.DefaultScenarioContext;
 
@@ -31,6 +32,16 @@ public class EditingSteps {
 
 	@When("^([\\w]*) edits the draft of ([\\w]*)$")
 	public void editsTheDraftOfTrailBlock(String actorLabel, String trailBlockLabel) {
+		editTrailBlock(actorLabel, trailBlockLabel, TrailBlockMode.DRAFT);
+
+	}
+
+	@And("^([\\w]*) edits the live ([\\w]*)$")
+	public void editsTheLiveTrailBlock(String actorLabel, String trailBlockLabel) {
+		editTrailBlock(actorLabel, trailBlockLabel, TrailBlockMode.LIVE);
+	}
+
+	private void editTrailBlock(String actorLabel, String trailBlockLabel, TrailBlockMode mode) {
 		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
 		context.setSubject(trailBlock);
 
@@ -38,9 +49,7 @@ public class EditingSteps {
 
 		Story story = new Story(UUID.randomUUID().toString());
 
-		AddStoryToTrailBlockAction action =
-			new AddStoryToTrailBlockAction(story, trailBlock, TrailBlockMode.DRAFT);
+		AddStoryToTrailBlockAction action = new AddStoryToTrailBlockAction(story, trailBlock, mode);
 		editor.execute(action);
-
 	}
 }

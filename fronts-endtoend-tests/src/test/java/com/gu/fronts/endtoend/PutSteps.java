@@ -5,6 +5,7 @@ import com.gu.fronts.endtoend.engine.Story;
 import com.gu.fronts.endtoend.engine.TrailBlock;
 import com.gu.fronts.endtoend.engine.TrailBlockEditor;
 import com.gu.fronts.endtoend.engine.TrailBlockEditors;
+import com.gu.fronts.endtoend.engine.TrailBlockMode;
 import com.gu.fronts.endtoend.engine.TrailBlocks;
 import com.gu.fronts.endtoend.engine.actions.AddStoryToTrailBlockAction;
 import cucumber.api.java.en.When;
@@ -56,7 +57,26 @@ public class PutSteps {
 	}
 
 	@When("^([\\w]*) copies ([\\w]*) to ([\\w]*)$")
-	public void copiesStoryAToTrailblock(String actorLabel, String storyLabel, String trailBlockLabel) {
+	public void copiesStoryAToTrailBlock(String actorLabel, String storyLabel, String trailBlockLabel) {
+		addToTrailBlock(actorLabel, storyLabel, trailBlockLabel, TrailBlockMode.LIVE);
+
+	}
+
+	@When("^([\\w]*) adds ([\\w]*) to the draft of ([\\w]*)$")
+	public void addsStoryAToTrailBlockDraft(String actorLabel, String storyLabel, String trailBlockLabel) {
+		addToTrailBlock(actorLabel, storyLabel, trailBlockLabel, TrailBlockMode.DRAFT);
+
+	}
+
+	@When("^([\\w]*) adds ([\\w]*) to ([\\w]*)$")
+	public void addsStoryAToTrailBlock(String actorLabel, String storyLabel, String trailBlockLabel) {
+		addToTrailBlock(actorLabel, storyLabel, trailBlockLabel, TrailBlockMode.LIVE);
+
+	}
+
+	private void addToTrailBlock(
+		String actorLabel, String storyLabel, String trailBlockLabel, TrailBlockMode mode
+	) {
 		TrailBlockEditor editor = editors.getActor(actorLabel);
 
 		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
@@ -64,9 +84,8 @@ public class PutSteps {
 
 		Story story = stories.get(storyLabel);
 
-		AddStoryToTrailBlockAction action = new AddStoryToTrailBlockAction(story, trailBlock);
+		AddStoryToTrailBlockAction action = new AddStoryToTrailBlockAction(story, trailBlock, mode);
 
 		editor.execute(action);
-
 	}
 }
