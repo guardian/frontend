@@ -1,16 +1,15 @@
 package tools
 
-import java.net.URLDecoder
+import implicits.Strings
 
-object QueryParams {
-  import scala.language.postfixOps
+
+object QueryParams extends Strings {
   def get(enc: String) : Map[String, Seq[String]] = {
-    def decode(raw: String) = URLDecoder.decode(raw, "UTF-8")
-    val params = enc.dropWhile('?'!=).dropWhile('?'==)
+    val params = enc.dropWhile(_!='?').dropWhile(_=='?')
     val pairs: Seq[(String,String)] = params.split('&').flatMap {
       _.split('=') match {
-        case Array(key, value) => List((decode(key), decode(value)))
-        case Array(key) if key != "" => List((decode(key), ""))
+        case Array(key, value) => List((key.stringDecoded, value.stringDecoded))
+        case Array(key) if key != "" => List((key.stringDecoded, ""))
         case _ => Nil
       }
     }
