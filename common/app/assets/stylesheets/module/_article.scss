@@ -168,7 +168,7 @@ video {
 }
 
 @mixin hide-discussion-tabs {
-    .d-actions .top,
+    .top,
     .d-tabs {
         display: none;
     }
