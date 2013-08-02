@@ -49,7 +49,7 @@
     color: $sportBright;
     font-weight: 500;
     margin: $baseline*2 0 0 0;
-    padding: 10px $baseline*2 $baseline*2;
+    padding: 10px $gutter/2 $baseline*2;
 }
 
 .sport-fullscorecard__table {
@@ -64,7 +64,7 @@
         color: $sportMid;
         display: table-cell;
         font-weight: 500;
-        padding: $baseline*2 $baseline*3;
+        padding: $baseline*2 $gutter/4*3;
     }
     [colspan] {
         text-align: left;
@@ -88,7 +88,7 @@
 }
 
 .sport-fullscorecard__statistic {
-    width: $baseline*3;
+    width: $gutter/4*3;
 }
 
 .sport-fullscorecard__information {
@@ -99,13 +99,13 @@
         @extend %type-10;
         color: $sportMid;
         font-weight: 500;
-        padding: $baseline*2 $baseline*3 0;
+        padding: $baseline*2 $gutter/4*3 0;
     }
     dd {
         @extend %type-10;
         border-bottom: 1px solid #DEDEDD;
         margin: 0;
-        padding: $baseline*2 $baseline*3;
+        padding: $baseline*2 $gutter/4*3;
     }
 
     dd:last-child {
