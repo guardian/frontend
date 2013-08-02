@@ -4,7 +4,7 @@
 @import play.api.templates.PlayMagic.toHtmlArgs
 
 @inputType = @{ args.toMap.get('type).map(_.toString).getOrElse("text") }
-@cls = @{ "text-input" + args.toMap.get('class).map(_.toString).getOrElse("") }
+@cls = @{ "text-input " + args.toMap.get('class).map(_.toString).getOrElse("") }
 @updatedArgs = @{ args ++ Seq('_showConstraints -> false) }
 
 @input(field, updatedArgs.filter(_._1 != 'type):_*) { (id, name, value, htmlArgs) =>

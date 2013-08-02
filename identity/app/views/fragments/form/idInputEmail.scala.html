@@ -4,7 +4,7 @@
 @import play.api.templates.PlayMagic.toHtmlArgs
 
 @inputType = @{ args.toMap.get('type).map(_.toString).getOrElse("email") }
-@cls = @{ "text-input" + args.toMap.get('class).map(_.toString).getOrElse("") }
+@cls = @{ "text-input " + args.toMap.get('class).map(_.toString).getOrElse("") }
 @autocomplete = @{ args.toMap.get('autocomplete).map(_.toString).getOrElse("on") }
 @spellcheck = @{ args.toMap.get('spellcheck).map(_.toString).getOrElse("false") }
 @updatedArgs = @{ args ++ Seq('_showConstraints -> false) }
