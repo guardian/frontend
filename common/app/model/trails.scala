@@ -128,7 +128,7 @@ class RunningOrderTrailblockDescription(
     response.map{ r =>
       r.status match {
         case 200 =>
-          Some(CustomTrailblockDescription(id, name, numItemsVisible){
+          Some(CustomTrailblockDescription(id, name, numItemsVisible, style, isConfigured){
             // extract the articles
             val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
               (trail \ "id").as[String]
