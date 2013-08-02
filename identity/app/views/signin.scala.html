@@ -1,7 +1,7 @@
 @(page: MetaData, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
-@import views.html.fragments.form.{idInputEmail, idInputPassword}
+@import views.html.fragments.form.{idInputEmail, idInputPassword, idCheckbox}
 
 @main(page, Switches.all){
 }{
@@ -16,7 +16,7 @@
             <button type="submit" class="submit-input">Sign in</button>
             
             <label class="check-label check-label--helper">
-                <input type="checkbox" value="1" />
+                @idCheckbox(signinForm("keepMeSignedIn"))
                 Remember me
             </label>
         </li>

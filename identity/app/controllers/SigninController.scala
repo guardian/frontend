@@ -23,8 +23,8 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends C
   )
 
   def renderForm = Action { implicit request =>
-    form.fill("", "", true)
-    Ok(views.html.signin(page, form))
+    val filledForm = form.fill("", "", true)
+    Ok(views.html.signin(page, filledForm))
   }
 
   def processForm = Action { implicit request =>
