@@ -232,7 +232,9 @@ object InBodyElementCleaner extends HtmlCleaner {
   private val supportedElements = Seq(
     "element-tweet",
     "element-video",
-    "element-image"
+    "element-image",
+    "element-witness",
+    "element-comment"
   )
 
   override def clean(document: Document): Document = {
@@ -290,8 +292,7 @@ object OmnitureAnalyticsData {
       ("g", path),
       ("ns", "guardian"),
       ("pageName", pageName),
-      //TODO EDITIONS - temporary until we move to single domain
-      ("cdp", (if (Site(request).map(_.isUsEdition).getOrElse(false)) "2" else "3")),
+      ("cdp", "2"),
       ("v7", pageName),
       ("c3", publication),
       ("ch", section),

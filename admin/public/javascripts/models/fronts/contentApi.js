@@ -1,15 +1,16 @@
 define([
     'Config',
     'Common',
-    'Reqwest'
+    'Reqwest',
+    'models/fronts/globals'
 ], 
 function (
     Config,
     Common,
-    Reqwest
+    Reqwest,
+    globals
 ){
-    var apiUrlBase = "/api/proxy/search",
-        cache = {};
+    var cache = {};
 
     var decorateItems = function(items) {
         var fetch = [];
@@ -44,7 +45,7 @@ function (
     var fetchArticles = function(ids, callback) {
         var apiUrl;
         if (ids.length) {
-            apiUrl = apiUrlBase + "?page-size=50&format=json&show-fields=all&show-tags=all&api-key=" + Config.apiKey;
+            apiUrl = globals.apiSearchBase + "?page-size=50&format=json&show-fields=all&show-tags=all&api-key=" + Config.apiKey;
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');

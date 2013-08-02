@@ -6,7 +6,7 @@
     clear: both;
     margin: 58px auto 0;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         margin-top: 104px;
     }
 }
@@ -24,7 +24,7 @@
     z-index: 99;
 
     /* These styles extend the top bars to the screen edges */
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         &:before,
         &:after {
             content: "";
@@ -58,6 +58,36 @@
     margin: 20px 0 18px $gutter;
     text-indent: -9999px;
 }
+
+
+/* Columning
+   ========================================================================== */
+
+.monocolumn-wrapper {
+    padding-left: $gutter;
+    padding-right: $gutter;
+
+    .article-zone {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .page-head {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@include mq(tablet) {
+    .monocolumn-wrapper {
+        max-width: gs-span(8);
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .monocolumn-wrapper--no-limit {
+        max-width: none;
+    }
+}
+
 
 /* Layout helpers
    ========================================================================== */

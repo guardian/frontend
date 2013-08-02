@@ -70,6 +70,14 @@ define([
             
             return true; // ensure default click happens on all the bindings
         };
+
+        function _startPoller() {
+            setInterval(function(){
+                self.search();
+            }, 10000);
+        }
+
+        this.startPoller = _.once(_startPoller);
     };
 });
 

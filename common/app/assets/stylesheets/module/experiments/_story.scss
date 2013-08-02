@@ -217,7 +217,7 @@ $orange: #FF7F00;
 }
 
 .story-article .article-body p:last-child {
-    border-bottom: 1px solid #EDEDE7;
+    border-bottom: 1px solid $medianMushroom;
     padding-bottom: 8px;
 }
 
@@ -310,11 +310,11 @@ $orange: #FF7F00;
     max-width: 100%;
     max-height: 200px;
 
-    @media (min-width: $tablet) {
+    @include mq(tablet) {
         max-height: 400px;
     }
 
-    @media (min-width: $desktop) {
+    @include mq(desktop) {
         max-height: 600px;
     }
 }

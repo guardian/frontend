@@ -84,11 +84,12 @@ object Frontend extends Build with Prototypes {
 
   val frontsApi = application("fronts-api").dependsOn(commonWithTests)
 
+  val identityLibVersion = "3.20"
   val identity = application("identity").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "com.gu.identity" %% "identity-model" % "3.19",
-      "com.gu.identity" %% "identity-request" % "3.19",
-      "com.gu.identity" %% "identity-cookie" % "3.19",
+      "com.gu.identity" %% "identity-model" % identityLibVersion,
+      "com.gu.identity" %% "identity-request" % identityLibVersion,
+      "com.gu.identity" %% "identity-cookie" % identityLibVersion,
       "com.tzavellas" % "sse-guice" % "0.7.1",
       "com.google.inject" % "guice" % "3.0",
       "joda-time" % "joda-time" % "1.6",
@@ -101,6 +102,7 @@ object Frontend extends Build with Prototypes {
 
   val dev = base("dev-build")
     .dependsOn(front)
+    .dependsOn(facia)
     .dependsOn(article)
     .dependsOn(applications)
     .dependsOn(event)

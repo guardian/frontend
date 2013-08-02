@@ -18,7 +18,6 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData w
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
-  override lazy val canonicalUrl = None
   override lazy val id = MatchUrl(theMatch)
   override lazy val section = "football"
   override lazy val webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score.getOrElse("")} ${theMatch.awayTeam.name}"

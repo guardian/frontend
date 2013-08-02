@@ -1,4 +1,8 @@
-@(item: MetaData, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+@(item: model.MetaData, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+@import conf.Configuration
+@import views.support.MetadataJson
+@import views.support.JavaScriptVariableName
+@import common.Edition
 
 {
     "page": {
@@ -9,8 +13,10 @@
         "edition": "@Edition(request).id",
         "ajaxUrl": "@Configuration.ajax.url",
         "isDev": @play.Play.isDev(),
-        "isDotcom": @{!Site(request).isDefined} @* //TODO temporary till after dotcom switch *@
-
+        "oasHost": "oas.theguardian.com",
+        "oasUrl": "http://oas.theguardian.com/RealMedia/ads/",
+        "oasSiteIdHost": "www.theguardian.com",
+        "idUrl": "@Configuration.id.url"
     },
     "switches" : { @{Html(switches.map{ switch =>
             s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""

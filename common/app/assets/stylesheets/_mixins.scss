@@ -1,3 +1,5 @@
+@import "_mq";
+
 //Output based on body font-size being 10px
 @mixin font($family, $weight, $size, $line-height) {
     font-family: $family;
@@ -62,90 +64,6 @@
     overflow: hidden;
 }
 
-
-@function px2em($px, $base-font-size: 16px) {
-    @return ($px / $base-font-size) * 1em;
-}
-
-// Breakpoints are in pixel for simpler understanding & manipulation
-// they get translated into ems in @media queries
-
-$mq-mobile:  300px  !default;
-$mq-tablet:  600px  !default;
-$mq-desktop: 900px  !default;
-$mq-wide:    1260px !default;
-
-$old-ie: false !default;
-
-// Usage:
-// .element {
-//     @include mq($from: mobile) {
-//         color: red;
-//     }
-//     @include mq($to: tablet) {
-//         color: blue;
-//     }
-//     @include mq(mobile, tablet) {
-//         color: green;
-//     }
-// }
-// Inspired by:
-// - https://github.com/alphagov/govuk_frontend_toolkit/blob/master/stylesheets/_conditionals.scss
-// - http://jakearchibald.github.io/sass-ie/
-
-@mixin mq($from: false, $to: false) {
-
-    // Initialize variables
-    $min-width: null;
-    $max-width: null;
-
-    // From: this breakpoint
-    @if ($from == mobile) {
-        $min-width: px2em($mq-mobile);
-    } @else if ($from == tablet) {
-        $min-width: px2em($mq-tablet);
-    } @else if ($from == desktop) {
-        $min-width: px2em($mq-desktop);
-    } @else if ($from == wide) {
-        $min-width: px2em($mq-wide);
-    }
-
-    // To: that breakpoint
-    @if ($to == mobile) {
-        $max-width: px2em($mq-mobile - 1px);
-    } @else if ($to == tablet) {
-        $max-width: px2em($mq-tablet - 1px);
-    } @else if ($to == desktop) {
-        $max-width: px2em($mq-desktop - 1px);
-    } @else if ($to == wide) {
-        $max-width: px2em($mq-wide - 1px);
-    }
-
-    // If this is IE8, output everything and rely on the cascade
-    @if ($old-ie) {
-        // Only if a min-width query is available
-        @if ($from and $to == false) {
-            @content;
-        }
-    } @else {
-        // Output @media query
-        @if $from {
-            @if $to {
-                @media (min-width: $min-width) and (max-width: $max-width) {
-                    @content;
-                }
-            } @else {
-                @media (min-width: $min-width) {
-                    @content;
-                }
-            }
-        } @else {
-            @media (max-width: $max-width) {
-                @content;
-            }
-        }
-    }
-}
 
 @mixin old-ie {
     // Only use this content if we're dealing with old IE

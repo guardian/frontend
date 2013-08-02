@@ -14,11 +14,13 @@ define([
     'modules/router',
     'modules/images',
     'modules/navigation/top-stories',
+    'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
     'modules/navigation/australia',
     'modules/navigation/edition-switch',
+    'modules/navigation/platform-switch',
     'modules/tabs',
     'modules/relativedates',
     'modules/analytics/clickstream',
@@ -26,6 +28,7 @@ define([
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
+    'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
     'modules/swipenav',
@@ -47,11 +50,13 @@ define([
     Router,
     Images,
     TopStories,
+    Profile,
     Sections,
     Search,
     NavControl,
     Australia,
     EditionSwitch,
+    PlatformSwitch,
     Tabs,
     RelativeDates,
     Clickstream,
@@ -59,6 +64,7 @@ define([
     Adverts,
     Cookies,
     OmnitureMedia,
+    AdvertsAnalytics,
     Debug,
     ab,
     swipeNav,
@@ -92,8 +98,16 @@ define([
                 search = new Search(config),
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
-                header = document.querySelector('body');
+                platforms = new PlatformSwitch(),
+                header = document.querySelector('body'),
+                profile;
 
+            if (config.switches.idProfileNavigation) {
+                profile = new Profile(header, {
+                    url: config.idUrl
+                });
+                profile.init();
+            }
 
             sections.init(header);
             navControl.init(header);
@@ -156,6 +170,12 @@ define([
                 common.mediator.emit('page:common:deferred:loaded', config, context);
             });
         },
+        
+        runAbTests: function () {
+            common.mediator.on('page:common:ready', function(config, context) {
+                ab.run(config, context);
+            });
+        },
 
         loadAnalytics: function () {
             var omniture = new Omniture();
@@ -173,12 +193,14 @@ define([
                             }).init();
                         }
                     });
+
+                    if (config.switches.adslotImpressionStats) {
+                        var advertsAnalytics = new AdvertsAnalytics(config, context);
+                    }
                 });
             });
 
             common.mediator.on('page:common:deferred:loaded', function(config, context) {
-
-                
 
                 common.mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
@@ -220,6 +242,28 @@ define([
 
         },
 
+        // Temporary - for a user zoom survey
+        paragraphSpacing: function () {
+            var key = 'paragraphSpacing';
+            common.mediator.on('page:common:ready', function(config, context) {
+                var typographyPrefs = userPrefs.get(key);
+                switch (typographyPrefs) {
+                    case 'none':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing');
+                        break;
+                    case 'indents':
+                        common.$g('body').addClass('test-paragraph-spacing--no-spacing-indents');
+                        break;
+                    case 'more':
+                        common.$g('body').addClass('test-paragraph-spacing--more-spacing');
+                        break;
+                    case 'clear':
+                        userPrefs.remove(key);
+                        break;
+                }
+            });
+        },
+
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
@@ -234,7 +278,7 @@ define([
         },
 
         loadVideoAdverts: function(config) {
-            common.mediator.on('page:video:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 if(config.switches.videoAdverts && !config.page.blockAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
@@ -253,6 +297,15 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
+        },
+   
+        // let large viewports opt-in to the responsive beta
+        betaOptIn: function () {
+            var isBeta = /#beta/.test(window.location.hash);
+            if (isBeta && window.screen.width >= 900) {
+                var expiryDays = 365;
+                Cookies.add("GU_VIEW", "mobile", expiryDays);
+            }
         },
 
         initSwipe: function(config) {
@@ -297,6 +350,7 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
             modules.transcludePopular();
@@ -309,6 +363,8 @@ define([
             modules.initSwipe(config);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
+            modules.betaOptIn();
+            modules.paragraphSpacing();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

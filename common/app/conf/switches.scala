@@ -42,6 +42,9 @@ object Switches extends Collections {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = Off)
 
+  val BetaServerSwitch = Switch("Beta", "beta",
+    "If this is switced on users with a #beta in the URL will be messaged",
+    safeState = Off)
 
   // Advertising Switches
 
@@ -70,6 +73,10 @@ object Switches extends Collections {
 
   val OmnitureDomReadySwitch = Switch("Analytics", "omniture-dom-ready",
     "Initialise Omniture on dom-ready, rather than on page-load.",
+    safeState = Off)
+
+  val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
+    "Track when adslots (and possible ad slots) are scrolled into view.",
     safeState = Off)
 
 
@@ -152,10 +159,9 @@ object Switches extends Collections {
     "If this switch is on, gallery trails are opened in a lightbox.",
     safeState = Off)
 
-  val EditionRedirectSwitch = Switch("Feature Switches", "edition-redirects",
-    "If this switch is on, editionalised pages will redirect from the root to the appropriate edition, e.g. culture -> uk/culture (only on www.theguardian.com)",
+  val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
+    "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = Off)
-
 
   // A/B Test Switches
 
@@ -171,6 +177,11 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
+  val ABLightboxGalleries = Switch("A/B Tests", "ab-lightbox-galleries",
+    "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
+    safeState = Off)
+
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -181,6 +192,11 @@ object Switches extends Collections {
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
     "Switch that is only used while running tests. You never need to change this switch.",
+    safeState = Off)
+
+  //Fronts film switch
+  val FilmFrontFacia = Switch("Facia", "facia-film-switch",
+    "Switch to redirect traffic to the facia film front instead of front film front",
     safeState = Off)
 
   val all: List[Switch] = List(
@@ -207,6 +223,7 @@ object Switches extends Collections {
     SocialSwitch,
     SearchSwitch,
     ImageServerSwitch,
+    BetaServerSwitch,
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
@@ -215,8 +232,11 @@ object Switches extends Collections {
     LocalNavSwitch,
     ABAa,
     LightboxGalleriesSwitch,
-    EditionRedirectSwitch,
-    LiveCricketSwitch
+    IdentityProfileNavigationSwitch,
+    LiveCricketSwitch,
+    ABLightboxGalleries,
+    FilmFrontFacia,
+    AdSlotImpressionStatsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

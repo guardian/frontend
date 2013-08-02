@@ -17,7 +17,9 @@
         function drawCharts() {
             @charts.map{ chart =>
                 var data = google.visualization.arrayToDataTable(@Html(chart.asDataset));
-                new google.visualization.NumberFormat({pattern: '#,###.###'}).format(data, 1);
+                @for(i <- 1 to chart.labels.length - 1) {
+                    new google.visualization.NumberFormat({pattern: '#,###.###'}).format(data, @i);
+                }
 
                 new google.visualization.@{chart.form}(document.getElementById('@chart.id')).draw(data, {
                     title: '@chart.name',

@@ -45,7 +45,6 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
 
   private def renderTopStories(trails: Seq[Trail])(implicit request: RequestHeader) = {
     val page = new Page(
-      Some("http://www.guardian.co.uk/"),
       "top-stories",
       "top-stories",
       "Top Stories",

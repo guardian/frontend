@@ -9,13 +9,9 @@
 
     <article id="article" class="article"
         itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
-
+       
         <header class="article-head">
             @fragments.dateline(interactive.webPublicationDate, interactive.isLive)
-
-            @fragments.headline(interactive.headline)
-
-            @fragments.standfirst(interactive)
         </header>
 
         <div class="after-header"></div>
@@ -24,38 +20,13 @@
              
             <div class="article-body from-content-api">
 
-                <figure class="interactive" data-interactive="@request.path.drop(1)"> <!-- FIXME fine until data comes from Composer -->
-                    This is an interactive.
+                <figure class="interactive" data-interactive="@request.path.drop(1)">
+                    <!-- FIXME using data-interactive attributes is fine until data comes from Composer -->
                 </figure>
 
             </div>
         </div>
 
-        @if(DiscussionSwitch.isSwitchedOn && interactive.isCommentable) {
-            <div class="article__discussion article-body"></div>
-        }
-
     </article>
 
-    @fragments.social(interactive)
-
-    @if(DiscussionSwitch.isSwitchedOn && interactive.isCommentable) {
-        <div class="article__discussion article-body"></div>
-        <div class="d-show-cta-wrapper">    
-            <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion/@interactive.shortUrlId}"
-               data-is-ajax data-link-name="View all comments">
-                View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
-            </a>
-        </div>
-    }
 </div>
-
-@if(storyPackage.nonEmpty) {
-    <aside role="complementary">
-        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-    </aside>
-} else {
-    <aside class="js-related" role="complementary"></aside>
-}
-
-<div   class="js-popular" role="complementary"></div>

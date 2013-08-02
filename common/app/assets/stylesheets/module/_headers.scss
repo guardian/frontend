@@ -6,59 +6,48 @@
     position: relative;
     overflow: hidden;
     border-top: $baseline solid $mushroom;
-}
 
-    .front-section-head h1,
-    .sub-section-head h1 {
+    h1 {
         margin-bottom: 0;
         line-height: 1;
+        font-weight: bolder;
+        -webkit-font-smoothing: antialiased;
     }
 
-    .front-section-head a,
-    .sub-section-head a {
+    a {
         display: block;
         padding: 15px $gutter;
     }
+}
 
-    .front-section-head a, 
-    .front-section-head a:link, 
-    .front-section-head a:visited {
+
+.front-section-head a {
+    &,
+    &:link,
+    &:visited {
         color: #fff;
     }
+}
 
 .sub-section-head {
     border-bottom: 1px solid $mushroom;
 }
 
 .section-head {
-    @extend %type-0;
+    @extend %type-1;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1;
+    font-weight: bolder;
     padding: 14px 0 15px;
     margin: 0 $gutter;
-    line-height: 1;
     border-top: 4px solid $mushroom;
     border-bottom: 1px solid $mushroom;
     @include box-sizing(border-box);
 
     &.zone-color {
-        @media (min-width: $tablet) {
+        @include mq(tablet) {
             border-top: none;
         }
-    }
-}
-
-/* Articles
-   ========================================================================== */
-
-.article-section-head {
-    @include box-sizing(border-box);
-    padding: 13px 0 14px;
-    margin: 0 $gutter;
-    line-height: 1;
-    border-top: 4px solid $mushroom;
-    border-bottom: 1px solid $mushroom;
-
-    @media (min-width: $tablet) {
-        border-top: none;
     }
 }
 
@@ -68,4 +57,26 @@
 .page-head {
     @extend %type-4;
     padding: 0 $gutter $baseline*2;
+}
+
+
+
+
+.beta {
+    display: none;
+    @include mq(tablet) {
+        margin: 18px 0 0 0;
+        color:  white;
+        font-size: 10px;
+        float:  left;
+        display: inline-block;
+        color: #95B1CA;
+    }
+}
+
+.message {
+    
+    padding: 11px;
+    background-color: #ffe;
+
 }

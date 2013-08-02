@@ -6,15 +6,16 @@ import model._
 import conf._
 import play.api.mvc._
 import model.Trailblock
-import Switches.EditionRedirectSwitch
 
 // TODO, this needs a rethink, does not seem elegant
+
+abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
+
 object FrontPage {
 
   private val fronts = Seq(
 
-    new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
+    new FrontPage(isNetworkFront = false) {
       override val id = "australia"
       override val section = "australia"
       override val webTitle = "The Guardian"
@@ -26,8 +27,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/sport")
+    new FrontPage(isNetworkFront = false) {
       override val id = "sport"
       override val section = "sport"
       override val webTitle = "Sport"
@@ -40,8 +40,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/money")
+    new FrontPage(isNetworkFront = false) {
       override val id = "money"
       override val section = "money"
       override val webTitle = "Money"
@@ -54,8 +53,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/commentisfree")
+    new FrontPage(isNetworkFront = false) {
       override val id = "commentisfree"
       override val section = "commentisfree"
       override val webTitle = "commentisfree"
@@ -68,8 +66,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/business")
+    new FrontPage(isNetworkFront = false) {
       override val id = "business"
       override val section = "business"
       override val webTitle = "business"
@@ -82,8 +79,7 @@ object FrontPage {
       )
     },
 
-    new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/culture")
+    new FrontPage(isNetworkFront = false) {
       override val id = "culture"
       override val section = "culture"
       override val webTitle = "Culture"
@@ -97,8 +93,7 @@ object FrontPage {
     },
 
     //TODO important this one is last for matching purposes
-    new MetaData {
-      override val canonicalUrl = Some("http://www.guardian.co.uk")
+    new FrontPage(isNetworkFront = true) {
       override val id = ""
       override val section = ""
       override val webTitle = "The Guardian"
@@ -111,7 +106,7 @@ object FrontPage {
     }
   )
 
-  def apply(path: String): Option[MetaData] = fronts.find(f => path.startsWith(f.id))
+  def apply(path: String): Option[FrontPage] = fronts.find(f => path.startsWith(f.id))
 
 }
 
@@ -155,7 +150,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         }
       }
 
-      if (EditionRedirectSwitch.isSwitchedOn && request.isSingleDomain && path != realPath) {
+      if (path != realPath) {
         Redirect(s"/$realPath")
       } else if (trailblocks.isEmpty) {
         InternalServerError

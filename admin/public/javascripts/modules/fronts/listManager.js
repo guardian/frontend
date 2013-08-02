@@ -1,45 +1,81 @@
 define([
     'Reqwest',
     'knockout',
+    'models/fronts/globals',
     'models/fronts/list',
     'models/fronts/article',
     'models/fronts/latestArticles'
 ], function(
     reqwest,
     knockout,
+    globals,
     List,
     Article,
     LatestArticles
 ) {
-    var apiBase = '/fronts/api',
-        maxDisplayedLists = 3;
+    var maxDisplayableLists = 3,
+        dragging = false,
+        loc = window.location;
 
     return function(selector) {
 
         var viewModel = {},
-            poller,
             self = this;
 
-        function showList(id) {
-            dropList(id);
-            viewModel.listsDisplayed.push(new List(id));
-            limitListsDisplayed(maxDisplayedLists);
-            connectSortableLists();
-            startPoller();
+        function queryParams() {
+            return _.object(loc.search.substring(1).split('&').map(function(keyVal){
+                return keyVal.split('=').map(function(s){
+                    return decodeURIComponent(s);
+                });
+            }));
         }
 
-        function dropList(id) {
-            id = id.id || id;
-            viewModel.listsDisplayed.remove(function(item) {
-                return item.id === id;
-            })
+        function chosenLists() {
+            return [].concat(_.filter((queryParams().blocks || "").split(","), function(str){ return !!str; }));
         }
 
-        function limitListsDisplayed(max) {
-            if(viewModel.listsDisplayed().length > max) {
-                viewModel.listsDisplayed.shift();
-                limitListsDisplayed(max);
+        function addList(id) {
+            if(chosenLists().indexOf(id) === -1) {
+                setDisplayedLists(chosenLists().slice(1 - maxDisplayableLists).concat(id));
             }
+        }
+
+        function dropList(list) {
+            setDisplayedLists(_.reject(chosenLists(), function(id){ return id === list.id; }));
+        }
+
+        function setDisplayedLists(listIDs) {
+            var qp = queryParams();
+            qp.blocks = listIDs.join(',');
+            qp = _.pairs(qp)
+                .filter(function(p){ return !!p[0]; })
+                .map(function(p){ return p[0] + (p[1] ? '=' + p[1] : ''); })
+                .join('&');
+
+            history.pushState({}, "", loc.pathname + '?' + qp);
+            renderLists();
+        }
+
+        function displayAllEditions() {
+            setDisplayedLists(viewModel.editions.map(function(edition){
+                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
+            }));
+        }
+
+        function renderLists() {
+            var chosen = chosenLists();
+            viewModel.listsDisplayed.remove(function(list){
+                if (chosen.indexOf(list.id) === -1) {
+                    return true;
+                } else {
+                    chosen = _.without(chosen, list.id);
+                    return false;
+                }    
+            });
+            chosen.forEach(function(id){
+                viewModel.listsDisplayed.push(new List(id));
+            });
+            connectSortableLists();
         }
 
         function connectSortableLists() {
@@ -47,24 +83,30 @@ define([
                 sortables = $(selector),
                 item,
                 fromList,
+                fromListObj,
                 toList;
 
             sortables.sortable({
                 helper: 'clone',
+                opacity: 0.9,
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
+                    globals.uiBusy = true;
 
-                    // Display the source trail. (The clone gets dragged.) 
+                    // Display the source item. (The clone gets dragged.) 
                     sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    stopPoller();
+                    fromListObj = knockout.dataFor(fromList[0]);
+                    
                 },
                 stop: function(event, ui) {
                     var index,
                         clone;
+
+                    globals.uiBusy = false;
 
                     // If we move between lists, effect a copy by cloning
                     if(toList !== fromList) {
@@ -76,7 +118,6 @@ define([
                     }
 
                     saveListDelta(item.data('url'), toList);
-                    startPoller();
                 },
                 change: function(event, ui) {
                     if(ui.sender) toList = ui.placeholder.parent();
@@ -88,18 +129,24 @@ define([
         function saveListDelta(id, list) {
             var listId,
                 inList,
+                listObj,
                 position,
                 delta;
                 
             if (list.hasClass('throwAway')) { return; }
 
+            listObj = knockout.dataFor(list[0]);
+
             listId = list.attr('data-list-id');
             if (!listId) { return; }
 
             inList = $("[data-url='" + id + "']", list);
+
             if (inList.length) {
                 delta = {
-                    item: id
+                    item: id,
+                    draft: true,
+                    live: !!list.attr('data-live-edit')
                 };
 
                 position = inList.next().data('url');
@@ -113,52 +160,41 @@ define([
                     } 
                 }
 
+                listObj.state.loadIsPending(true);
+
                 reqwest({
                     method: 'post',
-                    url: apiBase + '/' + listId,
+                    url: globals.apiBase + '/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
+                }).always(function(resp) {
+                    listObj.load();
                 });
             }
         };
 
-        function startPoller() {
-            stopPoller();
-            poller = setInterval(function(){
+        function _startPoller() {
+            setInterval(function(){
                 viewModel.listsDisplayed().forEach(function(list){
-                    list.load();
+                    if (!dragging) {
+                        list.refresh();
+                    }
                 });
-            }, 3000);
+            }, 5000);
         }
+        var startPoller = _.once(_startPoller);
 
-        function stopPoller() {
-            clearInterval(poller);
-            poller = false;
-        }
-
-        function displayAllEditions() {
-            viewModel.editions.forEach(function(edition){
-                var id = edition.id + '/' +
-                    viewModel.selectedSection().id + '/' + 
-                    viewModel.selectedBlock().id; 
-
-                showList(id);
-            });
-        }
-
-        function fetchSchema() {
+        function fetchSchema(callback) {
             reqwest({
-                url: apiBase,
+                url: globals.apiBase,
                 type: 'json'
             }).then(
                 function(resp) {
-                    viewModel.editions = resp.editions;                    
-                    // Render the page
-                    knockout.applyBindings(viewModel);
-                    connectSortableLists();
+                    viewModel.editions = resp.editions;
+                    if (typeof callback === 'function') { callback(); }
                 },
-                function(xhr) { console.log(xhr); } // error
+                function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
             );
         };
 
@@ -172,32 +208,39 @@ define([
             viewModel.dropList           = dropList;
             viewModel.displayAllEditions = displayAllEditions;
 
-            fetchSchema();
-
             viewModel.selectedEdition.subscribe(function(edition) {
-                viewModel.selectedSection('');
-                viewModel.selectedBlock('');
+                viewModel.selectedSection(undefined);
+                viewModel.selectedBlock(undefined);
             });
 
             viewModel.selectedSection.subscribe(function(section) {
-                console
-                viewModel.selectedBlock('');
+                viewModel.selectedBlock(undefined);
                 if (section && section.id) {
-                    viewModel.latestArticles.section(section.id);
+                    viewModel.latestArticles.section(section.sectionSearch || section.id);
                 }
             });
 
             viewModel.selectedBlock.subscribe(function(block) {
+                var id;
                 if(block && block.id) {
-                    var id = viewModel.selectedEdition().id + '/' +
-                             viewModel.selectedSection().id + '/' + 
-                             block.id;
+                    id = viewModel.selectedEdition().id + '/' +
+                         viewModel.selectedSection().id + '/' + 
+                         block.id;
 
-                    showList(id);
+                    addList(id);
                 }
             });
 
-            viewModel.latestArticles.search();
+            fetchSchema(function(){
+                knockout.applyBindings(viewModel);
+
+                renderLists();
+                window.onpopstate = renderLists;
+
+                startPoller();
+                viewModel.latestArticles.search();
+                viewModel.latestArticles.startPoller();
+            });
         };
 
     };

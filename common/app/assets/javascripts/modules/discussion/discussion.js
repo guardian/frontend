@@ -24,14 +24,14 @@ define([
             config                = options.config,
             discussionId          = options.id.replace('http://gu.com', ''),
             discussionContainer   = options.discussionContainer || '.article__discussion',
-            articleContainer      = options.articleContainer || '.article__container',
+            articleContainer      = options.articleContainer || '.js-article__container',
             mediaPrimary          = options.mediaPrimary || '.media-primary',
             commentsHaveLoaded    = false,
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<div class="d-actions">' +
-                '<a data-link-name="Comment on desktop" class="d-actions__link" href="' + config.page.canonicalUrl + '?mobile-redirect=false#start-of-comments">' +
+                '<a data-link-name="Comment on desktop" class="d-actions__link" href="' + config.page.canonicalUrl + '?view=desktop#start-of-comments">' +
                     'Want to comment? Visit the desktop site</a>' +
                 '<button class="top js-top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
             clickstream           = new ClickStream({ addListener: false }),
@@ -84,9 +84,9 @@ define([
                                '</div>';
 
                 if(bylineNode.length) {
-                    bylineNode.replaceWith(tabsHtml);
+                    bylineNode.addClass('byline--cloned').after(tabsHtml);
                 } else {
-                    bonzo(context.querySelector('.article__container')).before(tabsHtml);
+                    bonzo(context.querySelector('.js-article__container')).before(tabsHtml);
                 }
                 Array.prototype.forEach.call(context.querySelectorAll(".js-commentcount__number"), function(el) {
                     el.innerHTML = commentCount;

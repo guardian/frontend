@@ -100,9 +100,9 @@ object Au extends Edition(
 
   val configuredFronts = Map(
     Editionalise("", Au) -> Seq(
-      ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = false),
-      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = false),
-      ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Thumbnail), showMore = false),
+      ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true),
+      ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       Au.cultureCustomBlock,
       Au.commentCustomBlock,
       ItemTrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
@@ -116,25 +116,23 @@ object Au extends Edition(
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 5, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("football", "Football", numItemsVisible = 3, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("sport/cricket", "Cricket", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("sport/afl", "AFL", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("sport/nrl", "NRL", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("sport/rugby-union", "Rugby Union", numItemsVisible = 1, style = Some(Thumbnail)),
-      ItemTrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("sport/tennis", "Tennis", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("sport/golf", "Golf", numItemsVisible = 1, style = Some(Thumbnail)),
-      ItemTrailblockDescription("sport/horse-racing", "Horse Racing", numItemsVisible = 1, style = Some(Headline)),
-      ItemTrailblockDescription("sport/rugbyleague", "Rugby League", numItemsVisible = 1, style = Some(Headline)),
+      ItemTrailblockDescription("sport/motorsports", "Motor Sport", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1, style = Some(Headline)),
       ItemTrailblockDescription("sport/us-sport", "US Sport", numItemsVisible = 1, style = Some(Headline)),
-      ItemTrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1, style = Some(Headline)),
-      ItemTrailblockDescription("sport/cycling", "Cycling", numItemsVisible = 1, style = Some(Headline))
+      ItemTrailblockDescription("sport/boxing", "Boxing", numItemsVisible = 1, style = Some(Headline))
+
     ),
 
     Editionalise("culture", Au) -> Seq(
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 5, style = Some(Featured), showMore = true),
-      ItemTrailblockDescription("tv-and-radio", "TV & Radio", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("film", "Film", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("music", "Music", numItemsVisible = 1, style = Some(Thumbnail)),
-      ItemTrailblockDescription("stage", "Stage", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("books", "Books", numItemsVisible = 1, style = Some(Headline)),
-      ItemTrailblockDescription("artanddesign", "Art & Design", numItemsVisible = 1, style = Some(Headline)),
       ItemTrailblockDescription("technology/games", "Games", numItemsVisible = 1, style = Some(Headline))
     ),
 
@@ -191,9 +189,7 @@ object Au extends Edition(
     )),
 
     (Editionalise("film", Au), Seq(
-      RunningOrderTrailblockDescription("film", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("film", "features", "Features", 5),
-      RunningOrderTrailblockDescription("film", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("film", "top-stories", "Film", 15)
     ))
   )
 }

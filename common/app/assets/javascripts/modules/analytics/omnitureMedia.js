@@ -32,19 +32,19 @@ define([
 
         this.play = function() {
             if (initialPlay.content === true && initialPlay.advert === true) {
-                bean.one(video, 'loadedmetadata', function() {
+                self.execWhenDuration(function() {
                    self.trackUserInteraction("Play", "User clicked play", false);
                        if(video.advertWasRequested) {
                            self.trackUserInteraction("Advert", "Video advert was requested", false);
                        }
-                   });
+                });
             }
 
             if ((videoType === 'content' && initialPlay[videoType] === true) ||
                 (videoType === 'advert' && initialPlay[videoType] === true)) {
                     // We need to wait for the metadata before calling
                     // s.Media.open, otherwise duration comes back as NaN
-                    bean.one(video, 'loadedmetadata', function() {
+                    self.execWhenDuration(function() {
                         s.Media.open(mediaName, self.getDuration(), player);
                         s.Media.play(mediaName, self.getPosition());
                     });
@@ -109,6 +109,17 @@ define([
         this.trackVideoContent = function() {
             videoType = 'content';
             s.trackVideoContent(provider, restricted);
+        };
+
+        this.execWhenDuration = function(callback) {
+            var duration = this.getDuration();
+            if(duration > 0) {
+                callback();
+            } else {
+                setTimeout(function() {
+                    self.execWhenDuration(callback);
+                }, 100);
+            }
         };
 
         this.init = function() {
