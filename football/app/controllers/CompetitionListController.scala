@@ -8,7 +8,7 @@ import play.api.mvc.{ Controller, Action }
 
 object CompetitionListController extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
 
-  val page = Page(canonicalUrl = None, "football/competitions", "football", "Leagues & competitions", "GFE:Football:automatic:Leagues & competitions")
+  val page = Page("football/competitions", "football", "Leagues & competitions", "GFE:Football:automatic:Leagues & competitions")
 
   def renderJson() = render()
   def render = Action { implicit request =>

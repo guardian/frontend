@@ -14,7 +14,7 @@ public class Steps {
 
     private final SharedDriver webDriver;
     
-    protected String sectionFrontUrl = "/sport";
+    protected String sectionFrontUrl = "/uk-news";
     protected String articleUrl = "/football/2012/oct/15/steven-gerrard-england-poland-generation";
     
     public Steps(SharedDriver webDriver) {
@@ -29,7 +29,7 @@ public class Steps {
 	
 	@Given("^I visit the network front")
 	public void i_visit_the_network_front() throws Throwable {
-		webDriver.open("/");
+		webDriver.open("/uk");
 	}
 	
 	@Given("^I visit a section front")

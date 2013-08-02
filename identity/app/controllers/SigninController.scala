@@ -1,15 +1,50 @@
 package controllers
 
 import play.api.mvc._
-import play.api.http.HeaderNames._
-import play.api.mvc.ResponseHeader
-import play.api.mvc.SimpleResult
-import play.api.libs.iteratee.Enumerator
+import play.api.data.Forms
+import model.IdentityPage
+import play.api.data.Form
+import common.ExecutionContexts
+import services.ReturnUrlVerifier
+import com.google.inject.{Inject, Singleton}
 
-object SigninController extends Controller {
-  def renderForm = Action { request =>
-    SimpleResult(
-      header = ResponseHeader(200, Map("Cache-Control" -> "max-age=60")),
-      body = Enumerator("Ok - %s".format(request.cookies.get("GU_U").map("GU_U=" + _.value).getOrElse("Not logged in"))))
+
+@Singleton
+class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Controller with ExecutionContexts {
+
+  val page = new IdentityPage("/signin", "Signin", "signin")
+
+  val form = Form(
+    Forms.tuple(
+      "email" -> Forms.email,
+      "password" -> Forms.nonEmptyText(6, 20),
+      "keepMeSignedIn" -> Forms.boolean
+    )
+  )
+
+  def renderForm = Action { implicit request =>
+    form.fill("", "", true)
+    Ok(views.html.signin(page, form))
+  }
+
+  def processForm = Action { implicit request =>
+    form.bindFromRequest.fold(
+      formWithErrors => BadRequest(views.html.signin(page, form)),
+      { case (email, password, rememberMe) => {
+        TemporaryRedirect(returnUrlVerifier.getVerifiedReturnUrl(request))
+        // call ID API
+        if (true) {
+          // get a cookie back from api client
+
+          Ok("response")
+//            .withCookies(
+//              new Cookie("GU_U", GU_U_val, )
+//            )
+        } else {
+          // invalid username / password
+          Ok("Invalid! email: %s, password: %s, rememberMe: %s".format(email, password, rememberMe.toString))
+        }
+      }}
+    )
   }
 }
