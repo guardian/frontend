@@ -7,7 +7,6 @@ import com.gu.fronts.endtoend.engine.TrailBlockEditors;
 import com.gu.fronts.endtoend.engine.actions.ViewTrailBlockAction;
 import cucumber.api.java.en.Then;
 import hu.meza.aao.DefaultScenarioContext;
-import org.json.JSONException;
 import org.junit.Assert;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class PositionAssertSteps {
 	}
 
 	@Then("^(.*) should be above (.*)$")
-	public void storyAShouldBeAboveStoryB(String storyALabel, String storyBLabel) throws JSONException {
+	public void storyAShouldBeAboveStoryB(String storyALabel, String storyBLabel) {
 		TrailBlock trailBlock = context.getSubject();
 
 		Story storyA = stories.get(storyALabel);
