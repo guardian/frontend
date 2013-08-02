@@ -8,10 +8,14 @@ import org.mockito.Mockito._
 import java.io.IOException
 import client.connection.HttpResponse
 import client.Parameters
+import scala.concurrent.ExecutionContext
+import client.connection.util.ExecutionContexts
 
 
 class ApacheSyncHttpClientTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+  implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
   val mockHttpClient = mock[HttpClient]
+
 
   "the internal execute method," - {
     object TestApacheSyncHttpClient extends ApacheSyncHttpClient {
@@ -109,24 +113,24 @@ class ApacheSyncHttpClientTest extends path.FreeSpec with ShouldMatchers with Mo
     }
 
     "given valid parameters, should return execute's result" in {
-      TestApacheSyncHttpClient.GET("http://valid.url") match {
+      TestApacheSyncHttpClient.GET("http://valid.url").map(_ match {
         case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
         case Right(response) => response should be(httpResponse)
-      }
+      })
     }
 
     "given an invalid URI, should return IllegalArgumentException error" in {
-      TestApacheSyncHttpClient.GET("http:// not a valid URI") match {
+      TestApacheSyncHttpClient.GET("http:// not a valid URI").map(_ match {
         case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
         case Left(errors) => errors(0) should have('message("IllegalArgumentException"))
-      }
+      })
     }
 
     "given an invalid protocol in the URI, should return IllegalStateException error" in {
-      TestApacheSyncHttpClient.GET("bad://example.com/test") match {
+      TestApacheSyncHttpClient.GET("bad://example.com/test").map(_ match {
         case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
         case Left(errors) => errors(0) should have('message("IllegalStateException"))
-      }
+      })
     }
   }
 
@@ -140,24 +144,24 @@ class ApacheSyncHttpClientTest extends path.FreeSpec with ShouldMatchers with Mo
     }
 
     "given valid parameters, should return execute's result" in {
-      TestApacheSyncHttpClient.POST("http://valid.url", "body") match {
+      TestApacheSyncHttpClient.POST("http://valid.url", "body").map(_ match {
         case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
         case Right(response) => response should be(httpResponse)
-      }
+      })
     }
 
     "given an invalid URI, should return IllegalArgumentException error" in {
-      TestApacheSyncHttpClient.POST("http:// not a valid URI", "body") match {
+      TestApacheSyncHttpClient.POST("http:// not a valid URI", "body").map(_ match {
         case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
         case Left(errors) => errors(0) should have('message("IllegalArgumentException"))
-      }
+      })
     }
 
     "given an invalid protocol in the URI, should return IllegalStateException error" in {
-      TestApacheSyncHttpClient.POST("bad://example.com/test", "body") match {
+      TestApacheSyncHttpClient.POST("bad://example.com/test", "body").map(_ match {
         case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
         case Left(errors) => errors(0) should have('message("IllegalStateException"))
-      }
+      })
     }
   }
 
@@ -171,24 +175,24 @@ class ApacheSyncHttpClientTest extends path.FreeSpec with ShouldMatchers with Mo
     }
 
     "given valid parameters, should return execute's result" in {
-      TestApacheSyncHttpClient.DELETE("http://valid.url") match {
-        case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
+      TestApacheSyncHttpClient.DELETE("http://valid.url").map(_  match {
+        case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString))
         case Right(response) => response should be(httpResponse)
-      }
+      })
     }
 
     "given an invalid URI, should return IllegalArgumentException error" in {
-      TestApacheSyncHttpClient.DELETE("http:// not a valid URI") match {
+      TestApacheSyncHttpClient.DELETE("http:// not a valid URI").map(_ match {
         case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
         case Left(errors) => errors(0) should have('message("IllegalArgumentException"))
-      }
+      })
     }
 
     "given an invalid protocol in the URI, should return IllegalStateException error" in {
-      TestApacheSyncHttpClient.DELETE("bad://example.com/test") match {
+      TestApacheSyncHttpClient.DELETE("bad://example.com/test").map(_ match {
         case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
         case Left(errors) => errors(0) should have('message("IllegalStateException"))
-      }
+      })
     }
   }
 }
