@@ -8,7 +8,8 @@ case class Block(
                   areEqual: Boolean,
                   lastUpdated: String,
                   updatedBy: String,
-                  updatedEmail: String
+                  updatedEmail: String,
+                  contentApiQuery: Option[String]
                   )
 
 case class Trail(

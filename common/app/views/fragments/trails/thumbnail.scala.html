@@ -9,7 +9,7 @@
     <div class="media">
         @if(showThumbnail) {
             @trail.thumbnailPath.map{ thumbnailPath =>
-                <a href="@LinkTo{@trail.url}" class="media__img trail__img" data-link-name="@rowNum | image" role="presentation">
+                <a href="@LinkTo{@trail.url}" class="media__img trail__img" data-link-name="@rowNum | image" aria-hidden="true">
                     <img class="maxed" data-lowsrc="@thumbnailPath"
                         data-thumb-width="140"
                         @trail.mainPicture(width=220).map { largeCrop =>
