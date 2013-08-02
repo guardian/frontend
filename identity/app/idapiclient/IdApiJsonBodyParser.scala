@@ -7,7 +7,14 @@ import com.gu.identity.model.{Error => IdApiError}
 
 class IdApiJsonBodyParser extends JsonBodyParser {
   override def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = {
-    val idApiErrors = (json \ "errors").extract[List[IdApiError]]
-    idApiErrors.map(idApiError => Error(idApiError.message, idApiError.description, statusCode))
+    try {
+      val idApiErrors = (json \ "errors").extract[List[IdApiError]]
+      idApiErrors.map(idApiError => Error(idApiError.message, idApiError.description, statusCode))
+    } catch {
+      case e: Throwable => {
+        logger.error("Error extracting error from API response", e)
+        List(Error("Error extracting error from API response", e.getMessage))
+      }
+    }
   }
 }
