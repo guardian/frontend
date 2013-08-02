@@ -9,7 +9,6 @@ import model.Trailblock
 import scala.Some
 import play.api.libs.json._
 import concurrent.Future
-import Switches.EditionRedirectSwitch
 
 
 // TODO, this needs a rethink, does not seem elegant
