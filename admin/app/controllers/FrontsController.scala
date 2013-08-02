@@ -87,7 +87,7 @@ object FrontsController extends Controller with Logging {
   }
 
   private def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-      FrontsApi.putBlock(edition, section, block, Block(block, None, List(Trail(update.item, None, None, None)), List(Trail(update.item, None, None, None)), areEqual=true, DateTime.now.toString, identity.fullName, identity.email))
+      FrontsApi.putBlock(edition, section, block, Block(block, None, List(Trail(update.item, None, None, None)), List(Trail(update.item, None, None, None)), areEqual=true, DateTime.now.toString, identity.fullName, identity.email, None))
   }
   /**
    * @todo

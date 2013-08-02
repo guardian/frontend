@@ -9,10 +9,11 @@ import common._
 import contentapi.QueryDefaults
 import play.api.libs.ws.WS
 import play.api.libs.json.Json._
-import play.api.libs.json.JsValue
 import play.api.libs.ws.Response
 import scala.Some
 import play.api.libs.json.JsObject
+import java.net.URLDecoder
+import tools.QueryParams
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -123,32 +124,48 @@ class RunningOrderTrailblockDescription(
     parseResponse(WS.url(s"$configUrl").withTimeout(2000).get())
   }
 
-  private def parseResponse(response: Future[Response]) = {
+  private def parseResponse(response: Future[Response]): Future[Option[TrailblockDescription]] = {
     response.map{ r =>
       r.status match {
         case 200 =>
-          // extract the articles
-          val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
-            (trail \ "id").as[String]
-          }
-          // only make content api request if we have articles
-          if (articles.nonEmpty)
-            Some(CustomTrailblockDescription(id, name, numItemsVisible){
+          Some(CustomTrailblockDescription(id, name, numItemsVisible){
+            // extract the articles
+            val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
+              (trail \ "id").as[String]
+            }
+
+            val idSearch = {
+              val response = ContentApi.search(edition).ids(articles.mkString(",")).response
+              val results = response map {r => r.results map{new Content(_)} }
+              val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
+              sorted fallbackTo Future(Nil)
+            }
+
+            val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
+              val queryParams: Map[String, String] = QueryParams.get(query).mapValues{_.mkString("")}
+              val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
+              ContentApi.fetch(Configuration.contentApi.host + "/search", queryParamsWithEdition).flatMap { resp =>
+              val ids = (parse(resp) \\ "id") map {_.as[String] } mkString(",")
               ContentApi.search(edition)
-                .ids(articles.mkString(","))
+                .ids(ids)
                 .response map { r =>
-                  r.results.map(new Content(_)).sortBy(t => articles.indexWhere(_.equals(t.id)))
+                  r.results.map(new Content(_))
                 }
-            })
-          else
-            None
+              }.fallbackTo(Future(Nil))
+            } getOrElse Future(Nil)
+
+            for {
+                idSearchResults <- idSearch
+                contentApiResults <- contentApiQuery
+            } yield idSearchResults ++ contentApiResults
+
+          })
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
           // NOTE: better way of handling fallback
           Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition))
       }
     }
-
   }
 
 }
@@ -156,56 +173,4 @@ class RunningOrderTrailblockDescription(
 object RunningOrderTrailblockDescription {
   def apply(id: String, blockId: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false, isConfigured: Boolean = false)(implicit edition: Edition) =
     new RunningOrderTrailblockDescription(id, blockId, name, numItemsVisible, style, showMore, edition, isConfigured)
-}
-
-class FeatureTrailblockDescription(
-  val id: String,
-  val name: String,
-  val numItemsVisible: Int,
-  val style: Option[Style],
-  val showMore: Boolean,
-  val edition: Edition,
-  val isConfigured: Boolean
-) extends ConfiguredTrailblockDescription with AkkaSupport with Logging {
-
-  lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
-
-  def configuredQuery() = {
-    // get the running order from the api
-    val configUrl = Configuration.front.config
-    log.info(s"loading front configuration from: $configUrl")
-    // need to use AWS tool, otherwise
-    parseResponse(WS.url(configUrl).withTimeout(2000).get())
-  }
-
-  private def parseResponse(response: Future[Response]) = {
-    response.map{ r =>
-      r.status match {
-        case 200 =>
-          (parse(r.body) \ (edition.id.toLowerCase) \ "blocks").asOpt[Seq[JsValue]] map(_.headOption) getOrElse(None) map { block =>
-            ItemTrailblockDescription(
-              toId((block \ "id").as[String]),
-              (block \ "title").as[String],
-              (block \ "numItems").as[Int],
-              showMore = (block \ "showMore").asOpt[Boolean].getOrElse(false),
-              isConfigured = true
-            )(edition)
-          }
-        case _ =>
-          log.warn(s"Could not load front configuration: ${r.status} ${r.statusText}")
-          None
-      }
-    }
-  }
-
-  private def toId(id: String) = id.split("/").toSeq match {
-    case Seq(start, end) if start == end => start // this is a sections tag e.g. politics/politics
-    case _ => id
-  }
-
-}
-
-object FeatureTrailblockDescription {
-  def apply(id: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false, isConfigured: Boolean = false)(implicit edition: Edition) =
-    new FeatureTrailblockDescription(id, name, numItemsVisible, style, showMore, edition, isConfigured)
 }
