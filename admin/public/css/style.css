@@ -14,7 +14,7 @@ body {
 }
 
 .row, .dropdown-menu {
-    margin-left: 20px;                                                           1
+    margin-left: 20px;
 }
 
 .row {
@@ -508,11 +508,15 @@ a.cta, .cta a {
     color: #000;
 }
 
+.fronts .list-header__showSettings {
+    float: right;
+    margin: 0 2px 0 0;
+}
+
 .fronts .list-header__hide {
     float: right;
     font-size: 9px;
-    margin: 0 5px 0 0;
-
+    margin: 0 2px 0 0;
 }
 
 .fronts .trailblock {
@@ -547,15 +551,19 @@ a.cta, .cta a {
     visibility: visible !important;
 }
 
-.fronts .trail .trail__control {
-    display: none;
+.fronts .trail .trail__controls {
 }
 
-.fronts .trailblock .trail:hover .trail__control {
+.fronts .trailblock .trail .trail__controls {
     display: block;
     float: right;
     font-size: 10px;
     margin: -6px -2px 0 0;
+}
+
+.fronts .trail__controls a.trail__control {
+    font-size: 9px;
+    margin: 0 2px 0 0;
 }
 
 .fronts .trail img {
@@ -587,6 +595,10 @@ a.cta, .cta a {
     padding: 0 0 5px 0;
 }
 
+.fronts .trail .webTitle--override {
+    color: #f89406;
+}
+
 .fronts .trail .trailText {
     color: #666;
     font-family: EgyptianText, georgia, serif;
@@ -612,6 +624,12 @@ a.cta, .cta a {
     color: #666;
     border-left: 1px #ddd solid;
     padding-left: 4px;
+    cursor: pointer;
+}
+
+.fronts .trail_tweaks {
+    clear: both;
+    margin: 0 0 10px 0;
 }
 
 .fronts input[type="text"] {
@@ -629,7 +647,7 @@ a.cta, .cta a {
 }
 
 .fronts .needs-more {
-    padding: 0 0 0 10px;
+    padding: 5px 0 0 10px;
     color: #d61d00;
     font-size: 12px;
     text-transform: uppercase;    
@@ -639,25 +657,26 @@ a.cta, .cta a {
     font-weight: bold;
 }
 
-.fronts .list-footer {
-    padding: 2px 10px 10px 10px;
-    font-size: 10px;    
-    border-top: 3px solid #ccc;
+.fronts .list-config {
+    padding: 2px 7px 7px 7px;
+    font-size: 10px;
+    background: #666;
+    color: #fff;
 }
 
-.fronts .list-footer.editable {
+.fronts .list-config.editable {
     background-color: #eee;
 }
 
-.fronts .list-footer a {
+.fronts .list-config a {
     color: #666;
     cursor: pointer;
 }
 
-.fronts .list-footer .settings input {
+.fronts .list-config input {
 }
 
-.fronts .list-footer .settings input.tiny {
+.fronts .list-config input.tiny {
     width: 40px;
     text-align: right;
 }

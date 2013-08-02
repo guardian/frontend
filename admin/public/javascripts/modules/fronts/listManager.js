@@ -1,14 +1,14 @@
 define([
     'Reqwest',
     'knockout',
-    'models/fronts/globals',
+    'models/fronts/common',
     'models/fronts/list',
     'models/fronts/article',
     'models/fronts/latestArticles'
 ], function(
     reqwest,
     knockout,
-    globals,
+    common,
     List,
     Article,
     LatestArticles
@@ -22,16 +22,8 @@ define([
         var viewModel = {},
             self = this;
 
-        function queryParams() {
-            return _.object(loc.search.substring(1).split('&').map(function(keyVal){
-                return keyVal.split('=').map(function(s){
-                    return decodeURIComponent(s);
-                });
-            }));
-        }
-
         function chosenLists() {
-            return [].concat(_.filter((queryParams().blocks || "").split(","), function(str){ return !!str; }));
+            return [].concat(_.filter((common.util.queryParams().blocks || "").split(","), function(str){ return !!str; }));
         }
 
         function addList(id) {
@@ -45,7 +37,7 @@ define([
         }
 
         function setDisplayedLists(listIDs) {
-            var qp = queryParams();
+            var qp = common.util.queryParams();
             qp.blocks = listIDs.join(',');
             qp = _.pairs(qp)
                 .filter(function(p){ return !!p[0]; })
@@ -92,7 +84,7 @@ define([
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
-                    globals.uiBusy = true;
+                    common.state.uiBusy = true;
 
                     // Display the source item. (The clone gets dragged.) 
                     sortables.find('.trail:hidden').show();
@@ -106,7 +98,7 @@ define([
                     var index,
                         clone;
 
-                    globals.uiBusy = false;
+                    common.state.uiBusy = false;
 
                     // If we move between lists, effect a copy by cloning
                     if(toList !== fromList) {
@@ -164,7 +156,7 @@ define([
 
                 reqwest({
                     method: 'post',
-                    url: globals.apiBase + '/' + listId,
+                    url: common.config.apiBase + '/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
@@ -187,7 +179,7 @@ define([
 
         function fetchSchema(callback) {
             reqwest({
-                url: globals.apiBase,
+                url: common.config.apiBase,
                 type: 'json'
             }).then(
                 function(resp) {
