@@ -135,7 +135,7 @@ class RunningOrderTrailblockDescription(
             }
 
             val idSearch = {
-              val response = ContentApi.search(edition).ids(articles.mkString(",")).response
+              val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
               val results = response map {r => r.results map{new Content(_)} }
               val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
               sorted fallbackTo Future(Nil)
