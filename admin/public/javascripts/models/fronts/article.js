@@ -45,7 +45,6 @@ function (
         var opts = opts || {};
         common.util.populateObservables(this.meta, opts)
         common.util.populateObservables(this.fields, opts.fields)
-        common.util.populateObservables(this.config, opts)
     }
 
     Article.prototype.toggleEditingConfig = function() {
