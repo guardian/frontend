@@ -33,7 +33,7 @@ public class PutSteps {
 	public void putsStoryAIntoTrailBlockToThePositionOf(
 		String actorLabel, String storyALabel, String trailBlockLabel, String storyBLabel
 	) {
-		TrailBlockEditor editor = (TrailBlockEditor) editors.getActor(actorLabel);
+		TrailBlockEditor editor = editors.getActor(actorLabel);
 
 		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
 		context.setSubject(trailBlock);

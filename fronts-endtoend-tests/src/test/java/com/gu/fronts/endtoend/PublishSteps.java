@@ -1,6 +1,5 @@
 package com.gu.fronts.endtoend;
 
-import com.gu.fronts.endtoend.engine.Stories;
 import com.gu.fronts.endtoend.engine.TrailBlock;
 import com.gu.fronts.endtoend.engine.TrailBlockEditor;
 import com.gu.fronts.endtoend.engine.TrailBlockEditors;
@@ -12,15 +11,13 @@ import hu.meza.aao.DefaultScenarioContext;
 public class PublishSteps {
 
 	private final TrailBlocks trailBlocks;
-	private final Stories stories;
 	private final TrailBlockEditors editors;
 	private final DefaultScenarioContext context;
 
 	public PublishSteps(
-		TrailBlocks trailBlocks, Stories stories, TrailBlockEditors editors, DefaultScenarioContext context
+		TrailBlocks trailBlocks, TrailBlockEditors editors, DefaultScenarioContext context
 	) {
 		this.trailBlocks = trailBlocks;
-		this.stories = stories;
 		this.editors = editors;
 		this.context = context;
 	}

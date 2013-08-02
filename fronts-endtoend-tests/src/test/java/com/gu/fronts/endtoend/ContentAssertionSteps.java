@@ -1,6 +1,5 @@
 package com.gu.fronts.endtoend;
 
-import com.gu.fronts.endtoend.engine.Stories;
 import com.gu.fronts.endtoend.engine.TrailBlock;
 import com.gu.fronts.endtoend.engine.TrailBlockEditors;
 import com.gu.fronts.endtoend.engine.TrailBlockMode;
@@ -16,15 +15,13 @@ import java.util.List;
 public class ContentAssertionSteps {
 
 	private final TrailBlocks trailBlocks;
-	private final Stories stories;
 	private final TrailBlockEditors editors;
 	private final DefaultScenarioContext context;
 
 	public ContentAssertionSteps(
-		TrailBlocks trailBlocks, Stories stories, TrailBlockEditors editors, DefaultScenarioContext context
+		TrailBlocks trailBlocks, TrailBlockEditors editors, DefaultScenarioContext context
 	) {
 		this.trailBlocks = trailBlocks;
-		this.stories = stories;
 		this.editors = editors;
 		this.context = context;
 	}
