@@ -50,8 +50,6 @@ class Content(
 
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
 
-  override lazy val canonicalUrl = Some(webUrl)
-
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
 

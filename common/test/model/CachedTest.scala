@@ -52,8 +52,6 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
     val page = new MetaData {
-      def canonicalUrl = None
-
       def id = ""
 
       def section = ""
