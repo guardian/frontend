@@ -76,7 +76,7 @@ class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsync
   override val targetUrl = contentApi.host
   apiKey = Some(contentApi.key)
 
-  override protected def fetch(url: String, parameters: Map[String, String]) = {
+  override def fetch(url: String, parameters: Map[String, String]) = {
     checkQueryIsEditionalized(url, parameters)
     super.fetch(url, parameters + ("user-tier" -> "internal"))
   }
