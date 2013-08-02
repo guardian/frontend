@@ -55,7 +55,7 @@ object FrontsController extends Controller with Logging {
           .map {update =>
             FrontsApi.getBlock(edition, section, blockId).map { block =>
               val newBlock = block.copy(
-                contentApiQuery = update.config.contentApiQuery orElse block.contentApiQuery,
+                contentApiQuery = update.config.contentApiQuery orElse None,
                 //These defaults will move somewhere better during refactor
                 min = update.config.min orElse Some(0),
                 max = update.config.max orElse Some(20)

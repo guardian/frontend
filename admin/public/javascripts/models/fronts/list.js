@@ -213,7 +213,7 @@ define([
             contentType: 'application/json',
             data: JSON.stringify({ 
                 config: {
-                    contentApiQuery: this.config.contentApiQuery(),
+                    contentApiQuery: this.config.contentApiQuery() || undefined,
                     min: parseInt(this.config.min(), 10) || undefined,
                     max: parseInt(this.config.max(), 10) || undefined
                 }
