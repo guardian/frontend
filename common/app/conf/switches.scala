@@ -75,6 +75,10 @@ object Switches extends Collections {
     "Initialise Omniture on dom-ready, rather than on page-load.",
     safeState = Off)
 
+  val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
+    "Track when adslots (and possible ad slots) are scrolled into view.",
+    safeState = Off)
+
 
   // Discussion Switches
 
@@ -84,29 +88,6 @@ object Switches extends Collections {
 
   val ShortDiscussionSwitch = Switch("Discussion", "short-discussion",
     "If this switch is on, only 10 top level comments are requested from discussion api.",
-    safeState = Off)
-
-
-  // Storytelling Switches
-
-  val ExperimentStoryModule01Switch = Switch("Storytelling", "experiment-story-module-01",
-    "Enable storified articles.",
-    safeState = Off)
-
-  val StoryFrontTrails = Switch("Storytelling", "story-front-trails",
-    "Switch on to enable front trails for latest stories.",
-    safeState = Off)
-
-  val StoryVersionBSwitch = Switch("Storytelling", "story-version-b",
-    "Switch to enable version B of story page.",
-    safeState = Off)
-
-  val ABStoryArticleSwapV2 = Switch("Storytelling", "ab-story-article-swap-v2",
-    "If this switch is on, swaps the latest article in a story for the story.",
-    safeState = Off)
-
-  val StoryArticleSwap = Switch("Storytelling", "story-article-swap",
-    "If this switch is on, for the latest story, swaps it in in place of the latest article in that story. Confused?",
     safeState = Off)
 
 
@@ -190,6 +171,11 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
+  //Fronts film switch
+  val FilmFrontFacia = Switch("Facia", "facia-film-switch",
+    "Switch to redirect traffic to the facia film front instead of front film front",
+    safeState = Off)
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -201,11 +187,6 @@ object Switches extends Collections {
     OmnitureDomReadySwitch,
     DiscussionSwitch,
     ShortDiscussionSwitch,
-    ExperimentStoryModule01Switch,
-    StoryFrontTrails,
-    StoryVersionBSwitch,
-    ABStoryArticleSwapV2,
-    StoryArticleSwap,
     SwipeNav,
     SwipeNavOnClick,
     FontSwitch,
@@ -225,7 +206,9 @@ object Switches extends Collections {
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     LiveCricketSwitch,
-    ABLightboxGalleries
+    ABLightboxGalleries,
+    FilmFrontFacia,
+    AdSlotImpressionStatsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

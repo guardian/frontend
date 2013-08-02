@@ -8,7 +8,6 @@ import cricketModel.Match
 
 case class CricketMatchPage(theMatch: Match, matchId: String) extends MetaData with ExecutionContexts {
 
-  override lazy val canonicalUrl = None
   override lazy val id = s"sport/cricket/match/$matchId"
   override lazy val section = "cricket"
   override lazy val webTitle = s"${theMatch.description}, ${theMatch.venueName}"
@@ -16,8 +15,6 @@ case class CricketMatchPage(theMatch: Match, matchId: String) extends MetaData w
 }
 
 object CricketMatchController extends Controller with Logging with ExecutionContexts {
-
-  private val page = Page(canonicalUrl = None, "cricket/competitions", "cricket", "Leagues & competitions", "GFE:Cricket:automatic:Leagues & competitions")
 
   def renderMatchId(matchId: String) = Action { implicit request =>
 
