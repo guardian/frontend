@@ -148,7 +148,7 @@ object VideoEmbedCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>

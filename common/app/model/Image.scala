@@ -1,14 +1,13 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ MediaAsset => ApiMedia }
+import com.gu.openplatform.contentapi.model.Asset
 import views.support.{Naked, ImgSrc}
 
-case class Image(private val delegate: ApiMedia) {
-  private lazy val fields = delegate.fields getOrElse Map.empty[String, String]
+case class Image(private val delegate: Asset, val index: Int) {
+
+  private lazy val fields: Map[String,String] = delegate.typeData
 
   lazy val mediaType: String = delegate.`type`
-  lazy val rel: String = delegate.rel
-  lazy val index: Int = delegate.index
 
   lazy val url: Option[String] = delegate.file
   lazy val path: Option[String] = delegate.file.map(ImgSrc(_, Naked))
