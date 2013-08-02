@@ -17,6 +17,7 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
 
     /** @type {Object.<string.*>} */
     Profile.CONFIG = {
+        signinText: 'Sign in',
         eventName: 'modules:profilenav',
         classes: {
             container: 'js-profile-nav',
@@ -28,8 +29,7 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
 
     /** @type {Object.<string.*>} */
     Profile.prototype.config = {
-        url: 'https://profile.theguardian.com',
-        useCookie: true
+        url: 'https://profile.theguardian.com'
     };
 
     /** @enum {Element} */
@@ -45,10 +45,6 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
     Profile.prototype.init = function() {
         var self = this;
         
-        common.mediator.on(Profile.CONFIG.eventName + ':loaded', function(resp) {
-            self.renderControl(resp);
-        });
-
         this.setFragmentFromCookie();
     };
 
@@ -59,23 +55,29 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
             popup = bonzo(this.dom.popup);
 
         container.removeClass('js-hidden');
-        content.html(user ? user.displayName : 'Sign in');
-        popup.append('<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>');
-        // this.emitLoadedEvent(resp);
+        content.html(user ? user.displayName : Profile.CONFIG.signinText);
+
+        if (user && !this.dom.popup.querySelector('.' + Profile.CONFIG.classes.signout)) {
+            popup.append('<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>');
+        } else {
+            popup.html('');
+        }
+
+        this.emitLoadedEvent(user);
     };
 
     /**
      * @param {Object} resp response from the server
      */
-    Profile.prototype.emitLoadedEvent = function(resp) {
-        common.mediator.emit(Profile.CONFIG.eventName + ':loaded', resp);
+    Profile.prototype.emitLoadedEvent = function(user) {
+        common.mediator.emit(Profile.CONFIG.eventName + ':loaded', user);
     };
     
     /**
      * @param {Object} resp response from the server
      */
-    Profile.prototype.emitErrorEvent = function(resp) {
-        common.mediator.emit(Profile.CONFIG.eventName + ':error', resp);
+    Profile.prototype.emitErrorEvent = function() {
+        common.mediator.emit(Profile.CONFIG.eventName + ':error', user);
     };
 
     return Profile;
