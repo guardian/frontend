@@ -145,11 +145,13 @@ class RunningOrderTrailblockDescription(
             val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
               (trail \ "id").as[String]
             }
-            val idSearch = {ContentApi.search(edition)
-              .ids(articles.mkString(","))
-              .response map { r =>
-              r.results.map(new Content(_)).sortBy(t => articles.indexWhere(_.equals(t.id)))
-            }}.fallbackTo(Future(Nil))
+
+            val idSearch = {
+              val response = ContentApi.search(edition).ids(articles.mkString(",")).response
+              val results = response map {r => r.results map{new Content(_)} }
+              val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
+              sorted fallbackTo Future(Nil)
+            }
 
             val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
               val queryParams: Map[String, String] = QueryParams.get(query).mapValues{_.mkString("")}
