@@ -14,6 +14,8 @@
 
     <p>To log a support call with PA email <a href="mailto:customer.services@@pressassociation.com">customer.services@@pressassociation.com</a> or call <i>01430 455337</i></p>
 
+    <p>The PA API explorer is <a href="http://pads.pa-sport.com/api/football/">here</a>.</p>
+
     <h2>Competitions feed</h2>
 
     <p>This shows us all the competitions we have access to. You can use it to find the ID of a competition
@@ -52,6 +54,11 @@
 
     <a href="@pa.host/api/football/competition/results/@pa.apiKey/100/@{new DateTime().minusMonths(6).toString("yyyyMMdd")}">@pa.host/api/football/competition/results/@pa.apiKey/<strong>100</strong>/<strong>@{new DateTime().minusMonths(6).toString("yyyyMMdd")}</strong></a>
 
+    <h2>Match stats</h2>
+
+    <p>Detailed match stats for a specific match. You would get the match ID from the either fixtures or matchday or results feed</p>
+
+    <a href="@pa.host/api/football/match/stats/@pa.apiKey/3630511">@pa.host/api/football/match/stats/@pa.apiKey/<strong>3630511</strong></a>
 
 }
 
