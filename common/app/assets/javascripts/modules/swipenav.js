@@ -268,10 +268,12 @@ define([
                 i;
 
             if (len >= 3) {
-                //Remove current url from sequence
-                if(trails.indexOf(url) > -1) {
-                    delete trails[trails.indexOf(url)];
+                // Make sure url is the first in the sequence
+                if (trails[0].url !== url) {
+                    trails.unshift({url: url});
+                    len += 1;
                 }
+
 
                 sequence = [];
                 sequenceLen = 0;
