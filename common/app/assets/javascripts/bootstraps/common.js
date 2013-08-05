@@ -308,9 +308,12 @@ define([
             }
         },
 
-        initSwipe: function(config) {
+        initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
-                swipeNav(config);
+                swipeNav(config, contextHtml);
+            } else {
+                delete this.contextHtml;
+                return;
             }
             if (config.switches.swipeNav && detect.canSwipe()) {
                 bonzo(document.body).addClass('can-swipe');
@@ -345,7 +348,7 @@ define([
         });
     };
 
-    var ready = function (config, context) {
+    var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
             modules.upgradeImages();
@@ -360,7 +363,7 @@ define([
             if (config.switches.analyticsOnDomReady) {
                 modules.loadAnalytics();
             }
-            modules.initSwipe(config);
+            modules.initSwipe(config, contextHtml);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.betaOptIn();
@@ -369,8 +372,8 @@ define([
         common.mediator.emit("page:common:ready", config, context);
     };
 
-    var init = function (config, context) {
-        ready(config, context);
+    var init = function (config, context, contextHtml) {
+        ready(config, context, contextHtml);
         deferrable(config, context);
     };
 

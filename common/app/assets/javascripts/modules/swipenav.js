@@ -543,7 +543,7 @@ define([
         }, 1009); // Prime number, for good luck
     }
 
-    var initialise = function(config) {
+    var initialise = function(config, contextHtml) {
         loadSequence(config, function(){
             var loc = window.location.href;
 
@@ -568,6 +568,7 @@ define([
             // Cache the config of the initial page, in case the 2nd swipe is backwards to this page.
             if (sequenceCache[initialUrl]) {
                 sequenceCache[initialUrl].config = config;
+                sequenceCache[initialUrl].html = contextHtml;
             }
 
             start();
