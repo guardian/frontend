@@ -192,9 +192,8 @@ define([
         canonicalLink.attr('href', window.location.href);
 
         //Push state change to history
-        if(referrer.indexOf(url) === -1) {
-            urls.pushUrl({title: document.title}, document.title, url);
-        }
+        urls.pushUrl({title: document.title}, document.title, url);
+
 
         config.swipe = {
             initiatedBy: initiatedBy,
