@@ -242,8 +242,10 @@ video {
 }
 .furniture--left {
     float: left;
-    margin-left: ($a-leftCol-width + $gutter)*-1;
+    clear: left;
     width: $a-leftCol-width;
+    margin-left: ($a-leftCol-width + $gutter)*-1;
+    margin-bottom: $baseline*2;
 }
 
 .card {

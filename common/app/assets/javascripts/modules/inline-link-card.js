@@ -16,8 +16,9 @@ define([
     bonzo
 ) {
 
-    function InlineLinkCard(link) {
+    function InlineLinkCard(link, context) {
         this.link = link;
+        this.context = context;
         this.hasLoadedCard = false;
     }
 
@@ -52,22 +53,24 @@ define([
                 self.hasLoadedCard = true;
 
                 var headline = resp.config.page.headline,
-                    url = "/" + resp.config.page.pageId,
+                    url = '/' + resp.config.page.pageId,
                     thumbnail = resp.config.page.thumbnail,
-                    $template,
-                    $templateHTML;
+                    tpl,
+                    thumbnailFragment = '';
 
-                $template = '<a href="' + url + '" class="card-wrapper">' +
-                                '<div class="furniture furniture--left card">';
-                                    if (thumbnail) { $template += '<img src="' + thumbnail + '" alt="" class="card__media" />'; }
-                $template +=        '<div class="card__body"><h3 class="card__headline">' + headline + '</h3></div>' +
-                                '</div>' +
-                            '</a>';
+                if (thumbnail) {
+                    thumbnailFragment = '<img src="' + thumbnail + '" alt="" class="card__media" />';
+                }
 
-                $templateHTML = document.createElement('div');
-                $templateHTML.innerHTML = $template;
-                document.querySelector('#preload-1 .article-body').insertBefore($templateHTML, self.link.parentNode);
-            }, function(req) { }
+                tpl = '<a href="' + url + '" class="card-wrapper" data-link-name="in card link">' +
+                          '<div class="furniture furniture--left card">' +
+                              thumbnailFragment +
+                              '<div class="card__body"><h3 class="card__headline">' + headline + '</h3></div>' +
+                          '</div>' +
+                      '</a>';
+
+                common.$g('.article-body', self.context).prepend(tpl);
+            }
         );
     };
 

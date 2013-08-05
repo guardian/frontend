@@ -105,7 +105,7 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 var linkToCardify = context.querySelectorAll('.article-body p a[href^="/"]')[0];
                 if (linkToCardify) {
-                    new InlineLinkCard(linkToCardify).init();
+                    new InlineLinkCard(linkToCardify, context).init();
                 }
             });
         }
