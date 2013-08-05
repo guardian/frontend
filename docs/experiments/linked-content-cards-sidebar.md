@@ -12,6 +12,18 @@ as cards in the left sidebar will read more linked content.
 
 ## Predictions
 
+### Matt C
+
+- Number of read linked content increases by 3%
+
+### Patrick
+
+- Number of read linked content increases by 15%
+
+### Chris M
+
+- Number of read linked content increases by 30%
+
 ### Kaelig
 
 - Number of read linked content increases by 200%
