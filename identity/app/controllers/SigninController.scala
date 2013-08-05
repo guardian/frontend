@@ -12,7 +12,7 @@ import com.google.inject.{Inject, Singleton}
 @Singleton
 class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Controller with ExecutionContexts {
 
-  val page = new IdentityPage("/signin", "Signin", "signin")
+  val page = new IdentityPage("/signin", "Sign in", "signin")
 
   val form = Form(
     Forms.tuple(
