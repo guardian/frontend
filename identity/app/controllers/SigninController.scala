@@ -7,10 +7,13 @@ import play.api.data.Form
 import common.ExecutionContexts
 import services.ReturnUrlVerifier
 import com.google.inject.{Inject, Singleton}
+import idapiclient.{IdApiClient, EmailPassword}
+import org.joda.time.Duration
 
 
 @Singleton
-class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Controller with ExecutionContexts {
+class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdApiClient)
+  extends Controller with ExecutionContexts {
 
   val page = new IdentityPage("/signin", "Signin", "signin")
 
@@ -28,21 +31,25 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends C
   }
 
   def processForm = Action { implicit request =>
-    form.bindFromRequest.fold(
-      formWithErrors => BadRequest(views.html.signin(page, formWithErrors)),
+    val boundForm = form.bindFromRequest
+    boundForm.fold(
+      formWithErrors => Ok(views.html.signin(page, formWithErrors)),
       { case (email, password, rememberMe) => {
-        TemporaryRedirect(returnUrlVerifier.getVerifiedReturnUrl(request))
-        // call ID API
-        if (true) {
-          // get a cookie back from api client
-
-          Ok("response")
-//            .withCookies(
-//              new Cookie("GU_U", GU_U_val, )
-//            )
-        } else {
-          // invalid username / password
-          Ok("Invalid! email: %s, password: %s, rememberMe: %s".format(email, password, rememberMe.toString))
+        Async {
+          api.authBrowser(EmailPassword(email, password)) map(_ match {
+            case Left(errors) => {
+              Ok(views.html.signin(page, boundForm))
+            }
+            case Right(apiCookies) => {
+              val responseCookies = apiCookies.map { cookie =>
+                val maxAge = if(rememberMe) Some(Duration.standardDays(90).getStandardSeconds.toInt) else None
+                val secureHttpOnly = cookie.name.startsWith("SC_")
+                new Cookie(cookie.name, cookie.value, maxAge, "/", Some("http://domain"), secureHttpOnly, secureHttpOnly)
+              }
+              SeeOther(returnUrlVerifier.getVerifiedReturnUrl(request))
+                .withCookies(responseCookies.toSeq:_*)
+            }
+          })
         }
       }}
     )
