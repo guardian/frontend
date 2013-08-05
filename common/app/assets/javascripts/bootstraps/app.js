@@ -87,7 +87,7 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            var context = document.getElementById('preload-1');
+            var context = document.getElementById('preload-1'),
                 contextHtml = context.cloneNode.innerHTML;
             
             modules.initialiseAjax(config);
