@@ -14,7 +14,7 @@ import conf.IdentityConfiguration
 class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier, conf: IdentityConfiguration) extends Controller with ExecutionContexts {
 
   def signout = Action { implicit request =>
-    TemporaryRedirect(
+    Found(
       returnUrlVerifier.getVerifiedReturnUrl(request.getQueryString("returnUrl"))
     ).discardingCookies(
       DiscardingCookie("GU_U", "/", Some(conf.id.domain), false),
