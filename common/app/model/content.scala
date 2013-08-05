@@ -11,7 +11,6 @@ import views.support.{Naked, ImgSrc}
 class Content protected (
     delegate: ApiContent) extends Trail with Tags with MetaData {
 
-
   private lazy val fields = delegate.safeFields
 
   lazy val publication: String = fields.get("publication").getOrElse("")
