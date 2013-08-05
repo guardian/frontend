@@ -1,0 +1,14 @@
+@(trails: Seq[Trail])(implicit request: RequestHeader)
+
+<ul class="unstyled">
+    @trails.take(4).map{ trail =>
+        <li>
+            <a href="@LinkTo{@trail.url}">
+                <h2>@RemoveOuterParaHtml(trail.headline)</h2>
+                @trail.mainPicture.map{ mainPicture =>
+                    <img src="@mainPicture.path" />
+                }
+            </a>
+        </li>
+    }
+</ul>
