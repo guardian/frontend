@@ -4,10 +4,12 @@ import common.ExecutionContexts
 import model.IdentityPage
 import play.api.data.{Forms, Form}
 import play.api.mvc._
-import com.google.inject.Singleton
+import com.google.inject.{Inject, Singleton}
+import idapiclient.SynchronousIdApi
+
 
 @Singleton
-class ResetPasswordController extends Controller with ExecutionContexts {
+class ResetPasswordController @Inject()( idApi : SynchronousIdApi ) extends Controller with ExecutionContexts {
 
   val page = new IdentityPage("/reset-password", "Reset Password", "reset-password")
 
@@ -17,12 +19,12 @@ class ResetPasswordController extends Controller with ExecutionContexts {
       )
   )
 
-  def renderForm = Action { implicit request =>
+  def renderPasswordResetRequestForm = Action { implicit request =>
     form.fill("")
     Ok(views.html.reset_password(page, form))
   }
 
-  def processForm = Action { implicit request =>
+  def processPasswordResetRequestForm = Action { implicit request =>
     form.bindFromRequest.fold(
         formWithErrors => BadRequest(views.html.reset_password(page, form)),
         {
