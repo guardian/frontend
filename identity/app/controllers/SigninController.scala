@@ -9,10 +9,11 @@ import services.ReturnUrlVerifier
 import com.google.inject.{Inject, Singleton}
 import idapiclient.{IdApiClient, EmailPassword}
 import org.joda.time.Duration
+import conf.IdentityConfiguration
 
 
 @Singleton
-class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdApiClient)
+class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdApiClient, conf: IdentityConfiguration)
   extends Controller with ExecutionContexts {
 
   val page = new IdentityPage("/signin", "Signin", "signin")
@@ -44,10 +45,10 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdAp
               val responseCookies = apiCookies.map { cookie =>
                 val maxAge = if(rememberMe) Some(Duration.standardDays(90).getStandardSeconds.toInt) else None
                 val secureHttpOnly = cookie.name.startsWith("SC_")
-                new Cookie(cookie.name, cookie.value, maxAge, "/", Some("http://domain"), secureHttpOnly, secureHttpOnly)
+                new Cookie(cookie.name, cookie.value, maxAge, "/", Some(conf.id.domain), secureHttpOnly, secureHttpOnly)
               }
               SeeOther(returnUrlVerifier.getVerifiedReturnUrl(request))
-                .withCookies(responseCookies.toSeq:_*)
+                .withCookies(responseCookies:_*)
             }
           })
         }

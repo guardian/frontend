@@ -13,13 +13,15 @@ import test.{TestRequest, Fake}
 import scala.concurrent.Future
 import idapiclient.responses.CookieResponse
 import client.Auth
+import conf.IdentityConfiguration
 
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val api = mock[IdApiClient]
+  val conf = mock[IdentityConfiguration]
 
-  val signinController = new SigninController(returnUrlVerifier, api)
+  val signinController = new SigninController(returnUrlVerifier, api, conf)
 
   "the renderForm method" - {
     "should render the signin form" in Fake {
