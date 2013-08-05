@@ -14,6 +14,7 @@ import org.hamcrest.Description
 import org.mockito.ArgumentMatcher
 import org.joda.time.DateTime
 import client.connection.util.ExecutionContexts
+import model.OkResponse
 
 
 class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -181,6 +182,84 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       }
     }
   }
+
+  "the userForToken method " - {
+    val token = "atoken"
+    "when recieving a valid response" - {
+      val userJSON = """{"id": "123", "primaryEmailAddress": "test@example.coma", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}"""
+      val validUserResponse = HttpResponse(userJSON, 200, "OK")
+      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validUserResponse)))
+      "accesses the get user for token wioth the token param" in {
+          api.userForToken(token)
+          verify(http).GET(Matchers.eq("http://example.com/user/user-for-token"), argThat(new ParamMatcher(Iterable(("token", token)))),argThat(EmptyParamMatcher))
+      }
+
+      "returns the user object" in {
+        api.userForToken(token).map(_ match {
+          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
+          case Right(user) => {
+            user should have('id("123"))
+            user.publicFields should have('displayName("displayName"))
+            user.publicFields should have('username("Username"))
+            user.publicFields should have('usernameLowerCase("username"))
+            user.publicFields should have('vanityUrl("vanityUrl"))
+            user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
+          }
+        })
+      }
+   }
+    "when receiving an error response" - {
+      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
+        .thenReturn(toFuture(Left(errors)))
+
+      "returns the errors" in {
+        api.userForToken(token).map(_ match {
+          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString()))
+          case Left(responseErrors) => {
+            responseErrors should equal(errors)
+          }
+        })
+      }
+    }
+  }
+
+  "the update password method" - {
+    val requestJson = """{"token" : "atoken", "password" : "anewpassword" }"""
+    "when recieving a valid response" - {
+      val validResponse = HttpResponse("""{"status" : "ok" }""", 200, "OK")
+      when(http.POST(Matchers.any[String], Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validResponse)))
+
+      "posts the the request json data to the endpoint" in {
+         api.changePassword(requestJson)
+         verify(http).POST("http://example.com/user/reset-pwd-for-user", requestJson, Iterable.empty, Iterable.empty)
+      }
+
+      "returns an OkStatus object" in {
+         api.changePassword(requestJson).map( _ match {
+            case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
+            case Right(ok) => {
+               ok should have ('status("ok"))
+            }
+         })
+      }
+    }
+
+    "when recieving an error response" - {
+      when(http.POST(Matchers.any[String], Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
+      "returns the errors" in {
+        api.changePassword(requestJson).map( _ match {
+          case Right(ok) => fail("Got right(%s) instead of expected left".format(ok.toString))
+          case Left(responseErrors) => {
+            responseErrors should equal(errors)
+          }
+        })
+      }
+    }
+
+
+  }
+
+
 
   "the me method" - {
     "when receiving a valid response" - {

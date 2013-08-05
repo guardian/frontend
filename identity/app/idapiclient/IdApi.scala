@@ -8,6 +8,7 @@ import scala.concurrent.{Future, ExecutionContext}
 import client.parser.JsonBodyParser
 import idapiclient.responses.{CookiesResponse, CookieResponse, AccessTokenResponse}
 import client.connection.util.ExecutionContexts
+import model.OkResponse
 
 
 abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) {
@@ -16,7 +17,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   protected def apiUrl(path: String) = urlJoin(apiRootUrl, path)
 
   protected def urlJoin(pathParts: String*) = {
-    pathParts.filter(_.nonEmpty).map(slug => {
+    pathParts.filter(_.nonEmpty).map(slug => {                         0
       slug.stripPrefix("/").stripSuffix("/")
     }) mkString "/"
   }
@@ -48,6 +49,25 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
     response map jsonBodyParser.extract[User]
   }
+
+  //Change password
+
+  def userForToken( token : String, auth: Auth = Anonymous ): Future[Response[User]] = {
+    val apiPath = urlJoin("user", "user-for-token")
+    val params = auth.parameters ++ Iterable(("token", token))
+    val response = http.GET(apiUrl(apiPath), params, auth.headers)
+    response map jsonBodyParser.extract[User]
+  }
+
+  def changePassword( postBody : String, auth : Auth = Anonymous): Future[Response[OkResponse]] = {
+    val apiPath = urlJoin("user", "reset-pwd-for-user")
+    val response = http.POST(apiUrl(apiPath), postBody, auth.parameters, auth.headers)
+    response map jsonBodyParser.extract[OkResponse]
+  }
+
+
+
+
 
 //  def register(userData: String): Future[Response[User]] = {
 //    val response = http.POST(apiUrl("user"), userData)

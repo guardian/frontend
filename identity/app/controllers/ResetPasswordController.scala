@@ -9,7 +9,7 @@ import com.google.inject.Singleton
 @Singleton
 class ResetPasswordController extends Controller with ExecutionContexts {
 
-  val page = new IdentityPage("https://profile.theguardian.com/reset-password", "/reset-password", "Reset Password", "reset-password")
+  val page = new IdentityPage("/reset-password", "Reset Password", "reset-password")
 
   val form = Form(
       Forms.single(
