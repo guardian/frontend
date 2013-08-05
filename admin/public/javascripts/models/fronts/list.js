@@ -188,9 +188,10 @@ define([
                 self[list].removeAll();
             }
             if (opts[list] && opts[list].length) {
-                opts[list].forEach(function(item) {
+                opts[list].forEach(function(item, index) {
                     self[list].push(new Article({
                         id: item.id,
+                        index: index,
                         webTitleOverride: item.webTitleOverride
                     }));
                 });

@@ -31,7 +31,9 @@ function (
         this.state = common.util.asObservableProps([
             'editingConfig',
             'shares',
-            'comments']);
+            'comments',
+            'pageViews',
+            'pageViewsSeries']);
 
         // Computeds
         this.humanDate = ko.computed(function(){
@@ -45,6 +47,10 @@ function (
         var opts = opts || {};
         common.util.populateObservables(this.meta, opts)
         common.util.populateObservables(this.fields, opts.fields)
+
+        if (opts.index < 3) {
+            this.addPageViews();
+        }
     }
 
     Article.prototype.toggleEditingConfig = function() {
@@ -74,6 +80,26 @@ function (
         }).always(function(){
             self.stopEditingConfig();
         });
+    }
+
+    Article.prototype.addPageViews = function() {
+        var self = this;
+        // If a config property (a) is set and (b) differs from the meta value, include it in post.
+        reqwest({
+            url: 'http://dashboard.ophan.co.uk/graph/breakdown/data?path=' + encodeURIComponent('/' + this.meta.id()),
+            type: 'jsonp'
+        }).then(
+            function (resp) {
+                if(resp.totalHits) {
+                    self.state.pageViews(resp.totalHits);
+                }
+                if(resp.seriesData && resp.seriesData[0] && resp.seriesData[0].data) {
+                    self.state.pageViewsSeries(_.pluck(resp.seriesData[0].data, 'y'));
+                }
+            },
+            function (xhr) {}
+        );
+
     }
 
     Article.prototype.addPerformanceCounts = function() {

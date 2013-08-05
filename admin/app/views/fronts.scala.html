@@ -153,6 +153,11 @@
                 text: meta.webTitle, 
                 attr: {href: 'http://www.theguardian.com/' + meta.id()}"></a>
 
+            <div class="trail_stats cf">
+                <div class="pageviews" data-bind="if: state.pageViews(), text: state.pageViews"></div>
+                <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
+            </div>
+
         </div>
     </script>
     

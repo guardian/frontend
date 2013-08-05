@@ -61,8 +61,9 @@ define([
                         // clean up any dragged-in articles 
                         container.innerHTML = ''; 
 
-                        ([].concat(rawArticles)).map(function(a){
-                            self.articles.push(new Article(a));
+                        ([].concat(rawArticles)).forEach(function(article, index){
+                            article.index = index;
+                            self.articles.push(new Article(article));
                         })
                     },
                     error: function() {}

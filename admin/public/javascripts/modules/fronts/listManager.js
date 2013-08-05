@@ -232,6 +232,26 @@ define([
                 viewModel.latestArticles.search();
                 viewModel.latestArticles.startPoller();
             });
+
+
+            knockout.bindingHandlers.sparkline = {
+                update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                    var value = knockout.utils.unwrapObservable(valueAccessor()),
+                        height = Math.max(15, Math.min(35, _.max(value))),
+                        options = allBindingsAccessor().sparklineOptions || {
+                            lineColor: '#d61d00',
+                            fillColor: '#ffbaaf',
+                            height: height
+                        };
+
+                    if( value && _.max(value)) {
+                        console.log(height);                        
+                        $(element).sparkline(value, options);                        
+                    }
+                }
+            };
+
+
         };
 
     };
