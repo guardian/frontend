@@ -1,6 +1,6 @@
 package implicits
 
-import java.net.URLEncoder
+import java.net.{URLEncoder, URLDecoder}
 import org.apache.commons.lang.StringEscapeUtils
 
 trait Strings {
@@ -23,5 +23,9 @@ trait Strings {
   implicit class string2encodings(s: String) {
     lazy val urlEncoded = URLEncoder.encode(s, "utf-8")
     lazy val javascriptEscaped = StringEscapeUtils.escapeJavaScript(s)
+  }
+
+  implicit class string2decodings(s: String) {
+    lazy val stringDecoded = URLDecoder.decode(s, "UTF-8")
   }
 }

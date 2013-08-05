@@ -38,6 +38,11 @@ object Thumbnail extends Style { val className = "with-thumbnail" }
  */
 object Headline extends Style { val className = "headline-only" }
 
+/**
+ * trails for the section fronts
+ */
+object SectionFront extends Style { val className = "section-front" }
+
 object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {
@@ -167,8 +172,13 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
             })
           }
         }
-
-        fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+        fig.getElementsByTag("figcaption").foreach { figcaption =>
+          if (!figcaption.hasText()) {
+            figcaption.remove();
+          } else {
+            figcaption.attr("itemprop", "description")
+          }
+        }
       }
     }
     body
@@ -251,8 +261,8 @@ case class Summary(amount: Int) extends HtmlCleaner {
     val para: Option[Element] = children.filter(_.nodeName() == "p").take(amount).lastOption
     // if there is are no p's, just take the first n things (could be a blog)
     para match {
-      case Some(p) => children.drop(children.indexOf(p)).foreach(_.remove()) 
-      case _ => children.drop(amount).foreach(_.remove()) 
+      case Some(p) => children.drop(children.indexOf(p)).foreach(_.remove())
+      case _ => children.drop(amount).foreach(_.remove())
     }
     document
   }

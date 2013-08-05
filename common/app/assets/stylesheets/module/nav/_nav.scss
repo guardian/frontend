@@ -13,7 +13,7 @@
 .nav {
     list-style: none;
     margin: 0;
-    padding: $baseline *2 0 4px 0;
+    padding: $baseline*2 0 $baseline;
 }
 
     .nav > li,
@@ -74,7 +74,7 @@
     }
 
     .nav--columns-football {
-        padding: $baseline*2 0 $baseline 0
+        padding: $baseline*2 0 $baseline;
     }
 
 
@@ -191,7 +191,7 @@
     .nav__link:hover,
     .nav__link:visited {
         display: block;
-        margin: 10px 0 $baseline*3 0;
+        margin: 10px 0 $baseline*3;
         padding: 2px 9px 0 9px;
         font-family: $serif !important;
         font-size: 14px;
@@ -319,13 +319,13 @@
 .nav--toolbar {
     @extend %type-10;
     display: none;
-    margin: 0 $baseline*2 0 $gutter;
+    margin: 0 $gutter/2 0 $gutter;
     padding: $baseline*3 0 0;
     @include mq(tablet) { display: block; }
 
     .nav__item {
         margin: $baseline 0 0 0;
-        padding: $baseline $baseline*2;
+        padding: $baseline $gutter/2;
         color: #fff;
         border-right: 1px solid #94B1CA;
 
