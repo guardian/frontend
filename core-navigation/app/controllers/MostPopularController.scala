@@ -32,7 +32,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
                 if (request.isJson)
                   JsonComponent(
                     "html" -> views.html.fragments.mostPopular(popular, 5),
-                    "trails" -> sectionPopular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
+                    "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
                   )
                 else
                   Ok(views.html.mostPopular(page, popular))
