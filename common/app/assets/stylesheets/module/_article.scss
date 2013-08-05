@@ -232,3 +232,42 @@ video {
         padding-bottom: $baseline*2;
     }
 }
+
+
+/* Furniture
+   ========================================================================== */
+
+.furniture {
+    
+}
+.furniture--left {
+    float: left;
+    margin-left: ($a-leftCol-width + $gutter)*-1;
+    width: $a-leftCol-width;
+}
+
+.card {
+    
+}
+    .card__media {
+        display: block;
+    }
+    .card__body {
+        background: $mushroom;
+        padding: $baseline $gutter/2;
+        min-height: 120px;
+
+        .card-wrapper:hover &,
+        .card-wrapper:focus & {
+            background: $darkMushroom;
+        }
+    }
+        .card__headline {
+            font-family: $serifheadline !important; // Override .from-content-api h3 defaults
+            color: #444;
+
+            .card-wrapper:hover &,
+            .card-wrapper:focus & {
+                text-decoration: underline;
+            }
+        }

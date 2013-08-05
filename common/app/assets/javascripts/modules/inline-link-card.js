@@ -50,10 +50,23 @@ define([
         }).then(
             function(resp) {
                 self.hasLoadedCard = true;
-                // console.log(resp);
-                // console.log(bonzo(bonzo.create(resp.html))[1]);
 
-                // bonzo($p.previous()).before(linkToCardify.parent());
+                var headline = resp.config.page.headline,
+                    url = "/" + resp.config.page.pageId,
+                    thumbnail = resp.config.page.thumbnail,
+                    $template,
+                    $templateHTML;
+
+                $template = '<a href="' + url + '" class="card-wrapper">' +
+                                '<div class="furniture furniture--left card">';
+                                    if (thumbnail) { $template += '<img src="' + thumbnail + '" alt="" class="card__media" />'; }
+                $template +=        '<div class="card__body"><h3 class="card__headline">' + headline + '</h3></div>' +
+                                '</div>' +
+                            '</a>';
+
+                $templateHTML = document.createElement('div');
+                $templateHTML.innerHTML = $template;
+                document.querySelector('#preload-1 .article-body').insertBefore($templateHTML, self.link.parentNode);
             }, function(req) { }
         );
     };
