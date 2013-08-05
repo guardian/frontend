@@ -117,7 +117,7 @@ define([
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
-                item: item.id(),
+                item: item.meta.id(),
                 live: self.state.liveMode(),
                 draft: true
             })

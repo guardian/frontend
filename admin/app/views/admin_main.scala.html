@@ -21,7 +21,6 @@
                     ItemSearch: 'modules/ItemSearch',
                     AutoComplete: 'modules/AutoComplete',
                     knockout: 'components/knockout/build/output/knockout-latest.js',
-                    knockoutSortable: 'components/knockout-sortable/src/knockout-sortable.js',
                     Reqwest: 'components/reqwest/reqwest',
                     EventEmitter: 'components/eventEmitter/EventEmitter',
                     bean: 'components/bean/bean',
@@ -39,9 +38,6 @@
                     apiKey: '@conf.Configuration.contentApi.key',
                     identity: @{Html(identity)}
                 }
-            });
-            define('jquery.ui.sortable', function() {
-                require(['js!components/jquery-ui/ui/jquery.ui.sortable.js'], function() {});
             });
         </script>
 
