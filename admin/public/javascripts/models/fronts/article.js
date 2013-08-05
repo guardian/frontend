@@ -1,14 +1,14 @@
 define([
+    'models/fronts/common',
     'models/fronts/editable',
     'knockout',
-    'Common',
     'Reqwest',
     'js!humanizedTimeSpan'
 ], 
 function (
+    common,
     Editable,
     ko,
-    Common,
     Reqwest
 ){
     var absUrlHost = 'http://m.guardian.co.uk/';
@@ -21,33 +21,33 @@ function (
         this.trailText          = ko.observable();
         this.shortId            = ko.observable();
 
+        this.webTitleOverride   = ko.observable();
+
         // Performance stats
         this.shares             = ko.observable();
         this.comments           = ko.observable();
 
         // Temp vars
-        this._absUrl            = ko.observable();
+        this.editingTweaks      = ko.observable();
 
         // Computeds
-        this._humanDate = ko.computed(function(){
+        this.humanDate = ko.computed(function(){
             return this.webPublicationDate() ? humanized_time_span(this.webPublicationDate()) : '&nbsp;';
         }, this);
 
-        // Track for editability / saving
-        this._makeEditable(['webTitle', 'trailText']);
-
         this.init(opts);
     };
-
-    Article.prototype = new Editable();
 
     Article.prototype.init = function(opts) {
         var opts = opts || {},
             self = this;
 
-        this.id(opts.id || '');
-        this.webTitle(opts.webTitle || '');
+        this.id(opts.id);
+        this.webTitle(opts.webTitle);
         this.webPublicationDate(opts.webPublicationDate);
+
+        // Overrides
+        this.webTitleOverride(opts.webTitleOverride || opts.webTitle);
 
         if (opts.fields) {
             this.thumbnail(opts.fields.thumbnail);
@@ -58,10 +58,27 @@ function (
         this.shares(opts.shares);
         this.comments(opts.comments);
 
-        this._absUrl(absUrlHost + opts.id);    
-
         // Performance counts are awaiting a fix to the proxy API endpoint 
         //this.addPerformanceCounts();
+    }
+
+    Article.prototype.startEditingTweaks = function() {
+        this.editingTweaks(true);
+    }
+
+    Article.prototype.stopEditingTweaks = function() {
+        this.editingTweaks(false);
+    }
+
+    Article.prototype.saveTweaks = function(item) {
+        // Needs more work!
+        //item.webTitleOverride(common.util.fullTrim(item.webTitleOverride()));
+        //hasWebTitleOverride = item.webTitleOverride() && (item.webTitleOverride() !== item.webTitle());
+        //data.webTitleOverride = hasWebTitleOverride ? item.webTitleOverride() : undefined;
+
+        // Save to server here
+        //console.log(JSON.stringify(data));
+        this.stopEditingTweaks();
     }
 
     Article.prototype.addPerformanceCounts = function() {

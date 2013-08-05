@@ -33,11 +33,11 @@
     }
 
     .element-witness--main {
-        padding: $baseline*3 $baseline*2 $baseline*4 $baseline*2;
+        padding: $baseline*3 $gutter/2 $baseline*4;
     }
 
     .element-witness--brand {
-        padding: 0 $baseline*2 0 0;
+        padding: 0 $gutter/2 0 0;
         line-height: 14px;
     }
 
@@ -65,8 +65,8 @@
         }
         border-top: 1px solid $darkMushroom;
         background: $mushroom;
-        padding: $baseline*3 $baseline*2 $baseline*3 $baseline*2;
-        line-height: 1.0em;
+        padding: $baseline*3 $gutter/2;
+        line-height: 1;
         color: #666 !important;
     }
 
@@ -77,7 +77,7 @@
     p.element-witness--source {
         @extend %type-10;
 
-        padding-left: $baseline*2;
+        padding-left: $gutter/2;
         color: #666;
     }
 
@@ -89,7 +89,7 @@
     }
 
     .element-witness--author a {
-        padding-left: $baseline;
+        padding-left: $gutter/4;
     }
 
     .element-witness--author-name {
@@ -104,7 +104,7 @@
 
     .witness-avatar {
         float: left;
-        padding: 0 $baseline*2 0 0;
+        padding: 0 $gutter/2 0 0;
     }
 
     .element-witness--date {
@@ -116,12 +116,12 @@
     position: relative;
     overflow: hidden;
     max-height: 47px;
-    margin: 0 $baseline*4 $baseline*4;
+    margin: 0 $gutter $baseline*4;
 
     p {
         @extend %type-10;
         float: left;
-        padding: 2px $baseline*2 $baseline;
+        padding: 2px $gutter/2 $baseline;
         margin-left: 50px;
     }
 

@@ -9,7 +9,7 @@
     color: #fff;
     margin-top: $baseline*2;
     margin-bottom: $baseline;
-    padding: 9px $baseline*2;
+    padding: 9px $gutter/2;
 }
 
 .team-fixtures .competitions-date,
@@ -24,12 +24,12 @@
     text-decoration: none;
     text-align: left;
     position: relative;
-    padding-left: $baseline*2;
+    padding-left: $gutter/2;
 }
 
 .competition-title {
     margin-bottom: 0;
-    padding: 9px $baseline*2;
+    padding: 9px $gutter/2;
     position: relative;
     color: #064951;
     background: #f4f4ee;
@@ -45,7 +45,7 @@ a.competition-title {
 .football-table-link i {
     position: absolute;
     top: 12px;
-    right: $baseline*2;
+    right: $gutter/2;
 }
 
 .competition {
@@ -110,7 +110,7 @@ a.competition-title {
 
 .match-status {
     position: absolute;
-    right: $baseline*2;
+    right: $gutter/2;
     top: 10px;
     color: #777;
 }
@@ -317,7 +317,7 @@ a.competition-title {
 
 .football-filter {
     background: $sportBright;
-    margin: 0 $gutter $baseline*2 $gutter;
+    margin: 0 $gutter $baseline*2;
     color: #fff;
     border-bottom: none;
 

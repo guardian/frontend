@@ -50,46 +50,70 @@
         <div class="lists" data-bind="foreach: listsDisplayed">
             <div class="trailblock">
                 <div class="list-header">
-                    <a class="list-header__hide" data-bind="click: $parent.dropList">HIDE</a>
+                    <a data-bind="click: startEditingConfig" class="list-header__showSettings"><i class="icon-cog icon-white"></i></a>
+                    <a data-bind="click: $parent.dropList" class="list-header__hide">HIDE</a>
                     <div class="list-header__title" data-bind="foreach: crumbs">
                         <span class="list-header__title__part" data-bind="text: $data"></span> 
                     </div>
-                    <div class="list-header__meta">
-                        <!-- ko if: state.timeAgo -->
-                            updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span> 
-                            by <a class="list-header__meta__user" data-bind="
-                                text: meta.updatedBy,
-                                attr: {href: 'mailto:' + meta.updatedEmail}
-                                "></a>
-                        <!-- /ko -->
-                        <!-- ko ifnot: state.timeAgo -->
-                            Empty
-                        <!-- /ko -->
-                    </div>
-                    <div class="list-header__status">
-                        <div class="list-header__status__live" data-bind="
-                            css: {
-                                active: state.liveMode()
-                            }">
-                            <span class="list-header__status__live__title" data-bind="click: setLiveMode">LIVE</span>
-                        </div>                    
-                        <div class="list-header__status__draft" data-bind="
-                            css: {
-                                active: !state.liveMode(),
-                                hasUnPublishedEdits: state.hasUnPublishedEdits()
-                            }">
-                            <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
-                                DRAFT
-                                <span data-bind="if: state.hasUnPublishedEdits()">
-                                    has edits
+                    <div data-bind="visible: !state.editingConfig()">
+                        <div class="list-header__meta">
+                            <!-- ko if: state.timeAgo -->
+                                updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span> 
+                                by <a class="list-header__meta__user" data-bind="
+                                    text: meta.updatedBy,
+                                    attr: {href: 'mailto:' + meta.updatedEmail}
+                                    "></a>
+                            <!-- /ko -->
+                            <!-- ko ifnot: state.timeAgo -->
+                                Empty
+                            <!-- /ko -->
+                        </div>
+                        <div class="list-header__status">
+                            <div class="list-header__status__live" data-bind="
+                                css: {
+                                    active: state.liveMode()
+                                }">
+                                <span class="list-header__status__live__title" data-bind="click: setLiveMode">LIVE</span>
+                            </div>                    
+                            <div class="list-header__status__draft" data-bind="
+                                css: {
+                                    active: !state.liveMode(),
+                                    hasUnPublishedEdits: state.hasUnPublishedEdits()
+                                }">
+                                <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
+                                    DRAFT
+                                    <span data-bind="if: state.hasUnPublishedEdits()">
+                                        has edits
+                                    </span>
                                 </span>
-                            </span>
-                            <span data-bind="if: !state.liveMode() && state.hasUnPublishedEdits()">
-                                &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
-                                &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
-                            </span>
+                                <span data-bind="if: !state.liveMode() && state.hasUnPublishedEdits()">
+                                    &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
+                                    &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
+                                </span>
+                            </div>                    
                         </div>                    
                     </div>                    
+                </div>
+                <div class="list-config" data-bind="visible: state.editingConfig">
+                    <div>
+                        Number of articles:
+                    </div>
+                    <div>
+                        <input type="text" class="tiny" data-bind="value: config.min"/> Minumum
+                    </div>
+                    <div>
+                        <input type="text" class="tiny" data-bind="value: config.max"/> Maximum
+                    </div>
+                    <div>ContentApi query for trail automation:</div>
+                    <div>
+                        <input type="text" data-bind="value: config.contentApiQuery"/>
+                    </div>
+                    <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
+                    <button class="btn" value="Cancel" data-bind="click: stopEditingConfig">Cancel</button>
+                </div>
+                <div class="needs-more" data-bind="if: needsMore">
+                    Needs at least <span class="needs-more__num" data-bind="text: config.min"></span> 
+                    article<span data-bind="text: config.min() > 1 ? 's' : ''"></span>
                 </div>
                 <div class="connectedList" data-bind="
                     attr: {
@@ -98,30 +122,6 @@
                     },
                     css: {pending: state.loadIsPending},
                     template: {name: 'template_article', foreach: state.liveMode() ? live : draft}"></div>
-
-                <div class="needs-more" data-bind="if: needsMore">
-                    Needs at least <span class="needs-more__num" data-bind="text: config.min"></span> 
-                    article<span data-bind="text: config.min() > 1 ? 's' : ''"></span>
-                </div>
-                <div class="list-footer" data-bind="css: {editable: state.editingConfig}">
-                    <a data-bind="click: toggleShowSettings">Settings</a>
-                    <div data-bind="visible: state.editingConfig" class="settings">
-                        <div>
-                            Number of articles:
-                        </div>
-                        <div>
-                            <input type="text" class="tiny" data-bind="value: config.min"/> Minumum
-                        </div>
-                        <div>
-                            <input type="text" class="tiny" data-bind="value: config.max"/> Maximum
-                        </div>
-                        <div>
-                            ContentApi query for trail automation:
-                            <input type="text" data-bind="value: config.contentApiQuery"/>
-                        </div>
-                        <input type="submit" class="btn" value="Save Settings" data-bind="click: saveConfig"/>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -132,41 +132,31 @@
                 css: {redundant: $parent.config && $parent.config.max ? (0 + $index()) >= (0 + $parent.config.max()) : false}
             ">
 
-            <a class="trail__control" data-bind="click: $parent.dropItem">
-                <i class="icon-remove"></i>
-            </a>
-
             <div class="trail__meta">
-                <span data-bind="html: _humanDate() ? _humanDate : 'Loading...'"></span>
+                <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
                 <a data-bind="attr: {href: 'http://www.theguardian.com/' + id()}">view</a>
                 <a data-bind="attr: {href: 'http://dashboard.ophan.co.uk/summary?path=/' + id()}">stats</a>
+                <a data-bind="click: startEditingTweaks">tweak</a>
+                <a data-bind="click: $parent.dropItem">remove</a>
+            </div>
+
+            <div class="trail_tweaks cf" data-bind="visible: editingTweaks">
+                <div>
+                    Headline override:
+                    <input type="text" data-bind="value: webTitleOverride"/>
+                </div>
+                <input type="submit" class="btn" value="Save" data-bind="click: saveTweaks"/>
+                <button class="btn" value="Cancel" data-bind="click: stopEditingTweaks">Cancel</button>
             </div>
 
             <img data-bind="attr: {src: thumbnail}" />
 
-            <div class="webTitle" data-edit="webTitle" data-bind="
-                visible: !_editing_webTitle(),
-                text: webTitle() ? webTitle : '',
-                click: _edit
-                "></div>
-
-            <!-- Commented out awaiting decision on whether titles can be overwrittern in this tool -->
-            <!--input type="text" placeholder="webTitle" data-bind="
-                visible: _editing_webTitle,
-                value: webTitle,
-                hasfocus: _editing_webTitle
-                "/-->
-
-            <!--div class="trailText" data-edit="trailText" data-bind="
-                visible: !_editing_trailText(),
-                html: trailText() ? trailText : '',
-                click: _edit
-                "></div-->
-            <!--textarea type="text" placeholder="trailText" data-bind="
-                visible: _editing_trailText,
-                value: trailText,
-                hasfocus: _editing_trailText
-                "/></textarea-->
+            <!-- ko if: (webTitle() === webTitleOverride()) -->
+            <div class="webTitle" data-bind="text: webTitle"></div>
+            <!-- /ko -->
+            <!-- ko if: (webTitle() !== webTitleOverride()) -->
+            <div class="webTitle webTitle--override" data-bind="text: webTitleOverride"></div>
+            <!-- /ko -->
 
         </div>
     </script>

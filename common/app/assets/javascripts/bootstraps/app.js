@@ -15,7 +15,6 @@ define('bootstraps/app', [
     "bootstraps/video",
     "bootstraps/gallery",
     "bootstraps/interactive",
-    "bootstraps/story",
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag"
@@ -36,7 +35,6 @@ define('bootstraps/app', [
     Video,
     Gallery,
     Interactive,
-    Story,
     ab,
     pageConfig,
     Tag
@@ -115,8 +113,6 @@ define('bootstraps/app', [
                 r.get('/football/:action/:year/:month/:day', function(req) {      Football.init(req, config, context); });
                 r.get('/football/:tag/:action', function(req) {                   Football.init(req, config, context); });
                 r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config, context); });
-
-                r.get('/stories/:id', function(req) { Story.init(config, context);});
 
                 if(config.page.contentType === "Article") {
                     Article.init(config, context);

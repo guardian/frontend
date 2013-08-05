@@ -56,7 +56,7 @@
             </div>
 
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                <div class="article__discussion"></div>
+                <div class="article__discussion" id="comments"></div>
             }
             @fragments.social(article)
         </div>
