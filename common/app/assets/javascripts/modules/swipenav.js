@@ -93,7 +93,7 @@ define([
     }
 
     function load(o) {
-        var url = o.url,
+        var url = (typeof o.url !== "string") ? o.url.url : o.url,
             el = o.container,
             callback = o.callback || noop,
             frag;
@@ -273,7 +273,6 @@ define([
                     trails.unshift({url: url});
                     len += 1;
                 }
-
 
                 sequence = [];
                 sequenceLen = 0;
