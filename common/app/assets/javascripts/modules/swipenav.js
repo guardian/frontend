@@ -171,7 +171,7 @@ define([
 
         if (initiatedBy === 'initial') {
             loadSidePanes();
-            urls.pushUrl({title: document.title}, document.title, window.location.href, true);
+            urls.pushUrl({title: document.title}, document.title, window.location.href);
             return;
         }
 
@@ -259,7 +259,7 @@ define([
 
         ajax({
             url: '/' + sequenceUrl + '.json',
-            crossOrigin: true,
+            crossOrigin: true
         }).then(function (json) {
             var trails = json.trails,
                 len = trails ? trails.length : 0,
@@ -270,7 +270,7 @@ define([
             if (len >= 3) {
                 // Make sure url is the first in the sequence
                 if (trails[0].url !== url) {
-                    trails.unshift({url: url});
+                    trails.unshift(url);
                     len += 1;
                 }
 
