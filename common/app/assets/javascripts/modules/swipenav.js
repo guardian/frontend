@@ -287,9 +287,6 @@ define([
                     }
                 }
 
-                console.dir(trails);
-                console.dir(sequenceCache);
-
                 setSequencePos(window.location.pathname);
                 callback();
             } else {
