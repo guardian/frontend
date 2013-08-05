@@ -93,8 +93,7 @@ define([
     }
 
     function load(o) {
-        var
-            url = o.url,
+        var url = o.url,
             el = o.container,
             callback = o.callback || noop,
             frag;
@@ -269,10 +268,9 @@ define([
                 i;
 
             if (len >= 3) {
-                // Make sure url is the first in the sequence
-                if (trails[0] !== url) {
-                    trails.unshift(url);
-                    len += 1;
+                //Remove current url from sequence
+                if(trails.indexOf(url) > -1) {
+                    delete trails[trails.indexOf(url)];
                 }
 
                 sequence = [];
@@ -288,6 +286,10 @@ define([
                         sequenceLen += 1;
                     }
                 }
+
+                console.dir(trails);
+                console.dir(sequenceCache);
+
                 setSequencePos(window.location.pathname);
                 callback();
             } else {
