@@ -9,6 +9,12 @@ define([
         var url = config.page.interactiveUrl + el.getAttribute('data-interactive'),
             element = el;
 
+        this.api = { 
+            fullscreen: function () {
+                common.mediator.emit('chrome:fullscreen');
+            }
+        }
+
         this.init = function () {
 
             // The contract here is that the interactive module MUST return an object

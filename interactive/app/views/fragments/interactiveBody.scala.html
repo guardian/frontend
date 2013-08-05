@@ -1,32 +1,24 @@
 @(interactive: Interactive, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 
-<div class="monocolumn-wrapper">
-    
-    <h2 class="article-zone type-1">
-        <a class="zone-color" data-link-name="article section" href="@LinkTo{/@interactive.section}">@Html(interactive.sectionName)</a>
-    </h2>
+<h2 class="article-zone type-1">
+    <a class="zone-color" data-link-name="article section" href="@LinkTo{/@interactive.section}">@Html(interactive.sectionName)</a>
+</h2>
 
-    <article id="article" class="article"
-        itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
-       
-        <header class="article-head">
-            @fragments.dateline(interactive.webPublicationDate, interactive.isLive)
-        </header>
+<article id="article" class="article"
+    itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
 
-        <div class="after-header"></div>
+     <div class="article__container">
+         
+        <div class="article-body from-content-api">
 
-         <div class="article__container">
-             
-            <div class="article-body from-content-api">
+            <figure class="interactive" data-interactive="@request.path.drop(1)">
+                <!-- FIXME using data-interactive attributes is fine until data comes from Composer -->
+            </figure>
 
-                <figure class="interactive" data-interactive="@request.path.drop(1)">
-                    <!-- FIXME using data-interactive attributes is fine until data comes from Composer -->
-                </figure>
-
-            </div>
         </div>
+    </div>
 
-    </article>
+</article>
 
 </div>
