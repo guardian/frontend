@@ -24,12 +24,14 @@ object Au extends Edition(
 
   val cultureCustomBlock = CustomTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)){
 
-    val promiseOfCulture: Future[ItemResponse] = ContentApi.item.itemId("culture")
+    val promiseOfCulture: Future[ItemResponse] = ContentApi.item
+      .itemId("culture")
       .edition("au")
       .showTags("all")
       .showFields(trailFields)
       .showInlineElements(inlineElements)
-      .showMedia("all")
+      .showMedia("picture")
+      .showElements("all")
       .showReferences(references)
       .showStoryPackage(true)
       .tag(s"-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography,($supportedTypes)")
@@ -40,12 +42,14 @@ object Au extends Edition(
 
   val commentCustomBlock = CustomTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)){
 
-    val promiseOfComment: Future[ItemResponse] = ContentApi.item.itemId("commentisfree")
+    val promiseOfComment: Future[ItemResponse] = ContentApi.item
+      .itemId("commentisfree")
       .edition("au")
       .showTags("all")
       .showFields(trailFields)
       .showInlineElements(inlineElements)
-      .showMedia("all")
+      .showMedia("picture")
+      .showElements("all")
       .showReferences(references)
       .showStoryPackage(true)
       .tag(s"world/australia,($supportedTypes)")
@@ -67,7 +71,7 @@ object Au extends Edition(
       .tag(s"world/australia")
       .response
 
-    promiseOfAustralianVideo.map(_.results.map(new Content(_)))
+    promiseOfAustralianVideo.map(_.results.map(Content(_)))
   }
 
 

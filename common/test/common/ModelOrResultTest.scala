@@ -15,7 +15,7 @@ class ModelOrResultTest extends FlatSpec with ShouldMatchers {
 
   implicit val request: RequestHeader = TestRequest()
 
-  val testContent = new Content("the/id", None, None, new DateTime(), "the title", "http://www.guardian.co.uk/canonical",
+  val testContent = Content("the/id", None, None, new DateTime(), "the title", "http://www.guardian.co.uk/canonical",
     "http://foo.bar", elements = None)
 
   val articleTag = new Tag("type/article", "type", webTitle = "the title", webUrl = "http://foo.bar", apiUrl = "http://foo.bar")
@@ -29,7 +29,7 @@ class ModelOrResultTest extends FlatSpec with ShouldMatchers {
   val testSection = new Section("water", "Water", "http://foo.bar", "http://foo.bar")
 
   // FML
-  val stubResponse = new ItemResponse("ok", "top_tier", None, None, None, None, None, None, None, None, None, Nil, Nil, Nil, Nil, Nil, Nil)
+  val stubResponse = new ItemResponse("ok", "top_tier", None, None, None, None, None, None, None, None, None, None, Nil, Nil, Nil, Nil, Nil, Nil)
 
   "ModelOrNotFound" should "return the model if it exists" in {
     ModelOrResult(

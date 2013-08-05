@@ -15,7 +15,7 @@ import play.api.libs.json.JsObject
 import java.net.URLDecoder
 import tools.QueryParams
 
-trait Trail extends Images with Tags {
+trait Trail extends Elements with Tags {
   def webPublicationDate: DateTime
   def linkText: String
   def headline: String
@@ -149,7 +149,7 @@ class RunningOrderTrailblockDescription(
               ContentApi.search(edition)
                 .ids(ids)
                 .response map { r =>
-                  r.results.map(new Content(_))
+                  r.results.map(Content(_))
                 }
               }.fallbackTo(Future(Nil))
             } getOrElse Future(Nil)

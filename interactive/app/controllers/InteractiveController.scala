@@ -40,7 +40,7 @@ object InteractiveController extends Controller with Logging with ExecutionConte
       .showFields("all")
       .response.map{response =>
         val interactive = response.content map { new Interactive(_) }
-        val storyPackage = response.storyPackage map { new Content(_) }
+        val storyPackage = response.storyPackage map { Content(_) }
 
         val model = interactive map { i => InteractivePage(i, storyPackage.filterNot(_.id == i.id), index, isTrail) }
         ModelOrResult(model, response)

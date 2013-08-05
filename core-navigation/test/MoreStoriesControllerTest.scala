@@ -17,7 +17,7 @@ class MoreStoriesControllerTest extends FlatSpec with ShouldMatchers {
   val callbackName = "aFunction"
   val section = "football"
 
-  val testContent = Seq(new Content(new ApiContent("the/id", None, None, new DateTime(), "the title", "http://www.guardian.co.uk/canonical",
+  val testContent = Seq(Content(new ApiContent("the/id", None, None, new DateTime(), "the title", "http://www.guardian.co.uk/canonical",
     "http://foo.bar", elements = None)))
     
   private def unWrapJson(json: String): JsValue = {

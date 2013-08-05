@@ -5,8 +5,7 @@ import java.net.URLEncoder._
 import model._
 import org.jsoup.nodes.{ Element, Document }
 import org.jsoup.Jsoup
-import org.jsoup.safety.Whitelist
-import org.jsoup.safety.Cleaner
+import org.jsoup.safety.{ Whitelist, Cleaner }
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
@@ -14,12 +13,10 @@ import play.api.templates.Html
 import scala.collection.JavaConversions._
 import scala.Some
 import play.api.mvc.RequestHeader
-import org.joda.time.{ DateTimeZone, DateTime }
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import conf.Configuration
-import com.gu.openplatform.contentapi.model.MediaAsset
+import com.gu.openplatform.contentapi.model.Asset
 import play.Play
-import org.jsoup.nodes.Entities.EscapeMode
 import org.apache.commons.lang.StringEscapeUtils
 
 sealed trait Style {
@@ -151,7 +148,7 @@ object VideoEmbedCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
@@ -180,14 +177,14 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
   }
 }
 
-case class VideoPosterCleaner(videos: Seq[MediaAsset]) extends HtmlCleaner {
+case class VideoPosterCleaner(videos: Seq[Asset]) extends HtmlCleaner {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("video").filter(_.hasClass("gu-video")).foreach { videoTag =>
       videoTag.getElementsByTag("source").headOption.foreach{ source =>
         val file = source.attr("src")
-        videos.find(_.encodings.exists(_.file == file)).foreach{ video =>
-          video.fields.getOrElse(Map.empty).get("stillImageUrl").foreach{ poster =>
+        videos.find(_.file == file).foreach{ video =>
+          video.typeData.get("stillImageUrl").foreach{ poster =>
             videoTag.attr("poster", poster)
           }
         }
