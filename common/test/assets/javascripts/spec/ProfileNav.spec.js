@@ -73,7 +73,6 @@ define(['common', 'fixtures', 'modules/navigation/profile', 'modules/cookies'], 
                 expect(signout.length === 0);
             });
         });
-    
     });
 
-})
+});
