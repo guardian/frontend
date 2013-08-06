@@ -1,6 +1,6 @@
 package jobs
 
-import common.PorterMetrics
+import common.{ Job, PorterMetrics }
 import services.{ CloudWatch, Fastly }
 import scala.concurrent.Await
 import scala.concurrent.duration._

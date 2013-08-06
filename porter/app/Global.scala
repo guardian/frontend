@@ -1,3 +1,4 @@
+import common.JobScheduler
 import jobs._
 import play.api.GlobalSettings
 

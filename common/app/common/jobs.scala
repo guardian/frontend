@@ -1,6 +1,5 @@
-package jobs
+package common
 
-import common.{ TimingMetricLogging, AkkaSupport, Logging }
 import akka.actor.Props
 import akka.camel.Consumer
 import scala.reflect.ClassTag

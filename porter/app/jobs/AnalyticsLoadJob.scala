@@ -1,6 +1,6 @@
 package jobs
 
-import common.{ CSV, PorterMetrics, S3 }
+import common.{ Job, CSV, PorterMetrics, S3 }
 import conf.Configuration
 import services.Analytics
 
