@@ -106,9 +106,10 @@ object Frontend extends Build with Prototypes {
       "info.cukes" % "cucumber-java" % "1.1.3" % "test",
       "info.cukes" % "cucumber-junit" % "1.1.3" % "test",
       "info.cukes" % "cucumber-picocontainer" % "1.1.3" % "test",
-      "com.novocode" % "junit-interface" % "0.8" % "test->default",
+      "com.novocode" % "junit-interface" % "[0.8,)" % "test->default",
       "junit" % "junit" % "4.11" % "test"
-    )
+    ),
+    testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
   )
 
   val dev = base("dev-build")
