@@ -39,6 +39,27 @@ define([
         }
     };
 
+    InlineLinkCard.prototype.prependCard = function(href, data) {
+        var self = this,
+            headline = data.headline,
+            thumbnail = data.thumbnail,
+            tpl,
+            thumbnailFragment = '';
+
+        if (thumbnail) {
+            thumbnailFragment = '<img src="' + thumbnail + '" alt="" class="card__media" />';
+        }
+
+        tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
+                  '<div class="furniture furniture--left card">' +
+                      thumbnailFragment +
+                      '<div class="card__body u-text-hyphenate"><h3 class="card__headline">' + headline + '</h3></div>' +
+                  '</div>' +
+              '</a>';
+
+        self.linkContext.before(tpl);
+    };
+
     InlineLinkCard.prototype.fetchData = function() {
         var href = this.link.getAttribute('href'),
             self = this;
@@ -52,24 +73,7 @@ define([
             function(resp) {
                 self.hasLoadedCard = true;
 
-                var headline = resp.config.page.headline,
-                    url = '/' + resp.config.page.pageId,
-                    thumbnail = resp.config.page.thumbnail,
-                    tpl,
-                    thumbnailFragment = '';
-
-                if (thumbnail) {
-                    thumbnailFragment = '<img src="' + thumbnail + '" alt="" class="card__media" />';
-                }
-
-                tpl = '<a href="' + url + '" class="card-wrapper" data-link-name="in card link">' +
-                          '<div class="furniture furniture--left card">' +
-                              thumbnailFragment +
-                              '<div class="card__body u-text-hyphenate"><h3 class="card__headline">' + headline + '</h3></div>' +
-                          '</div>' +
-                      '</a>';
-
-                self.linkContext.before(tpl);
+                self.prependCard(href, resp.config.page);
             }
         );
     };

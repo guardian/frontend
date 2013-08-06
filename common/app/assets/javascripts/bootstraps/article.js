@@ -103,10 +103,10 @@ define([
         },
         initInlineLinkCard: function() {
             common.mediator.on('page:article:ready', function(config, context) {
-                var linkToCardify = context.querySelectorAll('.article-body p a[href^="/"]')[0],
-                    linkContext = common.$g(linkToCardify).parent();
+                var linkToCardify = context.querySelectorAll('.article-body p a[href^="/"]')[0];
 
                 if (linkToCardify) {
+                    var linkContext = common.$g(linkToCardify).parent();
                     new InlineLinkCard(linkToCardify, linkContext).init();
                 }
             });
