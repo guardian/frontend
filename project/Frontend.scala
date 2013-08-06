@@ -94,6 +94,23 @@ object Frontend extends Build with Prototypes {
     )
   )
 
+  val endtoend = application("fronts-endtoend-tests").settings(
+    libraryDependencies ++= Seq(
+      "org.slf4j" % "slf4j-api" % "1.7.5" % "test",
+      "ch.qos.logback" % "logback-classic" % "1.0.13" % "test",
+      "org.json" % "org.json" % "chargebee-1.0" % "test",
+      "joda-time" % "joda-time" % "2.2" % "test",
+      "hu.meza" % "aao" % "2.0.0" % "test",
+      "hu.meza.tools" % "config" % "0.1.1" % "test",
+      "hu.meza.tools" % "http-client-wrapper" % "0.1.7" % "test",
+      "info.cukes" % "cucumber-java" % "1.1.3" % "test",
+      "info.cukes" % "cucumber-junit" % "1.1.3" % "test",
+      "info.cukes" % "cucumber-picocontainer" % "1.1.3" % "test",
+      "com.novocode" % "junit-interface" % "0.8" % "test->default",
+      "junit" % "junit" % "4.11" % "test"
+    )
+  )
+
   val dev = base("dev-build")
     .dependsOn(front)
     .dependsOn(facia)
