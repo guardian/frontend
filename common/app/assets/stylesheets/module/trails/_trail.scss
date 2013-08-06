@@ -6,7 +6,7 @@
     position: relative;
     overflow: hidden;
     margin: 0;
-    padding: $baseline*3 0 $baseline*3;
+    padding: $baseline*3 0;
 }
 
 .trail + .trail {
@@ -185,8 +185,8 @@
 
     .relative-timestamp,
     .trail__headline {
-        margin-left: $baseline*2;
-        margin-right: $baseline*2;
+        margin-left: $gutter/2;
+        margin-right: $gutter/2;
     }
 
     .gallerythumbs {

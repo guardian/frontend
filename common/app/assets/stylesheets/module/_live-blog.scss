@@ -6,7 +6,7 @@
     @extend %type-9;
     border-top: 2px solid $darkMushroom;
     display: block;
-    padding: $baseline*4 0 $baseline*1 0;
+    padding: $baseline*4 0 $baseline;
     margin-top: $baseline*2;
     color: #333;
 }
@@ -104,7 +104,7 @@
 }
     .tweet,
     .from-content-api blockquote.tweet {
-        margin: $baseline*3 0 $baseline*4 0;
+        margin: $baseline*3 0 $baseline*4;
         border-left-width: 0;
         padding: $baseline*2;
     }

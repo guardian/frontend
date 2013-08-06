@@ -2,15 +2,11 @@ define([
     "common",
 
     "modules/gallery",
-    "modules/analytics/gallery",
-    "modules/accordion",
-    "modules/story/experiment"
+    "modules/analytics/gallery"
 ], function(
     common,
     Gallery,
-    Tracking,
-    Accordion,
-    Experiment
+    Tracking
 ) {
 
     var modules = {

@@ -5,11 +5,12 @@ import model.IdentityPage
 import play.api.data.{Forms, Form}
 import play.api.mvc._
 import com.google.inject.{Inject, Singleton}
-import idapiclient.SynchronousIdApi
+import idapiclient.{EmailPassword, Email, IdApiClient}
+import org.joda.time.Duration
 
 
 @Singleton
-class ResetPasswordController @Inject()( idApi : SynchronousIdApi ) extends Controller with ExecutionContexts {
+class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller with ExecutionContexts {
 
   val page = new IdentityPage("/reset-password", "Reset Password", "reset-password")
 
@@ -25,13 +26,19 @@ class ResetPasswordController @Inject()( idApi : SynchronousIdApi ) extends Cont
   }
 
   def processPasswordResetRequestForm = Action { implicit request =>
-    form.bindFromRequest.fold(
+    val boundForm = form.bindFromRequest
+    boundForm.fold(
         formWithErrors => BadRequest(views.html.reset_password(page, form)),
         {
-          case ( email ) => Ok("Reset: %s".format(email))
+          case(email) => {
+            api.email(Email(email)) map( _ match {
+              case Left(errors) => {
+                Ok(views.html.reset_password(page, boundForm))
+              }
+              case Right(user) => {Ok("gotcha")}
+            })
+          }
         }
     )
-
   }
-
 }

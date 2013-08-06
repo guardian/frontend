@@ -16,7 +16,7 @@
     font-weight: bold;
     margin-top: $baseline*2;
     margin-bottom: 0;
-    padding: 10px $baseline*2 $baseline*2;
+    padding: 10px $gutter/2 $baseline*2;
 }
 
 .sport-summary__body {
@@ -27,7 +27,7 @@
     td {
         @extend %type-10;
         display: block;
-        padding: 0 $baseline*3;
+        padding: 0 $gutter/4*3;
     }
 
     td:first-child {
@@ -46,7 +46,7 @@
         td {
             display: table-cell;
             border-bottom: 1px solid #DEDEDD;
-            padding: $baseline*2 $baseline*3;
+            padding: $baseline*2 $gutter/4*3;
         }
     }
 }
@@ -54,5 +54,5 @@
 .sport-summary__description {
     @extend %type-10;
     font-weight: bold;
-    padding: $baseline*2 $baseline*3;
+    padding: $baseline*2 $gutter/4*3;
 }

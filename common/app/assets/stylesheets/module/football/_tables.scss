@@ -42,12 +42,12 @@
 
 .table-football-header th:first-child,
 .table-football td:first-child {
-    padding: $baseline*2 3% $baseline*2 $baseline*2;
+    padding: $baseline*2 3% $baseline*2 $gutter/2;
 }
 
 .table-football-header th:last-child,
 .table-football td:last-child {
-    padding: $baseline*2 $baseline*2 $baseline*2 3%;
+    padding: $baseline*2 $gutter/2 $baseline*2 3%;
 }
 
 .table-football td:last-child {

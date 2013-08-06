@@ -57,8 +57,8 @@
         position: absolute;
         right: 0;
         top: 58px;
-        padding: 0 $gutter 10px $gutter;
-        margin: $baseline*2 0 $baseline*2 0;
+        padding: 0 $gutter 10px;
+        margin: $baseline*2 0;
         background-color: transparent;
         color: #444;
         font-size: 14px;
@@ -91,7 +91,7 @@ span.control__menu.i-menu {
 
 .control--sections .i-nav-divider {
     @include mq(tablet) {
-        margin-right: $baseline*3;
+        margin-right: $gutter/4*3;
         border-color: #BBBBBB;
         background-color: #E3E3DB;
     }
@@ -135,8 +135,8 @@ span.control__menu.i-menu {
     height: 28px;
     vertical-align: top;
     line-height: 28px;
-    margin-right: $baseline*2;
-    margin-left: $baseline*2;
+    margin-right: $gutter/2;
+    margin-left: $gutter/2;
 
     @include mq(544px) {
         display: inline-block;
@@ -168,7 +168,7 @@ span.control__menu.i-menu {
 .control--search {
     float:right;
     height: 28px;
-    padding: 15px $baseline*4 15px 0;
+    padding: 15px $gutter 15px 0;
     border: none;
 
     @include mq(tablet) {
@@ -214,8 +214,8 @@ span.control__menu.i-menu {
     height: 28px;
     vertical-align: top;
     line-height: 28px;
-    margin-right: $baseline*2;
-    margin-left: $baseline*2;
+    margin-right: $gutter/2;
+    margin-left: $gutter/2;
 
     @include mq(544px) {
         display: inline-block;

@@ -1,14 +1,12 @@
 define([
     'Config',
-    'Common',
     'Reqwest',
-    'models/fronts/globals'
+    'models/fronts/common'
 ], 
 function (
     Config,
-    Common,
     Reqwest,
-    globals
+    common
 ){
     var cache = {};
 
@@ -45,7 +43,7 @@ function (
     var fetchArticles = function(ids, callback) {
         var apiUrl;
         if (ids.length) {
-            apiUrl = globals.apiSearchBase + "?page-size=50&format=json&show-fields=all&show-tags=all&api-key=" + Config.apiKey;
+            apiUrl = common.config.apiSearchBase + "?page-size=50&format=json&show-fields=all&show-tags=all&api-key=" + Config.apiKey;
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');

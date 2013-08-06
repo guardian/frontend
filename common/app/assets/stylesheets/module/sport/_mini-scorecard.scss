@@ -16,7 +16,7 @@
     font-weight: bold;
     margin-top: $baseline*2;
     margin-bottom: 0;
-    padding: 10px $baseline*2 $baseline*2;
+    padding: 10px $gutter/2 $baseline*2;
 }
 
 .sport-miniscorecard__body {
@@ -25,7 +25,7 @@
     td {
         @extend %type-10;
         display: table-cell;
-        padding: $baseline*2 $baseline*3;
+        padding: $baseline*2 $gutter/4*3;
     }
 }
 
@@ -45,7 +45,7 @@
     td {
         @extend %type-10;
         display: table-cell;
-        padding: $baseline*2 $baseline*3;
+        padding: $baseline*2 $gutter/4*3;
     }
 
     td:first-child {

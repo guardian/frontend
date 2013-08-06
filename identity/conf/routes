@@ -1,7 +1,9 @@
+GET     /assets/*file                                   controllers.Assets.at(path="/public", file)
 GET     /signin                                         @controllers.SigninController.renderForm
 POST    /signin                                         @controllers.SigninController.processForm
-GET     /signout                                       @controllers.SignoutController.signout
-GET     /identity/fragments/profile-nav                @controllers.TopBarFragments.signin
-GET     /identity/fragments/profile-nav.json           @controllers.TopBarFragments.signin2
-GET     /identity/resetpassword                        @controllers.ResetPasswordController.renderPasswordResetRequestForm
-POST    /identity/resetpassword                        @controllers.ResetPasswordController.processPasswordResetRequestForm
+GET     /signout                                        @controllers.SignoutController.signout
+GET     /identity/fragments/profile-nav                 @controllers.TopBarFragments.signin
+GET     /identity/fragments/profile-nav.json            @controllers.TopBarFragments.signin2
+GET     /identity/recover                               @controllers.ResetPasswordController.renderPasswordResetRequestForm
+POST    /identity/recover                               @controllers.ResetPasswordController.processPasswordResetRequestForm
+

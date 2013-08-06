@@ -1,12 +1,12 @@
 define([
+    'models/fronts/common',
     'models/fronts/article',
     'knockout',
-    'Common',
     'Reqwest'
 ], function (
+    common,
     Article,
     ko,
-    Common,
     Reqwest
 ) {
 
@@ -17,7 +17,7 @@ define([
             opts = opts || {};
 
         this.articles   = ko.observableArray();
-        this.term       = ko.observable(Common.queryParams.q || '');
+        this.term       = ko.observable(common.util.queryParams().q || '');
         this.section    = ko.observable('');
         this.mostViewed = ko.observable(false);
 

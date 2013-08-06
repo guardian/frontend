@@ -3,8 +3,8 @@ package idapiclient
 import com.gu.identity.model.{User, AccessToken}
 import play.mvc.Http.Cookie
 import client.{Anonymous, Auth, Response}
-import client.connection.Http
-import scala.concurrent.{Future, ExecutionContext}
+import client.connection.{HttpResponse, Http}
+import scala.concurrent.{Promise, Future, ExecutionContext}
 import client.parser.JsonBodyParser
 import idapiclient.responses.{CookiesResponse, CookieResponse, AccessTokenResponse}
 import client.connection.util.ExecutionContexts
@@ -50,8 +50,17 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     response map jsonBodyParser.extract[User]
   }
 
+  //TODO - rename
+  def email(auth: Auth): Future[Response[User]] = {
+    val apiPath = urlJoin("user")
+    val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
+    response map jsonBodyParser.extract[User]
+
+  }
+
   //Change password
 
+  //TODO - changew to use authObject
   def userForToken( token : String, auth: Auth = Anonymous ): Future[Response[User]] = {
     val apiPath = urlJoin("user", "user-for-token")
     val params = auth.parameters ++ Iterable(("token", token))
@@ -64,6 +73,15 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     val response = http.POST(apiUrl(apiPath), postBody, auth.parameters, auth.headers)
     response map jsonBodyParser.extract[OkResponse]
   }
+
+  //TODO -remove unused imports
+  def sendPasswordResetEmail( auth : Auth ): Future[Response[OkResponse]] = {
+    val apiPath = urlJoin("user","send-password-reset-email")
+    val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
+    response map jsonBodyParser.extract[OkResponse]
+
+  }
+
 
 
 
