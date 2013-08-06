@@ -1,8 +1,7 @@
 package controllers
 
 import play.api.mvc._
-import play.api.data.{FormError, Forms, Form}
-import play.api.data.validation.Constraints
+import play.api.data._
 import model.IdentityPage
 import common.{Logging, ExecutionContexts}
 import services.ReturnUrlVerifier
@@ -17,7 +16,7 @@ import play.api.i18n.Messages
 class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdApiClient, conf: IdentityConfiguration)
   extends Controller with ExecutionContexts with Logging {
 
-  val page = new IdentityPage("/signin", "Signin", "signin")
+  val page = new IdentityPage("/signin", "Sign in", "signin")
 
   val form = Form(
     Forms.tuple(
