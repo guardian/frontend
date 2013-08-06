@@ -39,18 +39,7 @@ case class UpdateTrailblockConfigJson(contentApiQuery: Option[String], max: Opti
 
 trait DeleteAction
 
-case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean) {
-
-  def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
-    val listWithoutItem = blocks.filterNot(_.id == update.item)
-    val index = update.after.filter {_ == true}
-      .map {_ => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1}
-      .getOrElse { listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) }
-    val splitList = listWithoutItem.splitAt(index)
-    splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
-  }
-
-}
+case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean)
 
 object JsonExtract {
   implicit val updateListRead = Json.reads[UpdateList]
