@@ -17,8 +17,14 @@ class Front extends AkkaSupport with Logging {
     Front.refresh()
   }
 
+  def idFromEditionKey(section: String): String = {
+    val editions = Edition.all.map {_.id.toLowerCase}
+    val sectionId = section.split("/").last
+    if (editions.contains(sectionId)) "" else sectionId
+  }
+
   lazy val fronts: Map[String, FrontEdition] = Edition.all.flatMap{ edition =>
-    edition.configuredFrontsFacia.filter{front => edition == Edition.defaultEdition && !isEditionalised(front._1)}.map{
+    edition.configuredFrontsFacia.filter{ front => isEditionalised(idFromEditionKey(front._1)) || (!isEditionalised(idFromEditionKey(front._1)) && edition == Edition.defaultEdition) }.map{
       case (name, trailblockDescriptions) => name ->  new FrontEdition(edition, trailblockDescriptions)
     }.toMap
   }.toMap
