@@ -6,7 +6,7 @@ import scala.slick.jdbc.StaticQuery
 import scala.slick.session.Session
 import org.joda.time.DateMidnight
 
-object Analytics extends AkkaSupport with Logging with implicits.Dates with implicits.Collections with implicits.Tuples with implicits.Statistics {
+object Analytics extends Logging with implicits.Dates with implicits.Collections with implicits.Tuples with implicits.Statistics {
 
   def getPageviewsByDay(): Map[DateMidnight, Long] = {
     val pageviews: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>

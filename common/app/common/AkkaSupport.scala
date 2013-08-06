@@ -18,8 +18,6 @@ trait AkkaSupport extends ExecutionContexts {
 
     def system(): ActorSystem = PlayAkka.system(Play.current)
 
-    def uptime(): Long = system().uptime
-
     object dispatcher {
       val default = system().dispatchers.lookup("play.akka.actor.default-dispatcher")
     }

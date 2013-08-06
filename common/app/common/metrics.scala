@@ -1,9 +1,7 @@
 package common
 
-import akka.dispatch.Dispatcher
 import com.gu.management._
 import conf.RequestMeasurementMetrics
-import scala.Some
 import java.lang.management.ManagementFactory
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
@@ -28,46 +26,6 @@ trait TimingMetricLogging extends Logging { self: TimingMetric =>
 
     result.get
   }
-}
-
-object AkkaMetrics extends AkkaSupport {
-
-  class DispatcherInhabitantsMetric(name: String, dispatcher: Dispatcher) extends GaugeMetric(
-    "akka",
-    "akka_%s_inhabitants" format name,
-    "%s inhabitants" format name,
-    "Akka %s inhabitants" format name,
-    () => dispatcher.inhabitants
-  )
-
-  class DispatcherMailBoxTypeMetric(name: String, dispatcher: Dispatcher) extends TextMetric(
-    "akka",
-    "akka_%s_mailbox_type" format name,
-    "%s mailbox type" format name,
-    "Akka %s mailbox type" format name,
-    () => dispatcher match {
-      case downcast: Dispatcher => downcast.mailboxType.getClass.getSimpleName
-      case _ => "Not an akka.dispatch.Dispatcher: Cannot determine mailbox type"
-    }
-  )
-
-  class DispatcherMaximumThroughputMetric(name: String, dispatcher: Dispatcher) extends GaugeMetric(
-    "akka",
-    "akka_%s_maximum_throughput" format name,
-    "%s maximum throughput" format name,
-    "Akka %s maximum throughput" format name,
-    () => dispatcher.throughput
-  )
-
-  object Uptime extends GaugeMetric("akka", "akka_uptime", "Akka Uptime", "Akka system uptime in seconds", () => play_akka.uptime())
-
-  val dispatcher = executionContext.asInstanceOf[Dispatcher]
-
-  object DefaultDispatcherInhabitants extends DispatcherInhabitantsMetric("default_dispatcher", dispatcher)
-  object DefaultDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("default_dispatcher", dispatcher)
-  object DefaultDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("default_dispatcher", dispatcher)
-
-  val all = Seq(Uptime, DefaultDispatcherInhabitants, DefaultDispatcherMailBoxType, DefaultDispatcherMaximumThroughput)
 }
 
 object SystemMetrics extends implicits.Numbers {
@@ -196,10 +154,8 @@ object PorterMetrics {
   val all: Seq[Metric] = Seq(AnalyticsLoadTimingMetric, FastlyCloudwatchLoadTimingMetric)
 }
 
-//case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
-
 object Metrics {
-  lazy val common = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ SystemMetrics.all
+  lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all
   lazy val contentApi = ContentApiMetrics.all
   lazy val discussion = DiscussionMetrics.all
   lazy val mongo = MongoMetrics.all

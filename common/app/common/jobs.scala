@@ -3,8 +3,10 @@ package common
 import akka.actor.Props
 import akka.camel.Consumer
 import scala.reflect.ClassTag
+import play.api.Play
+import play.api.libs.concurrent.Akka
 
-trait Job extends Consumer with AkkaSupport with Logging with implicits.Strings {
+trait Job extends Consumer with Logging with implicits.Strings {
   val name: String = getClass.getSimpleName
   val cron: String
   val metric: TimingMetricLogging
@@ -21,11 +23,11 @@ trait Job extends Consumer with AkkaSupport with Logging with implicits.Strings 
   def run()
 }
 
-class JobScheduler[T <: Job: ClassTag] extends AkkaSupport with Logging {
+class JobScheduler[T <: Job: ClassTag] extends Logging {
   def start() {
     val clazz = implicitly[ClassTag[T]].runtimeClass.getSimpleName
     log.info("Scheduling job: %s" format clazz)
-    play_akka.system().actorOf(Props[T])
+    Akka.system(Play.current).actorOf(Props[T])
   }
 
   def stop() { }
