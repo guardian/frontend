@@ -2,6 +2,8 @@ package controllers
 
 import play.api.mvc._
 import play.api.data.Forms
+import play.api.data._
+import play.api.data.validation.Constraints._
 import model.IdentityPage
 import play.api.data.Form
 import common.ExecutionContexts
@@ -12,24 +14,24 @@ import com.google.inject.{Inject, Singleton}
 @Singleton
 class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Controller with ExecutionContexts {
 
-  val page = new IdentityPage("/signin", "Signin", "signin")
+  val page = new IdentityPage("/signin", "Sign in", "signin")
 
   val form = Form(
     Forms.tuple(
-      "email" -> Forms.email,
-      "password" -> Forms.nonEmptyText(6, 20),
+      "email" -> Forms.email.verifying(nonEmpty),
+      "password" -> Forms.nonEmptyText(6, 20).verifying(nonEmpty),
       "keepMeSignedIn" -> Forms.boolean
     )
   )
 
   def renderForm = Action { implicit request =>
-    form.fill("", "", true)
-    Ok(views.html.signin(page, form))
+    val filledForm = form.fill("", "", true)
+    Ok(views.html.signin(page, filledForm))
   }
 
   def processForm = Action { implicit request =>
     form.bindFromRequest.fold(
-      formWithErrors => BadRequest(views.html.signin(page, form)),
+      formWithErrors => BadRequest(views.html.signin(page, formWithErrors)),
       { case (email, password, rememberMe) => {
         TemporaryRedirect(returnUrlVerifier.getVerifiedReturnUrl(request))
         // call ID API
