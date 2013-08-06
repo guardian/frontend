@@ -47,6 +47,7 @@ form,
 
 label,
 .label {
+    cursor: pointer;
     display: block;
     font-size: 14px;
     margin-bottom: $baseline*3;
@@ -54,7 +55,7 @@ label,
 
 .text-input {
     border: 1px solid $grey;
-    box-sizing: border-box;
+    @include box-sizing(border-box);
     color: #545454;
     display: inline-block;
     font-family: $sans-serif;
@@ -70,7 +71,7 @@ label,
 }
 
 .submit-input {
-    background-color: $ctaBlue;
+    background: $linkBlue;
     border: 0 none;
     color: #fff;
     font-size: 14px;
@@ -90,8 +91,6 @@ label,
     font-size: 1.2rem;
     margin-top: $baseline*3;
 }
-
-.check-list {}
 
 .check-list label,
 .check-label {
