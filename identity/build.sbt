@@ -1,0 +1,1 @@
+addCommandAlias("idrun", ";run 9009")
