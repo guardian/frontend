@@ -36,8 +36,9 @@ object FrontsController extends Controller with Logging {
       case update: UpdateList => {
         val identity = Identity(request).get
         UpdateActions.updateBlock(edition, section, blockId, update, identity)
+        //TODO: How do we know if it was updated or created? Do we need to know?
         Ok
-        }
+      }
       case blockAction: BlockActionJson => {
         blockAction.publish.filter {_ == true}
           .map { _ => FrontsApi.publishBlock(edition, section, blockId) }
@@ -49,7 +50,7 @@ object FrontsController extends Controller with Logging {
       case updateTrailblock: UpdateTrailblockJson => {
         UpdateActions.updateTrailblockJson(edition, section, blockId, updateTrailblock)
         Ok
-        }
+      }
       case _ => NotFound
     } getOrElse NotFound
   }
