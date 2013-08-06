@@ -65,7 +65,7 @@ define([
                 tpl = '<a href="' + url + '" class="card-wrapper" data-link-name="in card link">' +
                           '<div class="furniture furniture--left card">' +
                               thumbnailFragment +
-                              '<div class="card__body u-textHyphenate"><h3 class="card__headline">' + headline + '</h3></div>' +
+                              '<div class="card__body u-text-hyphenate"><h3 class="card__headline">' + headline + '</h3></div>' +
                           '</div>' +
                       '</a>';
 
