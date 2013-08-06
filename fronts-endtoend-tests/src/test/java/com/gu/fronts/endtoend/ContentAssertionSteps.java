@@ -83,8 +83,7 @@ public class ContentAssertionSteps {
 	}
 
 	private List<String> getContent(String trailBlockLabel, TrailBlockMode mode) {
-		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailBlock);
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 
 		ViewTrailBlockAction action = new ViewTrailBlockAction(trailBlock);
 

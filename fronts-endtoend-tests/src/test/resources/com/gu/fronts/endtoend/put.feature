@@ -10,8 +10,8 @@ Feature: As an editor I want to put storyA in the position of storyB in trailblo
 
   Scenario: modify order
     Given trailblockX is an existing trailblock
-    And storyB is part of trailblockX
-    And storyA is part of trailblockX
+    And storyB is part of it
+    And storyA is part of it
     And storyA is positioned below storyB
     When an editor puts storyA into trailblockX to the position of storyB
     Then storyA should be above storyB

@@ -35,8 +35,7 @@ public class PutSteps {
 	) {
 		TrailBlockEditor editor = editors.getActor(actorLabel);
 
-		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailBlock);
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 
 		Story storyA = stories.get(storyALabel);
 		Story storyB = stories.get(storyBLabel);
@@ -79,8 +78,7 @@ public class PutSteps {
 	) {
 		TrailBlockEditor editor = editors.getActor(actorLabel);
 
-		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailBlock);
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 
 		Story story = stories.get(storyLabel);
 

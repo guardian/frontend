@@ -27,10 +27,9 @@ public class SetUpStoriesSteps {
 		this.context = context;
 	}
 
-	@Given("^(.*) is part of ((?!it).*)$")
+	@Given("^(.*) is part of (.*)$")
 	public void storyIsPartOfTrailBlock(String storyLabel, String trailBlockLabel) {
-		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailBlock);
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 
 		Story story = new Story(storyLabel);
 		stories.add(story);
@@ -42,32 +41,19 @@ public class SetUpStoriesSteps {
 		Assert.assertTrue(action.success());
 	}
 
-	@Given("^(.*) is part of it$")
-	public void storyIsPartOfTrailBlockReference(String storyLabel) {
-		TrailBlock trailblock = context.getSubject();
-		storyIsPartOfTrailBlock(storyLabel, trailblock.getName());
-	}
-
-	@Given("^(.*) is not part of ((?!it).*)$")
+	@Given("^(.*) is not part of (.*)$")
 	public void storyIsNotPartOfTrailBlock(String storyLabel, String trailBlockLabel) {
-		TrailBlock trailblock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailblock);
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 
 		Story story = new Story(storyLabel);
 		stories.add(story);
 
-		RemoveStoryFromTrailBlockAction action = new RemoveStoryFromTrailBlockAction(story, trailblock);
+		RemoveStoryFromTrailBlockAction action = new RemoveStoryFromTrailBlockAction(story, trailBlock);
 
 		editors.anyone().execute(action);
 
 		Assert.assertTrue(action.success());
 
-	}
-
-	@Given("^(.*) is not part of it$")
-	public void storyIsNotPartOfIt(String storyLabel) {
-		TrailBlock trailblock = context.getSubject();
-		storyIsNotPartOfTrailBlock(storyLabel, trailblock.getName());
 	}
 
 }

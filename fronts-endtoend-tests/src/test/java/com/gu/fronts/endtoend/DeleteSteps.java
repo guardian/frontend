@@ -9,7 +9,6 @@ import com.gu.fronts.endtoend.engine.TrailBlockMode;
 import com.gu.fronts.endtoend.engine.TrailBlocks;
 import com.gu.fronts.endtoend.engine.actions.DiscardDraftAction;
 import com.gu.fronts.endtoend.engine.actions.RemoveStoryFromTrailBlockAction;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import hu.meza.aao.DefaultScenarioContext;
 
@@ -36,8 +35,7 @@ public class DeleteSteps {
 	) {
 		TrailBlockEditor editor = editors.getActor(actorLabel);
 
-		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailBlock);
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 
 		Story story = stories.get(storyLabel);
 
@@ -51,9 +49,7 @@ public class DeleteSteps {
 	public void deletesStoryFromTrailBlock(String actorLabel, String storyLabel, String trailBlockLabel) {
 		TrailBlockEditor editor = editors.getActor(actorLabel);
 
-		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailBlock);
-
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 		Story story = stories.get(storyLabel);
 
 		RemoveStoryFromTrailBlockAction action = new RemoveStoryFromTrailBlockAction(story, trailBlock);
@@ -62,15 +58,18 @@ public class DeleteSteps {
 
 	}
 
-	@And("^([\\w]*) discards the draft of ([\\w]*)$")
+	@When("^([\\w]*) discards the draft of ([\\w]*)$")
 	public void discardsTheDraftOfTrailBlock(String actorLabel, String trailBlockLabel) {
 		TrailBlockEditor editor = editors.getActor(actorLabel);
-
-		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailBlock);
-
+		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 		DiscardDraftAction action = new DiscardDraftAction(trailBlock);
 
 		editor.execute(action);
+	}
+
+	@When("^([\\w]*) discards the draft$")
+	public void discardsTheDraftOfTrailBlock(String actorLabel) {
+		TrailBlock trailBlock = context.getSubject();
+		discardsTheDraftOfTrailBlock(actorLabel, trailBlock.getName());
 	}
 }
