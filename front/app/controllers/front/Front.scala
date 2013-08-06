@@ -1,17 +1,15 @@
 package controllers.front
 
 import model.Trailblock
-import common.{Edition, Logging, AkkaSupport}
+import common.{ Edition, Logging, AkkaScheduler }
 import scala.concurrent.duration._
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
-
 //Responsible for bootstrapping the front (setting up the refresh schedule)
-class Front extends AkkaSupport with Logging {
+class Front extends Logging {
 
   val refreshDuration = 60.seconds
 
-  private lazy val refreshSchedule = play_akka.scheduler.every(refreshDuration, initialDelay = 5.seconds) {
+  private lazy val refreshSchedule = AkkaScheduler.every(refreshDuration, initialDelay = 5.seconds) {
     log.info("Refreshing Front")
     Front.refresh()
   }

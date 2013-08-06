@@ -1,18 +1,16 @@
 package model
 
-import common.{Edition, AkkaSupport, Logging}
-import conf.ContentApi
 import akka.actor.Cancellable
-import java.util.concurrent.TimeUnit._
-import com.gu.openplatform.contentapi.model.ItemResponse
-
+import common._
+import conf.ContentApi
 import scala.concurrent.duration._
 
-trait LiveBlogAgent extends AkkaSupport with Logging {
+
+trait LiveBlogAgent extends ExecutionContexts with Logging {
 
   import Edition.{all => editions}
 
-  private val agents = editions.map(edition => edition.id -> play_akka.agent[Option[Trail]](None)).toMap
+  private val agents = editions.map(edition => edition.id -> AkkaAgent[Option[Trail]](None)).toMap
 
   // TODO editions
   def refreshLiveBlogs() = {
@@ -59,7 +57,7 @@ object LiveBlog extends LiveBlogAgent {
   private var schedule: Option[Cancellable] = None
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(2.minutes, initialDelay = 10.seconds) {
+    schedule = Some(AkkaScheduler.every(2.minutes, initialDelay = 10.seconds) {
       refreshLiveBlogs()
     })
   }

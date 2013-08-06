@@ -1,6 +1,6 @@
 package services
 
-import common.{ Logging, AkkaSupport }
+import common.Logging
 import conf.PorterConfiguration
 import scala.slick.jdbc.StaticQuery
 import scala.slick.session.Session

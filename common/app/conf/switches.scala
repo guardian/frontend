@@ -171,7 +171,7 @@ object Switches extends Collections {
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
     "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
-    safeState = Off);
+    safeState = Off)
 
   // Dummy Switch
 
@@ -224,9 +224,9 @@ object Switches extends Collections {
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with Logging with Plugin {
+class SwitchBoardAgent(config: GuardianConfiguration) extends ExecutionContexts with Logging with Plugin {
 
-  private lazy val refreshSwitches = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+  private lazy val refreshSwitches = AkkaScheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
     log.info("Refreshing switches")
     WS.url(config.switches.configurationUrl).get() foreach { response =>
       response.status match {

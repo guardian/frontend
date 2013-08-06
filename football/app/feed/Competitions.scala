@@ -86,7 +86,7 @@ trait CompetitionSupport extends Football {
   }
 }
 
-trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections with Football {
+trait Competitions extends CompetitionSupport with ExecutionContexts with Logging with implicits.Collections with Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
@@ -186,7 +186,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
   }
 
   def startup() {
-    import play_akka.scheduler._
+    import AkkaScheduler._
     schedules = every(Timed(10, SECONDS), initialDelay = Timed(1, SECONDS)) { refreshMatchDay() } ::
       every(Timed(5, MINUTES), initialDelay = Timed(1, SECONDS)) { refreshCompetitionData() } ::
       competitionAgents.zipWithIndex.toList.map {

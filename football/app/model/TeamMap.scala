@@ -1,10 +1,10 @@
 package model
 
-import pa._
-import common.{ Logging, AkkaSupport }
-import conf.ContentApi
-import scala.concurrent.duration._
 import akka.actor.Cancellable
+import common.{ ExecutionContexts, AkkaScheduler, AkkaAgent, Logging }
+import conf.ContentApi
+import pa._
+import scala.concurrent.duration._
 
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
@@ -13,9 +13,9 @@ case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String])
   override lazy val id = team.id
 }
 
-object TeamMap extends AkkaSupport with Logging {
+object TeamMap extends ExecutionContexts with Logging {
 
-  val teamAgent = play_akka.agent(Map.empty[String, Tag])
+  val teamAgent = AkkaAgent(Map.empty[String, Tag])
 
   private var schedule: Option[Cancellable] = None
 
@@ -100,7 +100,7 @@ object TeamMap extends AkkaSupport with Logging {
     ("7520", "Helsingborg"),
     ("26322", "Twente"),
     ("26398", "Basel")
-)
+  )
 
   def apply(team: FootballTeam) = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
 
@@ -109,7 +109,7 @@ object TeamMap extends AkkaSupport with Logging {
   def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
 
   def startup() {
-    schedule = Some(play_akka.scheduler.every(1.minute, initialDelay = 5.seconds) {
+    schedule = Some(AkkaScheduler.every(1.minute, initialDelay = 5.seconds) {
       incrementalRefresh(1) //pages are 1 based
     })
   }
