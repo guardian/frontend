@@ -28,17 +28,11 @@ sealed case class Trail(
                   )
 
 
+
+
 case class BlockActionJson(publish: Option[Boolean], discard: Option[Boolean])
-
-trait Update
-case class Publish(id: String)
-case class Discard(id: String)
-
 case class UpdateTrailblockJson(config: UpdateTrailblockConfigJson)
 case class UpdateTrailblockConfigJson(contentApiQuery: Option[String], max: Option[Int], min: Option[Int])
-
-trait DeleteAction
-
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean)
 
 object JsonExtract {
