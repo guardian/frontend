@@ -39,19 +39,25 @@ define([
         }
     };
 
-    InlineLinkCard.prototype.prependCard = function(href, data) {
+    InlineLinkCard.prototype.prependCard = function(href, data, title) {
         var self = this,
+            title = title || false,
             headline = data.headline,
             thumbnail = data.thumbnail,
             tpl,
-            thumbnailFragment = '';
+            thumbnailFragment = '',
+            titleFragment = '';
 
+        if (title) {
+            titleFragment = '<h2 class="card__title">' + title + '</h2>';
+        }
         if (thumbnail) {
             thumbnailFragment = '<img src="' + thumbnail + '" alt="" class="card__media" />';
         }
 
         tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
                   '<div class="furniture furniture--left card">' +
+                      titleFragment +
                       thumbnailFragment +
                       '<div class="card__body u-text-hyphenate"><h3 class="card__headline">' + headline + '</h3></div>' +
                   '</div>' +
@@ -73,7 +79,7 @@ define([
             function(resp) {
                 self.hasLoadedCard = true;
 
-                self.prependCard(href, resp.config.page);
+                self.prependCard(href, resp.config.page, 'Related');
             }
         );
     };
