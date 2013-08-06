@@ -56,6 +56,10 @@ object JsonExtract extends JsonExtract
 
 trait UpdateActions {
 
+  lazy val defaultMinimumTrailblocks = 0
+  lazy val defaultMaximumTrailblocks = 20
+  def trailWithId(id: String) = Trail(id, None, None, None)
+
   def updateActionFilter(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity): Either[String, String] =
     FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
       var newBlock: Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
@@ -80,7 +84,7 @@ trait UpdateActions {
       .map {_ => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1}
       .getOrElse { listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) }
     val splitList = listWithoutItem.splitAt(index)
-    splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
+    splitList._1 ++ List(trailWithId(update.item)) ++ splitList._2
   }
 
   def updateBlock(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity): Unit = {
@@ -105,16 +109,15 @@ trait UpdateActions {
   }
 
   def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-    FrontsApi.putBlock(edition, section, block, Block(block, None, List(Trail(update.item, None, None, None)), List(Trail(update.item, None, None, None)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
+    FrontsApi.putBlock(edition, section, block, Block(block, None, List(trailWithId(update.item)), List(trailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
   }
 
   def updateTrailblockJson(edition: String, section: String, blockId: String, updateTrailblock: UpdateTrailblockJson) = {
     FrontsApi.getBlock(edition, section, blockId).map { block =>
       val newBlock = block.copy(
         contentApiQuery = updateTrailblock.config.contentApiQuery orElse None,
-        //These defaults will move somewhere better during refactor
-        min = updateTrailblock.config.min orElse Some(0),
-        max = updateTrailblock.config.max orElse Some(20)
+        min = updateTrailblock.config.min orElse Some(defaultMinimumTrailblocks),
+        max = updateTrailblock.config.max orElse Some(defaultMaximumTrailblocks)
       )
       FrontsApi.putBlock(edition, section, newBlock)
     }
