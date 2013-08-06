@@ -105,6 +105,18 @@ $mq-responsive: false;
 }
 ```
 
+### Adding custom breakpoints
+
+```scss
+$mq-breakpoints: mq-add-breakpoint(tvscreen, 1920px);
+
+.hide-on-tv {
+    @include mq(tvscreen) {
+        display: none;
+    }
+}
+```
+
 ## Test
 
 1. cd into the `test` folder
