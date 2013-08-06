@@ -72,6 +72,7 @@ define([
                             // Sport Front
                             opts = {
                                 prependTo: context.querySelector('.trailblock ul > li'),
+                                competitions: ['500', '510', '100'],
                                 contextual: false,
                                 expandable: true,
                                 numVisible: 5
