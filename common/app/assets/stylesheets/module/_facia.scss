@@ -70,9 +70,11 @@
     @include mq(0, tablet) {
 
         .trail:nth-child(1) {
+            padding: 0;
+
             .trail__image {
                 width: 100%;
-                display:block;
+                display: block;
             }
             .trail__title {
                 @include font($serif, 700, 20, 22);
