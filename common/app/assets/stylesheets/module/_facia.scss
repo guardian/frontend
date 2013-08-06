@@ -58,11 +58,18 @@
 
     .trails {
         overflow: hidden;
+        margin-top: $baseline*4
     }
     .trail {
-        padding:0;
+        padding: 0;
         border:none;
         float: left;
+    }
+    .trail__count {
+        top: auto;
+        bottom: 10px;
+        left: 10px;
+        right: auto;
     }
 
     .trails-count-1 {
@@ -134,6 +141,7 @@
         .trail:nth-child(4) {
             border-top: 1px dotted #000000;
             padding-top: $baseline*3;
+            height: 173px;
         }
     }
 }
