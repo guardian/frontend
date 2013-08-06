@@ -1,12 +1,11 @@
 package frontsapi.model
 
 import play.api.libs.json.{Json, JsValue}
-import play.api.mvc.Results.Status
 import tools.FrontsApi
 import controllers.Identity
 import org.joda.time.DateTime
 
-sealed case class Block(
+case class Block(
                   id: String,
                   name: Option[String],
                   live: List[Trail],
@@ -20,15 +19,12 @@ sealed case class Block(
                   contentApiQuery: Option[String]
                   )
 
-sealed case class Trail(
+case class Trail(
                   id: String,
                   title: Option[String],
                   trailImage: Option[String],
                   linkText: Option[String]
                   )
-
-
-
 
 case class BlockActionJson(publish: Option[Boolean], discard: Option[Boolean])
 case class UpdateTrailblockJson(config: UpdateTrailblockConfigJson)
