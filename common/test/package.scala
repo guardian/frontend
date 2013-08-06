@@ -39,6 +39,16 @@ trait TestSettings {
       throw new RuntimeException("You are not using the correct content api host...")
     }
 
+    if (DigestUtils.sha256Hex(Configuration.contentApi.key) != "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96") {
+
+      // the println makes it easier to spot what is wrong in tests
+      println()
+      println("----------- YOU ARE NOT USING THE CORRECT CONTENT API KEY -----------")
+      println()
+
+      throw new RuntimeException("You are not using the correct content api key...")
+    }
+
     override def GET(url: String, headers: scala.Iterable[scala.Tuple2[java.lang.String, java.lang.String]]) = {
       recorder.load(url, headers.toMap) {
         originalHttp.GET(url, headers)

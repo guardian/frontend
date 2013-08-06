@@ -8,6 +8,7 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 #Note the order of these is important
 
+<<<<<<< HEAD
 #Identity
 GET     /identity/signin                                    @controllers.SigninController.renderForm
 POST    /identity/signin                                    @controllers.SigninController.processForm
@@ -18,6 +19,8 @@ GET     /identity/reset-password                            @controllers.ResetPa
 POST    /identity/reset-password                            @controllers.ResetPasswordController.processPasswordResetRequestForm
 
 
+=======
+>>>>>>> origin/signin-form-with-id-api
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)
 GET     /discussion/comment-counts.json                     controllers.CommentCountController.render(shortUrls: String)

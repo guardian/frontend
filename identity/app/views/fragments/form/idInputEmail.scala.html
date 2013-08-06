@@ -8,7 +8,8 @@
 @autocomplete = @{ args.toMap.get('autocomplete).map(_.toString).getOrElse("on") }
 @spellcheck = @{ args.toMap.get('spellcheck).map(_.toString).getOrElse("false") }
 @updatedArgs = @{ args ++ Seq('_showConstraints -> false) }
+@required = @{ field.constraints.exists(constraint => constraint._1 == "constraint.required") }
 
 @input(field, updatedArgs.filter(_._1 != 'type):_*) { (id, name, value, htmlArgs) =>
-    <input class="@cls" type="@inputType" id="@id" name="@name" value="@value" autocomplete="@autocomplete" spellcheck="@spellcheck" @toHtmlArgs(htmlArgs)>
+    <input class="@cls" type="@inputType" id="@id" name="@name" value="@value" autocomplete="@autocomplete" spellcheck="@spellcheck" @if(required){aria-required="true"} @toHtmlArgs(htmlArgs) />
 }

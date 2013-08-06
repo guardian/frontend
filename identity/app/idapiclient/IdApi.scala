@@ -1,7 +1,7 @@
 package idapiclient
 
 import com.gu.identity.model.{User, AccessToken}
-import play.mvc.Http.Cookie
+import client.{Logging, Anonymous, Auth, Response}
 import client.{Anonymous, Auth, Response}
 import client.connection.{HttpResponse, Http}
 import scala.concurrent.{Promise, Future, ExecutionContext}
@@ -11,7 +11,7 @@ import client.connection.util.ExecutionContexts
 import model.OkResponse
 
 
-abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) {
+abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends Logging {
   implicit def executionContext: ExecutionContext
 
   protected def apiUrl(path: String) = urlJoin(apiRootUrl, path)
@@ -31,7 +31,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
 
   def authBrowser(auth: Auth): Future[Response[List[CookieResponse]]] = {
     val params = auth.parameters ++ Iterable(("format", "cookie"))
-    val response = http.GET(apiUrl("auth"), params, auth.headers)
+    val response = http.POST(apiUrl("auth"), None, params, auth.headers)
     val cookieResponse = response map jsonBodyParser.extract[CookiesResponse]
     cookieResponse.map(_.right.map(_.values))
   }

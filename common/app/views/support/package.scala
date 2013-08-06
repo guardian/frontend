@@ -172,8 +172,13 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
             })
           }
         }
-
-        fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+        fig.getElementsByTag("figcaption").foreach { figcaption =>
+          if (!figcaption.hasText()) {
+            figcaption.remove();
+          } else {
+            figcaption.attr("itemprop", "description")
+          }
+        }
       }
     }
     body

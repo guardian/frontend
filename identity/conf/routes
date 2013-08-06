@@ -6,4 +6,3 @@ GET     /identity/fragments/profile-nav                 @controllers.TopBarFragm
 GET     /identity/fragments/profile-nav.json            @controllers.TopBarFragments.signin2
 GET     /identity/recover                               @controllers.ResetPasswordController.renderPasswordResetRequestForm
 POST    /identity/recover                               @controllers.ResetPasswordController.processPasswordResetRequestForm
-
