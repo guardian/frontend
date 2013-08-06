@@ -1,25 +1,17 @@
 package feed
 
-import common.{ Logging, AkkaSupport }
 import akka.actor.Cancellable
-import org.joda.time.{ DateTime, DateTimeComparator, DateMidnight }
+import org.joda.time.{ DateTimeComparator, DateMidnight }
 import conf.FootballClient
-import model.Competition
-import model.TeamFixture
-import scala.Some
 import java.util.Comparator
 import org.scala_tools.time.Imports._
 import pa._
 import implicits.Football
 import common._
-
-
 import scala.concurrent.duration.{Duration => Timed, _}
-import pa.MatchDayTeam
-import pa.MatchDay
-import scala.Some
 import model.Competition
 import model.TeamFixture
+
 
 trait CompetitionSupport extends Football {
 

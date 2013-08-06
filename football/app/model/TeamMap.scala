@@ -1,12 +1,11 @@
 package model
+
 import pa._
 import common.{ Logging, AkkaSupport }
 import conf.ContentApi
-
 import scala.concurrent.duration._
-import com.gu.openplatform.contentapi.model.TagsResponse
-import scala.Some
 import akka.actor.Cancellable
+
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
   lazy val url = tag.map(_.url)

@@ -1,7 +1,6 @@
 package controllers.front
 
 import model.TrailblockDescription
-import scala.Some
 import model.Trailblock
 import common.Edition
 

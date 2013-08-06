@@ -2,7 +2,6 @@ package model
 
 import org.joda.time.DateTime
 import views.support.Style
-import scala.math
 import scala.concurrent.Future
 import conf.{Configuration, ContentApi}
 import common._
@@ -10,10 +9,9 @@ import contentapi.QueryDefaults
 import play.api.libs.ws.WS
 import play.api.libs.json.Json._
 import play.api.libs.ws.Response
-import scala.Some
 import play.api.libs.json.JsObject
-import java.net.URLDecoder
 import tools.QueryParams
+
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime

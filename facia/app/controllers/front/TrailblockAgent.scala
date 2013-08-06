@@ -2,7 +2,6 @@ package controllers.front
 
 import model.{ConfiguredTrailblockDescription, Trail, Trailblock, TrailblockDescription}
 import common._
-import scala.Some
 
 trait TrailblockAgent {
   def refresh()
