@@ -1,0 +1,65 @@
+@(env: String)
+@import conf.AdminConfiguration.pa
+@import org.joda.time.DateTime
+
+@admin_main("Football Troubleshooter", env, isAuthed = true) {
+
+@defining(new DateTime().toString("yyyyMMdd")){ today =>
+
+    <h1>Football Troubleshooter</h1>
+
+    <p>How to access the raw feeds to determine if a problem lies in the feeds or in the application</p>
+
+    <p>The current API host is <i>@pa.host</i> and the API key is <i>@pa.apiKey</i>.</p>
+
+    <p>To log a support call with PA email <a href="mailto:customer.services@@pressassociation.com">customer.services@@pressassociation.com</a> or call <i>01430 455337</i></p>
+
+    <p>The PA API explorer is <a href="http://pads.pa-sport.com/api/football/">here</a>.</p>
+
+    <h2>Competitions feed</h2>
+
+    <p>This shows us all the competitions we have access to. You can use it to find the ID of a competition
+    that we can use to access other feeds.</p>
+
+    <a href="@pa.host/api/football/competitions/competitions/@pa.apiKey">@pa.host/api/football/competitions/competitions/@pa.apiKey</a>
+
+    <h2>Fixtures feed</h2>
+
+    <p>Matches will first appear in the fixtures feed. We query each competition separately for all upcoming fixtures.</p>
+
+    <p>Here is the API call for all upcoming fixtures in the Premier League (id 100). You can get other competition IDs
+        from the Competitions feed above.</p>
+
+    <a href="@pa.host/api/football/competition/fixtures/@pa.apiKey/100">@pa.host/api/football/competition/fixtures/@pa.apiKey/<strong>100</strong></a>
+
+    <h2>Matchday Feed</h2>
+
+    <p>This is the feed you are most likely to be interested in. This feed shows detailed information on today&apos;s
+        matches and is the feed we use while the match is live</p>
+
+    <p>A single call to this api loads match data for today for <i>all</i> competitions and the date format is <i>YYYYMMDD</i></p>
+
+    <p>This api call also includes today&apos;s fixtures and results.</p>
+
+    <p>Here is the API call for today&apos;s live matches</p>
+
+    <a href="@pa.host/api/football/competitions/matchDay/@pa.apiKey/@today">@pa.host/api/football/competitions/matchDay/@pa.apiKey/<strong>@today</strong></a>
+
+    <h2>Results feed</h2>
+
+    <p>Shows the results for completed matches. We query each competition separately for results.</p>
+
+    <p>Here is the API call for results in the Premier League (id 100) in the last 6 months. You can get other competition IDs
+        from the Competitions feed above and the date format is <i>YYYYMMDD</i>.</p>
+
+    <a href="@pa.host/api/football/competition/results/@pa.apiKey/100/@{new DateTime().minusMonths(6).toString("yyyyMMdd")}">@pa.host/api/football/competition/results/@pa.apiKey/<strong>100</strong>/<strong>@{new DateTime().minusMonths(6).toString("yyyyMMdd")}</strong></a>
+
+    <h2>Match stats</h2>
+
+    <p>Detailed match stats for a specific match. You would get the match ID from the either fixtures or matchday or results feed</p>
+
+    <a href="@pa.host/api/football/match/stats/@pa.apiKey/3630511">@pa.host/api/football/match/stats/@pa.apiKey/<strong>3630511</strong></a>
+
+}
+
+}
