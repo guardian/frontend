@@ -64,8 +64,8 @@ class Content protected (
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
-  override lazy val images: List[ImageElement] = imageMap(relation).sortBy(_.index)
-  override lazy val videos: List[VideoElement] = videoMap(relation).sortBy(_.index)
+  override lazy val images: List[ImageElement] = imageMap(relation)
+  override lazy val videos: List[VideoElement] = videoMap(relation) ++ videoMap("body")
 
   override lazy val cacheSeconds = {
     if (isLive) 30 // live blogs can expect imminent updates

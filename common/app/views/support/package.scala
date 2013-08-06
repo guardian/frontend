@@ -187,7 +187,7 @@ case class VideoPosterCleaner(videos: Seq[Asset]) extends HtmlCleaner {
   def clean(body: Document): Document = {
     body.getElementsByTag("video").filter(_.hasClass("gu-video")).foreach { videoTag =>
       videoTag.getElementsByTag("source").headOption.foreach{ source =>
-        val file = source.attr("src")
+        val file = Some(source.attr("src"))
         videos.find(_.file == file).foreach{ video =>
           video.typeData.get("stillImageUrl").foreach{ poster =>
             videoTag.attr("poster", poster)

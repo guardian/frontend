@@ -1,7 +1,5 @@
 package model
 
-import com.gu.openplatform.contentapi.model.MediaEncoding
-
 case class Encoding(format: String, url: String, rawFormat: String)
 
 object Encoding {

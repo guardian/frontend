@@ -43,17 +43,24 @@ object Page {
 }
 
 trait Elements {
+
+  // Find any crop which matches this width.
   def imageOfWidth(width: Int): Option[Image] = crops.filter(_.width == width).headOption.orElse(mainPicture)
 
-  // Legacy trait function which can soon be removed in favour of imageOfWidth.
-  def mainPicture(width: Int): Option[Image] = imageOfWidth(width)
-
+  // Find a main picture crop which matches this width.
+  def mainPicture(width: Int): Option[Image] = mainImageElement.flatMap(_.imageCrops.filter(_.width == width).headOption)
+                                                .headOption.orElse(mainPicture)
   def images: List[ImageElement]
   def videos: List[VideoElement]
 
+  private lazy val imageElements: List[ImageContainer] = (images ++ videos).sortBy(_.index)
+  // Find the the lowest index imageContainer.
+  private lazy val mainImageElement: Option[ImageContainer] = imageElements.find(!_.image.isEmpty)
+  lazy val crops: List[Image] = imageElements.flatMap(_.imageCrops)
   lazy val videoAssets: List[Asset] = videos.flatMap(_.videoAssets)
-  lazy val crops: List[Image] = images.flatMap(_.imageCrops) ++ videos.flatMap(_.videoImages)
-  lazy val mainPicture: Option[Image] = crops.headOption
+
+  // Return the biggest main picture crop.
+  lazy val mainPicture: Option[Image] = mainImageElement.flatMap(_.image)
 }
 
 trait Tags {
