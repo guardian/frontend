@@ -35,7 +35,7 @@ define([
 
     InlineLinkCard.prototype.loadCard = function() {
         var layoutMode = detect.getLayoutMode();
-        if(layoutMode.match('desktop|extended') && !this.hasLoadedCard) {
+        if(/leftcol|extended/.test(layoutMode) && !this.hasLoadedCard) {
             this.fetchData();
         }
     };
