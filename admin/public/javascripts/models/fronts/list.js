@@ -3,13 +3,15 @@ define([
     'knockout',
     'models/fronts/common',
     'models/fronts/article',
-    'models/fronts/contentApi'
+    'models/fronts/contentApi',
+    'models/fronts/ophanApi'
 ], function(
     reqwest,
     ko,
     common,
     Article,
-    ContentApi
+    contentApi,
+    ophanApi
 ) {
 
     function List(id) {
@@ -70,10 +72,12 @@ define([
 
     List.prototype.setLiveMode = function() {
         this.state.liveMode(true);
+        this.decorate();
     };
 
     List.prototype.setDraftMode = function() {
         this.state.liveMode(false);
+        this.decorate();
     };
 
     List.prototype.publishDraft = function() {
@@ -96,7 +100,7 @@ define([
         }).then(
             function(resp) {
                 self.load({
-                    callback: function(){ self.state.liveMode(true); }
+                    callback: function(){ self.setLiveMode(); }
                 });
             },
             function(xhr) {
@@ -172,6 +176,8 @@ define([
 
     List.prototype.populateLists = function(opts) {
         var self = this;
+        
+
         opts = opts || {};
 
         if (common.state.uiBusy) { return; }
@@ -195,11 +201,18 @@ define([
                         webTitleOverride: item.webTitleOverride
                     }));
                 });
-                ContentApi.decorateItems(self[list]());
             }
         });
 
+        self.decorate();
         this.state.hasUnPublishedEdits(opts.areEqual === false);
+    };
+
+    List.prototype.decorate = function() {
+        var list = this[this.state.liveMode() ? 'live' : 'draft']();
+
+        contentApi.decorateItems(list);
+        ophanApi.decorateItems(list);
     };
 
     List.prototype.refresh = function() {

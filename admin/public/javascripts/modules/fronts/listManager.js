@@ -245,13 +245,12 @@ define([
                         };
 
                     if( value && _.max(value)) {
-                        console.log(height);                        
                         $(element).sparkline(value, options);                        
                     }
                 }
             };
 
-
+            
         };
 
     };

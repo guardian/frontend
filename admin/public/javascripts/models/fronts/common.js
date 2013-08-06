@@ -8,10 +8,17 @@ define([
         config: {
             apiBase: '/fronts/api',
             apiSearchBase: '/api/proxy/search',
+            maxOphanCallsPerBlock: 20,
+            cacheExpiryMs: 300000, // 300000 = five mins 
             defaultToLiveMode: true
         },
 
         state: {},
+
+        cache: {
+            article: {},
+            pageViews: {}
+        },
 
         util: {
             queryParams: function() {
@@ -24,6 +31,17 @@ define([
 
             fullTrim: function(str){
                 return str ? str.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ') : undefined;
+            },
+
+            numberWithCommas: function(x) {
+                var pattern = /(-?\d+)(\d{3})/;
+
+                if(typeof x === 'undefined') { return ''; }
+
+                x = x.toString();
+                while (pattern.test(x))
+                    x = x.replace(pattern, "$1,$2");
+                return x;
             },
 
             asObservableProps: function(props) {

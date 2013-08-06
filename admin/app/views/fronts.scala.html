@@ -130,7 +130,7 @@
             <div class="trail__meta">
                 <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
                 <a class="trail__meta__stats"  data-bind="attr: {href: 'http://dashboard.ophan.co.uk/summary?path=/' + meta.id()}">stats</a>
-                <a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a>
+                <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
                 <a class="trail__meta__remove" data-bind="click: $parent.dropItem">remove</a>
             </div>
 
@@ -154,7 +154,7 @@
                 attr: {href: 'http://www.theguardian.com/' + meta.id()}"></a>
 
             <div class="trail_stats cf">
-                <div class="pageviews" data-bind="if: state.pageViews(), text: state.pageViews"></div>
+                <div class="pageviews" data-bind="if: pageViewsCommas(), text: pageViewsCommas"></div>
                 <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
             </div>
 

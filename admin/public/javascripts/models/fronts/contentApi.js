@@ -8,39 +8,41 @@ function (
     Reqwest,
     common
 ){
-    var cache = {};
+    var cache = common.cache.article;
 
-    var decorateItems = function(items) {
+    window.frontCache = common.cache;
+
+    function decorateItems (items) {
         var fetch = [];
 
         items.forEach(function(item){
-            var article = cache[item.meta.id()];
-            if(article) {
-                decorateItem(article, item);
+            var data = cache[item.meta.id()];
+            if(data) {
+                decorateItem(data, item);
             } else {
                 fetch.push(item.meta.id());
             }
         });
 
-        fetchArticles(fetch, function(results){
-            results.forEach(function(result){
-                if (result.id) {
-                    cache[result.id] = result;
+        fetchData(fetch, function(results){
+            results.forEach(function(article){
+                if (article.id) {
+                    cache[article.id] = article;
                     _.filter(items,function(item){
-                        return item.meta.id() === result.id;
+                        return item.meta.id() === article.id;
                     }).forEach(function(item){
-                        decorateItem(result, item);
+                        decorateItem(article, item);
                     });
                 }
             });
         })
     };
 
-    var decorateItem = function(fromObj, toKoObj) {
-        toKoObj.init(fromObj);
+    function decorateItem(fromObj, toKoObj) {
+        toKoObj.populate(fromObj);
     }
 
-    var fetchArticles = function(ids, callback) {
+    function fetchData(ids, callback) {
         var apiUrl;
         if (ids.length) {
             apiUrl = common.config.apiSearchBase + "?page-size=50&format=json&show-fields=all&show-tags=all&api-key=" + Config.apiKey;

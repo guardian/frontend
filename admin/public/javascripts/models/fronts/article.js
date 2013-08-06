@@ -14,6 +14,7 @@ function (
     var absUrlHost = 'http://m.guardian.co.uk/';
 
     function Article(opts) {
+        var opts = opts || {};
 
         this.meta = common.util.asObservableProps([
             'id',
@@ -39,17 +40,19 @@ function (
         this.humanDate = ko.computed(function(){
             return this.meta.webPublicationDate() ? humanized_time_span(this.meta.webPublicationDate()) : '&nbsp;';
         }, this);
+        this.pageViewsCommas = ko.computed(function(){
+            return common.util.numberWithCommas(this.state.pageViews());
+        }, this);
 
-        this.init(opts);
+        this.populate(opts);
     };
 
-    Article.prototype.init = function(opts) {
-        var opts = opts || {};
+    Article.prototype.populate = function(opts) {
         common.util.populateObservables(this.meta, opts)
         common.util.populateObservables(this.fields, opts.fields)
 
         if (opts.index < 3) {
-            this.addPageViews();
+            //this.fetchPageViews();
         }
     }
 
@@ -82,45 +85,6 @@ function (
         });
     }
 
-    Article.prototype.addPageViews = function() {
-        var self = this;
-        // If a config property (a) is set and (b) differs from the meta value, include it in post.
-        reqwest({
-            url: 'http://dashboard.ophan.co.uk/graph/breakdown/data?path=' + encodeURIComponent('/' + this.meta.id()),
-            type: 'jsonp'
-        }).then(
-            function (resp) {
-                if(resp.totalHits) {
-                    self.state.pageViews(resp.totalHits);
-                }
-                if(resp.seriesData && resp.seriesData[0] && resp.seriesData[0].data) {
-                    self.state.pageViewsSeries(_.pluck(resp.seriesData[0].data, 'y'));
-                }
-            },
-            function (xhr) {}
-        );
-
-    }
-
-    Article.prototype.addPerformanceCounts = function() {
-        this.addSharedCount();
-        this.addCommentCount();
-    }
-
-    Article.prototype.addSharedCount = function() {
-        var url = 'http://api.sharedcount.com/?url=http://www.guardian.co.uk/' + this.id(),
-            self = this;
-        reqwest({
-            url: '/json/proxy/' + url,
-            type: 'json',
-            success: function(resp) {
-                self.shares(self.sumNumericProps(resp));
-            },
-            complete: function() {
-            }
-        });
-    };
-
     Article.prototype.addCommentCount = function() {
         var url = 'http://discussion.guardianapis.com/discussion-api/discussion/p/' + 
             this.shortId() + '/comments/count',
@@ -136,17 +100,6 @@ function (
                 }
             });            
         }    
-    };
-
-    Article.prototype.sumNumericProps = function sumNumericProps(obj) {
-        var self = this;
-        return _.reduce(obj, function(sum, p){
-            if (typeof p === 'object' && p) {
-                return sum + self.sumNumericProps(p);
-            } else {
-                return sum + (typeof p === 'number' ? p : 0);
-            }
-        }, 0);
     };
 
     return Article;
