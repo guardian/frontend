@@ -35,10 +35,9 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdAp
 
   def processForm = Action { implicit request =>
     val boundForm = form.bindFromRequest
-    log.error("testing logging abc")
     boundForm.fold(
       formWithErrors => {
-        log.trace("Invalid login form submission")
+        log.info("Invalid login form submission")
         Ok(views.html.signin(page, formWithErrors))
       },
       { case (email, password, rememberMe) => {

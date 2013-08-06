@@ -76,29 +76,29 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   "the authBrowser method" - {
     "given a valid response" - {
       val validCookieResponse = HttpResponse("""{"expiry": "2013-10-30T12:21:00+00:00", "values": [{"name": testName", "value": "testValue"}]}""", 200, "OK")
-      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
+      when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters]))
         .thenReturn(toFuture(Right(validCookieResponse)))
 
       "accesses the /auth endpoint" in {
         api.authBrowser(Anonymous)
-        verify(http).GET(Matchers.eq("http://example.com/auth"), Matchers.any[Parameters], Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "adds the cookie parameter to the request" in {
         api.authBrowser(Anonymous)
-        verify(http).GET(Matchers.eq("http://example.com/auth"), argThat(new ParamMatcher(Iterable(("format", "cookie")))), Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], argThat(new ParamMatcher(Iterable(("format", "cookie")))), Matchers.any[Parameters])
       }
 
       "passes the auth parameters to the http lib's GET method" in {
         val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
         api.authBrowser(auth)
-        verify(http).GET(Matchers.any[String], argThat(new ParamMatcher(Iterable(("testParam", "value"), ("format", "cookie")))), argThat(EmptyParamMatcher))
+        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamMatcher(Iterable(("testParam", "value"), ("format", "cookie")))), argThat(EmptyParamMatcher))
       }
 
       "passes the auth header to the http lib's GET method" in {
         val auth = TestAuth(Iterable.empty, List(("testHeader", "value")))
         api.authBrowser(auth)
-        verify(http).GET(Matchers.any[String], argThat(new ParamMatcher(Iterable(("format", "cookie")))), argThat(new ParamMatcher(Iterable(("testHeader", "value")))))
+        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamMatcher(Iterable(("format", "cookie")))), argThat(new ParamMatcher(Iterable(("testHeader", "value")))))
       }
 
       "returns a cookies response" in {
@@ -114,7 +114,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     }
 
     "given an error" - {
-      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
+      when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters]))
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
@@ -172,8 +172,8 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.authBrowser(Anonymous).map(_ match {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString()))
+        api.user("123").map(_ match {
+          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
           }
@@ -224,8 +224,8 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.authBrowser(Anonymous).map(_ match {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString()))
+        api.me(Anonymous).map(_ match {
+          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
           }

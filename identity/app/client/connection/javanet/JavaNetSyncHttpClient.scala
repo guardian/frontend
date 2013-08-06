@@ -19,11 +19,11 @@ class JavaNetSyncHttpClient extends Http {
     Promise.successful(response).future
   }
 
-  override def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
+  override def POST(url: String, body: Option[String], urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
     logger.trace("POST request %s; body: %s; params: %s; headers: %s".format(url, body, formatParams(urlParameters), formatParams(headers)))
-    val response = getConnection(url, urlParameters, headers, "POST").right
-      .flatMap(writeBodyContent(_, body)).right
-      .flatMap(extractHttpResponse)
+    val connection = getConnection(url, urlParameters, headers, "POST").right
+    val request = if (body.isDefined) connection.flatMap(writeBodyContent(_, body.get)).right else connection
+    val response = request.flatMap(extractHttpResponse)
     Promise.successful(response).future
   }
 

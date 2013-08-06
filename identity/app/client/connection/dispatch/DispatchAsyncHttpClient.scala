@@ -62,9 +62,9 @@ trait DispatchAsyncHttpClient extends Http {
     new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either.map(mapFutureToResponse)
   }
 
-  override def POST(uri: String, body: String, urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+  override def POST(uri: String, body: Option[String], urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
     val req = buildRequest(url(uri).POST, urlParameters, headers)
-    req.setBody(body)
+    body.foreach(req.setBody)
     new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either.map(mapFutureToResponse)
   }
 

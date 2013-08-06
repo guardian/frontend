@@ -14,12 +14,13 @@ import scala.concurrent.Future
 import idapiclient.responses.CookieResponse
 import client.Auth
 import conf.IdentityConfiguration
+import play.api.mvc.Cookies
 
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val api = mock[IdApiClient]
-  val conf = mock[IdentityConfiguration]
+  val conf = new IdentityConfiguration
 
   val signinController = new SigninController(returnUrlVerifier, api, conf)
 
@@ -65,7 +66,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
         "should set login cookies on response" in Fake {
           val result = signinController.processForm()(fakeRequest)
-          val responseCookies: play.api.mvc.Cookies  = cookies(result)
+          val responseCookies: Cookies  = cookies(result)
           val testCookie = responseCookies.get("testCookie").get
           testCookie should have('value("testVal"))
           testCookie should have('secure(false))

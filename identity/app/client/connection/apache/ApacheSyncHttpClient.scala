@@ -68,11 +68,13 @@ class ApacheSyncHttpClient extends Http {
     Promise.successful(response).future
   }
 
-  override def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
+  override def POST(url: String, body: Option[String], urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
     logger.trace("POST request %s; body: %s; params: %s; headers: %s".format(url, body, formatParams(urlParameters), formatParams(headers)))
     val response = try {
       val method = new PostMethod(url)
-      method.setRequestEntity(new StringRequestEntity(body, "application/json", "UTF-8"))
+      if(body.isDefined) {
+        method.setRequestEntity(new StringRequestEntity(body.get, "application/json", "UTF-8"))
+      }
       execute(method, urlParameters, headers)
     } catch {
       case e: IllegalArgumentException => {

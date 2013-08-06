@@ -144,21 +144,21 @@ class ApacheSyncHttpClientTest extends path.FreeSpec with ShouldMatchers with Mo
     }
 
     "given valid parameters, should return execute's result" in {
-      TestApacheSyncHttpClient.POST("http://valid.url", "body").map(_ match {
+      TestApacheSyncHttpClient.POST("http://valid.url", Some("body")).map(_ match {
         case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
         case Right(response) => response should be(httpResponse)
       })
     }
 
     "given an invalid URI, should return IllegalArgumentException error" in {
-      TestApacheSyncHttpClient.POST("http:// not a valid URI", "body").map(_ match {
+      TestApacheSyncHttpClient.POST("http:// not a valid URI", Some("body")).map(_ match {
         case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
         case Left(errors) => errors(0) should have('message("IllegalArgumentException"))
       })
     }
 
     "given an invalid protocol in the URI, should return IllegalStateException error" in {
-      TestApacheSyncHttpClient.POST("bad://example.com/test", "body").map(_ match {
+      TestApacheSyncHttpClient.POST("bad://example.com/test", Some("body")).map(_ match {
         case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
         case Left(errors) => errors(0) should have('message("IllegalStateException"))
       })

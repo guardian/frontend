@@ -2,6 +2,7 @@ package idapiclient
 
 import com.google.inject.Inject
 import common.ExecutionContexts
+import conf.IdentityConfiguration
 
-class IdApiClient @Inject()(http: IdDispatchAsyncHttpClient, jsonParser: IdApiJsonBodyParser)
-  extends IdApi("http://example.com", http, jsonParser) with ExecutionContexts
+class IdApiClient @Inject()(http: IdDispatchAsyncHttpClient, jsonParser: IdApiJsonBodyParser, conf: IdentityConfiguration)
+  extends IdApi(conf.id.apiRoot, http, jsonParser) with ExecutionContexts

@@ -9,7 +9,7 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
 
     @if(signinForm.globalError.isDefined) {
-        <div class="form-field__error text-input__note">@signinForm.globalErrors.mkString(", ")</div>
+        <div class="form-field__error text-input__note">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
     }
 
     <ul class="form-fields">

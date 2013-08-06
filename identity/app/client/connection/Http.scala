@@ -15,7 +15,7 @@ trait Http extends Logging {
 
   def GET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]]
 
-  def POST(url: String, body: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]]
+  def POST(url: String, body: Option[String], urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]]
 
   def DELETE(url: String, body: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]]
 }
