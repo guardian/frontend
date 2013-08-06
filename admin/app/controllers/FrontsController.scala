@@ -63,7 +63,8 @@ object FrontsController extends Controller with Logging {
   def deleteTrail(edition: String, section: String, blockId: String) = AuthAction { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList => {
-        UpdateActions.updateActionFilter(edition, section, blockId, update)
+        val identity = Identity(request).get
+        UpdateActions.updateActionFilter(edition, section, blockId, update, identity)
         Ok
       }
       case _ => NotFound

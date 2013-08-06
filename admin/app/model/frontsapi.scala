@@ -5,6 +5,8 @@ import tools.FrontsApi
 import controllers.Identity
 import org.joda.time.DateTime
 
+trait JsonShape
+
 case class Block(
                   id: String,
                   name: Option[String],
@@ -17,19 +19,20 @@ case class Block(
                   max: Option[Int],
                   min: Option[Int],
                   contentApiQuery: Option[String]
-                  )
+                  ) extends JsonShape
 
 case class Trail(
                   id: String,
                   title: Option[String],
                   trailImage: Option[String],
                   linkText: Option[String]
-                  )
+                  ) extends JsonShape
 
-case class BlockActionJson(publish: Option[Boolean], discard: Option[Boolean])
-case class UpdateTrailblockJson(config: UpdateTrailblockConfigJson)
+
+case class BlockActionJson(publish: Option[Boolean], discard: Option[Boolean]) extends JsonShape
+case class UpdateTrailblockJson(config: UpdateTrailblockConfigJson) extends JsonShape
 case class UpdateTrailblockConfigJson(contentApiQuery: Option[String], max: Option[Int], min: Option[Int])
-case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean)
+case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean) extends JsonShape
 
 trait JsonExtract {
   implicit val updateListRead = Json.reads[UpdateList]
@@ -39,7 +42,7 @@ trait JsonExtract {
   implicit val updateMetaRead = Json.reads[UpdateTrailblockConfigJson]
   implicit val updateTrailblockRead = Json.reads[UpdateTrailblockJson]
 
-  private def extractJson(v: JsValue): Either[String, Any] =
+  private def extractJson(v: JsValue): Either[String, JsonShape] =
     v.asOpt[Block]
       .orElse{v.asOpt[UpdateList]}
       .orElse{v.asOpt[UpdateTrailblockJson]}
@@ -53,9 +56,9 @@ object JsonExtract extends JsonExtract
 
 trait UpdateActions {
 
-  def updateActionFilter(edition: String, section: String, blockId: String, update: UpdateList): Either[String, String] =
+  def updateActionFilter(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity): Either[String, String] =
     FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
-      var newBlock = block.copy()
+      var newBlock: Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
       if (update.draft) {
         val trails = block.draft.filterNot(_.id == update.item)
         newBlock = newBlock.copy(draft = trails)
