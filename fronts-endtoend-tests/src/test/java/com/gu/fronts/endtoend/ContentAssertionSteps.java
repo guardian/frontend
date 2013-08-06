@@ -60,8 +60,8 @@ public class ContentAssertionSteps {
 		Assert.assertArrayEquals(action.liveStories().toArray(), action.draftStories().toArray());
 	}
 
-	@Then("^the live version of ([\\w]*) should be replaced by the draft version$")
-	public void theLiveVersionShouldBeReplacedByTheDraftVersion(String trailBlockLabel) {
+	@Then("^the live version of ([\\w]*) should be replaced by the draft$")
+	public void theLiveVersionShouldBeReplacedByTheDraft(String trailBlockLabel) {
 		theDraftVersionOfTrailBlockShouldBeReplacedByTheLiveVersion(trailBlockLabel);
 	}
 
