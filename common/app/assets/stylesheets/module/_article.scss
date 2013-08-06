@@ -264,7 +264,9 @@ video {
     .card__title {
         font-family: $serifheadline !important;
         font-size: 18px !important;
+        font-size: 1.8rem !important;
         line-height: 26px !important;
+        line-height: 2.6rem !important;
     }
     .card__body {
         padding: $baseline*1.5 $gutter/2 $baseline*6;
@@ -280,5 +282,7 @@ video {
             font-family: $serif !important; // Override .from-content-api h3 defaults
             color: #444;
             font-size: 14px !important;
+            font-size: 1.4rem !important;
             line-height: 20px !important;
+            line-height: 2rem !important;
         }
