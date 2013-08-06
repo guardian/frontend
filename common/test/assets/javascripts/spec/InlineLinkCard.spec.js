@@ -49,6 +49,21 @@ define([
             expect(document.querySelectorAll('.card').length).toBe(1);
         });
 
+        it('Should have a title if specified', function() {
+            var cardTitle = 'Card title';
+
+            new InlineLinkCard(linkToCardify, linkContext).prependCard(href, pageconfig.data, cardTitle);
+
+            expect(document.querySelectorAll('.card__title').length).toBe(1);
+            expect(document.querySelector('.card__title').innerHTML).toContain(cardTitle);
+        });
+
+        it('Should not have a title if not specified', function() {
+            new InlineLinkCard(linkToCardify, linkContext).prependCard(href, pageconfig.data);
+
+            expect(document.querySelectorAll('.card__title').length).toBe(0);
+        });
+
         it('Should include the card before the first paragraph containing a link', function() {
             new InlineLinkCard(linkToCardify, linkContext).prependCard(href, pageconfig.data);
 
