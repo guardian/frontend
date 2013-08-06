@@ -1,8 +1,6 @@
 @(block: Trailblock, page: FrontPage)(implicit request: RequestHeader)
 
-<section
-    class="facia-section"
-    data-link-name="block | @block.description.name">
+<section data-link-name="block | @block.description.name">
 
     @block.description.style match {
         case Some(Thumbnail)    => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }

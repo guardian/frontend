@@ -2,16 +2,16 @@
 
 <ul class="unstyled trails trails-count-@trails.size">
     @trails.zipWithIndex.map{ case (trail, index) =>
-        <li class="trail">
+        <li class="trail" data-link-name="trail | @{index + 1}">
             <a href="@LinkTo{@trail.url}">
-                @if(!(trails.size == 4 && index > 2)){
+                @if(!(trails.size == 4 && index > 1)){
                     @trail.mainPicture.map{ mainPicture =>
                         <img class="trail__image" src="@mainPicture.path" />
                     }
                 }
                 <h2 class="trail__title">@RemoveOuterParaHtml(trail.headline)</h2>
             </a>
-            @if(trails.size == 1 && index == 1){
+            @if(trails.size == 1 && index == 0){
                 @trail.trailText.map { text =>
                     <p class="trail__standfirst">@cleanTrailText(text)(Edition(request))</p>
                 }
