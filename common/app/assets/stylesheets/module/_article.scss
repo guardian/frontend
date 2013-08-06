@@ -248,7 +248,9 @@ video {
     margin-bottom: $baseline*2;
 
     @include mq($a-leftCol-trigger) {
-        display: block;
+        .test-link-card--on & {
+            display: block;
+        }
     }
 }
 

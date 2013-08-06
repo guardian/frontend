@@ -10,6 +10,7 @@ define(['modules/userPrefs'], function (userPrefs) {
 
     var BASE_WIDTH     = 600,
         MEDIAN_WIDTH   = 900,
+        LEFTCOL_WIDTH  = 1052, // Breakpoint where we see the left column in article pages
         EXTENDED_WIDTH = 1280,
         mobileOS,
         supportsPushState;
@@ -29,6 +30,10 @@ define(['modules/userPrefs'], function (userPrefs) {
 
         if (width >= MEDIAN_WIDTH) {
             mode = "desktop";
+        }
+
+        if (width >= LEFTCOL_WIDTH) {
+            mode = "leftcol";
         }
 
         if (width >= EXTENDED_WIDTH) {
