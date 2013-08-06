@@ -35,15 +35,9 @@ object FrontsController extends Controller with Logging {
       case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
       case update: UpdateList => {
         val identity = Identity(request).get
-        FrontsApi.getBlock(edition, section, blockId).map { block =>
-          UpdateActions.updateBlock(edition, section, blockId, update, identity, block)
-          FrontsApi.archive(edition, section, block)
-          Ok
-        } getOrElse {
-          UpdateActions.createBlock(edition, section, blockId, identity, update)
-          Created
+        UpdateActions.updateBlock(edition, section, blockId, update, identity)
+        Ok
         }
-      }
       case blockAction: BlockActionJson => {
         blockAction.publish.filter {_ == true}
           .map { _ => FrontsApi.publishBlock(edition, section, blockId) }
@@ -53,17 +47,9 @@ object FrontsController extends Controller with Logging {
         Ok
       }
       case updateTrailblock: UpdateTrailblockJson => {
-        FrontsApi.getBlock(edition, section, blockId).map { block =>
-          val newBlock = block.copy(
-            contentApiQuery = updateTrailblock.config.contentApiQuery orElse None,
-            //These defaults will move somewhere better during refactor
-            min = updateTrailblock.config.min orElse Some(0),
-            max = updateTrailblock.config.max orElse Some(20)
-          )
-          FrontsApi.putBlock(edition, section, newBlock)
-          Ok
-        } getOrElse NotFound
-      }
+        UpdateActions.updateTrailblockJson(edition, section, blockId, updateTrailblock)
+        Ok
+        }
       case _ => NotFound
     } getOrElse NotFound
   }

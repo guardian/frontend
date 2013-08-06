@@ -99,24 +99,41 @@ trait UpdateActions {
     splitList._1 ++ List(Trail(update.item, None, None, None)) ++ splitList._2
   }
 
-  def updateBlock(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity, block: Block): Unit = {
-    var newBlock: Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
-    if (update.draft) {
-      val trails = updateList(update, block.draft)
-      newBlock = newBlock.copy(draft = trails)
-    }
-    if (update.live) {
-      val trails = updateList(update, block.live)
-      newBlock = newBlock.copy(live = trails)
-    }
+  def updateBlock(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity): Unit = {
+    FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
+      var newBlock: Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
+      if (update.draft) {
+        val trails = updateList(update, block.draft)
+        newBlock = newBlock.copy(draft = trails)
+      }
+      if (update.live) {
+        val trails = updateList(update, block.live)
+        newBlock = newBlock.copy(live = trails)
+      }
 
-    newBlock = newBlock.copy(areEqual = newBlock.live==newBlock.draft)
+      newBlock = newBlock.copy(areEqual = newBlock.live==newBlock.draft)
 
-    FrontsApi.putBlock(edition, section, blockId, newBlock)
+      FrontsApi.putBlock(edition, section, blockId, newBlock)
+      FrontsApi.archive(edition, section, block)
+    } getOrElse {
+      UpdateActions.createBlock(edition, section, blockId, identity, update)
+    }
   }
 
   def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
     FrontsApi.putBlock(edition, section, block, Block(block, None, List(Trail(update.item, None, None, None)), List(Trail(update.item, None, None, None)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
+  }
+
+  def updateTrailblockJson(edition: String, section: String, blockId: String, updateTrailblock: UpdateTrailblockJson) = {
+    FrontsApi.getBlock(edition, section, blockId).map { block =>
+      val newBlock = block.copy(
+        contentApiQuery = updateTrailblock.config.contentApiQuery orElse None,
+        //These defaults will move somewhere better during refactor
+        min = updateTrailblock.config.min orElse Some(0),
+        max = updateTrailblock.config.max orElse Some(20)
+      )
+      FrontsApi.putBlock(edition, section, newBlock)
+    }
   }
 }
 
