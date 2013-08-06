@@ -16,8 +16,9 @@ define([
     bonzo
 ) {
 
-    function InlineLinkCard(link, linkContext) {
+    function InlineLinkCard(link, linkContext, title) {
         this.link = link;
+        this.title = title || false;
         this.linkContext = linkContext;
         this.hasLoadedCard = false;
     }
@@ -41,7 +42,6 @@ define([
 
     InlineLinkCard.prototype.prependCard = function(href, data, title) {
         var self = this,
-            title = title || false,
             headline = data.headline,
             thumbnail = data.thumbnail,
             tpl,
@@ -79,7 +79,7 @@ define([
             function(resp) {
                 self.hasLoadedCard = true;
 
-                self.prependCard(href, resp.config.page, 'Related');
+                self.prependCard(href, resp.config.page, self.title);
             }
         );
     };

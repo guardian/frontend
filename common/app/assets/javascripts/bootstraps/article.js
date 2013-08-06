@@ -107,7 +107,7 @@ define([
 
                 if (linkToCardify) {
                     var linkContext = common.$g(linkToCardify).parent();
-                    new InlineLinkCard(linkToCardify, linkContext).init();
+                    new InlineLinkCard(linkToCardify, linkContext, 'Related').init();
                 }
             });
         }
