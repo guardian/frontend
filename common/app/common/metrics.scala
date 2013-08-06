@@ -154,8 +154,20 @@ object PorterMetrics {
   val all: Seq[Metric] = Seq(AnalyticsLoadTimingMetric, FastlyCloudwatchLoadTimingMetric)
 }
 
+object CommonApplicationMetrics {
+  object SwitchBoardLoadTimingMetric extends TimingMetric(
+    "switchboard",
+    "switchboard-load",
+    "Switchboard load timing",
+    "Time spent running switchboard load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(SwitchBoardLoadTimingMetric)
+}
+
 object Metrics {
-  lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all
+  lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
   lazy val contentApi = ContentApiMetrics.all
   lazy val discussion = DiscussionMetrics.all
   lazy val mongo = MongoMetrics.all

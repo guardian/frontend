@@ -1,6 +1,6 @@
 package common
 
-import akka.actor.Props
+import akka.actor.{ Actor, Props }
 import akka.camel.Consumer
 import scala.reflect.ClassTag
 import play.api.Play
@@ -13,6 +13,11 @@ trait Job extends Consumer with Logging with implicits.Strings {
 
   lazy val endpointUri = "quartz://jobs/%s?cron=%s" format (name, cron.urlEncoded)
 
+  override def preStart() {
+    log.info("Scheduling job: %s" format name)
+    super.preStart()
+  }
+
   def receive = {
     case _ =>
       log.info("Starting job: %s" format name)
@@ -23,13 +28,8 @@ trait Job extends Consumer with Logging with implicits.Strings {
   def run()
 }
 
-class JobScheduler[T <: Job: ClassTag] extends Logging {
-  def start() {
-    val clazz = implicitly[ClassTag[T]].runtimeClass.getSimpleName
-    log.info("Scheduling job: %s" format clazz)
-    Akka.system(Play.current).actorOf(Props[T])
-  }
-
-  def stop() { }
+object Jobs {
+  def schedule[T <: Job: ClassTag]() = Akka.system(Play.current).actorOf(Props[T])
+  def schedule(actor: => Actor) = Akka.system(Play.current).actorOf(Props(actor))
 }
 

@@ -5,7 +5,7 @@ import common._
 import implicits.Collections
 import play.api.Plugin
 import play.api.libs.ws.WS
-import scala.concurrent.duration._
+
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -224,28 +224,35 @@ object Switches extends Collections {
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration) extends ExecutionContexts with Logging with Plugin {
 
-  private lazy val refreshSwitches = AkkaScheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
-    log.info("Refreshing switches")
-    WS.url(config.switches.configurationUrl).get() foreach { response =>
-      response.status match {
-        case 200 =>
-          val nextState = Properties(response.body)
+class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts {
 
-          for (switch <- Switches.all) {
-            nextState.get(switch.name) foreach {
-              case "on" => switch.switchOn()
-              case "off" => switch.switchOff()
-              case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
+  object SwitchBoardRefreshJob extends Job {
+    val cron = "0 * * * * ?"
+    val metric = CommonApplicationMetrics.SwitchBoardLoadTimingMetric
+
+    def run() {
+      log.info("Refreshing switches")
+      WS.url(config.switches.configurationUrl).get() foreach { response =>
+        response.status match {
+          case 200 =>
+            val nextState = Properties(response.body)
+
+            for (switch <- Switches.all) {
+              nextState.get(switch.name) foreach {
+                case "on" => switch.switchOn()
+                case "off" => switch.switchOff()
+                case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
+              }
             }
-          }
 
-        case _ => log.warn(s"Could not load switch config ${response.status} ${response.statusText}")
+          case _ => log.warn(s"Could not load switch config ${response.status} ${response.statusText}")
+        }
       }
     }
   }
 
-  override def onStart() { refreshSwitches }
-  override def onStop() { refreshSwitches.cancel() }
+  override def onStart() {
+    Jobs.schedule(SwitchBoardRefreshJob)
+  }
 }
