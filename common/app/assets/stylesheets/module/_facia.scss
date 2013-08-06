@@ -58,12 +58,7 @@
 
     .trails {
         overflow: hidden;
-        margin-top: $baseline*4
-    }
-    .trail {
-        padding: 0;
-        border:none;
-        float: left;
+        margin-top: $baseline*4;
     }
     .trail__count {
         top: auto;
@@ -72,76 +67,121 @@
         right: auto;
     }
 
-    .trails-count-1 {
-        .trail {
-            background-color: #005688;
-            width: 1260px;
-            height: 372px;
+    @include mq(0, tablet) {
 
-            .trail__image {
-                width: 620px;
-                height: 100%;
-                margin-right: 20px;
-                float: left;
-            }
-            .trail__title {
-                @include font($serifheadline, 700, 40, 42);
-                color: #ffffff;
-                padding: $baseline*2 $baseline*2 0;
-            }
-            .trail__standfirst {
-                @include font($serifheadline, normal, 30, 32);
-                color: #ffffff;
-                margin: $baseline*3 0 0;
-                padding: $baseline*2 $baseline*2 0;
-            }
-        }
-    }
-
-    .trails-count-2 {
         .trail:nth-child(1) {
-            width: 940px;
-            height: 372px;
-
             .trail__image {
-                float: left;
-                width: 620px;
-                height: 100%;
-                margin-right: 20px;
+                width: 100%;
+                display:block;
             }
             .trail__title {
-                @include font($serifheadline, 700, 30, 32);
-                color: #000000;
+                @include font($serif, 700, 20, 22);
+                color: #ffffff;
+                position:absolute;
+                bottom:0;
+                background:rgba(0, 86, 136, 0.8);
+                padding: $baseline*2;
+                width: 100%;
+                @include box-sizing(border-box);
             }
         }
         .trail:nth-child(2) {
-            @include medium-trail;
-        }
-    }
-
-    .trails-count-3 {
-        .trail:nth-child(1) {
-            @include large-trail;
+            .trail__image {
+                display: none;
+            }
         }
         .trail:nth-child(n+2) {
-            @include medium-trail;
+            padding-left: $gutter*3;
+            .trail__title {
+                @include font($serif, 700, 16, 18);
+            }
         }
+
     }
 
-    .trails-count-4 {
-        .trail:nth-child(1) {
-            @include large-trail;
+    @include mq(tablet) {
+
+        .trails {
+            width: 1260px;
         }
-        .trail:nth-child(2) {
-            @include medium-trail;
+        .trail {
+            float: left;
+            padding: 0;
+            border:none;
         }
-        .trail:nth-child(n+3) {
-            @include small-trail;
+
+        .trails-count-1 {
+            .trail {
+                background-color: #005688;
+                width: 100%;
+                height: 372px;
+
+                .trail__image {
+                    width: 620px;
+                    height: 100%;
+                    margin-right: 20px;
+                    float: left;
+                }
+                .trail__title {
+                    @include font($serifheadline, 700, 40, 42);
+                    color: #ffffff;
+                    padding: $baseline*2 $baseline*2 0;
+                }
+                .trail__standfirst {
+                    @include font($serifheadline, normal, 30, 32);
+                    color: #ffffff;
+                    margin: $baseline*3 0 0;
+                    padding: $baseline*2 $baseline*2 0;
+                }
+            }
         }
-        .trail:nth-child(4) {
-            border-top: 1px dotted #000000;
-            padding-top: $baseline*3;
-            height: 173px;
+
+        .trails-count-2 {
+            .trail:nth-child(1) {
+                width: 940px;
+                height: 372px;
+
+                .trail__image {
+                    float: left;
+                    width: 620px;
+                    height: 100%;
+                    margin-right: 20px;
+                }
+                .trail__title {
+                    @include font($serifheadline, 700, 30, 32);
+                    color: #000000;
+                }
+            }
+            .trail:nth-child(2) {
+                @include medium-trail;
+            }
         }
+
+        .trails-count-3 {
+            .trail:nth-child(1) {
+                @include large-trail;
+            }
+            .trail:nth-child(n+2) {
+                @include medium-trail;
+            }
+        }
+
+        .trails-count-4 {
+            .trail:nth-child(1) {
+                @include large-trail;
+            }
+            .trail:nth-child(2) {
+                @include medium-trail;
+            }
+            .trail:nth-child(n+3) {
+                @include small-trail;
+            }
+            .trail:nth-child(4) {
+                border-top: 1px dotted #000000;
+                padding-top: $baseline*3;
+                height: 173px;
+            }
+        }
+
     }
 }
