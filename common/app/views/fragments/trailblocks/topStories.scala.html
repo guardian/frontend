@@ -1,14 +1,21 @@
 @(trails: Seq[Trail])(implicit request: RequestHeader)
 
-<ul class="unstyled">
-    @trails.take(4).map{ trail =>
-        <li>
+<ul class="unstyled trails trails-count-@trails.size">
+    @trails.zipWithIndex.map{ case (trail, index) =>
+        <li class="trail">
             <a href="@LinkTo{@trail.url}">
-                <h2>@RemoveOuterParaHtml(trail.headline)</h2>
-                @trail.mainPicture.map{ mainPicture =>
-                    <img src="@mainPicture.path" />
+                @if(!(trails.size == 4 && index > 2)){
+                    @trail.mainPicture.map{ mainPicture =>
+                        <img class="trail__image" src="@mainPicture.path" />
+                    }
                 }
+                <h2 class="trail__title">@RemoveOuterParaHtml(trail.headline)</h2>
             </a>
+            @if(trails.size == 1 && index == 1){
+                @trail.trailText.map { text =>
+                    <p class="trail__standfirst">@cleanTrailText(text)(Edition(request))</p>
+                }
+            }
         </li>
     }
 </ul>

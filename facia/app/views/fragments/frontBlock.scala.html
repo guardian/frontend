@@ -8,7 +8,7 @@
         case Some(Thumbnail)    => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }
         case Some(Headline)     => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
         case Some(SectionFront) => { @trailblocks.section(block.trails, block.description.numItemsVisible, numWithImages = 3 ) }
-        case Some(TopStories)   => { @trailblocks.topStories(block.trails) }
+        case Some(TopStories)   => { @trailblocks.topStories(block.trails.take(4)) }
         case _                  => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
     }
 
