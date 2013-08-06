@@ -55,7 +55,7 @@ label,
 
 .text-input {
     border: 1px solid $grey;
-    box-sizing: border-box;
+    @include box-sizing(border-box);
     color: #545454;
     display: inline-block;
     font-family: $sans-serif;
