@@ -238,26 +238,32 @@ video {
    ========================================================================== */
 
 .furniture {
-    
+    display: none;
 }
 .furniture--left {
     float: left;
     clear: left;
     width: $a-leftCol-width;
     margin-left: ($a-leftCol-width + $gutter)*-1;
+    margin-top: $baseline; // Align with top of text
     margin-bottom: $baseline*2;
+
+    @include mq($a-leftCol-trigger) {
+        display: block;
+    }
 }
 
 .card {
-    
+
 }
     .card__media {
         display: block;
+        width: 100%;
     }
     .card__body {
-        background: $mushroom;
         padding: $baseline $gutter/2;
-        min-height: 120px;
+        min-height: 76px; // image height - baseline * 2
+        background: $mushroom;
 
         .card-wrapper:hover &,
         .card-wrapper:focus & {
@@ -265,11 +271,7 @@ video {
         }
     }
         .card__headline {
+            font-weight: 200 !important;
             font-family: $serifheadline !important; // Override .from-content-api h3 defaults
             color: #444;
-
-            .card-wrapper:hover &,
-            .card-wrapper:focus & {
-                text-decoration: underline;
-            }
         }
