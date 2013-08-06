@@ -1,27 +1,29 @@
 package controllers
 
 import play.api.mvc._
-import play.api.data.Forms
+import play.api.data.{FormError, Forms, Form}
+import play.api.data.validation.Constraints
 import model.IdentityPage
-import play.api.data.Form
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import services.ReturnUrlVerifier
 import com.google.inject.{Inject, Singleton}
 import idapiclient.{IdApiClient, EmailPassword}
 import org.joda.time.Duration
 import conf.IdentityConfiguration
+import play.api.i18n.Messages
 
 
 @Singleton
 class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdApiClient, conf: IdentityConfiguration)
-  extends Controller with ExecutionContexts {
+  extends Controller with ExecutionContexts with Logging {
 
   val page = new IdentityPage("/signin", "Signin", "signin")
 
   val form = Form(
     Forms.tuple(
       "email" -> Forms.email,
-      "password" -> Forms.nonEmptyText(6, 20),
+      "password" -> Forms.text
+        .verifying(Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}),
       "keepMeSignedIn" -> Forms.boolean
     )
   )
@@ -33,15 +35,23 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdAp
 
   def processForm = Action { implicit request =>
     val boundForm = form.bindFromRequest
+    log.error("testing logging abc")
     boundForm.fold(
-      formWithErrors => Ok(views.html.signin(page, formWithErrors)),
+      formWithErrors => {
+        log.trace("Invalid login form submission")
+        Ok(views.html.signin(page, formWithErrors))
+      },
       { case (email, password, rememberMe) => {
+        log.trace("authing with ID API")
         Async {
           api.authBrowser(EmailPassword(email, password)) map(_ match {
             case Left(errors) => {
-              Ok(views.html.signin(page, boundForm))
+              log.info("Auth failed for %s".format(email))
+              val formWithErrors = boundForm.withError(FormError("", Messages("error.login")))
+              Ok(views.html.signin(page, formWithErrors))
             }
             case Right(apiCookies) => {
+              log.trace("Logging user in")
               val responseCookies = apiCookies.map { cookie =>
                 val maxAge = if(rememberMe) Some(Duration.standardDays(90).getStandardSeconds.toInt) else None
                 val secureHttpOnly = cookie.name.startsWith("SC_")

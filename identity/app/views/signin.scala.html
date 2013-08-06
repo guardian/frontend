@@ -7,6 +7,11 @@
 }{
 <form class="form" novalidate action="/signin" role="main" method="post">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
+
+    @if(signinForm.globalError.isDefined) {
+        <div class="form-field__error text-input__note">@signinForm.globalErrors.mkString(", ")</div>
+    }
+
     <ul class="form-fields">
 
         @idInputEmail(signinForm("email"), '_label -> "Email address")
