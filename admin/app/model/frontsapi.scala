@@ -31,7 +31,7 @@ case class UpdateTrailblockJson(config: UpdateTrailblockConfigJson)
 case class UpdateTrailblockConfigJson(contentApiQuery: Option[String], max: Option[Int], min: Option[Int])
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean)
 
-object JsonExtract {
+trait JsonExtract {
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val trailActionRead = Json.reads[Trail]
   implicit val blockActionRead = Json.reads[Block]
@@ -48,6 +48,8 @@ object JsonExtract {
 
   def build(v: JsValue) = extractJson(v).right.toOption
 }
+
+object JsonExtract extends JsonExtract
 
 trait UpdateActions {
 
