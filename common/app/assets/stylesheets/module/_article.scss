@@ -3,6 +3,9 @@ $a-leftCol-trigger:  gs-span(13) + $gutter*2;
 $a-rightCol-width:   gs-span(4);
 $a-rightCol-trigger: gs-span(11) + $gutter*2;
 
+$mq-breakpoints: mq-add-breakpoint(rightCol, $a-rightCol-trigger);
+$mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
+
 .article-zone {
     padding: 13px 0 14px;
     margin-left: $gutter;
@@ -105,14 +108,14 @@ $a-rightCol-trigger: gs-span(11) + $gutter*2;
     margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
 
-    @include mq(tablet, ($a-leftCol-trigger - 1px)) {
+    @include mq(tablet, leftCol) {
         font-size: 16px;
         font-size: 1.6rem;
     }
-    @include mq($a-rightCol-trigger) {
+    @include mq(rightCol) {
         display: block;
     }
-    @include mq($a-leftCol-trigger) {
+    @include mq(leftCol) {
         position: absolute;
         top: 0;
         left: 0;
@@ -210,7 +213,7 @@ video {
     }
 }
 
-@include mq($a-leftCol-trigger) {
+@include mq(leftCol) {
     #preloads {
         padding: 0 $gutter;
     }

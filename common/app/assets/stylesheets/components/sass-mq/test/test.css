@@ -25,6 +25,12 @@
 @media all and (min-width: 48em) and (max-width: 63.9375em) and (orientation: portrait) {
   .responsive {
     color: lightcoral; } }
+@media all and (min-width: 120em) {
+  .responsive {
+    color: DarkOliveGreen; } }
+@media all and (max-width: 119.9375em) {
+  .responsive {
+    color: DeepSkyBlue; } }
 
 .responsive-disabled {
   color: red;
