@@ -44,7 +44,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <dependency>
             <groupId>hu.meza.tools</groupId>
             <artifactId>http-client-wrapper</artifactId>
-            <version>0.1.7-SNAPSHOT</version>
+            <version>0.1.7</version>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>

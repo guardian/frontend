@@ -6,11 +6,16 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie2;
 import org.joda.time.DateTime;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class TrailBlockEditor extends RestfulActor {
 
+	private final String baseUrl;
 	private HttpClientWrapper client;
 
 	public TrailBlockEditor(String baseUrl) {
+		this.baseUrl = baseUrl;
 
 		client = new HttpClientWrapper();
 		client.dontCareAboutSSL();
@@ -29,14 +34,22 @@ public class TrailBlockEditor extends RestfulActor {
 			"%22email%22%3A%22marton.meszaros%40guardian.co" +
 			".uk%22%2C%22firstName%22%3A%22Marton%22%2C%22lastName%22%3A%22Meszaros%22%7D";
 
-		BasicClientCookie2 c = new BasicClientCookie2(cookieName, cookieValue);
-		c.setDomain("frontend.code.dev-gutools.co.uk");
-		c.setPath("/");
-		c.setSecure(false);
-		DateTime expiry = new DateTime().plusYears(10);
-		c.setExpiryDate(expiry.toDate());
+		BasicClientCookie2 cookie = new BasicClientCookie2(cookieName, cookieValue);
 
-		return c;
+		URL url;
+		try {
+			url = new URL(baseUrl);
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(String.format("Could not decode url: %s", baseUrl));
+		}
+
+		cookie.setDomain(url.getHost());
+		cookie.setPath("/");
+		cookie.setSecure(false);
+		DateTime expiry = new DateTime().plusYears(10);
+		cookie.setExpiryDate(expiry.toDate());
+
+		return cookie;
 	}
 
 	public void execute(TrailBlockAction action) {

@@ -30,7 +30,7 @@ public class DeleteSteps {
 	}
 
 
-	@When("^([\\w]*) deletes ([\\w]*) from the draft of ([\\w]*)$")
+	@When("^(.*) deletes ([\\w]*) from the draft of ([\\w]*)$")
 	public void deletesStoryFromTrailBlockDraft(
 		String actorLabel, String storyLabel, String trailBlockLabel
 	) {
@@ -47,7 +47,7 @@ public class DeleteSteps {
 		editor.execute(action);
 	}
 
-	@When("^([\\w]*) deletes ([\\w]*) from ([\\w]*)$")
+	@When("^(.*) deletes ([\\w]*) from ([\\w]*)$")
 	public void deletesStoryFromTrailBlock(String actorLabel, String storyLabel, String trailBlockLabel) {
 		TrailBlockEditor editor = editors.getActor(actorLabel);
 

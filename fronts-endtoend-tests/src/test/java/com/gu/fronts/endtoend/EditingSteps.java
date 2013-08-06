@@ -27,7 +27,7 @@ public class EditingSteps {
 		this.context = context;
 	}
 
-	@When("^([\\w]*) edits the draft of ([\\w]*)$")
+	@When("^(.*) edits the draft of ([\\w]*)$")
 	public void editsTheDraftOfTrailBlock(String actorLabel, String trailBlockLabel) {
 		editTrailBlock(actorLabel, trailBlockLabel, TrailBlockMode.DRAFT);
 

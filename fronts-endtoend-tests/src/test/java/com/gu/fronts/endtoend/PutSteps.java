@@ -56,13 +56,13 @@ public class PutSteps {
 												storyALabel);
 	}
 
-	@When("^([\\w]*) copies ([\\w]*) to ([\\w]*)$")
+	@When("^(.*) copies ([\\w]*) to ([\\w]*)$")
 	public void copiesStoryAToTrailBlock(String actorLabel, String storyLabel, String trailBlockLabel) {
 		addToTrailBlock(actorLabel, storyLabel, trailBlockLabel, TrailBlockMode.LIVE);
 
 	}
 
-	@When("^([\\w]*) adds ([\\w]*) to the draft of ([\\w]*)$")
+	@When("^(.*) adds ([\\w]*) to the draft of ([\\w]*)$")
 	public void addsStoryAToTrailBlockDraft(String actorLabel, String storyLabel, String trailBlockLabel) {
 		addToTrailBlock(actorLabel, storyLabel, trailBlockLabel, TrailBlockMode.DRAFT);
 
