@@ -108,6 +108,9 @@ define([
                 function cardifyRelatedInBodyLink(link) {
                     new InlineLinkCard(link, link.parentNode, 'Related').init();
                 }
+                function isArticle(url) {
+                    return /[0-9]{4}\/[a-z]{3}\/[0-9]{2}/g.test(url);
+                }
 
                 if (linksToCardify.length > 0) {
 
@@ -121,14 +124,30 @@ define([
                             insertCardEveryNParagraphs = 4,
                             lastParagraphsToNotCardify = 3, // Always allow enough space to display a card
                             linksInParagraph,
-                            i = 0;
+                            numberOfLinksInParagraph,
+                            i = 0,
+                            j,
+                            linkWasCardified;
 
                         // Looking for links every insertCardEveryNParagraphs paragraphs
                         while (i < (numberOfArticleParagraphs - lastParagraphsToNotCardify)) {
                             linksInParagraph = articleParagraphs[i].querySelectorAll('a[href^="/"]');
+                            numberOfLinksInParagraph = linksInParagraph.length;
+                            j = 0;
+                            linkWasCardified = false;
 
-                            if (linksInParagraph.length > 0) {
-                                cardifyRelatedInBodyLink(linksInParagraph[0]);
+                            if (numberOfLinksInParagraph > 0) {
+                                while (j < numberOfLinksInParagraph) {
+                                    if (isArticle(linksInParagraph[j].href)) {
+                                        cardifyRelatedInBodyLink(linksInParagraph[j]);
+                                        linkWasCardified = true;
+
+                                        break;
+                                    }
+                                    j++;
+                                }
+                            }
+                            if (linkWasCardified) {
                                 i = i + insertCardEveryNParagraphs;
                             } else {
                                 i++;
