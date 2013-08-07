@@ -29,7 +29,7 @@ define([
             return;
         }
         if (+new Date() - obj.time > expiry) {
-            delete p;
+            delete obj;
             return;
         }
         return obj.data; 
