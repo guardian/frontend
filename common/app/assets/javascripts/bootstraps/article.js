@@ -111,7 +111,7 @@ define([
 
                 if (linksToCardify.length > 0) {
 
-                    if (linksToCardify.length == 1) {
+                    if (linksToCardify.length === 1) {
                         // There's only one link
                         cardifyRelatedInBodyLink(linksToCardify[0]);
                     } else {
@@ -126,7 +126,7 @@ define([
                         // Looking for links every insertCardEveryNParagraphs paragraphs
                         while (i < (numberOfArticleParagraphs - lastParagraphsToNotCardify)) {
                             linksInParagraph = articleParagraphs[i].querySelectorAll('a[href^="/"]');
-                            console.log(linksInParagraph);
+
                             if (linksInParagraph.length > 0) {
                                 cardifyRelatedInBodyLink(linksInParagraph[0]);
                                 i = i + insertCardEveryNParagraphs;
