@@ -8,7 +8,7 @@ define(['common', 'modules/detect'], function (common, detect) {
         this.description = 'Impact of cardifying inline links on number of linked stories read';
         this.canRun = function(config) {
             var layoutMode = detect.getLayoutMode();
-            return config.page.contentType === 'Article' && /leftcol|extended/.test(layoutMode);
+            return config.page.contentType === 'Article' && layoutMode === 'extended';
         };
         this.variants = [
             {

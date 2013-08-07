@@ -10,8 +10,7 @@ define(['modules/userPrefs'], function (userPrefs) {
 
     var BASE_WIDTH     = 600,
         MEDIAN_WIDTH   = 900,
-        LEFTCOL_WIDTH  = 1052, // Breakpoint where we see the left column in article pages
-        EXTENDED_WIDTH = 1280,
+        EXTENDED_WIDTH = 1052,  // Breakpoint where we see the left column in article pages
         mobileOS,
         supportsPushState;
     
@@ -28,9 +27,6 @@ define(['modules/userPrefs'], function (userPrefs) {
             if (window.matchMedia('(min-width: '+ MEDIAN_WIDTH + ')')) {
                 mode = "desktop";
             }
-            if (window.matchMedia('(min-width: '+ LEFTCOL_WIDTH + ')')) {
-                mode = "leftcol";
-            }
             if (window.matchMedia('(min-width: '+ EXTENDED_WIDTH + ')')) {
                 mode = "extended";
             }
@@ -43,10 +39,6 @@ define(['modules/userPrefs'], function (userPrefs) {
 
             if (width >= MEDIAN_WIDTH) {
                 mode = "desktop";
-            }
-
-            if (width >= LEFTCOL_WIDTH) {
-                mode = "leftcol";
             }
 
             if (width >= EXTENDED_WIDTH) {

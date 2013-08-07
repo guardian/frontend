@@ -15,7 +15,11 @@ define([
     bean,
     bonzo
 ) {
-
+    /**
+     * @param {bonzo Object} link        The link to transform
+     * @param {bonzo Object} linkContext Where the card should be inserted
+     * @param {String}       title       Give a heading to the card
+     */
     function InlineLinkCard(link, linkContext, title) {
         this.link = link;
         this.title = title || false;
@@ -35,7 +39,7 @@ define([
 
     InlineLinkCard.prototype.loadCard = function() {
         var layoutMode = detect.getLayoutMode();
-        if(/leftcol|extended/.test(layoutMode) && !this.hasLoadedCard) {
+        if(layoutMode === 'extended' && !this.hasLoadedCard) {
             this.fetchData();
         }
     };
