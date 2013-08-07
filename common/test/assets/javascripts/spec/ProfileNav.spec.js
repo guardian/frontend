@@ -14,14 +14,13 @@ define(['common', 'fixtures', 'modules/navigation/profile', 'modules/cookies'], 
                 id: containerId,
                 fixtures: [
                     '<div class="' + Profile.CONFIG.classes.container + ' js-hidden">' +
-                    '    <a href="/signin" data-link-name="User profile" data-control-for="nav-popup-profile-nav"' +
-                    '        class="control control--profile">' +
+                    '    <a href="/signin" data-link-name="User profile" data-control-for="nav-popup-profile" class="control control--profile">' +
                     '        <i class="i i-nav-divider"></i>' +
                     '        <span class="' + Profile.CONFIG.classes.content + ' control--profile__info">Your profile</span>' +
                     '        <i class="i i-profile"></i>' +
                     '    </a>' +
                     '</div>',
-                    '<div class="nav-popup-profile-nav js-profile-nav-popup nav-popup nav-popup--box is-off"></div>'
+                    '<div class="nav-popup-profile js-profile-nav-popup nav-popup nav-popup--box is-off"></div>'
                 ]
             };
 
@@ -71,6 +70,11 @@ define(['common', 'fixtures', 'modules/navigation/profile', 'modules/cookies'], 
                 Cookies.cleanUp(['GU_U']);
                 profile.init();
                 expect(signout.length === 0);
+            });
+
+            it('removes the profile popup if you are logged out', function() {
+                var popup = context.querySelectorAll('.' + Profile.CONFIG.classes.popup);
+                expect(popup.length).toBe(0);
             });
         });
     });

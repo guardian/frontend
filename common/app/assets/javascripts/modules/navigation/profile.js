@@ -6,7 +6,6 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
      * @constructor
      */
     function Profile(context, config) {
-        var container;
         this.context = context;
         this.config = common.extend(this.config, config);
         
@@ -38,9 +37,6 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
     /** @type {Element|null} */
     Profile.prototype.context = null;
 
-    /** @type {Element|null} */
-    Profile.prototype.container = null;
-
     /** */
     Profile.prototype.init = function() {
         var self = this;
@@ -57,10 +53,10 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
         container.removeClass('js-hidden');
         content.html(user ? user.displayName : Profile.CONFIG.signinText);
 
-        if (user && !this.dom.popup.querySelector('.' + Profile.CONFIG.classes.signout)) {
-            popup.append('<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>');
+        if (user) {
+            popup.html('<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>');
         } else {
-            popup.html('');
+            popup.remove();
         }
 
         this.emitLoadedEvent(user);
