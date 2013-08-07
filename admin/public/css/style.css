@@ -392,6 +392,21 @@ a.cta, .cta a {
     color: #666;
 }
 
+.fronts .finder__refresh {
+    float: right;
+    cursor: pointer;
+    margin: 0 2px 0 0;
+    opacity: 0.5;
+}
+
+.fronts .finder__refresh:hover {
+    opacity: inherit;
+}
+
+.fronts .finder__refresh:active {
+    opacity: 0.5;
+}
+
 .fronts .list-picker__title {
     color: #666;
 }

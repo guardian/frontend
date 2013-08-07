@@ -42,8 +42,9 @@ define([
 
                 var url, propName;
 
-                // If term contains slashes, assume it's an article id
+                // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
+                    self.term(common.util.urlAbsPath(self.term()));
                     var url = '/api/proxy/' + self.term() + '?show-fields=all&format=json';
                     propName = 'content';
                 } else {
@@ -60,9 +61,7 @@ define([
                     success: function(resp) {
                         var rawArticles = resp.response && resp.response[propName] ? resp.response[propName] : [];
 
-                        self.articles.removeAll();
-                        // clean up any dragged-in articles 
-                        container.innerHTML = ''; 
+                        self.flush();
 
                         ([].concat(rawArticles)).forEach(function(article, index){
                             article.index = index;
@@ -79,13 +78,24 @@ define([
             return true; // ensure default click happens on all the bindings
         };
 
+        this.flush = function() {
+            self.articles.removeAll();
+            // clean up any dragged-in articles 
+            container.innerHTML = ''; 
+        }
+
+        this.refresh = function() {
+            self.flush();
+            self.search();
+        }
+
         function _startPoller() {
             setInterval(function(){
                 self.search();
             }, 10000);
         }
-
         this.startPoller = _.once(_startPoller);
+
     };
 });
 

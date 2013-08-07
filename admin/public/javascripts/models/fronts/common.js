@@ -24,6 +24,16 @@ define([
                 }));
             },
 
+            urlAbsPath: function(url) {
+                if(typeof url !== 'string') { return; }
+
+                var a = document.createElement('a');
+                a.href = url;
+                a = a.pathname + a.search + a.hash;
+                a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
+                return a;
+            },
+
             fullTrim: function(str){
                 return str ? str.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ') : undefined;
             },

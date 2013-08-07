@@ -28,7 +28,9 @@
             <div class="finder__title">Clipboard</div>
             <div class="connectedList clipboard"></div>
 
+            <i class="icon-refresh finder__refresh" data-bind="click: latestArticles.refresh"></i>
             <div class="finder__title">Latest Articles</div>
+
             <input type="text" placeholder="url or keyword" data-bind='
                 event: {keyup: latestArticles.search, afterpaste: latestArticles.search},
                 value: latestArticles.term,
