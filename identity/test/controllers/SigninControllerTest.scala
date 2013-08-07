@@ -4,9 +4,9 @@ import org.scalatest.path
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
-import org.mockito.Matchers.any
-import services.ReturnUrlVerifier
-import idapiclient.{EmailPassword, IdApiClient}
+import org.mockito.Matchers._
+import services.{IdentityRequest, IdRequestParser, ReturnUrlVerifier}
+import idapiclient.{OmnitureTracking, EmailPassword, IdApiClient}
 import play.api.test.Helpers._
 import play.api.test._
 import test.{TestRequest, Fake}
@@ -19,10 +19,15 @@ import play.api.mvc.Cookies
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
+  val requestParser = mock[IdRequestParser]
   val api = mock[IdApiClient]
   val conf = new IdentityConfiguration
+  val omnitureData = mock[OmnitureTracking]
+  val identityRequest = IdentityRequest(omnitureData)
 
-  val signinController = new SigninController(returnUrlVerifier, api, conf)
+  val signinController = new SigninController(returnUrlVerifier, api, conf, requestParser)
+  when(requestParser.apply(anyObject())).thenReturn(identityRequest)
+
 
   "the renderForm method" - {
     "should render the signin form" in Fake {
@@ -37,7 +42,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
       "so api is not called" in Fake {
         signinController.processForm()(fakeRequest)
-        verify(api, never).authBrowser(any[Auth])
+        verify(api, never).authBrowser(any[Auth], omnitureData)
       }
 
       "form is re-shown with errors" in Fake {
@@ -50,11 +55,11 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
       val auth = EmailPassword("test@example.com", "testpassword")
 
       "if api call succeeds" - {
-        when(api.authBrowser(any[Auth])).thenReturn(Future.successful(Right(List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal")))))
+        when(api.authBrowser(any[Auth], omnitureData)).thenReturn(Future.successful(Right(List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal")))))
 
         "should call authBrowser with provided credentials" in Fake {
           signinController.processForm()(fakeRequest)
-          verify(api).authBrowser(auth)
+          verify(api).authBrowser(auth, omnitureData)
         }
 
         "should redirect the user to the returnUrl" in Fake {

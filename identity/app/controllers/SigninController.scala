@@ -4,7 +4,7 @@ import play.api.mvc._
 import play.api.data._
 import model.IdentityPage
 import common.{Logging, ExecutionContexts}
-import services.ReturnUrlVerifier
+import services.{IdRequestParser, ReturnUrlVerifier}
 import com.google.inject.{Inject, Singleton}
 import idapiclient.{IdApiClient, EmailPassword}
 import org.joda.time.Duration
@@ -13,7 +13,7 @@ import play.api.i18n.Messages
 
 
 @Singleton
-class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdApiClient, conf: IdentityConfiguration)
+class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdApiClient, conf: IdentityConfiguration, requestParser: IdRequestParser)
   extends Controller with ExecutionContexts with Logging {
 
   val page = new IdentityPage("/signin", "Sign in", "signin")
@@ -33,6 +33,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdAp
   }
 
   def processForm = Action { implicit request =>
+    val idRequest = requestParser(request)
     val boundForm = form.bindFromRequest
     boundForm.fold(
       formWithErrors => {
@@ -42,7 +43,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdAp
       { case (email, password, rememberMe) => {
         log.trace("authing with ID API")
         Async {
-          api.authBrowser(EmailPassword(email, password)) map(_ match {
+          api.authBrowser(EmailPassword(email, password), idRequest.omnitureData) map(_ match {
             case Left(errors) => {
               log.info("Auth failed for %s".format(email))
               val formWithErrors = boundForm.withError(FormError("", Messages("error.login")))
