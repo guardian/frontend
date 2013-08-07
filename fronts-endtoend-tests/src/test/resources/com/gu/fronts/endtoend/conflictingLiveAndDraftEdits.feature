@@ -9,6 +9,19 @@ Feature: As an editor I want my changes to live trailblockX to be reflected in t
     When an editor adds StoryB to the draft of trailblockX
     And she adds StoryA to trailblockX
 
-    Then trailblockX draft should contain StoryA
+    Then trailblockX should contain StoryA
+    Then trailblockX draft should not contain StoryA
     Then trailblockX draft should contain StoryB
     Then trailblockX should not contain StoryB
+
+
+  Scenario: managing conflicts
+    Given trailblockX is an existing trailblock
+    And StoryA is a part of it
+    And StoryA is a part the draft of it
+
+    When an editor deletes StoryA from trailblockX
+
+    Then trailblockX should not contain StoryA
+    Then trailblockX draft should contain StoryA
+
