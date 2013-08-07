@@ -61,6 +61,18 @@ object SystemMetrics extends implicits.Numbers {
     MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric)
 }
 
+object CommonApplicationMetrics {
+  object SwitchBoardLoadTimingMetric extends TimingMetric(
+    "switchboard",
+    "switchboard-load",
+    "Switchboard load timing",
+    "Time spent running switchboard load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(SwitchBoardLoadTimingMetric)
+}
+
 object ContentApiMetrics {
   object HttpTimingMetric extends TimingMetric(
     "performance",
@@ -77,17 +89,6 @@ object ContentApiMetrics {
   )
 
   val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
-}
-
-object DiscussionMetrics {
-  object DiscussionHttpTimingMetric extends TimingMetric(
-    "performance",
-    "discussion-api-calls",
-    "Discussion API calls",
-    "outgoing requests to discussion api"
-  ) with TimingMetricLogging
-
-  val all: Seq[Metric] = Seq(DiscussionHttpTimingMetric)
 }
 
 object MongoMetrics {
@@ -124,6 +125,17 @@ object PaMetrics {
   val all: Seq[Metric] = Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
 }
 
+object DiscussionMetrics {
+  object DiscussionHttpTimingMetric extends TimingMetric(
+    "performance",
+    "discussion-api-calls",
+    "Discussion API calls",
+    "outgoing requests to discussion api"
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(DiscussionHttpTimingMetric)
+}
+
 object AdminMetrics {
   object ConfigUpdateCounter extends CountMetric("actions", "config_updates", "Config updates", "number of times config was updated")
   object ConfigUpdateErrorCounter extends CountMetric("actions", "config_update_errors", "Config update errors", "number of times config update failed")
@@ -154,24 +166,28 @@ object PorterMetrics {
   val all: Seq[Metric] = Seq(AnalyticsLoadTimingMetric, FastlyCloudwatchLoadTimingMetric)
 }
 
-object CommonApplicationMetrics {
-  object SwitchBoardLoadTimingMetric extends TimingMetric(
-    "switchboard",
-    "switchboard-load",
-    "Switchboard load timing",
-    "Time spent running switchboard load jobs",
+object CoreNavivationMetrics {
+  object MostPopularLoadTimingMetric extends TimingMetric(
+    "core-nav",
+    "core-nav-most-popular-load",
+    "Core Navigation Most Popular load timing",
+    "Time spent running most popular data load jobs",
     None
   ) with TimingMetricLogging
 
-  val all: Seq[Metric] = Seq(SwitchBoardLoadTimingMetric)
+  val all: Seq[Metric] = Seq(MostPopularLoadTimingMetric)
 }
+
 
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
+
   lazy val contentApi = ContentApiMetrics.all
-  lazy val discussion = DiscussionMetrics.all
   lazy val mongo = MongoMetrics.all
   lazy val pa = PaMetrics.all
+
+  lazy val discussion = DiscussionMetrics.all
   lazy val admin = AdminMetrics.all
   lazy val porter = PorterMetrics.all
+  lazy val coreNavigation = CoreNavivationMetrics.all
 }

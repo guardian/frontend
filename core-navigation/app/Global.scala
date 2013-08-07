@@ -8,7 +8,7 @@ import play.api.Play.current
 trait MostPopularLifecycle extends GlobalSettings {
   override def onStart(app: PlayApp) {
     super.onStart(app)
-    MostPopularAgent.startup()
+    MostPopularAgent.start()
 
     if (Play.isTest) {
       MostPopularAgent.refresh()
@@ -17,7 +17,7 @@ trait MostPopularLifecycle extends GlobalSettings {
   }
 
   override def onStop(app: PlayApp) {
-    MostPopularAgent.shutdown()
+    MostPopularAgent.stop()
     super.onStop(app)
   }
 }
