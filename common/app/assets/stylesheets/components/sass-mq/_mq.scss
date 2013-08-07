@@ -12,10 +12,6 @@ $mq-breakpoints: (
     (tablet  600px)
     (desktop 900px)
     (wide    1260px)
-
-    // Tweakpoints
-    (desktopAd 810px)
-    (mobileLandscape 480px)
 ) !default;
 
 
@@ -68,7 +64,7 @@ $mq-breakpoints: (
     $max-width: 0;
     $mediaQuery: '';
 
-    // From: this breakpoint
+    // From: this breakpoint (inclusive)
     @if $from {
         @if type-of($from) == number {
             $min-width: px2em($from);
@@ -77,7 +73,7 @@ $mq-breakpoints: (
         }
     }
 
-    // To: that breakpoint
+    // To: that breakpoint (exclusive)
     @if $to {
         @if type-of($to) == number {
             $max-width: px2em($to);
@@ -106,4 +102,13 @@ $mq-breakpoints: (
             @content;
         }
     }
+}
+
+// Add a breakpoint
+// Usage: $mq-breakpoints: mq-add-breakpoint(tvscreen, 1920px);
+// Credit goes to Sam Richard (author of the `respond-to()` mixin)
+@function mq-add-breakpoint($name, $breakpoint) {
+  $breakpoint: $name $breakpoint;
+  $output: append($mq-breakpoints, $breakpoint, 'space');
+  @return $output;
 }
