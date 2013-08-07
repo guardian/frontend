@@ -188,22 +188,43 @@
         margin-left: $gutter/2;
         margin-right: $gutter/2;
     }
+}
 
-    .gallerythumbs {
-        margin-top: $baseline;
-    }
+.trail--gallery + .trail--gallery {
+    margin: $baseline * 4 0;
+}
 
+
+
+.gallerythumbs {
+    margin: $baseline 0;
+    list-style: none;
+}
+
+.gallerythumbs__item {
+    @include box-sizing(border-box);
+    float: left;
+    line-height: 0;
+    overflow: hidden;
+}
+
+
+.gallerythumbs__item:last-child {
+    margin-bottom: 0;
+}
+
+.gallerythumbs__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+// Landscapes layout
+.gallerythumbs--landscapes {
     .gallerythumbs__item {
         @include fix-aspect-ratio(5, 3, 50%); // 5:3 aspect - works around thumbs being slightly different in size
-        @include box-sizing(border-box);
         margin-bottom: 3px;
-        float: left;
-        line-height: 0;
-        overflow: hidden;
-    }
-
-    .gallerythumbs__item:nth-child(odd) {
-        border-left: 3px solid transparent;
     }
 
     .gallerythumbs__item:first-child {
@@ -211,15 +232,8 @@
         border-left: 0;
     }
 
-    .gallerythumbs__item:last-child {
-        margin-bottom: 0;
-    }
-
-    .gallerythumbs__img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+    .gallerythumbs__item:nth-child(odd) {
+        border-left: 3px solid transparent;
     }
 
     @include mq(mobileLandscape) {
@@ -236,9 +250,14 @@
     }
 }
 
-.trail--gallery + .trail--gallery {
-    margin: $baseline * 4 0;
+// Portraits layout
+.gallerythumbs--portraits {
+    .gallerythumbs__item {
+        @include fix-aspect-ratio(3, 4, 33%);
+        border-left: 3px solid transparent;
+    }
 }
+
 
 /**
  * @todo: Clean these up into proper modifiers
