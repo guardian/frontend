@@ -1,9 +1,8 @@
 package model
 
-import akka.actor.Cancellable
+import akka.actor.ActorRef
 import common._
 import conf.ContentApi
-import scala.concurrent.duration._
 
 
 trait LiveBlogAgent extends ExecutionContexts with Logging {
@@ -14,6 +13,7 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
 
   // TODO editions
   def refreshLiveBlogs() = {
+    log.info("Refreshing Live Blogs")
     editions.foreach{ edition =>
       findBlogFor(edition).foreach(blog => agents(edition.id).send(blog))
     }
@@ -31,7 +31,7 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
 
       val editorsPicksIds = editorsPicks map { _.id }
 
-      val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+      val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains c.id }
 
       // order by editors' picks first
       val liveBlogs: Seq[Content] = (editorsPicks ++ latestContent).filter(_.isLive)
@@ -54,15 +54,23 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
 object LiveBlog extends LiveBlogAgent {
   def apply(edition: Edition) = blogFor(edition)()
 
-  private var schedule: Option[Cancellable] = None
+  private var job: Option[ActorRef] = None
+
+  class LiveBlogRefreshJob extends Job with ExecutionContexts {
+    val cron = "0 0/2 * * * ?"
+    val metric = FootballMetrics.LiveBlogRefreshTimingMetric
+
+    def run() {
+      refreshLiveBlogs()
+    }
+  }
 
   def start() {
-    schedule = Some(AkkaScheduler.every(2.minutes, initialDelay = 10.seconds) {
-      refreshLiveBlogs()
-    })
+    job = Some(Jobs.schedule[LiveBlogRefreshJob])
   }
+
   def stop() {
-    close()
-    schedule.foreach(_.cancel())
+    job foreach { Jobs.deschedule }
+    job = None
   }
 }

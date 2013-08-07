@@ -215,7 +215,15 @@ object FootballMetrics {
     None
   ) with TimingMetricLogging
 
-  val all: Seq[Metric] = Seq(MatchDayLoadTimingMetric, CompetitionAgentLoadTimingMetric)
+  object LiveBlogRefreshTimingMetric extends TimingMetric(
+    "football",
+    "football-live-blog-refresh",
+    "Football live blog refresh timing",
+    "Time spent running live blog refresh jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(MatchDayLoadTimingMetric, CompetitionLoadTimingMetric, CompetitionAgentLoadTimingMetric, LiveBlogRefreshTimingMetric)
 }
 
 

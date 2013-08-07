@@ -1,5 +1,6 @@
 package conf
 
+import akka.actor.ActorRef
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
@@ -227,7 +228,9 @@ object Switches extends Collections {
 
 class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts {
 
-  object SwitchBoardRefreshJob extends Job {
+  private var job: Option[ActorRef] = None
+
+  class SwitchBoardRefreshJob extends Job {
     val cron = "0 * * * * ?"
     val metric = CommonApplicationMetrics.SwitchBoardLoadTimingMetric
 
@@ -253,6 +256,11 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
   }
 
   override def onStart() {
-    Jobs.schedule(SwitchBoardRefreshJob)
+    job = Some(Jobs.schedule[SwitchBoardRefreshJob])
+  }
+
+  override def onStop() {
+    job foreach { Jobs.deschedule }
+    job = None
   }
 }

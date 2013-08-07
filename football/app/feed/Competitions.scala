@@ -1,5 +1,6 @@
 package feed
 
+import akka.actor.ActorRef
 import common._
 import conf.FootballClient
 import java.util.Comparator
@@ -160,7 +161,7 @@ trait Competitions extends CompetitionSupport with ExecutionContexts with Loggin
     }
   }
 
-  object MatchDayAgentRefreshJob extends Job with ExecutionContexts {
+  class MatchDayAgentRefreshJob extends Job with ExecutionContexts {
     val cron = "0/10 * * * * ?"
     val metric = FootballMetrics.MatchDayLoadTimingMetric
 
@@ -169,7 +170,7 @@ trait Competitions extends CompetitionSupport with ExecutionContexts with Loggin
     }
   }
 
-  object CompetitionRefreshJob extends Job with ExecutionContexts {
+  class CompetitionRefreshJob extends Job with ExecutionContexts {
     val cron = "0 0/5 * * * ?"
     val metric = FootballMetrics.CompetitionLoadTimingMetric
 
@@ -178,7 +179,7 @@ trait Competitions extends CompetitionSupport with ExecutionContexts with Loggin
     }
   }
 
-  case class CompetitionAgentRefreshJob(agent: CompetitionAgent) extends Job with ExecutionContexts {
+  class CompetitionAgentRefreshJob(agent: CompetitionAgent) extends Job with ExecutionContexts {
     override val name: String = s"${getClass.getSimpleName}_${agent.hashCode}"
 
     //stagger fixtures and results refreshes to avoid timeouts
@@ -191,15 +192,19 @@ trait Competitions extends CompetitionSupport with ExecutionContexts with Loggin
     }
   }
 
+  private var jobs: List[ActorRef] = List()
+
   def start() {
-    Jobs.schedule(MatchDayAgentRefreshJob)
-    Jobs.schedule(CompetitionRefreshJob)
+    jobs = Jobs.schedule[MatchDayAgentRefreshJob] :: jobs
+    jobs = Jobs.schedule[CompetitionRefreshJob] :: jobs
     competitionAgents foreach { agent =>
-      Jobs.schedule(CompetitionAgentRefreshJob(agent))
+      jobs = Jobs.schedule(new CompetitionAgentRefreshJob(agent)) :: jobs
     }
   }
 
   def stop() {
+    jobs foreach { Jobs.deschedule }
+    jobs = List()
     competitionAgents.foreach(_.stop())
   }
 }
