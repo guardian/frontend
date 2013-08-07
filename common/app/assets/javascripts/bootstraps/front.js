@@ -57,8 +57,9 @@ define([
                     var opts,
                         table;
 
-                    switch(window.location.pathname) {
-                        case "/" :
+                    switch(config.page.pageId) {
+                        case "" :
+                            // Network Front
                             opts = {
                                 prependTo: context.querySelector('.zone-sport ul > li'),
                                 competitions: ['500', '510', '100'],
@@ -67,9 +68,11 @@ define([
                                 numVisible: 3
                             };
                             break;
-                        case "/sport" :
+                        case "sport" :
+                            // Sport Front
                             opts = {
                                 prependTo: context.querySelector('.trailblock ul > li'),
+                                competitions: ['500', '510', '100'],
                                 contextual: false,
                                 expandable: true,
                                 numVisible: 5
