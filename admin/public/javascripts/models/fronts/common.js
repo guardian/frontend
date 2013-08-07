@@ -8,7 +8,7 @@ define([
         config: {
             apiBase: '/fronts/api',
             apiSearchBase: '/api/proxy/search',
-            maxOphanCallsPerBlock: 20,
+            maxOphanCallsPerBlock: 10,
             cacheExpiryMs: 300000, // 300000 = five mins 
             defaultToLiveMode: true
         },

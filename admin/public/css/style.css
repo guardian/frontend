@@ -686,14 +686,14 @@ a.cta, .cta a {
 .fronts .trail_stats {
     width: 100%;
     clear: both;
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .fronts .pageviews {
     color: #d61d00;
     float: right;
     margin: 0 0 0 5px;
-    color: #666;
+    color: #d61d00;
     font-weight: bold;
 }
 
