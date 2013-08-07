@@ -1,22 +1,20 @@
 define([
     'Config',
     'Reqwest',
-    'models/fronts/common'
+    'models/fronts/common',
+    'models/fronts/cache'
 ], 
 function (
     Config,
     Reqwest,
-    common
+    common,
+    cache
 ){
-    var cache = common.cache.article;
-
-    window.frontCache = common.cache;
-
     function decorateItems (items) {
         var fetch = [];
 
         items.forEach(function(item){
-            var data = cache[item.meta.id()];
+            var data = cache.get('contentApi', item.meta.id());
             if(data) {
                 decorateItem(data, item);
             } else {
@@ -27,7 +25,7 @@ function (
         fetchData(fetch, function(results){
             results.forEach(function(article){
                 if (article.id) {
-                    cache[article.id] = article;
+                    cache.put('contentApi', article.id, article);
                     _.filter(items,function(item){
                         return item.meta.id() === article.id;
                     }).forEach(function(item){

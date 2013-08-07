@@ -2,17 +2,17 @@ define([
     'models/fronts/common',
     'models/fronts/article',
     'models/fronts/ophanApi',
+    'models/fronts/cache',
     'knockout',
     'Reqwest'
 ], function (
     common,
     Article,
     ophanApi,
+    cache,
     ko,
     Reqwest
 ) {
-    var cache = common.cache.article;
-
     return function(opts) {
 
         var self = this,
@@ -67,7 +67,7 @@ define([
                         ([].concat(rawArticles)).forEach(function(article, index){
                             article.index = index;
                             self.articles.push(new Article(article));
-                            cache[article.id] = article;
+                            cache.put('contentApi', article.id, article);
                         })
 
                         ophanApi.decorateItems(self.articles());
