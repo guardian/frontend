@@ -42,6 +42,10 @@ define([
 
         });
 
+        afterEach(function() {
+            fixtures.clean('test-card');
+        });
+
         it('Should turn a link into a card and prepend its parent with markup', function() {
             new InlineLinkCard(linkToCardify, linkContext).prependCard(href, pageconfig.data);
 
