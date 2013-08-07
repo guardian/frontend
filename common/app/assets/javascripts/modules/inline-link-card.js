@@ -82,6 +82,9 @@ define([
                 self.hasLoadedCard = true;
 
                 self.prependCard(href, resp.config.page, self.title);
+            },
+            function(req) {
+                common.mediator.emit('module:error', 'Failed to cardify in body link: ' + req.statusText, 'modules/inline-link-card.js');
             }
         );
     };
