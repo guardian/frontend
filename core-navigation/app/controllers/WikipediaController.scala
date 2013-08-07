@@ -11,17 +11,21 @@ import org.jsoup.Jsoup
 
 object WikipediaController extends Controller with Logging with ExecutionContexts {
 
-  def render(path: String) = Action { implicit request =>
+  def render(resource: String) = Action { implicit request =>
+
+    val wikiUrl = "http://en.wikipedia.org/wiki/" + resource
 
     Async {
-          WS.url(path)
+          WS.url(wikiUrl)
             .get().map { response =>
               val fragment = Jsoup.parseBodyFragment(response.body)
-              
+              val firstParagraph = fragment.select("#mw-content-text > p").first
+              firstParagraph.select(".reference").remove()
+ 
               val wiki = Map(
                           "heading" -> fragment.select("#firstHeading").text(),
                           "thumbnail" -> fragment.select(".image img").attr("src"),
-                          "firstParagraph" -> fragment.select("#mw-content-text > p").first.text()
+                          "firstParagraph" -> firstParagraph.text()
               )
               Ok(Json.toJson(wiki))
             }
