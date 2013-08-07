@@ -5,19 +5,22 @@ define([
     //Current tests
     'modules/experiments/tests/paragraph-spacing',
     'modules/experiments/tests/aa',
-    'modules/experiments/tests/lightbox-galleries'
+    'modules/experiments/tests/lightbox-galleries',
+    'modules/experiments/tests/gallery-style'
 ], function (
     common,
     store,
     ParagraphSpacing,
     Aa,
-    LightboxGalleries
+    LightboxGalleries,
+    GalleryStyle
     ) {
 
     var TESTS = [
             new ParagraphSpacing(),
             new Aa(),
-            new LightboxGalleries()
+            new LightboxGalleries(),
+            new GalleryStyle()
         ],
         participationsKey = 'gu.ab.participations';
 

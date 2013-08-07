@@ -158,6 +158,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
     safeState = Off)
 
+  val ABGalleryStyle = Switch("A/B Tests", "ab-gallery-style",
+    "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
+    safeState = Off)
+
 
   // Sport Switch
 
@@ -208,7 +212,8 @@ object Switches extends Collections {
     LiveCricketSwitch,
     ABLightboxGalleries,
     FilmFrontFacia,
-    AdSlotImpressionStatsSwitch
+    AdSlotImpressionStatsSwitch,
+    ABGalleryStyle
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
