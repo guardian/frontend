@@ -109,7 +109,7 @@ define([
                     new InlineLinkCard(link, link.parentNode, 'Related').init();
                 }
                 function isArticle(url) {
-                    return /(\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/)/.test(url);
+                    return (/\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\//).test(url);
                 }
 
                 if (linksToCardify.length > 0) {
