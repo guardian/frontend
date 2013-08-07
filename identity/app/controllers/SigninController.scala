@@ -6,10 +6,15 @@ import model.IdentityPage
 import common.{Logging, ExecutionContexts}
 import services.ReturnUrlVerifier
 import com.google.inject.{Inject, Singleton}
-import idapiclient.{IdApiClient, EmailPassword}
-import org.joda.time.Duration
+import idapiclient.{ClientAuth, IdApiClient, EmailPassword}
+import org.joda.time._
 import conf.IdentityConfiguration
 import play.api.i18n.Messages
+import idapiclient.ClientAuth
+import play.api.data.FormError
+import scala.Some
+import idapiclient.EmailPassword
+import play.api.mvc.Cookie
 
 
 @Singleton
@@ -42,18 +47,19 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier, api: IdAp
       { case (email, password, rememberMe) => {
         log.trace("authing with ID API")
         Async {
-          api.authBrowser(EmailPassword(email, password)) map(_ match {
+          api.authBrowser(EmailPassword(email, password), ClientAuth(conf.id.apiClientToken)) map(_ match {
             case Left(errors) => {
+              log.error(errors.toString)
               log.info("Auth failed for %s".format(email))
               val formWithErrors = boundForm.withError(FormError("", Messages("error.login")))
               Ok(views.html.signin(page, formWithErrors))
             }
-            case Right(apiCookies) => {
+            case Right(apiCookiesResponse) => {
               log.trace("Logging user in")
-              val responseCookies = apiCookies.map { cookie =>
-                val maxAge = if(rememberMe) Some(Duration.standardDays(90).getStandardSeconds.toInt) else None
-                val secureHttpOnly = cookie.name.startsWith("SC_")
-                new Cookie(cookie.name, cookie.value, maxAge, "/", Some(conf.id.domain), secureHttpOnly, secureHttpOnly)
+              val maxAge = if(rememberMe) Some(Seconds.secondsBetween(DateTime.now, apiCookiesResponse.expiresAt).getSeconds) else None
+              val responseCookies = apiCookiesResponse.values.map { cookie =>
+                val secureHttpOnly = cookie.key.startsWith("SC_")
+                new Cookie(cookie.key, cookie.value, maxAge, "/", Some(conf.id.domain), secureHttpOnly, secureHttpOnly)
               }
               SeeOther(returnUrlVerifier.getVerifiedReturnUrl(request))
                 .withCookies(responseCookies:_*)

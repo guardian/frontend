@@ -102,6 +102,7 @@ class GuardianConfiguration(
     lazy val url = configuration.getStringProperty("id.url").getOrElse("")
     lazy val apiRoot = configuration.getStringProperty("id.apiRoot").getOrElse("")
     lazy val domain = """^https?//(?:profile.)?([^/:])*.*$""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
+    lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
   }
 
   object static {

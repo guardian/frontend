@@ -11,10 +11,12 @@ import play.api.test.Helpers._
 import play.api.test._
 import test.{TestRequest, Fake}
 import scala.concurrent.Future
-import idapiclient.responses.CookieResponse
+import idapiclient.responses.{CookiesResponse, CookieResponse}
 import client.Auth
+import idapiclient.ClientAuth
 import conf.IdentityConfiguration
 import play.api.mvc.Cookies
+import org.joda.time.DateTime
 
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -37,7 +39,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
       "so api is not called" in Fake {
         signinController.processForm()(fakeRequest)
-        verify(api, never).authBrowser(any[Auth])
+        verify(api, never).authBrowser(any[Auth], any[ClientAuth])
       }
 
       "form is re-shown with errors" in Fake {
@@ -48,13 +50,14 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
     "with valid API response" - {
       val fakeRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "test@example.com", "password" -> "testpassword")
       val auth = EmailPassword("test@example.com", "testpassword")
+      val clientAuth = ClientAuth("frontend-dev-client-token")
 
       "if api call succeeds" - {
-        when(api.authBrowser(any[Auth])).thenReturn(Future.successful(Right(List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal")))))
+        when(api.authBrowser(any[Auth], any[ClientAuth])).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
 
         "should call authBrowser with provided credentials" in Fake {
           signinController.processForm()(fakeRequest)
-          verify(api).authBrowser(auth)
+          verify(api).authBrowser(auth, clientAuth)
         }
 
         "should redirect the user to the returnUrl" in Fake {

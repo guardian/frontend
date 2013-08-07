@@ -14,6 +14,7 @@ import org.hamcrest.Description
 import org.mockito.ArgumentMatcher
 import org.joda.time.DateTime
 import client.connection.util.ExecutionContexts
+import org.joda.time.format.ISODateTimeFormat
 
 
 class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -24,6 +25,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val jsonParser = mock[JsonBodyParser]
   val api = new SynchronousIdApi(apiRoot, http, jsonParser)
   val errors = List(Error("Test error", "Error description", 500))
+  val clientAuth = ClientAuth("clientAccessToken")
 
   "the authApp method" - {
     val validAccessTokenResponse = HttpResponse("""{"accessToken": "abc", "expiresAt": "2013-10-30T12:21:00+00:00"}""", 200, "OK")
@@ -39,12 +41,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "passes the auth parameters to the http lib's GET method" in {
         api.authApp(ParamAuth)
-        verify(http).GET(Matchers.any[String], argThat(new ParamMatcher(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
+        verify(http).GET(Matchers.any[String], argThat(new ParamsMatcher(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
       }
 
       "passes the auth header to the http lib's GET method" in {
         api.authApp(HeaderAuth)
-        verify(http).GET(Matchers.any[String], argThat(EmptyParamMatcher), argThat(new ParamMatcher(Iterable(("testHeader", "value")))))
+        verify(http).GET(Matchers.any[String], argThat(EmptyParamMatcher), argThat(new ParamsMatcher(Iterable(("testHeader", "value")))))
       }
 
       "returns an access token response" in {
@@ -75,39 +77,46 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
   "the authBrowser method" - {
     "given a valid response" - {
-      val validCookieResponse = HttpResponse("""{"expiry": "2013-10-30T12:21:00+00:00", "values": [{"name": testName", "value": "testValue"}]}""", 200, "OK")
+      val validCookieResponse = HttpResponse("""{"expiresAt": "2013-10-30T12:21:00+00:00", "values": [{"name": testName", "value": "testValue"}]}""", 200, "OK")
       when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters]))
         .thenReturn(toFuture(Right(validCookieResponse)))
 
       "accesses the /auth endpoint" in {
-        api.authBrowser(Anonymous)
+        api.authBrowser(Anonymous, clientAuth)
         verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "adds the cookie parameter to the request" in {
-        api.authBrowser(Anonymous)
-        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], argThat(new ParamMatcher(Iterable(("format", "cookie")))), Matchers.any[Parameters])
+        api.authBrowser(Anonymous, clientAuth)
+        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("format", "cookies")))), Matchers.any[Parameters])
+      }
+
+      "adds the client access token parameter to the request" in {
+        api.authBrowser(Anonymous, clientAuth)
+        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("accessToken", "clientAccessToken")))), Matchers.any[Parameters])
       }
 
       "passes the auth parameters to the http lib's GET method" in {
         val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
-        api.authBrowser(auth)
-        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamMatcher(Iterable(("testParam", "value"), ("format", "cookie")))), argThat(EmptyParamMatcher))
+        api.authBrowser(auth, clientAuth)
+        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
       }
 
       "passes the auth header to the http lib's GET method" in {
         val auth = TestAuth(Iterable.empty, List(("testHeader", "value")))
-        api.authBrowser(auth)
-        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamMatcher(Iterable(("format", "cookie")))), argThat(new ParamMatcher(Iterable(("testHeader", "value")))))
+        api.authBrowser(auth, clientAuth)
+        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("format", "cookies")))), argThat(new ParamsIncludes(Iterable(("testHeader", "value")))))
       }
 
       "returns a cookies response" in {
-        api.authBrowser(Anonymous).map(_ match {
+        api.authBrowser(Anonymous, clientAuth).map(_ match {
           case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
           case Right(cookiesResponse) => {
-            cookiesResponse.size should equal(1)
-            cookiesResponse(0) should have('name("testName"))
-            cookiesResponse(0) should have('value("testValue"))
+            cookiesResponse.expiresAt should equal(ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2013-10-30T12:21:00+00:00"))
+            val cookies = cookiesResponse.values
+            cookies.size should equal(1)
+            cookies(0) should have('name("testName"))
+            cookies(0) should have('value("testValue"))
           }
         })
       }
@@ -118,8 +127,8 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.authBrowser(Anonymous).map(_ match {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString()))
+        api.authBrowser(Anonymous, clientAuth).map(_ match {
+          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
           }
@@ -157,12 +166,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       "when providinug authentication to the request" - {
         "adds the url parameters" in {
           api.user("123", ParamAuth)
-          verify(http).GET(Matchers.any[String], argThat(new ParamMatcher(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
+          verify(http).GET(Matchers.any[String], argThat(new ParamsMatcher(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
         }
 
         "adds the request headers" in {
           api.user("123", HeaderAuth)
-          verify(http).GET(Matchers.any[String], argThat(EmptyParamMatcher), argThat(new ParamMatcher(Iterable(("testHeader", "value")))))
+          verify(http).GET(Matchers.any[String], argThat(EmptyParamMatcher), argThat(new ParamsMatcher(Iterable(("testHeader", "value")))))
         }
       }
     }
@@ -210,12 +219,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "adds the auth url parameters" in {
         api.me(ParamAuth)
-        verify(http).GET(Matchers.any[String], argThat(new ParamMatcher(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
+        verify(http).GET(Matchers.any[String], argThat(new ParamsMatcher(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
       }
 
       "adds the auth request headers" in {
         api.me(HeaderAuth)
-        verify(http).GET(Matchers.any[String], argThat(EmptyParamMatcher), argThat(new ParamMatcher(Iterable(("testHeader", "value")))))
+        verify(http).GET(Matchers.any[String], argThat(EmptyParamMatcher), argThat(new ParamsMatcher(Iterable(("testHeader", "value")))))
       }
     }
 
@@ -248,17 +257,21 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   object ParamAuth extends TestAuth(Iterable(("testParam", "value")), Iterable.empty)
   object HeaderAuth extends TestAuth(Iterable.empty, Iterable(("testHeader", "value")))
 
-  class ListMatcher[T](items: Iterable[T]) extends ArgumentMatcher {
+  class ParamsMatcher(items: Iterable[(String, String)], completeMatch: Boolean = true) extends ArgumentMatcher {
     override def matches(arg: Any): Boolean = {
       arg match {
-        case list: Iterable[T] if list.size == items.size => items.forall(t => list.exists(_ == t))
+        case list: Iterable[_] => {
+          val params = list.asInstanceOf[Iterable[(String, String)]]
+          items.forall(param => params.exists(_ == param)) && (if(completeMatch) list.size == items.size else true)
+        }
         case _ => false
       }
     }
     override def describeTo(description: Description): Unit = {
-      description.appendText("Iterable" + items.mkString("(", ",", ")"))
+      description.appendText("Iterable" + (if(!completeMatch) " including" else "") + items.mkString("(", ",", ")"))
     }
   }
-  class ParamMatcher(items: Parameters) extends ListMatcher[(String, String)](items)
-  object EmptyParamMatcher extends ParamMatcher(Iterable.empty)
+  object EmptyParamMatcher extends ParamsMatcher(Iterable.empty)
+  class ParamsIncludes(items: Parameters) extends ParamsMatcher(items, false)
+
 }

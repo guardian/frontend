@@ -1,13 +1,13 @@
 package idapiclient
 
-import com.gu.identity.model.{User, AccessToken}
-import play.mvc.Http.Cookie
+import com.gu.identity.model.User
 import client.{Logging, Anonymous, Auth, Response}
 import client.connection.Http
 import scala.concurrent.{Future, ExecutionContext}
 import client.parser.JsonBodyParser
-import idapiclient.responses.{CookiesResponse, CookieResponse, AccessTokenResponse}
+import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
 import client.connection.util.ExecutionContexts
+import net.liftweb.json.JsonAST.JValue
 
 
 abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends Logging {
@@ -21,18 +21,19 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     }) mkString "/"
   }
 
+  def jsonField(field: String)(json: JValue): JValue = json \ field
+
   // AUTH
 
   def authApp(auth: Auth): Future[Response[AccessTokenResponse]] = {
     val response = http.GET(apiUrl("auth"), auth.parameters, auth.headers)
-    response map jsonBodyParser.extract[AccessTokenResponse]
+    response map jsonBodyParser.extract[AccessTokenResponse](jsonField("accessToken"))
   }
 
-  def authBrowser(auth: Auth): Future[Response[List[CookieResponse]]] = {
-    val params = auth.parameters ++ Iterable(("format", "cookie"))
-    val response = http.POST(apiUrl("auth"), None, params, auth.headers)
-    val cookieResponse = response map jsonBodyParser.extract[CookiesResponse]
-    cookieResponse.map(_.right.map(_.values))
+  def authBrowser(userAuth: Auth, clientAuth: ClientAuth): Future[Response[CookiesResponse]] = {
+    val params = userAuth.parameters ++ clientAuth.parameters ++ Iterable(("format", "cookies"))
+    val response = http.POST(apiUrl("auth"), None, params, userAuth.headers ++ clientAuth.headers)
+    response map jsonBodyParser.extract[CookiesResponse](jsonField("cookies"))
   }
 
   // USERS
@@ -40,18 +41,18 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   def user(userId: String, auth: Auth = Anonymous): Future[Response[User]] = {
     val apiPath = urlJoin("user", userId)
     val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
-    response map jsonBodyParser.extract[User]
+    response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
     val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
-    response map jsonBodyParser.extract[User]
+    response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
 //  def register(userData: String): Future[Response[User]] = {
 //    val response = http.POST(apiUrl("user"), userData)
-//    response map jsonBodyParser.extract[User]
+//    response map jsonBodyParser.extract[User](jsonField("user"))
 //  }
 
   // EMAILS

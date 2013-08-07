@@ -14,19 +14,7 @@ class DispatchAsyncHttpClientTest extends path.FreeSpec with ShouldMatchers with
   object TestDispatchAsyncHttpClient extends DispatchAsyncHttpClient with ExecutionContexts
 
   "the buildRequest method" - {
-    val req = mock[Req]
 
-    "adds the URL parameters to the request" in {
-      val params = List(("key1", "value1"), ("key2", "value2"))
-      TestDispatchAsyncHttpClient.buildRequest(req, params, Iterable.empty)
-      params.foreach(param => verify(req).addQueryParameter(param._1, param._2))
-    }
-
-    "adds the headers to the request" in {
-      val headers = List(("key1", "value1"), ("key2", "value2"))
-      TestDispatchAsyncHttpClient.buildRequest(req, Iterable.empty, headers)
-      headers.foreach(param => verify(req).addHeader(param._1, param._2))
-    }
   }
 
   "mapFutureToResponse" - {
