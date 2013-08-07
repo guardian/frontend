@@ -112,16 +112,21 @@ trait UpdateActions {
     FrontsApi.putBlock(edition, section, block, Block(block, None, List(trailWithId(update.item)), List(trailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
   }
 
-  def updateTrailblockJson(edition: String, section: String, blockId: String, updateTrailblock: UpdateTrailblockJson) = {
+  def updateTrailblockJson(edition: String, section: String, blockId: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
     FrontsApi.getBlock(edition, section, blockId).map { block =>
       val newBlock = block.copy(
         contentApiQuery = updateTrailblock.config.contentApiQuery orElse None,
         min = updateTrailblock.config.min orElse Some(defaultMinimumTrailblocks),
         max = updateTrailblock.config.max orElse Some(defaultMaximumTrailblocks)
       )
-      FrontsApi.putBlock(edition, section, newBlock)
+      if (newBlock != block) {
+        FrontsApi.putBlock(edition, section, updateIdentity(newBlock, identity))
+      }
     }
   }
+
+  def updateIdentity(block: Block, identity: Identity): Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
+
 }
 
 object UpdateActions extends UpdateActions

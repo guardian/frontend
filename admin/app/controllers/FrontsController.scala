@@ -41,14 +41,20 @@ object FrontsController extends Controller with Logging {
       }
       case blockAction: BlockActionJson => {
         blockAction.publish.filter {_ == true}
-          .map { _ => FrontsApi.publishBlock(edition, section, blockId) }
+          .map { _ =>
+            FrontsApi.publishBlock(edition, section, blockId)
+            Ok
+          }
           .orElse {
-          blockAction.discard.filter {_ == true}.map(_ => FrontsApi.discardBlock(edition, section, blockId))
+          blockAction.discard.filter {_ == true}.map { _ =>
+            FrontsApi.discardBlock(edition, section, blockId)
+            Ok
+          }
         } getOrElse NotFound("Invalid JSON")
-        Ok
       }
       case updateTrailblock: UpdateTrailblockJson => {
-        UpdateActions.updateTrailblockJson(edition, section, blockId, updateTrailblock)
+        val identity = Identity(request).get
+        UpdateActions.updateTrailblockJson(edition, section, blockId, updateTrailblock, identity)
         Ok
       }
       case _ => NotFound
