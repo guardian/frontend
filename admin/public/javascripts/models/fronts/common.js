@@ -15,11 +15,6 @@ define([
 
         state: {},
 
-        cache: {
-            article: {},
-            pageViews: {}
-        },
-
         util: {
             queryParams: function() {
                 return _.object(window.location.search.substring(1).split('&').map(function(keyVal){
