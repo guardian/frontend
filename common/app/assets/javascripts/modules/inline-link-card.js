@@ -14,14 +14,14 @@ define([
     bean
 ) {
     /**
-     * @param {bonzo Object} link        The link to transform
+     * @param {DOMElement}   link        The link to transform
      * @param {bonzo Object} linkContext Where the card should be inserted
      * @param {String}       title       Give a heading to the card
      */
     function InlineLinkCard(link, linkContext, title) {
         this.link = link;
         this.title = title || false;
-        this.linkContext = linkContext;
+        this.$linkContext = linkContext;
         this.hasLoadedCard = false;
     }
 
@@ -65,7 +65,7 @@ define([
                   '</div>' +
               '</a>';
 
-        self.linkContext.before(tpl);
+        self.$linkContext.before(tpl);
     };
 
     InlineLinkCard.prototype.fetchData = function() {
