@@ -9,14 +9,11 @@ class Front extends Logging {
 
   private def allFronts = fronts.values
 
-  object FrontRefreshJob extends Job with ExecutionContexts {
+  class FrontRefreshJob extends Job with ExecutionContexts {
     val cron = "0 * * * * ?"
     val metric = FrontMetrics.FrontLoadTimingMetric
 
-    def run() {
-      log.info("Refreshing Front")
-      allFronts.foreach(_.refresh())
-    }
+    def run() { refresh () }
   }
 
   lazy val fronts: Map[String, ConfiguredEdition] = Edition.all.flatMap{ edition =>
@@ -25,9 +22,12 @@ class Front extends Logging {
     }.toMap
   }.toMap
 
+  def refresh() {
+    log.info("Refreshing Front")
+    allFronts.foreach(_.refresh())
+  }
 
-  def start() { Jobs.schedule(FrontRefreshJob) }
-  def refresh() { FrontRefreshJob.run() }
+  def start() { Jobs.schedule[FrontRefreshJob] }
   def stop() { allFronts.foreach(_.stop()) }
 
   def apply(path: String): Seq[Trailblock] = fronts(path)()
