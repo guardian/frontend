@@ -58,7 +58,8 @@ trait UpdateActions {
 
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
-  def trailWithId(id: String) = Trail(id, None, None, None)
+
+  def emptyTrailWithId(id: String) = Trail(id, None, None, None)
 
   def updateActionFilter(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity): Either[String, String] =
     FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
@@ -84,7 +85,7 @@ trait UpdateActions {
       .map {_ => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1}
       .getOrElse { listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) }
     val splitList = listWithoutItem.splitAt(index)
-    splitList._1 ++ List(trailWithId(update.item)) ++ splitList._2
+    splitList._1 ++ List(emptyTrailWithId(update.item)) ++ splitList._2
   }
 
   def updateBlock(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity): Unit = {
@@ -109,7 +110,7 @@ trait UpdateActions {
   }
 
   def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-    FrontsApi.putBlock(edition, section, block, Block(block, None, List(trailWithId(update.item)), List(trailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
+    FrontsApi.putBlock(edition, section, block, Block(block, None, List(emptyTrailWithId(update.item)), List(emptyTrailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
   }
 
   def updateTrailblockJson(edition: String, section: String, blockId: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
