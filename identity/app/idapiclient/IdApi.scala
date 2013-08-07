@@ -25,13 +25,13 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
 
   // AUTH
 
-  def authApp(auth: Auth): Future[Response[AccessTokenResponse]] = {
-    val response = http.GET(apiUrl("auth"), auth.parameters, auth.headers)
+  def authApp(auth: Auth, trackingData: OmnitureTracking): Future[Response[AccessTokenResponse]] = {
+    val response = http.GET(apiUrl("auth"), auth.parameters ++ trackingData.parameters, auth.headers)
     response map jsonBodyParser.extract[AccessTokenResponse](jsonField("accessToken"))
   }
 
-  def authBrowser(userAuth: Auth, clientAuth: ClientAuth): Future[Response[CookiesResponse]] = {
-    val params = userAuth.parameters ++ clientAuth.parameters ++ Iterable(("format", "cookies"))
+  def authBrowser(userAuth: Auth, clientAuth: ClientAuth, trackingData: OmnitureTracking): Future[Response[CookiesResponse]] = {
+    val params = userAuth.parameters ++ trackingData.parameters ++ clientAuth.parameters ++ Iterable(("format", "cookies"))
     val response = http.POST(apiUrl("auth"), None, params, userAuth.headers ++ clientAuth.headers)
     response map jsonBodyParser.extract[CookiesResponse](jsonField("cookies"))
   }
