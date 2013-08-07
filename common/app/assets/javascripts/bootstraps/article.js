@@ -103,11 +103,38 @@ define([
         },
         initInlineLinkCard: function() {
             common.mediator.on('page:article:ready', function(config, context) {
-                var linkToCardify = context.querySelectorAll('.article-body p a[href^="/"]')[0];
+                var linksToCardify = context.querySelectorAll('.article-body > p a[href^="/"]');
 
-                if (linkToCardify) {
-                    var linkContext = linkToCardify.parentNode;
-                    new InlineLinkCard(linkToCardify, linkContext, 'Related').init();
+                function cardifyRelatedInBodyLink(link) {
+                    new InlineLinkCard(link, link.parentNode, 'Related').init();
+                }
+
+                if (linksToCardify.length > 0) {
+
+                    if (linksToCardify.length == 1) {
+                        // There's only one link
+                        cardifyRelatedInBodyLink(linksToCardify[0]);
+                    } else {
+                        // There are multiple links
+                        var articleParagraphs = context.querySelectorAll('.article-body > p'),
+                            numberOfArticleParagraphs = articleParagraphs.length,
+                            insertCardEveryNParagraphs = 4,
+                            lastParagraphsToNotCardify = 3, // Always allow enough space to display a card
+                            linksInParagraph,
+                            i = 0;
+
+                        // Looking for links every insertCardEveryNParagraphs paragraphs
+                        while (i < (numberOfArticleParagraphs - lastParagraphsToNotCardify)) {
+                            linksInParagraph = articleParagraphs[i].querySelectorAll('a[href^="/"]');
+                            console.log(linksInParagraph);
+                            if (linksInParagraph.length > 0) {
+                                cardifyRelatedInBodyLink(linksInParagraph[0]);
+                                i = i + insertCardEveryNParagraphs;
+                            } else {
+                                i++;
+                            }
+                        }
+                    }
                 }
             });
         }

@@ -44,11 +44,15 @@ define([
 
     InlineLinkCard.prototype.prependCard = function(href, data, title) {
         var self = this,
-            headline = data.headline,
+            headline = data.headline || false,
             thumbnail = data.thumbnail,
             tpl,
             thumbnailFragment = '',
             titleFragment = '';
+
+        if (!headline) {
+            return false;
+        }
 
         if (title) {
             titleFragment = '<h2 class="card__title">' + title + '</h2>';
