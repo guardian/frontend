@@ -178,6 +178,18 @@ object CoreNavivationMetrics {
   val all: Seq[Metric] = Seq(MostPopularLoadTimingMetric)
 }
 
+object FrontMetrics {
+  object FrontLoadTimingMetric extends TimingMetric(
+    "front",
+    "front-load",
+    "Front load timing",
+    "Time spent running front data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(FrontLoadTimingMetric)
+}
+
 
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
@@ -190,4 +202,5 @@ object Metrics {
   lazy val admin = AdminMetrics.all
   lazy val porter = PorterMetrics.all
   lazy val coreNavigation = CoreNavivationMetrics.all
+  lazy val front = FrontMetrics.all
 }

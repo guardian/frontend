@@ -1,17 +1,22 @@
 package controllers.front
 
+import common._
 import model.Trailblock
-import common.{ Edition, Logging, AkkaScheduler }
-import scala.concurrent.duration._
+
 
 //Responsible for bootstrapping the front (setting up the refresh schedule)
 class Front extends Logging {
 
-  val refreshDuration = 60.seconds
+  private def allFronts = fronts.values
 
-  private lazy val refreshSchedule = AkkaScheduler.every(refreshDuration, initialDelay = 5.seconds) {
-    log.info("Refreshing Front")
-    Front.refresh()
+  object FrontRefreshJob extends Job with ExecutionContexts {
+    val cron = "0 * * * * ?"
+    val metric = FrontMetrics.FrontLoadTimingMetric
+
+    def run() {
+      log.info("Refreshing Front")
+      allFronts.foreach(_.refresh())
+    }
   }
 
   lazy val fronts: Map[String, ConfiguredEdition] = Edition.all.flatMap{ edition =>
@@ -20,23 +25,12 @@ class Front extends Logging {
     }.toMap
   }.toMap
 
-  private def allFronts = fronts.values
 
-  def refresh() {
-    allFronts.foreach(_.refresh())
-  }
-
-  def shutdown() {
-    refreshSchedule.cancel()
-    allFronts.foreach(_.shutDown())
-  }
-
-  def startup() {
-    refreshSchedule
-  }
+  def start() { Jobs.schedule(FrontRefreshJob) }
+  def refresh() { FrontRefreshJob.run() }
+  def stop() { allFronts.foreach(_.shutDown()) }
 
   def apply(path: String): Seq[Trailblock] = fronts(path)()
-
 }
 
 object Front extends Front
