@@ -6,14 +6,12 @@ define([
     'common',
     'modules/detect',
     'ajax',
-    'bean',
-    'bonzo'
+    'bean'
 ], function (
     common,
     detect,
     ajax,
-    bean,
-    bonzo
+    bean
 ) {
     /**
      * @param {bonzo Object} link        The link to transform
