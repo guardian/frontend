@@ -5,7 +5,7 @@
         <li class="trail" data-link-name="trail | @{index + 1}">
             <a href="@LinkTo{@trail.url}">
                 @if(!(trails.size == 4 && index > 1)){
-                    @trail.mainPicture.map{ mainPicture =>
+                    @trail.mainPicture(620).map{ mainPicture =>
                         <img class="trail__image" src="@mainPicture.path" />
                     }
                 }

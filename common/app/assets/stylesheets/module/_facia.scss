@@ -80,45 +80,38 @@
         }
         .trail__title {
             color: #ffffff;
-            padding: $baseline*2 $baseline*2 0;
+            margin: $baseline*3 $baseline*3 0;
         }
         .trail__standfirst {
             color: #ffffff;
-            margin: $baseline*3 0 0;
-            padding: $baseline*2 $baseline*2 0;
+            margin: $baseline*6 $baseline*3 0;
+
         }
     }
 
     @include mq(0, tablet) {
 
+        .trails {
+            @include box-sizing(border-box);
+            padding: 0 10px;
+        }
         .trail:nth-child(1) {
             .trail__image{
                 width: 100%;
                 margin: 0;
             }
             .trail__title {
-                @include font($serif, 700, 20, 22);
+                @include font($serif, 700, 20, 24);
                 position: absolute;
                 bottom: 0;
                 background: rgba(0, 86, 136, 0.8);
-                padding-bottom: $baseline*2;
+                margin: 0;
+                padding: $baseline*2 $baseline*3 $baseline*2;
                 width: 100%;
                 @include box-sizing(border-box);
             }
             .trail__standfirst {
                 display: none;
-            }
-        }
-
-        .trail:nth-child(2) {
-            .trail__image {
-                display: none;
-            }
-        }
-        .trail:nth-child(n+2) {
-            padding-left: $gutter*3;
-            .trail__title {
-                @include font($serif, 700, 16, 18);
             }
         }
 
@@ -128,7 +121,13 @@
 
         .trails-count-1 {
             .trail {
-                height: 250px;
+                height: 228px;
+            }
+            .trail__title {
+                @include font($serifheadline, 700, 26, 28);
+            }
+            .trail__standfirst {
+                @include font($serifheadline, normal, 18, 20);
             }
         }
 
@@ -138,7 +137,13 @@
 
         .trails-count-1 {
             .trail {
-                height: 300px;
+                height: 324px;
+            }
+            .trail__title {
+                @include font($serifheadline, 700, 34, 36);
+            }
+            .trail__standfirst {
+                @include font($serifheadline, normal, 26, 28);
             }
         }
 
@@ -151,7 +156,7 @@
                 height: 372px;
             }
             .trail__title {
-                @include font($serifheadline, 700, 40, 42);
+                @include font($serifheadline, 700, 38, 40);
             }
             .trail__standfirst {
                 @include font($serifheadline, normal, 30, 32);
