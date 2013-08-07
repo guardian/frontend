@@ -42,6 +42,10 @@
 }
 
 .sport-miniscorecard__detail {
+    tr + tr td {
+        border-top: 1px solid #DEDEDD;
+    }
+
     td {
         @extend %type-10;
         display: table-cell;
@@ -51,13 +55,5 @@
     td:first-child {
         min-width: 60px;
         width: 30%
-    }
-
-    tr {
-        border-bottom: 1px solid #DEDEDD;
-    }
-
-    tr:last-child {
-        border-bottom: 0;
     }
 }

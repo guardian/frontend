@@ -37,7 +37,7 @@ define([
                 common.mediator.emit('modules:footballfixtures:render');
                 if(options.expandable) {
                     var expandable = new Expandable({
-                        dom: 'front-competition-fixtures',
+                        dom: '.front-competition-fixtures',
                         expanded: false
                     });
                     expandable.init();

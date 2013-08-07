@@ -17,8 +17,8 @@ import common.NavItem
 object Au extends Edition(
   id = "AU",
   displayName = "Australia edition",
-  DateTimeZone.forID("Australia/Sydney"),
-  hreflang = "en-au") with Sections with Zones with QueryDefaults {
+  DateTimeZone.forID("Australia/Sydney")
+  ) with Sections with Zones with QueryDefaults {
 
   implicit val AU = Au
 
