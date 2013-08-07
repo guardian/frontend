@@ -1,22 +1,18 @@
 define([
     'models/fronts/common',
-    'knockout'
 ], function(
-    common,
-    ko
+    common
 ) {
     var cache = {},
         expiry = common.config.cacheExpiryMs || 300000; // 300000 == 5 mins
 
-    window.frontCache = cache;
-
     function put(pot, key, data) {
         if (!cache[pot]) {
             cache[pot] = {};
-        }
+        }        
         cache[pot][key] = { 
             data: data,
-            // Spread timeouts into the range "expiry to twice expiry"
+            // Spread actual timeouts into the range "expiry two-times expiry"
             time: +new Date() + expiry * Math.random() 
         };
     }
