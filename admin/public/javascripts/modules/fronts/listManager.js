@@ -15,6 +15,7 @@ define([
 ) {
     var maxDisplayableLists = 3,
         dragging = false,
+        clipboard = document.querySelector('#clipboard'),
         loc = window.location;
 
     return function(selector) {
@@ -177,6 +178,9 @@ define([
         var startPoller = _.once(_startPoller);
 
         function fetchSchema(callback) {
+        }
+
+        function fetchSchema(callback) {
             reqwest({
                 url: common.config.apiBase,
                 type: 'json'
@@ -198,6 +202,10 @@ define([
 
             viewModel.dropList           = dropList;
             viewModel.displayAllEditions = displayAllEditions;
+
+            viewModel.flushClipboard = function() {
+                clipboard.innerHTML = '';
+            };
 
             viewModel.selectedEdition.subscribe(function(edition) {
                 viewModel.selectedSection(undefined);
@@ -248,9 +256,7 @@ define([
                         $(element).sparkline(value, options);                        
                     }
                 }
-            };
-
-            
+            };            
         };
 
     };

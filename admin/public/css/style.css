@@ -392,19 +392,19 @@ a.cta, .cta a {
     color: #666;
 }
 
-.fronts .finder__refresh {
+.fronts .list-tool {
     float: right;
     cursor: pointer;
-    margin: 0 2px 0 0;
-    opacity: 0.5;
+    margin: 3px 2px 0 0;
+    opacity: 0.6;
 }
 
-.fronts .finder__refresh:hover {
+.fronts .list-tool:hover {
     opacity: inherit;
 }
 
-.fronts .finder__refresh:active {
-    opacity: 0.5;
+.fronts .list-tool:active {
+    opacity: 0.6;
 }
 
 .fronts .list-picker__title {
@@ -657,7 +657,7 @@ a.cta, .cta a {
     margin: -2px 0 0 0;
 }
 
-.fronts .clipboard {
+.fronts #clipboard {
     min-height: 20px;
     margin: 5px 0 10px 0;
     background: #ddd;

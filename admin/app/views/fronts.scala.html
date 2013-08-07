@@ -25,10 +25,11 @@
         </div>
 
         <div class="finder">
+            <i class="icon-trash icon-white list-tool" data-bind="click: flushClipboard"></i>
             <div class="finder__title">Clipboard</div>
-            <div class="connectedList clipboard"></div>
+            <div id="clipboard" class="connectedList"></div>
 
-            <i class="icon-refresh finder__refresh" data-bind="click: latestArticles.refresh"></i>
+            <i class="icon-refresh icon-white list-tool" data-bind="click: latestArticles.refresh"></i>
             <div class="finder__title">Latest Articles</div>
 
             <input type="text" placeholder="url or keyword" data-bind='
@@ -47,7 +48,8 @@
         <div class="lists" data-bind="foreach: listsDisplayed">
             <div class="trailblock">
                 <div class="list-header">
-                    <a data-bind="click: toggleEditingConfig" class="list-header__showSettings" title="Show settings for this block"><i class="icon-cog icon-white"></i></a>
+                    <i class="icon-cog icon-white list-tool" data-bind="click: toggleEditingConfig"></i>
+
                     <a data-bind="click: $parent.dropList" class="list-header__hide" title="Hide this block">HIDE</a>
                     <div class="list-header__title" data-bind="foreach: crumbs">
                         <span class="list-header__title__part" data-bind="text: $data"></span> 
