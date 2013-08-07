@@ -260,6 +260,11 @@ video {
     .card__media {
         display: block;
         width: 100%;
+
+        .furniture--left & {
+            width: 140px;
+            height: 84px;
+        }
     }
     .card__title {
         font-family: $serifheadline !important;
@@ -270,7 +275,6 @@ video {
     }
     .card__body {
         padding: $baseline*1.5 $gutter/2 $baseline*6;
-        min-height: 76px; // image height - baseline * 2
         background: $mushroom;
 
         .card-wrapper:hover &,
