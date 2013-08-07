@@ -20,7 +20,7 @@ define(['modules/userPrefs'], function (userPrefs) {
      */
     function getLayoutMode(width) {
         var mode = "mobile";
-        if ("matchMedia" in window) {
+        if ("matchMedia" in window && width === undefined) {
             if (window.matchMedia('(min-width: '+ BASE_WIDTH + ')')) {
                 mode = "tablet";
             }
