@@ -2,7 +2,7 @@
 
 <ul class="unstyled trails trails-count-@trails.size">
     @trails.zipWithIndex.map{ case (trail, index) =>
-        <li class="trail" data-link-name="trail | @{index + 1}" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+        <li class="trail" data-link-name="trail | @{index + 1}">
             <a href="@LinkTo{@trail.url}">
                 @if(!(trails.size == 4 && index > 1)){
                     @trail.mainPicture.map{ mainPicture =>
