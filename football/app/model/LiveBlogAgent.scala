@@ -56,12 +56,12 @@ object LiveBlog extends LiveBlogAgent {
 
   private var schedule: Option[Cancellable] = None
 
-  def startup() {
+  def start() {
     schedule = Some(AkkaScheduler.every(2.minutes, initialDelay = 10.seconds) {
       refreshLiveBlogs()
     })
   }
-  def shutdown() {
+  def stop() {
     close()
     schedule.foreach(_.cancel())
   }

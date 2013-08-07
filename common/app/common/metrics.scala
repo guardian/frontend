@@ -190,6 +190,34 @@ object FrontMetrics {
   val all: Seq[Metric] = Seq(FrontLoadTimingMetric)
 }
 
+object FootballMetrics {
+  object MatchDayLoadTimingMetric extends TimingMetric(
+    "football",
+    "football-matchday-load",
+    "Football match day load timing",
+    "Time spent running football match day data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object CompetitionLoadTimingMetric extends TimingMetric(
+    "football",
+    "football-competition-load",
+    "Football competition load timing",
+    "Time spent running competition data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object CompetitionAgentLoadTimingMetric extends TimingMetric(
+    "football",
+    "football-competition-agent-load",
+    "Football competition agent load timing",
+    "Time spent running competition agent data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(MatchDayLoadTimingMetric, CompetitionAgentLoadTimingMetric)
+}
+
 
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
@@ -203,4 +231,5 @@ object Metrics {
   lazy val porter = PorterMetrics.all
   lazy val coreNavigation = CoreNavivationMetrics.all
   lazy val front = FrontMetrics.all
+  lazy val football = FootballMetrics.all
 }

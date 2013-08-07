@@ -108,13 +108,13 @@ object TeamMap extends ExecutionContexts with Logging {
 
   def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
 
-  def startup() {
+  def start() {
     schedule = Some(AkkaScheduler.every(1.minute, initialDelay = 5.seconds) {
       incrementalRefresh(1) //pages are 1 based
     })
   }
 
-  def shutdown() {
+  def stop() {
     schedule.foreach(_.cancel())
     teamAgent.close()
   }

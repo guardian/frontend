@@ -15,15 +15,15 @@ import scala.concurrent.Future
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
   override def onStart() {
-    Competitions.startup()
-    LiveBlog.startup()
-    TeamMap.startup()
+    Competitions.start()
+    LiveBlog.start()
+    TeamMap.start()
   }
 
   override def onStop() {
-    Competitions.shutDown()
-    LiveBlog.shutdown()
-    TeamMap.shutdown()
+    Competitions.stop()
+    LiveBlog.stop()
+    TeamMap.stop()
   }
 }
 
@@ -65,7 +65,7 @@ class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 object Management extends GuManagement {
   val applicationName = "frontend-football"
-  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa
+  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa ++ Metrics.football
 
   lazy val pages = List(
     new ManifestPage,
