@@ -59,6 +59,9 @@
     .trails {
         overflow: hidden;
         margin-top: $baseline*4;
+        padding: $baseline*3 0;
+        border-top: 1px solid #000000;
+        border-bottom: 1px solid #000000;
         width: 100%;
         max-width: retrieve-breakpoint-width(wide);
     }
@@ -66,6 +69,17 @@
         float: left;
         padding: 0;
         border: none;
+        .trail__count {
+            top: auto;
+            bottom: 0;
+            right: auto;
+            height: 30px;
+            padding-right: $baseline;
+            background-color: rgba(0, 0, 0, 0.3);
+            a {
+                color: #ffffff;
+            }
+        }
     }
 
     .trails-count-1 {
@@ -98,20 +112,18 @@
         .trail:nth-child(1) {
             .trail__image{
                 width: 100%;
+                float:none;
                 margin: 0;
             }
             .trail__title {
                 @include font($serif, 700, 20, 24);
-                position: absolute;
-                bottom: 0;
-                background: rgba(0, 86, 136, 0.8);
-                margin: 0;
-                padding: $baseline*2 $baseline*3 $baseline*2;
-                width: 100%;
-                @include box-sizing(border-box);
+                margin: $baseline*2 $baseline*3 $baseline*2;
             }
             .trail__standfirst {
                 display: none;
+            }
+            .trail__count {
+                right: 0;
             }
         }
 
@@ -129,6 +141,9 @@
             .trail__standfirst {
                 @include font($serifheadline, normal, 18, 20);
             }
+            .trail__count {
+                left: 380px;
+            }
         }
 
     }
@@ -145,6 +160,9 @@
             .trail__standfirst {
                 @include font($serifheadline, normal, 26, 28);
             }
+            .trail__count {
+                left: 560px;
+            }
         }
 
     }
@@ -160,6 +178,9 @@
             }
             .trail__standfirst {
                 @include font($serifheadline, normal, 30, 32);
+            }
+            .trail__count {
+                left: 640px;
             }
         }
 
