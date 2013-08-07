@@ -200,7 +200,7 @@ trait Competitions extends CompetitionSupport with ExecutionContexts with Loggin
   }
 
   def stop() {
-    competitionAgents.foreach(_.shutdown())
+    competitionAgents.foreach(_.stop())
   }
 }
 

@@ -34,7 +34,7 @@ class Front extends Logging {
 
   def start() { Jobs.schedule(FrontRefreshJob) }
   def refresh() { FrontRefreshJob.run() }
-  def stop() { allFronts.foreach(_.shutDown()) }
+  def stop() { allFronts.foreach(_.stop()) }
 
   def apply(path: String): Seq[Trailblock] = fronts(path)()
 }

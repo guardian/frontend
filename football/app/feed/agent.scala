@@ -147,7 +147,7 @@ class CompetitionAgent(_competition: Competition) extends FixtureAgent with Resu
     refreshLeagueTable()
   }
 
-  def shutdown() {
+  def stop() {
     shutdownFixtures()
     shutdownResults()
     shutdownLiveMatches()
