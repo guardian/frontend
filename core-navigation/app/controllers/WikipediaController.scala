@@ -23,9 +23,9 @@ object WikipediaController extends Controller with Logging with ExecutionContext
               firstParagraph.select(".reference").remove()
  
               val wiki = Map(
-                          "heading" -> fragment.select("#firstHeading").text(),
-                          "thumbnail" -> fragment.select(".image img").attr("src"),
-                          "firstParagraph" -> firstParagraph.text()
+                          "og:title" -> fragment.select("#firstHeading").text(),
+                          "og:image" -> fragment.select(".image img").attr("src"),
+                          "og:description" -> firstParagraph.text()
               )
               Ok(Json.toJson(wiki))
             }
