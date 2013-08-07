@@ -14,14 +14,14 @@ define([
     bean
 ) {
     /**
-     * @param {DOMElement}   link        The link to transform
-     * @param {bonzo Object} linkContext Where the card should be inserted
-     * @param {String}       title       Give a heading to the card
+     * @param {DOMElement} link        The link to transform
+     * @param {DOMElement} linkContext Where the card should be inserted
+     * @param {String}     title       Give a heading to the card
      */
     function InlineLinkCard(link, linkContext, title) {
         this.link = link;
         this.title = title || false;
-        this.$linkContext = linkContext;
+        this.$linkContext = common.$g(linkContext);
         this.hasLoadedCard = false;
     }
 

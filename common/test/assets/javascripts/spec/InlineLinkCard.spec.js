@@ -37,7 +37,7 @@ define([
             };
 
             linkToCardify = document.querySelectorAll('#test-card p a[href^="/"]')[0];
-            linkContext = common.$g(linkToCardify).parent();
+            linkContext = linkToCardify.parentNode;
             href = linkToCardify.getAttribute('href');
 
         });

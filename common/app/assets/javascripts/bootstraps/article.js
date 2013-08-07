@@ -106,7 +106,7 @@ define([
                 var linkToCardify = context.querySelectorAll('.article-body p a[href^="/"]')[0];
 
                 if (linkToCardify) {
-                    var linkContext = common.$g(linkToCardify).parent();
+                    var linkContext = linkToCardify.parentNode;
                     new InlineLinkCard(linkToCardify, linkContext, 'Related').init();
                 }
             });
