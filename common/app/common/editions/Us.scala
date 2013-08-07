@@ -11,8 +11,8 @@ import contentapi.QueryDefaults
 object Us extends Edition(
   id = "US",
   displayName = "US edition",
-  timezone = DateTimeZone.forID("America/New_York"),
-  hreflang = "en-us") with Sections with Zones with QueryDefaults {
+  timezone = DateTimeZone.forID("America/New_York")
+  ) with Sections with Zones with QueryDefaults {
 
   implicit val US = Us
   val zones = Seq(
