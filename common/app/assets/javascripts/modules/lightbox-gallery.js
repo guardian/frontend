@@ -29,7 +29,7 @@ define(["bean",
             $navArrows,
             $images;
 
-        this.selector = '.trail--gallery';
+        this.selector = '.gallerythumbs';
         this.galleryEndpoint = ''; // Hook for tests
 
         this.init = function(opts) {
