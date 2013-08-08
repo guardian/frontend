@@ -127,57 +127,66 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     case _ => Editionalise(path, edition)
   }
 
+  private def faciaRedirect(path: String, request: RequestHeader) =
+    request.headers.get("X-Gu-Facia") map {_ => Ok.withHeaders("X-Accel-Redirect" -> s"/redirect/facia/$path")}
+
   def render(path: String) = Action { implicit request =>
 
-    // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
-    // go live
-    val realPath = editionPath(path, Edition(request))
+    faciaRedirect(path, request) getOrElse {
 
-    // TODO - needed till after www.theguardian.com
-    val pageId = realPath.drop(3)  //removes the edition
+      // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
+      // go live
+      val realPath = editionPath(path, Edition(request))
+
+      // TODO - needed till after www.theguardian.com
+      val pageId = realPath.drop(3)  //removes the edition
 
 
-    FrontPage(pageId).map { frontPage =>
+      FrontPage(pageId).map { frontPage =>
 
-      // get the trailblocks
-      val trailblocks: Seq[Trailblock] = front(realPath).filterNot { trailblock =>
+        // get the trailblocks
+        val trailblocks: Seq[Trailblock] = front(realPath).filterNot { trailblock =>
 
-        // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
-        // filter out configured trailblocks if not on the network front
-        path match {
-          case FrontPath(_) => false
-          case _ => trailblock.description.isConfigured
+          // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
+          // filter out configured trailblocks if not on the network front
+          path match {
+            case FrontPath(_) => false
+            case _ => trailblock.description.isConfigured
+          }
         }
-      }
 
-      if (path != realPath) {
-        Redirect(s"/$realPath")
-      } else if (trailblocks.isEmpty) {
-        InternalServerError
-      } else {
-        val htmlResponse = () => views.html.front(frontPage, trailblocks)
-        val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
-        renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
-      }
-    }.getOrElse(NotFound) //TODO is 404 the right thing here
+        if (path != realPath) {
+          Redirect(s"/$realPath")
+        } else if (trailblocks.isEmpty) {
+          InternalServerError
+        } else {
+          val htmlResponse = () => views.html.front(frontPage, trailblocks)
+          val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
+          renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+        }
+      }.getOrElse(NotFound) //TODO is 404 the right thing here
+    }
   }
 
   def renderTrails(path: String) = Action { implicit request =>
 
-    val realPath = editionPath(path, Edition(request))
+    faciaRedirect(path, request) getOrElse {
 
-    FrontPage(realPath).map{ frontPage =>
-      // get the first trailblock
-      val trailblock: Option[Trailblock] = front(realPath).headOption
+      val realPath = editionPath(path, Edition(request))
 
-      if (trailblock.isEmpty) {
-        InternalServerError
-      } else {
-        val trails: Seq[Trail] = trailblock.get.trails
-        val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
-        renderFormat(response, response, frontPage)
-      }
-    }.getOrElse(NotFound)
+      FrontPage(realPath).map{ frontPage =>
+        // get the first trailblock
+        val trailblock: Option[Trailblock] = front(realPath).headOption
+
+        if (trailblock.isEmpty) {
+          InternalServerError
+        } else {
+          val trails: Seq[Trail] = trailblock.get.trails
+          val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
+          renderFormat(response, response, frontPage)
+        }
+      }.getOrElse(NotFound)
+    }
   }
 
 }
