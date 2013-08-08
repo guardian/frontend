@@ -3,7 +3,7 @@ define([
     'bonzo',
     'ajax',
     'fixtures',
-    'modules/inline-link-card'
+    'modules/experiments/inline-link-card'
 ], function(
     common,
     bonzo,

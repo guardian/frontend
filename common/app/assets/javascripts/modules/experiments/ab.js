@@ -11,14 +11,14 @@ define([
     common,
     store,
     ParagraphSpacing,
-    InlineLinkCard,
+    ExperimentInlineLinkCard,
     Aa,
     LightboxGalleries
     ) {
 
     var TESTS = [
             new ParagraphSpacing(),
-            new InlineLinkCard(),
+            new ExperimentInlineLinkCard(),
             new Aa(),
             new LightboxGalleries()
         ],
