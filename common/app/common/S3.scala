@@ -63,17 +63,13 @@ object S3FrontsApi extends S3 {
 
 
   def getSchema = get(s"${location}/schema.json")
-  def getFront(edition: String, section: String) = get(s"${location}/${edition}/${section}/latest/latest.json")
-  def putFront(edition: String, section: String, json: String) =
-    putPublic(s"${location}/${edition}/${section}/latest/latest.json", json, "application/json")
+  def getConfig(id: String) = get(s"${location}/config/${id}/config.json")
+  def getBlock(id: String) = get(s"${location}/collection/${id}/collection.json")
+  def putBlock(id: String, json: String) =
+    putPublic(s"${location}/collection/${id}/collection.json", json, "application/json")
 
-
-  def getBlock(edition: String, section: String, block: String) = get(s"${location}/${edition}/${section}/${block}/latest/latest.json")
-  def putBlock(edition: String, section: String, block: String, json: String) =
-    putPublic(s"${location}/${edition}/${section}/${block}/latest/latest.json", json, "application/json")
-
-  def archive(edition: String, section: String, block: String, json: String) = {
+  def archive(id: String, json: String) = {
     val now = DateTime.now
-    putPrivate(s"${location}/${edition}/${section}/${block}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+    putPrivate(s"${location}/collection/${id}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
   }
 }
