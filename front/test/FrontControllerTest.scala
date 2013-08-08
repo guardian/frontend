@@ -91,4 +91,21 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     status(result) should be(200)
   }
 
+  it should "200 with an X-Accel-Redirect when X-Gu-Facia is true" in Fake {
+    val fakeRequest = FakeRequest(GET, "/uk/culture")
+      .withHeaders("X-Gu-Facia" -> "true")
+
+    val result = controllers.FrontController.render("uk/culture")(fakeRequest)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (Some("/redirect/facia/uk/culture"))
+  }
+
+  it should "200 with an X-Accel-Redirect when X-Gu-Facia is false" in Fake {
+    val fakeRequest = FakeRequest(GET, "/uk/culture")
+      .withHeaders("X-Gu-Facia" -> "false")
+
+    val result = controllers.FrontController.render("uk/culture")(fakeRequest)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (None)
+  }
 }
