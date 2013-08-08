@@ -86,7 +86,7 @@ define('bootstraps/app', [
 
         domReady(function() {
             var context = document.getElementById('preload-1'),
-                contextHtml = context.cloneNode.innerHTML;
+                contextHtml = context.cloneNode().innerHTML;
             
             modules.initialiseAjax(config);
             modules.initialiseAbTest(config);
