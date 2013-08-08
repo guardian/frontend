@@ -7,6 +7,7 @@ import test.Fake
 import controllers.front.TrailblockAgent
 import conf.ContentApi
 import contentapi.QueryDefaults
+import akka.util.Timeout
 
 class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with QueryDefaults {
 
@@ -35,9 +36,6 @@ class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with
   }
 
   private def loadOrTimeout(agent: TrailblockAgent) {
-    val start = System.currentTimeMillis()
-    while (!agent.trailblock.isDefined) {
-      if (System.currentTimeMillis - start > 10000) throw new RuntimeException("Agent should have loaded by now")
-    }
+    if (agent.await(Timeout(10000)).isEmpty) throw new RuntimeException("Agent should have loaded by now")
   }
 }

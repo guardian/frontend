@@ -10,11 +10,8 @@ import collection.JavaConversions._
 import controllers.{ FrontController }
 import play.api.mvc._
 import model.Trailblock
-import scala.Some
-import model.TrailblockDescription
-import views.support.{ Featured, Thumbnail, Headline }
 import common.editions.{Us, Uk}
-import common.Edition
+import akka.util.Timeout
 
 class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results {
 
@@ -116,7 +113,6 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
         agent.refresh()
         loadOrTimeout(agent)
-
 
         val trails = agent.trailblock.get.trails
 
@@ -276,10 +272,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
   }
 
   private def loadOrTimeout(agent: TrailblockAgent) {
-    val start = System.currentTimeMillis()
-    while (!agent.trailblock.isDefined) {
-      if (System.currentTimeMillis - start > 10000) throw new RuntimeException("Agent should have loaded by now")
-    }
+    if (agent.await(Timeout(10000)).isEmpty) throw new RuntimeException("Agent should have loaded by now")
   }
 
   private def createTrails(section: String, numTrails: Int) = (1 to numTrails).toList map {
