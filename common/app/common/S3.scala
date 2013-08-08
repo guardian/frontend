@@ -68,12 +68,12 @@ object S3FrontsApi extends S3 {
     putPublic(s"${location}/${edition}/${section}/latest/latest.json", json, "application/json")
 
 
-  def getBlock(edition: String, section: String, block: String) = get(s"${location}/${edition}/${section}/${block}/latest/latest.json")
-  def putBlock(edition: String, section: String, block: String, json: String) =
-    putPublic(s"${location}/${edition}/${section}/${block}/latest/latest.json", json, "application/json")
+  def getBlock(id: String) = get(s"${location}/${id}/latest/latest.json")
+  def putBlock(id: String, json: String) =
+    putPublic(s"${location}/${id}/latest/latest.json", json, "application/json")
 
-  def archive(edition: String, section: String, block: String, json: String) = {
+  def archive(id: String, json: String) = {
     val now = DateTime.now
-    putPrivate(s"${location}/${edition}/${section}/${block}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+    putPrivate(s"${location}/${id}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
   }
 }

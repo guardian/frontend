@@ -63,25 +63,25 @@ trait UpdateActions {
 
   def shouldUpdate[T](cond: Boolean, original: T, updated: => T) = if (cond) updated else original
 
-  def updateCollectionFilter(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity) = {
-    FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
+  def updateCollectionFilter(id: String, update: UpdateList, identity: Identity) = {
+    FrontsApi.getBlock(id) map { block: Block =>
       lazy val updatedDraft = block.draft.filterNot(_.id == update.item)
       lazy val updatedLive = block.live.filterNot(_.id == update.item)
-      updateCollection(edition, section, blockId, block, update, identity, updatedDraft, updatedLive)
+      updateCollection(id, block, update, identity, updatedDraft, updatedLive)
     }
   }
 
-  def updateCollectionList(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity) = {
-    FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
+  def updateCollectionList(id: String, update: UpdateList, identity: Identity) = {
+    FrontsApi.getBlock(id) map { block: Block =>
       lazy val updatedDraft = updateList(update, block.draft)
       lazy val updatedLive = updateList(update, block.live)
-      updateCollection(edition, section, blockId, block, update, identity, updatedDraft, updatedLive)
+      updateCollection(id, block, update, identity, updatedDraft, updatedLive)
     } getOrElse {
-      UpdateActions.createBlock(edition, section, blockId, identity, update)
+      UpdateActions.createBlock(id, identity, update)
     }
   }
 
-  def updateCollection(edition: String, section: String, blockId: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => List[Trail], updatedLive: => List[Trail]): Unit = {
+  def updateCollection(id: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => List[Trail], updatedLive: => List[Trail]): Unit = {
       val draft = shouldUpdate(update.draft, block.draft, updatedDraft)
       val live = shouldUpdate(update.live, block.live, updatedLive)
 
@@ -92,8 +92,8 @@ trait UpdateActions {
 
       val newBlock: Block = updateIdentity(blockWithUpdatedTrails, identity)
 
-      FrontsApi.putBlock(edition, section, blockId, newBlock)
-      FrontsApi.archive(edition, section, block)
+      FrontsApi.putBlock(id, newBlock)
+      FrontsApi.archive(id, block)
   }
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
@@ -105,19 +105,19 @@ trait UpdateActions {
     splitList._1 ++ List(emptyTrailWithId(update.item)) ++ splitList._2
   }
 
-  def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {
-    FrontsApi.putBlock(edition, section, block, Block(block, None, List(emptyTrailWithId(update.item)), List(emptyTrailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
+  def createBlock(id: String, identity: Identity, update: UpdateList) {
+    FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), List(emptyTrailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
   }
 
-  def updateTrailblockJson(edition: String, section: String, blockId: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
-    FrontsApi.getBlock(edition, section, blockId).map { block =>
+  def updateTrailblockJson(id: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
+    FrontsApi.getBlock(id).map { block =>
       val newBlock = block.copy(
         contentApiQuery = updateTrailblock.config.contentApiQuery orElse None,
         min = updateTrailblock.config.min orElse Some(defaultMinimumTrailblocks),
         max = updateTrailblock.config.max orElse Some(defaultMaximumTrailblocks)
       )
       if (newBlock != block) {
-        FrontsApi.putBlock(edition, section, updateIdentity(newBlock, identity))
+        FrontsApi.putBlock(id, updateIdentity(newBlock, identity))
       }
     }
   }
