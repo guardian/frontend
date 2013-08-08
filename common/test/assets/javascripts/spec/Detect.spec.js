@@ -5,11 +5,12 @@ define(['modules/detect'], function(detect) {
    
     describe("Layout", function() {
         
-        it("should default to 'base' layout mode", function(){
+        it("should default to 'mobile' layout mode", function(){
             expect(detect.getLayoutMode(null)).toBe('mobile');
         });
     
         it("should return the correct layout mode for the device resolution", function(){
+
             expect(detect.getLayoutMode(100)).toBe('mobile');
 
             expect(detect.getLayoutMode(700)).toBe('tablet');
