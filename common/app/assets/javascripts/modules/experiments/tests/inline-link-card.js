@@ -42,12 +42,16 @@ function (
                         function isGallery(url) {
                             return (/\/gallery\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\//).test(url);
                         }
+                        function isCif(url) {
+                            return (/\/commentisfree\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\//).test(url);
+                        }
 
                         function cardifyRelatedInBodyLink(link) {
                             var title = 'Related';
 
                             if (isVideo(link.href)) { title = 'Video'; }
                             else if (isGallery(link.href)) { title = 'In pictures'; }
+                            else if (isCif(link.href)) { title = 'Comment'; }
 
                             new InlineLinkCard(link, link.parentNode, title).init();
                         }

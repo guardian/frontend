@@ -46,9 +46,11 @@ define([
         var self = this,
             headline = data.headline || false,
             thumbnail = data.thumbnail,
+            datePublished = data.webPublicationDate,
             tpl,
             thumbnailFragment = '',
-            titleFragment = '';
+            titleFragment = '',
+            commentsFragment = '';
 
         if (!headline) {
             return false;
@@ -61,15 +63,21 @@ define([
             thumbnailFragment = '<img src="' + thumbnail + '" alt="" class="card__media" />';
         }
 
+
         tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
                   '<div class="furniture furniture--left card">' +
                       titleFragment +
                       thumbnailFragment +
-                      '<div class="card__body u-text-hyphenate"><h3 class="card__headline">' + headline + '</h3></div>' +
+                      '<div class="card__body u-text-hyphenate">' +
+                          '<div class="dateline"><i class="i i-date relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>' +
+                          '<h3 class="card__headline">' + headline + '</h3>' +
+                          // datePublished +
+                      '</div>' +
                   '</div>' +
               '</a>';
 
         self.$linkContext.before(tpl);
+        common.mediator.emit('fragment:ready:dates');
     };
 
     InlineLinkCard.prototype.fetchData = function() {
