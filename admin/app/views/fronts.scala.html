@@ -5,24 +5,27 @@
     <div class="splash" data-bind="visible: false">Loading Fronts Editor...</div> 
 
     <div class="fronts" data-bind="visible: true" style="display: none">
-        <div class="list-picker">
-            <span class="list-picker__title">Select a block:</span>
+        <header>
+            <div class="tool-title">Trailblock Editor</div>
+            <div class="list-picker">
+                <span class="list-picker__title">Find blocks:</span>
 
-            <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Choose Edition...'"></select>
+                <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Choose Edition...'"></select>
 
-            <span data-bind="with: $root.selectedEdition()">
-                <select data-bind="options: sections, optionsText: 'id', value: $root.selectedSection, optionsCaption: 'Choose Section...'"></select>
+                <span data-bind="with: $root.selectedEdition()">
+                    <select data-bind="options: sections, optionsText: 'id', value: $root.selectedSection, optionsCaption: 'Choose Section...'"></select>
 
-                <span data-bind="with: $root.selectedSection()">
-                    <select data-bind="options: blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Choose Block...'"></select>
+                    <span data-bind="with: $root.selectedSection()">
+                        <select data-bind="options: blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Choose Block...'"></select>
 
-                    <span data-bind="with: $root.selectedBlock()">
-                        <a href="#" data-bind="click: $root.displayAllEditions"> &laquo; View in all editions</a>
+                        <span data-bind="with: $root.selectedBlock()">
+                            <a href="#" data-bind="click: $root.displayAllEditions"> &laquo; View in all editions</a>
+                        </span>
                     </span>
-                </span>
 
-            </span>
-        </div>
+                </span>
+            </div>
+        </header>
 
         <div class="finder">
             <i class="icon-trash icon-white list-tool" data-bind="click: flushClipboard"></i>
@@ -30,7 +33,7 @@
             <div id="clipboard" class="connectedList"></div>
 
             <i class="icon-refresh icon-white list-tool" data-bind="click: latestArticles.refresh"></i>
-            <div class="finder__title">Latest Articles</div>
+            <div class="finder__title">Search Articles</div>
 
             <input type="text" placeholder="url or keyword" data-bind='
                 event: {keyup: latestArticles.search, afterpaste: latestArticles.search},
@@ -45,7 +48,7 @@
             <div id="latest-articles" class="connectedList" data-bind="template: {name: 'template_article', foreach: latestArticles.articles()}">Searching...</div>
         </div>
 
-        <div class="lists" data-bind="foreach: listsDisplayed">
+        <!-- ko foreach: listsDisplayed -->
             <div class="trailblock">
                 <div class="list-header">
                     <i class="icon-cog icon-white list-tool" data-bind="click: toggleEditingConfig"></i>
@@ -122,7 +125,7 @@
                     css: {pending: state.loadIsPending},
                     template: {name: 'template_article', foreach: state.liveMode() ? live : draft}"></div>
             </div>
-        </div>
+        <!-- /ko -->
     </div>
 
     <script type="text/html" id="template_article">
@@ -130,13 +133,6 @@
                 attr: {'data-url': meta.id},
                 css: {redundant: $parent.config && $parent.config.max ? (0 + $index()) >= (0 + $parent.config.max()) : false}
             ">
-
-            <div class="trail__meta">
-                <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
-                <a class="trail__meta__stats"  data-bind="attr: {href: 'http://dashboard.ophan.co.uk/summary?path=/' + meta.id()}">stats</a>
-                <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
-                <a class="trail__meta__remove" data-bind="click: $parent.dropItem">remove</a>
-            </div>
 
             <div class="trail_tweaks cf" data-bind="visible: state.editingConfig">
                 <div>
@@ -147,15 +143,22 @@
                 <button class="btn" value="Cancel" data-bind="click: $parent.forceRefresh">Cancel</button>
             </div>
 
-            <img data-bind="attr: {src: fields.thumbnail}" />
-
             <!-- ko if: (config.webTitle() && (meta.webTitle() !== config.webTitle())) -->
-            <div class="webTitle webTitle--override" data-bind="text: config.webTitle"></div>
+            <span class="webTitle webTitle--override" data-bind="text: config.webTitle"></span>
             <!-- /ko -->
 
             <a class="webTitle" data-bind="
-                text: meta.webTitle, 
-                attr: {href: 'http://www.theguardian.com/' + meta.id()}"></a>
+            text: meta.webTitle, 
+            attr: {href: 'http://www.theguardian.com/' + meta.id()}"></a>
+
+            <img data-bind="attr: {src: fields.thumbnail}" />
+
+            <div class="trail__meta">
+                <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
+                <a class="trail__meta__stats"  data-bind="attr: {href: 'http://dashboard.ophan.co.uk/summary?path=/' + meta.id()}">stats</a>
+                <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
+                <a class="trail__meta__remove" data-bind="click: $parent.dropItem">remove</a>
+            </div>
 
             <div class="trail_stats cf">
                 <div class="pageviews" data-bind="if: pageViewsCommas(), text: pageViewsCommas"></div>

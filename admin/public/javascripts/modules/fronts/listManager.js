@@ -233,16 +233,16 @@ define([
                 renderLists();
                 window.onpopstate = renderLists;
 
-                startPoller();
+                //startPoller();
                 viewModel.latestArticles.search();
-                viewModel.latestArticles.startPoller();
+                //viewModel.latestArticles.startPoller();
             });
 
 
             knockout.bindingHandlers.sparkline = {
                 update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
                     var value = knockout.utils.unwrapObservable(valueAccessor()),
-                        height = Math.max(15, Math.min(35, _.max(value))),
+                        height = Math.max(15, Math.min(30, _.max(value))),
                         options = allBindingsAccessor().sparklineOptions || {
                             lineColor: '#d61d00',
                             fillColor: '#ffbaaf',
