@@ -78,14 +78,14 @@ define([
             return true; // ensure default click happens on all the bindings
         };
 
-        this.flush = function() {
+        this.flush = function(message) {
             self.articles.removeAll();
             // clean up any dragged-in articles 
-            container.innerHTML = ''; 
+            container.innerHTML = message || ''; 
         }
 
         this.refresh = function() {
-            self.flush();
+            self.flush('Searching...');
             self.search();
         }
 

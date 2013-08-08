@@ -178,9 +178,6 @@ define([
         var startPoller = _.once(_startPoller);
 
         function fetchSchema(callback) {
-        }
-
-        function fetchSchema(callback) {
             reqwest({
                 url: common.config.apiBase,
                 type: 'json'
