@@ -3,13 +3,15 @@ define([
     'knockout',
     'models/fronts/common',
     'models/fronts/article',
-    'models/fronts/contentApi'
+    'models/fronts/contentApi',
+    'models/fronts/ophanApi'
 ], function(
     reqwest,
     ko,
     common,
     Article,
-    ContentApi
+    contentApi,
+    ophanApi
 ) {
 
     function List(id) {
@@ -21,9 +23,20 @@ define([
         this.live   = ko.observableArray();
         this.draft  = ko.observableArray();
 
-        this.meta   = this.asObservableProps(['lastUpdated', 'updatedBy', 'updatedEmail']);
-        this.config = this.asObservableProps(['contentApiQuery', 'min', 'max']);
-        this.state  = this.asObservableProps(['liveMode', 'hasUnPublishedEdits', 'loadIsPending', 'editingConfig', 'timeAgo']);
+        this.meta   = common.util.asObservableProps([
+            'lastUpdated',
+            'updatedBy',
+            'updatedEmail']);
+        this.config = common.util.asObservableProps([
+            'contentApiQuery',
+            'min',
+            'max']);
+        this.state  = common.util.asObservableProps([
+            'liveMode',
+            'hasUnPublishedEdits',
+            'loadIsPending',
+            'editingConfig',
+            'timeAgo']);
 
         this.state.liveMode(common.config.defaultToLiveMode);
 
@@ -37,17 +50,20 @@ define([
             self.drop(item);
         };
 
+        this.saveItemConfig = function(item) {
+            item.saveConfig(self.id);
+            self.load();
+        }
+
+        this.forceRefresh = function() {
+            self.load();
+        }
+
         this.load();
     }
 
-    List.prototype.asObservableProps = function(props) {
-        return _.object(props.map(function(prop){
-            return [prop, ko.observable()];
-        }));
-    };
-
-    List.prototype.startEditingConfig = function() {
-        this.state.editingConfig(true);
+    List.prototype.toggleEditingConfig = function() {
+        this.state.editingConfig(!this.state.editingConfig());
     };
 
     List.prototype.stopEditingConfig = function() {
@@ -56,10 +72,12 @@ define([
 
     List.prototype.setLiveMode = function() {
         this.state.liveMode(true);
+        this.decorate();
     };
 
     List.prototype.setDraftMode = function() {
         this.state.liveMode(false);
+        this.decorate();
     };
 
     List.prototype.publishDraft = function() {
@@ -82,7 +100,7 @@ define([
         }).then(
             function(resp) {
                 self.load({
-                    callback: function(){ self.state.liveMode(true); }
+                    callback: function(){ self.setLiveMode(); }
                 });
             },
             function(xhr) {
@@ -103,7 +121,7 @@ define([
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
-                item: item.id(),
+                item: item.meta.id(),
                 live: self.state.liveMode(),
                 draft: true
             })
@@ -148,26 +166,18 @@ define([
     };
 
     List.prototype.populateMeta = function(opts) {
-        var self = this;
-        opts = opts || {};
-
-        _.keys(this.meta).forEach(function(key){
-            self.meta[key](opts[key]);
-        });
+        common.util.populateObservables(this.meta, opts)
         this.state.timeAgo(this.getTimeAgo(opts.lastUpdated));
     }
 
     List.prototype.populateConfig = function(opts) {
-        var self = this;
-        opts = opts || {};
-
-        _.keys(this.config).forEach(function(key){
-            self.config[key](opts[key]);
-        });
+        common.util.populateObservables(this.config, opts)
     };
 
     List.prototype.populateLists = function(opts) {
         var self = this;
+        
+
         opts = opts || {};
 
         if (common.state.uiBusy) { return; }
@@ -184,17 +194,25 @@ define([
                 self[list].removeAll();
             }
             if (opts[list] && opts[list].length) {
-                opts[list].forEach(function(item) {
+                opts[list].forEach(function(item, index) {
                     self[list].push(new Article({
                         id: item.id,
+                        index: index,
                         webTitleOverride: item.webTitleOverride
                     }));
                 });
-                ContentApi.decorateItems(self[list]());
             }
         });
 
+        self.decorate();
         this.state.hasUnPublishedEdits(opts.areEqual === false);
+    };
+
+    List.prototype.decorate = function() {
+        var list = this[this.state.liveMode() ? 'live' : 'draft']();
+
+        contentApi.decorateItems(list);
+        ophanApi.decorateItems(list);
     };
 
     List.prototype.refresh = function() {
@@ -204,7 +222,7 @@ define([
         });
     };
 
-    List.prototype.saveConfig = function(key, val) {
+    List.prototype.saveConfig = function() {
         var self = this;
         reqwest({
             url: common.config.apiBase + '/' + this.id,

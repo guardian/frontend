@@ -91,8 +91,7 @@ define([
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    fromListObj = knockout.dataFor(fromList[0]);
-                    
+                    fromListObj = knockout.dataFor(fromList[0]);                    
                 },
                 stop: function(event, ui) {
                     var index,
@@ -124,8 +123,8 @@ define([
                 listObj,
                 position,
                 delta;
-                
-            if (list.hasClass('throwAway')) { return; }
+
+            if (!list.hasClass('persisted')) { return; }
 
             listObj = knockout.dataFor(list[0]);
 
@@ -233,6 +232,25 @@ define([
                 viewModel.latestArticles.search();
                 viewModel.latestArticles.startPoller();
             });
+
+
+            knockout.bindingHandlers.sparkline = {
+                update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                    var value = knockout.utils.unwrapObservable(valueAccessor()),
+                        height = Math.max(15, Math.min(35, _.max(value))),
+                        options = allBindingsAccessor().sparklineOptions || {
+                            lineColor: '#d61d00',
+                            fillColor: '#ffbaaf',
+                            height: height
+                        };
+
+                    if( value && _.max(value)) {
+                        $(element).sparkline(value, options);                        
+                    }
+                }
+            };
+
+            
         };
 
     };
