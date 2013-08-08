@@ -41,45 +41,39 @@ function (
                         }
 
                         if (linksToCardify.length > 0) {
+                            // There are multiple links
+                            var articleParagraphs = context.querySelectorAll('.article-body > p'),
+                                numberOfArticleParagraphs = articleParagraphs.length,
+                                insertCardEveryNParagraphs = 4,
+                                lastParagraphsToNotCardify = 3, // Always allow enough space to display a card
+                                linksInParagraph,
+                                numberOfLinksInParagraph,
+                                i = 0,
+                                j,
+                                linkWasCardified;
 
-                            if (linksToCardify.length === 1) {
-                                // There's only one link
-                                cardifyRelatedInBodyLink(linksToCardify[0]);
-                            } else {
-                                // There are multiple links
-                                var articleParagraphs = context.querySelectorAll('.article-body > p'),
-                                    numberOfArticleParagraphs = articleParagraphs.length,
-                                    insertCardEveryNParagraphs = 4,
-                                    lastParagraphsToNotCardify = 3, // Always allow enough space to display a card
-                                    linksInParagraph,
-                                    numberOfLinksInParagraph,
-                                    i = 0,
-                                    j,
-                                    linkWasCardified;
+                            // Looking for links every insertCardEveryNParagraphs paragraphs
+                            while (i < (numberOfArticleParagraphs - lastParagraphsToNotCardify)) {
+                                linksInParagraph = articleParagraphs[i].querySelectorAll('a[href^="/"]');
+                                numberOfLinksInParagraph = linksInParagraph.length;
+                                j = 0;
+                                linkWasCardified = false;
 
-                                // Looking for links every insertCardEveryNParagraphs paragraphs
-                                while (i < (numberOfArticleParagraphs - lastParagraphsToNotCardify)) {
-                                    linksInParagraph = articleParagraphs[i].querySelectorAll('a[href^="/"]');
-                                    numberOfLinksInParagraph = linksInParagraph.length;
-                                    j = 0;
-                                    linkWasCardified = false;
+                                if (numberOfLinksInParagraph > 0) {
+                                    while (j < numberOfLinksInParagraph) {
+                                        if (isArticle(linksInParagraph[j].href)) {
+                                            cardifyRelatedInBodyLink(linksInParagraph[j]);
+                                            linkWasCardified = true;
 
-                                    if (numberOfLinksInParagraph > 0) {
-                                        while (j < numberOfLinksInParagraph) {
-                                            if (isArticle(linksInParagraph[j].href)) {
-                                                cardifyRelatedInBodyLink(linksInParagraph[j]);
-                                                linkWasCardified = true;
-
-                                                break;
-                                            }
-                                            j++;
+                                            break;
                                         }
+                                        j++;
                                     }
-                                    if (linkWasCardified) {
-                                        i = i + insertCardEveryNParagraphs;
-                                    } else {
-                                        i++;
-                                    }
+                                }
+                                if (linkWasCardified) {
+                                    i = i + insertCardEveryNParagraphs;
+                                } else {
+                                    i++;
                                 }
                             }
                         }
