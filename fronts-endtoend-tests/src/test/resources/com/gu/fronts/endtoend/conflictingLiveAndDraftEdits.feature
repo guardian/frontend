@@ -1,3 +1,4 @@
+@ignore
 Feature: As an editor I want my changes to live trailblockX to be reflected in the draft version but not
   override any changes made to the draft version
 
@@ -14,11 +15,10 @@ Feature: As an editor I want my changes to live trailblockX to be reflected in t
     Then trailblockX draft should contain StoryB
     Then trailblockX should not contain StoryB
 
-
-  Scenario: managing conflicts
+  Scenario: deleting story from live while in draft too
     Given trailblockX is an existing trailblock
-    And StoryA is a part of it
-    And StoryA is a part the draft of it
+    And StoryA is part of it
+    And StoryA is part of the draft of it
 
     When an editor deletes StoryA from trailblockX
 

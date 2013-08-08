@@ -1,10 +1,6 @@
 package com.gu.fronts.endtoend;
 
-import com.gu.fronts.endtoend.engine.Stories;
-import com.gu.fronts.endtoend.engine.Story;
-import com.gu.fronts.endtoend.engine.TrailBlock;
-import com.gu.fronts.endtoend.engine.TrailBlockEditors;
-import com.gu.fronts.endtoend.engine.TrailBlocks;
+import com.gu.fronts.endtoend.engine.*;
 import com.gu.fronts.endtoend.engine.actions.AddStoryToTrailBlockAction;
 import com.gu.fronts.endtoend.engine.actions.RemoveStoryFromTrailBlockAction;
 import cucumber.api.java.en.Given;
@@ -13,47 +9,57 @@ import org.junit.Assert;
 
 public class SetUpStoriesSteps {
 
-	private final TrailBlocks trailBlocks;
-	private final Stories stories;
-	private final TrailBlockEditors editors;
-	private final DefaultScenarioContext context;
+    private final TrailBlocks trailBlocks;
+    private final Stories stories;
+    private final TrailBlockEditors editors;
+    private final DefaultScenarioContext context;
 
-	public SetUpStoriesSteps(
-		TrailBlocks trailBlocks, Stories stories, TrailBlockEditors editors, DefaultScenarioContext context
-	) {
-		this.trailBlocks = trailBlocks;
-		this.stories = stories;
-		this.editors = editors;
-		this.context = context;
-	}
+    public SetUpStoriesSteps(
+            TrailBlocks trailBlocks, Stories stories, TrailBlockEditors editors, DefaultScenarioContext context
+    ) {
+        this.trailBlocks = trailBlocks;
+        this.stories = stories;
+        this.editors = editors;
+        this.context = context;
+    }
 
-	@Given("^(.*) is part of (.*)$")
-	public void storyIsPartOfTrailBlock(String storyLabel, String trailBlockLabel) {
-		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
+    @Given("^(.*) is part of the draft of (\\w+)$")
+    public void storyIsPartOfTrailBlockDraft(String storyLabel, String trailBlockLabel) {
+        AddStoryToTrailBlockAction action = addStoryTo(storyLabel, trailBlockLabel, TrailBlockMode.DRAFT);
+        Assert.assertTrue(action.success());
+    }
 
-		Story story = new Story(storyLabel);
-		stories.add(story);
+    @Given("^(.*) is part of (\\w+)$")
+    public void storyIsPartOfTrailBlock(String storyLabel, String trailBlockLabel) {
+        AddStoryToTrailBlockAction action = addStoryTo(storyLabel, trailBlockLabel, TrailBlockMode.LIVE);
+        Assert.assertTrue(action.success());
+    }
 
-		AddStoryToTrailBlockAction action = new AddStoryToTrailBlockAction(story, trailBlock);
+    private AddStoryToTrailBlockAction addStoryTo(String storyLabel, String trailBlockLabel, TrailBlockMode mode) {
+        TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 
-		editors.anyone().execute(action);
+        Story story = new Story(storyLabel);
+        stories.add(story);
 
-		Assert.assertTrue(action.success());
-	}
+        AddStoryToTrailBlockAction action = new AddStoryToTrailBlockAction(story, trailBlock, mode);
 
-	@Given("^(.*) is not part of (.*)$")
-	public void storyIsNotPartOfTrailBlock(String storyLabel, String trailBlockLabel) {
-		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
+        editors.anyone().execute(action);
+        return action;
+    }
 
-		Story story = new Story(storyLabel);
-		stories.add(story);
+    @Given("^(.*) is not part of (.*)$")
+    public void storyIsNotPartOfTrailBlock(String storyLabel, String trailBlockLabel) {
+        TrailBlock trailBlock = trailBlocks.get(trailBlockLabel, context);
 
-		RemoveStoryFromTrailBlockAction action = new RemoveStoryFromTrailBlockAction(story, trailBlock);
+        Story story = new Story(storyLabel);
+        stories.add(story);
 
-		editors.anyone().execute(action);
+        RemoveStoryFromTrailBlockAction action = new RemoveStoryFromTrailBlockAction(story, trailBlock);
 
-		Assert.assertTrue(action.success());
+        editors.anyone().execute(action);
 
-	}
+        Assert.assertTrue(action.success());
+
+    }
 
 }
