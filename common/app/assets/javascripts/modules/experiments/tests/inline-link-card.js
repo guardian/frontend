@@ -33,12 +33,25 @@ function (
                         var linksToCardify = context.querySelectorAll('.article-body > p a[href^="/"]');
                         common.$g('body').addClass('test-link-card--on');
 
-                        function cardifyRelatedInBodyLink(link) {
-                            new InlineLinkCard(link, link.parentNode, 'Related').init();
-                        }
                         function isArticle(url) {
                             return (/\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\//).test(url);
                         }
+                        function isVideo(url) {
+                            return (/\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\//).test(url);
+                        }
+                        function isGallery(url) {
+                            return (/\/gallery\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\//).test(url);
+                        }
+
+                        function cardifyRelatedInBodyLink(link) {
+                            var title = 'Related';
+
+                            if (isVideo(link.href)) { title = 'Video'; }
+                            else if (isGallery(link.href)) { title = 'In pictures'; }
+
+                            new InlineLinkCard(link, link.parentNode, title).init();
+                        }
+
 
                         if (linksToCardify.length > 0) {
                             // There are multiple links
