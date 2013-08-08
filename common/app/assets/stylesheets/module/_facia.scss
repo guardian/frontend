@@ -13,41 +13,6 @@
     @include box-sizing(border-box);
 }
 
-@mixin large-trail {
-    .trail__image {
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-    .trail__title {
-        @include overlay;
-    }
-}
-
-@mixin medium-trail {
-    width: 300px;
-    height: 100%;
-    @include bordered;
-
-    .trail__image {
-        width: 100%;
-        margin-bottom: $baseline*3;
-    }
-    .trail__title {
-        color: #000000;
-    }
-}
-
-@mixin small-trail {
-    width: 300px;
-    height: 186px;
-    @include bordered;
-
-    .trail__title {
-        color: #000000;
-    }
-}
-
 #preloads{
     padding: 0 $gs-gutter / 2;
 }
@@ -273,6 +238,42 @@
             }
         }
 
+        .trails-count-4 {
+            .trail__image {
+                width: 100%;
+            }
+            .trail__title {
+                @include font($serifheadline, 700, 26, 28);
+            }
+            .trail__standfirst {
+                display: none;
+            }
+
+            .trail:nth-child(1) {
+                width: 350px;
+                .trail__title {
+                    @include overlay;
+                }
+            }
+            .trail:nth-child(n+2) {
+                height: 33%;
+                @include box-sizing(border-box);
+                float: none;
+                @include bordered;
+                .trail__image {
+                    display: none;
+                }
+            }
+            .trail:nth-child(2) {
+                height: 34%;
+                padding-bottom: 10px;
+            }
+            .trail:nth-child(n+3) {
+                border-top: 1px solid #000000;
+                padding-top: 9px;
+            }
+        }
+
     }
 
     @include mq(desktop, wide) {
@@ -360,7 +361,48 @@
             }
         }
 
+        .trails-count-4 {
+            .trail__image {
+                width: 100%;
+            }
+            .trail__title {
+                @include font($serifheadline, 700, 30, 32);
+            }
+            .trail__standfirst {
+                display: none;
+            }
+
+            .trail:nth-child(1) {
+                width: 540px;
+                .trail__title {
+                    @include overlay;
+                }
+            }
+            .trail:nth-child(n+3) {
+                height: 50%;
+                @include box-sizing(border-box);
+                float: none;
+                @include bordered;
+                .trail__image {
+                    display: none;
+                }
+            }
+            .trail:nth-child(2) {
+                width: 300px;
+
+                margin: 0 10px 0 20px;
+            }
+            .trail:nth-child(3) {
+                padding-bottom: 10px;
+            }
+            .trail:nth-child(4) {
+                border-top: 1px solid #000000;
+                padding-top: 9px;
+            }
+        }
+
     }
+
 
     @include mq(wide) {
 
@@ -406,11 +448,13 @@
             }
             .trail__standfirst {
                 display: none;
-                @include font($serifheadline, normal, 26, 28);
             }
 
             .trail:nth-child(1) {
                 width: 620px;
+                .trail__image {
+                    width: 100%;
+                }
                 .trail__title {
                     @include overlay;
                 }
@@ -431,22 +475,42 @@
             }
         }
 
-
-
         .trails-count-4 {
-            .trail:nth-child(1) {
-                @include large-trail;
+            .trail__image {
+                width: 100%;
             }
-            .trail:nth-child(2) {
-                @include medium-trail;
+            .trail__title {
+                @include font($serifheadline, 700, 30, 32);
+            }
+            .trail__standfirst {
+                display: none;
+            }
+
+            .trail:nth-child(1) {
+                width: 620px;
+                .trail__title {
+                    @include overlay;
+                }
             }
             .trail:nth-child(n+3) {
-                @include small-trail;
+                height: 50%;
+                @include box-sizing(border-box);
+                float: none;
+                @include bordered;
+                .trail__image {
+                    display: none;
+                }
+            }
+            .trail:nth-child(2) {
+                margin: 0 10px 0 20px;
+                width: 300px;
+            }
+            .trail:nth-child(3) {
+                padding-bottom: 10px;
             }
             .trail:nth-child(4) {
-                border-top: 1px dotted #000000;
-                padding-top: $baseline*3;
-                height: 173px;
+                border-top: 1px solid #000000;
+                padding-top: 9px;
             }
         }
 
