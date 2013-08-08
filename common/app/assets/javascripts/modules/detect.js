@@ -21,13 +21,13 @@ define(['modules/userPrefs'], function (userPrefs) {
     function getLayoutMode(width) {
         var mode = "mobile";
         if ("matchMedia" in window && width === undefined) {
-            if (window.matchMedia('(min-width: '+ BASE_WIDTH + ')')) {
+            if (window.matchMedia('(min-width: '+ BASE_WIDTH + 'px)').matches) {
                 mode = "tablet";
             }
-            if (window.matchMedia('(min-width: '+ MEDIAN_WIDTH + ')')) {
+        if (window.matchMedia('(min-width: '+ MEDIAN_WIDTH + 'px)').matches) {
                 mode = "desktop";
             }
-            if (window.matchMedia('(min-width: '+ EXTENDED_WIDTH + ')')) {
+            if (window.matchMedia('(min-width: '+ EXTENDED_WIDTH + 'px)').matches) {
                 mode = "extended";
             }
         } else {
