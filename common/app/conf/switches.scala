@@ -150,6 +150,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
     safeState = Off)
 
+  val ABInlineLinkCardSwitch = Switch("A/B Tests", "ab-inline-link-card",
+    "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
+    safeState = Off)
+
   val ABAa = Switch("A/B Tests", "ab-aa",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
@@ -203,6 +207,7 @@ object Switches extends Collections {
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
+    ABInlineLinkCardSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     LocalNavSwitch,

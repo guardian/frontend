@@ -4,6 +4,7 @@ define([
 
     //Current tests
     'modules/experiments/tests/paragraph-spacing',
+    'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
     'modules/experiments/tests/lightbox-galleries',
     'modules/experiments/tests/gallery-style'
@@ -11,6 +12,7 @@ define([
     common,
     store,
     ParagraphSpacing,
+    ExperimentInlineLinkCard,
     Aa,
     LightboxGalleries,
     GalleryStyle
@@ -18,6 +20,7 @@ define([
 
     var TESTS = [
             new ParagraphSpacing(),
+            new ExperimentInlineLinkCard(),
             new Aa(),
             new LightboxGalleries(),
             new GalleryStyle()
