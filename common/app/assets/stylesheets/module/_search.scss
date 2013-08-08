@@ -14,7 +14,7 @@
             top: 0;
             bottom: 0;
             left: 0;
-            background: rgb(227,227,219);
+            background: $darkMushroom;
         }
     }
     @include mq(1117px) { // When the layout starts to be centered
