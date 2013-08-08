@@ -11,8 +11,8 @@ import contentapi.QueryDefaults
 object Us extends Edition(
   id = "US",
   displayName = "US edition",
-  timezone = DateTimeZone.forID("America/New_York"),
-  hreflang = "en-us") with Sections with Zones with QueryDefaults {
+  timezone = DateTimeZone.forID("America/New_York")
+  ) with Sections with Zones with QueryDefaults {
 
   implicit val US = Us
   val zones = Seq(
@@ -103,31 +103,31 @@ object Us extends Edition(
 
   val configuredFrontsFacia = Map(
     (Editionalise("", Us), Seq(
-      RunningOrderTrailblockDescription("news", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("news", "features", "Features", 5),
-      RunningOrderTrailblockDescription("news", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("news", "us/news/top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("news", "us/news/features", "Features", 5),
+      RunningOrderTrailblockDescription("news", "us/news/editors-picks", "Editor's Picks", 5)
     )),
 
     (Editionalise("culture", Us), Seq(
-      RunningOrderTrailblockDescription("culture", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("culture", "features", "Features", 5),
-      RunningOrderTrailblockDescription("culture", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("culture", "us/culture/top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("culture", "us/culture/features", "Features", 5),
+      RunningOrderTrailblockDescription("culture", "us/culture/editors-picks", "Editor's Picks", 5)
     )),
 
     (Editionalise("fashion", Us), Seq(
-      RunningOrderTrailblockDescription("fashion", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("fashion", "features", "Features", 5),
-      RunningOrderTrailblockDescription("fashion", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("fashion", "us/fashion/top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("fashion", "us/fashion/features", "Features", 5),
+      RunningOrderTrailblockDescription("fashion", "us/fashion/editors-picks", "Editor's Picks", 5)
     )),
 
     (Editionalise("technology", Us), Seq(
-      RunningOrderTrailblockDescription("technology", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("technology", "features", "Features", 5),
-      RunningOrderTrailblockDescription("technology", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("technology", "us/technology/top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("technology", "us/technology/features", "Features", 5),
+      RunningOrderTrailblockDescription("technology", "us/technology/editors-picks", "Editor's Picks", 5)
     )),
 
     (Editionalise("film", Us), Seq(
-      RunningOrderTrailblockDescription("film", "top-stories", "Film", 15)
+      RunningOrderTrailblockDescription("film", "us/film/top-stories", "Film", 15)
     ))
   )
 }

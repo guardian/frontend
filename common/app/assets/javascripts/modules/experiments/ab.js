@@ -4,18 +4,21 @@ define([
 
     //Current tests
     'modules/experiments/tests/paragraph-spacing',
+    'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
     'modules/experiments/tests/lightbox-galleries'
 ], function (
     common,
     store,
     ParagraphSpacing,
+    ExperimentInlineLinkCard,
     Aa,
     LightboxGalleries
     ) {
 
     var TESTS = [
             new ParagraphSpacing(),
+            new ExperimentInlineLinkCard(),
             new Aa(),
             new LightboxGalleries()
         ],

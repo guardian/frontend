@@ -81,7 +81,8 @@ class Content(
     ("page-code", fields("internalPageCode")),
     ("isLive", isLive),
     ("wordCount", wordCount),
-    ("shortUrl", shortUrl)
+    ("shortUrl", shortUrl),
+    ("thumbnail", thumbnailPath.getOrElse(false))
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override lazy val cacheSeconds = {

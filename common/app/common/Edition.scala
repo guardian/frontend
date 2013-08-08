@@ -8,8 +8,7 @@ import model.{MetaData, TrailblockDescription}
 abstract class Edition(
     val id: String,
     val displayName: String,
-    val timezone: DateTimeZone,
-    val hreflang: String // see http://support.google.com/webmasters/bin/answer.py?hl=en&answer=189077
+    val timezone: DateTimeZone
   ) {
   def configuredFronts: Map[String, Seq[TrailblockDescription]]
   def configuredFrontsFacia: Map[String, Seq[TrailblockDescription]]

@@ -28,25 +28,22 @@
         @extend %type-10;
         display: block;
         padding: 0 $gutter/4*3;
-    }
 
-    td:first-child {
-        font-weight: bold;
-        padding-top: $baseline*2;
-    }
+        &:first-child {
+            font-weight: bold;
+            padding-top: $baseline*2;
+        }
 
-    td:last-child {
-        padding-bottom: $baseline*2;
-        border-bottom: 1px solid #DEDEDD;
-    }
-}
+        & + td {
+            padding-bottom: $baseline*2;
+            border-bottom: 1px solid #DEDEDD;
+        }
 
-@include mq(tablet) {
-    .sport-summary__score {
-        td {
+        @include mq(tablet) {
             display: table-cell;
             border-bottom: 1px solid #DEDEDD;
-            padding: $baseline*2 $gutter/4*3;
+            padding-top: $baseline*2;
+            padding-bottom: $baseline*2;
         }
     }
 }

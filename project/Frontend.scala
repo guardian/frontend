@@ -79,7 +79,7 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val identityLibVersion = "3.20"
+  val identityLibVersion = "3.21"
   val identity = application("identity").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
       "com.gu.identity" %% "identity-model" % identityLibVersion,
@@ -90,7 +90,8 @@ object Frontend extends Build with Prototypes {
       "joda-time" % "joda-time" % "1.6",
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
-      "net.databinder.dispatch" %% "dispatch-core" % "0.10.1"
+      "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
+      "org.mockito" % "mockito-all" % "1.9.5" % "test"
     )
   )
 
