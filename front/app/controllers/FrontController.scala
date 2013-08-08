@@ -128,7 +128,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
   }
 
   private def faciaRedirect(path: String, request: RequestHeader) =
-    request.headers.get("X-Gu-Facia") map {_ => Ok.withHeaders("X-Accel-Redirect" -> s"/redirect/facia/$path")}
+    request.headers.get("X-Gu-Facia") filter(_ == "true") map {_ => Ok.withHeaders("X-Accel-Redirect" -> s"/redirect/facia/$path")}
 
   def render(path: String) = Action { implicit request =>
 
