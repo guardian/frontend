@@ -36,6 +36,7 @@ POST    /dev/switchboard                 controllers.SwitchboardController.save(
 # Fronts
 GET       /fronts                        controllers.FrontsController.index()
 GET       /fronts/api                    controllers.FrontsController.schema()
+GET       /fronts/config/*id             controllers.FrontsController.getConfig(id)
 GET       /fronts/api/*id                controllers.FrontsController.readBlock(id)
 POST      /fronts/api/*id                controllers.FrontsController.updateBlock(id)
 DELETE    /fronts/api/*id                controllers.FrontsController.deleteTrail(id)

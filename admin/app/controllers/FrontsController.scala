@@ -30,6 +30,12 @@ object FrontsController extends Controller with Logging {
     } getOrElse NotFound
   }
 
+  def getConfig(id: String) = AuthAction{ request =>
+    S3FrontsApi.getConfig(id) map { json =>
+      Ok(json).as("application/json")
+    } getOrElse NotFound
+  }
+
   def updateBlock(id: String): Action[AnyContent] = AuthAction { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
