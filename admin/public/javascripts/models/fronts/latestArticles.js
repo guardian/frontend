@@ -1,20 +1,24 @@
 define([
     'models/fronts/common',
     'models/fronts/article',
+    'models/fronts/ophanApi',
+    'models/fronts/cache',
     'knockout',
     'Reqwest'
 ], function (
     common,
     Article,
+    ophanApi,
+    cache,
     ko,
     Reqwest
 ) {
-
     return function(opts) {
 
         var self = this,
             deBounced,
-            opts = opts || {};
+            opts = opts || {},
+            container = document.querySelector('#latest-articles');
 
         this.articles   = ko.observableArray();
         this.term       = ko.observable(common.util.queryParams().q || '');
@@ -56,13 +60,17 @@ define([
                     success: function(resp) {
                         var rawArticles = resp.response && resp.response[propName] ? resp.response[propName] : [];
 
-                        // Make sure it's an array 
-                        rawArticles = [].concat(rawArticles);
-
                         self.articles.removeAll();
-                        rawArticles.map(function(a){
-                            self.articles.push(new Article(a));
+                        // clean up any dragged-in articles 
+                        container.innerHTML = ''; 
+
+                        ([].concat(rawArticles)).forEach(function(article, index){
+                            article.index = index;
+                            self.articles.push(new Article(article));
+                            cache.put('contentApi', article.id, article);
                         })
+
+                        ophanApi.decorateItems(self.articles());
                     },
                     error: function() {}
                 });
