@@ -11,10 +11,8 @@
                 }
                 <h2 class="trail__title">@RemoveOuterParaHtml(trail.headline)</h2>
             </a>
-            @if(trails.size == 1 && index == 0){
-                @trail.trailText.map { text =>
-                    <p class="trail__standfirst">@cleanTrailText(text)(Edition(request))</p>
-                }
+            @trail.trailText.map { text =>
+                <p class="trail__standfirst">@cleanTrailText(text)(Edition(request))</p>
             }
         </li>
     }

@@ -3,6 +3,15 @@
     border-left: 1px dotted #000000;
     padding-left: 9px;
 }
+@mixin overlay {
+    position:absolute;
+    bottom: 0;
+    background-color: rgba(0, 86, 136, 0.6);
+    color: #ffffff;
+    margin: 0;
+    padding: $baseline*3 $baseline;
+    @include box-sizing(border-box);
+}
 
 @mixin large-trail {
     width: 620px;
@@ -28,13 +37,11 @@
 
 @mixin medium-trail {
     width: 300px;
-    height: 372px;
+    height: 100%;
     @include bordered;
 
     .trail__image {
-        display: block;
         width: 100%;
-        height: 180px;
         margin-bottom: $baseline*3;
     }
     .trail__title {
@@ -54,6 +61,10 @@
     }
 }
 
+#preloads{
+    padding: 0 $gs-gutter / 2;
+}
+
 .facia-container {
 
     .trails {
@@ -63,7 +74,7 @@
         border-top: 1px solid #000000;
         border-bottom: 1px solid #000000;
         width: 100%;
-        max-width: retrieve-breakpoint-width(wide);
+        max-width: gs-span(16);
     }
     .trail {
         float: left;
@@ -103,21 +114,53 @@
         }
     }
 
+
+    .trails-count-2 {
+        .trail__title {
+            color: #000000;
+        }
+        .trail__standfirst {
+            color: #000000;
+        }
+        .trail:nth-child(1) {
+            background-color: #005688;
+            width: 100%;
+            height: 100%;
+            .trail__image {
+                height: 100%;
+                margin-right: 20px;
+                float: left;
+            }
+            .trail__title {
+                color: #ffffff;
+                margin: $baseline*3 $baseline*3 0;
+            }
+            .trail__standfirst {
+                color: #ffffff;
+                margin: $baseline*6 $baseline*3 0;
+            }
+        }
+        .trail:nth-child(2) {
+            .trail__image {
+                display: none;
+            }
+            .trail__title {
+                margin: 0;
+            }
+            .trail__standfirst {
+                margin: $baseline*6 0 0;
+            }
+        }
+    }
+
     @include mq(0, tablet) {
 
         .trails {
             @include box-sizing(border-box);
-            padding: 0 10px;
-        }
-        .trail:nth-child(1) {
-            .trail__image{
+            border: none;
+
+            .trail {
                 width: 100%;
-                float:none;
-                margin: 0;
-            }
-            .trail__title {
-                @include font($serif, 700, 20, 24);
-                margin: $baseline*2 $baseline*3 $baseline*2;
             }
             .trail__standfirst {
                 display: none;
@@ -125,16 +168,40 @@
             .trail__count {
                 right: 0;
             }
+
+            .trail:nth-child(1) {
+                height: auto;
+
+                .trail__image{
+                    width: 100%;
+                    float:none;
+                    margin: 0;
+                }
+                .trail__title {
+                    @include font($serif, 700, 20, 24);
+                    margin: $baseline*2 $baseline $baseline*3;
+                }
+            }
+
+            .trail:nth-child(2) {
+                .trail__title {
+                    @include font($serif, 700, 20, 24);
+                    margin: $baseline*3 $baseline 0;
+                    padding: $baseline*3 0 0;
+                    border-top: 1px dotted #000000;
+                }
+            }
         }
 
     }
 
     @include mq(tablet, desktop) {
 
+        .trails {
+            height: 228px;
+        }
+
         .trails-count-1 {
-            .trail {
-                height: 228px;
-            }
             .trail__title {
                 @include font($serifheadline, 700, 26, 28);
             }
@@ -146,14 +213,40 @@
             }
         }
 
+        .trails-count-2 {
+            .trail:nth-child(1) {
+                width: 380px;
+                margin-right: 10px;
+
+                .trail__title {
+                    @include overlay;
+                    @include font($serifheadline, 700, 26, 28);
+                }
+            }
+            .trail:nth-child(2) {
+                @include bordered;
+                float: none;
+                height: 100%;
+
+                .trail__title {
+                    @include font($serifheadline, 700, 26, 28);
+                    color: #000000;
+                }
+                .trail__standfirst {
+                    @include font($serifheadline, normal, 18, 20);
+                }
+            }
+        }
+
     }
 
     @include mq(desktop, wide) {
 
+        .trails {
+            height: 324px;
+        }
+
         .trails-count-1 {
-            .trail {
-                height: 324px;
-            }
             .trail__title {
                 @include font($serifheadline, 700, 34, 36);
             }
@@ -165,14 +258,40 @@
             }
         }
 
+        .trails-count-2 {
+            .trail:nth-child(1) {
+                width: 540px;
+                margin-right: 10px;
+
+                .trail__title {
+                    @include overlay;
+                    @include font($serifheadline, 700, 30, 32);
+                }
+            }
+            .trail:nth-child(2) {
+                @include bordered;
+                float: none;
+                height: 100%;
+
+                .trail__title {
+                    @include font($serifheadline, 700, 30, 32);
+                    color: #000000;
+                }
+                .trail__standfirst {
+                    @include font($serifheadline, normal, 26, 28);
+                }
+            }
+        }
+
     }
 
     @include mq(wide) {
 
+        .trails {
+            height: 372px;
+        }
+
         .trails-count-1 {
-            .trail {
-                height: 372px;
-            }
             .trail__title {
                 @include font($serifheadline, 700, 38, 40);
             }
@@ -184,30 +303,32 @@
             }
         }
 
-
-
-
-
         .trails-count-2 {
             .trail:nth-child(1) {
                 width: 940px;
-                height: 372px;
-
-                .trail__image {
-                    float: left;
-                    width: 620px;
-                    height: 100%;
-                    margin-right: 20px;
+                .trail__title {
+                    @include font($serifheadline, 700, 30, 32);
                 }
+                .trail__standfirst {
+                    @include font($serifheadline, normal, 26, 28);
+                }
+            }
+            .trail:nth-child(2) {
+                width: 300px;
+                height: 100%;
+                @include bordered;
+
                 .trail__title {
                     @include font($serifheadline, 700, 30, 32);
                     color: #000000;
                 }
-            }
-            .trail:nth-child(2) {
-                @include medium-trail;
+                .trail__standfirst {
+                    @include font($serifheadline, normal, 26, 28);
+                }
             }
         }
+
+
 
         .trails-count-3 {
             .trail:nth-child(1) {

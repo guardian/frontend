@@ -25,10 +25,10 @@ $svg-support: true !default;
 @import 'layout/_grid-system';
 
 $mq-breakpoints: (
-    (mobile  gs-span(4))
-    (tablet  gs-span(9))
-    (desktop gs-span(12))
-    (wide    gs-span(16))
+    (mobile  gs-span(4) + $gs-gutter)
+    (tablet  gs-span(9) + $gs-gutter)
+    (desktop gs-span(12) + $gs-gutter)
+    (wide    gs-span(16) + $gs-gutter)
 
     // Tweakpoints
     (desktopAd 810px)
