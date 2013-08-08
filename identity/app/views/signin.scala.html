@@ -1,16 +1,30 @@
-@(page: MetaData, form: Form[(String, String, Boolean)])(implicit request: RequestHeader)
+@(page: MetaData, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
+
+@import form.IdFormHelpers._
+@import views.html.fragments.form.{idInputEmail, idInputPassword, idCheckbox}
 
 @main(page, Switches.all){
-
 }{
-    <div class="monocolumn-wrapper">
-        <h2 class="page-head page-head--article">Signin</h2>
+<form class="form" novalidate action="/signin" role="main" method="post">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
 
-        @helper.form(action = routes.SigninController.processForm) {
-            @helper.inputText(form("email"), '_error -> form.error("email"))
-            @helper.inputPassword(form("password"), '_error -> form.error("password"))
-            @helper.checkbox(form("keepMeSignedIn"), '_help -> "Keep me signed in")
-            <input type="submit" name="signin" value="Signin" />
-        }
-    </div>
+    @if(signinForm.globalError.isDefined) {
+        <div class="form-field__error text-input__note">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
+    }
+
+    <ul class="form-fields">
+
+        @idInputEmail(signinForm("email"), '_label -> "Email address")
+        @idInputPassword(signinForm("password"), '_label -> "Password", '_help -> "<a href='/identity/recover'>Forgotten your password?</a>")
+
+        <li>
+            <button type="submit" class="submit-input">Sign in</button>
+            
+            <label class="check-label check-label--helper">
+                @idCheckbox(signinForm("keepMeSignedIn"))
+                Remember me
+            </label>
+        </li>
+  </ul>
+</form>
 }

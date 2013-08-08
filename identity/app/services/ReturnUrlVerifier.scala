@@ -1,25 +1,31 @@
 package services
 
 import play.api.mvc.{AnyContent, Request}
+import conf.IdentityConfiguration
+import com.google.inject.Inject
+import common.Logging
 
 
-class ReturnUrlVerifier {
+class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends Logging {
   val domainRegExp = """^https?://([^:/\?]+).*""".r
-  val returnUrlDomains = List("theguardian.com")
-  val defaultReturnUrl = "http://www.theguardian.com"
+  val returnUrlDomains = List(conf.id.domain)
+  val defaultReturnUrl = "http://www." + conf.id.domain
 
   def getVerifiedReturnUrl(request: Request[AnyContent]): String = {
     getVerifiedReturnUrl(request.queryString.get("returnUrl").flatMap(_.headOption))
   }
 
   def getVerifiedReturnUrl(returnUrl: Option[String]): String = {
-    returnUrl.map(getVerifiedReturnUrl(_)).getOrElse(defaultReturnUrl)
+    returnUrl.map(getVerifiedReturnUrl).getOrElse(defaultReturnUrl)
   }
 
   def getVerifiedReturnUrl(returnUrl: String): String = {
     hasVerifiedReturnUrl(returnUrl) match {
       case true => returnUrl
-      case false => defaultReturnUrl
+      case false => {
+        log.warn("Invalid returnURL: %s".format(returnUrl))
+        defaultReturnUrl
+      }
     }
   }
 

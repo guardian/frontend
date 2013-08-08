@@ -42,6 +42,14 @@ $mq-breakpoints: (
     @include mq(768, 1023, $and: '(orientation: portrait)') {
         color: lightcoral;
     }
+    // Add a custom breakpoint
+    $mq-breakpoints: mq-add-breakpoint(tvscreen, 1920px);
+    @include mq(tvscreen) {
+        color: DarkOliveGreen;
+    }
+    @include mq($to: tvscreen) {
+        color: DeepSkyBlue;
+    }
 }
 
 
