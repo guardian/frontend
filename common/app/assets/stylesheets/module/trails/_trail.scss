@@ -196,6 +196,21 @@
 
 
 
+/**
+ * @todo: Clean these up into proper modifiers
+ */
+
+.matches-container .trail__text {
+    display: none;
+}
+
+.competition .trail {
+    margin-top: $baseline*3;
+    border-bottom: none;
+}
+
+
+
 .gallerythumbs {
     margin: $baseline 0;
     list-style: none;
@@ -256,18 +271,4 @@
         @include fix-aspect-ratio(3, 4, 33%);
         border-left: 3px solid transparent;
     }
-}
-
-
-/**
- * @todo: Clean these up into proper modifiers
- */
-
-.matches-container .trail__text {
-    display: none;
-}
-
-.competition .trail {
-    margin-top: $baseline*3;
-    border-bottom: none;
 }
