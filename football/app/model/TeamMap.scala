@@ -1,10 +1,9 @@
 package model
 
-import akka.actor.Cancellable
-import common.{ ExecutionContexts, AkkaScheduler, AkkaAgent, Logging }
+import akka.actor.ActorRef
+import common._
 import conf.ContentApi
 import pa._
-import scala.concurrent.duration._
 
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
@@ -16,8 +15,6 @@ case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String])
 object TeamMap extends ExecutionContexts with Logging {
 
   val teamAgent = AkkaAgent(Map.empty[String, Tag])
-
-  private var schedule: Option[Cancellable] = None
 
   // teamId -> manually curated short name
   val shortNames = Map(
@@ -108,32 +105,44 @@ object TeamMap extends ExecutionContexts with Logging {
 
   def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
 
-  def start() {
-    schedule = Some(AkkaScheduler.every(1.minute, initialDelay = 5.seconds) {
+  private var job: Option[ActorRef] = None
+
+  class TeamTagMappingsRefreshJob extends Job {
+    val cron = "0 * * * * ?"
+    val metric = FootballMetrics.TeamTagMappingsRefreshTimingMetric
+
+    def run() {
+      log.info("Refreshing switches")
       incrementalRefresh(1) //pages are 1 based
-    })
+    }
+
+    private def incrementalRefresh(page: Int) {
+      log.info(s"Refreshing team tag mappings - page $page")
+      ContentApi.tags
+        .page(page)
+        .pageSize(50)
+        .referenceType("pa-football-team")
+        .showReferences("pa-football-team")
+        .response.foreach{ response =>
+        if (response.pages > page) {
+          incrementalRefresh(page + 1)
+        }
+
+        val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag(tag)) }.toMap
+        teamAgent.send(old => old ++ tagReferences)
+      }
+    }
+  }
+
+  def start() {
+    job = Some(Jobs.schedule[TeamTagMappingsRefreshJob])
   }
 
   def stop() {
-    schedule.foreach(_.cancel())
+    job foreach { Jobs.deschedule }
+    job = None
+
     teamAgent.close()
-  }
-
-  private def incrementalRefresh(page: Int) {
-    log.info(s"Refreshing team tag mappings - page $page")
-    ContentApi.tags
-      .page(page)
-      .pageSize(50)
-      .referenceType("pa-football-team")
-      .showReferences("pa-football-team")
-      .response.foreach{ response =>
-      if (response.pages > page) {
-        incrementalRefresh(page + 1)
-      }
-
-      val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag(tag)) }.toMap
-      teamAgent.send(old => old ++ tagReferences)
-    }
   }
 }
 

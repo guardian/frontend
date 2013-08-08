@@ -13,9 +13,3 @@ trait ExecutionContexts {
 object AkkaAgent {
   def apply[T](value: T) = Agent(value)(PlayAkka.system(Play.current))
 }
-
-object AkkaScheduler extends ExecutionContexts {
-  def every(duration: FiniteDuration, initialDelay: FiniteDuration = 5.seconds)(block: => Unit): Cancellable = {
-    PlayAkka.system(Play.current).scheduler.schedule(initialDelay, duration) { block }
-  }
-}
