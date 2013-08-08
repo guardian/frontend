@@ -61,23 +61,40 @@ trait UpdateActions {
 
   def emptyTrailWithId(id: String) = Trail(id, None, None, None)
 
-  def updateActionFilter(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity): Either[String, String] =
+  def shouldUpdate[T](cond: Boolean, original: T, updated: => T) = if (cond) updated else original
+
+  def updateCollectionFilter(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity) = {
     FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
-      var newBlock: Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
-      if (update.draft) {
-        val trails = block.draft.filterNot(_.id == update.item)
-        newBlock = newBlock.copy(draft = trails)
-      }
-      if (update.live) {
-        val trails = block.live.filterNot(_.id == update.item)
-        newBlock = newBlock.copy(live = trails)
-      }
-      newBlock = newBlock.copy(areEqual = newBlock.live==newBlock.draft)
+      lazy val updatedDraft = block.draft.filterNot(_.id == update.item)
+      lazy val updatedLive = block.live.filterNot(_.id == update.item)
+      updateCollection(edition, section, blockId, block, update, identity, updatedDraft, updatedLive)
+    }
+  }
 
-      FrontsApi.putBlock(edition, section, block.id, newBlock)
-      Right("OK")
-    } getOrElse Left("No edition or section") //To be more silent in the future?
+  def updateCollectionList(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity) = {
+    FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
+      lazy val updatedDraft = updateList(update, block.draft)
+      lazy val updatedLive = updateList(update, block.live)
+      updateCollection(edition, section, blockId, block, update, identity, updatedDraft, updatedLive)
+    } getOrElse {
+      UpdateActions.createBlock(edition, section, blockId, identity, update)
+    }
+  }
 
+  def updateCollection(edition: String, section: String, blockId: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => List[Trail], updatedLive: => List[Trail]): Unit = {
+      val draft = shouldUpdate(update.draft, block.draft, updatedDraft)
+      val live = shouldUpdate(update.live, block.live, updatedLive)
+
+      val blockWithUpdatedTrails =
+        block.copy(draft = draft)
+          .copy(live = live)
+          .copy(areEqual = draft == live)
+
+      val newBlock: Block = updateIdentity(blockWithUpdatedTrails, identity)
+
+      FrontsApi.putBlock(edition, section, blockId, newBlock)
+      FrontsApi.archive(edition, section, block)
+  }
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val listWithoutItem = blocks.filterNot(_.id == update.item)
@@ -86,27 +103,6 @@ trait UpdateActions {
       .getOrElse { listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) }
     val splitList = listWithoutItem.splitAt(index)
     splitList._1 ++ List(emptyTrailWithId(update.item)) ++ splitList._2
-  }
-
-  def updateBlock(edition: String, section: String, blockId: String, update: UpdateList, identity: Identity): Unit = {
-    FrontsApi.getBlock(edition, section, blockId) map { block: Block =>
-      var newBlock: Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
-      if (update.draft) {
-        val trails = updateList(update, block.draft)
-        newBlock = newBlock.copy(draft = trails)
-      }
-      if (update.live) {
-        val trails = updateList(update, block.live)
-        newBlock = newBlock.copy(live = trails)
-      }
-
-      newBlock = newBlock.copy(areEqual = newBlock.live==newBlock.draft)
-
-      FrontsApi.putBlock(edition, section, blockId, newBlock)
-      FrontsApi.archive(edition, section, block)
-    } getOrElse {
-      UpdateActions.createBlock(edition, section, blockId, identity, update)
-    }
   }
 
   def createBlock(edition: String, section: String, block: String, identity: Identity, update: UpdateList) {

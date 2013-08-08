@@ -35,7 +35,7 @@ object FrontsController extends Controller with Logging {
       case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
       case update: UpdateList => {
         val identity = Identity(request).get
-        UpdateActions.updateBlock(edition, section, blockId, update, identity)
+        UpdateActions.updateCollectionList(edition, section, blockId, update, identity)
         //TODO: How do we know if it was updated or created? Do we need to know?
         Ok
       }
@@ -71,7 +71,7 @@ object FrontsController extends Controller with Logging {
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList => {
         val identity = Identity(request).get
-        UpdateActions.updateActionFilter(edition, section, blockId, update, identity)
+        UpdateActions.updateCollectionFilter(edition, section, blockId, update, identity)
         Ok
       }
       case _ => NotFound
