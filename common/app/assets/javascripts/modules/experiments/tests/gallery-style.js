@@ -5,7 +5,7 @@ define(['common', 'modules/lightbox-gallery'], function (common, LightboxGallery
         var _config;
 
         this.id = 'GalleryStyle';
-        this.expiry = '2013-08-20';
+        this.expiry = '2013-08-21';
         this.audience = 1;
         this.description = 'Tests the new gallery style contact sheet CTA instead of the current style';
         this.canRun = function(config) {
@@ -16,7 +16,6 @@ define(['common', 'modules/lightbox-gallery'], function (common, LightboxGallery
             {
                 id: 'control',
                 test: function (context) {
-                   context.querySelector('.gallerytest--var-b').style.display = 'none';
                    return true;
                 }
             },
@@ -24,6 +23,7 @@ define(['common', 'modules/lightbox-gallery'], function (common, LightboxGallery
                 id: 'new-style',
                 test: function (context) {
                     context.querySelector('.gallerytest--var-a').style.display = 'none';
+                    context.querySelector('.gallerytest--var-b').style.display = 'block';
 
                     var galleries = new LightboxGallery(_config, context);
                     galleries.init({
