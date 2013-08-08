@@ -13,9 +13,9 @@ define([
     Article,
     LatestArticles
 ) {
-    var maxDisplayableLists = 3,
-        dragging = false,
+    var dragging = false,
         clipboard = document.querySelector('#clipboard'),
+        listLoadsPending = 0,
         loc = window.location;
 
     return function(selector) {
@@ -28,13 +28,16 @@ define([
         }
 
         function addList(id) {
-            if(chosenLists().indexOf(id) === -1) {
-                setDisplayedLists(chosenLists().slice(1 - maxDisplayableLists).concat(id));
-            }
+            var lists = chosenLists();
+            lists = _.without(lists, id);
+            lists.unshift(id);
+            lists = _.first(lists, common.config.maxDisplayableLists || 3);
+            setDisplayedLists(lists);
         }
 
         function dropList(list) {
             setDisplayedLists(_.reject(chosenLists(), function(id){ return id === list.id; }));
+            common.util.pageReflow();
         }
 
         function setDisplayedLists(listIDs) {
@@ -57,6 +60,7 @@ define([
 
         function renderLists() {
             var chosen = chosenLists();
+            //viewModel.listsDisplayed.removeAll();
             viewModel.listsDisplayed.remove(function(list){
                 if (chosen.indexOf(list.id) === -1) {
                     return true;
@@ -65,8 +69,9 @@ define([
                     return false;
                 }    
             });
-            chosen.forEach(function(id){
-                viewModel.listsDisplayed.push(new List(id));
+
+            chosen.reverse().forEach(function(id){
+                viewModel.listsDisplayed.unshift(new List(id));
             });
             connectSortableLists();
         }
@@ -233,9 +238,9 @@ define([
                 renderLists();
                 window.onpopstate = renderLists;
 
-                //startPoller();
+                startPoller();
                 viewModel.latestArticles.search();
-                //viewModel.latestArticles.startPoller();
+                viewModel.latestArticles.startPoller();
             });
 
 
@@ -253,7 +258,20 @@ define([
                         $(element).sparkline(value, options);                        
                     }
                 }
-            };            
+            };
+
+            common.util.mediator.on('list:load:start', function() {
+                listLoadsPending += 1;
+            });
+
+            common.util.mediator.on('list:load:end', function() {
+                listLoadsPending -= 1;
+                if (listLoadsPending < 1) {
+                    listLoadsPending = 0;
+                    common.util.pageReflow();
+                }
+            });
+
         };
 
     };

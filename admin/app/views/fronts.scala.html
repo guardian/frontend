@@ -8,6 +8,10 @@
         <header>
             <div class="tool-title">Trailblock Editor</div>
             <div class="list-picker">
+                <span data-bind="with: $root.selectedBlock()">
+                    <a href="#" data-bind="click: $root.displayAllEditions">View in all editions &raquo;</a>
+                </span>
+
                 <span class="list-picker__title">Find blocks:</span>
 
                 <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Choose Edition...'"></select>
@@ -17,10 +21,6 @@
 
                     <span data-bind="with: $root.selectedSection()">
                         <select data-bind="options: blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Choose Block...'"></select>
-
-                        <span data-bind="with: $root.selectedBlock()">
-                            <a href="#" data-bind="click: $root.displayAllEditions"> &laquo; View in all editions</a>
-                        </span>
                     </span>
 
                 </span>
@@ -48,7 +48,7 @@
             <div id="latest-articles" class="connectedList" data-bind="template: {name: 'template_article', foreach: latestArticles.articles()}">Searching...</div>
         </div>
 
-        <!-- ko foreach: listsDisplayed -->
+        <div id="trailblocks" data-bind="foreach: listsDisplayed">
             <div class="trailblock">
                 <div class="list-header">
                     <i class="icon-cog icon-white list-tool" data-bind="click: toggleEditingConfig"></i>
@@ -125,7 +125,7 @@
                     css: {pending: state.loadIsPending},
                     template: {name: 'template_article', foreach: state.liveMode() ? live : draft}"></div>
             </div>
-        <!-- /ko -->
+        </div>
     </div>
 
     <script type="text/html" id="template_article">

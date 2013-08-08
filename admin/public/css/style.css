@@ -422,11 +422,12 @@ a.cta, .cta a {
     border-right:  0;
 }
 
-.fronts .lists .connectedList {
-    min-height: 50px;
+.fronts #trailblocks .connectedList {
+    min-height: 100px;
+    background: #eee;
 }
 
-.fronts .lists .connectedList.pending {
+.fronts #trailblocks .connectedList.pending {
     pointer-events: none;
     opacity: 0.5;
 }
@@ -528,6 +529,10 @@ a.cta, .cta a {
     margin: 0 2px 0 0;
 }
 
+.fronts #trailblocks {
+    margin: 0 0 0 300px;
+}
+
 .fronts .trailblock {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -537,6 +542,9 @@ a.cta, .cta a {
 }
 
 .fronts .trail {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 107px;
     cursor: move;
     background-color: #fff;
     padding: 5px 5px 10px 10px;
@@ -603,6 +611,8 @@ a.cta, .cta a {
     text-decoration: none;
     color: #000;
     margin: 0 0 5px 0;
+    height: 40px;
+    overflow: hidden;
 }
 
 .fronts .trail .webTitle--override {
