@@ -14,24 +14,13 @@
 }
 
 @mixin large-trail {
-    width: 620px;
-    height: 372px;
-    position:relative;
-
     .trail__image {
         width: 100%;
         height: 100%;
         display: block;
     }
     .trail__title {
-        @include font($serifheadline, 700, 30, 32);
-        color: #ffffff;
-        position:absolute;
-        bottom:0;
-        background:rgba(0, 86, 136, 0.8);
-        padding: $baseline*2;
-        width: 100%;
-        @include box-sizing(border-box);
+        @include overlay;
     }
 }
 
@@ -45,7 +34,6 @@
         margin-bottom: $baseline*3;
     }
     .trail__title {
-        @include font($serifheadline, 700, 30, 32);
         color: #000000;
     }
 }
@@ -56,7 +44,6 @@
     @include bordered;
 
     .trail__title {
-        @include font($serifheadline, 700, 30, 32);
         color: #000000;
     }
 }
@@ -97,6 +84,7 @@
         .trail {
             background-color: #005688;
             width: 100%;
+            height: 100%;
         }
         .trail__image {
             height: 100%;
@@ -171,6 +159,7 @@
 
             .trail:nth-child(1) {
                 height: auto;
+                background-color: #005688;
 
                 .trail__image{
                     width: 100%;
@@ -179,11 +168,15 @@
                 }
                 .trail__title {
                     @include font($serif, 700, 20, 24);
+                    color: #ffffff;
                     margin: $baseline*2 $baseline $baseline*3;
                 }
             }
 
-            .trail:nth-child(2) {
+            .trail:nth-child(n+2) {
+                .trail__image{
+                    display: none;
+                }
                 .trail__title {
                     @include font($serif, 700, 20, 24);
                     margin: $baseline*3 $baseline 0;
@@ -214,13 +207,19 @@
         }
 
         .trails-count-2 {
+            .trail__title {
+                @include font($serifheadline, 700, 26, 28);
+            }
+            .trail__standfirst {
+                @include font($serifheadline, normal, 18, 20);
+            }
+
             .trail:nth-child(1) {
                 width: 380px;
                 margin-right: 10px;
 
                 .trail__title {
                     @include overlay;
-                    @include font($serifheadline, 700, 26, 28);
                 }
             }
             .trail:nth-child(2) {
@@ -229,12 +228,48 @@
                 height: 100%;
 
                 .trail__title {
-                    @include font($serifheadline, 700, 26, 28);
                     color: #000000;
                 }
-                .trail__standfirst {
-                    @include font($serifheadline, normal, 18, 20);
+            }
+        }
+
+        .trails-count-3 {
+            .trail__title {
+                @include font($serifheadline, 700, 26, 28);
+            }
+            .trail__standfirst {
+                display: none;
+            }
+
+            .trail:nth-child(1) {
+                width: 380px;
+                height: 100%;
+                margin-right: 10px;
+                .trail__image {
+                    width:100%;
                 }
+                .trail__title {
+                    @include overlay;
+                }
+            }
+            .trail:nth-child(n+2) {
+                height: 50%;
+                @include box-sizing(border-box);
+                float: none;
+                @include bordered;
+                .trail__image {
+                    display: none;
+                }
+                .trial__title {
+                    margin: $baseline*3 0 0;
+                }
+            }
+            .trail:nth-child(2) {
+                padding-bottom: 10px;
+            }
+            .trail:nth-child(3) {
+                border-top: 1px solid #000000;
+                padding-top: 9px;
             }
         }
 
@@ -259,13 +294,19 @@
         }
 
         .trails-count-2 {
+            .trail__title {
+                @include font($serifheadline, 700, 30, 32);
+            }
+            .trail__standfirst {
+                @include font($serifheadline, normal, 26, 28);
+            }
+
             .trail:nth-child(1) {
                 width: 540px;
                 margin-right: 10px;
 
                 .trail__title {
                     @include overlay;
-                    @include font($serifheadline, 700, 30, 32);
                 }
             }
             .trail:nth-child(2) {
@@ -274,12 +315,48 @@
                 height: 100%;
 
                 .trail__title {
-                    @include font($serifheadline, 700, 30, 32);
                     color: #000000;
                 }
-                .trail__standfirst {
-                    @include font($serifheadline, normal, 26, 28);
+            }
+        }
+
+        .trails-count-3 {
+            .trail__title {
+                @include font($serifheadline, 700, 30, 32);
+            }
+            .trail__standfirst {
+                display: none;
+            }
+
+            .trail:nth-child(1) {
+                width: 540px;
+                height: 100%;
+                margin-right: 10px;
+                .trail__image {
+                    width:100%;
                 }
+                .trail__title {
+                    @include overlay;
+                }
+            }
+            .trail:nth-child(n+2) {
+                height: 50%;
+                @include box-sizing(border-box);
+                float: none;
+                @include bordered;
+                .trail__image {
+                    display: none;
+                }
+                .trial__title {
+                    margin: $baseline*3 0 0;
+                }
+            }
+            .trail:nth-child(2) {
+                padding-bottom: 10px;
+            }
+            .trail:nth-child(3) {
+                border-top: 1px solid #000000;
+                padding-top: 9px;
             }
         }
 
@@ -289,6 +366,9 @@
 
         .trails {
             height: 372px;
+        }
+        .trail {
+            height: 100%;
         }
 
         .trails-count-1 {
@@ -304,40 +384,54 @@
         }
 
         .trails-count-2 {
+            .trail__title {
+                @include font($serifheadline, 700, 30, 32);
+            }
+            .trail__standfirst {
+                @include font($serifheadline, normal, 26, 28);
+            }
+
             .trail:nth-child(1) {
                 width: 940px;
-                .trail__title {
-                    @include font($serifheadline, 700, 30, 32);
-                }
-                .trail__standfirst {
-                    @include font($serifheadline, normal, 26, 28);
-                }
             }
             .trail:nth-child(2) {
                 width: 300px;
-                height: 100%;
                 @include bordered;
-
-                .trail__title {
-                    @include font($serifheadline, 700, 30, 32);
-                    color: #000000;
-                }
-                .trail__standfirst {
-                    @include font($serifheadline, normal, 26, 28);
-                }
             }
         }
-
-
 
         .trails-count-3 {
+            .trail__title {
+                @include font($serifheadline, 700, 30, 32);
+            }
+            .trail__standfirst {
+                display: none;
+                @include font($serifheadline, normal, 26, 28);
+            }
+
             .trail:nth-child(1) {
-                @include large-trail;
+                width: 620px;
+                .trail__title {
+                    @include overlay;
+                }
             }
             .trail:nth-child(n+2) {
-                @include medium-trail;
+                width: 300px;
+                @include bordered;
+                .trail__image {
+                    width: 100%;
+                }
+                .trial__title {
+                    margin: $baseline*3 0 0;
+                }
+            }
+            .trail:nth-child(2) {
+                border: none;
+                padding-left: 10px;
             }
         }
+
+
 
         .trails-count-4 {
             .trail:nth-child(1) {
