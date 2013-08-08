@@ -670,7 +670,9 @@ a.cta, .cta a {
 .fronts .needs-more {
     border-left: 1px solid #666;
     border-right: 1px solid #666;
-    color: #d61d00;
+    background: #d61d00;
+    color: #fff;
+    padding: 0px 10px;
     font-size: 12px;
     text-transform: uppercase;    
 }
