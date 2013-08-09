@@ -111,9 +111,14 @@ object Uk extends Edition(
 
   val configuredFrontsFacia = Map(
     (Editionalise("", Uk), Seq(
-      RunningOrderTrailblockDescription("news", "uk/news/top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("news", "uk/news/features", "Features", 5),
-      RunningOrderTrailblockDescription("news", "uk/news/editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("news", "uk/news/top-stories", "Top Stories", 5, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "uk/sport/top-stories", "Sports", 5, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "uk/commentisfree/top-stories", "Comment is free", 3, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "uk/culture/top-stories", "Culture", 3, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("news", "uk/business/top-stories", "Business", 1),
+      RunningOrderTrailblockDescription("news", "uk/lifeandstyle/top-stories", "Life and style", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("news", "uk/technology/top-stories", "Technology", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("news", "uk/travel/top-stories", "Travel", 1, style = Some(Thumbnail))
     )),
 
     (Editionalise("culture", Uk), Seq(

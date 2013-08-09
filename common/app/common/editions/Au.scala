@@ -165,9 +165,14 @@ object Au extends Edition(
 
   val configuredFrontsFacia = Map(
     (Editionalise("", Au), Seq(
-      RunningOrderTrailblockDescription("news", "au/news/top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("news", "au/news/features", "Features", 5),
-      RunningOrderTrailblockDescription("news", "au/news/editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("news", "au/news/top-stories", "Top Stories", 5, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "au/sport/top-stories", "Sports", 5, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "au/commentisfree/top-stories", "Comment is free", 3, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "au/culture/top-stories", "Culture", 3, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("news", "au/business/top-stories", "Business", 1),
+      RunningOrderTrailblockDescription("news", "au/lifeandstyle/top-stories", "Life and style", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("news", "au/technology/top-stories", "Technology", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("news", "au/travel/top-stories", "Travel", 1, style = Some(Thumbnail))
     )),
 
     (Editionalise("culture", Au), Seq(
