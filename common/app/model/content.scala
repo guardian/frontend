@@ -86,7 +86,7 @@ class Content(
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
 
-  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:title" -> webTitle,
     "og:url" -> webUrl,
     "og:description" -> trailText,
@@ -128,12 +128,12 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
 
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 
-  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "content-type" -> "article",
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName
-  )
+  ) ++ tags.map("article:tag" -> _.name)
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) {
