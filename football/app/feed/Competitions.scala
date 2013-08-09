@@ -120,7 +120,7 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
 
     CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English", showInTeamsList = true)),
 
-    CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield", "English")),
+    CompetitionAgent(Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true)),
 
     CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish", showInTeamsList = true)),
 

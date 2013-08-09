@@ -69,3 +69,19 @@
 .cf {
     zoom: 1;
 }
+
+/**
+ * Text hyphenation
+ *
+ * Break strings when their length exceeds the width of their container
+ * and hyphenate words at the end of lines using the `hyphens` property.
+ * Browser support for hyphenation: http://caniuse.com/#search=hyphenation
+ */
+
+.u-text-hyphenate {
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
+}

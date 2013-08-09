@@ -7,8 +7,10 @@ import test.Fake
 import controllers.front.TrailblockAgent
 import conf.ContentApi
 import contentapi.QueryDefaults
+import org.scalatest.concurrent.Eventually
+import org.scalatest.time.SpanSugar
 
-class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with QueryDefaults {
+class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with QueryDefaults with Eventually with SpanSugar{
 
   implicit val edition = Uk
 
@@ -35,9 +37,6 @@ class TrailsTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with
   }
 
   private def loadOrTimeout(agent: TrailblockAgent) {
-    val start = System.currentTimeMillis()
-    while (!agent.trailblock.isDefined) {
-      if (System.currentTimeMillis - start > 10000) throw new RuntimeException("Agent should have loaded by now")
-    }
+    eventually (timeout(5.seconds), interval(1.second)) { agent.trailblock should be ('defined) }
   }
 }

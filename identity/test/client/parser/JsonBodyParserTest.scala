@@ -45,7 +45,7 @@ class JsonBodyParserTest extends path.FreeSpec with ShouldMatchers {
 
   "The extract method" - {
     "extracts the provided type from the JSON body of a successful response" in {
-      TestJsonBodyParser.extract[TestType](Right(validJSONResponse)) match {
+      TestJsonBodyParser.extract[TestType]()(Right(validJSONResponse)) match {
         case Left(result) =>  fail("extract did not return a Right, got Left(%s)".format(result.toString()))
         case Right(testObject: TestType) => testObject should have('test("value"))
         case Right(result) => fail("extract did not return a Right of the required type, got a %s".format(result.getClass.getName))
@@ -53,21 +53,21 @@ class JsonBodyParserTest extends path.FreeSpec with ShouldMatchers {
     }
 
     "returns a mapping error if the provided type cannot be extracted from the response" in {
-      TestJsonBodyParser.extract[TestType](Right(badTypeJSONResponse)) match {
+      TestJsonBodyParser.extract[TestType]()(Right(badTypeJSONResponse)) match {
         case Right(result) => fail("extract did not return a Left, got %s".format(result.toString))
-        case Left(errors) => errors(0) should have('message("Failed to extract data from JSON"))
+        case Left(errors) => errors(0).message should startWith("JSON mapping exception")
       }
     }
 
     "passes an existing Left seamlessly" in {
-      TestJsonBodyParser.extract[TestType](Left(testErrors)) match {
+      TestJsonBodyParser.extract[TestType]()(Left(testErrors)) match {
         case Right(result) => fail("extract did not return a Left, got %s".format(result.toString))
         case Left(errors) => errors should be(testErrors)
       }
     }
 
     "returns the extractJsonOrError if that method throws an error" in {
-      TestJsonBodyParser.extract[TestType](Right(invalidJSONResponse)) match {
+      TestJsonBodyParser.extract[TestType]()(Right(invalidJSONResponse)) match {
         case Right(result) => fail("extract did not return a Left, got %s".format(result.toString))
         case errorResponse => errorResponse should equal(TestJsonBodyParser.extractJsonOrError(invalidJSONResponse))
       }

@@ -160,14 +160,18 @@ define([
         },
 
         initLightboxGalleries: function () {
+            var thisPageId;
             common.mediator.on('page:common:ready', function(config, context) {
                 var galleries = new LightboxGallery(config, context);
+                thisPageId = config.page.pageId;
                 galleries.init();
             });
 
-            // Register as a page view
+            // Register as a page view if invoked from elsewhere than its gallery page (like a trailblock)
             common.mediator.on('module:lightbox-gallery:loaded', function(config, context) {
-                common.mediator.emit('page:common:deferred:loaded', config, context);
+                if (thisPageId !== config.page.pageId) {
+                    common.mediator.emit('page:common:deferred:loaded', config, context);
+                }
             });
         },
         

@@ -119,7 +119,7 @@ class RunningOrderTrailblockDescription(
 
   def configuredQuery() = {
     // get the running order from the api
-    val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
+    val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$blockId/collection.json"
     log.info(s"loading running order configuration from: $configUrl")
     parseResponse(WS.url(s"$configUrl").withTimeout(2000).get())
   }

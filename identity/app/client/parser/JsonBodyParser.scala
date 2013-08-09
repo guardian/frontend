@@ -12,15 +12,15 @@ trait JsonBodyParser extends Logging {
   def responseIsError(json: JValue, statusCode: Int): Boolean = statusCode > 299
   def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error]
 
-  def extract[T](httpResponse: Response[HttpResponse])(implicit man: Manifest[T]): Response[T] = {
+  def extract[T](extractJsonObj: JValue => JValue = {json => json})(httpResponse: Response[HttpResponse])(implicit man: Manifest[T]): Response[T] = {
     try {
       httpResponse.right.flatMap(response => {
-        extractJsonOrError(response).right.map { _.extract[T] }
+        extractJsonOrError(response).right.map { extractJsonObj(_).extract[T] }
       })
     } catch {
       case e: MappingException => {
         logger.error("JSON mapping exception", e)
-        Left(List(Error("Failed to extract data from JSON", e.getMessage)))
+        Left(List(Error("JSON mapping exception: Failed to extract %s from JSON".format(man.runtimeClass.getName), e.getMessage)))
       }
     }
   }
