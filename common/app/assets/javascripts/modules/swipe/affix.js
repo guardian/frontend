@@ -1,0 +1,75 @@
+define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
+
+    // AFFIX CLASS DEFINITION
+    // ======================
+
+    var Affix = function (options) {
+        var self = this;
+
+        this.options = common.extend(Affix.OPTIONS, options);
+        this.$window = bonzo(document.body);
+
+        console.log(options);
+
+        bean.on(window, 'scroll', function() {
+            self.checkPosition.call(self);
+        });
+
+        bean.on(window, 'click',  function() {
+            self.checkPositionWithEventLoop.call(self);
+        });
+
+        this.$element = bonzo(options.element);
+        this.affixed;
+        this.unpin    = null;
+
+        this.checkPosition();
+    };
+
+    Affix.RESET = 'affix affix-top affix-bottom';
+
+    Affix.OPTIONS = {
+        offset: 0
+    };
+
+    Affix.prototype.checkPositionWithEventLoop = function () {
+        var self = this;
+        setTimeout(function(){
+            self.checkPosition.call(self)
+        }, 1);
+    };
+
+    Affix.prototype.checkPosition = function () {
+        var scrollHeight = bonzo(document).dim().height,
+            scrollTop    = this.$window.scrollTop(),
+            position     = this.$element.offset(),
+            offset       = this.options.offset,
+            offsetTop    = offset.top,
+            offsetBottom = offset.bottom;
+
+        console.log(scrollTop, offsetTop);
+
+        if (typeof offset != 'object')         offsetBottom = offsetTop = offset;
+        if (typeof offsetTop == 'function')    offsetTop    = offset.top();
+        if (typeof offsetBottom == 'function') offsetBottom = offset.bottom();
+
+        var affix = this.unpin   != null && (scrollTop + this.unpin <= position.top) ? false :
+                    offsetBottom != null && (position.top + this.$element.dim().height >= scrollHeight - offsetBottom) ? 'bottom' :
+                    offsetTop    != null && (scrollTop <= offsetTop) ? 'top' : false;
+
+        if (this.affixed === affix) return;
+        if (this.unpin) this.$element.css('top', '');
+
+        this.affixed = affix;
+        this.unpin   = affix == 'bottom' ? position.top - scrollTop : null;
+
+        this.$element.removeClass(Affix.RESET);
+        this.$element.addClass('affix' + (affix ? '-' + affix : ''));
+
+        if (affix == 'bottom') {
+            this.$element.offset({ top: document.body.offsetHeight - offsetBottom - this.$element.dim().height });
+        }
+    };
+
+    return Affix;
+});

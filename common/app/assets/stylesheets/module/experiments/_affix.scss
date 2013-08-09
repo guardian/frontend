@@ -1,0 +1,25 @@
+.affix {
+  position: fixed;
+}
+
+.affix-top {
+  position: relative;
+}
+
+.affix-bottom {
+  position: absolute;
+}
+
+.swipe-bar {
+  background-color: $mushroom;
+  width: 100%;
+  z-index: 9999;
+}
+
+.swipe-bar.affix {
+  top: 0px;
+}
+
+.swipe-bar.affix-top {
+  top: 58px;
+}

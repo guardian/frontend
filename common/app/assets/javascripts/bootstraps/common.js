@@ -35,7 +35,8 @@ define([
     "modules/adverts/video",
     "modules/discussion/commentCount",
     "modules/lightbox-gallery",
-    "modules/swipe/ears"
+    "modules/swipe/ears",
+    "modules/swipe/bar"
 ], function (
     common,
     ajax,
@@ -72,7 +73,8 @@ define([
     VideoAdvert,
     CommentCount,
     LightboxGallery,
-    ears
+    ears,
+    SwipeBar
 ) {
 
     var modules = {
@@ -317,7 +319,10 @@ define([
         initSwipe: function(config) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
                 var swipe = swipeNav(config);
-                ears.init();
+
+                //ears.init();
+                new SwipeBar();
+
                 common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
                 common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
             }
