@@ -34,19 +34,19 @@ function (
                         common.$g('body').addClass('test-link-card--on');
 
                         function isArticle(url) {
-                            return (/\/[\w-]+\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w-]+/).test(url);
+                            return (/\/[\w\-]+\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
                         }
                         function isVideo(url) {
-                        return (/\/[\w-]+\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w-]+|youtube\.com|dailymotion\.com|vimeo\.com/).test(url);
+                        return (/\/[\w\-]+\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+|youtube\.com|dailymotion\.com|vimeo\.com/).test(url);
                         }
                         function isGallery(url) {
-                            return (/\/[\w-]+\/gallery\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w-]+/).test(url);
+                            return (/\/[\w\-]+\/gallery\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
                         }
                         function isCif(url) {
-                            return (/\/commentisfree\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w-]+/).test(url);
+                            return (/\/commentisfree\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
                         }
                         function isWikipedia(url) {
-                            return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w-\.]+$/).test(url);
+                            return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.]+$/).test(url);
                         }
                         function isWhiteListed(url) {
                             return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url) || isWikipedia(url);
@@ -83,7 +83,6 @@ function (
 
                                 if (numberOfLinksInParagraph > 0) {
                                     while (j < numberOfLinksInParagraph) {
-                                        console.log(isWhiteListed(linksInParagraph[j].href), linksInParagraph[j].href);
                                         if (isWhiteListed(linksInParagraph[j].href)) {
                                             cardifyRelatedInBodyLink(linksInParagraph[j]);
                                             linkWasCardified = true;

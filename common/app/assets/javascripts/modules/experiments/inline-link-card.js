@@ -63,9 +63,8 @@ define([
             imageFragment = '<img src="' + image + '" alt="" class="card__media" />';
         }
         if (datePublished) {
-            publishedFragment = '<div class="dateline"><i class="i i-date relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>'
+            publishedFragment = '<div class="dateline"><i class="i i-date relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
         }
-
 
         tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
                   '<div class="furniture furniture--left card">' +
@@ -89,7 +88,7 @@ define([
             reqURL;
         if ((/^\//).test(href)) {
             reqURL = '/cards/opengraph/' + encodeURIComponent('http://www.theguardian.com' + href + '?view=desktop');
-        } else if ((/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\.-]+$/).test(href)) {
+        } else if ((/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\.\-]+$/).test(href)) {
             reqURL = '/cards/wikipedia/' + encodeURIComponent(href);
         } else {
             reqURL = '/cards/opengraph/' + encodeURIComponent(href);
