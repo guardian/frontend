@@ -93,7 +93,7 @@ define([
     }
 
     function load(o) {
-        var url = (typeof o.url !== "string") ? o.url.url : o.url,
+        var url = o.url,
             el = o.container,
             callback = o.callback || noop,
             frag;
@@ -130,10 +130,10 @@ define([
                     if (el.pendingUrl === url) {
                         el.url = url;
                         populate(el, html);
+                        delete el.pendingUrl;
                     }
                 }).fail(function () {
                 }).always(function () {
-                    delete el.pendingUrl;
                     callback();
                     common.mediator.emit('module:swipenav:pane:loaded', el);
                 });
@@ -267,9 +267,14 @@ define([
                 i;
 
             if (len >= 3) {
-                // Make sure url is the first in the sequence
-                if (trails[0].url !== url) {
-                    trails.unshift(url);
+                //Remove current url from sequence
+                if(trails.indexOf(url) > -1) { // Make sure url is the first in the sequence
+                    if (trails[0] !== url) {
+                        trails.unshift(url);
+                        len += 1;
+                    }
+                } else {
+                    trails[0] = url;
                     len += 1;
                 }
 
@@ -286,6 +291,10 @@ define([
                         sequenceLen += 1;
                     }
                 }
+
+                console.log(sequenceLen);
+                console.dir(sequence);
+                console.dir(sequenceCache);
 
                 setSequencePos(window.location.pathname);
                 callback();
@@ -322,6 +331,8 @@ define([
     function getAdjacentUrl(dir) {
         // dir = 1   => the right pane
         // dir = -1  => the left pane
+
+        console.log(sequencePos);
 
         if (dir === 0) {
             return getSequenceUrl(sequencePos);
@@ -533,7 +544,7 @@ define([
         // Bind back/forward button behavior
         window.onpopstate = function (event) {
             // Ignore inital popstate that some browsers fire on page load
-            if (!event.state && !event.state.title) { return; }
+            if (!event.state) { return; }
             window.location.reload();
         };
 
