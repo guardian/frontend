@@ -267,16 +267,9 @@ define([
                 i;
 
             if (len >= 3) {
-                //Remove current url from sequence
-                if(trails.indexOf(url) > -1) { // Make sure url is the first in the sequence
-                    if (trails[0] !== url) {
-                        trails.unshift(url);
-                        len += 1;
-                    }
-                } else {
-                    trails[0] = url;
-                    len += 1;
-                }
+
+                trails.unshift(url);
+                len += 1;
 
                 sequence = [];
                 sequenceLen = 0;
@@ -291,10 +284,6 @@ define([
                         sequenceLen += 1;
                     }
                 }
-
-                console.log(sequenceLen);
-                console.dir(sequence);
-                console.dir(sequenceCache);
 
                 setSequencePos(window.location.pathname);
                 callback();
@@ -331,8 +320,6 @@ define([
     function getAdjacentUrl(dir) {
         // dir = 1   => the right pane
         // dir = -1  => the left pane
-
-        console.log(sequencePos);
 
         if (dir === 0) {
             return getSequenceUrl(sequencePos);
