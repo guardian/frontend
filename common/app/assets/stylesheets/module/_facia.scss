@@ -13,6 +13,9 @@
         padding: $baseline*3 $baseline;
         @include box-sizing(border-box);
     }
+    .trail__standfirst {
+        display: none;
+    }
 }
 
 @mixin small-card {
@@ -29,9 +32,7 @@
     padding: 0 $gs-gutter / 2;
 }
 
-
 .facia-container {
-
     .trails {
         overflow: hidden;
         margin-top: $baseline*4;
@@ -40,37 +41,89 @@
         border-bottom: 1px solid #000000;
         width: 100%;
         max-width: gs-span(16);
-    }
-    .trail {
-        float: left;
-        padding: 0;
-        border: none;
-        height: 100%;
-    }
-    .trail__image {
-        width: 100%;
-        float: left;
-    }
-    .trail__title {
-        color: #000000;
-    }
-    .trail__standfirst {
-        color: #000000;
-    }
-    .trail__count {
-        top: auto;
-        bottom: 0;
-        right: auto;
-        height: 30px;
-        padding-right: $baseline;
-        background-color: rgba(0, 0, 0, 0.3);
-        a {
-            color: #ffffff;
+        .trail {
+            float: left;
+            padding: 0;
+            border: none;
+            height: 100%;
+        }
+        .trail__image {
+            width: 100%;
+            float: left;
+        }
+        .trail__title {
+            color: #000000;
+        }
+        .trail__standfirst {
+            color: #000000;
+        }
+        .trail__count {
+            top: auto;
+            bottom: 0;
+            right: auto;
+            height: 30px;
+            padding-right: $baseline;
+            background-color: rgba(0, 0, 0, 0.3);
+            a {
+                color: #ffffff;
+            }
+        }
+        .trail:nth-child(1) {
+            background-color: #005688;
+        }
+        @include mq(0, tablet) {
+            @include box-sizing(border-box);
+            border: none;
+            .trail {
+                width: 100%;
+            }
+            .trail__standfirst {
+                display: none;
+            }
+            .trail__count {
+                right: 0;
+            }
+            .trail:nth-child(1) {
+                height: auto;
+
+                .trail__image{
+                    float:none;
+                    margin: 0;
+                }
+                .trail__title {
+                    @include font($serif, 700, 20, 24);
+                    color: #ffffff;
+                    margin: $baseline*2 $baseline $baseline*3;
+                }
+            }
+            .trail:nth-child(n+2) {
+                margin: $baseline*3 0 0;
+                padding: $baseline*3 $baseline 0;
+                border-top: 1px dotted #000000;
+                .trail__image{
+                    display: none;
+                }
+                .trail__title {
+                    @include font($serif, 700, 20, 24);
+                }
+            }
         }
     }
 
-    .trail:nth-child(1) {
-        background-color: #005688;
+    @include mq(tablet, desktop) {
+        .trails {
+            height: 276px;
+        }
+    }
+    @include mq(desktop, wide) {
+        .trails {
+            height: 276px;
+        }
+    }
+    @include mq(wide) {
+        .trails {
+            height: 372px;
+        }
     }
 
     .trails-count-1 {
@@ -87,7 +140,49 @@
         .trail__standfirst {
             color: #ffffff;
             margin: $baseline*6 $baseline*3 0;
+        }
+        @include mq(tablet, desktop) {
+            .trail__image {
+                width: 380px;
+            }
+            .trail__title {
+                @include font($serifheadline, 700, 26, 28);
+            }
+            .trail__standfirst {
+                @include font($serifheadline, normal, 18, 20);
+            }
+            .trail__count {
+                left: 380px;
+            }
+        }
 
+        @include mq(desktop, wide) {
+            .trail__image {
+                width: 540px;
+            }
+            .trail__title {
+                @include font($serifheadline, 700, 34, 36);
+            }
+            .trail__standfirst {
+                @include font($serifheadline, normal, 26, 28);
+            }
+            .trail__count {
+                left: 560px;
+            }
+        }
+        @include mq(wide) {
+            .trail__image {
+                width: 620px;
+            }
+            .trail__title {
+                @include font($serifheadline, 700, 38, 40);
+            }
+            .trail__standfirst {
+                @include font($serifheadline, normal, 30, 32);
+            }
+            .trail__count {
+                left: 640px;
+            }
         }
     }
 
@@ -116,79 +211,13 @@
                 margin: $baseline*6 0 0;
             }
         }
-    }
-
-    @include mq(0, tablet) {
-
-        .trails {
-            @include box-sizing(border-box);
-            border: none;
-        }
-        .trail {
-            width: 100%;
-        }
-        .trail__standfirst {
-            display: none;
-        }
-        .trail__count {
-            right: 0;
-        }
-
-        .trail:nth-child(1) {
-            height: auto;
-
-            .trail__image{
-                float:none;
-                margin: 0;
-            }
-            .trail__title {
-                @include font($serif, 700, 20, 24);
-                color: #ffffff;
-                margin: $baseline*2 $baseline $baseline*3;
-            }
-        }
-        .trail:nth-child(n+2) {
-            margin: $baseline*3 0 0;
-            padding: $baseline*3 $baseline 0;
-            border-top: 1px dotted #000000;
-            .trail__image{
-                display: none;
-            }
-            .trail__title {
-                @include font($serif, 700, 20, 24);
-            }
-        }
-    }
-
-    @include mq(tablet, desktop) {
-
-        .trails {
-            height: 228px;
-        }
-
-        .trails-count-1 {
-            .trail__image {
-                width: 380px;
-            }
+        @include mq(tablet, desktop) {
             .trail__title {
                 @include font($serifheadline, 700, 26, 28);
             }
             .trail__standfirst {
                 @include font($serifheadline, normal, 18, 20);
             }
-            .trail__count {
-                left: 380px;
-            }
-        }
-
-        .trails-count-2 {
-            .trail__title {
-                @include font($serifheadline, 700, 26, 28);
-            }
-            .trail__standfirst {
-                @include font($serifheadline, normal, 18, 20);
-            }
-
             .trail:nth-child(1) {
                 width: 380px;
                 margin-right: 10px;
@@ -199,92 +228,13 @@
                 float: none;
             }
         }
-
-        .trails-count-3 {
-            .trail__title {
-                @include font($serifheadline, 700, 26, 28);
-            }
-            .trail__standfirst {
-                display: none;
-            }
-
-            .trail:nth-child(1) {
-                width: 380px;
-                margin-right: 10px;
-                @include overlay;
-            }
-            .trail:nth-child(n+2) {
-                @include small-card;
-                .trial__title {
-                    margin: $baseline*3 0 0;
-                }
-            }
-            .trail:nth-child(2) {
-                padding-bottom: 10px;
-            }
-            .trail:nth-child(3) {
-                border-top: 1px solid #000000;
-                padding-top: 9px;
-            }
-        }
-
-        .trails-count-4 {
-            .trail__title {
-                @include font($serifheadline, 700, 26, 28);
-            }
-            .trail__standfirst {
-                display: none;
-            }
-
-            .trail:nth-child(1) {
-                width: 350px;
-                @include overlay;
-            }
-            .trail:nth-child(n+2) {
-                @include small-card;
-                height: 33%;
-            }
-            .trail:nth-child(2) {
-                height: 34%;
-                padding-bottom: 10px;
-            }
-            .trail:nth-child(n+3) {
-                border-top: 1px solid #000000;
-                padding-top: 9px;
-            }
-        }
-
-    }
-
-    @include mq(desktop, wide) {
-
-        .trails {
-            height: 324px;
-        }
-
-        .trails-count-1 {
-            .trail__image {
-                width: 540px;
-            }
-            .trail__title {
-                @include font($serifheadline, 700, 34, 36);
-            }
-            .trail__standfirst {
-                @include font($serifheadline, normal, 26, 28);
-            }
-            .trail__count {
-                left: 560px;
-            }
-        }
-
-        .trails-count-2 {
+        @include mq(desktop, wide) {
             .trail__title {
                 @include font($serifheadline, 700, 30, 32);
             }
             .trail__standfirst {
                 @include font($serifheadline, normal, 26, 28);
             }
-
             .trail:nth-child(1) {
                 width: 540px;
                 margin-right: 10px;
@@ -295,95 +245,13 @@
                 float: none;
             }
         }
-
-        .trails-count-3 {
-            .trail__title {
-                @include font($serifheadline, 700, 30, 32);
-            }
-            .trail__standfirst {
-                display: none;
-            }
-
-            .trail:nth-child(1) {
-                width: 540px;
-                margin-right: 10px;
-                @include overlay;
-            }
-            .trail:nth-child(n+2) {
-                @include small-card;
-                .trial__title {
-                    margin: $baseline*3 0 0;
-                }
-            }
-            .trail:nth-child(2) {
-                padding-bottom: 10px;
-            }
-            .trail:nth-child(3) {
-                border-top: 1px solid #000000;
-                padding-top: 9px;
-            }
-        }
-
-        .trails-count-4 {
-            .trail__title {
-                @include font($serifheadline, 700, 30, 32);
-            }
-            .trail__standfirst {
-                display: none;
-            }
-
-            .trail:nth-child(1) {
-                width: 540px;
-                @include overlay;
-            }
-            .trail:nth-child(2) {
-                width: 300px;
-                margin: 0 10px 0 20px;
-            }
-            .trail:nth-child(n+3) {
-                @include small-card;
-            }
-            .trail:nth-child(3) {
-                padding-bottom: 10px;
-            }
-            .trail:nth-child(4) {
-                border-top: 1px solid #000000;
-                padding-top: 9px;
-            }
-        }
-
-    }
-
-
-    @include mq(wide) {
-
-        .trails {
-            height: 372px;
-        }
-
-        .trails-count-1 {
-            .trail__image {
-                width: 620px;
-            }
-            .trail__title {
-                @include font($serifheadline, 700, 38, 40);
-            }
-            .trail__standfirst {
-                @include font($serifheadline, normal, 30, 32);
-            }
-            .trail__count {
-                left: 640px;
-            }
-        }
-
-        .trails-count-2 {
+        @include mq(wide) {
             .trail__title {
                 @include font($serifheadline, 700, 30, 32);
             }
             .trail__standfirst {
                 @include font($serifheadline, normal, 26, 28);
             }
-
             .trail:nth-child(1) {
                 width: 940px;
                 .trail__image {
@@ -395,8 +263,64 @@
                 @include bordered;
             }
         }
+    }
 
-        .trails-count-3 {
+    .trails-count-3 {
+        @include mq(tablet, desktop) {
+            .trail__title {
+                @include font($serifheadline, 700, 26, 28);
+            }
+            .trail__standfirst {
+                display: none;
+            }
+
+            .trail:nth-child(1) {
+                width: 460px;
+                margin-right: 10px;
+                @include overlay;
+            }
+            .trail:nth-child(n+2) {
+                @include small-card;
+                .trial__title {
+                    margin: $baseline*3 0 0;
+                }
+            }
+            .trail:nth-child(2) {
+                padding-bottom: 10px;
+            }
+            .trail:nth-child(3) {
+                border-top: 1px solid #000000;
+                padding-top: 9px;
+            }
+        }
+        @include mq(desktop, wide) {
+            .trail__title {
+                @include font($serifheadline, 700, 30, 32);
+            }
+            .trail__standfirst {
+                display: none;
+            }
+
+            .trail:nth-child(1) {
+                width: 460px;
+                margin-right: 10px;
+                @include overlay;
+            }
+            .trail:nth-child(n+2) {
+                @include small-card;
+                .trial__title {
+                    margin: $baseline*3 0 0;
+                }
+            }
+            .trail:nth-child(2) {
+                padding-bottom: 10px;
+            }
+            .trail:nth-child(3) {
+                border-top: 1px solid #000000;
+                padding-top: 9px;
+            }
+        }
+        @include mq(wide) {
             .trail__title {
                 @include font($serifheadline, 700, 30, 32);
             }
@@ -420,22 +344,52 @@
                 padding-left: 10px;
             }
         }
+    }
 
-        .trails-count-4 {
-            .trail__title {
-                @include font($serifheadline, 700, 30, 32);
-            }
-            .trail__standfirst {
-                display: none;
-            }
+    .trails-count-4 {
+        .trail__standfirst {
+            display: none;
+        }
 
+        @include mq(tablet, desktop) {
             .trail:nth-child(1) {
-                width: 620px;
+                width: 460px;
+                margin-right: 10px;
+                @include overlay;
+                .trail__title {
+                    @include font($serifheadline, 700, 24, 26);
+                }
+            }
+            .trail:nth-child(n+2) {
+                @include small-card;
+                height: 33%;
+                .trail__title {
+                    @include font($serifheadline, 700, 20, 22);
+                }
+            }
+            .trail:nth-child(2) {
+                height: 34%;
+                padding-bottom: 10px;
+            }
+            .trail:nth-child(n+3) {
+                border-top: 1px dotted #000000;
+                padding-top: 9px;
+            }
+        }
+        @include mq(desktop, wide) {
+            .trail__title {
+                @include font($serifheadline, 700, 26, 28);
+            }
+            .trail:nth-child(1) {
+                width: 460px;
                 @include overlay;
             }
             .trail:nth-child(2) {
+                width: 230px;
                 margin: 0 10px 0 20px;
-                width: 300px;
+                .trail__image {
+                    margin-bottom: $baseline*5;
+                }
             }
             .trail:nth-child(n+3) {
                 @include small-card;
@@ -448,6 +402,36 @@
                 padding-top: 9px;
             }
         }
-
+        @include mq(wide) {
+            .trail:nth-child(1) {
+                width: 620px;
+                @include overlay;
+                .trail__title {
+                    @include font($serifheadline, 700, 30, 32);
+                }
+            }
+            .trail:nth-child(n+2) {
+                .trail__title {
+                    @include font($serifheadline, 700, 26, 28);
+                }
+            }
+            .trail:nth-child(2) {
+                margin: 0 10px 0 20px;
+                width: 300px;
+                .trail__image {
+                    margin-bottom: $baseline*5;
+                }
+            }
+            .trail:nth-child(n+3) {
+                @include small-card;
+            }
+            .trail:nth-child(3) {
+                padding-bottom: 10px;
+            }
+            .trail:nth-child(4) {
+                border-top: 1px dotted #000000;
+                padding-top: 9px;
+            }
+        }
     }
 }
