@@ -24,7 +24,8 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="HandheldFriendly" content="True" />
 
-    @fragments.opengraphMetaData(item)
+    @item.openGraph.map{ case (key, value) =>
+    <meta property="@key" content="@value"/> }
 
 @*
     this script allows you to hook up an external debugger for mobile devices
