@@ -108,7 +108,7 @@ define([
 
             // Is cached ?
             if (frag && frag.html) {
-                populate(el, frag.html);
+                populate(el, frag.html, url);
                 common.mediator.emit('module:swipenav:pane:loaded', el);
                 callback();
             }
@@ -128,8 +128,7 @@ define([
                     sequenceCache[url].config = frag.config || {};
 
                     if (el.pendingUrl === url) {
-                        el.url = url;
-                        populate(el, html);
+                        populate(el, html, url);
                         delete el.pendingUrl;
                     }
                 }).fail(function () {
@@ -141,8 +140,9 @@ define([
         }
     }
 
-    function populate(el, html) {
+    function populate(el, html, url) {
         el.bodyPart.innerHTML = html;
+        el.url = url;
     }
 
     // Make the swipeContainer height equal to the visiblePane height. (We view the latter through the former.)
