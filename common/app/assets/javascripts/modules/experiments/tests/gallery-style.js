@@ -23,7 +23,7 @@ define(['common', 'modules/lightbox-gallery'], function (common, LightboxGallery
                 id: 'new-style',
                 test: function (context) {
                     context.querySelector('.ab-gallerytest--control').style.display = 'none';
-                    context.querySelector('.ab-gallerytest--var-a').style.display = 'block';
+                    context.querySelector('.ab-gallerytest--newstyle').style.display = 'block';
 
                     var galleries = new LightboxGallery(_config, context);
                     galleries.init({
