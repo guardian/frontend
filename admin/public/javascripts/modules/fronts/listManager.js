@@ -13,8 +13,9 @@ define([
     Article,
     LatestArticles
 ) {
-    var maxDisplayableLists = 3,
-        dragging = false,
+    var dragging = false,
+        clipboard = document.querySelector('#clipboard'),
+        listLoadsPending = 0,
         loc = window.location;
 
     return function(selector) {
@@ -27,13 +28,16 @@ define([
         }
 
         function addList(id) {
-            if(chosenLists().indexOf(id) === -1) {
-                setDisplayedLists(chosenLists().slice(1 - maxDisplayableLists).concat(id));
-            }
+            var lists = chosenLists();
+            lists = _.without(lists, id);
+            lists.unshift(id);
+            lists = _.first(lists, common.config.maxDisplayableLists || 3);
+            setDisplayedLists(lists);
         }
 
         function dropList(list) {
             setDisplayedLists(_.reject(chosenLists(), function(id){ return id === list.id; }));
+            common.util.pageReflow();
         }
 
         function setDisplayedLists(listIDs) {
@@ -56,6 +60,7 @@ define([
 
         function renderLists() {
             var chosen = chosenLists();
+            //viewModel.listsDisplayed.removeAll();
             viewModel.listsDisplayed.remove(function(list){
                 if (chosen.indexOf(list.id) === -1) {
                     return true;
@@ -64,8 +69,9 @@ define([
                     return false;
                 }    
             });
-            chosen.forEach(function(id){
-                viewModel.listsDisplayed.push(new List(id));
+
+            chosen.reverse().forEach(function(id){
+                viewModel.listsDisplayed.unshift(new List(id));
             });
             connectSortableLists();
         }
@@ -199,6 +205,10 @@ define([
             viewModel.dropList           = dropList;
             viewModel.displayAllEditions = displayAllEditions;
 
+            viewModel.flushClipboard = function() {
+                clipboard.innerHTML = '';
+            };
+
             viewModel.selectedEdition.subscribe(function(edition) {
                 viewModel.selectedSection(undefined);
                 viewModel.selectedBlock(undefined);
@@ -237,7 +247,7 @@ define([
             knockout.bindingHandlers.sparkline = {
                 update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
                     var value = knockout.utils.unwrapObservable(valueAccessor()),
-                        height = Math.max(15, Math.min(35, _.max(value))),
+                        height = Math.max(15, Math.min(30, _.max(value))),
                         options = allBindingsAccessor().sparklineOptions || {
                             lineColor: '#d61d00',
                             fillColor: '#ffbaaf',
@@ -250,7 +260,18 @@ define([
                 }
             };
 
-            
+            common.util.mediator.on('list:load:start', function() {
+                listLoadsPending += 1;
+            });
+
+            common.util.mediator.on('list:load:end', function() {
+                listLoadsPending -= 1;
+                if (listLoadsPending < 1) {
+                    listLoadsPending = 0;
+                    common.util.pageReflow();
+                }
+            });
+
         };
 
     };

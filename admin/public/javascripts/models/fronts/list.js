@@ -1,5 +1,6 @@
 define([
     'Reqwest',
+    'EventEmitter',
     'knockout',
     'models/fronts/common',
     'models/fronts/article',
@@ -7,6 +8,7 @@ define([
     'models/fronts/ophanApi'
 ], function(
     reqwest,
+    eventEmitter,
     ko,
     common,
     Article,
@@ -139,6 +141,8 @@ define([
         var self = this;
         opts = opts || {};
 
+        common.util.mediator.emit('list:load:start');
+
         reqwest({
             url: common.config.apiBase + '/' + this.id,
             type: 'json'
@@ -161,6 +165,8 @@ define([
                 }
 
                 if (_.isFunction(opts.callback)) { opts.callback(); } 
+
+                common.util.mediator.emit('list:load:end');
             }
         );
     };

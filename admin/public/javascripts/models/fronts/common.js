@@ -1,27 +1,45 @@
 define([
+    'EventEmitter',
     'knockout'
 ], function(
+    EventEmitter,
     ko
 ) {
-    return {
+    var _listsContainerID = '#trailblocks',
+        _masonryEl;
 
+    return {
         config: {
-            apiBase: '/fronts/api',
-            apiSearchBase: '/api/proxy/search',
+            maxDisplayableLists:   6,
             maxOphanCallsPerBlock: 10,
-            cacheExpiryMs: 300000, // 300000 = five mins 
-            defaultToLiveMode: true
+            cacheExpiryMs:         300000, // 300000 = five mins 
+            defaultToLiveMode:     true,
+
+            apiBase:               '/fronts/api',
+            apiSearchBase:         '/api/proxy/search'
         },
 
         state: {},
 
         util: {
+            mediator: new EventEmitter(),
+
             queryParams: function() {
                 return _.object(window.location.search.substring(1).split('&').map(function(keyVal){
                     return keyVal.split('=').map(function(s){
                         return decodeURIComponent(s);
                     });
                 }));
+            },
+
+            urlAbsPath: function(url) {
+                if(typeof url !== 'string') { return; }
+
+                var a = document.createElement('a');
+                a.href = url;
+                a = a.pathname + a.search + a.hash;
+                a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
+                return a;
             },
 
             fullTrim: function(str){
@@ -50,6 +68,15 @@ define([
                 _.keys(target).forEach(function(key){
                     target[key](opts[key]);
                 });
+            },
+
+            pageReflow: function() {
+                if(_masonryEl) {
+                    _masonryEl.masonry('destroy');
+                } else {
+                    _masonryEl = $(_listsContainerID);
+                }
+                _masonryEl.masonry();
             }
         }
 
