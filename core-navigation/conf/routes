@@ -28,4 +28,3 @@ GET    /front-trails/*path                                  controllers.MoreStor
 # Experimental
 GET    /cards/opengraph/*path                               controllers.CardController.opengraph(path)
 GET    /cards/wikipedia/*path                               controllers.CardController.wikipedia(path)
-
