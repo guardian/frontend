@@ -3,7 +3,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
     /*
         expects the following HTML structure
 
-        <div class="tabs-container {tabs-fixable}">
+        <div class="tabs-container">
             <ol class="tabs js-tabs">
                 <li class="tabs-selected"><a href="#foo">Foo</a></li>
                 <li><a href="#bar">Bar</a></li>
@@ -48,8 +48,7 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                     tabSetHeight = 0,
                     vPos = 0,
                     vHeight = 0,
-                    vScroll = 0,
-                    vFixed = false;
+                    vScroll = 0;
 
                 if(tabSet) {
 
@@ -72,23 +71,6 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                         }
                     });
 
-                    if (bonzo(container).hasClass('tabs-fixable')) {
-
-                        vHeight = bonzo(container).offset().height - tabSetHeight;
-
-                        bean.add(window, 'scroll', function (e) {
-                            vScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-                            if( !vFixed && vScroll >= vPos && vScroll <= vPos + vHeight ) {
-                                bonzo(tabSet).addClass('tabs-fixed');
-                                vFixed = true;
-                            } else if( vFixed && (vScroll < vPos || vScroll > vPos + vHeight)) {
-                                bonzo(tabSet).removeClass('tabs-fixed');
-                                vFixed = false;
-                            }
-                        });
-                    }
-        
                     tabSet.setAttribute('data-is-bound', true);
                 }
             });

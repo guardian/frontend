@@ -188,6 +188,33 @@ object DaysSeenPerUserGraph extends Chart with implicits.Tuples with implicits.D
   }
 }
 
+object ActiveUsersFourDaysFromSevenOrMoreGraph extends Chart with implicits.Tuples with implicits.Dates {
+  val name = "Users active 4 or more days (weekly/4 weekly)"
+  lazy val labels = Seq("Date", "week", "4 week")
+
+  def dataset = {
+    val week = {
+      val users = Analytics.getWeeklyDaysSeenByDay()
+      val counts = (users filterKeys { _ >= 4 }).values flatMap { _.toList }
+      val grouped = counts groupBy { _.first } mapValues { _ map { _.second }}
+      val summed = grouped mapValues { _.sum }
+      summed withDefaultValue 0L
+    }
+    val month = {
+      val users = Analytics.getFourWeeklyDaysSeenByDay()
+      val counts = (users filterKeys { _ >= 4 }).values flatMap { _.toList }
+      val grouped = counts groupBy { _.first } mapValues { _ map { _.second }}
+      val summed = grouped mapValues { _.sum }
+      summed withDefaultValue 0L
+    }
+
+    val range = (week.keySet ++ month.keySet - today()).toList.sorted
+    range map { date =>
+      DataPoint(date.toString("dd/MM"), Seq(week(date), month(date)))
+    }
+  }
+}
+
 object ActiveUserProportionGraph extends Chart with implicits.Tuples with implicits.Dates {
   val name = "Active users as a percentage of monthly active users (daily/weekly)"
   lazy val labels = Seq("Date", "day", "week")
@@ -200,7 +227,6 @@ object ActiveUserProportionGraph extends Chart with implicits.Tuples with implic
     val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
     range map { date =>
       val monthlyUsers = month(date) / 100.0
-      println(date.toString("dd/MM") + " -> " + day(date) + " " + month(date))
       DataPoint(date.toString("dd/MM"), Seq(day(date)/monthlyUsers, week(date)/monthlyUsers))
     }
   }

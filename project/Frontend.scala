@@ -33,9 +33,6 @@ object Frontend extends Build with Prototypes {
   val article = application("article").dependsOn(commonWithTests)
   val interactive = application("interactive").dependsOn(commonWithTests)
   val applications = application("applications").dependsOn(commonWithTests)
-  val event = application("event").dependsOn(commonWithTests).settings(
-    libraryDependencies += "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
-  )
   val football = application("football").dependsOn(commonWithTests).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
     templatesImport ++= Seq(
@@ -82,15 +79,27 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val frontsApi = application("fronts-api").dependsOn(commonWithTests)
-
-  val identity = application("identity").dependsOn(commonWithTests)
+  val identityLibVersion = "3.21"
+  val identity = application("identity").dependsOn(commonWithTests).settings(
+    libraryDependencies ++= Seq(
+      "com.gu.identity" %% "identity-model" % identityLibVersion,
+      "com.gu.identity" %% "identity-request" % identityLibVersion,
+      "com.gu.identity" %% "identity-cookie" % identityLibVersion,
+      "com.tzavellas" % "sse-guice" % "0.7.1",
+      "com.google.inject" % "guice" % "3.0",
+      "joda-time" % "joda-time" % "1.6",
+      "net.liftweb" %% "lift-json" % "2.5",
+      "commons-httpclient" % "commons-httpclient" % "3.1",
+      "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
+      "org.mockito" % "mockito-all" % "1.9.5" % "test"
+    )
+  )
 
   val dev = base("dev-build")
     .dependsOn(front)
+    .dependsOn(facia)
     .dependsOn(article)
     .dependsOn(applications)
-    .dependsOn(event)
     .dependsOn(interactive)
     .dependsOn(football)
     .dependsOn(sport)
@@ -103,9 +112,7 @@ object Frontend extends Build with Prototypes {
     .dependsOn(identity)
 
   val faciaDev = application("facia-dev-build")
-    .dependsOn(admin)
     .dependsOn(facia)
-    .dependsOn(frontsApi)
     .dependsOn(article)
     .dependsOn(applications)
     .dependsOn(football)
@@ -119,7 +126,6 @@ object Frontend extends Build with Prototypes {
     facia,
     article,
     applications,
-    event,
     interactive,
     football,
     sport,
@@ -131,7 +137,6 @@ object Frontend extends Build with Prototypes {
     styleGuide,
     admin,
     porter,
-    frontsApi,
     identity
   )
 }

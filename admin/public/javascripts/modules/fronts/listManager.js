@@ -1,70 +1,79 @@
 define([
     'Reqwest',
     'knockout',
-    'models/fronts/globals',
+    'models/fronts/common',
     'models/fronts/list',
     'models/fronts/article',
     'models/fronts/latestArticles'
 ], function(
     reqwest,
     knockout,
-    globals,
+    common,
     List,
     Article,
     LatestArticles
 ) {
-    var apiBase = '/fronts/api',
-        maxDisplayedLists = 3,
-        dragging = false;
+    var dragging = false,
+        clipboard = document.querySelector('#clipboard'),
+        listLoadsPending = 0,
+        loc = window.location;
 
     return function(selector) {
 
         var viewModel = {},
-            schemaLookUp = {},
             self = this;
 
-        function getHashLists() {
-            return window.location.hash ? window.location.hash.slice(1).split(",") : [];
-        }
-
-        function renderLists() {
-            viewModel.listsDisplayed.removeAll();
-            getHashLists().forEach(function(id){
-                viewModel.listsDisplayed.push(new List(id, schemaLookUp[id]));
-            });
-            connectSortableLists();
+        function chosenLists() {
+            return [].concat(_.filter((common.util.queryParams().blocks || "").split(","), function(str){ return !!str; }));
         }
 
         function addList(id) {
-            var ids = getHashLists().slice(1 - maxDisplayedLists);
-            if(ids.indexOf(id) === -1) {
-                ids.push(id);
-                window.location.hash = ids.join(',');
-            }
-        }
-
-        function displayAllEditions() {
-            window.location.hash = viewModel.editions.map(function(edition){
-                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
-            }).join(',');
+            var lists = chosenLists();
+            lists = _.without(lists, id);
+            lists.unshift(id);
+            lists = _.first(lists, common.config.maxDisplayableLists || 3);
+            setDisplayedLists(lists);
         }
 
         function dropList(list) {
-            var ids = getHashLists(),
-                id = list.id || list,
-                pos = ids.indexOf(id);
-
-            if (pos > -1) {
-                ids.splice(pos, 1);
-                window.location.hash = ids.join(',');
-            }
+            setDisplayedLists(_.reject(chosenLists(), function(id){ return id === list.id; }));
+            common.util.pageReflow();
         }
 
-        function limitListsDisplayed(max) {
-            if(viewModel.listsDisplayed().length > max) {
-                viewModel.listsDisplayed.shift();
-                limitListsDisplayed(max);
-            }
+        function setDisplayedLists(listIDs) {
+            var qp = common.util.queryParams();
+            qp.blocks = listIDs.join(',');
+            qp = _.pairs(qp)
+                .filter(function(p){ return !!p[0]; })
+                .map(function(p){ return p[0] + (p[1] ? '=' + p[1] : ''); })
+                .join('&');
+
+            history.pushState({}, "", loc.pathname + '?' + qp);
+            renderLists();
+        }
+
+        function displayAllEditions() {
+            setDisplayedLists(viewModel.editions.map(function(edition){
+                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
+            }));
+        }
+
+        function renderLists() {
+            var chosen = chosenLists();
+            //viewModel.listsDisplayed.removeAll();
+            viewModel.listsDisplayed.remove(function(list){
+                if (chosen.indexOf(list.id) === -1) {
+                    return true;
+                } else {
+                    chosen = _.without(chosen, list.id);
+                    return false;
+                }    
+            });
+
+            chosen.reverse().forEach(function(id){
+                viewModel.listsDisplayed.unshift(new List(id));
+            });
+            connectSortableLists();
         }
 
         function connectSortableLists() {
@@ -77,24 +86,24 @@ define([
 
             sortables.sortable({
                 helper: 'clone',
+                opacity: 0.9,
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
-                    globals.uiBusy = true;
+                    common.state.uiBusy = true;
 
                     // Display the source item. (The clone gets dragged.) 
                     sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    fromListObj = knockout.dataFor(fromList[0]);
-                    
+                    fromListObj = knockout.dataFor(fromList[0]);                    
                 },
                 stop: function(event, ui) {
                     var index,
                         clone;
 
-                    globals.uiBusy = false;
+                    common.state.uiBusy = false;
 
                     // If we move between lists, effect a copy by cloning
                     if(toList !== fromList) {
@@ -120,8 +129,8 @@ define([
                 listObj,
                 position,
                 delta;
-                
-            if (list.hasClass('throwAway')) { return; }
+
+            if (!list.hasClass('persisted')) { return; }
 
             listObj = knockout.dataFor(list[0]);
 
@@ -148,11 +157,11 @@ define([
                     } 
                 }
 
-                listObj.loadIsPending(true);
+                listObj.state.loadIsPending(true);
 
                 reqwest({
                     method: 'post',
-                    url: apiBase + '/' + listId,
+                    url: common.config.apiBase + '/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
@@ -162,7 +171,7 @@ define([
             }
         };
 
-        function startPoller() {
+        function _startPoller() {
             setInterval(function(){
                 viewModel.listsDisplayed().forEach(function(list){
                     if (!dragging) {
@@ -171,22 +180,14 @@ define([
                 });
             }, 5000);
         }
+        var startPoller = _.once(_startPoller);
 
         function fetchSchema(callback) {
             reqwest({
-                url: apiBase,
+                url: common.config.apiBase,
                 type: 'json'
             }).then(
                 function(resp) {
-                    // Make a flat version of schema for lookup by id path, e.g. "uk/news/top-stories" 
-                    [].concat(resp.editions).forEach(function(edition){
-                        [].concat(edition.sections).forEach(function(section){
-                            [].concat(section.blocks).forEach(function(block){
-                                schemaLookUp[edition.id + '/' + section.id + '/' + block.id] = block;
-                            });
-                        });
-                    });
-
                     viewModel.editions = resp.editions;
                     if (typeof callback === 'function') { callback(); }
                 },
@@ -203,6 +204,10 @@ define([
 
             viewModel.dropList           = dropList;
             viewModel.displayAllEditions = displayAllEditions;
+
+            viewModel.flushClipboard = function() {
+                clipboard.innerHTML = '';
+            };
 
             viewModel.selectedEdition.subscribe(function(edition) {
                 viewModel.selectedSection(undefined);
@@ -231,12 +236,42 @@ define([
                 knockout.applyBindings(viewModel);
 
                 renderLists();
-                window.onhashchange = renderLists;
+                window.onpopstate = renderLists;
 
                 startPoller();
                 viewModel.latestArticles.search();
                 viewModel.latestArticles.startPoller();
             });
+
+
+            knockout.bindingHandlers.sparkline = {
+                update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                    var value = knockout.utils.unwrapObservable(valueAccessor()),
+                        height = Math.max(15, Math.min(30, _.max(value))),
+                        options = allBindingsAccessor().sparklineOptions || {
+                            lineColor: '#d61d00',
+                            fillColor: '#ffbaaf',
+                            height: height
+                        };
+
+                    if( value && _.max(value)) {
+                        $(element).sparkline(value, options);                        
+                    }
+                }
+            };
+
+            common.util.mediator.on('list:load:start', function() {
+                listLoadsPending += 1;
+            });
+
+            common.util.mediator.on('list:load:end', function() {
+                listLoadsPending -= 1;
+                if (listLoadsPending < 1) {
+                    listLoadsPending = 0;
+                    common.util.pageReflow();
+                }
+            });
+
         };
 
     };

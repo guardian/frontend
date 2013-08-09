@@ -87,25 +87,23 @@ define([
             s.tl(true, 'o', tagStr);
         };
 
+        this.trackAdImpression = function(tagStr) {
+            s.linkTrackVars = 'eVar73,events';
+            s.linkTrackEvents = 'event29';
+            s.events = 'event29';
+            s.eVar73 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
+            s.tl(true, 'o', tagStr);
+        };
+
         this.populatePageProperties = function() {
 
             // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
-
-            //TODO temporary till after theguardian.com
-            if(config.page.isDotcom){
-                s.cookieDomainPeriods = "2";
-            } else {
-                s.cookieDomainPeriods = config.page.edition === "US" ? "2" : "3";
-            }
+            s.cookieDomainPeriods = "2";
 
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com';
 
-            //TODO temporary till after dotcom switch
-            // then make this permanent in the omniture vendor file
-            if (config.page.isDotcom) {
-                s.trackingServer="hits.theguardian.com";
-                s.trackingServerSecure="hits-secure.theguardian.com";
-            }
+            s.trackingServer="hits.theguardian.com";
+            s.trackingServerSecure="hits-secure.theguardian.com";
 
             s.ce= "UTF-8";
             s.pageName  = config.page.analyticsName;
@@ -202,6 +200,8 @@ define([
                 });
             }
         };
+
+        common.mediator.on('module:analytics:adimpression', that.trackAdImpression );
 
         common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
 

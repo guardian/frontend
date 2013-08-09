@@ -14,6 +14,7 @@ define([
     'modules/router',
     'modules/images',
     'modules/navigation/top-stories',
+    'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/control',
@@ -27,6 +28,7 @@ define([
     'modules/adverts/adverts',
     'modules/cookies',
     'modules/analytics/omnitureMedia',
+    'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
     'modules/swipe/swipenav',
@@ -49,6 +51,7 @@ define([
     Router,
     Images,
     TopStories,
+    Profile,
     Sections,
     Search,
     NavControl,
@@ -62,6 +65,7 @@ define([
     Adverts,
     Cookies,
     OmnitureMedia,
+    AdvertsAnalytics,
     Debug,
     ab,
     swipeNav,
@@ -97,8 +101,15 @@ define([
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
-                header = document.querySelector('body');
+                header = document.querySelector('body'),
+                profile;
 
+            if (config.switches.idProfileNavigation) {
+                profile = new Profile(header, {
+                    url: config.idUrl
+                });
+                profile.init();
+            }
 
             sections.init(header);
             navControl.init(header);
@@ -151,14 +162,18 @@ define([
         },
 
         initLightboxGalleries: function () {
+            var thisPageId;
             common.mediator.on('page:common:ready', function(config, context) {
                 var galleries = new LightboxGallery(config, context);
+                thisPageId = config.page.pageId;
                 galleries.init();
             });
 
-            // Register as a page view
+            // Register as a page view if invoked from elsewhere than its gallery page (like a trailblock)
             common.mediator.on('module:lightbox-gallery:loaded', function(config, context) {
-                common.mediator.emit('page:common:deferred:loaded', config, context);
+                if (thisPageId !== config.page.pageId) {
+                    common.mediator.emit('page:common:deferred:loaded', config, context);
+                }
             });
         },
         
@@ -184,6 +199,10 @@ define([
                             }).init();
                         }
                     });
+
+                    if (config.switches.adslotImpressionStats) {
+                        var advertsAnalytics = new AdvertsAnalytics(config, context);
+                    }
                 });
             });
 

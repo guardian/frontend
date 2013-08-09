@@ -21,8 +21,10 @@ define(['common',
                 id: 'lightbox-gallery',
                 fixtures: [
                     '<li class="trail trail--gallery">' +
-                    '  <a href="/link/to/gallery" class="">Trail to gallery</a>' +
-                    '  <a href="/link/to/gallery?index=4" class="link-to-image">Trail to specific gallery image</a>' +
+                    '  <div class="gallerythumbs">' +
+                    '    <a href="/link/to/gallery" class="">Trail to gallery</a>' +
+                    '    <a href="/link/to/gallery?index=4" class="link-to-image">Trail to specific gallery image</a>' +
+                    '  </div>' +
                     '</li>'
                 ]
         };

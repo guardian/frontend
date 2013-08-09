@@ -39,7 +39,7 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
   it should "redirect to desktop when content type is not supported in app" in Fake {
     val result = controllers.ArticleController.render("/world/interactive/2013/mar/04/choose-a-pope-interactive-guide")(TestRequest())
     status(result) should be(303)
-    header("Location", result).get should be("http://www.guardian.co.uk/world/interactive/2013/mar/04/choose-a-pope-interactive-guide?mobile-redirect=false")
+    header("Location", result).get should be("http://www.theguardian.com/world/interactive/2013/mar/04/choose-a-pope-interactive-guide?view=desktop")
   }
 
   it should "internal redirect unsupported content to desktop" in Fake {

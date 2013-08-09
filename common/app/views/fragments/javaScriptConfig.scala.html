@@ -3,8 +3,6 @@
 @import views.support.MetadataJson
 @import views.support.JavaScriptVariableName
 @import common.Edition
-@import common.Site
-@import common.SiteOr
 
 {
     "page": {
@@ -15,10 +13,10 @@
         "edition": "@Edition(request).id",
         "ajaxUrl": "@Configuration.ajax.url",
         "isDev": @play.Play.isDev(),
-        "isDotcom": @{!Site(request).isDefined}, @* TODO temporary till after dotcom switch *@
-        "oasHost": @SiteOr{site=>"oas.guardian.co.uk"}{"oas.theguardian.com"},
-        "oasUrl": @SiteOr{site=>"http://oas.guardian.co.uk/RealMedia/ads/"}{"http://oas.theguardian.com/RealMedia/ads/"},
-        "oasSiteIdHost": @SiteOr{site=>"@Configuration.oas.siteIdHost"}{"www.theguardian.com"}
+        "oasHost": "oas.theguardian.com",
+        "oasUrl": "http://oas.theguardian.com/RealMedia/ads/",
+        "oasSiteIdHost": "www.theguardian.com",
+        "idUrl": "@Configuration.id.url"
     },
     "switches" : { @{Html(switches.map{ switch =>
             s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""

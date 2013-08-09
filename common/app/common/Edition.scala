@@ -8,8 +8,7 @@ import model.{MetaData, TrailblockDescription}
 abstract class Edition(
     val id: String,
     val displayName: String,
-    val timezone: DateTimeZone,
-    val hreflang: String // see http://support.google.com/webmasters/bin/answer.py?hl=en&answer=189077
+    val timezone: DateTimeZone
   ) {
   def configuredFronts: Map[String, Seq[TrailblockDescription]]
   def configuredFrontsFacia: Map[String, Seq[TrailblockDescription]]
@@ -38,9 +37,6 @@ object Edition {
     // set upstream from geo location/ user preference
     val editionFromHeader = request.headers.get("X-Gu-Edition").map(_.toUpperCase)
 
-    // TODO legacy fallback - delete after single site
-    val editionFromSite = Site(request).map(_.edition)
-
     // NOTE: this only works on dev machines for local testing
     // in production no cookies make it this far
     val editionFromCookie = request.cookies.get("GU_EDITION").map(_.value.toUpperCase)
@@ -48,7 +44,6 @@ object Edition {
     val editionId = editionFromParameter
       .orElse(editionFromHeader)
       .orElse(editionFromCookie)
-      .orElse(editionFromSite)
       .getOrElse(Edition.defaultEdition.id)
 
     all.find(_.id == editionId).getOrElse(defaultEdition)
@@ -63,14 +58,9 @@ object Edition {
 object Editionalise {
   import common.editions.EditionalisedSections._
 
-  //TODO this scheme changes at some point (awaiting content api work)
   def apply(id: String, edition: Edition, request: Option[RequestHeader] = None): String = {
-
-    // TODO temporarily support old style (non-editionalised) ids
-    val isLegacy = request.flatMap(Site(_)).isDefined
-
-    if (isLegacy || !isEditionalised(id)) {
-      id
+    if (!isEditionalised(id)) {
+     id
     } else {
       id match {
         case "" => s"${edition.id.toLowerCase}"

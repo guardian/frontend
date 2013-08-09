@@ -10,7 +10,7 @@ define(['modules/userPrefs'], function (userPrefs) {
 
     var BASE_WIDTH     = 600,
         MEDIAN_WIDTH   = 900,
-        EXTENDED_WIDTH = 1280,
+        EXTENDED_WIDTH = 1052,  // Breakpoint where we see the left column in article pages
         mobileOS,
         supportsPushState;
     
@@ -20,19 +20,30 @@ define(['modules/userPrefs'], function (userPrefs) {
      */
     function getLayoutMode(width) {
         var mode = "mobile";
+        if ("matchMedia" in window && width === undefined) {
+            if (window.matchMedia('(min-width: '+ BASE_WIDTH + 'px)').matches) {
+                mode = "tablet";
+            }
+        if (window.matchMedia('(min-width: '+ MEDIAN_WIDTH + 'px)').matches) {
+                mode = "desktop";
+            }
+            if (window.matchMedia('(min-width: '+ EXTENDED_WIDTH + 'px)').matches) {
+                mode = "extended";
+            }
+        } else {
+            width = (width !== undefined) ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
 
-        width = (width !== undefined) ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
+            if (width >= BASE_WIDTH) {
+                mode = "tablet";
+            }
 
-        if (width >= BASE_WIDTH) {
-            mode = "tablet";
-        }
+            if (width >= MEDIAN_WIDTH) {
+                mode = "desktop";
+            }
 
-        if (width >= MEDIAN_WIDTH) {
-            mode = "desktop";
-        }
-
-        if (width >= EXTENDED_WIDTH) {
-            mode = "extended";
+            if (width >= EXTENDED_WIDTH) {
+                mode = "extended";
+            }
         }
 
         return mode;

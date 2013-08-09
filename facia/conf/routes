@@ -4,7 +4,9 @@
 
 
 # For dev machines
-GET     /assets/*file                                controllers.Assets.at(path="/public", file)
+GET     /assets/*file                             controllers.Assets.at(path="/public", file)
+
+GET     /film                                     controllers.FaciaController.renderFilm
 
 GET     /$path<(\w\w-edition)?>                      controllers.FaciaController.render(path)
 GET     /$path<(\w\w-edition)?>.json                 controllers.FaciaController.render(path)

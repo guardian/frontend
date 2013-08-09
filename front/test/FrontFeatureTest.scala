@@ -10,13 +10,11 @@ import collection.JavaConversions._
 import controllers.{ FrontController }
 import play.api.mvc._
 import model.Trailblock
-import scala.Some
-import model.TrailblockDescription
-import views.support.{ Featured, Thumbnail, Headline }
 import common.editions.{Us, Uk}
-import common.Edition
+import org.scalatest.concurrent.Eventually
+import org.scalatest.time.SpanSugar
 
-class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results {
+class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results with Eventually with SpanSugar{
 
   val TrailblockDescription = ItemTrailblockDescription
 
@@ -38,7 +36,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
     scenario("Load the network front") {
 
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
 
@@ -50,40 +48,40 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     scenario("Section navigation") {
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
 
           Then("I should see the link for section navigation")
-          findFirst(".control--sections").href should endWith("/#footer-nav")
+          findFirst(".control--sections").href should endWith("/uk#footer-nav")
       }
     }
 
     scenario("Link to desktop version for UK edition") {
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst("[data-link-name='desktop version UK full site']").href should endWith("http://www.guardian.co.uk/fullsite")
+          findFirst(".main-site-link").href should endWith("/uk?view=desktop")
       }
     }
 
     scenario("Link to desktop version for US edition") {
       Given("I visit the network front")
-      HtmlUnit.US("/") {
+      HtmlUnit.US("/us") {
         browser =>
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst("[data-link-name='desktop version US full site']").href should endWith("http://www.guardiannews.com/fullsite")
+          findFirst(".main-site-link").href should endWith("/us?view=desktop")
       }
     }
 
     scenario("Copyright") {
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
 
@@ -95,7 +93,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
     scenario("Link tracking") {
       Given("I visit the network front")
-      HtmlUnit("/") {
+      HtmlUnit("/uk") {
         browser =>
           import browser._
           Then("All links should be tracked")
@@ -116,7 +114,6 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
 
         agent.refresh()
         loadOrTimeout(agent)
-
 
         val trails = agent.trailblock.get.trails
 
@@ -276,10 +273,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
   }
 
   private def loadOrTimeout(agent: TrailblockAgent) {
-    val start = System.currentTimeMillis()
-    while (!agent.trailblock.isDefined) {
-      if (System.currentTimeMillis - start > 10000) throw new RuntimeException("Agent should have loaded by now")
-    }
+    eventually (timeout(5.seconds), interval(1.second)) { agent.trailblock should be ('defined) }
   }
 
   private def createTrails(section: String, numTrails: Int) = (1 to numTrails).toList map {

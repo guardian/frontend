@@ -6,7 +6,6 @@ import model._
 import conf._
 import play.api.mvc._
 import model.Trailblock
-import Switches.EditionRedirectSwitch
 
 // TODO, this needs a rethink, does not seem elegant
 
@@ -17,7 +16,6 @@ object FrontPage {
   private val fronts = Seq(
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/australia")
       override val id = "australia"
       override val section = "australia"
       override val webTitle = "The Guardian"
@@ -30,7 +28,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/sport")
       override val id = "sport"
       override val section = "sport"
       override val webTitle = "Sport"
@@ -44,7 +41,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/money")
       override val id = "money"
       override val section = "money"
       override val webTitle = "Money"
@@ -58,7 +54,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/commentisfree")
       override val id = "commentisfree"
       override val section = "commentisfree"
       override val webTitle = "commentisfree"
@@ -72,7 +67,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/business")
       override val id = "business"
       override val section = "business"
       override val webTitle = "business"
@@ -86,7 +80,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = false) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk/culture")
       override val id = "culture"
       override val section = "culture"
       override val webTitle = "Culture"
@@ -101,7 +94,6 @@ object FrontPage {
 
     //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
-      override val canonicalUrl = Some("http://www.guardian.co.uk")
       override val id = ""
       override val section = ""
       override val webTitle = "The Guardian"
@@ -135,57 +127,66 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
     case _ => Editionalise(path, edition)
   }
 
+  private def faciaRedirect(path: String, request: RequestHeader) =
+    request.headers.get("X-Gu-Facia") filter(_ == "true") map {_ => Ok.withHeaders("X-Accel-Redirect" -> s"/redirect/facia/$path")}
+
   def render(path: String) = Action { implicit request =>
 
-    // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
-    // go live
-    val realPath = editionPath(path, Edition(request))
+    faciaRedirect(path, request) getOrElse {
 
-    // TODO - needed till after www.theguardian.com
-    val pageId = realPath.drop(3)  //removes the edition
+      // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
+      // go live
+      val realPath = editionPath(path, Edition(request))
+
+      // TODO - needed till after www.theguardian.com
+      val pageId = realPath.drop(3)  //removes the edition
 
 
-    FrontPage(pageId).map { frontPage =>
+      FrontPage(pageId).map { frontPage =>
 
-      // get the trailblocks
-      val trailblocks: Seq[Trailblock] = front(realPath).filterNot { trailblock =>
+        // get the trailblocks
+        val trailblocks: Seq[Trailblock] = front(realPath).filterNot { trailblock =>
 
-        // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
-        // filter out configured trailblocks if not on the network front
-        path match {
-          case FrontPath(_) => false
-          case _ => trailblock.description.isConfigured
+          // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
+          // filter out configured trailblocks if not on the network front
+          path match {
+            case FrontPath(_) => false
+            case _ => trailblock.description.isConfigured
+          }
         }
-      }
 
-      if (EditionRedirectSwitch.isSwitchedOn && request.isSingleDomain && path != realPath) {
-        Redirect(s"/$realPath")
-      } else if (trailblocks.isEmpty) {
-        InternalServerError
-      } else {
-        val htmlResponse = () => views.html.front(frontPage, trailblocks)
-        val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
-        renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
-      }
-    }.getOrElse(NotFound) //TODO is 404 the right thing here
+        if (path != realPath) {
+          Redirect(s"/$realPath")
+        } else if (trailblocks.isEmpty) {
+          InternalServerError
+        } else {
+          val htmlResponse = () => views.html.front(frontPage, trailblocks)
+          val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
+          renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+        }
+      }.getOrElse(NotFound) //TODO is 404 the right thing here
+    }
   }
 
   def renderTrails(path: String) = Action { implicit request =>
 
-    val realPath = editionPath(path, Edition(request))
+    faciaRedirect(path, request) getOrElse {
 
-    FrontPage(realPath).map{ frontPage =>
-      // get the first trailblock
-      val trailblock: Option[Trailblock] = front(realPath).headOption
+      val realPath = editionPath(path, Edition(request))
 
-      if (trailblock.isEmpty) {
-        InternalServerError
-      } else {
-        val trails: Seq[Trail] = trailblock.get.trails
-        val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
-        renderFormat(response, response, frontPage)
-      }
-    }.getOrElse(NotFound)
+      FrontPage(realPath).map{ frontPage =>
+        // get the first trailblock
+        val trailblock: Option[Trailblock] = front(realPath).headOption
+
+        if (trailblock.isEmpty) {
+          InternalServerError
+        } else {
+          val trails: Seq[Trail] = trailblock.get.trails
+          val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
+          renderFormat(response, response, frontPage)
+        }
+      }.getOrElse(NotFound)
+    }
   }
 
 }

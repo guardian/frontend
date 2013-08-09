@@ -10,7 +10,7 @@ define(['common', 'modules/lightbox-gallery'], function (common, LightboxGallery
         this.description = 'Tests the lightbox gallery variants between no lightbox, lightbox and lightbox with swipe';
         this.canRun = function(config) {
             _config = config;
-            return true;
+            return document.querySelector('.trail--gallery');
         };
         this.variants = [
             {

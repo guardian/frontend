@@ -39,6 +39,16 @@ trait TestSettings {
       throw new RuntimeException("You are not using the correct content api host...")
     }
 
+    if (DigestUtils.sha256Hex(Configuration.contentApi.key) != "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96") {
+
+      // the println makes it easier to spot what is wrong in tests
+      println()
+      println("----------- YOU ARE NOT USING THE CORRECT CONTENT API KEY -----------")
+      println()
+
+      throw new RuntimeException("You are not using the correct content api key...")
+    }
+
     override def GET(url: String, headers: scala.Iterable[scala.Tuple2[java.lang.String, java.lang.String]]) = {
       recorder.load(url, headers.toMap) {
         originalHttp.GET(url, headers)
@@ -52,44 +62,33 @@ trait TestSettings {
  */
 class EditionalisedHtmlUnit extends TestSettings {
 
-  val ukHost = "http://localhost:9000"
-  val usHost = "http://127.0.0.1:9000"
+  val host = "http://localhost:9000"
+
 
   val Port = """.*:(\d*)$""".r
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
-  def UK[T](path: String)(block: TestBrowser => T): T = goTo(path, ukHost)(block)
+  def UK[T](path: String)(block: TestBrowser => T): T = goTo(path, host)(block)
 
-  def US[T](path: String)(block: TestBrowser => T): T = goTo(path, usHost)(block)
-
-  def connection[T](path: String)(block: HttpURLConnection => T): T = {
-    connectionUK(path)(block)
+  def US[T](path: String)(block: TestBrowser => T): T = {
+    val editionPath = if (path.contains("?")) s"$path&_edition=US" else s"$path?_edition=US"
+    goTo(editionPath, host)(block)
   }
 
-  def connectionUK[T](path: String)(block: HttpURLConnection => T): T = {
-    testConnection(ukHost, path)(block)
-  }
+  private def testConnection(url: String): Boolean = {
 
-  def connectionUS[T](path: String)(block: HttpURLConnection => T): T = {
-    testConnection(usHost, path)(block)
-  }
-
-  protected def testConnection[T](host: String, path: String)(block: HttpURLConnection => T): T = {
-
-    val port = host match {
-      case Port(p) => p.toInt
-      case _ => 9000
+    // Check that the test server is accepting connections.
+    val connection = (new URL(url)).openConnection.asInstanceOf[HttpURLConnection]
+    try {
+      connection.connect
+      assert(HttpURLConnection.HTTP_OK == connection.getResponseCode, s"Invalid response: ${connection.getResponseCode}")
+      return true
     }
-    running(TestServer(port,
-      FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
-        withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
-      // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-      browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)
-
-      val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
-      block(connection)
+    finally {
+      connection.disconnect
     }
+    return false
   }
 
   protected def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
@@ -98,9 +97,17 @@ class EditionalisedHtmlUnit extends TestSettings {
       case Port(p) => p.toInt
       case _ => 9000
     }
+
     running(TestServer(port,
       FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
-        withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
+                      withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
+
+      // A test to check that the TestServer started by running() is accepting connections.
+      val start = System.currentTimeMillis()
+      while (!testConnection(host + path) && (System.currentTimeMillis - start < 10000)) {
+        println("Waiting for test server to accept connections...")
+        Thread.sleep(2000)
+      }
 
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)

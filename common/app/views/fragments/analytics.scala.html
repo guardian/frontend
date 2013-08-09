@@ -1,7 +1,7 @@
 @(page: MetaData)( implicit request:RequestHeader)
 
 @*<!-- TODO temporary till after dotcom switch -->*@
-@defining(if (Site(request).isDefined) "hits.guardian.co.uk" else "hits.theguardian.com"){ analyticsHost =>
+@defining("hits.theguardian.com"){ analyticsHost =>
 
     @defining(request.host + request.path) { path =>
 

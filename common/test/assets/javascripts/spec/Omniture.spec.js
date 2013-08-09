@@ -10,7 +10,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         }
 
         beforeEach(function(){
-            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name', isDotcom: false };
+            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' };
             config.switches = {};
 
             s = { t: function(){}, tl: function(){}, apl: function(){} };
@@ -61,8 +61,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                     buildNumber: "build-73",
                     edition: "US",
                     webPublicationDate: "2012-02-22T16:58:00.000Z",
-                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long",
-                    isDotcom: false
+                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long"
             };
 
             var o = new Omniture(s, w);
@@ -86,26 +85,8 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop19).toBe("frontend");
             expect(s.eVar19).toBe("frontend");
             expect(s.cookieDomainPeriods).toBe("2")
-
-            //check we have not overridden these
-            expect(s.trackingServer).toBe(undefined);
-            expect(s.trackingServerSecure).toBe(undefined);
-
-        });
-
-        it("should correctly set omniture domain if it is www.theguardian.com", function(){
-
-            s.linkInternalFilters = 'guardian.co.uk,guardiannews.co.uk'
-            config.page = {
-                isDotcom: true
-            };
-
-            var o = new Omniture(s, w);
-            o.go(config);
-
-            expect(s.trackingServer).toBe('hits.theguardian.com');
+            expect(s.trackingServer).toBe("hits.theguardian.com");
             expect(s.trackingServerSecure).toBe('hits-secure.theguardian.com');
-            expect(s.cookieDomainPeriods).toBe('2');
 
         });
 
@@ -120,7 +101,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             var o = new Omniture(s, w);
             o.go(config);
 
-            expect(s.cookieDomainPeriods).toBe("3")
+            expect(s.cookieDomainPeriods).toBe("2")
         });
 
         it("should log a page view event", function() {
@@ -128,6 +109,18 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             waits(100);
             runs(function() {
                 expect(s.t).toHaveBeenCalledOnce();
+            });
+        });
+
+        it("should log an ad impression event", function() {
+            var o = new Omniture(s).go(config);
+            waits(100);
+            runs(function() {
+                common.mediator.emit('module:analytics:adimpression', 'top banner');
+                expect(s.linkTrackVars).toBe('eVar73,events');
+                expect(s.linkTrackEvents).toBe('event29');
+                expect(s.events).toBe('event29');
+                expect(s.eVar73).toBe('top banner');
             });
         });
 

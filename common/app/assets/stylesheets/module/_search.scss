@@ -1,5 +1,31 @@
 .nav-popup-search {
     min-height: 47px;
+
+    @include mq(tablet) {
+        right: 0;
+        max-width: 512px;
+
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            width: 1px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background: $darkMushroom;
+        }
+    }
+    @include mq(1117px) { // When the layout starts to be centered
+        right: -1px;
+        &:after { left: auto; right: 0; }
+    }
+}
+
+.gsc-search-box {
+    padding: 0;
+    max-width: none;
 }
 
 .search-box {
@@ -66,7 +92,7 @@ input.gsc-search-button-v2 {
 }
 
 .gsc-results .gsc-cursor-box {
-    margin: 0 0 $gutter 0 !important;
+    margin: 0 0 $baseline*4 0 !important;
 }
 
 .gsc-results .gsc-cursor-box .gsc-cursor-page {

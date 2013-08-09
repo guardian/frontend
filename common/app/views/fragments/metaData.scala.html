@@ -1,20 +1,13 @@
 @(item: MetaData)(implicit request: RequestHeader)
-@import common.editions.EditionalisedSections
+@import common._
+@import model._
+@import conf._
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
-
-    @*<!-- TODO EDITIONS -->*@
-    @SiteOr{ site =>
-        @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
-    }{
-        @if(EditionalisedSections.isEditionalised(item.id)){
-            @Edition.others.map{ ed =>
-                <link rel="alternate" hreflang="@ed.hreflang" href="/@Editionalise(item.id, ed)" />
-            }
-        }
-    }
+    @* https://support.google.com/plus/answer/1713826 *@
+    <link rel="publisher" href="https://plus.google.com/113000071431138202574"/>
 
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
 

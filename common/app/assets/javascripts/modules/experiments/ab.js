@@ -4,20 +4,26 @@ define([
 
     //Current tests
     'modules/experiments/tests/paragraph-spacing',
+    'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
-    'modules/experiments/tests/lightbox-galleries'
+    'modules/experiments/tests/lightbox-galleries',
+    'modules/experiments/tests/gallery-style'
 ], function (
     common,
     store,
     ParagraphSpacing,
+    ExperimentInlineLinkCard,
     Aa,
-    LightboxGalleries
+    LightboxGalleries,
+    GalleryStyle
     ) {
 
     var TESTS = [
             new ParagraphSpacing(),
+            new ExperimentInlineLinkCard(),
             new Aa(),
-            new LightboxGalleries()
+            new LightboxGalleries(),
+            new GalleryStyle()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -54,7 +60,12 @@ define([
         if (currentDataLinkTest) {
             dataLinkTest.push(currentDataLinkTest);
         }
-        dataLinkTest.push(['AB', test.id + ' test', variantId]. join(' | '));
+
+        var testName = ['AB', test.id + ' test', variantId]. join(' | ');
+        if (!currentDataLinkTest || currentDataLinkTest.indexOf(testName) === -1) {
+            dataLinkTest.push(testName);
+        }
+
         common.$g(document.body).attr('data-link-test', dataLinkTest.join(', '));
     }
 

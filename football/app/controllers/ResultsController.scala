@@ -67,7 +67,6 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
 object ResultsController extends ResultsRenderer with Logging {
 
   val page = new Page(
-    Some("http://www.guardian.co.uk/football/matches"),
     "football/results",
     "football",
     "All results",
@@ -114,7 +113,6 @@ object CompetitionResultsController extends ResultsRenderer with Logging {
   def render(competitionName: String, competition: Competition, date: Option[DateMidnight] = None) = Action { implicit request =>
 
     val page = new Page(
-      Some("http://www.guardian.co.uk/football/matches"),
       "football/results",
       "football",
       s"${competition.fullName} results",
@@ -146,7 +144,6 @@ object TeamResultsController extends Controller with Logging with CompetitionRes
       val upcomingFixtures = fixtures.filter(_.fixture.date <= startDate).reverse
 
       val page = new Page(
-        Some(s"http://www.guardian.co.uk/$teamName/results"),
         s"/football/$teamName/results",
         "football",
         s"${team.name} results",

@@ -9,8 +9,7 @@ import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 
 class Content(
-    delegate: ApiContent,
-    override val storyItems: Option[StoryItems] = None) extends Trail with Tags with MetaData {
+    delegate: ApiContent) extends Trail with Tags with MetaData {
   private lazy val fields = delegate.safeFields
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
@@ -50,8 +49,6 @@ class Content(
 
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
 
-  override lazy val canonicalUrl = Some(webUrl)
-
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
 
@@ -84,7 +81,8 @@ class Content(
     ("page-code", fields("internalPageCode")),
     ("isLive", isLive),
     ("wordCount", wordCount),
-    ("shortUrl", shortUrl)
+    ("shortUrl", shortUrl),
+    ("thumbnail", thumbnailPath.getOrElse(false))
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override lazy val cacheSeconds = {
@@ -96,18 +94,18 @@ class Content(
 
 object Content {
 
-  def apply(delegate: ApiContent, storyItems: Option[StoryItems]): Content = {
+  def apply(delegate: ApiContent): Content = {
     delegate match {
-      case gallery if delegate.isGallery => new Gallery(delegate, storyItems)
-      case video if delegate.isVideo => new Video(delegate, storyItems)
-      case article if delegate.isArticle => new Article(delegate, storyItems)
-      case d => new Content(d, storyItems)
+      case gallery if delegate.isGallery => new Gallery(delegate)
+      case video if delegate.isVideo => new Video(delegate)
+      case article if delegate.isArticle => new Article(delegate)
+      case d => new Content(d)
     }
   }
 
 }
 
-class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
@@ -123,7 +121,7 @@ class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] =
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 }
 
-class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   private implicit val ordering = EncodingOrdering
 
@@ -136,36 +134,22 @@ class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = N
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))
 }
 
-class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   private val lookup: Map[Int, Image] = (images map { image => (image.index, image) }).toMap
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
   lazy val contentType = "Gallery"
   lazy val landscapes = images.filter(i => i.width > i.height)
+  lazy val portraits = images.filter(i => i.width < i.height)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 }
 
-class Interactive(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+class Interactive(private val delegate: ApiContent) extends Content(delegate) {
   lazy val contentType = "Interactive"
   lazy val body: String = delegate.safeFields("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
-
-case class Quote(
-  text: Option[String] = None,
-  by: Option[String] = None,
-  url: Option[String] = None,
-  subject: Option[String] = None)
-
-case class StoryItems(
-  importance: Int,
-  colour: Int,
-  shares: Option[Int] = None,
-  comments: Option[Int] = None,
-  quote: Option[Quote] = None,
-  headlineOverride: Option[String] = None
-)
