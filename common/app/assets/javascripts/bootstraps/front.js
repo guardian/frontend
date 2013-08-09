@@ -62,7 +62,7 @@ define([
                             // Network Front
                             opts = {
                                 prependTo: context.querySelector('.zone-sport ul > li'),
-                                competitions: ['500', '510', '100'],
+                                competitions: ['500', '510', '100', '400'],
                                 contextual: false,
                                 expandable: true,
                                 numVisible: 3
@@ -72,7 +72,7 @@ define([
                             // Sport Front
                             opts = {
                                 prependTo: context.querySelector('.trailblock ul > li'),
-                                competitions: ['500', '510', '100'],
+                                competitions: ['500', '510', '100', '400'],
                                 contextual: false,
                                 expandable: true,
                                 numVisible: 5
