@@ -17,6 +17,7 @@ public class ViewTrailBlockAction implements TrailBlockAction {
     private final TrailBlock trailBlock;
     private HttpClientWrapper client;
     private HttpCall httpCall;
+    private Exception lastException;
 
     public ViewTrailBlockAction(TrailBlock trailBlock) {
         this.trailBlock = trailBlock;
@@ -71,7 +72,7 @@ public class ViewTrailBlockAction implements TrailBlockAction {
                 foundStories.add(liveStories.getJSONObject(i).getString("id"));
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            lastException = e;
         }
 
         return foundStories;
