@@ -1,7 +1,7 @@
 package conf
 
 import common.PaMetrics._
-import common.{Logging, ExecutionContexts, Metrics}
+import common._
 import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
@@ -15,14 +15,51 @@ import scala.concurrent.Future
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
   override def onStart() {
-    Competitions.start()
-    LiveBlog.start()
-    TeamMap.start()
+    Competitions.competitionIds.zipWithIndex map { case (id, index) =>
+      //stagger fixtures and results refreshes to avoid timeouts
+      val seconds = index * 5 % 60
+      val minutes = index * 5 / 60 % 5
+      val cron = s"$seconds $minutes/5 * * * ?"
+
+      Jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron, FootballMetrics.CompetitionAgentLoadTimingMetric) {
+        Competitions.refreshCompetitionAgent(id)
+      }
+    }
+
+    Jobs.schedule("MatchDayAgentRefreshJob", "0/10 * * * * ?", FootballMetrics.MatchDayLoadTimingMetric) {
+      Competitions.refreshMatchDay()
+    }
+
+    Jobs.schedule("CompetitionRefreshJob", "0 0/5 * * * ?", FootballMetrics.CompetitionLoadTimingMetric) {
+      Competitions.refreshCompetitionData()
+    }
+
+    Jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?", FootballMetrics.LiveBlogRefreshTimingMetric) {
+      LiveBlog.refresh()
+    }
+
+    Jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?", FootballMetrics.LiveBlogRefreshTimingMetric) {
+      LiveBlog.refresh()
+    }
+
+    Jobs.schedule("TeamMapRefreshJob", "0 * * * * ?", FootballMetrics.TeamTagMappingsRefreshTimingMetric) {
+      TeamMap.refresh()
+    }
   }
 
   override def onStop() {
+    Competitions.competitionIds map { id =>
+      Jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
+    }
+
+    Jobs.deschedule("MatchDayAgentRefreshJob")
+    Jobs.deschedule("CompetitionRefreshJob")
     Competitions.stop()
+
+    Jobs.deschedule("LiveBlogRefreshJob")
     LiveBlog.stop()
+
+    Jobs.deschedule("TeamMapRefreshJob")
     TeamMap.stop()
   }
 }

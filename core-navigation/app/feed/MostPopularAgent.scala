@@ -1,6 +1,5 @@
 package feed
 
-import akka.actor.ActorRef
 import conf.ContentApi
 import common._
 import model.Content
@@ -9,14 +8,6 @@ import scala.concurrent.duration._
 object MostPopularAgent extends Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
-  private var job: Option[ActorRef] = None
-
-  class MostPopularAgentRefreshJob extends Job {
-    val cron = "0 * * * * ?"
-    val metric = CoreNavivationMetrics.MostPopularLoadTimingMetric
-
-    def run() { refresh() }
-  }
 
   def mostPopular(edition: Edition): Seq[Content] = agent().get(edition.id).getOrElse(Nil)
 
@@ -32,14 +23,5 @@ object MostPopularAgent extends Logging with ExecutionContexts {
         }
       }
     }
-  }
-
-  def start() {
-    job = Some(Jobs.schedule[MostPopularAgentRefreshJob])
-  }
-
-  def stop() {
-    job foreach { Jobs.deschedule }
-    job = None
   }
 }

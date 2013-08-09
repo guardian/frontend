@@ -1,6 +1,5 @@
 package model
 
-import akka.actor.ActorRef
 import common._
 import conf.ContentApi
 
@@ -12,7 +11,7 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
   private val agents = editions.map(edition => edition.id -> AkkaAgent[Option[Trail]](None)).toMap
 
   // TODO editions
-  def refreshLiveBlogs() = {
+  def refresh() = {
     log.info("Refreshing Live Blogs")
     editions.foreach{ edition =>
       findBlogFor(edition).foreach(blog => agents(edition.id).send(blog))
@@ -45,32 +44,11 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
   // TODO EDITIONS
   def blogFor(edition: Edition) = agents(edition.id)
 
-  def close() {
+  def stop() {
     agents.values.foreach(_.close())
   }
-
 }
 
 object LiveBlog extends LiveBlogAgent {
   def apply(edition: Edition) = blogFor(edition)()
-
-  private var job: Option[ActorRef] = None
-
-  class LiveBlogRefreshJob extends Job with ExecutionContexts {
-    val cron = "0 0/2 * * * ?"
-    val metric = FootballMetrics.LiveBlogRefreshTimingMetric
-
-    def run() {
-      refreshLiveBlogs()
-    }
-  }
-
-  def start() {
-    job = Some(Jobs.schedule[LiveBlogRefreshJob])
-  }
-
-  def stop() {
-    job foreach { Jobs.deschedule }
-    job = None
-  }
 }

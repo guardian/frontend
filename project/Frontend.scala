@@ -11,8 +11,6 @@ object Frontend extends Build with Prototypes {
       "com.gu.openplatform" %% "content-api-client" % "2.0",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
-      "com.typesafe.akka" %% "akka-camel" % "2.1.0",
-      "org.apache.camel" % "camel-quartz" % "2.11.0",
 
       "org.jsoup" % "jsoup" % "1.6.3",
       "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
@@ -22,6 +20,8 @@ object Frontend extends Build with Prototypes {
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
 
       "com.amazonaws" % "aws-java-sdk" % "1.4.7",
+
+      "org.quartz-scheduler" % "quartz" % "2.2.0",
 
       "org.jboss.dna" % "dna-common" % "0.6",
       "commons-io" % "commons-io" % "2.4",

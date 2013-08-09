@@ -1,6 +1,5 @@
 package model
 
-import akka.actor.ActorRef
 import common._
 import conf.ContentApi
 import pa._
@@ -101,47 +100,28 @@ object TeamMap extends ExecutionContexts with Logging {
 
   def apply(team: FootballTeam) = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
 
-  def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == (s"football/$name")).map(_._1)
+  def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == s"football/$name").map(_._1)
 
   def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
 
-  private var job: Option[ActorRef] = None
-
-  class TeamTagMappingsRefreshJob extends Job {
-    val cron = "0 * * * * ?"
-    val metric = FootballMetrics.TeamTagMappingsRefreshTimingMetric
-
-    def run() {
-      log.info("Refreshing switches")
-      incrementalRefresh(1) //pages are 1 based
-    }
-
-    private def incrementalRefresh(page: Int) {
-      log.info(s"Refreshing team tag mappings - page $page")
-      ContentApi.tags
-        .page(page)
-        .pageSize(50)
-        .referenceType("pa-football-team")
-        .showReferences("pa-football-team")
-        .response.foreach{ response =>
-        if (response.pages > page) {
-          incrementalRefresh(page + 1)
-        }
-
-        val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag(tag)) }.toMap
-        teamAgent.send(old => old ++ tagReferences)
+  def refresh(page: Int = 1) { //pages are 1 based
+    log.info(s"Refreshing team tag mappings - page $page")
+    ContentApi.tags
+      .page(page)
+      .pageSize(50)
+      .referenceType("pa-football-team")
+      .showReferences("pa-football-team")
+      .response.foreach{ response =>
+      if (response.pages > page) {
+        refresh(page + 1)
       }
-    }
-  }
 
-  def start() {
-    job = Some(Jobs.schedule[TeamTagMappingsRefreshJob])
+      val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag(tag)) }.toMap
+      teamAgent.send(old => old ++ tagReferences)
+    }
   }
 
   def stop() {
-    job foreach { Jobs.deschedule }
-    job = None
-
     teamAgent.close()
   }
 }

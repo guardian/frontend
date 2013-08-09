@@ -1,6 +1,5 @@
 package conf
 
-import akka.actor.ActorRef
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
@@ -226,41 +225,35 @@ object Switches extends Collections {
 }
 
 
-class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts {
+class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
 
-  private var job: Option[ActorRef] = None
+  def refresh() {
+    log.info("Refreshing switches")
+    WS.url(config.switches.configurationUrl).get() foreach { response =>
+      response.status match {
+        case 200 =>
+          val nextState = Properties(response.body)
 
-  class SwitchBoardRefreshJob extends Job {
-    val cron = "0 * * * * ?"
-    val metric = CommonApplicationMetrics.SwitchBoardLoadTimingMetric
-
-    def run() {
-      log.info("Refreshing switches")
-      WS.url(config.switches.configurationUrl).get() foreach { response =>
-        response.status match {
-          case 200 =>
-            val nextState = Properties(response.body)
-
-            for (switch <- Switches.all) {
-              nextState.get(switch.name) foreach {
-                case "on" => switch.switchOn()
-                case "off" => switch.switchOff()
-                case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
-              }
+          for (switch <- Switches.all) {
+            nextState.get(switch.name) foreach {
+              case "on" => switch.switchOn()
+              case "off" => switch.switchOff()
+              case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
             }
+          }
 
-          case _ => log.warn(s"Could not load switch config ${response.status} ${response.statusText}")
-        }
+        case _ => log.warn(s"Could not load switch config ${response.status} ${response.statusText}")
       }
     }
   }
 
   override def onStart() {
-    job = Some(Jobs.schedule[SwitchBoardRefreshJob])
+    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
+      refresh()
+    }
   }
 
   override def onStop() {
-    job foreach { Jobs.deschedule }
-    job = None
+    Jobs.deschedule("SwitchBoardRefreshJob")
   }
 }
