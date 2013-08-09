@@ -85,6 +85,14 @@ class Content(
     ("thumbnail", thumbnailPath.getOrElse(false))
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
+
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
+    "og:title" -> webTitle,
+    "og:url" -> webUrl,
+    "og:description" -> trailText,
+    "og:image" -> thumbnailPath
+  )
+
   override lazy val cacheSeconds = {
     if (isLive) 30 // live blogs can expect imminent updates
     else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
@@ -119,6 +127,13 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
     .getOrElse(false)
 
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
+
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
+    "content-type" -> "article",
+    "article:published_time" -> webPublicationDate,
+    "article:modified_time" -> lastModified,
+    "article:section" -> sectionName
+  )
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) {

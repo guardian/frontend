@@ -1,0 +1,6 @@
+@(metaData: MetaData)(implicit request: RequestHeader)
+@import model.MetaData
+
+
+@metaData.openGraph.map{ case (key, value) =>
+    <meta property="@key" content="@value"/> }

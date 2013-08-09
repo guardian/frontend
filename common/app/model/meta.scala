@@ -24,6 +24,11 @@ trait MetaData {
     "analytics-name" -> analyticsName
   )
 
+  def openGraph: Map[String, Any] = Map(
+    "og:site_name" -> "the Guardian",
+    "fb:app_id"    -> "180444840287" // TODO: Needs to move to config
+  )
+
   def cacheSeconds = 60
 }
 
