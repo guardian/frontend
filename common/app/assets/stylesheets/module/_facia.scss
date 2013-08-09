@@ -33,6 +33,9 @@
 }
 
 .facia-container {
+    .top-stories .front-section-head {
+        display: none;
+    }
     .trails {
         overflow: hidden;
         margin-top: $baseline*4;
@@ -143,7 +146,7 @@
         }
         @include mq(tablet, desktop) {
             .trail__image {
-                width: 380px;
+                width: 460px;
             }
             .trail__title {
                 @include font($serifheadline, 700, 26, 28);
@@ -158,7 +161,7 @@
 
         @include mq(desktop, wide) {
             .trail__image {
-                width: 540px;
+                width: 460px;
             }
             .trail__title {
                 @include font($serifheadline, 700, 34, 36);
@@ -219,7 +222,7 @@
                 @include font($serifheadline, normal, 18, 20);
             }
             .trail:nth-child(1) {
-                width: 380px;
+                width: 460px;
                 margin-right: 10px;
                 @include overlay;
             }
@@ -236,7 +239,7 @@
                 @include font($serifheadline, normal, 26, 28);
             }
             .trail:nth-child(1) {
-                width: 540px;
+                width: 460px;
                 margin-right: 10px;
                 @include overlay;
             }
