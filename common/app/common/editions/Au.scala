@@ -165,31 +165,36 @@ object Au extends Edition(
 
   val configuredFrontsFacia = Map(
     (Editionalise("", Au), Seq(
-      RunningOrderTrailblockDescription("news", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("news", "features", "Features", 5),
-      RunningOrderTrailblockDescription("news", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("news", "au/news/top-stories", "Top Stories", 5, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "au/sport/top-stories", "Sports", 5, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "au/commentisfree/top-stories", "Comment is free", 3, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "au/culture/top-stories", "Culture", 3, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("news", "au/business/top-stories", "Business", 1),
+      RunningOrderTrailblockDescription("news", "au/lifeandstyle/top-stories", "Life and style", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("news", "au/technology/top-stories", "Technology", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("news", "au/travel/top-stories", "Travel", 1, style = Some(Thumbnail))
     )),
 
     (Editionalise("culture", Au), Seq(
-      RunningOrderTrailblockDescription("culture", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("culture", "features", "Features", 5),
-      RunningOrderTrailblockDescription("culture", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("culture", "au/culture/top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("culture", "au/culture/features", "Features", 5),
+      RunningOrderTrailblockDescription("culture", "au/culture/editors-picks", "Editor's Picks", 5)
     )),
 
     (Editionalise("fashion", Au), Seq(
-      RunningOrderTrailblockDescription("fashion", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("fashion", "features", "Features", 5),
-      RunningOrderTrailblockDescription("fashion", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("fashion", "au/fashion/top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("fashion", "au/fashion/features", "Features", 5),
+      RunningOrderTrailblockDescription("fashion", "au/fashion/editors-picks", "Editor's Picks", 5)
     )),
 
     (Editionalise("technology", Au), Seq(
-      RunningOrderTrailblockDescription("technology", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("technology", "features", "Features", 5),
-      RunningOrderTrailblockDescription("technology", "editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("technology", "au/technology/top-stories", "Top Stories", 5),
+      RunningOrderTrailblockDescription("technology", "au/technology/features", "Features", 5),
+      RunningOrderTrailblockDescription("technology", "au/technology/editors-picks", "Editor's Picks", 5)
     )),
 
     (Editionalise("film", Au), Seq(
-      RunningOrderTrailblockDescription("film", "top-stories", "Film", 15)
+      RunningOrderTrailblockDescription("film", "au/film/top-stories", "Film", 15)
     ))
   )
 }

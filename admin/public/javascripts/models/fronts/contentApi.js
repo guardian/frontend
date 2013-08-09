@@ -1,46 +1,46 @@
 define([
     'Config',
     'Reqwest',
-    'models/fronts/common'
+    'models/fronts/common',
+    'models/fronts/cache'
 ], 
 function (
     Config,
     Reqwest,
-    common
+    common,
+    cache
 ){
-    var cache = {};
-
-    var decorateItems = function(items) {
+    function decorateItems (items) {
         var fetch = [];
 
         items.forEach(function(item){
-            var article = cache[item.id()];
-            if(article) {
-                decorateItem(article, item);
+            var data = cache.get('contentApi', item.meta.id());
+            if(data) {
+                decorateItem(data, item);
             } else {
-                fetch.push(item.id());
+                fetch.push(item.meta.id());
             }
         });
 
-        fetchArticles(fetch, function(results){
-            results.forEach(function(result){
-                if (result.id) {
-                    cache[result.id] = result;
+        fetchData(fetch, function(results){
+            results.forEach(function(article){
+                if (article.id) {
+                    cache.put('contentApi', article.id, article);
                     _.filter(items,function(item){
-                        return item.id() === result.id;
+                        return item.meta.id() === article.id;
                     }).forEach(function(item){
-                        decorateItem(result, item);
+                        decorateItem(article, item);
                     });
                 }
             });
         })
     };
 
-    var decorateItem = function(fromObj, toKoObj) {
-        toKoObj.init(fromObj);
+    function decorateItem(fromObj, toKoObj) {
+        toKoObj.populate(fromObj);
     }
 
-    var fetchArticles = function(ids, callback) {
+    function fetchData(ids, callback) {
         var apiUrl;
         if (ids.length) {
             apiUrl = common.config.apiSearchBase + "?page-size=50&format=json&show-fields=all&show-tags=all&api-key=" + Config.apiKey;
