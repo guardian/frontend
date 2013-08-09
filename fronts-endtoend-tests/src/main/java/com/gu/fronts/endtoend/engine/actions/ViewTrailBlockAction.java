@@ -14,67 +14,67 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewTrailBlockAction implements TrailBlockAction {
-    private final TrailBlock trailBlock;
-    private HttpClientWrapper client;
-    private HttpCall httpCall;
-    private Exception lastException;
+	private final TrailBlock trailBlock;
+	private HttpClientWrapper client;
+	private HttpCall httpCall;
+	private Exception lastException;
 
-    public ViewTrailBlockAction(TrailBlock trailBlock) {
-        this.trailBlock = trailBlock;
-    }
+	public ViewTrailBlockAction(TrailBlock trailBlock) {
+		this.trailBlock = trailBlock;
+	}
 
-    @Override
-    public void useClient(HttpClientWrapper client) {
-        this.client = client;
-    }
+	@Override
+	public void useClient(HttpClientWrapper client) {
+		this.client = client;
+	}
 
-    @Override
-    public boolean success() {
-        return HttpStatus.SC_OK == httpCall.response().getStatusLine().getStatusCode();
-    }
+	@Override
+	public boolean success() {
+		return HttpStatus.SC_OK == httpCall.response().getStatusLine().getStatusCode();
+	}
 
-    @Override
-    public void setAuthenticationData(Cookie cookie) {
-        client.addCookie(cookie);
-    }
+	@Override
+	public void setAuthenticationData(Cookie cookie) {
+		client.addCookie(cookie);
+	}
 
-    @Override
-    public void execute() {
-        final String requestUrl = String.format("/fronts/api/%s", trailBlock.URI());
-        httpCall = client.getFrom(requestUrl);
-    }
+	@Override
+	public void execute() {
+		final String requestUrl = String.format("/fronts/api/%s", trailBlock.uri());
+		httpCall = client.getFrom(requestUrl);
+	}
 
-    @Override
-    public ViewTrailBlockAction copyOf() {
-        return new ViewTrailBlockAction(trailBlock);
-    }
+	@Override
+	public ViewTrailBlockAction copyOf() {
+		return new ViewTrailBlockAction(trailBlock);
+	}
 
-    public List<String> liveStories() {
-        return getStories("live");
-    }
+	public List<String> liveStories() {
+		return getStories("live");
+	}
 
-    public List<String> draftStories() {
-        return getStories("draft");
-    }
+	public List<String> draftStories() {
+		return getStories("draft");
+	}
 
-    private String responseBody() {
-        return httpCall.body();
-    }
+	private String responseBody() {
+		return httpCall.body();
+	}
 
-    private List<String> getStories(String mode) {
-        List<String> foundStories = new ArrayList<>();
-        try {
-            JSONObject tb = new JSONObject(responseBody());
-            JSONArray liveStories = tb.getJSONArray(mode);
+	private List<String> getStories(String mode) {
+		List<String> foundStories = new ArrayList<>();
+		try {
+			JSONObject tb = new JSONObject(responseBody());
+			JSONArray liveStories = tb.getJSONArray(mode);
 
 
-            for (int i = 0; i < liveStories.length(); i++) {
-                foundStories.add(liveStories.getJSONObject(i).getString("id"));
-            }
-        } catch (JSONException e) {
-            lastException = e;
-        }
+			for (int i = 0; i < liveStories.length(); i++) {
+				foundStories.add(liveStories.getJSONObject(i).getString("id"));
+			}
+		} catch (JSONException e) {
+			lastException = e;
+		}
 
-        return foundStories;
-    }
+		return foundStories;
+	}
 }

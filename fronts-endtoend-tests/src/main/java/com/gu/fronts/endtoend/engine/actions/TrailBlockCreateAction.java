@@ -31,7 +31,7 @@ public class TrailBlockCreateAction implements TrailBlockAction {
 					  ",\"live\":true" +
 					  "}";
 
-		final String requestUrl = String.format("/fronts/api/%s", trailBlock.URI());
+		final String requestUrl = String.format("/fronts/api/%s", trailBlock.uri());
 		httpCall = client.postJsonTo(requestUrl, data);
 	}
 

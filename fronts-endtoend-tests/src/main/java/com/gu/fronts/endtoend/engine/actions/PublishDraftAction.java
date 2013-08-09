@@ -8,40 +8,40 @@ import org.apache.http.HttpStatus;
 import org.apache.http.cookie.Cookie;
 
 public class PublishDraftAction implements TrailBlockAction {
-    private final TrailBlock trailBlock;
-    private HttpClientWrapper client;
-    private HttpCall httpCall;
+	private final TrailBlock trailBlock;
+	private HttpClientWrapper client;
+	private HttpCall httpCall;
 
-    public PublishDraftAction(TrailBlock trailBlock) {
-        this.trailBlock = trailBlock;
-    }
+	public PublishDraftAction(TrailBlock trailBlock) {
+		this.trailBlock = trailBlock;
+	}
 
-    @Override
-    public void useClient(HttpClientWrapper client) {
-        this.client = client;
-    }
+	@Override
+	public void useClient(HttpClientWrapper client) {
+		this.client = client;
+	}
 
-    @Override
-    public boolean success() {
-        return HttpStatus.SC_OK == httpCall.response().getStatusLine().getStatusCode();
-    }
+	@Override
+	public boolean success() {
+		return HttpStatus.SC_OK == httpCall.response().getStatusLine().getStatusCode();
+	}
 
-    @Override
-    public void setAuthenticationData(Cookie cookie) {
-        client.addCookie(cookie);
-    }
+	@Override
+	public void setAuthenticationData(Cookie cookie) {
+		client.addCookie(cookie);
+	}
 
-    @Override
-    public void execute() {
-        String data = "{\"publish\":true}";
+	@Override
+	public void execute() {
+		String data = "{\"publish\":true}";
 
-        final String requestUrl = String.format("/fronts/api/%s", trailBlock.URI());
-        httpCall = client.postJsonTo(requestUrl, data);
-    }
+		final String requestUrl = String.format("/fronts/api/%s", trailBlock.uri());
+		httpCall = client.postJsonTo(requestUrl, data);
+	}
 
-    @Override
-    public PublishDraftAction copyOf() {
-        return new PublishDraftAction(trailBlock);
-    }
+	@Override
+	public PublishDraftAction copyOf() {
+		return new PublishDraftAction(trailBlock);
+	}
 
 }
