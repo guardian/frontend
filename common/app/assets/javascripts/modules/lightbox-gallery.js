@@ -74,7 +74,9 @@ define(["bean",
             bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
 
             bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__img', function() {
-                self.toggleFurniture();
+                if (swipeActive) {
+                    self.swipe.next();
+                }
             });
 
             bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery__item', function(el) {
