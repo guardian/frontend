@@ -321,7 +321,7 @@ define([
                 var swipe = swipeNav(config);
 
                 //ears.init();
-                new SwipeBar();
+                var bar = new SwipeBar();
 
                 common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
                 common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });

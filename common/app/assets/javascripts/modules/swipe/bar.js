@@ -38,7 +38,7 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
         btn.className = ['js-' + btnClassName, btnClassName, btnClassName + '--' + dir].join(' ');
         btn.setAttribute('data-direction', dir);
         btn.setAttribute('data-link-name', 'swipe bar ' + dir);
-        btn.innerHTML = '<i class="i i-swipe-arrow i-swipe-arrow--' + dir +'">' + titleCase(dir) + '</i>';
+        btn.innerHTML = '<i class="i i-swipe-arrow i-swipe-arrow--' + dir +'">' + dir + '</i>';
         return btn;
     };
 
@@ -47,7 +47,7 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
             this.$el.removeClass('is-hidden');
             this.isVisible = true;
         }
-    }
+    };
 
     SwipeBar.prototype.hide = function() {
         this.$el.addClass('is-hidden');
@@ -70,6 +70,6 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
 //        });
     };
 
-    return SwipeBar
+    return SwipeBar;
 
 });
