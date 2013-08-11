@@ -50,7 +50,6 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
     };
 
     SwipeBar.prototype.updateCount = function(data) {
-        console.log('inside', data);
         if(typeof data === 'object' && data.pos && data.len) {
             this.el.querySelector('.' + this.options.countClassName).innerHTML = data.pos + ' of ' + data.len;
         }
