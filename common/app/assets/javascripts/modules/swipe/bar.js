@@ -49,6 +49,13 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
         return btn;
     };
 
+    SwipeBar.prototype.updateCount = function(data) {
+        console.log('inside', data);
+        if(typeof data === 'object' && data.pos && data.len) {
+            this.el.querySelector('.' + this.options.countClassName).innerHTML = data.pos + ' of ' + data.len;
+        }
+    };
+
     SwipeBar.prototype.show = function() {
         if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
             this.$el.removeClass('is-hidden');
@@ -67,6 +74,10 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
 
     SwipeBar.prototype.bindListeners = function() {
         var self = this;
+
+        common.mediator.on('module:swipenav:position:update', function(data){
+            self.updateCount.call(self, data);
+        });
 
         bean.on(this.body, 'click', '.js-' + this.options.btnClassName, function(e) {
             var dir = (e.target.getAttribute('data-direction') === 'left') ? 'prev' : 'next';

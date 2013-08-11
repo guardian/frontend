@@ -155,7 +155,7 @@ define([
 
         if (pinHeader) {
             header = header || $('#header');
-            header.css('top', contentOffset.top - header.offset().height + 'px');
+            header.css('top', contentOffset.top - header.offset().height - 24 + 'px');
         }
 
         if (swipeContainerHeight !== contentHeight) {
@@ -469,6 +469,7 @@ define([
             if(el === visiblePane && !el.pending) {
                 doAfterShow(el);
             }
+            common.mediator.emit('module:swipenav:position:update', { len: sequenceLen, pos: sequencePos + 1});
         });
 
         // Fire the first pane-loaded event
