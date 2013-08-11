@@ -1,25 +1,59 @@
 .affix {
-  position: fixed;
+    position: fixed;
 }
 
-.affix-top {
-  position: relative;
-}
+    .affix--top {
+        position: relative;
+    }
 
-.affix-bottom {
-  position: absolute;
-}
+    .affix--bottom {
+        position: absolute;
+    }
 
 .swipe-bar {
-  background-color: $mushroom;
-  width: 100%;
-  z-index: 9999;
+    display: block;
+    height: 24px;
+    width: 100%;
+    z-index: 9999;
+    background-color: #F9F9F7;
+    text-align: center;
+
+    &.affix {
+        top: 0px;
+        opacity: 0.95;
+    }
+
+    &.affix--top {
+        top: 58px;
+    }
+
+    &.is-hidden {
+        display: none;
+    }
 }
 
-.swipe-bar.affix {
-  top: 0px;
-}
+    .swipe-bar__btn {
+        display: block;
+        position: absolute;
+        top: 0px;
+        background-color: transparent;
+        border: none;
 
-.swipe-bar.affix-top {
-  top: 58px;
-}
+        i { text-indent: -9999px; }
+    }
+
+    .swipe-bar__btn--right {
+        right: 0;
+        padding: 7px 16px 2px 8px;
+    }
+
+    .swipe-bar__btn--left {
+        left: 0;
+        padding: 7px 8px 2px 16px;
+        i { @include rotate(180deg); }
+    }
+
+    .swipe-bar__count {
+        display: inline-block;
+        @extend %type-11;
+    }

@@ -3,7 +3,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     var Affix = function (options) {
         var self = this;
 
-        this.options = common.extend(Affix.OPTIONS, options);
+        this.options = common.extend(Affix.DEFAULTS, options);
         this.$window = bonzo(document.body);
 
         bean.on(window, 'scroll', function() {
@@ -21,9 +21,9 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
         this.checkPosition();
     };
 
-    Affix.RESET = 'affix affix-top affix-bottom';
+    Affix.RESET = 'affix affix--top affix--bottom';
 
-    Affix.OPTIONS = {
+    Affix.DEFAULTS = {
         offset: 0
     };
 
@@ -57,7 +57,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
         this.unpin   = affix === 'bottom' ? position.top - scrollTop : null;
 
         this.$element.removeClass(Affix.RESET);
-        this.$element.addClass('affix' + (affix ? '-' + affix : ''));
+        this.$element.addClass('affix' + (affix ? '--' + affix : ''));
 
         if (affix === 'bottom') {
             this.$element.offset({ top: document.body.offsetHeight - offsetBottom - this.$element.dim().height });

@@ -21,13 +21,20 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
 
     SwipeBar.prototype.DEFAULTS = {
         className : 'swipe-bar',
-        btnClassName : 'swipe-bar__btn'
+        btnClassName : 'swipe-bar__btn',
+        countClassName : 'swipe-bar__count'
     };
 
     SwipeBar.prototype.generateTpl = function() {
-        var wrap = document.createElement('div');
+        var self = this,
+            wrap = document.createElement('div'),
+            span = document.createElement('span');
+
         wrap.className = [this.options.className, 'js-' + this.options.className].join(' ');
-        wrap.innerHTML = '<p>foooooo</p>';
+        span.className = this.options.countClassName;
+        wrap.appendChild(span);
+        ['right', 'left'].forEach(function(dir){ wrap.appendChild(self.generateBtn(dir)); });
+
         return wrap;
     };
 
@@ -38,7 +45,7 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
         btn.className = ['js-' + btnClassName, btnClassName, btnClassName + '--' + dir].join(' ');
         btn.setAttribute('data-direction', dir);
         btn.setAttribute('data-link-name', 'swipe bar ' + dir);
-        btn.innerHTML = '<i class="i i-swipe-arrow i-swipe-arrow--' + dir +'">' + dir + '</i>';
+        btn.innerHTML = '<i class="i i-swipe-arrow-small i-swipe-arrow--' + dir +'">' + dir + '</i>';
         return btn;
     };
 
@@ -50,24 +57,30 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
     };
 
     SwipeBar.prototype.hide = function() {
-        this.$el.addClass('is-hidden');
-        this.isVisible = false;
+        if(this.$el.hasClass('affix')) {
+            this.$el.addClass('is-hidden');
+            this.isVisible = false;
+        } else {
+            this.show();
+        }
     };
 
     SwipeBar.prototype.bindListeners = function() {
-//        bean.on(body, 'click', '.js-' + btnClassName, function(e) {
-//            var dir = (e.target.getAttribute(dataAttribute) === 'left') ? 'prev' : 'next';
-//            common.mediator.emit('module:swipenav:navigate:' + dir);
-//        });
-//
-//        var debouncedHideBtns = common.debounce(function(){
-//            hideBtns();
-//        }, 1000);
-//
-//        bean.on(body, 'touchmove', function() {
-//            showBtns();
-//            debouncedHideBtns();
-//        });
+        var self = this;
+
+        bean.on(this.body, 'click', '.js-' + this.options.btnClassName, function(e) {
+            var dir = (e.target.getAttribute('data-direction') === 'left') ? 'prev' : 'next';
+            common.mediator.emit('module:swipenav:navigate:' + dir);
+        });
+
+        var debouncedHide = common.debounce(function(){
+            self.hide();
+        }, 1000);
+
+        bean.on(window, 'scroll', function(){
+            self.show();
+            debouncedHide();
+        });
     };
 
     return SwipeBar;
