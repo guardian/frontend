@@ -15,6 +15,7 @@ $featuredImgWidth: 460px;
         margin: 0;
         padding: $baseline*3 $gutter/4;
         @include box-sizing(border-box);
+        width: 100%;
     }
     .trail__standfirst {
         display: none;
@@ -137,7 +138,8 @@ $featuredImgWidth: 460px;
     }
     .trail__title {
         color: #ffffff;
-        margin: $baseline*3 $gutter*3/4 0;
+        margin: 0 $gutter*3/4;
+        padding-top: $baseline*3;
     }
     .trail__standfirst {
         color: #ffffff;
@@ -195,7 +197,8 @@ $featuredImgWidth: 460px;
         }
         .trail__title {
             color: #ffffff;
-            margin: $baseline*3 $gutter*3/4 0;
+            margin: 0 $gutter*3/4;
+            padding-top: $baseline*3;
         }
         .trail__standfirst {
             color: #ffffff;
