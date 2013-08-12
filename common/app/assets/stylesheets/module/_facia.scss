@@ -7,10 +7,11 @@
     .trail__title {
         position:absolute;
         bottom: 0;
+        background-color: #005688;
         background-color: rgba(0, 86, 136, 0.6);
         color: #ffffff;
         margin: 0;
-        padding: $baseline*3 $baseline;
+        padding: $baseline*3 $gutter/4;
         @include box-sizing(border-box);
     }
     .trail__standfirst {
@@ -65,7 +66,8 @@
             bottom: 0;
             right: auto;
             height: 30px;
-            padding-right: $baseline;
+            padding-right: $gutter/4;
+            background-color: #000000;
             background-color: rgba(0, 0, 0, 0.3);
             a {
                 color: #ffffff;
@@ -96,12 +98,12 @@
                 .trail__title {
                     @include font($serif, 700, 20, 24);
                     color: #ffffff;
-                    margin: $baseline*2 $baseline $baseline*3;
+                    margin: $baseline*2 $gutter/4 $baseline*3;
                 }
             }
             .trail:nth-child(n+2) {
                 margin: $baseline*3 0 0;
-                padding: $baseline*3 $baseline 0;
+                padding: $baseline*3 $gutter/4 0;
                 border-top: 1px dotted #000000;
                 .trail__image{
                     display: none;
@@ -138,11 +140,11 @@
         }
         .trail__title {
             color: #ffffff;
-            margin: $baseline*3 $baseline*3 0;
+            margin: $baseline*3 $gutter*3/4 0;
         }
         .trail__standfirst {
             color: #ffffff;
-            margin: $baseline*6 $baseline*3 0;
+            margin: $baseline*6 $gutter*3/4 0;
         }
         @include mq(tablet, desktop) {
             .trail__image {
@@ -196,11 +198,11 @@
             }
             .trail__title {
                 color: #ffffff;
-                margin: $baseline*3 $baseline*3 0;
+                margin: $baseline*3 $gutter*3/4 0;
             }
             .trail__standfirst {
                 color: #ffffff;
-                margin: $baseline*6 $baseline*3 0;
+                margin: $baseline*6 $gutter*3/4 0;
             }
         }
         .trail:nth-child(2) {
