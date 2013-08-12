@@ -3,7 +3,7 @@ package common.editions
 import org.joda.time.DateTimeZone
 import model._
 import common._
-import views.support.{Headline, Thumbnail, Featured}
+import views.support.{TopStories, Headline, Thumbnail, Featured}
 import scala.concurrent.Future
 import conf.ContentApi
 import contentapi.QueryDefaults
@@ -166,7 +166,7 @@ object Au extends Edition(
 
   val configuredFrontsFacia = Map(
     (Editionalise("", Au), Seq(
-      RunningOrderTrailblockDescription("news", "au/news/top-stories", "Top Stories", 5, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "au/news/top-stories", "Top Stories", 5, style = Some(TopStories)),
       RunningOrderTrailblockDescription("news", "au/sport/top-stories", "Sports", 5, style = Some(Featured)),
       RunningOrderTrailblockDescription("news", "au/commentisfree/top-stories", "Comment is free", 3, style = Some(Featured)),
       RunningOrderTrailblockDescription("news", "au/culture/top-stories", "Culture", 3, style = Some(Thumbnail)),
