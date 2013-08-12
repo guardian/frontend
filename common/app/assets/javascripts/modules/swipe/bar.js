@@ -1,4 +1,4 @@
-define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean, bonzo, Affix) {
+define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
 
     var SwipeBar = function(options) {
         this.options = common.extend(this.DEFAULTS, options);
@@ -11,12 +11,6 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
         bonzo(document.getElementById('header')).after(this.el);
 
         this.bindListeners();
-        this.affix = new Affix({
-            element: this.el,
-            offset: {
-                top: 58
-            }
-        });
     };
 
     SwipeBar.prototype.DEFAULTS = {
@@ -30,7 +24,7 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
             wrap = document.createElement('div'),
             span = document.createElement('span');
 
-        wrap.className = [this.options.className, 'js-' + this.options.className].join(' ');
+        wrap.className = [this.options.className, 'js-' + this.options.className, 'is-hidden'].join(' ');
         span.className = this.options.countClassName;
         wrap.appendChild(span);
         ['right', 'left'].forEach(function(dir){ wrap.appendChild(self.generateBtn(dir)); });
@@ -45,7 +39,7 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
         btn.className = ['js-' + btnClassName, btnClassName, btnClassName + '--' + dir].join(' ');
         btn.setAttribute('data-direction', dir);
         btn.setAttribute('data-link-name', 'swipe bar ' + dir);
-        btn.innerHTML = '<i class="i i-swipe-arrow-small i-swipe-arrow--' + dir +'">' + dir + '</i>';
+        btn.innerHTML = '<i class="i i-swipe-arrow i-swipe-arrow--' + dir +'">' + dir + '</i>';
         return btn;
     };
 
@@ -56,19 +50,19 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
     };
 
     SwipeBar.prototype.show = function() {
-        if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
-            this.$el.removeClass('is-hidden');
-            this.isVisible = true;
+        if(!common.isVisible(document.getElementById('header'))) {
+            if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
+                this.$el.removeClass('is-hidden');
+                this.isVisible = true;
+            }
+        } else {
+            this.hide();
         }
     };
 
-    SwipeBar.prototype.hide = function() {
-        if(this.$el.hasClass('affix')) {
-            this.$el.addClass('is-hidden');
-            this.isVisible = false;
-        } else {
-            this.show();
-        }
+    SwipeBar.prototype.hide = function(){
+        this.$el.addClass('is-hidden');
+        this.isVisible = false;
     };
 
     SwipeBar.prototype.bindListeners = function() {
@@ -85,9 +79,9 @@ define(['common', 'bean', 'bonzo', 'modules/swipe/affix'], function(common, bean
 
         var debouncedHide = common.debounce(function(){
             self.hide();
-        }, 1000);
+        }, 500);
 
-        bean.on(window, 'scroll', function(){
+        bean.on(this.body, 'touchmove', function(){
             self.show();
             debouncedHide();
         });

@@ -1,31 +1,13 @@
-.affix {
-    position: fixed;
-}
-
-    .affix--top {
-        position: relative;
-    }
-
-    .affix--bottom {
-        position: absolute;
-    }
-
 .swipe-bar {
     display: block;
-    height: 24px;
+    position: fixed;
+    top: 0;
+    height: 36px;
     width: 100%;
     z-index: 9999;
+    opacity: 0.75;
     background-color: #F9F9F7;
     text-align: center;
-
-    &.affix {
-        top: 0px;
-        opacity: 0.95;
-    }
-
-    &.affix--top {
-        top: 58px;
-    }
 
     &.is-hidden {
         display: none;
@@ -44,16 +26,17 @@
 
     .swipe-bar__btn--right {
         right: 0;
-        padding: 7px 16px 2px 8px;
+        padding: 10px $gutter 10px 8px;
     }
 
     .swipe-bar__btn--left {
         left: 0;
-        padding: 7px 8px 2px 16px;
+        padding: 10px 8px 10px $gutter;
         i { @include rotate(180deg); }
     }
 
     .swipe-bar__count {
         display: inline-block;
+        padding: 10px 0;
         @extend %type-11;
     }

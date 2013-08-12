@@ -40,7 +40,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
 
         var debouncedHideBtns = common.debounce(function(){
             hideBtns();
-        }, 1000);
+        }, 500);
 
         bean.on(body, 'touchmove', function() {
             showBtns();
