@@ -24,3 +24,7 @@ GET    /front-trails                                        controllers.MoreStor
 GET    /front-trails.json                                   controllers.MoreStoriesController.renderFrontTrails(path = "")
 GET    /front-trails/*path.json                             controllers.MoreStoriesController.renderFrontTrails(path)
 GET    /front-trails/*path                                  controllers.MoreStoriesController.renderFrontTrails(path)
+
+# Experimental
+GET    /cards/opengraph/*path                               controllers.CardController.opengraph(path)
+GET    /cards/wikipedia/*path                               controllers.CardController.wikipedia(path)

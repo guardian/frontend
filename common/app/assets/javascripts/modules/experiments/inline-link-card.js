@@ -27,7 +27,6 @@ define([
 
     InlineLinkCard.prototype.init = function() {
         var self = this;
-
         self.loadCard();
 
         bean.on(window, 'resize', common.debounce(function(e){
@@ -37,6 +36,7 @@ define([
 
     InlineLinkCard.prototype.loadCard = function() {
         var layoutMode = detect.getLayoutMode();
+
         if(layoutMode === 'extended' && !this.hasLoadedCard) {
             this.fetchData();
         }
@@ -44,11 +44,13 @@ define([
 
     InlineLinkCard.prototype.prependCard = function(href, data, title) {
         var self = this,
-            headline = data.headline || false,
-            thumbnail = data.thumbnail,
+            headline = data.title || false,
+            image = data.image || false,
+            datePublished = data.published_time || false,
             tpl,
-            thumbnailFragment = '',
-            titleFragment = '';
+            imageFragment = '',
+            titleFragment = '',
+            publishedFragment = '';
 
         if (!headline) {
             return false;
@@ -57,35 +59,50 @@ define([
         if (title) {
             titleFragment = '<h2 class="card__title">' + title + '</h2>';
         }
-        if (thumbnail) {
-            thumbnailFragment = '<img src="' + thumbnail + '" alt="" class="card__media" />';
+        if (image && (/^\//).test(href)) {
+            imageFragment = '<img src="' + image + '" alt="" class="card__media" />';
+        }
+        if (datePublished) {
+            publishedFragment = '<div class="dateline"><i class="i i-date relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
         }
 
         tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
                   '<div class="furniture furniture--left card">' +
                       titleFragment +
-                      thumbnailFragment +
-                      '<div class="card__body u-text-hyphenate"><h3 class="card__headline">' + headline + '</h3></div>' +
+                      imageFragment +
+                      '<div class="card__body u-text-hyphenate">' +
+                          publishedFragment +
+                          '<h3 class="card__headline">' + headline + '</h3>' +
+                          // datePublished +
+                      '</div>' +
                   '</div>' +
               '</a>';
 
         self.$linkContext.before(tpl);
+        common.mediator.emit('fragment:ready:dates');
     };
 
     InlineLinkCard.prototype.fetchData = function() {
         var href = this.link.getAttribute('href'),
-            self = this;
+            self = this,
+            reqURL;
+        if ((/^\//).test(href)) {
+            reqURL = '/cards/opengraph/' + encodeURIComponent('http://www.theguardian.com' + href + '?view=desktop');
+        } else if ((/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\.\-]+$/).test(href)) {
+            reqURL = '/cards/wikipedia/' + encodeURIComponent(href);
+        } else {
+            reqURL = '/cards/opengraph/' + encodeURIComponent(href);
+        }
 
         // make request to endpoint
         ajax({
-            url: href + '.json',
+            url: reqURL,
             type: 'json',
             crossOrigin: true
         }).then(
             function(resp) {
                 self.hasLoadedCard = true;
-
-                self.prependCard(href, resp.config.page, self.title);
+                self.prependCard(href, resp, self.title);
             },
             function(req) {
                 common.mediator.emit('module:error', 'Failed to cardify in body link: ' + req.statusText, 'modules/inline-link-card.js');
