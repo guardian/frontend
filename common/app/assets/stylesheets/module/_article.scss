@@ -116,10 +116,18 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
         display: block;
     }
     @include mq(leftCol) {
-        position: absolute;
-        top: 0;
-        left: 0;
+        float: left;
+        margin-left: ($a-leftCol-width + $gs-gutter)*-1;
+        margin-bottom: $baseline*4;
         width: $a-leftCol-width;
+
+        .media-primary + & {
+            margin-left: 0;
+            margin-bottom: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     }
 }
 @include mq(tablet) {
@@ -159,7 +167,6 @@ video {
         padding-right: 0 !important;
     }
     .d-tabs,
-    .byline,
     .player,
     .media-primary {
         margin-left: 0 !important;
