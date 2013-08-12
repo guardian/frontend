@@ -46,17 +46,17 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
 
     Profile.prototype.setFragmentFromCookie = function() {
         var user = Id.getUserFromCookie(),
-            container = bonzo(this.dom.container),
-            content = bonzo(this.dom.content),
-            popup = bonzo(this.dom.popup);
+            $container = bonzo(this.dom.container),
+            $content = bonzo(this.dom.content),
+            $popup = bonzo(this.dom.popup);
 
-        container.removeClass('js-hidden');
-        content.html(user ? user.displayName : Profile.CONFIG.signinText);
+        $container.removeClass('js-hidden');
+        $content.html(user ? user.displayName : Profile.CONFIG.signinText);
 
         if (user) {
-            popup.html('<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>');
+            $popup.html('<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>');
         } else {
-            popup.remove();
+            $popup.remove();
         }
 
         this.emitLoadedEvent(user);
