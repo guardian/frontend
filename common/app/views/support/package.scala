@@ -43,6 +43,11 @@ object Headline extends Style { val className = "headline-only" }
  */
 object SectionFront extends Style { val className = "section-front" }
 
+/**
+ * trails for the top stories component
+ */
+object TopStories extends Style { val className = "top-stories" }
+
 object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {
