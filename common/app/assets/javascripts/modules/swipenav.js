@@ -108,7 +108,7 @@ define([
 
             // Is cached ?
             if (frag && frag.html) {
-                populate(el, frag.html);
+                populate(el, frag.html, url);
                 common.mediator.emit('module:swipenav:pane:loaded', el);
                 callback();
             }
@@ -128,8 +128,7 @@ define([
                     sequenceCache[url].config = frag.config || {};
 
                     if (el.pendingUrl === url) {
-                        el.url = url;
-                        populate(el, html);
+                        populate(el, html, url);
                         delete el.pendingUrl;
                     }
                 }).fail(function () {
@@ -141,8 +140,9 @@ define([
         }
     }
 
-    function populate(el, html) {
+    function populate(el, html, url) {
         el.bodyPart.innerHTML = html;
+        el.url = url;
     }
 
     // Make the swipeContainer height equal to the visiblePane height. (We view the latter through the former.)
@@ -267,16 +267,9 @@ define([
                 i;
 
             if (len >= 3) {
-                //Remove current url from sequence
-                if(trails.indexOf(url) > -1) { // Make sure url is the first in the sequence
-                    if (trails[0] !== url) {
-                        trails.unshift(url);
-                        len += 1;
-                    }
-                } else {
-                    trails[0] = url;
-                    len += 1;
-                }
+
+                trails.unshift(url);
+                len += 1;
 
                 sequence = [];
                 sequenceLen = 0;
