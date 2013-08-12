@@ -3,7 +3,7 @@ package common.editions
 import common._
 import org.joda.time.DateTimeZone
 import model.{RunningOrderTrailblockDescription, MetaData, ItemTrailblockDescription}
-import views.support.{Headline, Thumbnail, Featured}
+import views.support.{TopStories, Headline, Thumbnail, Featured}
 import contentapi.QueryDefaults
 
 object Us extends Edition(
@@ -101,7 +101,7 @@ object Us extends Edition(
 
   val configuredFrontsFacia = Map(
     (Editionalise("", Us), Seq(
-      RunningOrderTrailblockDescription("news", "us/news/top-stories", "Top Stories", 5, style = Some(Featured)),
+      RunningOrderTrailblockDescription("news", "us/news/top-stories", "Top Stories", 5, style = Some(TopStories)),
       RunningOrderTrailblockDescription("news", "us/sport/top-stories", "Sports", 5, style = Some(Featured)),
       RunningOrderTrailblockDescription("news", "us/commentisfree/top-stories", "Comment is free", 3, style = Some(Featured)),
       RunningOrderTrailblockDescription("news", "us/culture/top-stories", "Culture", 3, style = Some(Thumbnail)),
