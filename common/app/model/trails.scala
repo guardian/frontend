@@ -144,14 +144,13 @@ class RunningOrderTrailblockDescription(
             val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
               val queryParams: Map[String, String] = QueryParams.get(query).mapValues{_.mkString("")}
               val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
-              ContentApi.fetch(Configuration.contentApi.host + "/search", queryParamsWithEdition).flatMap { resp =>
-              val ids = (parse(resp) \\ "id") map {_.as[String] } mkString(",")
-              ContentApi.search(edition)
-                .ids(ids)
-                .response map { r =>
-                  r.results.map(new Content(_))
-                }
-              }.fallbackTo(Future(Nil))
+              val search = ContentApi.search(edition)
+              val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
+              val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
+
+              newSearch.response map { r =>
+                r.results.map(new Content(_))
+              }
             } getOrElse Future(Nil)
 
             for {
