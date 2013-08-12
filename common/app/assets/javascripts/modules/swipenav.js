@@ -292,10 +292,6 @@ define([
                     }
                 }
 
-                console.log(sequenceLen);
-                console.dir(sequence);
-                console.dir(sequenceCache);
-
                 setSequencePos(window.location.pathname);
                 callback();
             } else {
