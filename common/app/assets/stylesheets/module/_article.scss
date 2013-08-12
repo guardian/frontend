@@ -215,9 +215,6 @@ video {
 }
 
 @include mq(leftCol) {
-    #preloads {
-        padding: 0 $gutter;
-    }
     .article-wrapper {
         padding-left: 0;
         padding-right: 0;
@@ -235,5 +232,11 @@ video {
     .article-head {
         padding-top: $baseline*2;
         padding-bottom: $baseline*2;
+    }
+}
+
+@include mq(wide) {
+    .article-wrapper {
+        margin-left: $gs-column-width;
     }
 }

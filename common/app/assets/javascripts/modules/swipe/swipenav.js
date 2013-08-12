@@ -521,10 +521,11 @@ define([
         });
 
         // Bind back/forward button behavior
-        window.onpopstate = function (event) {
+        window.onpopstate = function(event) {
             // Ignore inital popstate that some browsers fire on page load
-            if (!event.state && !event.state.title) { return; }
-            window.location.reload();
+            if (event.state && initiatedBy !== 'initial') {
+                window.location.reload();
+            }
         };
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
