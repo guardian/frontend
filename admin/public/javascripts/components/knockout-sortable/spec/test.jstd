@@ -1,8 +1,0 @@
-load:
- - lib/jasmine.js
- - lib/JasmineAdapter.js
- - ../ext/jquery-1.7.1.min.js
- - ../ext/jquery-ui.min.js
- - ../ext/knockout-2.0.0.debug.js
- - ../build/knockout-sortable.min.js
- - knockout-sortable.spec.js

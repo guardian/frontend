@@ -34,12 +34,12 @@ GET     /dev/switchboard                 controllers.SwitchboardController.rende
 POST    /dev/switchboard                 controllers.SwitchboardController.save()
 
 # Fronts
-GET       /fronts                                        controllers.FrontsController.index()
-GET       /fronts/api                                    controllers.FrontsController.schema()
-GET       /fronts/api/:edition/:section/:block           controllers.FrontsController.readBlock(edition, section, block)
-POST      /fronts/api/:edition/:section/:block           controllers.FrontsController.updateBlock(edition, section, block)
-POST      /fronts/api/:edition/:section/:block/*trail    controllers.FrontsController.updateTrail(edition, section, block, trail)
-DELETE    /fronts/api/:edition/:section/:block           controllers.FrontsController.deleteTrail(edition, section, block)
+GET       /fronts                        controllers.FrontsController.index()
+GET       /fronts/api                    controllers.FrontsController.schema()
+GET       /fronts/config/*id             controllers.FrontsController.getConfig(id)
+GET       /fronts/api/*id                controllers.FrontsController.readBlock(id)
+POST      /fronts/api/*id                controllers.FrontsController.updateBlock(id)
+DELETE    /fronts/api/*id                controllers.FrontsController.deleteTrail(id)
 
 # Analytics
 GET     /analytics/kpis                  controllers.AnalyticsController.kpis()

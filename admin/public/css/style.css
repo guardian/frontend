@@ -354,46 +354,55 @@ a.cta, .cta a {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
-    width: 25%;
-}
-
-.fronts .lists {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    float: left;
-    width: 75%;
-}
-
-.fronts .finder {
+    width: 300px;
+    padding: 10px;
     background-color: #ccc;
-    padding: 7px 7px 5px 7px;
 }
 
 .fronts .finder input[type="text"] {
     width: 49%;
 }
 
-.fronts .list-picker {
+.fronts header {
     background-color: #ccc;
-    padding: 7px 7px 5px 7px;
+    padding: 7px 5px 5px 10px;
+    overflow: auto;
+}
+
+.fronts header .tool-title {
+    float: left;
+}
+
+.fronts header .list-picker {
     float: right;
-    width: 75%;
-    border-left: 10px solid #fff;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+}
+
+.fronts .tool-title {
+    font-size: 18px;
 }
 
 .fronts .list-picker__title,
 .fronts .finder__title {
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .fronts .finder__title {
     color: #666;
 }
 
-.fronts .list-picker__title {
-    color: #666;
+.fronts .list-tool {
+    float: right;
+    cursor: pointer;
+    margin: 3px 2px 0 0;
+    opacity: 0.6;
+}
+
+.fronts .list-tool:hover {
+    opacity: inherit;
+}
+
+.fronts .list-tool:active {
+    opacity: 0.6;
 }
 
 .fronts .list-picker__item {
@@ -413,11 +422,12 @@ a.cta, .cta a {
     border-right:  0;
 }
 
-.fronts .lists .connectedList {
-    min-height: 50px;
+.fronts #trailblocks .connectedList {
+    min-height: 100px;
+    background: #eee;
 }
 
-.fronts .lists .connectedList.pending {
+.fronts #trailblocks .connectedList.pending {
     pointer-events: none;
     opacity: 0.5;
 }
@@ -469,7 +479,7 @@ a.cta, .cta a {
     font-size: 12px;
     float: left;
     padding: 0 6px;    
-    margin: 2px 0 0 3px;
+    margin: 2px 0 0 1px;
     background-color: #ccc;    
     cursor: pointer;
 }
@@ -519,28 +529,42 @@ a.cta, .cta a {
     margin: 0 2px 0 0;
 }
 
+.fronts #trailblocks {
+    margin: 0 0 0 300px;
+}
+
 .fronts .trailblock {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    width: 33.333%;
+    width: 290px;
     float: left;
-    border-top:  10px solid #fff;
-    border-left: 10px solid #fff;
+    padding: 10px 0 0 10px;
 }
 
 .fronts .trail {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 107px;
     cursor: move;
     background-color: #fff;
-    padding: 5px 5px 5px 10px;
-    border-bottom: 1px solid #ccc;
+    padding: 5px 5px 10px 10px;
+    border-left: 1px solid #666;
+    border-right: 1px solid #666;
+    border-bottom: 1px dotted #666;
+}
+
+.fronts .finder .trail {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background-color: #eee;
+}
+
+.fronts .trail:hover {
+    background-color: rgb(223, 240, 216);
 }
 
 .fronts .trail.redundant {
     opacity: 0.2;
-}
-
-.fronts .trail:hover {
-    background-color: #eee;
 }
 
 .fronts .ui-sortable-placeholder {
@@ -567,12 +591,8 @@ a.cta, .cta a {
 }
 
 .fronts .trail img {
-    display: none;
     float: left;
-    margin: 2px 10px 10px 0;
-    width: 42%;
-    width: 140px;
-    height: 84px;    
+    width: 75px;
     background-color: #eee;
 }
 
@@ -587,12 +607,12 @@ a.cta, .cta a {
 }
 
 .fronts .trail .webTitle {
-    font-family: EgyptianText, georgia, serif;
-    font-size: 15px;
-    line-height: 17px;
-    font-weight: bold;
-    margin: 0;
-    padding: 0 0 5px 0;
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin: 0 0 5px 0;
+    height: 40px;
+    overflow: hidden;
 }
 
 .fronts .trail .webTitle--override {
@@ -608,18 +628,19 @@ a.cta, .cta a {
 }
 
 .fronts .trail .trail__meta {
+    width: 180px;
+    height: 16px;
+    float: right;
     color: #999;
-    font-family: arial, sans-serif;
-    font-size: 11px;
-    font-weight: normal;
-    line-height: 16px;
+    font-size: 10px;
+    line-height: 10px;
 }
 
 .fronts .trail .trail__meta a {
     display: none;
 }
 
-.fronts .trail:hover .trail__meta a {
+.fronts .persisted .trail:hover .trail__meta a {
     display: inline-block;
     color: #666;
     border-left: 1px #ddd solid;
@@ -636,19 +657,22 @@ a.cta, .cta a {
 }
 
 .fronts select {
-    width: 20%;
+    width: 150px;
     margin: -2px 0 0 0;
 }
 
-.fronts .clipboard {
+.fronts #clipboard {
     min-height: 20px;
     margin: 5px 0 10px 0;
     background: #ddd;
 }
 
 .fronts .needs-more {
-    padding: 5px 0 0 10px;
-    color: #d61d00;
+    border-left: 1px solid #666;
+    border-right: 1px solid #666;
+    background: #d61d00;
+    color: #fff;
+    padding: 0px 10px;
     font-size: 12px;
     text-transform: uppercase;    
 }
@@ -679,6 +703,31 @@ a.cta, .cta a {
 .fronts .list-config input.tiny {
     width: 40px;
     text-align: right;
+}
+
+.fronts .trail_stats {
+    width: 180px;
+    height: 30px;
+    float: right;
+    font-size: 9px;
+    line-height: 12px;
+    position: relative;
+}
+
+.fronts .pageviews {
+    color: #d61d00;
+    font-weight: bold;
+    position: absolute;
+    bottom: -2px;
+    left: 150px;
+}
+
+.fronts .pageviews-graph canvas {
+    max-width: 140px;
+    float: right;
+    position: absolute;
+    bottom: -2px;
+    right: 33px;
 }
 
 /** http://localhost:9003/analytics/browsers */

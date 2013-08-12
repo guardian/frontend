@@ -16,9 +16,9 @@ class TrailblockAgent(val description: TrailblockDescription) extends AkkaSuppor
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
-  def refresh() = description.query map refreshTrails
+  def refresh() { description.query map refreshTrails }
 
-  def refreshTrails(newTrails: Seq[Trail]) = {
+  def refreshTrails(newTrails: Seq[Trail]) {
     agent.send{ old =>
 
       val oldUrls = old.toList.flatMap(_.trails).map(_.url).toList
@@ -36,7 +36,7 @@ class TrailblockAgent(val description: TrailblockDescription) extends AkkaSuppor
     }
   }
 
-  def close() = agent.close()
+  def close() {agent.close()}
 
   def trailblock: Option[Trailblock] = agent()
 

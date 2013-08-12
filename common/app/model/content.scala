@@ -81,7 +81,8 @@ class Content(
     ("page-code", fields("internalPageCode")),
     ("isLive", isLive),
     ("wordCount", wordCount),
-    ("shortUrl", shortUrl)
+    ("shortUrl", shortUrl),
+    ("thumbnail", thumbnailPath.getOrElse(false))
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override lazy val cacheSeconds = {
@@ -139,6 +140,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   lazy val size = images.size
   lazy val contentType = "Gallery"
   lazy val landscapes = images.filter(i => i.width > i.height)
+  lazy val portraits = images.filter(i => i.width < i.height)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
