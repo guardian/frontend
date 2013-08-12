@@ -2,17 +2,17 @@
 
 @admin_main("Fronts editor", env, isAuthed = true) {
 
-    <div class="splash" data-bind="visible: false">Loading Fronts Editor...</div> 
+    <div class="splash" data-bind="visible: false">Loading Editor...</div> 
 
     <div class="fronts" data-bind="visible: true" style="display: none">
         <header>
-            <div class="tool-title">Trailblock Editor</div>
+            <div class="tool-title">Collections Editor</div>
             <div class="list-picker">
                 <span data-bind="with: $root.selectedBlock()">
                     <a href="#" data-bind="click: $root.displayAllEditions">View in all editions &raquo;</a>
                 </span>
 
-                <span class="list-picker__title">Find blocks:</span>
+                <span class="list-picker__title">Find collections:</span>
 
                 <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Choose Edition...'"></select>
 
@@ -106,7 +106,7 @@
                     <div>
                         <input type="number" class="tiny" data-bind="value: config.max"/> Maximum
                     </div>
-                    <div>ContentApi query for trail automation:</div>
+                    <div>ContentApi query for collection automation:</div>
                     <div>
                         <input type="text" data-bind="value: config.contentApiQuery"/>
                     </div>
