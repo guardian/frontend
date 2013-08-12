@@ -248,6 +248,7 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
   }
 
   override def onStart() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
     Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
       refresh()
     }

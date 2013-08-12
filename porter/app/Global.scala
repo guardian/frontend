@@ -3,9 +3,8 @@ import jobs._
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings  {
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
 
+  def scheduleJobs() {
     Jobs.schedule("AnalyticsLoadJob", "0 0 8/24 * * ?", PorterMetrics.AnalyticsLoadTimingMetric) {
       AnalyticsLoadJob.run()
     }
@@ -14,9 +13,20 @@ object Global extends GlobalSettings  {
     }
   }
 
-  override def onStop(app: play.api.Application) {
+  def descheduleJobs() {
     Jobs.deschedule("AnalyticsLoadJob")
     Jobs.deschedule("FastlyCloudwatchLoadJob")
+  }
+
+  override def onStart(app: play.api.Application) {
+    super.onStart(app)
+
+    descheduleJobs()
+    scheduleJobs()
+  }
+
+  override def onStop(app: play.api.Application) {
+    descheduleJobs()
 
     super.onStop(app)
   }

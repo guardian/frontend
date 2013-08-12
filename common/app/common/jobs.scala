@@ -4,7 +4,7 @@ import org.quartz.impl.StdSchedulerFactory
 import org.quartz._
 import scala.collection.mutable
 
-object Jobs {
+object Jobs extends Logging {
   private val scheduler = StdSchedulerFactory.getDefaultScheduler()
   private val jobs = mutable.Map[String, () => Unit]()
 
@@ -18,6 +18,7 @@ object Jobs {
   scheduler.start()
 
   def schedule(name: String, cron: String, metric: TimingMetricLogging)(block: => Unit) {
+    log.info(s"Scheduling $name")
     jobs.put(name, () => block)
 
     val schedule = CronScheduleBuilder.cronSchedule(new CronExpression(cron))
@@ -29,6 +30,7 @@ object Jobs {
   }
 
   def deschedule(name: String) {
+    log.info(s"Descheduling $name")
     jobs.remove(name)
     scheduler.deleteJob(new JobKey(name))
   }

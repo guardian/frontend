@@ -14,7 +14,7 @@ import scala.concurrent.Future
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
-  override def onStart() {
+  def scheduleJobs() {
     Competitions.competitionIds.zipWithIndex map { case (id, index) =>
       //stagger fixtures and results refreshes to avoid timeouts
       val seconds = index * 5 % 60
@@ -38,28 +38,31 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
       LiveBlog.refresh()
     }
 
-    Jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?", FootballMetrics.LiveBlogRefreshTimingMetric) {
-      LiveBlog.refresh()
-    }
-
     Jobs.schedule("TeamMapRefreshJob", "0 * * * * ?", FootballMetrics.TeamTagMappingsRefreshTimingMetric) {
       TeamMap.refresh()
     }
   }
 
-  override def onStop() {
+  def descheduleJobs() {
     Competitions.competitionIds map { id =>
       Jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
     }
-
     Jobs.deschedule("MatchDayAgentRefreshJob")
     Jobs.deschedule("CompetitionRefreshJob")
-    Competitions.stop()
-
     Jobs.deschedule("LiveBlogRefreshJob")
-    LiveBlog.stop()
-
     Jobs.deschedule("TeamMapRefreshJob")
+  }
+
+  override def onStart() {
+    descheduleJobs()
+    scheduleJobs()
+  }
+
+  override def onStop() {
+    descheduleJobs()
+
+    Competitions.stop()
+    LiveBlog.stop()
     TeamMap.stop()
   }
 }

@@ -6,6 +6,8 @@ import play.api.GlobalSettings
 trait FrontLifecycle extends GlobalSettings {
   override def onStart(app: play.api.Application) {
     super.onStart(app)
+
+    Jobs.deschedule("FrontRefreshJob")
     Jobs.schedule("FrontRefreshJob", "0 * * * * ?", FrontMetrics.FrontLoadTimingMetric) {
       Front.refresh()
     }
