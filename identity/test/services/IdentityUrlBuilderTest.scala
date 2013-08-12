@@ -73,7 +73,7 @@ class IdentityUrlBuilderTest extends path.FreeSpec with ShouldMatchers with Mock
     when(omnitureTracking.registrationType) thenReturn Some("bar")
 
     "should add path and params to configured root" - {
-      idUrlBuilder.buildUrl("test/path", idRequest) should equal(conf.id.url + "/test/path?returnUrl=foo&type=bar")
+      idUrlBuilder.buildUrl("/test/path", idRequest) should equal(conf.id.url + "/test/path?returnUrl=foo&type=bar")
     }
   }
 }
