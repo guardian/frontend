@@ -46,9 +46,10 @@ object Au extends Edition(
       .showFields(trailFields)
       .showInlineElements(inlineElements)
       .showMedia("all")
+      .showEditorsPicks(true)
       .showReferences(references)
       .showStoryPackage(true)
-      .tag(s"world/australia,($supportedTypes)")
+      .tag(s"($supportedTypes)")
       .response
 
     EditorsPicsOrLeadContentAndLatest(promiseOfComment)
