@@ -328,8 +328,6 @@ define([
         // dir = 1   => the right pane
         // dir = -1  => the left pane
 
-        console.log(sequencePos);
-
         if (dir === 0) {
             return getSequenceUrl(sequencePos);
         }
