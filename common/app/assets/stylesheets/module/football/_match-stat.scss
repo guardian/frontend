@@ -1,21 +1,18 @@
 .match-stat {
-    padding-bottom: $baseline;
+    padding-bottom: $baseline*2;
     margin-bottom: 0;
-
-    h5 {
-        font-weight: bold;
-    }
-
-    li {
-        display: inline-block;
-        width: 49%;
-
-        &:nth-child(2) {
-            text-align: right;
-        }
-    }
 
     span {
         display: inline-block;
+    }
+}
+
+.match-stat__item {
+    float: left;
+    width: 49%;
+
+    & + & {
+        float: right;
+        text-align: right;
     }
 }

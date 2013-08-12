@@ -29,13 +29,16 @@ define(["bean",
             $navArrows,
             $images;
 
-        this.selector = '.trail--gallery';
+        this.selector = '.gallerythumbs';
         this.galleryEndpoint = ''; // Hook for tests
 
         this.init = function(opts) {
             self.opts = opts || {};
 
             if (config.switches.lightboxGalleries || self.opts.overrideSwitch) {
+                // Apply tracking to links
+                bonzo(context.querySelectorAll(self.selector + ' a')).attr('data-is-ajax', '1');
+
                 bean.on(context, 'click', self.selector + ' a', function(e) {
                     var galleryUrl = e.currentTarget.href;
 
@@ -71,7 +74,9 @@ define(["bean",
             bean.on(overlay.bodyNode,    'click', '.js-toggle-furniture', this.toggleFurniture);
 
             bean.on(overlay.bodyNode,    'click', '.gallery--fullimage-mode .gallery__img', function() {
-                self.toggleFurniture();
+                if (swipeActive) {
+                    self.swipe.next();
+                }
             });
 
             bean.on(overlay.bodyNode,    'click', '.gallery--grid-mode .gallery__item', function(el) {
