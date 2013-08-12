@@ -59,7 +59,7 @@ define([
         if (title) {
             titleFragment = '<h2 class="card__title">' + title + '</h2>';
         }
-        if (image && (/^\//).test(href)) {
+        if (image) {
             imageFragment = '<img src="' + image + '" alt="" class="card__media" />';
         }
         if (datePublished) {
@@ -83,7 +83,7 @@ define([
     };
 
     InlineLinkCard.prototype.fetchData = function() {
-        var href = this.link.getAttribute('href'),
+        var href = this.link.getAttribute('href').trim(), // Trim because some href attributes contain spaces
             self = this,
             reqURL;
         if ((/^\//).test(href)) {

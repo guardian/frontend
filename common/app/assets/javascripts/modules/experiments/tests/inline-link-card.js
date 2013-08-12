@@ -37,7 +37,7 @@ function (
                             return (/\/[\w\-]+\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
                         }
                         function isVideo(url) {
-                        return (/\/[\w\-]+\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+|youtube\.com|dailymotion\.com|vimeo\.com/).test(url);
+                            return (/\/[\w\-]+\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+|youtube\.com|dailymotion\.com|vimeo\.com/).test(url);
                         }
                         function isGallery(url) {
                             return (/\/[\w\-]+\/gallery\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
@@ -55,9 +55,10 @@ function (
                         function cardifyRelatedInBodyLink(link) {
                             var title = 'Related';
 
-                            if (isVideo(link.href)) { title = 'Video'; }
-                            else if (isGallery(link.href)) { title = 'Gallery'; }
-                            else if (isCif(link.href)) { title = 'Comment'; }
+                            if (isVideo(link.getAttribute('href').trim())) { title = 'Video'; }
+                            else if (isGallery(link.getAttribute('href').trim())) { title = 'Gallery'; }
+                            else if (isCif(link.getAttribute('href').trim())) { title = 'Comment'; }
+                            else if (isWikipedia(link.getAttribute('href').trim())) { title = 'Wikipedia'; }
 
                             new InlineLinkCard(link, link.parentNode, title).init();
                         }
@@ -83,7 +84,7 @@ function (
 
                                 if (numberOfLinksInParagraph > 0) {
                                     while (j < numberOfLinksInParagraph) {
-                                        if (isWhiteListed(linksInParagraph[j].href)) {
+                                        if (isWhiteListed(linksInParagraph[j].getAttribute('href').trim())) {
                                             cardifyRelatedInBodyLink(linksInParagraph[j]);
                                             linkWasCardified = true;
 
