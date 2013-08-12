@@ -9,8 +9,8 @@ import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import conf.Configuration
 
-class Content(
-    delegate: ApiContent) extends Trail with Tags with MetaData {
+class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
+
   private lazy val fields = delegate.safeFields
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
@@ -42,7 +42,10 @@ class Content(
 
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
-
+  
+  override lazy val body: String = delegate.safeFields("body")
+  override lazy val bodyParagraphs: Option[org.jsoup.select.Elements] = Option(Jsoup.parseBodyFragment(body).body().select("p"))
+  
   lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
@@ -114,7 +117,6 @@ object Content {
 }
 
 class Article(private val delegate: ApiContent) extends Content(delegate) {
-  lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
@@ -170,7 +172,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 
 class Interactive(private val delegate: ApiContent) extends Content(delegate) {
   lazy val contentType = "Interactive"
-  lazy val body: String = delegate.safeFields("body")
+  override lazy val body: String = delegate.safeFields("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
