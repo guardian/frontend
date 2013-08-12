@@ -6,7 +6,7 @@
             <a href="@LinkTo{@trail.url}">
                 @if(!(trails.size == 4 && index > 1)){
                     @trail.mainPicture(620).map{ mainPicture =>
-                        <img class="trail__image" src="@mainPicture.path" />
+                        <img class="trail__image" src="@mainPicture.path" alt="" />
                     }
                 }
                 <h2 class="trail__title">@RemoveOuterParaHtml(trail.headline)</h2>

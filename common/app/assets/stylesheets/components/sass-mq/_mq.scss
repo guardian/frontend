@@ -4,6 +4,17 @@
 // meaning @media queries will be rasterized, relying on the cascade itself
 $mq-responsive: true !default;
 
+// Name your breakpoints in a way that creates a ubiquitous language
+// across team members. It will improve communication between
+// stakeholders, designers, developers, and testers.
+$mq-breakpoints: (
+    (mobile  300px)
+    (tablet  600px)
+    (desktop 900px)
+    (wide    1260px)
+) !default;
+
+
 @function px2em($px, $base-font-size: 16px) {
     @if (unitless($px)) {
         @warn "Assuming #{$px} to be in pixels, attempting to convert it into pixels for you";
@@ -48,12 +59,12 @@ $mq-responsive: true !default;
 
 @mixin mq($from: false, $to: false, $and: false) {
 
-    // Initialize variables
+// Initialize variables
     $min-width: 0;
     $max-width: 0;
     $mediaQuery: '';
 
-    // From: this breakpoint (inclusive)
+// From: this breakpoint (inclusive)
     @if $from {
         @if type-of($from) == number {
             $min-width: px2em($from);
@@ -62,7 +73,7 @@ $mq-responsive: true !default;
         }
     }
 
-    // To: that breakpoint (exclusive)
+// To: that breakpoint (exclusive)
     @if $to {
         @if type-of($to) == number {
             $max-width: px2em($to);
@@ -71,10 +82,10 @@ $mq-responsive: true !default;
         }
     }
 
-    // Responsive support is disabled, rasterize the output outside @media blocks
-    // The browser will rely on the cascade itself.
+// Responsive support is disabled, rasterize the output outside @media blocks
+// The browser will rely on the cascade itself.
     @if ($mq-responsive == false) {
-        // Output rules in min-width statements only
+    // Output rules in min-width statements only
         @if ($from and $to == false and $and == false) {
             @content;
         }
@@ -88,8 +99,8 @@ $mq-responsive: true !default;
         $mediaQuery: unquote(#{$mediaQuery});
 
         @media all #{$mediaQuery} {
-            @content;
-        }
+        @content;
+    }
     }
 }
 
@@ -97,7 +108,7 @@ $mq-responsive: true !default;
 // Usage: $mq-breakpoints: mq-add-breakpoint(tvscreen, 1920px);
 // Credit goes to Sam Richard (author of the `respond-to()` mixin)
 @function mq-add-breakpoint($name, $breakpoint) {
-  $breakpoint: $name $breakpoint;
-  $output: append($mq-breakpoints, $breakpoint, 'space');
-  @return $output;
+    $breakpoint: $name $breakpoint;
+    $output: append($mq-breakpoints, $breakpoint, 'space');
+    @return $output;
 }
