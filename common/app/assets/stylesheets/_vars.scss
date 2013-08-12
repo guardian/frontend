@@ -15,6 +15,17 @@ $old-ie:      false !default;
 $svg-support: true !default;
 
 
+/* Layout dimensions
+   ========================================================================== */
+
+$baseline: 4px;
+$gutter: 16px;
+$unitHeight: 36px;
+$inArticleInlineImgWidth: 114px;
+$trailblockImgWidth: 100%;
+$trailblockImgWidthLarge: 140px;
+
+
 /* Breakpoints
    ========================================================================== */
 
@@ -25,26 +36,15 @@ $svg-support: true !default;
 @import 'layout/_grid-system';
 
 $mq-breakpoints: (
-    (mobile  gs-span(4) + $gs-gutter)
-    (tablet  gs-span(9) + $gs-gutter)
-    (desktop gs-span(12) + $gs-gutter)
-    (wide    gs-span(16) + $gs-gutter)
+    (mobile  gs-span(4) + $gutter*2)
+    (tablet  gs-span(9) + $gutter*2)
+    (desktop gs-span(12) + $gutter*2)
+    (wide    gs-span(16) + $gutter*2)
 
     // Tweakpoints
     (desktopAd 810px)
     (mobileLandscape 480px)
 );
-
-
-/* Layout dimensions
-   ========================================================================== */
-
-$baseline: 4px;
-$gutter: 16px;
-$unitHeight: 36px;
-$inArticleInlineImgWidth: 114px;
-$trailblockImgWidth: 100%;
-$trailblockImgWidthLarge: 140px;
 
 
 /* Fonts
