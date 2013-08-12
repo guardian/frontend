@@ -11,6 +11,8 @@ trait FrontLifecycle extends GlobalSettings {
     Jobs.schedule("FrontRefreshJob", "0 * * * * ?", FrontMetrics.FrontLoadTimingMetric) {
       Front.refresh()
     }
+
+    Front.refresh()
   }
 
   override def onStop(app: play.api.Application) {
