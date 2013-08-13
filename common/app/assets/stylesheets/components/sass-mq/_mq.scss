@@ -15,17 +15,17 @@ $mq-breakpoints: (
 ) !default;
 
 
-@function px2em($px, $base-font-size: 16px) {
+@function mq-px2em($px, $base-font-size: 16px) {
     @if (unitless($px)) {
         @warn "Assuming #{$px} to be in pixels, attempting to convert it into pixels for you";
-        @return px2em($px + 0px); // That may fail.
+        @return mq-px2em($px + 0px); // That may fail.
     } @else if (unit($px) == em) {
         @return $px;
     }
     @return ($px / $base-font-size) * 1em;
 }
 
-@function retrieve-breakpoint-width($name) {
+@function mq-retrieve-breakpoint-width($name) {
     @each $breakpoint in $mq-breakpoints {
         $breakpoint-name:  nth($breakpoint, 1);
         $breakpoint-width: nth($breakpoint, 2);
@@ -59,33 +59,33 @@ $mq-breakpoints: (
 
 @mixin mq($from: false, $to: false, $and: false) {
 
-// Initialize variables
+    // Initialize variables
     $min-width: 0;
     $max-width: 0;
     $mediaQuery: '';
 
-// From: this breakpoint (inclusive)
+    // From: this breakpoint (inclusive)
     @if $from {
         @if type-of($from) == number {
-            $min-width: px2em($from);
+            $min-width: mq-px2em($from);
         } @else {
-            $min-width: px2em(retrieve-breakpoint-width($from));
+            $min-width: mq-px2em(mq-retrieve-breakpoint-width($from));
         }
     }
 
-// To: that breakpoint (exclusive)
+    // To: that breakpoint (exclusive)
     @if $to {
         @if type-of($to) == number {
-            $max-width: px2em($to);
+            $max-width: mq-px2em($to);
         } @else {
-            $max-width: px2em(retrieve-breakpoint-width($to) - 1px);
+            $max-width: mq-px2em(mq-retrieve-breakpoint-width($to) - 1px);
         }
     }
 
-// Responsive support is disabled, rasterize the output outside @media blocks
-// The browser will rely on the cascade itself.
+    // Responsive support is disabled, rasterize the output outside @media blocks
+    // The browser will rely on the cascade itself.
     @if ($mq-responsive == false) {
-    // Output rules in min-width statements only
+        // Output rules in min-width statements only
         @if ($from and $to == false and $and == false) {
             @content;
         }
@@ -99,8 +99,8 @@ $mq-breakpoints: (
         $mediaQuery: unquote(#{$mediaQuery});
 
         @media all #{$mediaQuery} {
-        @content;
-    }
+            @content;
+        }
     }
 }
 
