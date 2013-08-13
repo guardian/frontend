@@ -320,9 +320,6 @@ define([
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
                 var swipe = swipeNav(config);
 
-                ears.init();
-                //var bar = new SwipeBar();
-
                 common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
                 common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
             }
