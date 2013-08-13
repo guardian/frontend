@@ -205,7 +205,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validUserResponse)))
       "accesses the get user for token wioth the token param" in {
           api.userForToken(token)
-          verify(http).GET(Matchers.eq("http://example.com/user/user-for-token"), argThat(new ParamMatcher(Iterable(("token", token)))), argThat(new IsNull[Nothing]))
+          verify(http).GET(Matchers.eq("http://example.com/user/user-for-token"), argThat(new ParamsIncludes(Iterable(("token", token)))), argThat(new IsNull[Nothing]))
       }
 
       "returns the user object" in {
@@ -289,7 +289,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "adds the email address and type parameters" in {
         api.sendPasswordResetEmail(testEmail)
-        verify(http).GET(Matchers.eq("http://example.com/user/send-password-reset-email"), argThat(new ParamMatcher(Iterable(("email-address", testEmail), ("type", "reset")))), argThat(new IsNull[Nothing]))
+        verify(http).GET(Matchers.eq("http://example.com/user/send-password-reset-email"), argThat(new ParamsIncludes(Iterable(("email-address", testEmail), ("type", "reset")))), argThat(new IsNull[Nothing]))
       }
 
       "returns an user object" in {
@@ -400,7 +400,6 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       description.appendText("Iterable" + (if(!completeMatch) " including" else "") + items.mkString("(", ",", ")"))
     }
   }
-
  object EmptyParamMatcher extends ParamsMatcher(Iterable.empty)
  class ParamsIncludes(items: Parameters) extends ParamsMatcher(items, false)
 

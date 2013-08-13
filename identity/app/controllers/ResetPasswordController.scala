@@ -67,8 +67,8 @@ class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller 
            api.resetPassword(token,password) map ( _ match {
              case Left(errors) => {
                errors match {
-                 case List( Error("Token expired", _, _)) => SeeOther("/identity/recover/tokenexpired")
-                 case List( Error("Access Denied", _, _)) => SeeOther("/identity/recover/passworderror")
+                 case List( Error("Token expired", _, _)) => SeeOther("/recover/tokenexpired")
+                 case List( Error("Access Denied", _, _)) => SeeOther("/recover/passworderror")
                  case _ => SeeOther("/identity/recover")
                }
              }
@@ -86,7 +86,7 @@ class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller 
       api.userForToken(token) map ( _ match {
         case Left(errors) => {
           log.trace("Could not retrieve password reset request for token: %s".format(token))
-          SeeOther("/identity/recover/tokenexpired")
+          SeeOther("/recover/tokenexpired")
         }
         case Right(user) => {
           passwordResetForm.fill("","",token)

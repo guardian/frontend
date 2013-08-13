@@ -59,11 +59,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
       val clientAuth = ClientAuth("frontend-dev-client-token")
 
       "if api call succeeds" - {
-<<<<<<< HEAD
-        when(api.authBrowser(any[Auth])).thenReturn(Future.successful(Right(List(CookieResponse("testCooke", "testVal"), CookieResponse("SC_testCookie", "secureVal")))))
-=======
         when(api.authBrowser(any[Auth], any[ClientAuth], same(omnitureData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
->>>>>>> origin/master
 
         "should call authBrowser with provided credentials" in Fake {
           signinController.processForm()(fakeRequest)

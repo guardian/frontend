@@ -10,6 +10,7 @@ import idapiclient.responses.{OkResponse, CookiesResponse, AccessTokenResponse}
 import client.connection.util.ExecutionContexts
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.DefaultFormats
+import net.liftweb.json.Serialization.write
 
 
 abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends Logging {
@@ -54,27 +55,27 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
-  git// PASSWORD RESET
+  // PASSWORD RESET
 
   def userForToken( token : String ): Future[Response[User]] = {
     val apiPath = urlJoin("user", "user-for-token")
     val params = Iterable(("token", token))
     val response = http.GET(apiUrl(apiPath), params)
-    response map jsonBodyParser.extract[User]
+    response map jsonBodyParser.extract[User]()
   }
 
   def resetPassword( token : String, newPassword : String ): Future[Response[OkResponse]] = {
     val apiPath = urlJoin("user", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
     val response = http.POST(apiUrl(apiPath), Option(postBody))
-    response map jsonBodyParser.extract[OkResponse]
+    response map jsonBodyParser.extract[OkResponse]()
   }
 
   def sendPasswordResetEmail( emailAddress : String ): Future[Response[User]] = {
     val apiPath = urlJoin("user","send-password-reset-email")
     val params = Iterable(("email-address", emailAddress), ("type", "reset"))
     val response = http.GET(apiUrl(apiPath), params)
-    response map jsonBodyParser.extract[User]
+    response map jsonBodyParser.extract[User]()
   }
 
 //  def register(userData: String): Future[Response[User]] = {

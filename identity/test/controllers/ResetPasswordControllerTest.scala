@@ -5,7 +5,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import idapiclient.{Email, IdApiClient}
+import idapiclient.IdApiClient
 import test.{TestRequest, Fake}
 import play.api.test._
 import play.api.test.Helpers._
@@ -38,7 +38,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
   "the processPasswordRequestForm" - {
     var emailAddress: String = "test@example.com"
-    val fakeRequest = FakeRequest(POST, "/identity/recover").withFormUrlEncodedBody("email" -> emailAddress)
+    val fakeRequest = FakeRequest(POST, "/recover").withFormUrlEncodedBody("email" -> emailAddress)
 
     "with an api response validating the user" - {
       when(api.sendPasswordResetEmail(any[String])).thenReturn(Future.successful(Right(user)))
@@ -61,7 +61,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
   "the handle render method" - {
 
-      val fakeRequest = FakeRequest(GET, "/identity/c/1234")
+      val fakeRequest = FakeRequest(GET, "/c/1234")
       "when the token provided is valid" - {
          when(api.userForToken(Matchers.any[String])).thenReturn(Future.successful(Right(user)))
          "should pass the token param to to the api" in Fake {
@@ -80,14 +80,14 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       "should redirect to the the to the request new password form" in Fake {
         val result = resetPasswordControkller.processUpdatePasswordToken("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        redirectLocation(result).get should equal("/identity/recover/tokenexpired")
+        redirectLocation(result).get should equal("/recover/tokenexpired")
       }
     }
   }
 
   "the reset password method" - {
 
-    val fakeRequest = FakeRequest(POST, "/identity/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password_confirm" -> "newpassword", "token" -> "1234")
+    val fakeRequest = FakeRequest(POST, "/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password_confirm" -> "newpassword", "token" -> "1234")
     "when the token provided is valid" - {
       when(api.resetPassword(Matchers.any[String], Matchers.any[String])).thenReturn(Future.successful(Right(OkResponse("OK"))))
       "should call the api the password with the provided new password and token" in Fake {
@@ -105,7 +105,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       "should redirect to request request new password with a token expired" in Fake {
           val result = resetPasswordControkller.resetPassword(fakeRequest)
           status(result) should equal(SEE_OTHER)
-          redirectLocation(result).get should equal("/identity/recover/tokenexpired")
+          redirectLocation(result).get should equal("/recover/tokenexpired")
       }
     }
 
@@ -114,7 +114,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       "should redirect to request new password with a problem resetting your password" in Fake {
         val result = resetPasswordControkller.resetPassword(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        redirectLocation(result).get should equal("/identity/recover/passworderror")
+        redirectLocation(result).get should equal("/recover/passworderror")
       }
     }
   }
