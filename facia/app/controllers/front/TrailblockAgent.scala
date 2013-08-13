@@ -17,7 +17,7 @@ class QueryTrailblockAgent(var description: TrailblockDescription) extends Trail
 
   private lazy val agent = play_akka.agent[Option[Trailblock]](None)
 
-  def refresh() = description.query filter(_.nonEmpty) map refreshTrails
+  def refresh() = description.query map refreshTrails
 
   private def refreshTrails(newTrails: Seq[Trail]) = {
     agent.send{ old =>
