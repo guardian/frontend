@@ -127,6 +127,10 @@ class GuardianConfiguration(
     lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
   }
 
+  object facebook {
+    lazy val appId = configuration.getStringProperty("guardian.page.fbAppId").getOrElse("0")
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments

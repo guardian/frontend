@@ -7,6 +7,7 @@ import common.Reference
 import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
+import conf.Configuration
 
 class Content(
     delegate: ApiContent) extends Trail with Tags with MetaData {
@@ -85,12 +86,13 @@ class Content(
     ("thumbnail", thumbnailPath.getOrElse(false))
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
-
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:site_name" -> "the Guardian",
     "og:title" -> webTitle,
     "og:url" -> webUrl,
     "og:description" -> trailText,
-    "og:image" -> thumbnailPath
+    "og:image" -> mainPicture.map(_.path).getOrElse(thumbnailPath.getOrElse("")),
+    "fb:app_id" -> Configuration.facebook.appId
   )
 
   override lazy val cacheSeconds = {
@@ -129,11 +131,12 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
-    "content-type" -> "article",
+    "og:type" -> "article",
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName
-  ) ++ tags.map("article:tag" -> _.name)
+  ) ++ tags.map("article:tag" -> _.name) ++
+    tags.filter(_.isContributor).map("article:author" -> _.webTitle)
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) {
@@ -149,7 +152,8 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
-    "content-type" -> "video",
+    "og:type" -> "video",
+    "og:video:type" -> "text/html"
   ) ++ tags.map("video:tag" -> _.name)
 }
 
