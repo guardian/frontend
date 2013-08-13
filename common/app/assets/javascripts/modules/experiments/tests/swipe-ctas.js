@@ -9,7 +9,7 @@ define(['common', 'modules/swipe/ears', 'modules/swipe/bar'], function (common, 
         this.audience = 1;
         this.description = 'Tests whether adding call to actions for swipe will increase average page views';
         this.canRun = function(config) {
-            return true
+            return true;
         };
         this.variants = [
             {
