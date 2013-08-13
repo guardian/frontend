@@ -11,20 +11,20 @@ class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends Logging {
   val returnUrlDomains = List(conf.id.domain)
   val defaultReturnUrl = "http://www." + conf.id.domain
 
-  def getVerifiedReturnUrl(request: Request[AnyContent]): String = {
+  def getVerifiedReturnUrl(request: Request[AnyContent]): Option[String] = {
     getVerifiedReturnUrl(request.queryString.get("returnUrl").flatMap(_.headOption))
   }
 
-  def getVerifiedReturnUrl(returnUrl: Option[String]): String = {
-    returnUrl.map(getVerifiedReturnUrl).getOrElse(defaultReturnUrl)
+  def getVerifiedReturnUrl(returnUrl: Option[String]): Option[String] = {
+    returnUrl.flatMap(getVerifiedReturnUrl)
   }
 
-  def getVerifiedReturnUrl(returnUrl: String): String = {
+  def getVerifiedReturnUrl(returnUrl: String): Option[String] = {
     hasVerifiedReturnUrl(returnUrl) match {
-      case true => returnUrl
+      case true => Some(returnUrl)
       case false => {
         log.warn("Invalid returnURL: %s".format(returnUrl))
-        defaultReturnUrl
+        None
       }
     }
   }
