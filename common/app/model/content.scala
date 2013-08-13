@@ -87,12 +87,10 @@ class Content(
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
-    "og:site_name" -> "the Guardian",
     "og:title" -> webTitle,
     "og:url" -> webUrl,
     "og:description" -> trailText,
-    "og:image" -> mainPicture.map(_.path).getOrElse(thumbnailPath.getOrElse("")),
-    "fb:app_id" -> Configuration.facebook.appId
+    "og:image" -> mainPicture.map(_.path).getOrElse(thumbnailPath.getOrElse(""))
   )
 
   override lazy val cacheSeconds = {

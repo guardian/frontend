@@ -1,6 +1,7 @@
 package model
 
 import common.ManifestData
+import conf.Configuration
 
 trait MetaData {
   def id: String
@@ -26,7 +27,7 @@ trait MetaData {
 
   def openGraph: List[(String, Any)] = List(
     "og:site_name" -> "the Guardian",
-    "fb:app_id"    -> "180444840287" // TODO: Needs to move to config
+    "fb:app_id"    -> Configuration.facebook.appId
   )
 
   def cacheSeconds = 60
