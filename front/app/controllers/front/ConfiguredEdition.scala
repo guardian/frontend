@@ -12,12 +12,11 @@ import play.api.libs.ws.WS
 //responsible for managing the blocks of an edition that are externally configured
 class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescription])
     extends FrontEdition(edition, descriptions)
-    with AkkaSupport with Logging {
-
+    with ExecutionContexts with Logging {
 
   val configUrl = Configuration.front.config
 
-  val configAgent = play_akka.agent[Seq[TrailblockAgent]](Nil)
+  val configAgent = AkkaAgent[Seq[TrailblockAgent]](Nil)
 
   override def apply(): Seq[Trailblock] = {
     val trailblocks = manualAgents.flatMap(_.trailblock).toList match {
@@ -58,8 +57,8 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
     newAgents
   }
 
-  override def shutDown() = {
-    super.shutDown()
+  override def stop() = {
+    super.stop()
     configAgent().foreach(_.close())
   }
 

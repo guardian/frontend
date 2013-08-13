@@ -1,0 +1,441 @@
+$featuredImgWidth: 460px;
+
+@mixin bordered {
+    margin-left: 10px;
+    border-left: 1px dotted #000000;
+    padding-left: 9px;
+}
+@mixin overlay {
+    .trail__title {
+        position:absolute;
+        bottom: 0;
+        background-color: #005688;
+        background-color: rgba(0, 86, 136, 0.6);
+        color: #ffffff;
+        margin: 0;
+        padding: $baseline*3 $gutter/4;
+        @include box-sizing(border-box);
+        width: 100%;
+    }
+    .trail__standfirst {
+        display: none;
+    }
+}
+
+@mixin small-card {
+    height: 50%;
+    @include box-sizing(border-box);
+    float: none;
+    @include bordered;
+    .trail__image-container {
+        display: none;
+    }
+}
+
+.top-stories .front-section-head {
+    display: none;
+}
+.trails {
+    overflow: hidden;
+    margin-top: $baseline*4;
+    padding: $baseline*3 0;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    width: 100%;
+    max-width: gs-span(16);
+    .trail {
+        float: left;
+        padding: 0;
+        border: none;
+        height: 100%;
+    }
+    .trail__image {
+        width: 100%;
+        float: left;
+    }
+    .trail__title {
+        color: #000000;
+    }
+    .trail__standfirst {
+        color: #000000;
+    }
+    .trail__count {
+        top: auto;
+        bottom: 0;
+        right: auto;
+        height: 30px;
+        padding-right: $gutter/4;
+        background-color: #000000;
+        background-color: rgba(0, 0, 0, 0.3);
+        a {
+            color: #ffffff;
+        }
+    }
+    .trail:nth-child(1) {
+        background-color: #005688;
+    }
+    @include mq(0, tablet) {
+        @include box-sizing(border-box);
+        border: none;
+        .trail {
+            width: 100%;
+        }
+        .trail__standfirst {
+            display: none;
+        }
+        .trail__count {
+            right: 0;
+        }
+        .trail:nth-child(1) {
+            height: auto;
+
+            .trail__image{
+                float:none;
+                margin: 0;
+            }
+            .trail__title {
+                @include font($serif, 700, 20, 24);
+                color: #ffffff;
+                margin: $baseline*2 $gutter/4 $baseline*3;
+            }
+        }
+        .trail:nth-child(n+2) {
+            margin: $baseline*3 0 0;
+            padding: $baseline*3 $gutter/4 0;
+            border-top: 1px dotted #000000;
+            .trail__image-container {
+                display: none;
+            }
+            .trail__title {
+                @include font($serif, 700, 20, 24);
+            }
+        }
+    }
+}
+
+@include mq(tablet, desktop) {
+    .trails {
+        height: 276px;
+    }
+}
+@include mq(desktop, wide) {
+    .trails {
+        height: 276px;
+    }
+}
+@include mq(wide) {
+    .trails {
+        height: 372px;
+    }
+}
+
+.trails-count-1 {
+    .trail {
+        width: 100%;
+    }
+    .trail__image {
+        margin-right: 20px;
+    }
+    .trail__title {
+        color: #ffffff;
+        margin: 0 $gutter*3/4;
+        padding-top: $baseline*3;
+    }
+    .trail__standfirst {
+        color: #ffffff;
+        margin: $baseline*6 $gutter*3/4 0;
+    }
+    @include mq(tablet, desktop) {
+        .trail__image {
+            width: $featuredImgWidth;
+        }
+        .trail__title {
+            @include font($serifheadline, 700, 26, 28);
+        }
+        .trail__standfirst {
+            @include font($serifheadline, normal, 18, 20);
+        }
+        .trail__count {
+            left: 380px;
+        }
+    }
+
+    @include mq(desktop, wide) {
+        .trail__image {
+            width: $featuredImgWidth;
+        }
+        .trail__title {
+            @include font($serifheadline, 700, 34, 36);
+        }
+        .trail__standfirst {
+            @include font($serifheadline, normal, 26, 28);
+        }
+        .trail__count {
+            left: 560px;
+        }
+    }
+    @include mq(wide) {
+        .trail__image {
+            width: 620px;
+        }
+        .trail__title {
+            @include font($serifheadline, 700, 38, 40);
+        }
+        .trail__standfirst {
+            @include font($serifheadline, normal, 30, 32);
+        }
+        .trail__count {
+            left: 640px;
+        }
+    }
+}
+
+.trails-count-2 {
+    .trail:nth-child(1) {
+        .trail__image {
+            margin-right: 20px;
+        }
+        .trail__title {
+            color: #ffffff;
+            margin: 0 $gutter*3/4;
+            padding-top: $baseline*3;
+        }
+        .trail__standfirst {
+            color: #ffffff;
+            margin: $baseline*6 $gutter*3/4 0;
+        }
+    }
+    .trail:nth-child(2) {
+        .trail__image-container {
+            display: none;
+        }
+        .trail__title {
+            margin: 0;
+        }
+        .trail__standfirst {
+            margin: $baseline*6 0 0;
+        }
+    }
+    @include mq(tablet, desktop) {
+        .trail__title {
+            @include font($serifheadline, 700, 26, 28);
+        }
+        .trail__standfirst {
+            @include font($serifheadline, normal, 18, 20);
+        }
+        .trail:nth-child(1) {
+            width: $featuredImgWidth;
+            margin-right: 10px;
+            @include overlay;
+        }
+        .trail:nth-child(2) {
+            @include bordered;
+            float: none;
+        }
+    }
+    @include mq(desktop, wide) {
+        .trail__title {
+            @include font($serifheadline, 700, 30, 32);
+        }
+        .trail__standfirst {
+            @include font($serifheadline, normal, 26, 28);
+        }
+        .trail:nth-child(1) {
+            width: $featuredImgWidth;
+            margin-right: 10px;
+            @include overlay;
+        }
+        .trail:nth-child(2) {
+            @include bordered;
+            float: none;
+        }
+    }
+    @include mq(wide) {
+        .trail__title {
+            @include font($serifheadline, 700, 30, 32);
+        }
+        .trail__standfirst {
+            @include font($serifheadline, normal, 26, 28);
+        }
+        .trail:nth-child(1) {
+            width: 940px;
+            .trail__image {
+                width: 620px;
+            }
+        }
+        .trail:nth-child(2) {
+            width: 300px;
+            @include bordered;
+        }
+    }
+}
+
+.trails-count-3 {
+    @include mq(tablet, desktop) {
+        .trail__title {
+            @include font($serifheadline, 700, 26, 28);
+        }
+        .trail__standfirst {
+            display: none;
+        }
+
+        .trail:nth-child(1) {
+            width: $featuredImgWidth;
+            margin-right: 10px;
+            @include overlay;
+        }
+        .trail:nth-child(n+2) {
+            @include small-card;
+            .trial__title {
+                margin: $baseline*3 0 0;
+            }
+        }
+        .trail:nth-child(2) {
+            padding-bottom: 10px;
+        }
+        .trail:nth-child(3) {
+            border-top: 1px solid #000000;
+            padding-top: 9px;
+        }
+    }
+    @include mq(desktop, wide) {
+        .trail__title {
+            @include font($serifheadline, 700, 30, 32);
+        }
+        .trail__standfirst {
+            display: none;
+        }
+
+        .trail:nth-child(1) {
+            width: $featuredImgWidth;
+            margin-right: 10px;
+            @include overlay;
+        }
+        .trail:nth-child(n+2) {
+            @include small-card;
+            .trial__title {
+                margin: $baseline*3 0 0;
+            }
+        }
+        .trail:nth-child(2) {
+            padding-bottom: 10px;
+        }
+        .trail:nth-child(3) {
+            border-top: 1px solid #000000;
+            padding-top: 9px;
+        }
+    }
+    @include mq(wide) {
+        .trail__title {
+            @include font($serifheadline, 700, 30, 32);
+        }
+        .trail__standfirst {
+            display: none;
+        }
+
+        .trail:nth-child(1) {
+            width: 620px;
+            @include overlay;
+        }
+        .trail:nth-child(n+2) {
+            width: 300px;
+            @include bordered;
+            .trial__title {
+                margin: $baseline*3 0 0;
+            }
+        }
+        .trail:nth-child(2) {
+            border: none;
+            padding-left: 10px;
+        }
+    }
+}
+
+.trails-count-4 {
+    .trail__standfirst {
+        display: none;
+    }
+
+    @include mq(tablet, desktop) {
+        .trail:nth-child(1) {
+            width: $featuredImgWidth;
+            margin-right: 10px;
+            @include overlay;
+            .trail__title {
+                @include font($serifheadline, 700, 24, 26);
+            }
+        }
+        .trail:nth-child(n+2) {
+            @include small-card;
+            height: 33%;
+            .trail__title {
+                @include font($serifheadline, 700, 20, 22);
+            }
+        }
+        .trail:nth-child(2) {
+            height: 34%;
+            padding-bottom: 10px;
+        }
+        .trail:nth-child(n+3) {
+            border-top: 1px dotted #000000;
+            padding-top: 9px;
+        }
+    }
+    @include mq(desktop, wide) {
+        .trail__title {
+            @include font($serifheadline, 700, 26, 28);
+        }
+        .trail:nth-child(1) {
+            width: $featuredImgWidth;
+            @include overlay;
+        }
+        .trail:nth-child(2) {
+            width: 230px;
+            margin: 0 10px 0 20px;
+            .trail__image {
+                margin-bottom: $baseline*5;
+            }
+        }
+        .trail:nth-child(n+3) {
+            @include small-card;
+        }
+        .trail:nth-child(3) {
+            padding-bottom: 10px;
+        }
+        .trail:nth-child(4) {
+            border-top: 1px solid #000000;
+            padding-top: 9px;
+        }
+    }
+    @include mq(wide) {
+        .trail:nth-child(1) {
+            width: 620px;
+            @include overlay;
+            .trail__title {
+                @include font($serifheadline, 700, 30, 32);
+            }
+        }
+        .trail:nth-child(n+2) {
+            .trail__title {
+                @include font($serifheadline, 700, 26, 28);
+            }
+        }
+        .trail:nth-child(2) {
+            margin: 0 10px 0 20px;
+            width: 300px;
+            .trail__image {
+                margin-bottom: $baseline*5;
+            }
+        }
+        .trail:nth-child(n+3) {
+            @include small-card;
+        }
+        .trail:nth-child(3) {
+            padding-bottom: 10px;
+        }
+        .trail:nth-child(4) {
+            border-top: 1px dotted #000000;
+            padding-top: 9px;
+        }
+    }
+}

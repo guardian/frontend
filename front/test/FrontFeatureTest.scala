@@ -7,12 +7,12 @@ import controllers.front.{ TrailblockAgent, FrontEdition, Front }
 import model._
 import org.joda.time.DateTime
 import collection.JavaConversions._
-import controllers.{ FrontController }
+import controllers.FrontController
 import play.api.mvc._
-import model.Trailblock
 import common.editions.{Us, Uk}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.SpanSugar
+
 
 class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results with Eventually with SpanSugar{
 
