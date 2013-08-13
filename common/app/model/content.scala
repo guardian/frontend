@@ -90,7 +90,7 @@ class Content(
     "og:title" -> webTitle,
     "og:url" -> webUrl,
     "og:description" -> trailText,
-    "og:image" -> mainPicture.map(_.path).getOrElse(thumbnailPath.getOrElse(""))
+    "og:image" -> mainPicture.map(_.path).getOrElse(thumbnailPath.getOrElse(conf.Configuration.facebook.imageFallback))
   )
 
   override lazy val cacheSeconds = {
