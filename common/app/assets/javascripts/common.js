@@ -94,24 +94,26 @@ define(["EventEmitter", "bonzo", "qwery"], function (EventEmitter, bonzo, qwery)
                 return output;
             };
         })(),
-        isVisible : function(el) {
-            var top = el.offsetTop,
-                left = el.offsetLeft,
-                width = el.offsetWidth,
-                height = el.offsetHeight;
+        requestAnimationFrame : function(callback) {
+            var lastTime = 0,
+                vendors = ['ms', 'moz', 'webkit', 'o'];
 
-            while(el.offsetParent) {
-                el = el.offsetParent;
-                top += el.offsetTop;
-                left += el.offsetLeft;
+            for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+                window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
             }
 
-            return (
-                top < (window.pageYOffset + window.innerHeight) &&
-                    left < (window.pageXOffset + window.innerWidth) &&
-                    (top + height) > window.pageYOffset &&
-                    (left + width) > window.pageXOffset
-                );
+            if (!window.requestAnimationFrame) {
+                window.requestAnimationFrame = function(callback) {
+                    var currTime = new Date().getTime();
+                    var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                    var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                        timeToCall);
+                    lastTime = currTime + timeToCall;
+                    return id;
+                };
+            } else {
+                window.requestAnimationFrame(callback);
+            }
         }
-    };
+    }
 });

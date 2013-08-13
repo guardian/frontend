@@ -50,7 +50,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     };
 
     SwipeBar.prototype.show = function() {
-        if(!common.isVisible(document.getElementById('header'))) {
+        if(bonzo(this.body).scrollTop() > 122) {
             if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
                 this.$el.removeClass('is-hidden');
                 this.isVisible = true;
@@ -82,8 +82,10 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
         }, 500);
 
         bean.on(this.body, 'touchmove', function(){
-            self.show();
-            debouncedHide();
+            common.requestAnimationFrame(function(){
+                self.show();
+                debouncedHide();
+            });
         });
     };
 
