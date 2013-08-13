@@ -45,16 +45,19 @@ define([
     InlineLinkCard.prototype.prependCard = function(href, data, title) {
         var self = this,
             headline = data.title || false,
+            description = data.description || false,
             image = data.image || false,
             datePublished = data.published_time || false,
             tpl,
             imageFragment = '',
             titleFragment = '',
-            publishedFragment = '';
+            publishedFragment = '',
+            contentFragment = '';
 
         if (!headline) {
             return false;
         }
+        
 
         if (title) {
             titleFragment = '<h2 class="card__title">' + title + '</h2>';
@@ -65,6 +68,11 @@ define([
         if (datePublished) {
             publishedFragment = '<div class="dateline"><i class="i i-date relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
         }
+        if (title === 'Wikipedia') {
+            contentFragment = '<div class="card__description type-11">' + description + '</div>';
+        } else {
+            contentFragment = '<h3 class="card__headline">' + headline + '</h3>';
+        }
 
         tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
                   '<div class="furniture furniture--left card">' +
@@ -72,8 +80,7 @@ define([
                       imageFragment +
                       '<div class="card__body u-text-hyphenate">' +
                           publishedFragment +
-                          '<h3 class="card__headline">' + headline + '</h3>' +
-                          // datePublished +
+                          contentFragment +
                       '</div>' +
                   '</div>' +
               '</a>';

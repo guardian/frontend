@@ -51,11 +51,12 @@ object CardController extends Controller with Logging with ExecutionContexts {
                   val firstParagraph = fragment.select("#mw-content-text > p").first
                   firstParagraph.select(".reference").remove()
 
+
                   val wiki = Map(
                     "url" -> resource,
                     "title" -> fragment.select("#firstHeading").text(),
                     "image" -> fragment.select(".image img").attr("src"),
-                    "description" -> firstParagraph.text(),
+                    "description" -> firstParagraph.text().split("\\.").headOption.getOrElse(""),
                     "site_name" -> "Wikipedia"
                   )
                   Ok(Json.toJson(wiki)).as("application/json;charset=UTF-8")
