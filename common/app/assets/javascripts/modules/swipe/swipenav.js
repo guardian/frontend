@@ -475,6 +475,7 @@ define([
             if(el === visiblePane && !el.pendingUrl) {
                 doAfterShow(el);
             }
+            common.mediator.emit('module:swipenav:position:update', { len: sequenceLen, pos: sequencePos + 1});
         });
 
         // Fire the first pane-loaded event
@@ -528,7 +529,7 @@ define([
         // Bind back/forward button behavior
         window.onpopstate = function(event) {
             // Ignore inital popstate that some browsers fire on page load
-            if ('state' in event && initiatedBy !== 'initial') {
+            if ('state' in event && event.state !== null && initiatedBy !== 'initial') {
                 window.location.reload();
             }
         };
