@@ -172,7 +172,7 @@ define([
 
         if (initiatedBy === 'initial') {
             loadSidePanes();
-            urls.pushUrl({title: document.title}, document.title, window.location.href);
+            urls.pushUrl({title: document.title}, document.title, window.location.href, true);
             return;
         }
 
@@ -527,6 +527,7 @@ define([
 
         // Bind back/forward button behavior
         window.onpopstate = function(event) {
+            console.log('popped', event);
             // Ignore inital popstate that some browsers fire on page load
             if ('state' in event && initiatedBy !== 'initial') {
                 window.location.reload();
