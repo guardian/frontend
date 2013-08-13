@@ -20,4 +20,11 @@ Adding call-to-actions for swipe functionality will increase discoverability of 
 - Average page views per session increase by 1 with variant A (ears).
 - Average page views per session increase by 2 with variant B (bar).
 
+## Chris
+
+- Discoverability will increase by 1.5% with Ears and increase avaerage page views per session by 7%.
+- Discoverability will increase by 1% with Bar and increase avaerage page views per session by 5%.
+- We will receive feedback that you can't click on them
+
+
 # Summary
