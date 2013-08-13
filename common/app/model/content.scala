@@ -45,8 +45,13 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   
   lazy val body: String = delegate.safeFields("body")
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
-    val souped = Jsoup.parseBodyFragment(body).body().select("p")
-    Option(souped) map { _.toList } getOrElse Nil
+    val contentWithBody = delegate.safeFields.get("body")
+    val souped = contentWithBody flatMap { body =>
+      val souped = Jsoup.parseBodyFragment(body).body().select("p")
+      Option(souped) map { _.toList }
+    }
+
+    souped getOrElse Nil
   }
   
   lazy val byline: Option[String] = fields.get("byline")
