@@ -22,7 +22,6 @@ define([
         this.link = link;
         this.title = title || false;
         this.$linkContext = common.$g(linkContext);
-        this.hasLoadedCard = false;
     }
 
     InlineLinkCard.prototype.init = function() {
@@ -37,7 +36,9 @@ define([
 
     InlineLinkCard.prototype.loadCard = function() {
         var layoutMode = detect.getLayoutMode();
-        if(layoutMode === 'extended' && !this.hasLoadedCard) {
+
+        if (layoutMode === 'extended' && !this.link.getAttribute('data-hasbeencardified')) {
+            this.link.setAttribute('data-hasbeencardified', true);
             this.fetchData();
         }
     };
@@ -83,8 +84,6 @@ define([
             crossOrigin: true
         }).then(
             function(resp) {
-                self.hasLoadedCard = true;
-
                 self.prependCard(href, resp.config.page, self.title);
             },
             function(req) {

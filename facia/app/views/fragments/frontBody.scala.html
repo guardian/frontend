@@ -1,9 +1,9 @@
 @(front: FrontPage, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
 
-<div class="front-container cf" data-link-name="Front" role="main">
-    @trailblocks.map{ block =>
+<div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
+    @trailblocks.zipWithIndex.map{ case(block, index) =>
         @if(block.trails.nonEmpty) {
-            @fragments.frontBlock(block, front)
+            @fragments.frontBlock(block, front, index)
         }
     }
 </div>

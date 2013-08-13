@@ -12,15 +12,13 @@ import play.api.libs.json.Writes
 import play.api.libs.json.Json._
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-import scala.Some
 import play.api.mvc.RequestHeader
-import org.joda.time.{ DateTimeZone, DateTime }
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import conf.Configuration
 import com.gu.openplatform.contentapi.model.MediaAsset
 import play.Play
-import org.jsoup.nodes.Entities.EscapeMode
 import org.apache.commons.lang.StringEscapeUtils
+
 
 sealed trait Style {
   val className: String
@@ -42,6 +40,11 @@ object Headline extends Style { val className = "headline-only" }
  * trails for the section fronts
  */
 object SectionFront extends Style { val className = "section-front" }
+
+/**
+ * trails for the top stories component
+ */
+object TopStories extends Style { val className = "top-stories" }
 
 object MetadataJson {
 
@@ -276,7 +279,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" }>{ tag.name }</a></span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" } data-link-context={ s"${tag.id}" }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)

@@ -31,10 +31,12 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/swipenav',
+    'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
-    "modules/lightbox-gallery"
+    "modules/lightbox-gallery",
+    "modules/swipe/ears",
+    "modules/swipe/bar"
 ], function (
     common,
     ajax,
@@ -70,7 +72,9 @@ define([
     swipeNav,
     VideoAdvert,
     CommentCount,
-    LightboxGallery
+    LightboxGallery,
+    ears,
+    SwipeBar
 ) {
 
     var modules = {
@@ -104,7 +108,7 @@ define([
 
             if (config.switches.idProfileNavigation) {
                 profile = new Profile(header, {
-                    url: config.idUrl
+                    url: config.page.idUrl
                 });
                 profile.init();
             }
@@ -312,9 +316,15 @@ define([
             }
         },
 
-        initSwipe: function(config) {
+        initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
-                swipeNav(config);
+                var swipe = swipeNav(config, contextHtml);
+
+                common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
+                common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
+            } else {
+                delete this.contextHtml;
+                return;
             }
             if (config.switches.swipeNav && detect.canSwipe()) {
                 bonzo(document.body).addClass('can-swipe');
@@ -349,7 +359,7 @@ define([
         });
     };
 
-    var ready = function (config, context) {
+    var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
             modules.upgradeImages();
@@ -364,7 +374,7 @@ define([
             if (config.switches.analyticsOnDomReady) {
                 modules.loadAnalytics();
             }
-            modules.initSwipe(config);
+            modules.initSwipe(config, contextHtml);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.betaOptIn();
@@ -373,8 +383,8 @@ define([
         common.mediator.emit("page:common:ready", config, context);
     };
 
-    var init = function (config, context) {
-        ready(config, context);
+    var init = function (config, context, contextHtml) {
+        ready(config, context, contextHtml);
         deferrable(config, context);
     };
 
