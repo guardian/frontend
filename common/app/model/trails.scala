@@ -125,10 +125,9 @@ class RunningOrderTrailblockDescription(
   }
 
   private def parseResponse(response: Future[Response]): Future[Option[TrailblockDescription]] = {
-    response.map{ r =>
+    response.flatMap { r =>
       r.status match {
-        case 200 =>
-          Some(CustomTrailblockDescription(id, name, numItemsVisible, style, isConfigured){
+          case 200 =>
             // extract the articles
             val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
               (trail \ "id").as[String]
@@ -153,17 +152,23 @@ class RunningOrderTrailblockDescription(
               }
             } getOrElse Future(Nil)
 
-            for {
-                idSearchResults <- idSearch
-                contentApiResults <- contentApiQuery
+            val results = for {
+              idSearchResults <- idSearch
+              contentApiResults <- contentApiQuery
             } yield idSearchResults ++ contentApiResults
 
-          })
-        case _ =>
-          log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
-          // NOTE: better way of handling fallback
-          Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition))
-      }
+
+            results map {
+              case l: List[Content] => Some(CustomTrailblockDescription(id, name, numItemsVisible, style, isConfigured) {
+                results
+              })
+            } fallbackTo Future(None)
+
+          case _ =>
+            log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
+            // NOTE: better way of handling fallback
+            Future(Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition)))
+        }
     }
   }
 
