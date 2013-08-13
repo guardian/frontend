@@ -15,7 +15,7 @@ class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier, conf: Id
 
   def signout = Action { implicit request =>
     Found(
-      returnUrlVerifier.getVerifiedReturnUrl(request.getQueryString("returnUrl"))
+      returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
     ).discardingCookies(
       DiscardingCookie("GU_U", "/", Some(conf.id.domain), false),
       DiscardingCookie("SC_GU_U", "/", Some(conf.id.domain), true)

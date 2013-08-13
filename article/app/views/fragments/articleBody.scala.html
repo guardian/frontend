@@ -74,11 +74,11 @@
     }
 </div>
 @if(storyPackage.nonEmpty) {
-    <aside role="complementary">
+    <aside role="complementary" data-link-context="@article.section">
         @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
     </aside>
 } else {
-    <aside class="js-related" role="complementary"></aside>
+    <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
 }
 
 <div class="js-popular" role="complementary"></div>
