@@ -5,7 +5,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.Matchers._
-import services.{IdentityRequest, IdRequestParser, ReturnUrlVerifier}
+import services.{IdentityUrlBuilder, IdentityRequest, IdRequestParser, ReturnUrlVerifier}
 import idapiclient.{OmnitureTracking, EmailPassword, IdApiClient}
 import play.api.test.Helpers._
 import play.api.test._
@@ -22,12 +22,13 @@ import org.joda.time.DateTime
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val requestParser = mock[IdRequestParser]
+  val idUrlBuilder = mock[IdentityUrlBuilder]
   val api = mock[IdApiClient]
   val conf = new IdentityConfiguration
   val omnitureData = mock[OmnitureTracking]
-  val identityRequest = IdentityRequest(omnitureData)
+  val identityRequest = IdentityRequest(omnitureData, Some("http://example.com/return"))
 
-  val signinController = new SigninController(returnUrlVerifier, api, conf, requestParser)
+  val signinController = new SigninController(returnUrlVerifier, api, conf, requestParser, idUrlBuilder)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
 
 
@@ -66,13 +67,14 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
         }
 
         "should redirect the user to the returnUrl" in Fake {
-          when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn("http://example.com/return")
+          when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
           val result = signinController.processForm()(fakeRequest)
           status(result) should equal(SEE_OTHER)
           redirectLocation(result).get should equal("http://example.com/return")
         }
 
         "should set login cookies on response" in Fake {
+          when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
           val result = signinController.processForm()(fakeRequest)
           val responseCookies: Cookies  = cookies(result)
           val testCookie = responseCookies.get("testCookie").get
