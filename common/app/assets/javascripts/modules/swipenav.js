@@ -131,7 +131,8 @@ define([
                         populate(el, html, url);
                         delete el.pendingUrl;
                     }
-                }).fail(function () {
+                }).fail(function (err) {
+                    common.mediator.emit('modules:error', 'Failed to load swipe sequence: ' + err, 'modules/swipe/swipenav.js');
                 }).always(function () {
                     callback();
                     common.mediator.emit('module:swipenav:pane:loaded', el);
@@ -244,10 +245,6 @@ define([
                 // No data-link-context, so infer the section/tag component from the url,
                 sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
                 sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
-
-                // No data-link-context, so infer the section from page config
-                //sequenceUrl = (config.page && config.page.section) ? config.page.section : null;
-                //sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl : '');
             }
         }
 
