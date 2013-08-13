@@ -84,8 +84,6 @@ trait Football {
     lazy val videoImages: Seq[Image] = Nil
     lazy val webPublicationDate: DateTime = m.date
     lazy val sectionName: String = "Football"
-
-    override lazy val body: String = "" // FIXME
   }
 
   implicit class Match2hasStarted(m: FootballMatch) {

@@ -31,7 +31,7 @@
         </h@headingLevel>
 
         @if(InlineArticlesSwitch.isSwitchedOn) {
-            @trail.bodyParagraphs.get.take(4).map { paragraph => <p>@Html(paragraph.html())</p> }
+            @trail.leadingParagraphs.take(4).map { paragraph => <p>@Html(paragraph.html())</p> }
         } else {
             @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
         }
