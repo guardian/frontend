@@ -155,7 +155,7 @@ define([
 
         if (pinHeader) {
             header = header || $('#header');
-            header.css('top', contentOffset.top - header.offset().height - 24 + 'px');
+            header.css('top', contentOffset.top - header.offset().height + 'px');
         }
 
         if (swipeContainerHeight !== contentHeight) {
