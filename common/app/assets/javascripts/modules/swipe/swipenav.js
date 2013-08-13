@@ -475,6 +475,7 @@ define([
             if(el === visiblePane && !el.pendingUrl) {
                 doAfterShow(el);
             }
+            common.mediator.emit('module:swipenav:position:update', { len: sequenceLen, pos: sequencePos + 1});
         });
 
         // Fire the first pane-loaded event
