@@ -5,7 +5,7 @@
 
 @main(page, conf.Switches.all){
 }{
-<form class="form" novalidate action="@idUrlBuilder.buildUrl("signin", idRequest)" role="main" method="post">
+<form class="form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
 
     @if(signinForm.globalError.isDefined) {
