@@ -46,7 +46,7 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.FrontController.render("uk")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
-    contentAsString(result) should startWith(s"""$callbackName({\"config\"""")
+    contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
   }
 
   it should "return JSON when .json format is supplied to front" in Fake {
@@ -57,7 +57,7 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
     val result = controllers.FrontController.render("uk")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
-    contentAsString(result) should startWith("{\"config\"")
+    contentAsString(result) should startWith("{\"html\"")
   }
 
   it should "200 when content type is front trails" in Fake {
