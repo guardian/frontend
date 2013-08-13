@@ -147,6 +147,10 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))
+
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "content-type" -> "video",
+  ) ++ tags.map("video:tag" -> _.name)
 }
 
 class Gallery(private val delegate: ApiContent) extends Content(delegate) {
