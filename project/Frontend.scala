@@ -21,6 +21,8 @@ object Frontend extends Build with Prototypes {
 
       "com.amazonaws" % "aws-java-sdk" % "1.4.7",
 
+      "org.quartz-scheduler" % "quartz" % "2.2.0",
+
       "org.jboss.dna" % "dna-common" % "0.6",
       "commons-io" % "commons-io" % "2.4",
       "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
@@ -40,7 +42,6 @@ object Frontend extends Build with Prototypes {
       "feed._"
     )
   )
-
   val sport = application("sport").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val image = application("image").dependsOn(commonWithTests).settings(
@@ -72,8 +73,6 @@ object Frontend extends Build with Prototypes {
   )
   val porter = application("porter").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-camel" % "2.1.0",
-      "org.apache.camel" % "camel-quartz" % "2.11.0",
       "com.typesafe.slick" %% "slick" % "1.0.0",
       "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
     )

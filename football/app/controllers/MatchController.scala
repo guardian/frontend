@@ -4,15 +4,12 @@ import common._
 import model._
 import conf._
 import play.api.mvc.{ Controller, Action }
-import conf.FootballClient
 import pa.FootballMatch
 import org.joda.time.format.DateTimeFormat
 import feed._
 import pa.LineUp
-import scala.Some
 import implicits.{ Requests, Football }
 
-import concurrent.Future
 
 case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends MetaData with Football with ExecutionContexts {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
