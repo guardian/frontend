@@ -8,8 +8,6 @@ import model._
 import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Imports._
-import model.Page
-import scala.Some
 import play.api.templates.Html
 
 

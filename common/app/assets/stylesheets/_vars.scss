@@ -3,7 +3,7 @@
    ========================================================================== */
 
 /**
- * Be careful of SASS variable scope: 
+ * Be careful of Sass variable scope:
  * http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables_
  */
 
@@ -15,24 +15,6 @@ $old-ie:      false !default;
 $svg-support: true !default;
 
 
-/* Breakpoints
-   ========================================================================== */
-
-// Breakpoints are in pixel for simpler understanding & manipulation
-// they get translated into ems in @media queries
-
-$mq-breakpoints: (
-    (mobile  300px)
-    (tablet  600px)
-    (desktop 900px)
-    (wide    1260px)
-
-    // Tweakpoints
-    (desktopAd 810px)
-    (mobileLandscape 480px)
-);
-
-
 /* Layout dimensions
    ========================================================================== */
 
@@ -42,6 +24,27 @@ $unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
 $trailblockImgWidth: 100%;
 $trailblockImgWidthLarge: 140px;
+
+
+/* Breakpoints
+   ========================================================================== */
+
+// Name your breakpoints in a way that creates a ubiquitous language
+// across team members. It will improve communication between
+// stakeholders, designers, developers, and testers.
+
+@import 'layout/_grid-system';
+
+$mq-breakpoints: (
+    (mobile  gs-span(4) + $gutter*2)
+    (tablet  gs-span(9) + $gutter*2)
+    (desktop gs-span(12) + $gutter*2)
+    (wide    gs-span(16) + $gutter*2)
+
+    // Tweakpoints
+    (desktopAd 810px)
+    (mobileLandscape 480px)
+);
 
 
 /* Fonts

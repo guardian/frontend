@@ -5,7 +5,7 @@ import common._
 import implicits.Collections
 import play.api.Plugin
 import play.api.libs.ws.WS
-import scala.concurrent.duration._
+
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -171,7 +171,7 @@ object Switches extends Collections {
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
     "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
-    safeState = Off);
+    safeState = Off)
 
   // Dummy Switch
 
@@ -224,9 +224,10 @@ object Switches extends Collections {
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with Logging with Plugin {
 
-  private lazy val refreshSwitches = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
+
+  def refresh() {
     log.info("Refreshing switches")
     WS.url(config.switches.configurationUrl).get() foreach { response =>
       response.status match {
@@ -246,6 +247,14 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with L
     }
   }
 
-  override def onStart() { refreshSwitches }
-  override def onStop() { refreshSwitches.cancel() }
+  override def onStart() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
+      refresh()
+    }
+  }
+
+  override def onStop() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+  }
 }

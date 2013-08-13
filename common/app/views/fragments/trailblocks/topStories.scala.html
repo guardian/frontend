@@ -1,0 +1,21 @@
+@(trails: Seq[Trail])(implicit request: RequestHeader)
+
+<ul class="unstyled trails trails-count-@trails.size">
+    @trails.zipWithIndex.map{ case (trail, index) =>
+        <li class="trail" data-link-name="trail | @{index + 1}" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+            <a href="@LinkTo{@trail.url}">
+                @if(!(trails.size == 4 && index > 1)){
+                    @trail.mainPicture(620).map{ mainPicture =>
+                        <div class="trail__image-container">
+                            <img class="trail__image" src="@mainPicture.path" alt="" />
+                        </div>
+                    }
+                }
+                <h2 class="trail__title">@RemoveOuterParaHtml(trail.headline)</h2>
+            </a>
+            @trail.trailText.map { text =>
+                <p class="trail__standfirst">@cleanTrailText(text)(Edition(request))</p>
+            }
+        </li>
+    }
+</ul>

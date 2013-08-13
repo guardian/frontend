@@ -1,6 +1,6 @@
 package jobs
 
-import common.PorterMetrics
+import common.Logging
 import services.{ CloudWatch, Fastly }
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -8,10 +8,7 @@ import scala.collection.mutable
 import conf.Configuration
 import org.joda.time.DateTime
 
-class FastlyCloudwatchLoadJob extends Job {
-  val cron = "0 0/2 * * * ?"
-  val metric = PorterMetrics.FastlyCloudwatchLoadTimingMetric
-
+object FastlyCloudwatchLoadJob extends Logging {
   // Samples in CloudWatch are additive so we want to limit duplicate reporting.
   // We do not want to corrupt the past either, so set a default value (the most
   // recent 15 minutes of results are unstable).
