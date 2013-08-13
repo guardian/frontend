@@ -4,5 +4,8 @@ POST    /signin                                         @controllers.SigninContr
 GET     /signout                                        @controllers.SignoutController.signout
 GET     /identity/fragments/profile-nav                 @controllers.TopBarFragments.signin
 GET     /identity/fragments/profile-nav.json            @controllers.TopBarFragments.signin2
-GET     /identity/recover                               @controllers.ResetPasswordController.renderPasswordResetRequestForm
+GET     /identity/recover/:message                      @controllers.ResetPasswordController.renderPasswordResetRequestForm( message: String )
+GET     /identity/recover                               @controllers.ResetPasswordController.renderPasswordResetRequestForm( message = "")
 POST    /identity/recover                               @controllers.ResetPasswordController.processPasswordResetRequestForm
+GET     /identity/c/:resetToken                         @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
+POST    /identity/reset-password                        @controllers.ResetPasswordController.resetPassword

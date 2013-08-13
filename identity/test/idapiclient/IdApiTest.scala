@@ -14,7 +14,11 @@ import org.hamcrest.Description
 import org.mockito.ArgumentMatcher
 import org.joda.time.DateTime
 import client.connection.util.ExecutionContexts
-import model.OkResponse
+import net.liftweb.json.Serialization._
+import net.liftweb.json.JsonParser._
+
+import org.hamcrest.core.IsNull
+import idapiclient.responses.OkResponse
 
 
 class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -129,53 +133,6 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     }
   }
 
-  "the user exists for email method" - {
-    val auth = TestAuth(List(("filter","primaryEmailAddress:test@example.com")), Iterable.empty)
-    "when recieving a valid response"  - {
-      val userJSON = """{"id": "123", "primaryEmailAddress": "test@example.com", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}"""
-      val validUserResponse = HttpResponse(userJSON, 200, "OK")
-
-
-      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
-        .thenReturn(toFuture(Right(validUserResponse)))
-      "accesses the /user endpoint" in {
-        api.email(Anonymous)
-        verify(http).GET(Matchers.eq("http://example.com/user"), Matchers.any[Parameters], Matchers.any[Parameters])
-        //verify(Matchers.any[String], argThat(new ParamMatcher(Iterable(("filter", "primaryEmailAddress:test@example.com")))))
-      }
-      "adds the primaryEmailAddress filter param to the request" in {
-        api.email(auth)
-        verify(http).GET(Matchers.any[String], argThat(new ParamMatcher(Iterable(("filter", "primaryEmailAddress:test@example.com")))), Matchers.any[Parameters])
-      }
-      "returns the user object" in {
-        api.email(auth).map(_ match {
-          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-          case Right(user) => {
-            user should have('id("123"))
-            user.publicFields should have('displayName("displayName"))
-            user.publicFields should have('username("Username"))
-            user.publicFields should have('usernameLowerCase("username"))
-            user.publicFields should have('vanityUrl("vanityUrl"))
-            user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
-          }
-        })
-      }
-    }
-
-    "given an error" - {
-      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
-        .thenReturn(toFuture(Left(errors)))
-
-      "returns the errors" in {
-        api.email(auth).map(_ match {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString()))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
-        })
-      }
-    }
-  }
 
   "the user method" - {
     "when receiving a valid response" - {
@@ -240,7 +197,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validUserResponse)))
       "accesses the get user for token wioth the token param" in {
           api.userForToken(token)
-          verify(http).GET(Matchers.eq("http://example.com/user/user-for-token"), argThat(new ParamMatcher(Iterable(("token", token)))),argThat(EmptyParamMatcher))
+          verify(http).GET(Matchers.eq("http://example.com/user/user-for-token"), argThat(new ParamMatcher(Iterable(("token", token)))), argThat(new IsNull[Nothing]))
       }
 
       "returns the user object" in {
@@ -273,18 +230,22 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
 
   "the update password method" - {
-    val requestJson = """{"token" : "atoken", "password" : "anewpassword" }"""
+
+    val token = "atoken"
+    val newPassword = "anewpassword"
+
+    val requestJson = """{"token":"%s","password":"%s"}""".format(token, newPassword)
     "when recieving a valid response" - {
       val validResponse = HttpResponse("""{"status" : "ok" }""", 200, "OK")
-      when(http.POST(Matchers.any[String], Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validResponse)))
+      when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validResponse)))
 
       "posts the the request json data to the endpoint" in {
-         api.changePassword(requestJson)
-         verify(http).POST("http://example.com/user/reset-pwd-for-user", requestJson, Iterable.empty, Iterable.empty)
+         api.resetPassword(token, newPassword)
+         verify(http).POST(Matchers.eq("http://example.com/user/reset-pwd-for-user"), Matchers.eq(Option(requestJson)), argThat(new IsNull[Nothing]), argThat(new IsNull[Nothing]))
       }
 
       "returns an OkStatus object" in {
-         api.changePassword(requestJson).map( _ match {
+         api.resetPassword(token, newPassword).map( _ match {
             case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
             case Right(ok) => {
                ok should have ('status("ok"))
@@ -294,9 +255,9 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     }
 
     "when recieving an error response" - {
-      when(http.POST(Matchers.any[String], Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
+      when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
       "returns the errors" in {
-        api.changePassword(requestJson).map( _ match {
+        api.resetPassword(token, newPassword).map( _ match {
           case Right(ok) => fail("Got right(%s) instead of expected left".format(ok.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
@@ -307,35 +268,41 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
 
   "the send password reset email" - {
-    val auth = TestAuth( List( ("email-address", "someguy@test.com"), ("type", "reset")), Iterable.empty )
+    val testEmail = "test@example.com"
     "when receiving a valid response" -  {
-      val validResponse = HttpResponse( """{"status" : "ok"}""", 200, "OK")
+      val myUserJSON = """{"id": "1234", "primaryEmailAddress": "test@example.com", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}"""
+      val validResponse = HttpResponse(myUserJSON, 200, "OK")
       when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validResponse)))
 
       "accesses the reset password endpoint" in {
-        api.sendPasswordResetEmail(Anonymous)
-        verify(http).GET("http://example.com/user/send-password-reset-email", Iterable.empty, Iterable.empty)
+        api.sendPasswordResetEmail(testEmail)
+        verify(http).GET(Matchers.eq("http://example.com/user/send-password-reset-email"), Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "adds the email address and type parameters" in {
-        api.sendPasswordResetEmail(auth)
-        verify(http).GET(Matchers.any[String], argThat(new ParamMatcher(Iterable(("email-address", "someguy@test.com"), ("type", "reset")))), argThat(EmptyParamMatcher))
+        api.sendPasswordResetEmail(testEmail)
+        verify(http).GET(Matchers.eq("http://example.com/user/send-password-reset-email"), argThat(new ParamMatcher(Iterable(("email-address", testEmail), ("type", "reset")))), argThat(new IsNull[Nothing]))
       }
 
-      "returns an OkStatus object" in {
-        api.sendPasswordResetEmail(auth).map( _ match {
+      "returns an user object" in {
+        api.sendPasswordResetEmail(testEmail).map( _ match {
           case Left(error) => fail("Got left(%s), instead of expected Right".format(error.toString()))
-          case Right(ok) => {
-            ok should have ('status("ok"))
+          case Right(user) => {
+            user should have('id("1234"))
+            user.publicFields should have('displayName("displayName"))
+            user.publicFields should have('username("Username"))
+            user.publicFields should have('usernameLowerCase("username"))
+            user.publicFields should have('vanityUrl("vanityUrl"))
+            user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
           }
         })
       }
 
       "when recieving an error response" - {
-        when(http.POST(Matchers.any[String], Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
+        when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
         "returns the errors" in {
-          api.sendPasswordResetEmail(auth).map( _ match {
-            case Right(ok) => fail("Got right(%s) instead of expected left".format(ok.toString))
+          api.sendPasswordResetEmail(testEmail).map( _ match {
+            case Right(user) => fail("Got right(%s) instead of expected left".format(user.toString))
             case Left(responseErrors) => {
               responseErrors should equal(errors)
             }
@@ -422,6 +389,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       description.appendText("Iterable" + items.mkString("(", ",", ")"))
     }
   }
-  class ParamMatcher(items: Parameters) extends ListMatcher[(String, String)](items)
+
+ class ParamMatcher(items: Parameters) extends ListMatcher[(String, String)](items)
   object EmptyParamMatcher extends ParamMatcher(Iterable.empty)
 }

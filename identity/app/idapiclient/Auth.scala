@@ -8,16 +8,6 @@ case class EmailPassword(email: String, password: String) extends Auth {
   override def headers: Parameters = Iterable.empty
 }
 
-case class Email(email: String) extends Auth {
-  override def parameters: Parameters = List(("filter", "%s:%s".format("primaryEmailAddress", email)))
-  override def headers: Parameters = Iterable.empty
-}
-
-case class PasswordResetEmail(email: String) extends Auth {
-  override def parameters: Parameters = List(("email", email), ("type", "reset"))
-  override def headers: Parameters = Iterable.empty
-}
-
 case class UserToken(userAccessToken: String) extends Auth {
   override def parameters: Parameters = List(("accessToken", userAccessToken))
   override def headers: Parameters = Iterable.empty

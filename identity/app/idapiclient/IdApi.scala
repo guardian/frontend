@@ -6,13 +6,16 @@ import client.{Anonymous, Auth, Response}
 import client.connection.{HttpResponse, Http}
 import scala.concurrent.{Promise, Future, ExecutionContext}
 import client.parser.JsonBodyParser
-import idapiclient.responses.{CookiesResponse, CookieResponse, AccessTokenResponse}
+import idapiclient.responses.{OkResponse, CookiesResponse, CookieResponse, AccessTokenResponse}
 import client.connection.util.ExecutionContexts
-import model.OkResponse
+import net.liftweb.json.Serialization.write
+import net.liftweb.json.DefaultFormats
 
 
 abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends Logging {
   implicit def executionContext: ExecutionContext
+  implicit val formats = DefaultFormats
+
 
   protected def apiUrl(path: String) = urlJoin(apiRootUrl, path)
 
@@ -50,42 +53,26 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     response map jsonBodyParser.extract[User]
   }
 
-  //TODO - rename
-  def email(auth: Auth): Future[Response[User]] = {
-    val apiPath = urlJoin("user")
-    val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
-    response map jsonBodyParser.extract[User]
-
-  }
-
-  //Change password
-
-  //TODO - changew to use authObject
-  def userForToken( token : String, auth: Auth = Anonymous ): Future[Response[User]] = {
+  def userForToken( token : String ): Future[Response[User]] = {
     val apiPath = urlJoin("user", "user-for-token")
-    val params = auth.parameters ++ Iterable(("token", token))
-    val response = http.GET(apiUrl(apiPath), params, auth.headers)
+    val params = Iterable(("token", token))
+    val response = http.GET(apiUrl(apiPath), params)
     response map jsonBodyParser.extract[User]
   }
 
-  def changePassword( postBody : String, auth : Auth = Anonymous): Future[Response[OkResponse]] = {
+  def resetPassword( token : String, newPassword : String ): Future[Response[OkResponse]] = {
     val apiPath = urlJoin("user", "reset-pwd-for-user")
-    val response = http.POST(apiUrl(apiPath), postBody, auth.parameters, auth.headers)
+    val postBody = write(TokenPassword(token, newPassword))
+    val response = http.POST(apiUrl(apiPath), Option(postBody))
     response map jsonBodyParser.extract[OkResponse]
   }
 
-  //TODO -remove unused imports
-  def sendPasswordResetEmail( auth : Auth ): Future[Response[OkResponse]] = {
+  def sendPasswordResetEmail( emailAddress : String ): Future[Response[User]] = {
     val apiPath = urlJoin("user","send-password-reset-email")
-    val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
-    response map jsonBodyParser.extract[OkResponse]
-
+    val params = Iterable(("email-address", emailAddress), ("type", "reset"))
+    val response = http.GET(apiUrl(apiPath), params)
+    response map jsonBodyParser.extract[User]
   }
-
-
-
-
-
 
 //  def register(userData: String): Future[Response[User]] = {
 //    val response = http.POST(apiUrl("user"), userData)

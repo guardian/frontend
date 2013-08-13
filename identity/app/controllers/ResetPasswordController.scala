@@ -1,44 +1,99 @@
 package controllers
 
-import common.ExecutionContexts
+import common.{ExecutionContexts, Logging}
 import model.IdentityPage
 import play.api.data.{Forms, Form}
 import play.api.mvc._
 import com.google.inject.{Inject, Singleton}
-import idapiclient.{EmailPassword, Email, IdApiClient}
-import org.joda.time.Duration
+import idapiclient.IdApiClient
+import client.Error
 
 
 @Singleton
-class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller with ExecutionContexts {
+class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller with ExecutionContexts with Logging {
 
   val page = new IdentityPage("/reset-password", "Reset Password", "reset-password")
 
-  val form = Form(
-      Forms.single(
-        "email" -> Forms.email
-      )
+  val requestPasswordResetForm = Form(
+    Forms.single(
+      "email" -> Forms.email
+    )
   )
 
-  def renderPasswordResetRequestForm = Action { implicit request =>
-    form.fill("")
-    Ok(views.html.reset_password(page, form))
+  val passwordResetForm = Form(
+    Forms.tuple (
+      "password" ->  Forms.text,
+      "password_confirm" ->  Forms.text,
+      "token" -> Forms.text
+    ) verifying("Password must match", f => f._1 == f._2  )
+  )
+
+  def renderPasswordResetRequestForm(message : String = "") = Action { implicit request =>
+    requestPasswordResetForm.fill("")
+    message match {
+      case "tokenexpired" => Ok(views.html.request_password_reset(page, requestPasswordResetForm, "Looks like you left it too long. Please request a new password reset code<"))
+      case "passworderror" => Ok(views.html.request_password_reset(page, requestPasswordResetForm, "We could not reset your details. Please request a new password reset code<"))
+      case "" => Ok(views.html.request_password_reset(page, requestPasswordResetForm, ""))
+    }
   }
 
   def processPasswordResetRequestForm = Action { implicit request =>
-    val boundForm = form.bindFromRequest
+    val boundForm = requestPasswordResetForm.bindFromRequest
     boundForm.fold(
-        formWithErrors => BadRequest(views.html.reset_password(page, form)),
-        {
-          case(email) => {
-            api.email(Email(email)) map( _ match {
-              case Left(errors) => {
-                Ok(views.html.reset_password(page, boundForm))
-              }
-              case Right(user) => {Ok("gotcha")}
-            })
-          }
+    formWithErrors => {
+      log.info("bad password reset request form submission")
+      Ok(views.html.request_password_reset(page, formWithErrors, ""))
+    },
+    { case(email) => {
+        Async {
+          api.sendPasswordResetEmail(email) map(_ match {
+            case Left(errors) => Ok(views.html.send_password_reset_email_error(page))
+            case Right(apiOk) => Ok(views.html.reset_password_email_confirmation(page, email))
+          })
         }
-    )
+       }
+     })
+  }
+
+  def resetPassword = Action { implicit request =>
+    val boundForm = passwordResetForm.bindFromRequest
+    boundForm.fold(
+      formWithErrors => {
+        log.info("bad rest password attempt")
+        Ok(views.html.reset_password(page, formWithErrors))
+     },
+     { case(password, password_confirm, token)  => {
+         Async {
+           api.resetPassword(token,password) map ( _ match {
+             case Left(errors) => {
+               errors match {
+                 case List( Error("Token expired", _, _)) => SeeOther("/identity/recover/tokenexpired")
+                 case List( Error("Access Denied", _, _)) => SeeOther("/identity/recover/passworderror")
+                 case _ => SeeOther("/identity/recover")
+               }
+             }
+             case Right(ok) =>
+               Ok(views.html.reset_password_confirmation(page))
+           })
+         }
+       }
+     }
+   )
+  }
+
+  def processUpdatePasswordToken( token : String) = Action { implicit request =>
+    Async {
+      api.userForToken(token) map ( _ match {
+        case Left(errors) => {
+          log.trace("Could not retrieve password reset request for token: %s".format(token))
+          SeeOther("/identity/recover/tokenexpired")
+        }
+        case Right(user) => {
+          passwordResetForm.fill("","",token)
+          Ok(views.html.reset_password(page, passwordResetForm))
+        }
+
+      })
+    }
   }
 }
