@@ -1,7 +1,7 @@
 // Helpers
 $gs-gutter: 20px;
 $gs-column-width: 60px;
-$gs-max-columns: 14;
+$gs-max-columns: 16;
 
 
 @function gs-span($n-columns) {
@@ -11,7 +11,7 @@ $gs-max-columns: 14;
 @mixin gs-container {
     position: relative;
     margin: 0 auto;
-    max-width: gs-span($gs-max-columns);
+    max-width: gs-span($gs-max-columns) + $gutter*2;
 }
 
 // Output grid system

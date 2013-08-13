@@ -6,6 +6,10 @@ import model._
 import conf._
 import play.api.mvc._
 import model.Trailblock
+import scala.Some
+import play.api.libs.json._
+import concurrent.Future
+
 
 // TODO, this needs a rethink, does not seem elegant
 
@@ -128,7 +132,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
   }
 
   private def faciaRedirect(path: String, request: RequestHeader) =
-    request.headers.get("X-Gu-Facia") filter(_ == "true") map {_ => Ok.withHeaders("X-Accel-Redirect" -> s"/redirect/facia/$path")}
+    request.headers.get("X-Gu-Facia") filter(_ == "true" && path.nonEmpty) map {_ => Ok.withHeaders("X-Accel-Redirect" -> s"/redirect/facia/$path")}
 
   def render(path: String) = Action { implicit request =>
 
@@ -144,11 +148,11 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
 
       FrontPage(pageId).map { frontPage =>
 
-        // get the trailblocks
+      // get the trailblocks
         val trailblocks: Seq[Trailblock] = front(realPath).filterNot { trailblock =>
 
-          // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
-          // filter out configured trailblocks if not on the network front
+        // TODO this must die, configured trailblock should not be in there in the first place if we don't want it.......
+        // filter out configured trailblocks if not on the network front
           path match {
             case FrontPath(_) => false
             case _ => trailblock.description.isConfigured
@@ -160,10 +164,20 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         } else if (trailblocks.isEmpty) {
           InternalServerError
         } else {
-          val htmlResponse = () => views.html.front(frontPage, trailblocks)
-          val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
-          renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+          Cached(frontPage){
+            if (request.isJson)
+              JsonComponent(
+                "html" -> views.html.fragments.frontBody(frontPage, trailblocks),
+                "trails" -> trailblocks.headOption.map{ trailblock =>
+                  trailblock.trails.map(_.url)
+                }.getOrElse(Nil),
+                "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
+              )
+            else
+              Ok(views.html.front(frontPage, trailblocks))
+          }
         }
+
       }.getOrElse(NotFound) //TODO is 404 the right thing here
     }
   }

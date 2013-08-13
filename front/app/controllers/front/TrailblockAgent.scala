@@ -1,20 +1,14 @@
 package controllers.front
 
-import model._
-import model.Trailblock
-import scala.Some
-import model.TrailblockDescription
 import common._
-
-import scala.concurrent.duration._
-
+import model._
 
 /*
   Responsible for refreshing one block on the front (e.g. the Sport block) for one edition
  */
-class TrailblockAgent(val description: TrailblockDescription) extends AkkaSupport with Logging {
+class TrailblockAgent(val description: TrailblockDescription) extends ExecutionContexts with Logging {
 
-  private lazy val agent = play_akka.agent[Option[Trailblock]](None)
+  private lazy val agent = AkkaAgent[Option[Trailblock]](None)
 
   def refresh() { description.query map refreshTrails }
 
@@ -43,6 +37,5 @@ class TrailblockAgent(val description: TrailblockDescription) extends AkkaSuppor
 }
 
 object TrailblockAgent {
-  def apply(description: TrailblockDescription): TrailblockAgent =
-    new TrailblockAgent(description)
+  def apply(description: TrailblockDescription): TrailblockAgent = new TrailblockAgent(description)
 }

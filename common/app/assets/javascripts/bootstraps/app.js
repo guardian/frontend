@@ -85,7 +85,8 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            var context = document.getElementById('preload-1');
+            var context = document.getElementById('preload-1'),
+                contextHtml = context.cloneNode().innerHTML;
             
             modules.initialiseAjax(config);
             modules.initialiseAbTest(config);
@@ -94,13 +95,12 @@ define('bootstraps/app', [
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
 
-            var pageRoute = function(config, context) {
+            var pageRoute = function(config, context, contextHtml) {
 
                 // We should rip out this router:
                 var r = new Router();
 
-                bootstrapCommon.init(config, context);
-
+                bootstrapCommon.init(config, context, contextHtml);
 
                 //Fronts
                 if(config.page.isFront){
@@ -139,7 +139,7 @@ define('bootstraps/app', [
             };
 
             common.mediator.on('page:ready', pageRoute);
-            common.mediator.emit('page:ready', config, context);
+            common.mediator.emit('page:ready', config, context, contextHtml);
         });
     };
 
