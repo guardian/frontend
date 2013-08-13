@@ -42,11 +42,10 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
-  
-  lazy val body: String = delegate.safeFields("body")
+
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
-    val contentWithBody = delegate.safeFields.get("body")
-    val souped = contentWithBody flatMap { body =>
+    val body = delegate.safeFields.get("body")
+    val souped = body flatMap { body =>
       val souped = Jsoup.parseBodyFragment(body).body().select("p")
       Option(souped) map { _.toList }
     }
@@ -125,6 +124,7 @@ object Content {
 }
 
 class Article(private val delegate: ApiContent) extends Content(delegate) {
+  lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
@@ -180,6 +180,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 
 class Interactive(private val delegate: ApiContent) extends Content(delegate) {
   lazy val contentType = "Interactive"
+  lazy val body: String = delegate.safeFields("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
