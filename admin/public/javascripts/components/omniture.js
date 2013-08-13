@@ -2,7 +2,7 @@
  Copyright 1996-2013 Adobe, Inc. All Rights Reserved
  More info available at http://www.omniture.com */
 
-var s_account="guardiangu-internaltools"
+var s_account="guardiangu-frontend-tools"
 
 var s=s_gi(s_account);
 
