@@ -527,7 +527,6 @@ define([
 
         // Bind back/forward button behavior
         window.onpopstate = function(event) {
-            console.log('popped', event);
             // Ignore inital popstate that some browsers fire on page load
             if ('state' in event && event.state !== null && initiatedBy !== 'initial') {
                 window.location.reload();
