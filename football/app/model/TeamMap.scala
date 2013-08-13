@@ -1,12 +1,9 @@
 package model
-import pa._
-import common.{ Logging, AkkaSupport }
-import conf.ContentApi
 
-import scala.concurrent.duration._
-import com.gu.openplatform.contentapi.model.TagsResponse
-import scala.Some
-import akka.actor.Cancellable
+import common._
+import conf.ContentApi
+import pa._
+
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
   lazy val url = tag.map(_.url)
@@ -14,11 +11,9 @@ case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String])
   override lazy val id = team.id
 }
 
-object TeamMap extends AkkaSupport with Logging {
+object TeamMap extends ExecutionContexts with Logging {
 
-  val teamAgent = play_akka.agent(Map.empty[String, Tag])
-
-  private var schedule: Option[Cancellable] = None
+  val teamAgent = AkkaAgent(Map.empty[String, Tag])
 
   // teamId -> manually curated short name
   val shortNames = Map(
@@ -101,26 +96,15 @@ object TeamMap extends AkkaSupport with Logging {
     ("7520", "Helsingborg"),
     ("26322", "Twente"),
     ("26398", "Basel")
-)
+  )
 
   def apply(team: FootballTeam) = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
 
-  def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == (s"football/$name")).map(_._1)
+  def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == s"football/$name").map(_._1)
 
   def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.url.replace("/football/", ""))
 
-  def startup() {
-    schedule = Some(play_akka.scheduler.every(1.minute, initialDelay = 5.seconds) {
-      incrementalRefresh(1) //pages are 1 based
-    })
-  }
-
-  def shutdown() {
-    schedule.foreach(_.cancel())
-    teamAgent.close()
-  }
-
-  private def incrementalRefresh(page: Int) {
+  def refresh(page: Int = 1) { //pages are 1 based
     log.info(s"Refreshing team tag mappings - page $page")
     ContentApi.tags
       .page(page)
@@ -129,12 +113,16 @@ object TeamMap extends AkkaSupport with Logging {
       .showReferences("pa-football-team")
       .response.foreach{ response =>
       if (response.pages > page) {
-        incrementalRefresh(page + 1)
+        refresh(page + 1)
       }
 
       val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag(tag)) }.toMap
       teamAgent.send(old => old ++ tagReferences)
     }
+  }
+
+  def stop() {
+    teamAgent.close()
   }
 }
 

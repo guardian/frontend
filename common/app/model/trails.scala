@@ -1,19 +1,16 @@
 package model
 
-import org.joda.time.DateTime
-import views.support.Style
-import scala.math
-import scala.concurrent.Future
 import conf.{Configuration, ContentApi}
 import common._
 import contentapi.QueryDefaults
-import play.api.libs.ws.WS
+import org.joda.time.DateTime
+import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.Json._
-import play.api.libs.ws.Response
-import scala.Some
 import play.api.libs.json.JsObject
-import java.net.URLDecoder
+import scala.concurrent.Future
 import tools.QueryParams
+import views.support.Style
+
 
 trait Trail extends Images with Tags {
   def webPublicationDate: DateTime
@@ -113,13 +110,13 @@ class RunningOrderTrailblockDescription(
   val showMore: Boolean,
   val edition: Edition,
   val isConfigured: Boolean
-) extends ConfiguredTrailblockDescription with AkkaSupport with Logging {
+) extends ConfiguredTrailblockDescription with Logging {
 
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
   def configuredQuery() = {
     // get the running order from the api
-    val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
+    val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$blockId/collection.json"
     log.info(s"loading running order configuration from: $configUrl")
     parseResponse(WS.url(s"$configUrl").withTimeout(2000).get())
   }

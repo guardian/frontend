@@ -10,15 +10,14 @@ import model.Competition
 import pa.Fixture
 import org.scala_tools.time.Imports._
 
-import scala.concurrent.duration._
 
 trait HasCompetition {
   def competition: Competition
 }
 
-trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
+trait LeagueTableAgent extends HasCompetition with ExecutionContexts with Logging {
 
-  private lazy val agent = play_akka.agent[Seq[LeagueTableEntry]](Nil)
+  private lazy val agent = AkkaAgent[Seq[LeagueTableEntry]](Nil)
 
   def refreshLeagueTable() = FootballClient.leagueTable(competition.id, new DateMidnight).map{_.map{ t =>
     val team = t.team.copy(name = TeamName(t.team))
@@ -35,9 +34,9 @@ trait LeagueTableAgent extends AkkaSupport with HasCompetition with Logging {
   def leagueTable = agent()
 }
 
-trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
+trait LiveMatchAgent extends HasCompetition with Logging {
 
-  private lazy val agent = play_akka.agent[Seq[MatchDay]](Nil)
+  private lazy val agent = AkkaAgent[Seq[MatchDay]](Nil)
 
   def updateLiveMatches(matches: Seq[MatchDay]) = {
     val copiedMatches = matches.map { m =>
@@ -55,9 +54,9 @@ trait LiveMatchAgent extends AkkaSupport with HasCompetition with Logging {
   def liveMatches = agent()
 }
 
-trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
+trait FixtureAgent extends HasCompetition with ExecutionContexts with Logging {
 
-  private lazy val agent = play_akka.agent[Seq[Fixture]](Nil)
+  private lazy val agent = AkkaAgent[Seq[Fixture]](Nil)
 
   def refreshFixtures() = FootballClient.fixtures(competition.id).map{ _.map { f =>
     val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
@@ -79,9 +78,9 @@ trait FixtureAgent extends AkkaSupport with HasCompetition with Logging {
   def fixturesOn(date: DateMidnight) = fixtures.filter(_.date.toDateMidnight == date)
 }
 
-trait ResultAgent extends AkkaSupport with HasCompetition with Logging with implicits.Collections {
+trait ResultAgent extends HasCompetition with ExecutionContexts with Logging with implicits.Collections {
 
-  private lazy val agent = play_akka.agent[Seq[FootballMatch]](Nil)
+  private lazy val agent = AkkaAgent[Seq[FootballMatch]](Nil)
 
   def refreshResults() = {
 
@@ -136,7 +135,7 @@ trait ResultAgent extends AkkaSupport with HasCompetition with Logging with impl
 
 class CompetitionAgent(_competition: Competition) extends FixtureAgent with ResultAgent with LiveMatchAgent with LeagueTableAgent {
 
-  private lazy val agent = play_akka.agent(_competition)
+  private lazy val agent = AkkaAgent(_competition)
 
   def competition = agent()
 
@@ -148,7 +147,7 @@ class CompetitionAgent(_competition: Competition) extends FixtureAgent with Resu
     refreshLeagueTable()
   }
 
-  def shutdown() {
+  def stop() {
     shutdownFixtures()
     shutdownResults()
     shutdownLiveMatches()

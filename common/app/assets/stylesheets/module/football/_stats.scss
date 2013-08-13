@@ -49,8 +49,12 @@
 }
 
 .team-list-name {
-    width: 49%;
-    display: inline-block;
+    float: left;
+    width: 49.5%;
+
+    & + & {
+        float: right;
+    }
 }
 
 .m-status {
@@ -58,16 +62,16 @@
 }
 
 .home-header {
-    display: inline-block;
-    width: 49%;
+    float: left;
+    width: 49.5%;
     margin-bottom: $baseline * 3;
     border-bottom: 5px solid $homeColour;
     padding-bottom: $baseline;
 }
 
 .away-header {
-    display: inline-block;
-    width: 49%;
+    float: right;
+    width: 49.5%;
     text-align: right;
     margin-bottom: $baseline * 3;
     border-bottom: 5px solid $awayColour;
@@ -75,10 +79,14 @@
 }
 
 .lineup {
-    display: inline-block;
-    width: 49%;
+    float: left;
+    width: 49.5%;
     vertical-align: top;
     padding-bottom: $baseline * 2;
+
+    & + & {
+        float: right;
+    }
 }
 
 .i-status {

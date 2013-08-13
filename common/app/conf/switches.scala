@@ -5,7 +5,7 @@ import common._
 import implicits.Collections
 import play.api.Plugin
 import play.api.libs.ws.WS
-import scala.concurrent.duration._
+
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -150,6 +150,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
     safeState = Off)
 
+  val ABInlineLinkCardSwitch = Switch("A/B Tests", "ab-inline-link-card",
+    "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
+    safeState = Off)
+
   val ABAa = Switch("A/B Tests", "ab-aa",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
@@ -158,12 +162,16 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
     safeState = Off)
 
+  val ABGalleryStyle = Switch("A/B Tests", "ab-gallery-style",
+    "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
+    safeState = Off)
+
 
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
     "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
-    safeState = Off);
+    safeState = Off)
 
   // Dummy Switch
 
@@ -199,6 +207,7 @@ object Switches extends Collections {
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
+    ABInlineLinkCardSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     LocalNavSwitch,
@@ -208,15 +217,17 @@ object Switches extends Collections {
     LiveCricketSwitch,
     ABLightboxGalleries,
     FilmFrontFacia,
-    AdSlotImpressionStatsSwitch
+    AdSlotImpressionStatsSwitch,
+    ABGalleryStyle
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with Logging with Plugin {
 
-  private lazy val refreshSwitches = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
+
+  def refresh() {
     log.info("Refreshing switches")
     WS.url(config.switches.configurationUrl).get() foreach { response =>
       response.status match {
@@ -236,6 +247,14 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with L
     }
   }
 
-  override def onStart() { refreshSwitches }
-  override def onStop() { refreshSwitches.cancel() }
+  override def onStart() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
+      refresh()
+    }
+  }
+
+  override def onStop() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+  }
 }

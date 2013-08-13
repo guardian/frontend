@@ -1,27 +1,16 @@
 package feed
 
-import common.{ Logging, AkkaSupport }
-import akka.actor.Cancellable
-import org.joda.time.{ DateTime, DateTimeComparator, DateMidnight }
+import common._
 import conf.FootballClient
+import java.util.Comparator
 import model.Competition
 import model.TeamFixture
-import scala.Some
-import java.util.Comparator
+import org.joda.time.{ DateTimeComparator, DateMidnight }
 import org.scala_tools.time.Imports._
 import pa._
-import implicits.Football
-import common._
 
 
-import scala.concurrent.duration.{Duration => Timed, _}
-import pa.MatchDayTeam
-import pa.MatchDay
-import scala.Some
-import model.Competition
-import model.TeamFixture
-
-trait CompetitionSupport extends Football {
+trait CompetitionSupport extends implicits.Football {
 
   private implicit val dateMidnightOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateMidnight]]
@@ -94,62 +83,40 @@ trait CompetitionSupport extends Football {
   }
 }
 
-trait Competitions extends CompetitionSupport with AkkaSupport with Logging with implicits.Collections with Football {
+trait Competitions extends CompetitionSupport with ExecutionContexts with Logging with implicits.Collections with implicits.Football {
 
   private implicit val dateOrdering = Ordering.comparatorToOrdering(
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
   )
 
-  private var schedules: Seq[Cancellable] = Nil
-
-  val competitionAgents = Seq(
-
-    CompetitionAgent(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("500", "/football/championsleague", "Champions League", "Champions League", "European")),
-
-    CompetitionAgent(Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European")),
-
-    CompetitionAgent(Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English")),
-
-    CompetitionAgent(Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English")),
-
-    CompetitionAgent(Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("102", "/football/leagueonefootball", "League One", "League One", "English", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("213", "/football/community-shield", "Community Shield", "Community Shield", "English")),
-
-    CompetitionAgent(Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three", "Scottish", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish")),
-
-    CompetitionAgent(Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish")),
-
-    CompetitionAgent(Competition("701", "/football/world-cup-2014-qualifiers", "World Cup 2014 qualifiers", "World Cup 2014 qualifiers", "Internationals")),
-
-    CompetitionAgent(Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals")),
-
-    CompetitionAgent(Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("625", "/football/bundesligafootball", "Bundesliga", "Bundesliga", "European", showInTeamsList = true)),
-
-    CompetitionAgent(Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true))
-
+  val competitionDefinitions = Seq(
+    Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true),
+    Competition("500", "/football/championsleague", "Champions League", "Champions League", "European"),
+    Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European"),
+    Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English"),
+    Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English"),
+    Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true),
+    Competition("102", "/football/leagueonefootball", "League One", "League One", "English", showInTeamsList = true),
+    Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English", showInTeamsList = true),
+    Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
+    Competition("120", "/football/scottishpremierleague", "Scottish Premier League", "Scottish Premier League", "Scottish", showInTeamsList = true),
+    Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish", showInTeamsList = true),
+    Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish", showInTeamsList = true),
+    Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three", "Scottish", showInTeamsList = true),
+    Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
+    Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
+    Competition("701", "/football/world-cup-2014-qualifiers", "World Cup 2014 qualifiers", "World Cup 2014 qualifiers", "Internationals"),
+    Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals"),
+    Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true),
+    Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European", showInTeamsList = true),
+    Competition("625", "/football/bundesligafootball", "Bundesliga", "Bundesliga", "European", showInTeamsList = true),
+    Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true)
   )
 
-  override def competitions = competitionAgents.map { agent =>
+  val competitionAgents = competitionDefinitions map { CompetitionAgent(_) }
+  val competitionIds: Seq[String] = competitionDefinitions map { _.id }
 
+  override def competitions = competitionAgents.map { agent =>
     val results = agent.results
 
     //results trump live games
@@ -166,6 +133,10 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
     )
   }
 
+  def refreshCompetitionAgent(id: String) {
+    competitionAgents find { _.competition.id == id } map { _.refresh() }
+  }
+
   //one http call updates all competitions
   def refreshCompetitionData() = FootballClient.competitions.map(_.flatMap{ season =>
     log.info("Refreshing competition data")
@@ -176,37 +147,27 @@ trait Competitions extends CompetitionSupport with AkkaSupport with Logging with
   })
 
   //one http call updates all competitions
-  def refreshMatchDay() = FootballClient.matchDay(DateMidnight.now).map{ todaysMatches: List[MatchDay] =>
-
-    val liveMatches = todaysMatches.filter(_.isLive)
-    val results = todaysMatches.filter(_.isResult)
-    competitionAgents.map { agent =>
+  def refreshMatchDay() = {
+    log.info("Refreshing match day data")
+    FootballClient.matchDay(DateMidnight.now).map{ todaysMatches: List[MatchDay] =>
+      val liveMatches = todaysMatches.filter(_.isLive)
+      val results = todaysMatches.filter(_.isResult)
+      competitionAgents.map { agent =>
 
       //update the results of the competition
-      val competitionResults = results.filter(_.competition.exists(_.id == agent.competition.id))
-      agent.addResultsFromMatchDay(competitionResults)
+        val competitionResults = results.filter(_.competition.exists(_.id == agent.competition.id))
+        agent.addResultsFromMatchDay(competitionResults)
 
-      //update the live matches of the competition
-      val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
-      log.info(s"found ${competitionLiveMatches.size} live matches for competition ${agent.competition.fullName}")
-      agent.updateLiveMatches(competitionLiveMatches)
+        //update the live matches of the competition
+        val competitionLiveMatches = liveMatches.filter(_.competition.exists(_.id == agent.competition.id))
+        log.info(s"found ${competitionLiveMatches.size} live matches for competition ${agent.competition.fullName}")
+        agent.updateLiveMatches(competitionLiveMatches)
+      }
     }
   }
 
-  def startup() {
-    import play_akka.scheduler._
-    schedules = every(Timed(10, SECONDS), initialDelay = Timed(1, SECONDS)) { refreshMatchDay() } ::
-      every(Timed(5, MINUTES), initialDelay = Timed(1, SECONDS)) { refreshCompetitionData() } ::
-      competitionAgents.zipWithIndex.toList.map {
-        case (agent, index) =>
-          //stagger fixtures and results refreshes to avoid timeouts
-          every(Timed(5, MINUTES), initialDelay = Timed(5 + index, SECONDS)) { agent.refresh() }
-      }
-  }
-
-  def shutDown() {
-    schedules.foreach(_.cancel())
-    competitionAgents.foreach(_.shutdown())
+  def stop() {
+    competitionAgents.foreach(_.stop())
   }
 }
 

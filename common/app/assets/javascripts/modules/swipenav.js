@@ -93,16 +93,12 @@ define([
     }
 
     function load(o) {
-        var
-            url = o.url,
+        var url = o.url,
             el = o.container,
             callback = o.callback || noop,
             frag;
 
         if (url && el) {
-            el.dataset = el.dataset || {};
-            el.dataset.url = url;
-            
             // Associate a contenet area with this pane, if not already done so
             el.bodyPart = el.bodyPart || el.querySelector(bodyPartSelector);
             el.bodyPart.innerHTML = pendingHTML;
@@ -112,40 +108,42 @@ define([
 
             // Is cached ?
             if (frag && frag.html) {
-                populate(el, frag.html);
+                populate(el, frag.html, url);
                 common.mediator.emit('module:swipenav:pane:loaded', el);
                 callback();
             }
             else {
-                el.pending = true;
+                el.pendingUrl = url;
                 ajax({
-                    url: url,
-                    type: 'json',
+                    url: url + '.json',
                     crossOrigin: true,
-                    success: function (frag) {
-                        var html;
+                }).then(function (frag) {
+                    var html;
 
-                        delete el.pending;
-                        frag   = frag || {};
-                        html   = frag.html || '<div class="preload-msg">Oops. This page might be broken?</div>';
+                    frag   = frag || {};
+                    html   = frag.html || '';
 
-                        sequenceCache[url] = sequenceCache[url] || {};
-                        sequenceCache[url].html = html;
-                        sequenceCache[url].config = frag.config || {};
+                    sequenceCache[url] = sequenceCache[url] || {};
+                    sequenceCache[url].html = html;
+                    sequenceCache[url].config = frag.config || {};
 
-                        if (el.dataset.url === url) {
-                            populate(el, html);
-                            common.mediator.emit('module:swipenav:pane:loaded', el);
-                            callback();
-                        }
+                    if (el.pendingUrl === url) {
+                        populate(el, html, url);
+                        delete el.pendingUrl;
                     }
+                }).fail(function (err) {
+                    common.mediator.emit('modules:error', 'Failed to load swipe sequence: ' + err, 'modules/swipe/swipenav.js');
+                }).always(function () {
+                    callback();
+                    common.mediator.emit('module:swipenav:pane:loaded', el);
                 });
             }
         }
     }
 
-    function populate(el, html) {
+    function populate(el, html, url) {
         el.bodyPart.innerHTML = html;
+        el.url = url;
     }
 
     // Make the swipeContainer height equal to the visiblePane height. (We view the latter through the former.)
@@ -174,13 +172,13 @@ define([
 
         if (initiatedBy === 'initial') {
             loadSidePanes();
-            urls.pushUrl({title: document.title}, document.title, window.location.href, true);
+            urls.pushUrl({title: document.title}, document.title, window.location.href);
             return;
         }
 
         recalcHeight(true);
 
-        url = context.dataset.url;
+        url = context.url;
         setSequencePos(url);
 
         config = (sequenceCache[url] || {}).config || {};
@@ -195,9 +193,8 @@ define([
         canonicalLink.attr('href', window.location.href);
 
         //Push state change to history
-        if(referrer.indexOf(url) === -1) {
-            urls.pushUrl({title: document.title}, document.title, url);
-        }
+        urls.pushUrl({title: document.title}, document.title, url);
+
 
         config.swipe = {
             initiatedBy: initiatedBy,
@@ -225,12 +222,11 @@ define([
     }
 
     function getSequencePos(url) {
-        url = sequenceCache[url];
-        return url ? url.pos : -1;
+        return sequence.indexOf(url);
     }
 
     function getSequenceUrl(pos) {
-        return pos > -1 && pos < sequenceLen ? sequence[pos].url : sequence[0].url;
+        return pos > -1 && pos < sequenceLen ? sequence[pos] : sequence[0];
     }
 
     function loadSequence(config, callback) {
@@ -238,62 +234,72 @@ define([
 
         if (sequenceUrl) {
             // data-link-context was from a click within this app
-            sequenceUrl = '/' + sequenceUrl;
             linkContext = undefined;
         } else {
             sequenceUrl = storage.get(storePrefix + 'linkContext');
             if (sequenceUrl) {
                 // data-link-context was set by a click on a previous page
-                sequenceUrl = '/' + sequenceUrl;
                 storage.remove(storePrefix + 'linkContext');
             } else {
-                // No data-link-context, so infer the section from page config
-                sequenceUrl = (config.page && config.page.section) ? config.page.section : null;
-                sequenceUrl = '/front-trails' + (sequenceUrl ? '/' + sequenceUrl : '');
+
+                // No data-link-context, so infer the section/tag component from the url,
+                sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
+                sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
             }
         }
 
-        // 'news' should return top stories, i.e. the default response
-        sequenceUrl = (sequenceUrl === '/front-trails/news' ? '/front-trails' : sequenceUrl);
+        // Strip trailing slash
+        sequenceUrl = sequenceUrl.replace(/\/$/, "");
+        // 'news' should return top trails, i.e. the default response
+        sequenceUrl = (sequenceUrl === 'news' ? '' : sequenceUrl);
 
         ajax({
-            url: sequenceUrl,
-            type: 'json',
-            crossOrigin: true,
-            success: function (json) {
-                var stories = json.stories,
-                    len = stories.length,
-                    url = window.location.pathname,
-                    s,
-                    i;
+            url: '/' + sequenceUrl + '.json',
+            crossOrigin: true
+        }).then(function (json) {
+            var trails = json.trails,
+                len = trails ? trails.length : 0,
+                url = window.location.pathname,
+                s,
+                i;
 
-                if (len >= 3) {
-                    // Make sure url is the first in the sequence
-                    if (stories[0].url !== url) {
-                        stories.unshift({url: url});
-                        len += 1;
+            if (len >= 3) {
+
+                trails.unshift(url);
+                len += 1;
+
+                sequence = [];
+                sequenceLen = 0;
+                sequenceCache = {};
+
+                for (i = 0; i < len; i += 1) {
+                    s = trails[i];
+                    // dedupe, while also creating a lookup obj
+                    if(!sequenceCache[s]) {
+                        sequenceCache[s] = {};
+                        sequence.push(s);
+                        sequenceLen += 1;
                     }
-
-                    sequence = [];
-                    sequenceLen = 0;
-                    sequenceCache = {};
-
-                    for (i = 0; i < len; i += 1) {
-                        s = stories[i];
-                        // dedupe, while also creating a lookup obj
-                        if(!sequenceCache[s.url]) {
-                            s.pos = sequenceLen;
-                            sequenceCache[s.url] = s;
-                            sequence.push(s);
-                            sequenceLen += 1;
-                        }
-                    }
-                    setSequencePos(window.location.pathname);
                 }
 
+                setSequencePos(window.location.pathname);
                 callback();
+            } else {
+                loadSequenceRetry (sequenceUrl, callback);
             }
+        }).fail(function () {
+            loadSequenceRetry (sequenceUrl, callback);
         });
+    }
+
+    function loadSequenceRetry (sequenceUrl, callback) {
+        // drop last component of url, then retry
+        sequenceUrl = sequenceUrl.split('/');
+        sequenceUrl.pop();
+        if(sequenceUrl.length > 0) {
+            linkContext = sequenceUrl.join('/');
+            loadSequence(callback);
+        }
     }
 
     function gotoUrl(url, dir) {
@@ -353,13 +359,13 @@ define([
         el = panes.masterPages[mod3(paneNow + dir)];
         
         // Only load if not already loaded into this pane
-        if (el.dataset.url !== url) {
+        if (el.url !== url) {
             load({
                 url: url,
                 container: el,
                 callback: function () {
                     // before slideInPane, confirm that this pane hasn't had its url changed since the request was made
-                    if (doSlideIn && el.dataset.url === url) {
+                    if (doSlideIn && el.url === url) {
                         slideInPane(dir);
                     }
                 }
@@ -462,11 +468,11 @@ define([
 
         // Identify and annotate the initially visible pane
         visiblePane = panes.masterPages[1];
-        visiblePane.dataset.url = initialUrl;
+        visiblePane.url = initialUrl;
 
         // Render panes that come into view, and that are not still loading
         common.mediator.on('module:swipenav:pane:loaded', function(el){
-            if(el === visiblePane && !el.pending) {
+            if(el === visiblePane && !el.pendingUrl) {
                 doAfterShow(el);
             }
         });
@@ -520,10 +526,11 @@ define([
         });
 
         // Bind back/forward button behavior
-        window.onpopstate = function (event) {
+        window.onpopstate = function(event) {
             // Ignore inital popstate that some browsers fire on page load
-            if (!event.state && !event.state.title) { return; }
-            window.location.reload();
+            if ('state' in event && initiatedBy !== 'initial') {
+                window.location.reload();
+            }
         };
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
@@ -532,7 +539,7 @@ define([
         }, 1009); // Prime number, for good luck
     }
 
-    var initialise = function(config) {
+    var initialise = function(config, contextHtml) {
         loadSequence(config, function(){
             var loc = window.location.href;
 
@@ -557,6 +564,7 @@ define([
             // Cache the config of the initial page, in case the 2nd swipe is backwards to this page.
             if (sequenceCache[initialUrl]) {
                 sequenceCache[initialUrl].config = config;
+                sequenceCache[initialUrl].html = contextHtml;
             }
 
             start();

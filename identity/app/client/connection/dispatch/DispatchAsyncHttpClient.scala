@@ -36,14 +36,14 @@ trait DispatchAsyncHttpClient extends Http {
   val client = new Client(asyncHttpClient)
   implicit def executionContext: ExecutionContext
 
-  def buildRequest(request: Req, urlParameters: Parameters, headers: Parameters): Req = {
-    urlParameters.foreach(param => {
-      request.addQueryParameter(param._1, param._2)
-    })
-    headers.foreach(header => {
-      request.addHeader(header._1, header._2)
-    })
-    request
+  implicit object IterStringTupleToArrayNameValuePairs extends (Parameters => Map[String, Seq[String]]) {
+    def apply(iterStringTuple: Parameters) = iterStringTuple.toMap.groupBy(_._1).map {
+      case (key, map) => (key, map.values.toSeq)
+    }
+  }
+
+  def buildRequest(request: dispatch.Req, urlParameters: Parameters, headers: Parameters): Req = {
+    request.setQueryParameters(urlParameters).setHeaders(headers)
   }
 
   def httpResponseHandler = new FunctionHandler(response =>

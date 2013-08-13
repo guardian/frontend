@@ -8,16 +8,6 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 #Note the order of these is important
 
-#Identity
-GET     /identity/signin                                    @controllers.SigninController.renderForm
-POST    /identity/signin                                    @controllers.SigninController.processForm
-GET     /identity/signout                                   @controllers.SignoutController.signout
-GET     /identity/fragments/profile-nav                     @controllers.TopBarFragments.signin
-GET     /identity/fragments/profile-nav.json                @controllers.TopBarFragments.signin2
-GET     /identity/reset-password                            @controllers.ResetPasswordController.renderPasswordResetRequestForm
-POST    /identity/reset-password                            @controllers.ResetPasswordController.processPasswordResetRequestForm
-
-
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)
 GET     /discussion/comment-counts.json                     controllers.CommentCountController.render(shortUrls: String)
