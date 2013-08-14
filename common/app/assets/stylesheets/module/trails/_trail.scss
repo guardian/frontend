@@ -147,7 +147,11 @@
     }
 
     .media {
-        padding: 0 0 $baseline*1 0;
+        padding: 0 0 $baseline 0;
+
+        .ab-expandable-trails--on & {
+            padding-bottom: 0;
+        }
     }
 
     .media__img { width: 35%; }

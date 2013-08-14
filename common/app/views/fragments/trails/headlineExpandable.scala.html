@@ -1,0 +1,31 @@
+@(trail: Trail, rowNum: Int, related: Boolean = false, element: String = "li", headingLevel: Int = 2, trailId: String = util.Random.alphanumeric.take(5).mkString)(implicit request: RequestHeader)
+
+<@element class="trail trail--headline t@rowNum" data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+<input type="checkbox" name="foo" id="trail__expander-@trailId" class="trail__expander-trigger" tabindex="-1" />
+<div class="trail__expander-wrapper">
+    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
+    <h@headingLevel class="trail__headline type-5">
+        <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+            @cleanTrailText(trail.headline)(Edition(request))
+        </a>
+    </h@headingLevel>
+
+    @trail.trailText.map { text => <div class="trail__text trail__expander-hide">@cleanTrailText(text)(Edition(request))</div> }
+    <p class="byline trail__expander-show"><a href="">Jean Bonneau</a></p>
+    <div class="from-content-api trail__expander-content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi nihil dicta ea est iure harum dolore laborum cum numquam eos possimus perspiciatis doloremque quas provident!</p>
+        <p>Esse sint id quas sapiente ipsa vero animi ut aspernatur et quia. Veniam voluptatibus veritatis repellendus labore numquam non quo molestiae odio facere dolor exercitationem.</p>
+        <p>Sunt quas molestias maxime dolore rem exercitationem vel ut commodi vero rerum praesentium blanditiis laudantium eius error obcaecati? Ipsam reiciendis earum commodi eum blanditiis laudantium!</p>
+        <p>Quis illum distinctio nulla veritatis laboriosam iste praesentium suscipit voluptate error quidem id sunt reprehenderit asperiores explicabo sequi aspernatur quasi obcaecati ex hic cum vero.</p>
+        <p><a href="@LinkTo{@trail.url}" data-link-name="@rowNum | read full article" aria-hidden="true">Read the full article</a></p>
+    </div>
+
+    <label class="trail__expander-cta" for="trail__expander-@trailId">
+        <span class="trail__expander-cta__button">
+            <span class="trail__expander-hide">Read more</span>
+            <span class="trail__expander-show">Close</span>
+        </span>
+    </label>
+</div>
+</@element>
