@@ -154,8 +154,7 @@
 
     .media__img img {
         width: $trailblockImgWidth;
-        margin-bottom: 5px;
-        margin-top: 3px;
+        margin-top: 3px; // Align with top of text
     }
 
     .trail__text {

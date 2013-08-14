@@ -1,20 +1,21 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
 <div class="article-wrapper monocolumn-wrapper">
-   <h2 class="article-zone type-2">
-       <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
-   </h2>
+    <div class="article__main-column">
+        <h2 class="article-zone type-1">
+            <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
+        </h2>
+    </div>
 
-   <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
+    <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
-        <header class="article-head">
-            @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
-            @fragments.headline(gallery.headline)
-        </header>
-        <div class="article__inner">
-
-            @fragments.byline(gallery.byline, gallery)
-
+        <div class="article__main-column">
+            <header class="article-head">
+                @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
+                @fragments.headline(gallery.headline)
+            </header>
+        </div>
+        <div class="article__main-column">
 
             <div class="ab-gallerytest--control">
                 <p class="js-gallery-nav box-indent gallery-nav type-11">
@@ -58,11 +59,11 @@
                             data-width="@image.width" data-height="@image.height">
                             }
 
-                    <div class="gallery-caption">
-                        <p class="caption type-12">@Html(image.caption.getOrElse(""))</p>
-                        <p class="caption-credit type-12">@image.credit</p>
-                    </div>
-                    </li>
+                            <div class="gallery-caption">
+                                <p class="caption type-12">@Html(image.caption.getOrElse(""))</p>
+                                <p class="caption-credit type-12">@image.credit</p>
+                            </div>
+                        </li>
                     }
                     </ul>
                 </div>
@@ -71,23 +72,23 @@
             <div class="ab-gallerytest--newstyle" data-link-name="Gallery thumbnail sheet">
                 @fragments.galleryThumbs(gallery)
             </div>
-
-
+            @fragments.byline(gallery.byline, gallery)
 
             @fragments.standfirst(gallery)
 
             @fragments.social(gallery)
         </div>
     </article>
+    <div class="article__main-column">
+        @if(storyPackage.nonEmpty) {
+            <aside role="complementary">
+                @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+            </aside>
+        } else {
+            <aside class="js-related" role="complementary"></aside>
+        }
+    </div>
 </div>
-
-@if(storyPackage.nonEmpty) {
-    <aside role="complementary">
-        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-    </aside>
-} else {
-    <aside class="js-related" role="complementary"></aside>
-}
 
 @fragments.mostPopularPlaceholder(gallery.section)
 

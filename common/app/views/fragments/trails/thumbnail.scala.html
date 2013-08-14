@@ -3,33 +3,49 @@
 <@element class="trail trail--thumbnail t@rowNum" data-link-name="trail"
     @trail.discussionId.map{ id => data-discussion-id="@id" }
     @CricketMatch(trail).map{ id => data-cricket-match="@id" } >
-
-    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
-
-    <div class="media">
-        @if(showThumbnail) {
-            @trail.thumbnailPath.map{ thumbnailPath =>
-                <a href="@LinkTo{@trail.url}" class="media__img trail__img" data-link-name="@rowNum | image" aria-hidden="true">
-                    <img class="maxed" data-lowsrc="@thumbnailPath"
-                        data-thumb-width="140"
-                        @trail.mainPicture(width=220).map { largeCrop =>
-                            data-fullsrc="@largeCrop.path"
-                            data-full-width="@largeCrop.width"
-                            alt=""
-                        }
-                        itemprop="contentURL"
-                    />
-                </a>
-            }
-        }
-
-        <h@headingLevel class="media__body trail__headline type-5">
+    <input type="checkbox" name="foo" id="trail__expander--@rowNum" class="trail__expander-trigger" tabindex="-1" />
+    <div class="trail__expander-wrapper">
+        @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+        <h@headingLevel class="trail__headline type-5">
             <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
                 @RemoveOuterParaHtml(trail.headline)
             </a>
         </h@headingLevel>
 
-        @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
+        <div class="media">
+            @if(showThumbnail) {
+                <figure class="media-primary">
+                @trail.thumbnailPath.map{ thumbnailPath =>
+                    @trail.mainPicture(width=220).map { largeCrop =>
+                        <a href="@LinkTo{@trail.url}" class="media__img trail__img" data-link-name="@rowNum | image" aria-hidden="true">
+                            <img class="maxed main-image" data-lowsrc="@thumbnailPath"
+                                data-thumb-width="140"
+                                    data-fullsrc="@largeCrop.path"
+                                    data-full-width="@largeCrop.width"
+                                    alt=""
+                                itemprop="contentURL"
+                            />
+                        </a>
+                        @if(largeCrop.caption.headOption.getOrElse("").trim != "") {
+                            <figcaption class="main-caption trail__expander-show" itemprop="description">@StripHtmlTagsAndUnescapeEntities(largeCrop.caption.getOrElse(""))</figcaption>
+                        }
+                    }
+                }
+                </figure>
+            }
+            <div class="media__body">
+                @trail.trailText.map { text => <div class="trail__text trail__expander-hide">@cleanTrailText(text)(Edition(request))</div> }
+                <p class="byline trail__expander-show"><a href="">Jean Bonneau</a></p>
+                <div class="from-content-api trail__expander-content">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi nihil dicta ea est iure harum dolore laborum cum numquam eos possimus perspiciatis doloremque quas provident!</p>
+                    <p>Esse sint id quas sapiente ipsa vero animi ut aspernatur et quia. Veniam voluptatibus veritatis repellendus labore numquam non quo molestiae odio facere dolor exercitationem.</p>
+                    <p>Sunt quas molestias maxime dolore rem exercitationem vel ut commodi vero rerum praesentium blanditiis laudantium eius error obcaecati? Ipsam reiciendis earum commodi eum blanditiis laudantium!</p>
+                    <p>Quis illum distinctio nulla veritatis laboriosam iste praesentium suscipit voluptate error quidem id sunt reprehenderit asperiores explicabo sequi aspernatur quasi obcaecati ex hic cum vero.</p>
+                    <p><a href="@LinkTo{@trail.url}" data-link-name="@rowNum | read full article" aria-hidden="true">Read the full article</a></p>
+                </div>
+            </div>
+        </div>
+        <label class="trail__expander-cta" for="trail__expander--@rowNum"><span class="trail__expander-cta__button"><span class="trail__expander-hide">Read more</span> <span class="trail__expander-show">Close</span>
+</span></label>
     </div>
-
 </@element>
