@@ -1,4 +1,4 @@
-define(['common'], function (common) {
+define(function () {
 
     var ExperimentExpandableTrails = function () {
 
@@ -19,7 +19,7 @@ define(['common'], function (common) {
             {
                 id: 'expandable-trails',
                 test: function () {
-                    common.$g('body').addClass('ab-expandable-trails--on');
+                    document.body.className += ' ab-expandable-trails--on';
                 }
             }
         ];
