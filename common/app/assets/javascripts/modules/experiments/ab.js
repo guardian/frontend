@@ -6,7 +6,6 @@ define([
     'modules/experiments/tests/paragraph-spacing',
     'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
-    'modules/experiments/tests/lightbox-galleries',
     'modules/experiments/tests/gallery-style',
     'modules/experiments/tests/swipe-ctas'
 ], function (
@@ -15,7 +14,6 @@ define([
     ParagraphSpacing,
     ExperimentInlineLinkCard,
     Aa,
-    LightboxGalleries,
     GalleryStyle,
     SwipeCtas
     ) {
@@ -24,7 +22,6 @@ define([
             new ParagraphSpacing(),
             new ExperimentInlineLinkCard(),
             new Aa(),
-            new LightboxGalleries(),
             new GalleryStyle(),
             new SwipeCtas()
         ],
