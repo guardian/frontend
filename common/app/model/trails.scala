@@ -164,7 +164,7 @@ class RunningOrderTrailblockDescription(
           case _ =>
             log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
             // NOTE: better way of handling fallback
-            Future(Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition)))
+            Future(Some(ItemTrailblockDescription(id, name, numItemsVisible, style, showMore, isConfigured)(edition)))
         }
     }
   }
