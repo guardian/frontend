@@ -1,11 +1,11 @@
-@(page: MetaData, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
+@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{idInputEmail, idInputPassword, idCheckbox}
 
-@main(page, Switches.all){
+@main(page, conf.Switches.all){
 }{
-<form class="form" novalidate action="/signin" role="main" method="post">
+<form class="form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
 
     @if(signinForm.globalError.isDefined) {

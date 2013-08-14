@@ -31,10 +31,12 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/swipenav',
+    'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
-    "modules/lightbox-gallery"
+    "modules/lightbox-gallery",
+    "modules/swipe/ears",
+    "modules/swipe/bar"
 ], function (
     common,
     ajax,
@@ -70,7 +72,9 @@ define([
     swipeNav,
     VideoAdvert,
     CommentCount,
-    LightboxGallery
+    LightboxGallery,
+    ears,
+    SwipeBar
 ) {
 
     var modules = {
@@ -104,7 +108,7 @@ define([
 
             if (config.switches.idProfileNavigation) {
                 profile = new Profile(header, {
-                    url: config.idUrl
+                    url: config.page.idUrl
                 });
                 profile.init();
             }
@@ -314,7 +318,10 @@ define([
 
         initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
-                swipeNav(config, contextHtml);
+                var swipe = swipeNav(config, contextHtml);
+
+                common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
+                common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
             } else {
                 delete this.contextHtml;
                 return;

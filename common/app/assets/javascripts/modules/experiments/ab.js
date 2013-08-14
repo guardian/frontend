@@ -7,7 +7,8 @@ define([
     'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
     'modules/experiments/tests/lightbox-galleries',
-    'modules/experiments/tests/gallery-style'
+    'modules/experiments/tests/gallery-style',
+    'modules/experiments/tests/swipe-ctas'
 ], function (
     common,
     store,
@@ -15,7 +16,8 @@ define([
     ExperimentInlineLinkCard,
     Aa,
     LightboxGalleries,
-    GalleryStyle
+    GalleryStyle,
+    SwipeCtas
     ) {
 
     var TESTS = [
@@ -23,7 +25,8 @@ define([
             new ExperimentInlineLinkCard(),
             new Aa(),
             new LightboxGalleries(),
-            new GalleryStyle()
+            new GalleryStyle(),
+            new SwipeCtas()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -164,6 +167,7 @@ define([
 
         run: function(config, context, options) {
             var opts = options || {};
+
             getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });
