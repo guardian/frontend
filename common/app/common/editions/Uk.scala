@@ -3,7 +3,7 @@ package common.editions
 import common._
 import org.joda.time.DateTimeZone
 import model.{RunningOrderTrailblockDescription, ItemTrailblockDescription, MetaData}
-import views.support.{Headline, Thumbnail, Featured, SectionFront, TopStories}
+import views.support._
 
 
 object Uk extends Edition(
@@ -108,38 +108,62 @@ object Uk extends Edition(
   )
 
   val configuredFrontsFacia = Map(
+
     (Editionalise("", Uk), Seq(
-      RunningOrderTrailblockDescription("news", "uk/news/top-stories", "Top Stories", 4, style = Some(TopStories)),
-      RunningOrderTrailblockDescription("news", "uk/sport/top-stories", "Sports", 5, style = Some(Featured)),
-      RunningOrderTrailblockDescription("news", "uk/commentisfree/top-stories", "Comment is free", 3, style = Some(Featured)),
-      RunningOrderTrailblockDescription("news", "uk/culture/top-stories", "Culture", 3, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("news", "uk/business/top-stories", "Business", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("news", "uk/lifeandstyle/top-stories", "Life and style", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("news", "uk/technology/top-stories", "Technology", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("news", "uk/money/top-stories", "Money", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("news", "uk/travel/top-stories", "Travel", 1, style = Some(Thumbnail))
+      RunningOrderTrailblockDescription("", "uk/news/masthead", "", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("", "uk/news/top-stories", "News", 5, style = Some(Featured), showMore = true),
+      RunningOrderTrailblockDescription("sport", "uk/sport/top-stories", "Sport", 5, style = Some(Featured), showMore = true),
+      RunningOrderTrailblockDescription("commentisfree", "uk/comment-is-free/top-stories", "Comment is free", 3, style = Some(Featured), showMore = true),
+      RunningOrderTrailblockDescription("culture", "uk/culture/top-stories", "Culture", 3, style = Some(Thumbnail), showMore = true),
+      RunningOrderTrailblockDescription("business", "uk/business/top-stories", "Business", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("lifeandstyle", "uk/life-and-style/top-stories", "Life and style", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("technology", "uk/technology/top-stories", "Technology", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("money", "uk/money/top-stories", "Money", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("travel", "uk/travel/top-stories", "Travel", 1, style = Some(Thumbnail))
+    )),
+
+    (Editionalise("sport", Uk), Seq(
+      RunningOrderTrailblockDescription("sport", "uk/sport/masthead", "", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("sport", "uk/sport/top-stories", "Sport", 5, style = Some(Featured), showMore = true),
+      RunningOrderTrailblockDescription("football", "uk/sport/football", "Football", 3, style = Some(Featured), showMore = true),
+      RunningOrderTrailblockDescription("sport/cricket", "uk/sport/cricket", "Cricket", 1, style = Some(Featured)),
+      RunningOrderTrailblockDescription("sport/rugby-union", "uk/sport/rugby-union", "Rugby Union", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("sport/motorsports", "uk/sport/motor-sport", "Motor Sport", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("sport/tennis", "uk/sport/tennis", "Tennis", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("sport/golf", "uk/sport/golf", "Golf", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("sport/horse-racing", "uk/sport/horse-racing", "Horse Racing", 1, style = Some(Headline)),
+      RunningOrderTrailblockDescription("sport/rugbyleague", "uk/sport/rugby-league", "Rugby League", 1, style = Some(Headline)),
+      RunningOrderTrailblockDescription("sport/us-sport", "uk/sport/us-sport", "US Sport", 1, style = Some(Headline)),
+      RunningOrderTrailblockDescription("sport/boxing", "uk/sport/boxing", "Boxing", 1, style = Some(Headline)),
+      RunningOrderTrailblockDescription("sport/cycling", "uk/sport/cycling", "Cycling", 1, style = Some(Headline))
     )),
 
     (Editionalise("culture", Uk), Seq(
-      RunningOrderTrailblockDescription("culture", "uk/culture/top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("culture", "uk/culture/features", "Features", 5),
-      RunningOrderTrailblockDescription("culture", "uk/culture/editors-picks", "Editor's Picks", 5)
+      RunningOrderTrailblockDescription("culture", "uk/culture/masthead", "", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("culture", "uk/culture/top-stories", "Culture", 5, style = Some(Thumbnail), showMore = true),
+      RunningOrderTrailblockDescription("tv-and-radio", "uk/culture/tv-and-radio", "TV & Radio", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("film", "uk/film/top-stories", "Film", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("music", "uk/culture/music", "Music", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("stage", "uk/culture/stage", "Stage", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("books", "uk/culture/books", "Books", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("artanddesign", "uk/culture/art-and-design", "Art & Design", 1, style = Some(Thumbnail)),
+      RunningOrderTrailblockDescription("technology/games", "uk/culture/games", "Games", 1, style = Some(Thumbnail))
     )),
 
-    (Editionalise("fashion", Uk), Seq(
-      RunningOrderTrailblockDescription("fashion", "uk/fashion/top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("fashion", "uk/fashion/features", "Features", 5),
-      RunningOrderTrailblockDescription("fashion", "uk/fashion/editors-picks", "Editor's Picks", 5)
+    (Editionalise("commentisfree", Uk), Seq(
+      RunningOrderTrailblockDescription("commentisfree", "uk/comment-is-free/masthead", "", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("commentisfree", "uk/comment-is-free/top-stories", "Comment is free", 20, style = Some(Featured))
     )),
 
-    (Editionalise("technology", Uk), Seq(
-      RunningOrderTrailblockDescription("technology", "uk/technology/top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("technology", "uk/technology/features", "Features", 5),
-      RunningOrderTrailblockDescription("technology", "uk/technology/editors-picks", "Editor's Picks", 5)
+    (Editionalise("business", Uk), Seq(
+      RunningOrderTrailblockDescription("business", "uk/business/masthead", "", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("business", "uk/business/top-stories", "Business", 20, style = Some(Featured))
     )),
 
-    (Editionalise("film", Uk), Seq(
-      RunningOrderTrailblockDescription("film", "uk/film/top-stories", "Film", 15, style = Some(SectionFront))
+    (Editionalise("money", Uk), Seq(
+      RunningOrderTrailblockDescription("money", "uk/money/masthead", "", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("money", "uk/money/top-stories", "Money", 20, style = Some(Featured))
     ))
+
   )
 }

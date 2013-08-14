@@ -87,6 +87,7 @@ object CustomTrailblockDescription {
             name: String,
             numItemsVisible: Int,
             style: Option[Style] = None,
+            showMore: Boolean = false,
             isConfigured: Boolean = false)
            (query: => Future[Seq[Trail]]): TrailblockDescription =
     CustomQueryTrailblockDescription(id, name, numItemsVisible, style, () => query, isConfigured)
@@ -122,10 +123,9 @@ class RunningOrderTrailblockDescription(
   }
 
   private def parseResponse(response: Future[Response]): Future[Option[TrailblockDescription]] = {
-    response.map{ r =>
+    response.flatMap { r =>
       r.status match {
-        case 200 =>
-          Some(CustomTrailblockDescription(id, name, numItemsVisible, style, isConfigured){
+          case 200 =>
             // extract the articles
             val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
               (trail \ "id").as[String]
@@ -141,27 +141,31 @@ class RunningOrderTrailblockDescription(
             val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
               val queryParams: Map[String, String] = QueryParams.get(query).mapValues{_.mkString("")}
               val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
-              ContentApi.fetch(Configuration.contentApi.host + "/search", queryParamsWithEdition).flatMap { resp =>
-              val ids = (parse(resp) \\ "id") map {_.as[String] } mkString(",")
-              ContentApi.search(edition)
-                .ids(ids)
-                .response map { r =>
-                  r.results.map(new Content(_))
-                }
-              }.fallbackTo(Future(Nil))
+              val search = ContentApi.search(edition)
+              val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
+              val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
+
+              newSearch.response map { r =>
+                r.results.map(new Content(_))
+              }
             } getOrElse Future(Nil)
 
-            for {
-                idSearchResults <- idSearch
-                contentApiResults <- contentApiQuery
+            val results = for {
+              idSearchResults <- idSearch
+              contentApiResults <- contentApiQuery
             } yield idSearchResults ++ contentApiResults
 
-          })
-        case _ =>
-          log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
-          // NOTE: better way of handling fallback
-          Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition))
-      }
+            results map {
+              case l: List[Content] => Some(CustomTrailblockDescription(id, name, numItemsVisible, style, isConfigured) {
+                results
+              })
+            } fallbackTo Future(None)
+
+          case _ =>
+            log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
+            // NOTE: better way of handling fallback
+            Future(Some(ItemTrailblockDescription(id, name, numItemsVisible, style, showMore, isConfigured)(edition)))
+        }
     }
   }
 
