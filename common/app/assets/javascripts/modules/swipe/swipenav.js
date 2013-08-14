@@ -249,9 +249,6 @@ define([
 
         // Strip trailing slash
         sequenceUrl = sequenceUrl.replace(/\/$/, "");
-        // 'news' should return top trails, i.e. the default response
-        var news = /^(\w{2})\/news$/.exec(sequenceUrl);
-        sequenceUrl = (news) ? news[1] : sequenceUrl;
 
         ajax({
             url: '/' + sequenceUrl + '.json',
