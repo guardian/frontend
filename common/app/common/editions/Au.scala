@@ -8,7 +8,6 @@ import scala.concurrent.Future
 import conf.ContentApi
 import contentapi.QueryDefaults
 import com.gu.openplatform.contentapi.model.ItemResponse
-import scala.Some
 import common.NavItem
 
 

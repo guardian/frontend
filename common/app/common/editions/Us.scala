@@ -5,7 +5,6 @@ import org.joda.time.DateTimeZone
 import model.{RunningOrderTrailblockDescription, MetaData, ItemTrailblockDescription}
 import views.support._
 import contentapi.QueryDefaults
-import scala.Some
 import common.NavItem
 
 object Us extends Edition(
