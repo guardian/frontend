@@ -87,6 +87,7 @@ object CustomTrailblockDescription {
             name: String,
             numItemsVisible: Int,
             style: Option[Style] = None,
+            showMore: Boolean = false,
             isConfigured: Boolean = false)
            (query: => Future[Seq[Trail]]): TrailblockDescription =
     CustomQueryTrailblockDescription(id, name, numItemsVisible, style, () => query, isConfigured)
@@ -153,7 +154,6 @@ class RunningOrderTrailblockDescription(
               idSearchResults <- idSearch
               contentApiResults <- contentApiQuery
             } yield idSearchResults ++ contentApiResults
-
 
             results map {
               case l: List[Content] => Some(CustomTrailblockDescription(id, name, numItemsVisible, style, isConfigured) {

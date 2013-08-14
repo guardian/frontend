@@ -44,7 +44,7 @@ object SectionFront extends Style { val className = "section-front" }
 /**
  * trails for the top stories component
  */
-object TopStories extends Style { val className = "top-stories" }
+object Masthead extends Style { val className = "masthead" }
 
 object MetadataJson {
 
