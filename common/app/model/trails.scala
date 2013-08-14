@@ -87,6 +87,7 @@ object CustomTrailblockDescription {
             name: String,
             numItemsVisible: Int,
             style: Option[Style] = None,
+            showMore: Boolean = false,
             isConfigured: Boolean = false)
            (query: => Future[Seq[Trail]]): TrailblockDescription =
     CustomQueryTrailblockDescription(id, name, numItemsVisible, style, () => query, isConfigured)
@@ -160,7 +161,7 @@ class RunningOrderTrailblockDescription(
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
           // NOTE: better way of handling fallback
-          Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition))
+          Some(ItemTrailblockDescription(id, name, numItemsVisible, style, showMore, isConfigured)(edition))
       }
     }
   }
