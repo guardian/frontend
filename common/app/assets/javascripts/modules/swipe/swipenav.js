@@ -172,7 +172,7 @@ define([
 
         if (initiatedBy === 'initial') {
             loadSidePanes();
-            urls.pushUrl({title: document.title}, document.title, window.location.href, true);
+            urls.pushUrl({title: document.title}, document.title, window.location.href);
             return;
         }
 
