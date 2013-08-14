@@ -35,6 +35,11 @@ $featuredImgWidth: 460px;
 .top-stories .front-section-head {
     display: none;
 }
+
+.trailblock--masthead {
+    padding: 0;
+}
+
 .trails {
     overflow: hidden;
     margin-top: $baseline*4;
