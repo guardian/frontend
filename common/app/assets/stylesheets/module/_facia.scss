@@ -64,16 +64,22 @@ $featuredImgWidth: 460px;
     .trail__standfirst {
         color: #000000;
     }
+    .trail__timestamp {
+        position: absolute;
+        bottom: 0;
+    }
     .trail__count {
+        height: 36px;
         top: auto;
         bottom: 0;
+        left: $gs-column-width + $gs-gutter;
         right: auto;
-        height: 30px;
-        padding-right: $gutter/4;
-        background-color: #000000;
-        background-color: rgba(0, 0, 0, 0.3);
+        padding-left: 8px;
+        border-left: 1px solid #000000;
         a {
-            color: #ffffff;
+            margin: 0;
+            color: #000000;
+            @include font($sans-serif, normal, 16, 16);
         }
     }
     .trail:nth-child(1) {
