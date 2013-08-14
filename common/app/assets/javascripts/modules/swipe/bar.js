@@ -17,7 +17,8 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     SwipeBar.prototype.DEFAULTS = {
         className : 'swipe-bar',
         btnClassName : 'swipe-bar__btn',
-        countClassName : 'swipe-bar__count'
+        countClassName : 'swipe-bar__count',
+        headerHeight : 122
     };
 
     SwipeBar.prototype.generateTpl = function() {
@@ -51,7 +52,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     };
 
     SwipeBar.prototype.show = function() {
-        if(this.$body.scrollTop() > 122) {
+        if(this.$body.scrollTop() > this.options.headerHeight) {
             if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
                 this.$el.removeClass('is-hidden');
                 this.isVisible = true;
