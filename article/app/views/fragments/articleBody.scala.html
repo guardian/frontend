@@ -64,15 +64,15 @@
     </article>
 
 
-    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-        <div class="d-show-cta-wrapper article__main-column">
-            <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion@article.shortUrlId}"
-               data-is-ajax data-link-name="View all comments">
-                View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
-            </a>
-        </div>
-    }
     <div class="article__main-column">
+        @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+            <div class="d-show-cta-wrapper">
+                <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion@article.shortUrlId}"
+                   data-is-ajax data-link-name="View all comments">
+                    View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
+                </a>
+            </div>
+        }
         @if(storyPackage.nonEmpty) {
             <aside role="complementary" data-link-context="@article.section">
                 @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)

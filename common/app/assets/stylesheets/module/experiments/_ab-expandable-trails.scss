@@ -10,7 +10,6 @@
 }
 .trail__expander-trigger:checked {
     + .trail__expander-wrapper {
-
         .trail__headline {
             @extend .article-headline;
         }
@@ -32,7 +31,6 @@
 }
 .trail__expander-cta {
     padding-top: $baseline;
-    display: block;
     margin-bottom: $baseline*3;
     text-align: center;
     cursor: pointer;
@@ -51,11 +49,17 @@
             color: #000;
         }
     }
+
+    // Test on/off
+    display: none;
+
+    .ab-expandable-trails--on & {
+        display: block;
+    }
 }
 // TODO: Make reusable if experiment is successful
 .trail__expander-cta__button {
     background: $mushroom;
-    display: inline-block;
     padding: $baseline*2 $gutter;
     color: #444;
     text-align: center;

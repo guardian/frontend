@@ -155,6 +155,11 @@
     .media__img img {
         width: $trailblockImgWidth;
         margin-top: 3px; // Align with top of text
+        margin-bottom: 5px;
+
+        .ab-expandable-trails--on & {
+            margin-bottom: 0;
+        }
     }
 
     .trail__text {
