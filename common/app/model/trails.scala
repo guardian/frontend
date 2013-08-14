@@ -1,6 +1,6 @@
 package model
 
-import conf.{Configuration, ContentApi}
+import conf.{Configuration, FaciaContentApi => ContentApi}
 import common._
 import contentapi.QueryDefaults
 import org.joda.time.DateTime

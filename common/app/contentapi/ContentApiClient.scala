@@ -1,7 +1,7 @@
 package contentapi
 
 import com.gu.openplatform.contentapi.{FutureAsyncApi, Api}
-import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy}
+import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy, Dispatch}
 import conf.Configuration
 import scala.concurrent.Future
 import common.{ExecutionContexts, Edition, Logging, GuardianConfiguration}
@@ -89,6 +89,11 @@ class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsync
   }
 
   private def isTagQuery(url: String) = url.endsWith("/tags")
+}
 
-
+class FaciaContentApi(configuration: GuardianConfiguration) extends ContentApiClient(configuration) with Dispatch {
+  override lazy val maxConnections: Int = 1
+  override lazy val connectionTimeoutInMs: Int = 1000
+  override lazy val requestTimeoutInMs: Int = 2000
+  override lazy val compressionEnabled: Boolean = true
 }
