@@ -107,6 +107,7 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
     border-bottom: 1px solid #cccccc;
     margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
+
     article & {
         @include mq(tablet, leftCol) {
             font-size: 16px;
@@ -115,20 +116,21 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
         @include mq(rightCol) {
             display: block;
         }
-        @include mq(leftCol) {
-            float: left;
-            margin-left: ($a-leftCol-width + $gs-gutter)*-1;
-            margin-bottom: $baseline*4;
-            width: $a-leftCol-width;
-
-            .media-primary + & {
-                margin-left: 0;
-                margin-bottom: 0;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-        }
+    }
+}
+@include mq(leftCol) {
+    article .byline {
+        float: left;
+        margin-left: ($a-leftCol-width + $gs-gutter)*-1;
+        margin-bottom: $baseline*4;
+        width: $a-leftCol-width;
+    }
+    article .media-primary + .byline {
+        margin-left: 0;
+        margin-bottom: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 }
 @include mq(tablet) {
