@@ -5,7 +5,7 @@
     class="front-section zone-@block.description.section" 
     data-link-name="block | @block.description.name"
     @defining(Edition(request).id.toLowerCase()) { edition =>
-    data-link-context="if(section == "news"){@edition}else{@edition/@block.description.section}">
+    data-link-context="@if(block.description.section == "news"){@edition}else{@edition/@block.description.section}">
     }
 
     @if(block.description.id != "") {
