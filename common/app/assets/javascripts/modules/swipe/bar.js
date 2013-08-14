@@ -5,6 +5,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
         this.el = this.generateTpl();
         this.$el = bonzo(this.el);
         this.body = this.options.context || document.body;
+        this.$body = bonzo(this.body);
         this.isVisible = false;
         this.btns = [];
 
@@ -50,7 +51,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     };
 
     SwipeBar.prototype.show = function() {
-        if(bonzo(this.body).scrollTop() > 122) {
+        if(this.$body.scrollTop() > 122) {
             if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
                 this.$el.removeClass('is-hidden');
                 this.isVisible = true;
@@ -81,7 +82,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
             self.hide();
         }, 500);
 
-        bean.on(this.body, 'touchmove', function(){
+        bean.on(this.body, 'touchstart touchmove', function(){
             common.requestAnimationFrame(function(){
                 self.show();
                 debouncedHide();
