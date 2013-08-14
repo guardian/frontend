@@ -116,7 +116,7 @@ define([
                 el.pendingUrl = url;
                 ajax({
                     url: url + '.json',
-                    crossOrigin: true,
+                    crossOrigin: true
                 }).then(function (frag) {
                     var html;
 
@@ -172,7 +172,7 @@ define([
 
         if (initiatedBy === 'initial') {
             loadSidePanes();
-            urls.pushUrl({title: document.title}, document.title, window.location.href);
+            urls.pushUrl({title: document.title}, document.title, window.location.href, true);
             return;
         }
 
@@ -241,7 +241,6 @@ define([
                 // data-link-context was set by a click on a previous page
                 storage.remove(storePrefix + 'linkContext');
             } else {
-
                 // No data-link-context, so infer the section/tag component from the url,
                 sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
                 sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
@@ -251,7 +250,8 @@ define([
         // Strip trailing slash
         sequenceUrl = sequenceUrl.replace(/\/$/, "");
         // 'news' should return top trails, i.e. the default response
-        sequenceUrl = (sequenceUrl === 'news' ? '' : sequenceUrl);
+        var news = /^(\w{2})\/news$/.exec(sequenceUrl);
+        sequenceUrl = (news) ? news[1] : sequenceUrl;
 
         ajax({
             url: '/' + sequenceUrl + '.json',
