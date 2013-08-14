@@ -13,9 +13,7 @@
 
     &.is-hidden {
         opacity: 0;
-        transition: opacity 0.5s;
-        -moz-transition: opacity 0.5s;
-        -webkit-transition: opacity 0.5s;
+        @include transition(opacity 0.5s);
     }
 }
 
