@@ -5,7 +5,6 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
         this.el = this.generateTpl();
         this.$el = bonzo(this.el);
         this.body = this.options.context || document.body;
-        this.$body = bonzo(this.body);
         this.isVisible = false;
         this.btns = [];
 
@@ -17,8 +16,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     SwipeBar.prototype.DEFAULTS = {
         className : 'swipe-bar',
         btnClassName : 'swipe-bar__btn',
-        countClassName : 'swipe-bar__count',
-        headerHeight : 122
+        countClassName : 'swipe-bar__count'
     };
 
     SwipeBar.prototype.generateTpl = function() {
@@ -52,13 +50,11 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     };
 
     SwipeBar.prototype.show = function() {
-        if(this.$body.scrollTop() > this.options.headerHeight) {
-            if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
-                bean.on(this.body, 'click.swipe.bar', '.js-' + this.options.btnClassName, this.navigate);
+        if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
+            bean.on(this.body, 'click.swipe.bar', '.js-' + this.options.btnClassName, this.navigate);
 
-                this.$el.removeClass('is-hidden');
-                this.isVisible = true;
-            }
+            this.$el.removeClass('is-hidden');
+            this.isVisible = true;
         } else {
             this.hide();
         }
