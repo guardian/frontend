@@ -1,9 +1,7 @@
 $featuredImgWidth: 460px;
 
 @mixin bordered {
-    margin-left: 10px;
     border-left: 1px dotted #000000;
-    padding-left: 9px;
 }
 @mixin overlay {
     .trail__title {
@@ -13,12 +11,15 @@ $featuredImgWidth: 460px;
         background-color: rgba(0, 86, 136, 0.6);
         color: #ffffff;
         margin: 0;
-        padding: $baseline*3 $gutter/4;
+        padding: $baseline*3 $gutter/2;
         @include box-sizing(border-box);
         width: 100%;
     }
     .trail__standfirst {
         display: none;
+    }
+    .trail__timestamp {
+        color: #ffffff;
     }
 }
 
@@ -26,7 +27,8 @@ $featuredImgWidth: 460px;
     height: 50%;
     @include box-sizing(border-box);
     float: none;
-    @include bordered;
+    padding-top: $gutter/2;
+    border-top: 2px solid #005688;
     .trail__image-container {
         display: none;
     }
@@ -64,9 +66,19 @@ $featuredImgWidth: 460px;
     .trail__standfirst {
         color: #000000;
     }
-    .trail__timestamp {
+    .trail__meta {
         position: absolute;
-        bottom: 0;
+        bottom: $baseline;
+    }
+    .trail__timestamp {
+        padding-bottom: $baseline * 2;
+        padding-left: $gutter / 4;
+        color: #cccccc;
+        @include font($sans-serif, lighter, 16, 16);
+        i {
+            margin-right: $gutter / 4;
+            @extend .i-clock-blue;
+        }
     }
     .trail__count {
         height: 36px;
@@ -119,6 +131,21 @@ $featuredImgWidth: 460px;
             }
             .trail__title {
                 @include font($serif, 700, 20, 24);
+            }
+        }
+    }
+
+    .trail--feature {
+        background-color: #AB1454;
+        .trail__title {
+            color: #ffffff;
+            padding: 0 $gutter/2;
+        }
+        .trail__timestamp {
+            color: #ffffff;
+            i {
+                color: #ffffff;
+                @extend .i-clock-pink;
             }
         }
     }
@@ -370,83 +397,85 @@ $featuredImgWidth: 460px;
     @include mq(tablet, desktop) {
         .trail:nth-child(1) {
             width: $featuredImgWidth;
-            margin-right: 10px;
+            margin-right: $gutter * 5/4;
             @include overlay;
             .trail__title {
-                @include font($serifheadline, 700, 24, 26);
+                @include font($serifheadline, 700, 24, 28);
+                width: 460 - $gs-column-width - $gs-gutter;
+                padding-top: $baseline*2;
+                padding-bottom: $baseline*10;
             }
         }
         .trail:nth-child(n+2) {
             @include small-card;
             height: 33%;
             .trail__title {
-                @include font($serifheadline, 700, 20, 22);
+                @include font($serifheadline, 700, 20, 24);
+            }
+            .trail__timestamp {
+                display: none;
             }
         }
         .trail:nth-child(2) {
             height: 34%;
-            padding-bottom: 10px;
-        }
-        .trail:nth-child(n+3) {
-            border-top: 1px dotted #000000;
-            padding-top: 9px;
         }
     }
     @include mq(desktop, wide) {
-        .trail__title {
-            @include font($serifheadline, 700, 26, 28);
-        }
         .trail:nth-child(1) {
             width: $featuredImgWidth;
+            margin-right: $gutter * 5/4;
             @include overlay;
+            .trail__title {
+                @include font($serifheadline, 700, 24, 28);
+                width: 460 - $gs-column-width - $gs-gutter;
+                padding-top: $baseline*2;
+                padding-bottom: $baseline*10;
+            }
+        }
+        .trail:nth-child(n+2) {
+            .trail__title {
+                @include font($serifheadline, 700, 20, 24);
+            }
         }
         .trail:nth-child(2) {
-            width: 230px;
-            margin: 0 10px 0 20px;
+            width: 220px;
+            margin-right: $gutter * 5/4;
             .trail__image {
-                margin-bottom: $baseline*5;
+                margin-bottom: $baseline*3;
             }
         }
         .trail:nth-child(n+3) {
             @include small-card;
-        }
-        .trail:nth-child(3) {
-            padding-bottom: 10px;
-        }
-        .trail:nth-child(4) {
-            border-top: 1px solid #000000;
-            padding-top: 9px;
+            .trail__timestamp {
+                display: none;
+            }
         }
     }
     @include mq(wide) {
         .trail:nth-child(1) {
             width: 620px;
+            margin-right: $gutter * 5/4;
             @include overlay;
             .trail__title {
-                @include font($serifheadline, 700, 30, 32);
+                @include font($serifheadline, 700, 28, 32);
+                width: 620 - $gs-column-width - $gs-gutter;
+                padding-bottom: $baseline*13;
             }
         }
         .trail:nth-child(n+2) {
             .trail__title {
-                @include font($serifheadline, 700, 26, 28);
+                @include font($serifheadline, 700, 24, 28);
             }
         }
         .trail:nth-child(2) {
-            margin: 0 10px 0 20px;
             width: 300px;
+            margin-right: $gutter * 5/4;
             .trail__image {
-                margin-bottom: $baseline*5;
+                margin-bottom: $baseline*3;
             }
         }
         .trail:nth-child(n+3) {
             @include small-card;
-        }
-        .trail:nth-child(3) {
-            padding-bottom: 10px;
-        }
-        .trail:nth-child(4) {
-            border-top: 1px dotted #000000;
-            padding-top: 9px;
         }
     }
 }

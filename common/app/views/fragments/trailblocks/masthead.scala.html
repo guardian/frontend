@@ -2,7 +2,7 @@
 
 <ul class="unstyled trails trails-count-@trails.size">
     @trails.zipWithIndex.map{ case (trail, index) =>
-        <li class="trail" data-link-name="trail | @{index + 1}" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+        <li class="trail @trail.tags.filter(_.id == "tone/features").headOption.map{tag => trail--feature}" data-link-name="trail | @{index + 1}" @trail.discussionId.map{ id => data-discussion-id="@id" }>
             <a href="@LinkTo{@trail.url}">
                 @if(!(trails.size == 4 && index > 1)){
                     @trail.mainPicture(620).map{ mainPicture =>
@@ -13,10 +13,12 @@
                 }
                 <h2 class="trail__title">@RemoveOuterParaHtml(trail.headline)</h2>
             </a>
-            <time class="js-timestamp trail__timestamp"
-                  itemprop="datePublished"
-                  datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
-                  data-timestamp="@trail.webPublicationDate.getMillis">@Format(trail.webPublicationDate, "d MMM y")</time>
+            <div class="trail__meta">
+                <time class="trail__timestamp"
+                      itemprop="datePublished"
+                      datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
+                      data-timestamp="@trail.webPublicationDate.getMillis"><i class="i"></i>20m</time>
+            </div>
             @trail.trailText.map { text =>
                 <p class="trail__standfirst">@cleanTrailText(text)(Edition(request))</p>
             }
