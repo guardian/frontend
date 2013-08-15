@@ -17,6 +17,14 @@
         .trail__img {
             float: none;
             width: 100%;
+            margin-bottom: $baseline*2;
+
+            img {
+                margin-top: 0;
+            }
+        }
+        .main-caption {
+            padding-top: 0;
         }
         .trail__expander-content {
             opacity: 1;

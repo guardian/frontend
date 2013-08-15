@@ -2,7 +2,7 @@
 
 <ul class="unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        @if(expandable) {
+        @if(expandable && !trail.leadingParagraphs.isEmpty) {
             @fragments.trails.headlineExpandable(trail, info.rowNum, related)
         } else {
             @fragments.trails.headline(trail, info.rowNum, related)

@@ -13,7 +13,9 @@
         </h@headingLevel>
 
         <div class="media">
-            @if(showThumbnail) {
+            @if(!showThumbnail) {
+                <div class="trail__expander-show">
+            }
                 <figure class="media-primary">
                 @trail.thumbnailPath.map{ thumbnailPath =>
                     @trail.mainPicture(width=220).map { largeCrop =>
@@ -26,24 +28,29 @@
                                 itemprop="contentURL"
                             />
                         </a>
-                        <div class="main-caption trail__expander-show">
-                            @if(largeCrop.caption.headOption.getOrElse("").trim != "") {
+                        @if(largeCrop.caption.headOption.getOrElse("").trim != "") {
+                            <div class="main-caption trail__expander-show">
                                 <figcaption itemprop="description">@StripHtmlTagsAndUnescapeEntities(largeCrop.caption.getOrElse(""))</figcaption>
-                            }
-                        </div>
+                            </div>
+                        }
                     }
                 }
                 </figure>
+            @if(!showThumbnail) {
+                </div>
             }
             <div class="media__body">
                 @trail.trailText.map { text => <div class="trail__text trail__expander-hide">@cleanTrailText(text)(Edition(request))</div> }
-                <p class="byline trail__expander-show"><a href="">Jean Bonneau</a></p>
-                <div class="from-content-api trail__expander-content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi nihil dicta ea est iure harum dolore laborum cum numquam eos possimus perspiciatis doloremque quas provident!</p>
-                    <p>Esse sint id quas sapiente ipsa vero animi ut aspernatur et quia. Veniam voluptatibus veritatis repellendus labore numquam non quo molestiae odio facere dolor exercitationem.</p>
-                    <p>Sunt quas molestias maxime dolore rem exercitationem vel ut commodi vero rerum praesentium blanditiis laudantium eius error obcaecati? Ipsam reiciendis earum commodi eum blanditiis laudantium!</p>
-                    <p>Quis illum distinctio nulla veritatis laboriosam iste praesentium suscipit voluptate error quidem id sunt reprehenderit asperiores explicabo sequi aspernatur quasi obcaecati ex hic cum vero.</p>
-                    <p><a href="@LinkTo{@trail.url}" data-link-name="@rowNum | read full article" aria-hidden="true">Read the full article</a></p>
+                <div class="trail__expander-show">
+                    @trail.byline.map { text => <p class="byline" data-link-name="byline">@ContributorLinks(text, trail.contributors) }</p>
+                    <div class="from-content-api trail__expander-content">
+                        @if(!trail.leadingParagraphs.isEmpty) {
+                            @trail.leadingParagraphs.take(4).map { paragraph => <p>@Html(paragraph.html())</p> }
+                        }
+                        <p><a href="@LinkTo{@trail.url}" data-link-name="@rowNum | read full article" aria-hidden="true">Read the full article</a></p>
+                    </div>
+
+                    @fragments.social(article)
                 </div>
             </div>
         </div>
