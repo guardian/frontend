@@ -15,12 +15,22 @@ class IdentitySafeLogger(wrappedLogger: LocationAwareLogger, classname : String)
         ("(?<=" + name + "=)[^&,# :=/]+").r
       }
 
+      def jsonStringMatcher(name: String): Regex = {
+        // lookbehind and ahead to check format is "name":"value", matching up to first "
+        // does not support " chars in value, but we don't need that
+        ("""(?<=["]""" + name + """["]:")[^"]+""").r
+      }
+
       val patterns = List(
         getVariableMatcher("accessToken"),
         getVariableMatcher("password"),
         getVariableMatcher("email"),
         getVariableMatcher("trackingUserAgent"),
-        getVariableMatcher("trackingIpAddress")
+        getVariableMatcher("trackingIpAddress"),
+        jsonStringMatcher("token"),
+        jsonStringMatcher("accessToken"),
+        jsonStringMatcher("password"),
+        jsonStringMatcher("email")
       )
 
       def cleanString(msg : String): String = {
