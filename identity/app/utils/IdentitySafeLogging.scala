@@ -4,6 +4,7 @@ import org.slf4j.spi.LocationAwareLogger
 import org.slf4j.ext.LoggerWrapper
 import org.slf4j.{LoggerFactory, Marker}
 import scala.util.matching.Regex
+import client.Logging
 
 
 class IdentitySafeLogger(wrappedLogger: LocationAwareLogger, classname : String)
@@ -54,11 +55,8 @@ class IdentitySafeLogger(wrappedLogger: LocationAwareLogger, classname : String)
   )
 
 
-trait SafeLogging {
-  val logger = new IdentitySafeLogger(LoggerFactory.getLogger(getClass).asInstanceOf[LocationAwareLogger], getClass.getName)
-}
-object SafeLogging {
-  def logger[T](clazz: Class[T]) = new IdentitySafeLogger(LoggerFactory.getLogger(clazz).asInstanceOf[LocationAwareLogger], clazz.getName)
+trait SafeLogging extends Logging {
+  override val logger = new IdentitySafeLogger(LoggerFactory.getLogger(getClass).asInstanceOf[LocationAwareLogger], getClass.getName)
 }
 
 class CleanedException(message: String, cause: CleanedException = null) extends Throwable(message, cause)

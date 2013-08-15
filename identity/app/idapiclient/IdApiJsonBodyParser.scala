@@ -6,10 +6,7 @@ import client.Error
 import com.gu.identity.model.{Error => IdApiError}
 import utils.SafeLogging
 
-class IdApiJsonBodyParser extends JsonBodyParser {
-
-  override val logger = SafeLogging.logger(getClass)
-
+class IdApiJsonBodyParser extends JsonBodyParser with SafeLogging {
   override def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = {
     try {
       val idApiErrors = (json \ "errors").extract[List[IdApiError]]

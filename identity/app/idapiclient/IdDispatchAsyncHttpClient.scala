@@ -5,6 +5,4 @@ import client.connection.dispatch.DispatchAsyncHttpClient
 import utils.SafeLogging
 
 
-class IdDispatchAsyncHttpClient extends DispatchAsyncHttpClient with ExecutionContexts {
-  override val logger = SafeLogging.logger(getClass)
-}
+class IdDispatchAsyncHttpClient extends DispatchAsyncHttpClient with ExecutionContexts with SafeLogging
