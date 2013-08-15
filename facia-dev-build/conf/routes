@@ -78,6 +78,7 @@ GET     /football/match/:matchId                                                
 
 #Front
 GET     /$path<(us|uk|au)?>                                                                        controllers.FaciaController.render(path)
+GET     /$path<(us|uk|au)?>.json                                                                   controllers.FaciaController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>                controllers.FaciaController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>.json           controllers.FaciaController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>/trails         controllers.FaciaController.renderTrails(path)
