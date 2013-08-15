@@ -431,6 +431,20 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
 
     }
+    
+    scenario("Story package with inline expansion") {
+
+      Given("I'm on an article that has a story package and the inline switch in turned on")
+      InlineArticlesSwitch.switchOn
+      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
+        import browser._
+
+        Then("the package should be flagged as being upgradable to being viewed inline")
+        findFirst(".related-trails").getAttribute("class") should include("inline")
+      }
+
+
+    }
 
   }
 }

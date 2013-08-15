@@ -75,7 +75,7 @@
 </div>
 @if(storyPackage.nonEmpty) {
     <aside role="complementary" data-link-context="@article.section">
-        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+        @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5, isShaded = false, inline = InlineArticlesSwitch.isSwitchedOn)
     </aside>
 } else {
     <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>

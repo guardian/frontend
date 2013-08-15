@@ -116,7 +116,7 @@ define([
                 el.pendingUrl = url;
                 ajax({
                     url: url + '.json',
-                    crossOrigin: true,
+                    crossOrigin: true
                 }).then(function (frag) {
                     var html;
 
@@ -172,7 +172,7 @@ define([
 
         if (initiatedBy === 'initial') {
             loadSidePanes();
-            urls.pushUrl({title: document.title}, document.title, window.location.href);
+            urls.pushUrl({title: document.title}, document.title, window.location.href, true);
             return;
         }
 
@@ -241,7 +241,6 @@ define([
                 // data-link-context was set by a click on a previous page
                 storage.remove(storePrefix + 'linkContext');
             } else {
-
                 // No data-link-context, so infer the section/tag component from the url,
                 sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
                 sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
@@ -250,8 +249,6 @@ define([
 
         // Strip trailing slash
         sequenceUrl = sequenceUrl.replace(/\/$/, "");
-        // 'news' should return top trails, i.e. the default response
-        sequenceUrl = (sequenceUrl === 'news' ? '' : sequenceUrl);
 
         ajax({
             url: '/' + sequenceUrl + '.json',
@@ -398,22 +395,25 @@ define([
         });
     }
 
+    function resetScrollPos() {
+        $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
+        $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
+        $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
+        // And reset the scroll
+        body.scrollTop(0);
+        recalcHeight(true);
+
+        visiblePaneMargin = 0;
+        hiddenPaneMargin = 0;
+    }
+
     var pushDownSidepanes = common.debounce(function(){
         hiddenPaneMargin = Math.max( 0, body.scrollTop());
 
+        // We've scrolled up over the offset; reset all margins and jump to topmost scroll
         if( hiddenPaneMargin < visiblePaneMargin) {
-            // We've scrolled up over the offset; reset all margins and jump to topmost scroll
-            $(panes.masterPages[mod3(paneNow)]).css(  'marginTop', 0);
-            $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', 0);
-            $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
-            // And reset the scroll
-            body.scrollTop(0);
-            recalcHeight(true);
-
-            visiblePaneMargin = 0;
-            hiddenPaneMargin = 0;
-        }
-        else {
+            resetScrollPos();
+        } else {
             // We've scrolled down; push L/R sidepanes down to level of current pane
             $(panes.masterPages[mod3(paneNow+1)]).css('marginTop', hiddenPaneMargin);
             $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', hiddenPaneMargin);

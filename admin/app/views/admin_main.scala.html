@@ -25,7 +25,8 @@
                     EventEmitter: 'components/eventEmitter/EventEmitter',
                     bean: 'components/bean/bean',
                     bonzo: 'components/bonzo/bonzo',
-                    humanizedTimeSpan: 'components/js_humanized_time_span/humanized_time_span.js'
+                    humanizedTimeSpan: 'components/js_humanized_time_span/humanized_time_span.js',
+                    omniture: 'components/omniture.js'
                 }
             }
         </script>
@@ -72,6 +73,11 @@
 
     <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
+    <script>
+        curl(['js!omniture']).then(function () {
+            s.tl();        
+        })
+    </script>
 
     </body>
 </html>

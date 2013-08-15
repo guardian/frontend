@@ -108,7 +108,7 @@ define([
 
             if (config.switches.idProfileNavigation) {
                 profile = new Profile(header, {
-                    url: config.idUrl
+                    url: config.page.idUrl
                 });
                 profile.init();
             }
@@ -178,7 +178,7 @@ define([
                 }
             });
         },
-        
+
         runAbTests: function () {
             common.mediator.on('page:common:ready', function(config, context) {
                 ab.run(config, context);
@@ -306,13 +306,27 @@ define([
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
         },
-   
+
         // let large viewports opt-in to the responsive beta
         betaOptIn: function () {
             var isBeta = /#beta/.test(window.location.hash);
             if (isBeta && window.screen.width >= 900) {
                 var expiryDays = 365;
                 Cookies.add("GU_VIEW", "mobile", expiryDays);
+            }
+        },
+
+        // opt in/out of facia app
+        faciaOptToggle: function () {
+            var faciaOpt = /^#facia-opt-(.*)$/.exec(window.location.hash);
+            if (faciaOpt) {
+                var expiryDays = 365,
+                    cookieName = 'GU_FACIA';
+                if (faciaOpt[1] === 'in') {
+                    Cookies.add(cookieName, 'true', expiryDays);
+                } else {
+                    Cookies.cleanUp([cookieName]);
+                }
             }
         },
 
@@ -378,6 +392,7 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.betaOptIn();
+            modules.faciaOptToggle();
             modules.paragraphSpacing();
         }
         common.mediator.emit("page:common:ready", config, context);

@@ -22,15 +22,6 @@ GET    /top-stories/trails                                  controllers.TopStori
 GET    /top-stories/trails.json                             controllers.TopStoriesController.renderJsonTrails()
 GET    /related/*path.json                                  controllers.RelatedController.render(path)
 GET    /related/*path                                       controllers.RelatedController.render(path)
-# more stories for swipe
-GET    /most-viewed                                         controllers.MoreStoriesController.renderMostViewed(path = "")
-GET    /most-viewed.json                                    controllers.MoreStoriesController.renderMostViewed(path = "")
-GET    /most-viewed/*path.json                              controllers.MoreStoriesController.renderMostViewed(path)
-GET    /most-viewed/*path                                   controllers.MoreStoriesController.renderMostViewed(path)
-GET    /front-trails                                        controllers.MoreStoriesController.renderFrontTrails(path = "")
-GET    /front-trails.json                                   controllers.MoreStoriesController.renderFrontTrails(path = "")
-GET    /front-trails/*path.json                             controllers.MoreStoriesController.renderFrontTrails(path)
-GET    /front-trails/*path                                  controllers.MoreStoriesController.renderFrontTrails(path)
 
 #Football
 GET     /football/fixtures/:year/:month/:day.json                 controllers.FixturesController.renderForJson(year, month, day)
@@ -87,6 +78,7 @@ GET     /football/match/:matchId                                                
 
 #Front
 GET     /$path<(us|uk|au)?>                                                                        controllers.FaciaController.render(path)
+GET     /$path<(us|uk|au)?>.json                                                                   controllers.FaciaController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>                controllers.FaciaController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>.json           controllers.FaciaController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money|film)>/trails         controllers.FaciaController.renderTrails(path)

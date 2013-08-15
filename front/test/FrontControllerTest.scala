@@ -4,6 +4,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
+import conf.Switches
 
 class FrontControllerTest extends FlatSpec with ShouldMatchers {
   
@@ -92,6 +93,7 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "200 with an X-Accel-Redirect when X-Gu-Facia is true" in Fake {
+    Switches.FaciaSwitch.switchOn()
     val fakeRequest = FakeRequest(GET, "/uk/culture")
       .withHeaders("X-Gu-Facia" -> "true")
 
@@ -101,8 +103,19 @@ class FrontControllerTest extends FlatSpec with ShouldMatchers {
   }
 
   it should "200 with an X-Accel-Redirect when X-Gu-Facia is false" in Fake {
+    Switches.FaciaSwitch.switchOn()
     val fakeRequest = FakeRequest(GET, "/uk/culture")
       .withHeaders("X-Gu-Facia" -> "false")
+
+    val result = controllers.FrontController.render("uk/culture")(fakeRequest)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (None)
+  }
+
+  it should "completely ignore X-Gu-Facia if FaciaSwitch is off" in Fake {
+    Switches.FaciaSwitch.switchOff()
+    val fakeRequest = FakeRequest(GET, "/uk/culture")
+      .withHeaders("X-Gu-Facia" -> "true")
 
     val result = controllers.FrontController.render("uk/culture")(fakeRequest)
     status(result) should be(200)

@@ -1,16 +1,19 @@
 .swipe-bar {
     display: block;
     position: fixed;
-    top: 0;
+    bottom: 0;
     height: 36px;
     width: 100%;
     z-index: 9999;
-    opacity: 0.90;
     background-color: #F9F9F7;
     text-align: center;
 
+    //For fading
+    opacity: 0.9;
+
     &.is-hidden {
-        display: none;
+        opacity: 0;
+        @include transition(opacity 0.5s);
     }
 }
 
