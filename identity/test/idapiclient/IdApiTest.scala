@@ -200,7 +200,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   "the userForToken method " - {
     val token = "atoken"
     "when recieving a valid response" - {
-      val userJSON = """{"id": "123", "primaryEmailAddress": "test@example.coma", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}"""
+      val userJSON = """{"status" : "ok", "user":{"id": "123", "primaryEmailAddress": "test@example.coma", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}}"""
       val validUserResponse = HttpResponse(userJSON, 200, "OK")
       when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validUserResponse)))
       "accesses the get user for token wioth the token param" in {

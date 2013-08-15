@@ -67,7 +67,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   def resetPassword( token : String, newPassword : String ): Future[Response[OkResponse]] = {
     val apiPath = urlJoin("user", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
-    val response = http.POST(apiUrl(apiPath), Option(postBody))
+    val response = http.POST(apiUrl(apiPath), Some(postBody))
     response map jsonBodyParser.extract[OkResponse]()
   }
 
@@ -75,7 +75,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     val apiPath = urlJoin("user","send-password-reset-email")
     val params = Iterable(("email-address", emailAddress), ("type", "reset"))
     val response = http.GET(apiUrl(apiPath), params)
-    response map jsonBodyParser.extract[User]()
+    response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
 //  def register(userData: String): Future[Response[User]] = {

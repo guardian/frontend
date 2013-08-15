@@ -5,9 +5,10 @@ import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.JsonParser._
 import client.{Logging, Error, Response}
 import client.connection.HttpResponse
+import com.gu.identity.model.LiftJsonConfig
 
 trait JsonBodyParser extends Logging {
-  implicit val formats = DefaultFormats + new JodaJsonSerializer
+  implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
   def responseIsError(json: JValue, statusCode: Int): Boolean = statusCode > 299
   def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error]

@@ -44,7 +44,7 @@ trait DispatchAsyncHttpClient extends Http {
 
   def buildRequest(request: dispatch.Req, urlParameters: Parameters, headers: Parameters): Req = {
     request.setQueryParameters(urlParameters).setHeaders(headers)
-  }
+ }
 
   def httpResponseHandler = new FunctionHandler(response =>
     HttpResponse(response.getResponseBody("utf-8"), response.getStatusCode, response.getStatusText)
@@ -64,13 +64,13 @@ trait DispatchAsyncHttpClient extends Http {
 
   override def POST(uri: String, body: Option[String], urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
     val req = buildRequest(url(uri).POST, urlParameters, headers)
-    body.foreach(req.setBody)
-    new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either.map(mapFutureToResponse)
+    val request = body.map(req.setBody).getOrElse(req).toRequest
+    new EnrichedFuture(client(request, httpResponseHandler)).either.map(mapFutureToResponse)
   }
 
   override def DELETE(uri: String, body: Option[String], urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
     val req = buildRequest(url(uri).DELETE, urlParameters, headers)
-    body.foreach(req.setBody)
-    new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either.map(mapFutureToResponse)
+    val request = body.map(req.setBody).getOrElse(req).toRequest
+    new EnrichedFuture(client(request, httpResponseHandler)).either.map(mapFutureToResponse)
   }
 }

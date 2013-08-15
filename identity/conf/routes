@@ -8,4 +8,4 @@ GET     /recover/:message                               @controllers.ResetPasswo
 GET     /recover                                        @controllers.ResetPasswordController.renderPasswordResetRequestForm( message = "")
 POST    /recover                                        @controllers.ResetPasswordController.processPasswordResetRequestForm
 GET     /c/:resetToken                                  @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
-POST    /reset-password                                 @controllers.ResetPasswordController.resetPassword
+POST    /reset-password/:resetToken                     @controllers.ResetPasswordController.resetPassword( resetToken : String )

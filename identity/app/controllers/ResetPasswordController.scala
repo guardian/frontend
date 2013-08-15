@@ -7,10 +7,11 @@ import play.api.mvc._
 import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
 import client.Error
+import services.{IdentityUrlBuilder, IdRequestParser}
 
 
 @Singleton
-class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller with ExecutionContexts with Logging {
+class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdRequestParser, idUrlBuilder: IdentityUrlBuilder ) extends Controller with ExecutionContexts with Logging {
 
   val page = new IdentityPage("/reset-password", "Reset Password", "reset-password")
 
@@ -23,17 +24,16 @@ class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller 
   val passwordResetForm = Form(
     Forms.tuple (
       "password" ->  Forms.text,
-      "password_confirm" ->  Forms.text,
-      "token" -> Forms.text
+      "password_confirm" ->  Forms.text
     ) verifying("Password must match", f => f._1 == f._2  )
   )
 
   def renderPasswordResetRequestForm(message : String = "") = Action { implicit request =>
     requestPasswordResetForm.fill("")
     message match {
-      case "tokenexpired" => Ok(views.html.request_password_reset(page, requestPasswordResetForm, "Looks like you left it too long. Please request a new password reset code<"))
-      case "passworderror" => Ok(views.html.request_password_reset(page, requestPasswordResetForm, "We could not reset your details. Please request a new password reset code<"))
-      case "" => Ok(views.html.request_password_reset(page, requestPasswordResetForm, ""))
+      case "tokenexpired" => Ok(views.html.request_password_reset(page, requestPasswordResetForm, "Looks like you left it too long. Please request a new password reset code"))
+      case "passworderror" => Ok(views.html.request_password_reset(page, requestPasswordResetForm, "We could not reset your details. Please request a new password reset code"))
+      case _ => Ok(views.html.request_password_reset(page, requestPasswordResetForm, ""))
     }
   }
 
@@ -47,7 +47,10 @@ class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller 
     { case(email) => {
         Async {
           api.sendPasswordResetEmail(email) map(_ match {
-            case Left(errors) => Ok(views.html.send_password_reset_email_error(page))
+            case Left(errors) => {
+              log.info("User not found for request new password.")
+              Ok(views.html.reset_password_email_confirmation(page, email))
+            }
             case Right(apiOk) => Ok(views.html.reset_password_email_confirmation(page, email))
           })
         }
@@ -55,21 +58,22 @@ class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller 
      })
   }
 
-  def resetPassword = Action { implicit request =>
+  def resetPassword(token : String) = Action { implicit request =>
+    val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromRequest
     boundForm.fold(
       formWithErrors => {
         log.info("bad rest password attempt")
-        Ok(views.html.reset_password(page, formWithErrors))
+        Ok(views.html.reset_password(page, idRequest, idUrlBuilder, passwordResetForm, token))
      },
-     { case(password, password_confirm, token)  => {
+     { case(password, password_confirm)  => {
          Async {
            api.resetPassword(token,password) map ( _ match {
              case Left(errors) => {
                errors match {
                  case List( Error("Token expired", _, _)) => SeeOther("/recover/tokenexpired")
                  case List( Error("Access Denied", _, _)) => SeeOther("/recover/passworderror")
-                 case _ => SeeOther("/identity/recover")
+                 case _ => SeeOther("/recover")
                }
              }
              case Right(ok) =>
@@ -82,6 +86,7 @@ class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller 
   }
 
   def processUpdatePasswordToken( token : String) = Action { implicit request =>
+    val idRequest = idRequestParser(request)
     Async {
       api.userForToken(token) map ( _ match {
         case Left(errors) => {
@@ -89,8 +94,8 @@ class ResetPasswordController @Inject()( api : IdApiClient ) extends Controller 
           SeeOther("/recover/tokenexpired")
         }
         case Right(user) => {
-          passwordResetForm.fill("","",token)
-          Ok(views.html.reset_password(page, passwordResetForm))
+          passwordResetForm.fill("","")
+          Ok(views.html.reset_password(page, idRequest, idUrlBuilder, passwordResetForm, token))
         }
 
       })
