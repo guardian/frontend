@@ -64,7 +64,7 @@ a.competition-title {
         padding: $baseline*2;
 
         &:active {
-            background: #666;
+            background: $darkMushroom;
             color: #fff !important;
             text-decoration: none;
         }
