@@ -25,7 +25,7 @@ define([
                 Cricket.cricketTrail(config, context);
             });
         },
-            
+
         showTrailblockToggles: function () {
             var tt = new TrailblockToggle();
             common.mediator.on('page:front:ready', function(config, context) {
@@ -70,8 +70,12 @@ define([
                             break;
                         case "sport" :
                             // Sport Front
+                            // don't want to put it in the masthead trailblock
+                            var trailblocks = [].filter.call(context.querySelectorAll('.trailblock'), function(trailblock) {
+                                return bonzo(trailblock).hasClass('trailblock--masthead') === false;
+                            });
                             opts = {
-                                prependTo: context.querySelector('.trailblock ul > li'),
+                                prependTo: (trailblocks) ? trailblocks[0].querySelector('ul > li') : null,
                                 competitions: ['500', '510', '100', '400'],
                                 contextual: false,
                                 expandable: true,
@@ -87,7 +91,7 @@ define([
                 }
             });
         }
-        
+
     };
 
     var ready = function (config, context) {

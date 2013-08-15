@@ -126,7 +126,7 @@ object FrontPage {
 class FaciaController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val EditionalisedKey = """(.*\w\w-edition)""".r
-  val FrontPath = """(\w\w-edition)?""".r
+  val FrontPath = """(\w\w-edition|\w\w)?""".r
 
   val front: Front = Front
 
@@ -148,7 +148,9 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       // go live
       val realPath = editionPath(path, Edition(request))
 
-      FrontPage(realPath).map { frontPage =>
+      val pageId = realPath.drop(3)  //removes the edition
+
+      FrontPage(pageId).map { frontPage =>
 
         // get the trailblocks
         val trailblocks: Seq[Trailblock] = front(realPath)
