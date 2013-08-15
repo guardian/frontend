@@ -188,11 +188,11 @@ object Switches extends Collections {
     safeState = Off)
 
   //Fronts film switch
-  val FilmFrontFacia = Switch("Facia", "facia-film-switch",
+  val FilmFrontFacia = Switch("Facia", "facia-film",
     "Switch to redirect traffic to the facia film front instead of front film front",
     safeState = Off)
 
-  val FaciaHeaderSwitch = Switch("Facia", "facia-header-switch",
+  val FaciaSwitch = Switch("Facia", "facia",
     "Switch to redirect to facia if request has X-Gu-Facia=true",
     safeState = Off
   )
@@ -230,7 +230,7 @@ object Switches extends Collections {
     LiveCricketSwitch,
     ABLightboxGalleries,
     FilmFrontFacia,
-    FaciaHeaderSwitch,
+    FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
     ABSwipeCtas,
