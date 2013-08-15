@@ -449,7 +449,6 @@ define([
         panes = new SwipeView(swipeContainer, {});
 
         panes.onFlip(function () {
-            resetScrollPos();
             paneNow = mod3(panes.pageIndex+1);
             if (paneThen !== paneNow) {
                 // shuffle down the pane we've just left
