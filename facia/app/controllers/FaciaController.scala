@@ -126,7 +126,7 @@ object FrontPage {
 class FaciaController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
   val front: Front = Front
-  val EditionalisedKey = """^\w\w(\\.*)?$""".r
+  val EditionalisedKey = """^\w\w(/.*)?$""".r
 
   private def editionPath(path: String, edition: Edition) = path match {
     case EditionalisedKey(_) => path
