@@ -5,7 +5,6 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
         this.el = this.generateTpl();
         this.$el = bonzo(this.el);
         this.body = this.options.context || document.body;
-        this.$body = bonzo(this.body);
         this.isVisible = false;
         this.btns = [];
 
@@ -17,8 +16,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     SwipeBar.prototype.DEFAULTS = {
         className : 'swipe-bar',
         btnClassName : 'swipe-bar__btn',
-        countClassName : 'swipe-bar__count',
-        headerHeight : 122
+        countClassName : 'swipe-bar__count'
     };
 
     SwipeBar.prototype.generateTpl = function() {
@@ -52,19 +50,25 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     };
 
     SwipeBar.prototype.show = function() {
-        if(this.$body.scrollTop() > this.options.headerHeight) {
-            if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
-                this.$el.removeClass('is-hidden');
-                this.isVisible = true;
-            }
+        if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
+            bean.on(this.body, 'click.swipe.bar', '.js-' + this.options.btnClassName, this.navigate);
+
+            this.$el.removeClass('is-hidden');
+            this.isVisible = true;
         } else {
             this.hide();
         }
     };
 
     SwipeBar.prototype.hide = function(){
+        bean.off(this.body, 'click.swipe.bar');
         this.$el.addClass('is-hidden');
         this.isVisible = false;
+    };
+
+    SwipeBar.prototype.navigate = function(e) {
+        var dir = (e.target.getAttribute('data-direction') === 'left') ? 'prev' : 'next';
+        common.mediator.emit('module:swipenav:navigate:' + dir);
     };
 
     SwipeBar.prototype.bindListeners = function() {
@@ -72,11 +76,6 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
 
         common.mediator.on('module:swipenav:position:update', function(data){
             self.updateCount.call(self, data);
-        });
-
-        bean.on(this.body, 'click', '.js-' + this.options.btnClassName, function(e) {
-            var dir = (e.target.getAttribute('data-direction') === 'left') ? 'prev' : 'next';
-            common.mediator.emit('module:swipenav:navigate:' + dir);
         });
 
         var debouncedHide = common.debounce(function(){
