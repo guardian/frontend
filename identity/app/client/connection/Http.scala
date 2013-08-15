@@ -10,8 +10,8 @@ trait Http extends Logging {
   implicit val codec = Codec("UTF-8")
 
   protected def formatParams(params: Parameters) = params.map {
-    case (k, v) => "%s, %s".format(k, v)
-  }.mkString(",")
+    case (k, v) => "%s=%s".format(k, v)
+  }.mkString("&")
 
   def GET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]]
 

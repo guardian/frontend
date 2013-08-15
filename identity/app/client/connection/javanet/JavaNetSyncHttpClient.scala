@@ -13,22 +13,24 @@ import scala.concurrent.{Future, Promise}
 class JavaNetSyncHttpClient extends Http {
 
   override def GET(urlString: String, parameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
-    logger.trace("GET request %s; params: %s; headers: %s".format(urlString, formatParams(parameters), formatParams(headers)))
+    logger.debug("GET request %s; params: %s; headers: %s".format(urlString, formatParams(parameters), formatParams(headers)))
     val response = getConnection(urlString, parameters, headers, "GET")
       .right.flatMap(extractHttpResponse)
     Promise.successful(response).future
   }
 
-  override def POST(url: String, body: Option[String], urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
-    logger.trace("POST request %s; body: %s; params: %s; headers: %s".format(url, body, formatParams(urlParameters), formatParams(headers)))
+  override def POST(url: String, bodyOpt: Option[String], urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
+    logger.debug("POST request %s; params: %s; headers: %s".format(url, bodyOpt, formatParams(urlParameters), formatParams(headers)))
+    logger.trace("POST body %s".format(bodyOpt))
     val connection = getConnection(url, urlParameters, headers, "POST").right
-    val request = if (body.isDefined) connection.flatMap(writeBodyContent(_, body.get)).right else connection
+    val request = if (bodyOpt.isDefined) connection.flatMap(writeBodyContent(_, bodyOpt.get)).right else connection
     val response = request.flatMap(extractHttpResponse)
     Promise.successful(response).future
   }
 
   override def DELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
-    logger.trace("DELETER request %s; body: %s; params: %s; headers: %s".format(url, bodyOpt.toString, formatParams(urlParameters), formatParams(headers)))
+    logger.debug("DELETE request %s; params: %s; headers: %s".format(url, bodyOpt.toString, formatParams(urlParameters), formatParams(headers)))
+    logger.trace("POST body %s".format(bodyOpt))
     val response = getConnection(url, urlParameters, headers, "DELETE").right
       .flatMap(connection => {
         bodyOpt.foreach(writeBodyContent(connection, _))

@@ -5,13 +5,14 @@ import org.slf4j.ext.LoggerWrapper
 import org.slf4j.{LoggerFactory, Marker}
 import scala.util.matching.Regex
 
+
 class IdentitySafeLogger(wrappedLogger: LocationAwareLogger, classname : String)
   extends LoggerWrapper(
     new LoggerWrapper(wrappedLogger, classname) with LocationAwareLogger {
 
       def getVariableMatcher(name: String): Regex = {
-        // lookbehind to check format is [&?]name=<value> then match the value, a chunk of url-safe chars
-        ("(?<=[&?]" + name + "=)[^&,# +:=/]+").r
+        // lookbehind to check format is name=<value> then match the value, a chunk of url-safe chars
+        ("(?<=" + name + "=)[^&,# :=/]+").r
       }
 
       val patterns = List(
@@ -22,19 +23,32 @@ class IdentitySafeLogger(wrappedLogger: LocationAwareLogger, classname : String)
         getVariableMatcher("trackingIpAddress")
       )
 
-      def makeSafe(msg : String) : String = {
+      def cleanString(msg : String): String = {
         patterns.foldLeft(msg){ case (filteredMsg, pattern) =>
           pattern.replaceAllIn(filteredMsg, "***")
         }
       }
 
-      def log(marker: Marker, fqcn: String, level: Int, message: String, argArray: Array[AnyRef], t: Throwable) {
-        wrappedLogger.log(marker, fqcn, level, makeSafe(message), argArray, t)
+      def cleanThrowable(t: Throwable): CleanedException = {
+        val message = Option("(" + t.getClass.getName + "): " + t.getMessage).map(cleanString).orNull
+        val cause = Option(t.getCause).map(cleanThrowable).orNull
+        val cleaned = new CleanedException(message, cause)
+        cleaned.setStackTrace(t.getStackTrace)
+        cleaned
       }
-    }, classname)
+
+      override def log(marker: Marker, fqcn: String, level: Int, message: String, argArray: Array[AnyRef], t: Throwable): Unit = {
+        wrappedLogger.log(marker, fqcn, level, cleanString(message), argArray, Option(t).map(cleanThrowable).orNull)
+      }
+    }, classname
+  )
 
 
 trait SafeLogging {
   val logger = new IdentitySafeLogger(LoggerFactory.getLogger(getClass).asInstanceOf[LocationAwareLogger], getClass.getName)
 }
-object SafeLogging extends SafeLogging
+object SafeLogging {
+  def logger[T](clazz: Class[T]) = new IdentitySafeLogger(LoggerFactory.getLogger(clazz).asInstanceOf[LocationAwareLogger], clazz.getName)
+}
+
+class CleanedException(message: String, cause: CleanedException = null) extends Throwable(message, cause)

@@ -38,6 +38,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   )
 
   def renderForm = Action { implicit request =>
+    logger.trace("Rendering signin form")
     val idRequest = idRequestParser(request)
     val filledForm = form.fill("", "", true)
     Ok(views.html.signin(page, idRequest, idUrlBuilder, filledForm))

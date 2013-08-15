@@ -8,7 +8,7 @@ import utils.SafeLogging
 
 class IdApiJsonBodyParser extends JsonBodyParser {
 
-  override val logger = SafeLogging.logger
+  override val logger = SafeLogging.logger(getClass)
 
   override def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = {
     try {

@@ -47,7 +47,7 @@ class ApacheSyncHttpClient extends Http {
   }
 
   override def GET(url: String, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
-    logger.trace("GET request %s; params: %s; headers: %s".format(url, formatParams(urlParameters), formatParams(headers)))
+    logger.debug("GET request %s; params: %s; headers: %s".format(url, formatParams(urlParameters), formatParams(headers)))
     val response = try {
       val method = new GetMethod(url)
       execute(method, urlParameters, headers)
@@ -68,12 +68,13 @@ class ApacheSyncHttpClient extends Http {
     Promise.successful(response).future
   }
 
-  override def POST(url: String, body: Option[String], urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
-    logger.trace("POST request %s; body: %s; params: %s; headers: %s".format(url, body, formatParams(urlParameters), formatParams(headers)))
+  override def POST(url: String, bodyOpt: Option[String], urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
+    logger.debug("POST request %s; params: %s; headers: %s".format(url, formatParams(urlParameters), formatParams(headers)))
+    logger.trace("POST body %s".format(bodyOpt))
     val response = try {
       val method = new PostMethod(url)
-      if(body.isDefined) {
-        method.setRequestEntity(new StringRequestEntity(body.get, "application/json", "UTF-8"))
+      if(bodyOpt.isDefined) {
+        method.setRequestEntity(new StringRequestEntity(bodyOpt.get, "application/json", "UTF-8"))
       }
       execute(method, urlParameters, headers)
     } catch {
@@ -94,7 +95,8 @@ class ApacheSyncHttpClient extends Http {
   }
 
   override def DELETE(url: String, bodyOpt: Option[String] = None, urlParameters: Parameters = Nil, headers: Parameters = Nil): Future[Response[HttpResponse]] = {
-    logger.trace("DELETER request %s; body: %s; params: %s; headers: %s".format(url, bodyOpt.toString, formatParams(urlParameters), formatParams(headers)))
+    logger.debug("DELETE request %s; params: %s; headers: %s".format(url, formatParams(urlParameters), formatParams(headers)))
+    logger.trace("DELETE body %s".format(bodyOpt))
     val response = try {
       val method = if (bodyOpt.isDefined) {
         val deleteWithBody = new DeleteMethodWithBody(url)
