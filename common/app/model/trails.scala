@@ -23,9 +23,8 @@ trait Trail extends Images with Tags {
   def thumbnail: Option[String] = None
   def thumbnailPath: Option[String] = None
   def isLive: Boolean
-
   def discussionId: Option[String] = None
-
+  def leadingParagraphs: List[org.jsoup.nodes.Element] = Nil
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
