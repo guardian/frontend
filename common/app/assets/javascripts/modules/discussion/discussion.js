@@ -250,6 +250,7 @@ define([
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
+
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
 
@@ -258,6 +259,8 @@ define([
 
                     self.discussionContainerNode.style.display = 'none';
                     self.articleContainerNode.style.display = 'block';
+
+                    common.mediator.emit('modules:discussion:show');
 
                     if (e.currentTarget.className.indexOf('js-top') !== -1) {
                         self.jumpToTop();
