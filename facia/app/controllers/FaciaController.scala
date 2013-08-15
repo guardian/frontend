@@ -118,17 +118,15 @@ object FrontPage {
     }
   )
 
-  def apply(path: String): Option[FrontPage] = fronts.find(f => path.startsWith(f.id))
+  def apply(path: String): Option[FrontPage] = fronts.find(f => path.endsWith(f.id))
 
 }
 
 
 class FaciaController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
-  val EditionalisedKey = """(.*\w\w-edition)""".r
-  val FrontPath = """(\w\w-edition|\w\w)?""".r
-
   val front: Front = Front
+  val EditionalisedKey = """^\w\w(/.*)?$""".r
 
   private def editionPath(path: String, edition: Edition) = path match {
     case EditionalisedKey(_) => path
@@ -142,18 +140,14 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       Action { Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film/film") }
   }
 
-
   def render(path: String) = Action { implicit request =>
-      // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
-      // go live
-      val realPath = editionPath(path, Edition(request))
 
-      val pageId = realPath.drop(3)  //removes the edition
+      val editionalisedPath = editionPath(path, Edition(request))
 
-      FrontPage(pageId).map { frontPage =>
+      FrontPage(editionalisedPath).map { frontPage =>
 
         // get the trailblocks
-        val trailblocks: Seq[Trailblock] = front(realPath)
+        val trailblocks: Seq[Trailblock] = front(editionalisedPath)
 
         if (trailblocks.isEmpty) {
           InternalServerError
@@ -167,11 +161,12 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
   def renderTrails(path: String) = Action { implicit request =>
 
-    val realPath = editionPath(path, Edition(request))
+    val editionalisedPath = editionPath(path, Edition(request))
 
-    FrontPage(realPath).map{ frontPage =>
+    FrontPage(editionalisedPath).map{ frontPage =>
+
       // get the first trailblock
-      val trailblock: Option[Trailblock] = front(realPath).headOption
+      val trailblock: Option[Trailblock] = front(editionalisedPath).headOption
 
       if (trailblock.isEmpty) {
         InternalServerError
