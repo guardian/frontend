@@ -9,8 +9,8 @@ import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import conf.Configuration
 
-class Content(
-    delegate: ApiContent) extends Trail with Tags with MetaData {
+class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
+
   private lazy val fields = delegate.safeFields
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
@@ -43,6 +43,16 @@ class Content(
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
 
+  override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
+    val body = delegate.safeFields.get("body")
+    val souped = body flatMap { body =>
+      val souped = Jsoup.parseBodyFragment(body).body().select("p")
+      Option(souped) map { _.toList }
+    }
+
+    souped getOrElse Nil
+  }
+  
   lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
