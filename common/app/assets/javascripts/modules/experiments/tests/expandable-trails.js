@@ -7,7 +7,7 @@ define(['common', 'bean'], function (common, bean) {
         this.audience = 1;
         this.description = 'Impact of expandable trails on page views';
         this.canRun = function(config) {
-            return config.page.contentType === 'Article';
+            return (/^Video|Article|Gallery$/).test(config.page.contentType);
         };
         this.variants = [
             {
