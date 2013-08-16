@@ -112,21 +112,24 @@ $grey: #cccccc;
     .trail__timestamp,
     .trail__count {
         padding-bottom: $baseline * 5;
-        padding-left: $gutter / 4;
         float: left;
         border-left: 1px solid $grey;
         i {
-            margin: 0 $gutter / 4 0 0;
-            @extend .i-clock-blue;
+            margin:0;
+            position: absolute;
+            top: 0;
+            left: 4px;
         }
         &,
         a {
             color: $grey;
-            @include font($sans-serif, lighter, 16, 16);
+            @include font($sans-serif, lighter, 12, 12);
         }
     }
     .trail__timestamp {
-        min-width: 80px;
+        min-width: 58px;
+        margin-right: $gutter/4;
+        padding-left: 21px;
         i {
             @extend .i-clock-blue;
         }
@@ -134,17 +137,13 @@ $grey: #cccccc;
     .trail__count {
         position: relative;
         top: auto;
-        margin-left: $gutter/4;
+        padding-left: 23px;
         a {
             float: none;
             display: inline;
             margin: 0;
         }
         i {
-            float: none;
-            position: relative;
-            top: 3px;
-            margin-top: -1px;
             @extend .i-comment-blue;
         }
     }
@@ -183,7 +182,8 @@ $grey: #cccccc;
             .trail__title {
                 @include font-size(24, 28);
                 color: #ffffff;
-                padding: $baseline*3 $gutter/2 $baseline*10;
+                padding-top: $baseline*3;
+                margin-bottom: $baseline*10;
             }
         }
         .trail:nth-child(n+2) {
@@ -257,15 +257,17 @@ $grey: #cccccc;
     .trail__image {
         margin-right: $gs-gutter;
     }
+    a,
     .trail__title,
     .trail__standfirst,
     .trail__timestamp,
-    .trail__count a {
+    .trail__count a
+    {
         color: #ffffff;
     }
     .trail__title,
     .trail__standfirst {
-        padding: 0 $baseline*2 0;
+        margin: 0 $baseline*2 0;
     }
     .trail__title {
         padding-top: $baseline*2;
@@ -298,7 +300,7 @@ $grey: #cccccc;
         }
         .trail__standfirst {
             @include font-size(20, 24);
-            padding-top: $baseline*5;
+            margin-top: $baseline*5;
         }
         .trail__meta {
             left: $featured-img-width + $gs-gutter;
@@ -313,7 +315,7 @@ $grey: #cccccc;
         }
         .trail__standfirst {
             @include font-size(28, 32);
-            padding-top: $baseline*7;
+            margin-top: $baseline*7;
         }
         .trail__meta {
             left: 620px + $gs-gutter;
@@ -329,9 +331,15 @@ $grey: #cccccc;
         .trail__image {
             margin-right: $gs-gutter;
         }
+        a,
+        .trail__title,
+        .trail__standfirst,
+        .trail__timestamp {
+            color: #ffffff;
+        }
         .trail__title,
         .trail__standfirst {
-            color: #ffffff;
+            padding: 0 $gutter/2;
         }
         .trail__title {
             padding-top: $baseline*2;

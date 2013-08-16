@@ -14,10 +14,13 @@
                 <h2 class="trail__title">@RemoveOuterParaHtml(trail.headline)</h2>
             </a>
             <div class="trail__meta">
-                <time class="trail__timestamp"
+                <time class="trail__timestamp trail__timestamp--js"
                       itemprop="datePublished"
                       datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
-                      data-timestamp="@trail.webPublicationDate.getMillis"><i class="i"></i>@Format(trail.webPublicationDate, "d MMM y")</time>
+                      data-timestamp="@trail.webPublicationDate.getMillis">
+                    <i class="i"></i>
+                    <span class="timestamp__text">@Format(trail.webPublicationDate, "d MMM y")</span>
+                </time>
             </div>
             @trail.trailText.map { text =>
                 <p class="trail__standfirst">@cleanTrailText(text)(Edition(request))</p>
