@@ -134,6 +134,11 @@ class GuardianConfiguration(
     lazy val imageFallback = "http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png"
   }
 
+  object ios {
+    lazy val ukAppId = "409128287"
+    lazy val usAppId = "411493119"
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments
