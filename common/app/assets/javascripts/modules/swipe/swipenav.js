@@ -242,8 +242,12 @@ define([
                 storage.remove(storePrefix + 'linkContext');
             } else {
                 // No data-link-context, so infer the section/tag component from the url,
-                sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
-                sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
+                if("page" in config) {
+                    sequenceUrl = (config.page.section ? config.page.section : '');
+                } else {
+                    sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
+                    sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
+                }
             }
         }
 
