@@ -42,7 +42,7 @@
             <div class="media__body">
                 @trail.trailText.map { text => <div class="trail__text trail__expander-hide">@cleanTrailText(text)(Edition(request))</div> }
                 <div class="trail__expander-show">
-                    @trail.byline.map { text => <p class="byline" data-link-name="byline">@ContributorLinks(text, trail.contributors) }</p>
+                    @trail.byline.map { text => <p class="byline" data-link-name="byline">@ContributorLinks(text, trail.contributors)</p> }
                     <div class="from-content-api trail__expander-content">
                         @if(!trail.leadingParagraphs.isEmpty) {
                             @trail.leadingParagraphs.take(4).map { paragraph => <p>@Html(paragraph.html())</p> }

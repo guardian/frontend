@@ -24,6 +24,7 @@
                         itemprop="contentURL"
                     />
                 </a>
+
                 @if(largeCrop.caption.headOption.getOrElse("").trim != "") {
                     <div class="main-caption trail__expander-show">
                         <figcaption itemprop="description">@StripHtmlTagsAndUnescapeEntities(largeCrop.caption.getOrElse(""))</figcaption>
@@ -35,13 +36,15 @@
     </div>
 
     @trail.trailText.map { text => <div class="trail__text trail__expander-hide">@cleanTrailText(text)(Edition(request))</div> }
-    <p class="byline trail__expander-show"><a href="">Jean Bonneau</a></p>
-    <div class="from-content-api trail__expander-content">
-        @if(!trail.leadingParagraphs.isEmpty) {
-            @trail.leadingParagraphs.take(4).map { paragraph => <p>@Html(paragraph.html())</p> }
-        }
-        <div class="trail__expander-action">
-            <p><a href="@LinkTo{@trail.url}" data-link-name="@rowNum | read full article" aria-hidden="true">Read the full article</a></p>
+    <div class="trail__expander-show">
+        @trail.byline.map { text => <p class="byline" data-link-name="byline">@ContributorLinks(text, trail.contributors)</p> }
+        <div class="from-content-api trail__expander-content">
+            @if(!trail.leadingParagraphs.isEmpty) {
+                @trail.leadingParagraphs.take(4).map { paragraph => <p>@Html(paragraph.html())</p> }
+            }
+            <div class="trail__expander-action">
+                <p><a href="@LinkTo{@trail.url}" data-link-name="@rowNum | read full article" aria-hidden="true">Read the full article</a></p>
+            </div>
         </div>
     </div>
 
