@@ -4,7 +4,7 @@ define(['common', 'bonzo'], function (common, bonzo) {
         'minute': 60,
         'hour': 60 * 60,
         'day': 60 * 60 * 24
-    }
+    };
 
     function relativise(then) {
         var delta = (new Date() - new Date(then)) / 1000;
@@ -23,7 +23,7 @@ define(['common', 'bonzo'], function (common, bonzo) {
         [].forEach.call(context.querySelectorAll('.trail__timestamp--js'), function(timestamp) {
             var relativeTime = relativise(bonzo(timestamp).attr('datetime'));
             common.$g('.timestamp__text', timestamp).text(relativeTime);
-        })
+        });
     }
 
     return {
