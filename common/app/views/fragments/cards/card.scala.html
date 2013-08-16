@@ -1,0 +1,10 @@
+@(trail: Trail, linkName: String)(implicit request: RequestHeader)
+<a href="/@trail.id" class="card-wrapper" data-link-name="@linkName" aria-hidden="true">
+    <div class="furniture furniture--@column card">
+        <h2 class="card__title"></h2>
+        <img src="" alt="" class="card__media" />
+        <div class="card__body u-text-hyphenate">
+            <h3 class="card__headline"></h3>
+        </div>
+    </div>
+</a>
