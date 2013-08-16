@@ -17,7 +17,7 @@
                 <time class="trail__timestamp"
                       itemprop="datePublished"
                       datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
-                      data-timestamp="@trail.webPublicationDate.getMillis"><i class="i"></i>20m</time>
+                      data-timestamp="@trail.webPublicationDate.getMillis"><i class="i"></i>@Format(trail.webPublicationDate, "d MMM y")</time>
             </div>
             @trail.trailText.map { text =>
                 <p class="trail__standfirst">@cleanTrailText(text)(Edition(request))</p>

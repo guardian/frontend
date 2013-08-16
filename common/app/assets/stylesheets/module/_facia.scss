@@ -26,6 +26,9 @@ $grey: #cccccc;
     .trail__count {
         border-left-color: $light-blue;
     }
+    .trail__timestamp {
+        border-left: none;
+    }
     .trail__timestamp,
     .trail__count a {
         color: #ffffff;
@@ -56,6 +59,9 @@ $grey: #cccccc;
     float: none;
     padding-top: $baseline*2;
     border-top: 2px solid $blue;
+    &.trail--feature {
+        border-top: none;
+    }
     .trail__image-container {
         display: none;
     }
@@ -91,15 +97,23 @@ $grey: #cccccc;
     .trail__standfirst {
         color: #000000;
     }
+    .trail__title {
+        font-family: $serifheadline;
+        font-weight: 700;
+    }
+    .trail__stadfirst {
+        font-weight: normal;
+    }
     .trail__meta {
         position: absolute;
         bottom: 0;
     }
     .trail__timestamp,
     .trail__count {
-        padding-bottom: $baseline * 2;
+        padding-bottom: $baseline * 5;
         padding-left: $gutter / 4;
         float: left;
+        border-left: 1px solid $grey;
         i {
             margin: 0 $gutter / 4 0 0;
             @extend .i-clock-blue;
@@ -119,7 +133,7 @@ $grey: #cccccc;
     .trail__count {
         position: relative;
         top: auto;
-        border-left: 1px solid $grey;
+        margin-left: $gutter/4;
         a {
             float: none;
             display: inline;
@@ -166,7 +180,7 @@ $grey: #cccccc;
                 margin: 0;
             }
             .trail__title {
-                @include font($serif, 700, 24, 28);
+                @include font-size(24, 28);
                 color: #ffffff;
                 margin: $baseline*3 $gutter/2 $baseline*10;
             }
@@ -174,13 +188,16 @@ $grey: #cccccc;
         .trail:nth-child(n+2) {
             padding: $baseline*2 0 $baseline*4;
             border-top: 2px solid $blue;
+            &.trail--feature {
+                border-top: none;
+            }
             .trail__image-container,
             .trail__timestamp,
             .trail__count {
                 display: none;
             }
             .trail__title {
-                @include font($serif, 700, 20, 24);
+                @include font-size(20, 24);
             }
         }
     }
@@ -194,9 +211,13 @@ $grey: #cccccc;
         }
         .trail__title {
             padding: 0 $gutter/2;
+            font-weight: normal;
         }
         .trail__timestamp i {
             @extend .i-clock-pink;
+        }
+        .trail__timestamp {
+            border-left: none;
         }
         .trail__count {
             border-left-color: $light-pink;
@@ -244,10 +265,10 @@ $grey: #cccccc;
             width: $featured-img-width;
         }
         .trail__title {
-            @include font($serifheadline, 700, 26, 28);
+            @include font-size(26, 28);
         }
         .trail__standfirst {
-            @include font($serifheadline, normal, 18, 20);
+            @include font-size(18, 20);
         }
     }
 
@@ -256,10 +277,10 @@ $grey: #cccccc;
             width: $featured-img-width;
         }
         .trail__title {
-            @include font($serifheadline, 700, 34, 36);
+            @include font-size(34, 36);
         }
         .trail__standfirst {
-            @include font($serifheadline, normal, 26, 28);
+            @include font-size(26, 28);
         }
     }
     @include mq(wide) {
@@ -267,10 +288,10 @@ $grey: #cccccc;
             width: 620px;
         }
         .trail__title {
-            @include font($serifheadline, 700, 38, 40);
+            @include font-size(38, 40);
         }
         .trail__standfirst {
-            @include font($serifheadline, normal, 30, 32);
+            @include font-size(30, 32);
         }
     }
 }
@@ -303,10 +324,10 @@ $grey: #cccccc;
     }
     @include mq(tablet, desktop) {
         .trail__title {
-            @include font($serifheadline, 700, 26, 28);
+            @include font-size(26, 28);
         }
         .trail__standfirst {
-            @include font($serifheadline, normal, 18, 20);
+            @include font-size(18, 20);
         }
         .trail:nth-child(1) {
             width: $featured-img-width;
@@ -320,10 +341,10 @@ $grey: #cccccc;
     }
     @include mq(desktop, wide) {
         .trail__title {
-            @include font($serifheadline, 700, 30, 32);
+            @include font-size(30, 32);
         }
         .trail__standfirst {
-            @include font($serifheadline, normal, 26, 28);
+            @include font-size(26, 28);
         }
         .trail:nth-child(1) {
             width: $featured-img-width;
@@ -337,10 +358,10 @@ $grey: #cccccc;
     }
     @include mq(wide) {
         .trail__title {
-            @include font($serifheadline, 700, 30, 32);
+            @include font-size(30, 32);
         }
         .trail__standfirst {
-            @include font($serifheadline, normal, 26, 28);
+            @include font-size(26, 28);
         }
         .trail:nth-child(1) {
             width: 940px;
@@ -358,7 +379,7 @@ $grey: #cccccc;
 .trails-count-3 {
     @include mq(tablet, desktop) {
         .trail__title {
-            @include font($serifheadline, 700, 26, 28);
+            @include font-size(26, 28);
         }
         .trail__standfirst {
             display: none;
@@ -385,7 +406,7 @@ $grey: #cccccc;
     }
     @include mq(desktop, wide) {
         .trail__title {
-            @include font($serifheadline, 700, 30, 32);
+            @include font-size(30, 32);
         }
         .trail__standfirst {
             display: none;
@@ -412,7 +433,7 @@ $grey: #cccccc;
     }
     @include mq(wide) {
         .trail__title {
-            @include font($serifheadline, 700, 30, 32);
+            @include font-size(30, 32);
         }
         .trail__standfirst {
             display: none;
@@ -447,7 +468,7 @@ $grey: #cccccc;
             margin-right: $gutter * 5/4;
             @include overlay;
             .trail__title {
-                @include font($serifheadline, 700, 24, 28);
+                @include font-size(24, 28);
                 width: 460 - $gs-column-width - $gs-gutter;
                 padding-top: $baseline*2;
                 padding-bottom: $baseline*10;
@@ -457,7 +478,7 @@ $grey: #cccccc;
             @include small-card;
             height: 33%;
             .trail__title {
-                @include font($serifheadline, 700, 20, 24);
+                @include font-size(20, 24);
             }
             .trail__timestamp,
             .trail__count {
@@ -474,7 +495,7 @@ $grey: #cccccc;
             margin-right: $gutter * 5/4;
             @include overlay;
             .trail__title {
-                @include font($serifheadline, 700, 24, 28);
+                @include font-size(24, 28);
                 width: 460 - $gs-column-width - $gs-gutter;
                 padding-top: $baseline*2;
                 padding-bottom: $baseline*10;
@@ -482,7 +503,7 @@ $grey: #cccccc;
         }
         .trail:nth-child(n+2) {
             .trail__title {
-                @include font($serifheadline, 700, 20, 24);
+                @include font-size(20, 24);
             }
         }
         .trail:nth-child(2) {
@@ -506,14 +527,14 @@ $grey: #cccccc;
             margin-right: $gutter * 5/4;
             @include overlay;
             .trail__title {
-                @include font($serifheadline, 700, 28, 32);
+                @include font-size(28, 32);
                 width: 620 - $gs-column-width - $gs-gutter;
                 padding-bottom: $baseline*13;
             }
         }
         .trail:nth-child(n+2) {
             .trail__title {
-                @include font($serifheadline, 700, 24, 28);
+                @include font-size(24, 28);
             }
         }
         .trail:nth-child(2) {
