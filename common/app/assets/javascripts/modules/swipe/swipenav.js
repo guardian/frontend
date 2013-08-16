@@ -551,7 +551,6 @@ define([
 
     var initialise = function(config, contextHtml) {
         loadSequence(config, function(){
-            console.log(config);
             var loc = window.location.href;
 
             initialUrl       = urlAbsPath(loc);
