@@ -7,9 +7,10 @@ import common.Reference
 import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
+import conf.Configuration
 
-class Content(
-    delegate: ApiContent) extends Trail with Tags with MetaData {
+class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
+
   private lazy val fields = delegate.safeFields
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
@@ -42,6 +43,16 @@ class Content(
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
 
+  override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
+    val body = delegate.safeFields.get("body")
+    val souped = body flatMap { body =>
+      val souped = Jsoup.parseBodyFragment(body).body().select("p")
+      Option(souped) map { _.toList }
+    }
+
+    souped getOrElse Nil
+  }
+  
   lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
@@ -85,6 +96,13 @@ class Content(
     ("thumbnail", thumbnailPath.getOrElse(false))
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
 
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:title" -> webTitle,
+    "og:url" -> webUrl,
+    "og:description" -> trailText,
+    "og:image" -> mainPicture.map(_.path).getOrElse(thumbnailPath.getOrElse(conf.Configuration.facebook.imageFallback))
+  )
+
   override lazy val cacheSeconds = {
     if (isLive) 30 // live blogs can expect imminent updates
     else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
@@ -119,6 +137,14 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
     .getOrElse(false)
 
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
+
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:type" -> "article",
+    "article:published_time" -> webPublicationDate,
+    "article:modified_time" -> lastModified,
+    "article:section" -> sectionName
+  ) ++ tags.map("article:tag" -> _.name) ++
+    tags.filter(_.isContributor).map("article:author" -> _.webTitle)
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) {
@@ -132,6 +158,11 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))
+
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:type" -> "video",
+    "og:video:type" -> "text/html"
+  ) ++ tags.map("video:tag" -> _.name)
 }
 
 class Gallery(private val delegate: ApiContent) extends Content(delegate) {

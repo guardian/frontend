@@ -31,10 +31,12 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/swipenav',
+    'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
-    "modules/lightbox-gallery"
+    "modules/lightbox-gallery",
+    "modules/swipe/ears",
+    "modules/swipe/bar"
 ], function (
     common,
     ajax,
@@ -70,7 +72,9 @@ define([
     swipeNav,
     VideoAdvert,
     CommentCount,
-    LightboxGallery
+    LightboxGallery,
+    ears,
+    SwipeBar
 ) {
 
     var modules = {
@@ -104,7 +108,7 @@ define([
 
             if (config.switches.idProfileNavigation) {
                 profile = new Profile(header, {
-                    url: config.idUrl
+                    url: config.page.idUrl
                 });
                 profile.init();
             }
@@ -174,7 +178,7 @@ define([
                 }
             });
         },
-        
+
         runAbTests: function () {
             common.mediator.on('page:common:ready', function(config, context) {
                 ab.run(config, context);
@@ -271,7 +275,7 @@ define([
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
-                    if (config.switches && config.switches.adverts) {
+                    if (config.switches && config.switches.adverts && !config.page.blockAds) {
                         Adverts.init(config, context);
                     }
                 });
@@ -302,7 +306,7 @@ define([
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
         },
-   
+
         // let large viewports opt-in to the responsive beta
         betaOptIn: function () {
             var isBeta = /#beta/.test(window.location.hash);
@@ -312,9 +316,26 @@ define([
             }
         },
 
+        // opt in/out of facia app
+        faciaOptToggle: function () {
+            var faciaOpt = /^#facia-opt-(.*)$/.exec(window.location.hash);
+            if (faciaOpt) {
+                var expiryDays = 365,
+                    cookieName = 'GU_FACIA';
+                if (faciaOpt[1] === 'in') {
+                    Cookies.add(cookieName, 'true', expiryDays);
+                } else {
+                    Cookies.cleanUp([cookieName]);
+                }
+            }
+        },
+
         initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
-                swipeNav(config, contextHtml);
+                var swipe = swipeNav(config, contextHtml);
+
+                common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
+                common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
             } else {
                 delete this.contextHtml;
                 return;
@@ -371,6 +392,7 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.betaOptIn();
+            modules.faciaOptToggle();
             modules.paragraphSpacing();
         }
         common.mediator.emit("page:common:ready", config, context);
