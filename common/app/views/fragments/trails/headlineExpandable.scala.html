@@ -40,14 +40,18 @@
         @if(!trail.leadingParagraphs.isEmpty) {
             @trail.leadingParagraphs.take(4).map { paragraph => <p>@Html(paragraph.html())</p> }
         }
-        <p><a href="@LinkTo{@trail.url}" data-link-name="@rowNum | read full article" aria-hidden="true">Read the full article</a></p>
+        <div class="trail__expander-action">
+            <p><a href="@LinkTo{@trail.url}" data-link-name="@rowNum | read full article" aria-hidden="true">Read the full article</a></p>
+        </div>
     </div>
 
-    <label class="trail__expander-cta" for="trail__expander-@trailId">
-        <span class="trail__expander-cta__button">
-            <span class="trail__expander-hide">Read more</span>
-            <span class="trail__expander-show">Close</span>
-        </span>
+    <label class="trail__expander-cta" for="trail__expander-@trailId" data-link-name="@rowNum | read more article">
+        <button class="u-button-reset">
+            <span class="trail__expander-cta__button">
+                <span class="trail__expander-hide">Read more</span>
+                <span class="trail__expander-show">Close</span>
+            </span>
+        </button>
     </label>
 </div>
 </@element>
