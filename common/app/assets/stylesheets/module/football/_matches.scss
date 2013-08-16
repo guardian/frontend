@@ -183,8 +183,7 @@ a.competition-title {
             content: "+ ";
         }
         &:active {
-            background: #666;
-            color: #fff;
+            background: $darkMushroom;
             text-decoration: none;
         }
     }
