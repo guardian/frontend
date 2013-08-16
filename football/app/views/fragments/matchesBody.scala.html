@@ -13,7 +13,9 @@
 }
 
 @if(model.pageType == "live") {
-    <div class="update update-live-matches" data-link-name="autoupdate"></div>
+    <div class="box-indent">
+        <div class="update update-live-matches" data-link-name="autoupdate"></div>
+    </div>
 }
 
 @fragments.filterBar(model.page.webTitle)
