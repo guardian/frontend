@@ -1,4 +1,9 @@
-$featuredImgWidth: 460px;
+$featured-img-width: 460px;
+$blue: #005688;
+$light-blue: #4cc7e0;
+$pink: #AB1454;
+$light-pink: #f66980;
+$grey: #cccccc;
 
 @mixin bordered {
     border-left: 1px dotted #000000;
@@ -7,10 +12,10 @@ $featuredImgWidth: 460px;
     .trail__title {
         position:absolute;
         bottom: 0;
-        background-color: #005688;
-        background-color: rgba(0, 86, 136, 0.6);
         color: #ffffff;
         margin: 0;
+        background-color: $blue;
+        background-color: rgba($blue, 0.7);
         padding: $baseline*3 $gutter/2;
         @include box-sizing(border-box);
         width: 100%;
@@ -18,12 +23,30 @@ $featuredImgWidth: 460px;
     .trail__standfirst {
         display: none;
     }
+    .trail__count {
+        border-left-color: $light-blue;
+    }
     .trail__timestamp,
     .trail__count a {
         color: #ffffff;
     }
+    &.trail--feature {
+        .trail__title {
+            background-color: $pink;
+            background-color: rgba($pink, 0.7);
+        }
+        .trail__count {
+            border-left-color: $light-pink;
+        }
+    }
+}
+@mixin overlay-feature {
+    .trail__title {
+        background-color: $pink;
+        background-color: rgba($pink, 0.6);
+    }
     .trail__count {
-        border-left-color: #4cc7e0;
+        border-left-color: $light-pink;
     }
 }
 
@@ -32,7 +55,7 @@ $featuredImgWidth: 460px;
     @include box-sizing(border-box);
     float: none;
     padding-top: $baseline*2;
-    border-top: 2px solid #005688;
+    border-top: 2px solid $blue;
     .trail__image-container {
         display: none;
     }
@@ -64,9 +87,7 @@ $featuredImgWidth: 460px;
         width: 100%;
         float: left;
     }
-    .trail__title {
-        color: #000000;
-    }
+    .trail__title,
     .trail__standfirst {
         color: #000000;
     }
@@ -74,35 +95,41 @@ $featuredImgWidth: 460px;
         position: absolute;
         bottom: 0;
     }
-    .trail__timestamp {
+    .trail__timestamp,
+    .trail__count {
         padding-bottom: $baseline * 2;
         padding-left: $gutter / 4;
-        color: #cccccc;
-        @include font($sans-serif, lighter, 16, 16);
-        min-width: 80px;
-        display: inline-block;
+        float: left;
         i {
-            margin-right: $gutter / 4;
+            margin: 0 $gutter / 4 0 0;
+            @extend .i-clock-blue;
+        }
+        &,
+        a {
+            color: $grey;
+            @include font($sans-serif, lighter, 16, 16);
+        }
+    }
+    .trail__timestamp {
+        min-width: 80px;
+        i {
             @extend .i-clock-blue;
         }
     }
     .trail__count {
         position: relative;
         top: auto;
-        padding-left: $gutter/4;
-        padding-bottom: $baseline * 2;
-        border-left: 1px solid #cccccc;
-        display: inline-block;
+        border-left: 1px solid $grey;
         a {
             float: none;
             display: inline;
-            color: #cccccc;
             margin: 0;
-            @include font($sans-serif, normal, 16, 16);
         }
         i {
             float: none;
-            margin: 0 $gutter / 4 0 0;
+            position: relative;
+            top: 3px;
+            margin-top: -1px;
             @extend .i-comment-blue;
         }
     }
@@ -110,7 +137,10 @@ $featuredImgWidth: 460px;
         top:auto;
     }
     .trail:nth-child(1) {
-        background-color: #005688;
+        background-color: $blue;
+    }
+    .trail--feature:nth-child(1) {
+        background-color: $pink;
     }
     @include mq(0, tablet) {
         @include box-sizing(border-box);
@@ -126,7 +156,7 @@ $featuredImgWidth: 460px;
             color: #ffffff;
         }
         .trail__count {
-            border-left-color: #4cc7e0;
+            border-left-color: $light-blue;
         }
         .trail:nth-child(1) {
             height: auto;
@@ -143,7 +173,7 @@ $featuredImgWidth: 460px;
         }
         .trail:nth-child(n+2) {
             padding: $baseline*2 0 $baseline*4;
-            border-top: 2px solid #005688;
+            border-top: 2px solid $blue;
             .trail__image-container,
             .trail__timestamp,
             .trail__count {
@@ -156,7 +186,7 @@ $featuredImgWidth: 460px;
     }
 
     .trail--feature {
-        background-color: #AB1454;
+        background-color: $pink;
         .trail__title,
         .trail__timestamp,
         .trail__count a {
@@ -169,7 +199,7 @@ $featuredImgWidth: 460px;
             @extend .i-clock-pink;
         }
         .trail__count {
-            border-left-color: #f66980;
+            border-left-color: $light-pink;
             i {
                 @extend .i-comment-pink;
             }
@@ -211,7 +241,7 @@ $featuredImgWidth: 460px;
     }
     @include mq(tablet, desktop) {
         .trail__image {
-            width: $featuredImgWidth;
+            width: $featured-img-width;
         }
         .trail__title {
             @include font($serifheadline, 700, 26, 28);
@@ -223,7 +253,7 @@ $featuredImgWidth: 460px;
 
     @include mq(desktop, wide) {
         .trail__image {
-            width: $featuredImgWidth;
+            width: $featured-img-width;
         }
         .trail__title {
             @include font($serifheadline, 700, 34, 36);
@@ -279,7 +309,7 @@ $featuredImgWidth: 460px;
             @include font($serifheadline, normal, 18, 20);
         }
         .trail:nth-child(1) {
-            width: $featuredImgWidth;
+            width: $featured-img-width;
             margin-right: 10px;
             @include overlay;
         }
@@ -296,7 +326,7 @@ $featuredImgWidth: 460px;
             @include font($serifheadline, normal, 26, 28);
         }
         .trail:nth-child(1) {
-            width: $featuredImgWidth;
+            width: $featured-img-width;
             margin-right: 10px;
             @include overlay;
         }
@@ -335,7 +365,7 @@ $featuredImgWidth: 460px;
         }
 
         .trail:nth-child(1) {
-            width: $featuredImgWidth;
+            width: $featured-img-width;
             margin-right: 10px;
             @include overlay;
         }
@@ -362,7 +392,7 @@ $featuredImgWidth: 460px;
         }
 
         .trail:nth-child(1) {
-            width: $featuredImgWidth;
+            width: $featured-img-width;
             margin-right: 10px;
             @include overlay;
         }
@@ -413,7 +443,7 @@ $featuredImgWidth: 460px;
 
     @include mq(tablet, desktop) {
         .trail:nth-child(1) {
-            width: $featuredImgWidth;
+            width: $featured-img-width;
             margin-right: $gutter * 5/4;
             @include overlay;
             .trail__title {
@@ -440,7 +470,7 @@ $featuredImgWidth: 460px;
     }
     @include mq(desktop, wide) {
         .trail:nth-child(1) {
-            width: $featuredImgWidth;
+            width: $featured-img-width;
             margin-right: $gutter * 5/4;
             @include overlay;
             .trail__title {
