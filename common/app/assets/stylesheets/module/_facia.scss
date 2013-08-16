@@ -5,9 +5,6 @@ $pink: #AB1454;
 $light-pink: #f66980;
 $grey: #cccccc;
 
-@mixin bordered {
-    border-left: 1px dotted #000000;
-}
 @mixin overlay($width, $font-size) {
     .trail__title,
     .trail__timestamp,
@@ -42,15 +39,6 @@ $grey: #cccccc;
         .trail__count {
             border-left-color: $light-pink;
         }
-    }
-}
-@mixin overlay-feature {
-    .trail__title {
-        background-color: $pink;
-        background-color: rgba($pink, 0.6);
-    }
-    .trail__count {
-        border-left-color: $light-pink;
     }
 }
 
@@ -168,6 +156,9 @@ $grey: #cccccc;
         .trail__timestamp,
         .trail__count a {
             color: #ffffff;
+        }
+        .trail__timestamp {
+            border-left-style: none;
         }
         .trail__count {
             border-left-color: $light-blue;
