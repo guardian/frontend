@@ -22,7 +22,8 @@ trait MetaData {
     "section" -> section,
     "web-title" -> webTitle,
     "build-number" -> buildNumber,
-    "analytics-name" -> analyticsName
+    "analytics-name" -> analyticsName,
+    "blockAds" -> false
   )
 
   def openGraph: List[(String, Any)] = List(

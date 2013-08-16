@@ -35,8 +35,6 @@ $tabBorderWidth: 2px;
     }
 }
 
-
-
 @include mq($to: 300px) {
     .tabs li a {
         font-size: 14px;
@@ -76,8 +74,7 @@ $tabBorderWidth: 2px;
     width: auto;
     float: none;
 
-    &:first-child,
-    &:last-child {
+    &:first-child {
         border-left: none;
     }
 }
