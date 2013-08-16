@@ -7,13 +7,14 @@
     z-index: 9999;
     background-color: #F9F9F7;
     text-align: center;
+    @include transition(opacity 0.5s);
 
     //For fading
-    opacity: 0.9;
+    opacity: 0.95;
 
     &.is-hidden {
         opacity: 0;
-        @include transition(opacity 0.5s);
+        @include transition(opacity 1s ease-out);
     }
 }
 
