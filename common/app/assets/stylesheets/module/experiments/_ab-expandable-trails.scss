@@ -67,6 +67,18 @@
     }
 }
 // TODO: Make reusable if experiment is successful
+.u-button-reset {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    background: transparent;
+
+    &:focus {
+        outline: 0;
+    }
+}
 .trail__expander-cta__button {
     display: inline-block;
     padding: $baseline*2 $gutter;
@@ -77,4 +89,8 @@
     font-family: $sans-serif;
     font-size: 12px;
     font-size: 1.2rem;
+}
+.trail__expander-action {
+    padding-top: $baseline*2;
+    padding-bottom: $baseline*2;
 }
