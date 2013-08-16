@@ -1,0 +1,80 @@
+.trail__expander-trigger,
+.trail__expander-show {
+    display: none;
+}
+.trail__expander-content {
+    @include transition(opacity .5s ease-out);
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+.trail__expander-trigger:checked {
+    + .trail__expander-wrapper {
+        .trail__headline {
+            @extend .article-headline;
+        }
+        .trail__img {
+            float: none;
+            width: 100%;
+            margin-bottom: $baseline*2;
+
+            img {
+                margin-top: 0;
+            }
+        }
+        .main-caption {
+            padding-top: 0;
+        }
+        .trail__expander-content {
+            opacity: 1;
+            height: auto;
+        }
+        .trail__expander-show {
+            display: block;
+        }
+        .trail__expander-hide {
+            display: none;
+        }
+    }
+}
+.trail__expander-cta {
+    padding-top: $baseline*2;
+    margin-bottom: $baseline*3;
+    text-align: center;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        display: block;
+        height: 2px;
+        background: $mushroom;
+    }
+    &:hover,
+    &:focus {
+        &:before,
+        .trail__expander-cta__button {
+            background: $darkMushroom;
+            color: #000;
+        }
+    }
+
+    // Test on/off
+    display: none;
+
+    .ab-expandable-trails--on & {
+        display: block;
+    }
+}
+// TODO: Make reusable if experiment is successful
+.trail__expander-cta__button {
+    display: inline-block;
+    padding: $baseline*2 $gutter;
+    border-radius: 0 0 3px 3px;
+    background: $mushroom;
+    color: #444;
+    text-align: center;
+    font-family: $sans-serif;
+    font-size: 12px;
+    font-size: 1.2rem;
+}
