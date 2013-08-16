@@ -30,7 +30,7 @@ function (
                 id: 'link-card',
                 test: function () {
                     common.mediator.on('page:article:ready', function(config, context) {
-                        var linksToCardify = context.querySelectorAll('.article-body > p a[href=/]');
+                        var linksToCardify = context.querySelectorAll('.article-body > p a[href]');
                         common.$g('body').addClass('test-link-card--on');
 
                         function isArticle(url) {
