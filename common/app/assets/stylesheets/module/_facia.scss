@@ -207,6 +207,7 @@ $grey: #cccccc;
         background-color: $pink;
         a,
         .trail__title,
+        .trail__standfirst,
         .trail__timestamp {
             color: #ffffff;
         }
@@ -214,6 +215,9 @@ $grey: #cccccc;
         .trail__standfirst {
             padding: 0 $gutter/2;
             font-weight: normal;
+        }
+        .trail__title {
+            padding-top: $baseline * 2;
         }
         .trail__timestamp i {
             @extend .i-clock-pink;
@@ -251,26 +255,37 @@ $grey: #cccccc;
         width: 100%;
     }
     .trail__image {
-        margin-right: 20px;
+        margin-right: $gs-gutter;
+    }
+    .trail__title,
+    .trail__standfirst,
+    .trail__timestamp,
+    .trail__count a {
+        color: #ffffff;
+    }
+    .trail__title,
+    .trail__standfirst {
+        padding: 0 $baseline*2 0;
     }
     .trail__title {
-        color: #ffffff;
-        margin: 0 $gutter*3/4;
-        padding-top: $baseline*3;
+        padding-top: $baseline*2;
     }
-    .trail__standfirst {
-        color: #ffffff;
-        margin: $baseline*6 $gutter*3/4 0;
+    .trail__timestamp,
+    .trail__count {
+        border-left-color: $light-blue;
     }
     @include mq(tablet, desktop) {
         .trail__image {
             width: $featured-img-width;
         }
         .trail__title {
-            @include font-size(26, 28);
+            @include font-size(24, 28);
         }
         .trail__standfirst {
-            @include font-size(18, 20);
+            display:none;
+        }
+        .trail__meta {
+            left: $featured-img-width + $gs-gutter;
         }
     }
 
@@ -279,10 +294,14 @@ $grey: #cccccc;
             width: $featured-img-width;
         }
         .trail__title {
-            @include font-size(34, 36);
+            @include font-size(28, 32);
         }
         .trail__standfirst {
-            @include font-size(26, 28);
+            @include font-size(20, 24);
+            padding-top: $baseline*5;
+        }
+        .trail__meta {
+            left: $featured-img-width + $gs-gutter;
         }
     }
     @include mq(wide) {
@@ -290,15 +309,22 @@ $grey: #cccccc;
             width: 620px;
         }
         .trail__title {
-            @include font-size(38, 40);
+            @include font-size(36, 40);
         }
         .trail__standfirst {
-            @include font-size(30, 32);
+            @include font-size(28, 32);
+            padding-top: $baseline*7;
+        }
+        .trail__meta {
+            left: 620px + $gs-gutter;
         }
     }
 }
 
 .trails-count-2 {
+    .trail__standfirst {
+        margin: $gs-gutter 0 0;
+    }
     .trail:nth-child(1) {
         .trail__image {
             margin-right: $gs-gutter;
@@ -309,9 +335,6 @@ $grey: #cccccc;
         }
         .trail__title {
             padding-top: $baseline*2;
-        }
-        .trail__standfirst {
-            margin-top: $baseline*5;
         }
     }
     .trail:nth-child(2) {
@@ -339,9 +362,6 @@ $grey: #cccccc;
         }
     }
     @include mq(desktop, wide) {
-        .trail__standfirst {
-            display:none;
-        }
         .trail:nth-child(1) {
             width: 700px;
             margin-right: $gs-gutter;
@@ -350,6 +370,9 @@ $grey: #cccccc;
             }
             .trail__title {
                 @include font-size(24, 28);
+            }
+            .trail__standfirst {
+                display:none;
             }
             .trail__meta {
                 left: 460px + $gs-gutter;
@@ -389,9 +412,6 @@ $grey: #cccccc;
             width: 300px;
             .trail__title {
                 @include font-size(24, 28);
-            }
-            .trail__standfirst {
-                display: none;
             }
         }
     }
