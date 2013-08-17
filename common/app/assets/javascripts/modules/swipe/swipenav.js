@@ -243,7 +243,7 @@ define([
             } else {
                 // No data-link-context, so infer the section/tag component from the url,
                 if("page" in config) {
-                    sequenceUrl = (config.page.section ? config.page.section : '');
+                    sequenceUrl = (config.page.section ? config.page.section : config.page.edition.toLowerCase());
                 } else {
                     sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
                     sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
