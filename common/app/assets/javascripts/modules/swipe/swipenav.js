@@ -538,9 +538,10 @@ define([
             }
         };
 
-        common.mediator.on('modules:discussion:show', function() {
-            recalcHeight();
-            pushDownSidepanes();
+        common.mediator.on('modules:discussion:show', function(callback) {
+            resetScrollPos();
+            recalcHeight(true);
+            callback();
         });
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.
