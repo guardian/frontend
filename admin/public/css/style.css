@@ -661,6 +661,10 @@ a.cta, .cta a {
     margin: -2px 0 0 0;
 }
 
+.fronts select:disabled {
+    opacity: 0.5;
+}
+
 .fronts #clipboard {
     min-height: 20px;
     margin: 5px 0 10px 0;

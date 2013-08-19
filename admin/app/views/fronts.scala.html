@@ -12,18 +12,16 @@
                     <a href="#" data-bind="click: $root.displayAllEditions">View in all editions &raquo;</a>
                 </span>
 
-                <span class="list-picker__title">Find collections:</span>
+                <span class="list-picker__title">Collections:</span>
 
-                <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Choose Edition...'"></select>
+                <select data-bind="options: editions, value: selectedEdition, optionsCaption: 'choose edition...'"></select>
 
-                <span data-bind="with: $root.selectedEdition()">
-                    <select data-bind="options: sections, optionsText: 'id', value: $root.selectedSection, optionsCaption: 'Choose Section...'"></select>
+                <select data-bind="options: sections, value: selectedSection, enable: selectedEdition, optionsCaption: 'choose section...'"></select>
 
-                    <span data-bind="with: $root.selectedSection()">
-                        <select data-bind="options: blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Choose Collection...'"></select>
-                    </span>
+                <select data-bind="options: blocks, value: selectedBlock, enable: selectedSection, optionsCaption: 'show all'"></select>
 
-                </span>
+                <button data-bind="enable: selectedSection, click: showSelectedBlocks">OK</button>
+                <button data-bind="click: clearAll">Clear</button>
             </div>
         </header>
 

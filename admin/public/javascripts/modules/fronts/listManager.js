@@ -13,14 +13,15 @@ define([
     Article,
     LatestArticles
 ) {
-    var dragging = false,
+    var collections = {},
+        dragging = false,
         clipboard = document.querySelector('#clipboard'),
         listLoadsPending = 0,
         loc = window.location;
 
     return function(selector) {
 
-        var viewModel = {},
+        var model = {},
             self = this;
 
         function chosenLists() {
@@ -40,6 +41,13 @@ define([
             common.util.pageReflow();
         }
 
+        function clearAll() {
+            model.selectedEdition(undefined);
+            model.selectedSection(undefined);
+            model.selectedBlock(undefined);
+            setDisplayedLists([]);
+        }
+
         function setDisplayedLists(listIDs) {
             var qp = common.util.queryParams();
             qp.blocks = listIDs.join(',');
@@ -53,15 +61,15 @@ define([
         }
 
         function displayAllEditions() {
-            setDisplayedLists(viewModel.editions.map(function(edition){
-                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
+            setDisplayedLists(model.editions.map(function(edition){
+                return edition.id + '/' + model.selectedSection().id + '/' + model.selectedBlock().id; 
             }));
         }
 
         function renderLists() {
             var chosen = chosenLists();
-            //viewModel.listsDisplayed.removeAll();
-            viewModel.listsDisplayed.remove(function(list){
+            //model.listsDisplayed.removeAll();
+            model.listsDisplayed.remove(function(list){
                 if (chosen.indexOf(list.id) === -1) {
                     return true;
                 } else {
@@ -70,8 +78,8 @@ define([
                 }    
             });
 
-            chosen.reverse().forEach(function(id){
-                viewModel.listsDisplayed.unshift(new List(id));
+            chosen.forEach(function(id){
+                model.listsDisplayed.push(new List(id));
             });
             connectSortableLists();
         }
@@ -173,7 +181,7 @@ define([
 
         function _startPoller() {
             setInterval(function(){
-                viewModel.listsDisplayed().forEach(function(list){
+                model.listsDisplayed().forEach(function(list){
                     if (!dragging) {
                         list.refresh();
                     }
@@ -188,64 +196,92 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    viewModel.editions = resp.editions;
+                    resp.collections.forEach(function(id){
+                        treeAdd(id.split('/'), collections);
+                    });                    
+                    model.editions(_.keys(collections));
                     if (typeof callback === 'function') { callback(); }
                 },
                 function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
             );
         };
 
+        function treeAdd(path, obj) {
+            var f = _.first(path),
+                r = _.rest(path);
+
+            if (r.length) {
+                obj[f] = obj[f] || {};
+                treeAdd(r, obj[f]);
+            } else {
+                obj[f] = false;
+            }
+        };
+
+        function showSelectedBlocks() {           
+            var blocks = model.selectedBlock() ? [model.selectedBlock()] : model.blocks();
+
+            blocks.forEach(function(block){
+                addList([
+                    model.selectedEdition(),
+                    model.selectedSection(),
+                    block
+                ].join('/'));
+            })
+        };
+
         this.init = function(callback) {
-            viewModel.latestArticles  = new LatestArticles();
-            viewModel.listsDisplayed  = knockout.observableArray();
-            viewModel.selectedEdition = knockout.observable();
-            viewModel.selectedSection = knockout.observable();
-            viewModel.selectedBlock   = knockout.observable();
+            model.latestArticles  = new LatestArticles();
+            model.listsDisplayed  = knockout.observableArray();
 
-            viewModel.dropList           = dropList;
-            viewModel.displayAllEditions = displayAllEditions;
+            model.editions        = knockout.observableArray();
+            model.selectedEdition = knockout.observable();
 
-            viewModel.flushClipboard = function() {
+            model.sections        = knockout.observableArray();
+            model.selectedSection = knockout.observable();
+
+            model.blocks          = knockout.observableArray();
+            model.selectedBlock   = knockout.observable();
+
+            model.showSelectedBlocks  = showSelectedBlocks;
+            model.displayAllEditions = displayAllEditions;
+            model.dropList           = dropList;
+            model.clearAll           = clearAll;
+
+            model.flushClipboard = function() {
                 clipboard.innerHTML = '';
             };
 
-            viewModel.selectedEdition.subscribe(function(edition) {
-                viewModel.selectedSection(undefined);
-                viewModel.selectedBlock(undefined);
+            model.selectedEdition.subscribe(function(edition) {
+                model.sections(edition ? _.keys(collections[edition]) : []);
+                model.selectedSection(undefined);
+
+                model.blocks([]);
+                model.selectedBlock(undefined);
             });
 
-            viewModel.selectedSection.subscribe(function(section) {
-                viewModel.selectedBlock(undefined);
-                if (section && section.id) {
-                    viewModel.latestArticles.section(section.sectionSearch || section.id);
-                }
-            });
+            model.selectedSection.subscribe(function(section) {
+                model.blocks(section ? _.keys(collections[model.selectedEdition()][section]) : []);
+                model.selectedBlock(undefined);
 
-            viewModel.selectedBlock.subscribe(function(block) {
-                var id;
-                if(block && block.id) {
-                    id = viewModel.selectedEdition().id + '/' +
-                         viewModel.selectedSection().id + '/' + 
-                         block.id;
-
-                    addList(id);
+                if (section) {
+                    model.latestArticles.section(section);
                 }
             });
 
             fetchSchema(function(){
-                knockout.applyBindings(viewModel);
+                knockout.applyBindings(model);
 
                 renderLists();
                 window.onpopstate = renderLists;
 
                 startPoller();
-                viewModel.latestArticles.search();
-                viewModel.latestArticles.startPoller();
+                model.latestArticles.search();
+                model.latestArticles.startPoller();
             });
 
-
             knockout.bindingHandlers.sparkline = {
-                update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                update: function (element, valueAccessor, allBindingsAccessor, model) {
                     var value = knockout.utils.unwrapObservable(valueAccessor()),
                         height = Math.max(15, Math.min(30, _.max(value))),
                         options = allBindingsAccessor().sparklineOptions || {
