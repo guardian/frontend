@@ -66,6 +66,7 @@ public class SharedDriver extends EventFiringWebDriver {
     @After
     public void embedScreenshot(Scenario scenario) throws IOException {
         if (scenario.isFailed()) {
+            System.out.println("URL on failure was: "+getCurrentUrl());
             try {
                 byte[] screenshot = getScreenshotAs(OutputType.BYTES);
                 new File("target/surefire-reports/").mkdirs(); // ensure directory is there
