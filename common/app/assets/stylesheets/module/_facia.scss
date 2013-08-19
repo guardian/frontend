@@ -25,11 +25,11 @@ $grey: #cccccc;
     .trail__standfirst {
         display: none;
     }
-    .trail__count {
-        border-left-color: $light-blue;
-    }
     .trail__timestamp {
         border-left-style: none;
+    }
+    .trail__count {
+        border-left-color: $light-blue;
     }
     &.trail--feature {
         .trail__title {
@@ -42,7 +42,7 @@ $grey: #cccccc;
     }
 }
 
-@mixin small-card($num) {
+@mixin small-card($num, $show-meta: false) {
     height: 100%/$num;
     @include box-sizing(border-box);
     float: none;
@@ -58,12 +58,11 @@ $grey: #cccccc;
     .trail__duration {
         display: none;
     }
-    @include mq($to: wide) {
+    @if $show-meta == false {
         &:last-child {
-            border-bottom: none;
+            border-bottom-style: none;
         }
-        .trail__timestamp,
-        .trail__count {
+        .trail__meta {
             display: none;
         }
     }
@@ -345,7 +344,7 @@ $grey: #cccccc;
 
 .trails-count-2 {
     .trail__standfirst {
-        margin: $gs-gutter 0 0;
+        margin: $baseline*5 0 0;
     }
     .trail:nth-child(1) {
         .trail__image {
@@ -365,11 +364,6 @@ $grey: #cccccc;
             padding-top: $baseline*2;
         }
     }
-    .trail:nth-child(2) {
-        .trail__image-container {
-            display: none;
-        }
-    }
     @include mq(tablet, desktop) {
         .trail__standfirst {
             display:none;
@@ -383,7 +377,7 @@ $grey: #cccccc;
             }
         }
         .trail:nth-child(2) {
-            float: none;
+            @include small-card(1);
             .trail__title {
                 @include font-size(20, 24);
             }
@@ -410,7 +404,7 @@ $grey: #cccccc;
             }
         }
         .trail:nth-child(2) {
-            float: none;
+            @include small-card(1, $show-meta: true);
             .trail__title {
                 @include font-size(20, 24);
             }
@@ -438,6 +432,7 @@ $grey: #cccccc;
         }
         .trail:nth-child(2) {
             width: 300px;
+            @include small-card(1, $show-meta: true);
             .trail__title {
                 @include font-size(24, 28);
             }
@@ -446,11 +441,6 @@ $grey: #cccccc;
 }
 
 .trails-count-3 {
-    @include mq(tablet, desktop) {
-        .trail:nth-child(n+2) .trail__meta {
-            display: none;
-        }
-    }
     @include mq(tablet, wide) {
         .trail__standfirst {
             display: none;
@@ -474,9 +464,6 @@ $grey: #cccccc;
         .trail {
             margin-right: $gs-gutter;
         }
-        .trail:last-child {
-            margin-right: 0;
-        }
         .trail__standfirst {
             display: none;
         }
@@ -486,12 +473,19 @@ $grey: #cccccc;
         }
         .trail:nth-child(n+2) {
             width: 300px;
-            .trail__image {
-                margin-bottom: $baseline*3;
-            }
             .trail__title {
                 @include font-size(24, 28);
             }
+        }
+        .trail:nth-child(2) {
+            border-bottom: 1px solid $grey;
+            .trail__image {
+                margin-bottom: $baseline*3;
+            }
+        }
+        .trail:nth-child(3) {
+            margin-right: 0;
+            @include small-card(1, $show-meta: true);
         }
     }
 }
