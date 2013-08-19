@@ -25,7 +25,7 @@ define([
             discussionId          = options.id.replace('http://gu.com', ''),
             discussionContainer   = options.discussionContainer || '.article__discussion',
             articleContainer      = options.articleContainer || '.js-article__container',
-            mediaPrimary          = options.mediaPrimary || '.media-primary',
+            mediaPrimary          = options.mediaPrimary || 'article .media-primary',
             commentsHaveLoaded    = false,
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
@@ -66,7 +66,7 @@ define([
             },
 
             upgradeByline: function(commentCount) {
-                var bylineNode = bonzo(context.querySelector('.byline')),
+                var bylineNode = bonzo(context.querySelector('article .byline')),
                     isLive = (config.page.isLive) ? ' d-tabs--is-live' : '',
                     tabsHtml = '<div class="d-tabs' + isLive + '">' +
                                  '<ol class="d-tabs__container unstyled">' +
