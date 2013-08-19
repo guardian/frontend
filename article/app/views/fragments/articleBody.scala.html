@@ -61,9 +61,9 @@
             @fragments.social(article)
         </div>
 
-        <div class="article__right-column">
-
-        </div>
+        @if(storyPackage.nonEmpty) {
+            @fragments.cards.card(storyPackage.head, "right", "More on this story", "Story package card")
+        }
 
     </article>
 
