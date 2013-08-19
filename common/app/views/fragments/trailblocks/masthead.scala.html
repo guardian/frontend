@@ -19,9 +19,19 @@
                       datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
                       data-timestamp="@trail.webPublicationDate.getMillis">
                     <i class="i"></i>
-                    <span class="timestamp__text">@Format(trail.webPublicationDate, "d MMM y")</span>
+                    <span class="timestamp__text"><span class="h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
                 </time>
             </div>
+            @trail match {
+                case trail: Video => {
+                    @trail.videoAsset.map { video =>
+                        @video.fields.map { fields =>
+                            <span class="trail__duration"><i class="i"></i><span class="h">Duration: </span>@fields("durationMinutes"): @fields("durationSeconds")</span>
+                        }
+                    }
+                }
+                case _ => {}
+            }
             @trail.trailText.map { text =>
                 <p class="trail__standfirst">@cleanTrailText(text)(Edition(request))</p>
             }

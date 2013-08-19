@@ -42,17 +42,30 @@ $grey: #cccccc;
     }
 }
 
-@mixin small-card {
-    height: 50%;
+@mixin small-card($num) {
+    height: 100%/$num;
     @include box-sizing(border-box);
     float: none;
     padding-top: $baseline*2;
     border-top: 2px solid $blue;
-    &.trail--feature {
-        border-top: none;
+    &:last-child {
+        border-bottom: 1px solid $grey;
     }
-    .trail__image-container {
+    &.trail--feature {
+        border: none;
+    }
+    .trail__image-container,
+    .trail__duration {
         display: none;
+    }
+    @include mq($to: wide) {
+        &:last-child {
+            border-bottom: none;
+        }
+        .trail__timestamp,
+        .trail__count {
+            display: none;
+        }
     }
 }
 
@@ -138,6 +151,19 @@ $grey: #cccccc;
     .trail:first-child .trail__count {
         top: auto;
     }
+    .trail__duration {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #ffffff;
+        background-color: $light-blue;
+        @include font($sans-serif, lighter, 12, 12);
+        padding: $baseline $gutter/2;
+        i {
+            @extend .i-play;
+            margin-right: $baseline;
+        }
+    }
     .trail:nth-child(1) {
         background-color: $blue;
     }
@@ -185,7 +211,8 @@ $grey: #cccccc;
             }
             .trail__image-container,
             .trail__timestamp,
-            .trail__count {
+            .trail__count,
+            .trail__duration {
                 display: none;
             }
             .trail__title {
@@ -221,6 +248,9 @@ $grey: #cccccc;
             i {
                 @extend .i-comment-pink;
             }
+        }
+        .trail__duration {
+            background-color: $light-pink;
         }
     }
 }
@@ -434,7 +464,7 @@ $grey: #cccccc;
             }
         }
         .trail:nth-child(n+2) {
-            @include small-card;
+            @include small-card(2);
             .trail__title {
                 @include font-size(20, 24);
             }
@@ -470,6 +500,9 @@ $grey: #cccccc;
     .trail__standfirst {
         display: none;
     }
+    .trail:nth-child(n+2) .trail__image {
+        margin-bottom: $baseline*3;
+    }
 
     @include mq(tablet, desktop) {
         .trail:nth-child(1) {
@@ -481,53 +514,40 @@ $grey: #cccccc;
             }
         }
         .trail:nth-child(n+2) {
-            @include small-card;
-            height: 33%;
+            @include small-card(3);
             .trail__title {
                 @include font-size(20, 24);
             }
-            .trail__timestamp,
-            .trail__count {
-                display: none;
-            }
-        }
-        .trail:nth-child(2) {
-            height: 34%;
         }
     }
     @include mq(desktop, wide) {
+        .trail:nth-child(-n+2) {
+            margin-right: $gs-gutter;
+        }
         .trail:nth-child(1) {
             width: $featured-img-width;
-            margin-right: $gs-gutter;
             @include overlay(460, 24);
             .trail__title {
                 padding-top: $baseline*2;
             }
         }
-        .trail:nth-child(n+2) {
-            .trail__title {
-                @include font-size(20, 24);
-            }
+        .trail:nth-child(n+2) .trail__title {
+            @include font-size(20, 24);
         }
         .trail:nth-child(2) {
             width: 220px;
-            margin-right: $gs-gutter;
-            .trail__image {
-                margin-bottom: $baseline*3;
-            }
+            border-bottom: 1px solid $grey;
         }
         .trail:nth-child(n+3) {
-            @include small-card;
-            .trail__timestamp,
-            .trail__count {
-                display: none;
-            }
+            @include small-card(2);
         }
     }
     @include mq(wide) {
+        .trail:nth-child(-n+2) {
+            margin-right: $gs-gutter;
+        }
         .trail:nth-child(1) {
             width: 620px;
-            margin-right: $gs-gutter;
             @include overlay(620, 28);
         }
         .trail:nth-child(n+2) {
@@ -537,13 +557,10 @@ $grey: #cccccc;
         }
         .trail:nth-child(2) {
             width: 300px;
-            margin-right: $gs-gutter;
-            .trail__image {
-                margin-bottom: $baseline*3;
-            }
+            border-bottom: 1px solid $grey;
         }
         .trail:nth-child(n+3) {
-            @include small-card;
+            @include small-card(2);
         }
     }
 }
