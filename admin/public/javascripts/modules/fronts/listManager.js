@@ -1,20 +1,21 @@
 define([
     'Reqwest',
     'knockout',
-    'models/fronts/globals',
+    'models/fronts/common',
     'models/fronts/list',
     'models/fronts/article',
     'models/fronts/latestArticles'
 ], function(
     reqwest,
     knockout,
-    globals,
+    common,
     List,
     Article,
     LatestArticles
 ) {
-    var maxDisplayableLists = 3,
-        dragging = false,
+    var dragging = false,
+        clipboard = document.querySelector('#clipboard'),
+        listLoadsPending = 0,
         loc = window.location;
 
     return function(selector) {
@@ -22,30 +23,25 @@ define([
         var viewModel = {},
             self = this;
 
-        function queryParams() {
-            return _.object(loc.search.substring(1).split('&').map(function(keyVal){
-                return keyVal.split('=').map(function(s){
-                    return decodeURIComponent(s);
-                });
-            }));
-        }
-
         function chosenLists() {
-            return [].concat(_.filter((queryParams().blocks || "").split(","), function(str){ return !!str; }));
+            return [].concat(_.filter((common.util.queryParams().blocks || "").split(","), function(str){ return !!str; }));
         }
 
         function addList(id) {
-            if(chosenLists().indexOf(id) === -1) {
-                setDisplayedLists(chosenLists().slice(1 - maxDisplayableLists).concat(id));
-            }
+            var lists = chosenLists();
+            lists = _.without(lists, id);
+            lists.unshift(id);
+            lists = _.first(lists, common.config.maxDisplayableLists || 3);
+            setDisplayedLists(lists);
         }
 
         function dropList(list) {
             setDisplayedLists(_.reject(chosenLists(), function(id){ return id === list.id; }));
+            common.util.pageReflow();
         }
 
         function setDisplayedLists(listIDs) {
-            var qp = queryParams();
+            var qp = common.util.queryParams();
             qp.blocks = listIDs.join(',');
             qp = _.pairs(qp)
                 .filter(function(p){ return !!p[0]; })
@@ -64,6 +60,7 @@ define([
 
         function renderLists() {
             var chosen = chosenLists();
+            //viewModel.listsDisplayed.removeAll();
             viewModel.listsDisplayed.remove(function(list){
                 if (chosen.indexOf(list.id) === -1) {
                     return true;
@@ -72,8 +69,9 @@ define([
                     return false;
                 }    
             });
-            chosen.forEach(function(id){
-                viewModel.listsDisplayed.push(new List(id));
+
+            chosen.reverse().forEach(function(id){
+                viewModel.listsDisplayed.unshift(new List(id));
             });
             connectSortableLists();
         }
@@ -92,21 +90,20 @@ define([
                 revert: 200,
                 scroll: true,
                 start: function(event, ui) {
-                    globals.uiBusy = true;
+                    common.state.uiBusy = true;
 
                     // Display the source item. (The clone gets dragged.) 
                     sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    fromListObj = knockout.dataFor(fromList[0]);
-                    
+                    fromListObj = knockout.dataFor(fromList[0]);                    
                 },
                 stop: function(event, ui) {
                     var index,
                         clone;
 
-                    globals.uiBusy = false;
+                    common.state.uiBusy = false;
 
                     // If we move between lists, effect a copy by cloning
                     if(toList !== fromList) {
@@ -132,8 +129,8 @@ define([
                 listObj,
                 position,
                 delta;
-                
-            if (list.hasClass('throwAway')) { return; }
+
+            if (!list.hasClass('persisted')) { return; }
 
             listObj = knockout.dataFor(list[0]);
 
@@ -164,7 +161,7 @@ define([
 
                 reqwest({
                     method: 'post',
-                    url: globals.apiBase + '/' + listId,
+                    url: common.config.apiBase + '/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
@@ -187,7 +184,7 @@ define([
 
         function fetchSchema(callback) {
             reqwest({
-                url: globals.apiBase,
+                url: common.config.apiBase,
                 type: 'json'
             }).then(
                 function(resp) {
@@ -207,6 +204,10 @@ define([
 
             viewModel.dropList           = dropList;
             viewModel.displayAllEditions = displayAllEditions;
+
+            viewModel.flushClipboard = function() {
+                clipboard.innerHTML = '';
+            };
 
             viewModel.selectedEdition.subscribe(function(edition) {
                 viewModel.selectedSection(undefined);
@@ -241,6 +242,36 @@ define([
                 viewModel.latestArticles.search();
                 viewModel.latestArticles.startPoller();
             });
+
+
+            knockout.bindingHandlers.sparkline = {
+                update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                    var value = knockout.utils.unwrapObservable(valueAccessor()),
+                        height = Math.max(15, Math.min(30, _.max(value))),
+                        options = allBindingsAccessor().sparklineOptions || {
+                            lineColor: '#d61d00',
+                            fillColor: '#ffbaaf',
+                            height: height
+                        };
+
+                    if( value && _.max(value)) {
+                        $(element).sparkline(value, options);                        
+                    }
+                }
+            };
+
+            common.util.mediator.on('list:load:start', function() {
+                listLoadsPending += 1;
+            });
+
+            common.util.mediator.on('list:load:end', function() {
+                listLoadsPending -= 1;
+                if (listLoadsPending < 1) {
+                    listLoadsPending = 0;
+                    common.util.pageReflow();
+                }
+            });
+
         };
 
     };

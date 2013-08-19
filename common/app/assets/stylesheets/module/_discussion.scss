@@ -40,14 +40,14 @@ $keylineSize: 1px;
 .d-tabs__item--byline {
     @extend %type-7;
     vertical-align: top;
-    padding: 4px $gutter;
+    padding: $baseline $gutter;
 
     a {
         pointer-events: none;
         color: #666;
     }
     &.d-tabs__item--is-active {
-        padding-bottom: 4px + $keylineSize;
+        padding-bottom: $baseline + $keylineSize;
         border-top-color: $keylineColor;
         border-right: $keylineSize solid $keylineColor;
 
@@ -123,7 +123,7 @@ $keylineSize: 1px;
 
 .d-comment__pick {
     position: absolute;
-    top: 8px;
+    top: $baseline * 2;
     right: 0;
 }
 
@@ -164,8 +164,8 @@ $keylineSize: 1px;
 }
 
 .d-comment__main {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: $baseline * 3;
+    padding-bottom: $baseline * 3;
 }
 
 .d-comment__body {
@@ -233,8 +233,8 @@ $keylineSize: 1px;
 }
 
 .d-comment__actions {
-    margin-top: 12px; /* Compensate missing space in case the comment does not end with a paragraph */
-    margin-bottom: 4px;
+    margin-top: $baseline * 3; /* Compensate missing space in case the comment does not end with a paragraph */
+    margin-bottom: $baseline;
 }
 
 .d-comment__action {
@@ -316,8 +316,8 @@ $keylineSize: 1px;
 
 .d-actions .top:before {
     @extend .i-filter-arrow-right;
-    position:absolute;
-    top:10px;
+    position: absolute;
+    top: 10px;
     left: 10px;
     content: ' ';
     display: inline-block;
@@ -355,7 +355,7 @@ $keylineSize: 1px;
     color: #444;
     position: relative;
     display: block;
-    padding: $baseline*4 $baseline*2;
+    padding: $baseline*4 $gutter/2;
     text-align: left;
     overflow: auto;
     background-color: $mushroom;

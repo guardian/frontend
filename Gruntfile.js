@@ -16,7 +16,6 @@ module.exports = function (grunt) {
                     'common/app/assets/stylesheets/global.min.css': 'common/app/assets/stylesheets/global.scss',
                     'common/app/assets/stylesheets/football.min.css': 'common/app/assets/stylesheets/football.scss',
                     'common/app/assets/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
-                    'common/app/assets/stylesheets/story.min.css': 'common/app/assets/stylesheets/story.scss',
                     'common/app/assets/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
                     'common/app/assets/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
                     'common/app/assets/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss',

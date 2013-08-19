@@ -5,10 +5,6 @@ import model._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 import xml.XML
-import com.gu.openplatform.contentapi.model.MediaAsset
-import model.Image
-import scala.Some
-import model.Tag
 import common.editions.Uk
 
 class TemplatesTest extends FlatSpec with ShouldMatchers {
@@ -89,7 +85,10 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
       (fig \ "@itemtype").text should be("http://schema.org/ImageObject")
     }
 
-    (body \\ "figcaption").foreach { fig => (fig \ "@itemprop").text should be("description") }
+    (body \\ "figcaption").foreach { fig =>
+      (fig \ "@itemprop").text should be("description")
+      (fig).text should include("Image caption")
+    }
   }
 
   "InBodyLinkCleaner" should "clean links" in {
@@ -181,11 +180,13 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
 
      <figure>
        <img src='http://www.a.b.c/img.jpg' alt='Meldrum House in Oldmeldrum\n' width='140' height='84' class='gu-image'/>
+       <figcaption></figcaption>
      </figure>
 
 
      <figure>
        <img src='http://www.a.b.c/img2.jpg' alt='Meldrum House in Oldmeldrum\n' width='250' height='100' class='gu-image'/>
+       <figcaption>Image caption</figcaption>
      </figure>
 
 

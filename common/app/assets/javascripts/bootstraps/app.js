@@ -15,7 +15,6 @@ define('bootstraps/app', [
     "bootstraps/video",
     "bootstraps/gallery",
     "bootstraps/interactive",
-    "bootstraps/story",
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag"
@@ -36,7 +35,6 @@ define('bootstraps/app', [
     Video,
     Gallery,
     Interactive,
-    Story,
     ab,
     pageConfig,
     Tag
@@ -87,7 +85,8 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            var context = document.getElementById('preload-1');
+            var context = document.getElementById('preload-1'),
+                contextHtml = context.cloneNode().innerHTML;
             
             modules.initialiseAjax(config);
             modules.initialiseAbTest(config);
@@ -96,13 +95,12 @@ define('bootstraps/app', [
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
 
-            var pageRoute = function(config, context) {
+            var pageRoute = function(config, context, contextHtml) {
 
                 // We should rip out this router:
                 var r = new Router();
 
-                bootstrapCommon.init(config, context);
-
+                bootstrapCommon.init(config, context, contextHtml);
 
                 //Fronts
                 if(config.page.isFront){
@@ -115,8 +113,6 @@ define('bootstraps/app', [
                 r.get('/football/:action/:year/:month/:day', function(req) {      Football.init(req, config, context); });
                 r.get('/football/:tag/:action', function(req) {                   Football.init(req, config, context); });
                 r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config, context); });
-
-                r.get('/stories/:id', function(req) { Story.init(config, context);});
 
                 if(config.page.contentType === "Article") {
                     Article.init(config, context);
@@ -143,7 +139,7 @@ define('bootstraps/app', [
             };
 
             common.mediator.on('page:ready', pageRoute);
-            common.mediator.emit('page:ready', config, context);
+            common.mediator.emit('page:ready', config, context, contextHtml);
         });
     };
 

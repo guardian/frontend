@@ -12,15 +12,13 @@ import play.api.libs.json.Writes
 import play.api.libs.json.Json._
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-import scala.Some
 import play.api.mvc.RequestHeader
-import org.joda.time.{ DateTimeZone, DateTime }
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import conf.Configuration
 import com.gu.openplatform.contentapi.model.MediaAsset
 import play.Play
-import org.jsoup.nodes.Entities.EscapeMode
 import org.apache.commons.lang.StringEscapeUtils
+
 
 sealed trait Style {
   val className: String
@@ -37,6 +35,16 @@ object Thumbnail extends Style { val className = "with-thumbnail" }
  * trails only display headline
  */
 object Headline extends Style { val className = "headline-only" }
+
+/**
+ * trails for the section fronts
+ */
+object SectionFront extends Style { val className = "section-front" }
+
+/**
+ * trails for the top stories component
+ */
+object Masthead extends Style { val className = "masthead" }
 
 object MetadataJson {
 
@@ -167,8 +175,13 @@ case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicit
             })
           }
         }
-
-        fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+        fig.getElementsByTag("figcaption").foreach { figcaption =>
+          if (!figcaption.hasText()) {
+            figcaption.remove();
+          } else {
+            figcaption.attr("itemprop", "description")
+          }
+        }
       }
     }
     body
@@ -251,8 +264,8 @@ case class Summary(amount: Int) extends HtmlCleaner {
     val para: Option[Element] = children.filter(_.nodeName() == "p").take(amount).lastOption
     // if there is are no p's, just take the first n things (could be a blog)
     para match {
-      case Some(p) => children.drop(children.indexOf(p)).foreach(_.remove()) 
-      case _ => children.drop(amount).foreach(_.remove()) 
+      case Some(p) => children.drop(children.indexOf(p)).foreach(_.remove())
+      case _ => children.drop(amount).foreach(_.remove())
     }
     document
   }
@@ -266,7 +279,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" }>{ tag.name }</a></span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" } data-link-context={ s"${tag.id}" }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)

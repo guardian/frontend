@@ -11,7 +11,7 @@
 }
 
 .i-sport-arrow-small {
-    margin: 0 0 -1px $baseline*2;
+    margin: 0 0 -1px $gutter/2;
 }
 
 .is-active .i-menu {
@@ -40,6 +40,16 @@
     @if ($svg-support) {
         .svg & {
             @extend .svg-i-top-stories-active;
+        }
+    }
+}
+
+.is-active .i-profile {
+    @extend .i-profile-active;
+
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-profile-active;
         }
     }
 }

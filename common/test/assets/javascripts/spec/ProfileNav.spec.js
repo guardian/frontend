@@ -1,98 +1,75 @@
-define(['common', 'fixtures', 'ajax', 'modules/navigation/profile'], function(common, fixtures, ajax, Profile) {
+define(['common', 'fixtures', 'modules/navigation/profile', 'modules/cookies'], function(common, fixtures, Profile, Cookies) {
 
     describe('Profile navigation', function() {
         var context,
-            control,
-            server = sinon.fakeServer.create(),
+            contentElem,
             containerId = 'profile-control-container',
-            config = {page: {
-                idUrl: 'https://profile.theguardian.co.uk'
-            }},
+            cookieData = 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMTU5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY',
             controlFixtures = {
                 id: containerId,
                 fixtures: [
-                    '<div class="' + Profile.CONFIG.classes.content + '"></div>'
+                    '<div class="' + Profile.CONFIG.classes.container + ' js-hidden">' +
+                        '<a href="/signin" data-link-name="User profile" data-control-for="nav-popup-profile" class="control control--profile">' +
+                            '<i class="i i-nav-divider"></i>' +
+                            '<span class="' + Profile.CONFIG.classes.content + ' control__info">Your profile</span>' +
+                            '<i class="i i-profile"></i>' +
+                        ' </a>' +
+                    '</div>',
+                    '<div class="nav-popup-profile js-profile-nav-popup nav-popup nav-popup--box is-off"></div>'
                 ]
             };
 
-        ajax.init({page: {
-            ajaxUrl: '',
-            edition: 'UK'
-        }});
-
         fixtures.render(controlFixtures);
         context = document.getElementById(containerId);
+        contentElem = context.querySelector('.' + Profile.CONFIG.classes.content);
 
-        describe('Fetching the HTML fragment', function() {
-            control = new Profile(config, context);
+        describe('Profile Nav control', function() {
+            var profile = new Profile(context);
 
             beforeEach(function() {
-                server = sinon.fakeServer.create();
-                server.autoRespond = true;
+                // Assume signed out state
+                Cookies.cleanUp(['GU_U']);
+                profile.init();
             });
 
-            afterEach(function() {
-                server.restore();
+            it('renders the signin prompt when not signed in', function() {
+                expect(contentElem.innerHTML).toBe(Profile.CONFIG.signinText);
             });
 
-            it('Fires a loaded event once the HTML has been fetched', function() {
-                var callback = sinon.stub();
-                common.mediator.on('modules:profilenav:loaded', callback);
-
-                server.respondWith([200, {}, '{ "html": "<i>Profile fragment</i>" }']);
-                control.getNavigationFragment();
-
-                waitsFor(function() {
-                    return callback.calledOnce === true;
-                }, 'Profile control to fetch HTML fragment', 500);
+            it('renders your username when signed in', function() {
+                Cookies.add('GU_U', cookieData);
+                profile.init();
+                expect(contentElem.innerHTML).toBe('jamesgorrie');
             });
 
-            it('Fires an error event when server responds badly', function() {
-                var callback = sinon.stub();
-                common.mediator.on('modules:profilenav:error', callback);
-
-                server.respondWith([500, {}, '{ "error": "Server did a bad bad thing" }']);
-                control.getNavigationFragment();
-
-                waitsFor(function() {
-                    return callback.calledOnce === true;
-                }, 'Profile control to throw error', 500);
+            it('renders the signout link when signed in', function() {
+                Cookies.add('GU_U', cookieData);
+                profile.init();
+                var signout = profile.dom.popup.querySelectorAll('.' + Profile.CONFIG.classes.signout);
+                expect(signout.length).toBe(1);
             });
 
+            it('renders the profile popup when signed in', function() {
+                Cookies.add('GU_U', cookieData);
+                profile.init();
+                var popup = profile.dom.popup.querySelectorAll('.' + Profile.CONFIG.classes.signout);
+                expect(popup.length).toBe(1);
+            });
+
+            it('does not render the profile popup when not signed in', function() {
+                var popup = context.querySelectorAll('.' + Profile.CONFIG.classes.popup);
+                expect(popup.length).toBe(0);
+            });
+
+            it('does not render the signout link more than once when signed in', function() {
+                Cookies.add('GU_U', cookieData);
+                profile.init();
+                var signout = profile.dom.popup.querySelectorAll('.' + Profile.CONFIG.classes.signout);
+                expect(signout.length).toBe(1);
+                profile.init();
+                expect(signout.length).toBe(1);
+            });
         });
-
-        describe('Rendering the HTML fragment', function() {
-            control = new Profile(config, context);
-            
-            beforeEach(function() {
-                server = sinon.fakeServer.create();
-                server.autoRespond = true;
-            });
-
-            afterEach(function() {
-                server.restore();
-            });
-
-            it('Renders the content fetched from ID fragment', function() {
-                var content = '<i>auserwithmassintent</i>',
-                    callback = sinon.stub();
-
-                server.respondWith([200, {}, '{ "html": "' + content + '" }']);
-
-                common.mediator.on('modules:profilenav:rendered', callback);
-                control.init();
-
-                waitsFor(function() {
-                    return callback.calledOnce === true;
-                }, 'Render to fetch content', 500);
-
-                runs(function() {
-                     expect(context.querySelector('.' + Profile.CONFIG.classes.content).innerHTML).toEqual(content);
-                });
-            });
-
-        });
-    
     });
 
-})
+});

@@ -1,7 +1,6 @@
 package controllers.front
 
 import model.TrailblockDescription
-import scala.Some
 import model.Trailblock
 import common.Edition
 
@@ -37,8 +36,7 @@ class FrontEdition(val edition: Edition, val descriptions: Seq[TrailblockDescrip
     }
   }
 
-  def refresh() = manualAgents.foreach(_.refresh())
+  def refresh() {manualAgents.map(_.refresh())}
 
-  def shutDown() = manualAgents.foreach(_.close())
-
+  def stop() { manualAgents.foreach(_.close()) }
 }

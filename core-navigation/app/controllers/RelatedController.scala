@@ -30,7 +30,7 @@ object RelatedController extends Controller with Logging with ExecutionContexts 
       .showRelated(true)
       .response.map {response =>
       val heading = "Related content"
-      val related = SupportedContentFilter(response.relatedContent map { Content(_,None) })
+      val related = SupportedContentFilter(response.relatedContent map { Content(_) })
 
       Some(Related(heading, related))
     }.recover{ case ApiError(404, message) =>
@@ -40,7 +40,15 @@ object RelatedController extends Controller with Logging with ExecutionContexts 
   }
 
   private def renderRelated(model: Related)(implicit request: RequestHeader) = {
-    val html = () => views.html.fragments.relatedTrails(model.trails, model.heading, 5)
-    renderFormat(html, html, 900)
+    Cached(900){
+      val html = views.html.fragments.relatedTrails(model.trails, model.heading, 5)
+      if (request.isJson)
+        JsonComponent(
+          "html" -> html,
+          "trails" -> model.trails.map(_.url)
+        )
+      else
+        Ok(html)
+    }
   }
 }

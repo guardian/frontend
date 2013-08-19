@@ -1,8 +1,8 @@
 @(front: FrontPage, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
 
 <div class="front-container cf" data-link-name="Front" role="main">
-    @trailblocks.map{ block =>
-        @fragments.frontBlock(block, front)
+    @trailblocks.zipWithIndex.map{ case(block, index) =>
+        @fragments.frontBlock(block, front, index)
     }
 </div>
 

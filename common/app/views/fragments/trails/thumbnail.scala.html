@@ -1,4 +1,5 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
+@import conf.Switches._
 
 <@element class="trail trail--thumbnail t@rowNum" data-link-name="trail"
     @trail.discussionId.map{ id => data-discussion-id="@id" }
@@ -9,7 +10,7 @@
     <div class="media">
         @if(showThumbnail) {
             @trail.thumbnailPath.map{ thumbnailPath =>
-                <a href="@LinkTo{@trail.url}" class="media__img trail__img" data-link-name="@rowNum | image" role="presentation">
+                <a href="@LinkTo{@trail.url}" class="media__img trail__img" data-link-name="@rowNum | image" aria-hidden="true">
                     <img class="maxed" data-lowsrc="@thumbnailPath"
                         data-thumb-width="140"
                         @trail.mainPicture(width=220).map { largeCrop =>
@@ -29,7 +30,6 @@
             </a>
         </h@headingLevel>
 
-        @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
     </div>
 
 </@element>

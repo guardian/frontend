@@ -7,10 +7,10 @@ import common.Reference
 import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
+import conf.Configuration
 
-class Content(
-    delegate: ApiContent,
-    override val storyItems: Option[StoryItems] = None) extends Trail with Tags with MetaData {
+class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
+
   private lazy val fields = delegate.safeFields
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
@@ -43,7 +43,17 @@ class Content(
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
 
-  lazy val byline: Option[String] = fields.get("byline")
+  override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
+    val body = delegate.safeFields.get("body")
+    val souped = body flatMap { body =>
+      val souped = Jsoup.parseBodyFragment(body).body().select("p")
+      Option(souped) map { _.toList }
+    }
+
+    souped getOrElse Nil
+  }
+  
+  override lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
   override lazy val discussionId = Some(shortUrlPath)
@@ -82,8 +92,16 @@ class Content(
     ("page-code", fields("internalPageCode")),
     ("isLive", isLive),
     ("wordCount", wordCount),
-    ("shortUrl", shortUrl)
+    ("shortUrl", shortUrl),
+    ("thumbnail", thumbnailPath.getOrElse(false))
   ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
+
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:title" -> webTitle,
+    "og:url" -> webUrl,
+    "og:description" -> trailText,
+    "og:image" -> mainPicture.map(_.path).getOrElse(thumbnailPath.getOrElse(conf.Configuration.facebook.imageFallback))
+  )
 
   override lazy val cacheSeconds = {
     if (isLive) 30 // live blogs can expect imminent updates
@@ -94,18 +112,18 @@ class Content(
 
 object Content {
 
-  def apply(delegate: ApiContent, storyItems: Option[StoryItems]): Content = {
+  def apply(delegate: ApiContent): Content = {
     delegate match {
-      case gallery if delegate.isGallery => new Gallery(delegate, storyItems)
-      case video if delegate.isVideo => new Video(delegate, storyItems)
-      case article if delegate.isArticle => new Article(delegate, storyItems)
-      case d => new Content(d, storyItems)
+      case gallery if delegate.isGallery => new Gallery(delegate)
+      case video if delegate.isVideo => new Video(delegate)
+      case article if delegate.isArticle => new Article(delegate)
+      case d => new Content(d)
     }
   }
 
 }
 
-class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
@@ -119,9 +137,17 @@ class Article(private val delegate: ApiContent, storyItems: Option[StoryItems] =
     .getOrElse(false)
 
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
+
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:type" -> "article",
+    "article:published_time" -> webPublicationDate,
+    "article:modified_time" -> lastModified,
+    "article:section" -> sectionName
+  ) ++ tags.map("article:tag" -> _.name) ++
+    tags.filter(_.isContributor).map("article:author" -> _.webTitle)
 }
 
-class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   private implicit val ordering = EncodingOrdering
 
@@ -132,38 +158,29 @@ class Video(private val delegate: ApiContent, storyItems: Option[StoryItems] = N
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))
+
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:type" -> "video",
+    "og:video:type" -> "text/html"
+  ) ++ tags.map("video:tag" -> _.name)
 }
 
-class Gallery(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   private val lookup: Map[Int, Image] = (images map { image => (image.index, image) }).toMap
   def apply(index: Int): Image = lookup(index)
   lazy val size = images.size
   lazy val contentType = "Gallery"
   lazy val landscapes = images.filter(i => i.width > i.height)
+  lazy val portraits = images.filter(i => i.width < i.height)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
 }
 
-class Interactive(private val delegate: ApiContent, storyItems: Option[StoryItems] = None) extends Content(delegate, storyItems) {
+class Interactive(private val delegate: ApiContent) extends Content(delegate) {
   lazy val contentType = "Interactive"
   lazy val body: String = delegate.safeFields("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
-
-case class Quote(
-  text: Option[String] = None,
-  by: Option[String] = None,
-  url: Option[String] = None,
-  subject: Option[String] = None)
-
-case class StoryItems(
-  importance: Int,
-  colour: Int,
-  shares: Option[Int] = None,
-  comments: Option[Int] = None,
-  quote: Option[Quote] = None,
-  headlineOverride: Option[String] = None
-)

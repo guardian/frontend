@@ -8,12 +8,6 @@ GET     /assets/*file                         controllers.Assets.at(path="/publi
 
 #Note the order of these is important
 
-#Identity
-GET     /identity/signin                                    @controllers.SigninController.renderForm
-POST    /identity/signin                                    @controllers.SigninController.processForm
-GET     /identity/fragments/profile-nav                     @controllers.TopBarFragments.signin
-GET     /identity/fragments/profile-nav.json                @controllers.TopBarFragments.signin2
-
 # Discussion
 GET     /discussion/comment-counts                          controllers.CommentCountController.render(shortUrls: String)
 GET     /discussion/comment-counts.json                     controllers.CommentCountController.render(shortUrls: String)
@@ -31,23 +25,6 @@ GET    /top-stories/trails                                  controllers.TopStori
 GET    /top-stories/trails.json                             controllers.TopStoriesController.renderJsonTrails()
 GET    /related/*path.json                                  controllers.RelatedController.render(path)
 GET    /related/*path                                       controllers.RelatedController.render(path)
-# more stories for swipe
-GET    /most-viewed                                         controllers.MoreStoriesController.renderMostViewed(path = "")
-GET    /most-viewed.json                                    controllers.MoreStoriesController.renderMostViewed(path = "")
-GET    /most-viewed/*path.json                              controllers.MoreStoriesController.renderMostViewed(path)
-GET    /most-viewed/*path                                   controllers.MoreStoriesController.renderMostViewed(path)
-GET    /front-trails                                        controllers.MoreStoriesController.renderFrontTrails(path = "")
-GET    /front-trails.json                                   controllers.MoreStoriesController.renderFrontTrails(path = "")
-GET    /front-trails/*path.json                             controllers.MoreStoriesController.renderFrontTrails(path)
-GET    /front-trails/*path                                  controllers.MoreStoriesController.renderFrontTrails(path)
-
-#Stories
-GET    /stories                                             controllers.StoryController.latest()
-GET    /stories.json                                        controllers.StoryController.latestJson()
-GET    /stories/articles                                    controllers.StoryController.latestWithContent()
-GET    /stories/storymodule01/*id                           controllers.StoryController.headerAndBlock(id)
-GET    /stories/*id.json                                    controllers.StoryController.byId(id)
-GET    /stories/*id                                         controllers.StoryController.byId(id)
 
 #Style-guide
 GET     /style-guide                                        controllers.StyleGuideController.renderIndex
@@ -121,6 +98,7 @@ GET     /film                                                       controllers.
 
 #Front
 GET     /$path<(us|uk|au)?>                                                                         controllers.FrontController.render(path)
+GET     /$path<(us|uk|au)?>.json                                                                         controllers.FrontController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                     controllers.FrontController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json                controllers.FrontController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails              controllers.FrontController.renderTrails(path)

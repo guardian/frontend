@@ -25,13 +25,13 @@ define([
             discussionId          = options.id.replace('http://gu.com', ''),
             discussionContainer   = options.discussionContainer || '.article__discussion',
             articleContainer      = options.articleContainer || '.js-article__container',
-            mediaPrimary          = options.mediaPrimary || '.media-primary',
+            mediaPrimary          = options.mediaPrimary || 'article .media-primary',
             commentsHaveLoaded    = false,
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<div class="d-actions">' +
-                '<a data-link-name="Comment on desktop" class="d-actions__link" href="' + config.page.canonicalUrl + '?view=desktop#start-of-comments">' +
+                '<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
                     'Want to comment? Visit the desktop site</a>' +
                 '<button class="top js-top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
             clickstream           = new ClickStream({ addListener: false }),
@@ -66,7 +66,7 @@ define([
             },
 
             upgradeByline: function(commentCount) {
-                var bylineNode = bonzo(context.querySelector('.byline')),
+                var bylineNode = bonzo(context.querySelector('article .byline')),
                     isLive = (config.page.isLive) ? ' d-tabs--is-live' : '',
                     tabsHtml = '<div class="d-tabs' + isLive + '">' +
                                  '<ol class="d-tabs__container unstyled">' +
@@ -243,13 +243,19 @@ define([
                     }
 
                     if (e.currentTarget.className.indexOf('js-top') !== -1) {
-                        self.jumpToTop();
+                        if(document.body.className.indexOf('has-swipe') !== -1) {
+                            common.mediator.emit('modules:discussion:show', self.jumpToTop);
+                        } else {
+                            self.jumpToTop();
+                        }
                     }
 
                     location.hash = 'comments';
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
+                    e.preventDefault();
+
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
 
@@ -260,7 +266,11 @@ define([
                     self.articleContainerNode.style.display = 'block';
 
                     if (e.currentTarget.className.indexOf('js-top') !== -1) {
-                        self.jumpToTop();
+                        if(document.body.className.indexOf('has-swipe') !== -1) {
+                            common.mediator.emit('modules:discussion:show', self.jumpToTop);
+                        } else {
+                            self.jumpToTop();
+                        }
                     }
 
                     // We force analytics on the Article/Byline tab, because

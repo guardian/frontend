@@ -5,7 +5,7 @@ import common._
 import implicits.Collections
 import play.api.Plugin
 import play.api.libs.ws.WS
-import scala.concurrent.duration._
+
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -91,29 +91,6 @@ object Switches extends Collections {
     safeState = Off)
 
 
-  // Storytelling Switches
-
-  val ExperimentStoryModule01Switch = Switch("Storytelling", "experiment-story-module-01",
-    "Enable storified articles.",
-    safeState = Off)
-
-  val StoryFrontTrails = Switch("Storytelling", "story-front-trails",
-    "Switch on to enable front trails for latest stories.",
-    safeState = Off)
-
-  val StoryVersionBSwitch = Switch("Storytelling", "story-version-b",
-    "Switch to enable version B of story page.",
-    safeState = Off)
-
-  val ABStoryArticleSwapV2 = Switch("Storytelling", "ab-story-article-swap-v2",
-    "If this switch is on, swaps the latest article in a story for the story.",
-    safeState = Off)
-
-  val StoryArticleSwap = Switch("Storytelling", "story-article-swap",
-    "If this switch is on, for the latest story, swaps it in in place of the latest article in that story. Confused?",
-    safeState = Off)
-
-
   // Swipe Switches
 
   val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
@@ -173,6 +150,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
     safeState = Off)
 
+  val ABInlineLinkCardSwitch = Switch("A/B Tests", "ab-inline-link-card",
+    "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
+    safeState = Off)
+
   val ABAa = Switch("A/B Tests", "ab-aa",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
@@ -181,12 +162,24 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
     safeState = Off)
 
+  val ABGalleryStyle = Switch("A/B Tests", "ab-gallery-style",
+    "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
+    safeState = Off)
+
+  val ABSwipeCtas = Switch("A/B Tests", "ab-swipe-ctas",
+    "If this is switched on an AB test runs to trial the new swipe call to actions ",
+    safeState = Off)
+
+  val ABExpandableTrails = Switch("A/B Tests", "ab-expandable-trails",
+    "If this is switched on an AB test runs to trial the impact of having expandable content in trails",
+    safeState = Off)
+
 
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
     "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
-    safeState = Off);
+    safeState = Off)
 
   // Dummy Switch
 
@@ -195,9 +188,14 @@ object Switches extends Collections {
     safeState = Off)
 
   //Fronts film switch
-  val FilmFrontFacia = Switch("Facia", "facia-film-switch",
+  val FilmFrontFacia = Switch("Facia", "facia-film",
     "Switch to redirect traffic to the facia film front instead of front film front",
     safeState = Off)
+
+  val FaciaSwitch = Switch("Facia", "facia",
+    "Switch to redirect to facia if request has X-Gu-Facia=true",
+    safeState = Off
+  )
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -210,11 +208,6 @@ object Switches extends Collections {
     OmnitureDomReadySwitch,
     DiscussionSwitch,
     ShortDiscussionSwitch,
-    ExperimentStoryModule01Switch,
-    StoryFrontTrails,
-    StoryVersionBSwitch,
-    ABStoryArticleSwapV2,
-    StoryArticleSwap,
     SwipeNav,
     SwipeNavOnClick,
     FontSwitch,
@@ -227,6 +220,7 @@ object Switches extends Collections {
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
+    ABInlineLinkCardSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     LocalNavSwitch,
@@ -236,15 +230,20 @@ object Switches extends Collections {
     LiveCricketSwitch,
     ABLightboxGalleries,
     FilmFrontFacia,
-    AdSlotImpressionStatsSwitch
+    FaciaSwitch,
+    AdSlotImpressionStatsSwitch,
+    ABGalleryStyle,
+    ABSwipeCtas,
+    ABExpandableTrails
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with Logging with Plugin {
 
-  private lazy val refreshSwitches = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
+
+  def refresh() {
     log.info("Refreshing switches")
     WS.url(config.switches.configurationUrl).get() foreach { response =>
       response.status match {
@@ -264,6 +263,14 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with L
     }
   }
 
-  override def onStart() { refreshSwitches }
-  override def onStop() { refreshSwitches.cancel() }
+  override def onStart() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
+      refresh()
+    }
+  }
+
+  override def onStop() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+  }
 }

@@ -30,6 +30,8 @@
 @import "module/_social";
 @import "module/_search";
 @import "module/_debug";
+@import "module/_forms";
+@import "module/_gallerythumbs";
 @import "module/nav/_pop-up";
 @import "module/nav/_localnav";
 @import "module/_live-blog";
@@ -41,6 +43,7 @@
 @import "module/_interactive";
 @import "module/_overlay";
 @import "module/_lightbox-gallery";
+
 
 
 /* ==========================================================================
@@ -64,14 +67,9 @@
    Experiments
    ========================================================================== */
 
-/* Story telling
-   ========================================================================== */
-
-@import "module/experiments/_story";
-@import "module/experiments/_timeline";
-@import "module/experiments/_accordion";
-@import "module/experiments/_reaction";
-@import "module/experiments/_trail";
+@import "module/experiments/_ears";
+@import "module/experiments/_bar";
+@import "module/_facia";
 
 
 /* ==========================================================================
@@ -81,6 +79,3 @@
 @import "theme/_global-icons-sprite";
 @import "theme/_global-icons-svg";
 @import "theme/_icons";
-
-// New front experiment
-@import "module/experiments/_front";

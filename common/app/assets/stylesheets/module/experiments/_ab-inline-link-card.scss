@@ -1,0 +1,60 @@
+/* Furniture
+   ========================================================================== */
+
+.furniture {
+    display: none;
+}
+.furniture--left {
+    float: left;
+    clear: left;
+    width: $a-leftCol-width;
+    margin-left: ($a-leftCol-width + $gs-gutter)*-1;
+    margin-bottom: $baseline*2;
+
+    @include mq($a-leftCol-trigger) {
+        .test-link-card--on & {
+            display: block;
+        }
+    }
+}
+
+
+/* Card
+   ========================================================================== */
+
+.card {
+
+}
+.card__media {
+    display: block;
+    width: 100%;
+
+    .furniture--left & {
+        width: 140px;
+        height: 84px;
+    }
+}
+.card__title {
+    font-family: $serifheadline !important;
+    font-size: 18px !important;
+    font-size: 1.8rem !important;
+    line-height: 26px !important;
+    line-height: 2.6rem !important;
+}
+.card__body {
+    padding: $baseline*1.5 $gutter/2 $baseline*6;
+    background: $mushroom;
+
+    .card-wrapper:hover &,
+    .card-wrapper:focus & {
+        background: $darkMushroom;
+    }
+}
+.card__headline {
+    font-family: $serif !important; // Override .from-content-api h3 defaults
+    color: #444;
+    font-size: 14px !important;
+    font-size: 1.4rem !important;
+    line-height: 20px !important;
+    line-height: 2rem !important;
+}

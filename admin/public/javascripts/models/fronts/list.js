@@ -1,15 +1,19 @@
 define([
     'Reqwest',
+    'EventEmitter',
     'knockout',
-    'models/fronts/globals',
+    'models/fronts/common',
     'models/fronts/article',
-    'models/fronts/contentApi'
+    'models/fronts/contentApi',
+    'models/fronts/ophanApi'
 ], function(
     reqwest,
+    eventEmitter,
     ko,
-    globals,
+    common,
     Article,
-    ContentApi
+    contentApi,
+    ophanApi
 ) {
 
     function List(id) {
@@ -21,11 +25,22 @@ define([
         this.live   = ko.observableArray();
         this.draft  = ko.observableArray();
 
-        this.meta   = this.asObservableProps(['lastUpdated', 'updatedBy', 'updatedEmail']);
-        this.config = this.asObservableProps(['contentApiQuery', 'min', 'max']);
-        this.state  = this.asObservableProps(['liveMode', 'hasUnPublishedEdits', 'loadIsPending', 'editingConfig', 'timeAgo']);
+        this.meta   = common.util.asObservableProps([
+            'lastUpdated',
+            'updatedBy',
+            'updatedEmail']);
+        this.config = common.util.asObservableProps([
+            'contentApiQuery',
+            'min',
+            'max']);
+        this.state  = common.util.asObservableProps([
+            'liveMode',
+            'hasUnPublishedEdits',
+            'loadIsPending',
+            'editingConfig',
+            'timeAgo']);
 
-        this.state.liveMode(globals.defaultToLiveMode);
+        this.state.liveMode(common.config.defaultToLiveMode);
 
         this.needsMore = ko.computed(function() {
             if (self.state.liveMode()  && self.live().length  < self.config.min()) { return true; }
@@ -37,25 +52,34 @@ define([
             self.drop(item);
         };
 
+        this.saveItemConfig = function(item) {
+            item.saveConfig(self.id);
+            self.load();
+        }
+
+        this.forceRefresh = function() {
+            self.load();
+        }
+
         this.load();
     }
 
-    List.prototype.asObservableProps = function(props) {
-        return _.object(props.map(function(prop){
-            return [prop, ko.observable()];
-        }));
+    List.prototype.toggleEditingConfig = function() {
+        this.state.editingConfig(!this.state.editingConfig());
     };
 
-    List.prototype.toggleShowSettings = function() {
-        this.state.editingConfig(!this.state.editingConfig());
+    List.prototype.stopEditingConfig = function() {
+        this.state.editingConfig(false);
     };
 
     List.prototype.setLiveMode = function() {
         this.state.liveMode(true);
+        this.decorate();
     };
 
     List.prototype.setDraftMode = function() {
         this.state.liveMode(false);
+        this.decorate();
     };
 
     List.prototype.publishDraft = function() {
@@ -70,7 +94,7 @@ define([
         var self = this;
 
         reqwest({
-            url: globals.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
@@ -78,7 +102,7 @@ define([
         }).then(
             function(resp) {
                 self.load({
-                    callback: function(){ self.state.liveMode(true); }
+                    callback: function(){ self.setLiveMode(); }
                 });
             },
             function(xhr) {
@@ -95,11 +119,11 @@ define([
         self.state.loadIsPending(true);
         reqwest({
             method: 'delete',
-            url: globals.apiBase + '/' + self.id,
+            url: common.config.apiBase + '/' + self.id,
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
-                item: item.id(),
+                item: item.meta.id(),
                 live: self.state.liveMode(),
                 draft: true
             })
@@ -116,36 +140,53 @@ define([
     List.prototype.load = function(opts) {
         var self = this;
         opts = opts || {};
+
+        common.util.mediator.emit('list:load:start');
+
         reqwest({
-            url: globals.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/' + this.id,
             type: 'json'
         }).always(
             function(resp) {
-                self.populateMeta(resp);
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
-                    return;
-                }
-                self.populateData(resp);
-                if (typeof opts.callback === 'function') { opts.callback(); } 
                 self.state.loadIsPending(false);
+
+                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
+                    // noop    
+                } else {
+                    self.populateLists(resp);
+                }
+
+                if (resp.lastUpdated !== self.meta.lastUpdated()) {
+                    self.populateMeta(resp);
+                }
+
+                if (!self.state.editingConfig()) {
+                    self.populateConfig(resp);
+                }
+
+                if (_.isFunction(opts.callback)) { opts.callback(); } 
+
+                common.util.mediator.emit('list:load:end');
             }
         );
     };
 
     List.prototype.populateMeta = function(opts) {
-        var self = this;
-        opts = opts || {};
-        _.keys(this.meta).forEach(function(key){
-            self.meta[key](opts[key]);
-        });
+        common.util.populateObservables(this.meta, opts)
         this.state.timeAgo(this.getTimeAgo(opts.lastUpdated));
     }
 
-    List.prototype.populateData = function(opts) {
-        var self = this;
+    List.prototype.populateConfig = function(opts) {
+        common.util.populateObservables(this.config, opts)
+    };
 
-        if (globals.uiBusy) { return; }
+    List.prototype.populateLists = function(opts) {
+        var self = this;
+        
+
         opts = opts || {};
+
+        if (common.state.uiBusy) { return; }
 
         // Knockout doesn't seem to empty elements dragged into
         // a container when it regenerates its DOM content. So empty it first.
@@ -159,48 +200,50 @@ define([
                 self[list].removeAll();
             }
             if (opts[list] && opts[list].length) {
-                opts[list].forEach(function(item) {
+                opts[list].forEach(function(item, index) {
                     self[list].push(new Article({
-                        id: item.id
+                        id: item.id,
+                        index: index,
+                        webTitleOverride: item.webTitleOverride
                     }));
                 });
-                ContentApi.decorateItems(self[list]());
             }
         });
 
-        // Only refresh config properties if they're not currently being edited
-        if (!this.state.editingConfig()) {
-            _.keys(this.config).forEach(function(key){
-                self.config[key](opts[key]);
-            });
-        }
-
+        self.decorate();
         this.state.hasUnPublishedEdits(opts.areEqual === false);
     };
 
+    List.prototype.decorate = function() {
+        var list = this[this.state.liveMode() ? 'live' : 'draft']();
+
+        contentApi.decorateItems(list);
+        ophanApi.decorateItems(list);
+    };
+
     List.prototype.refresh = function() {
-        if (globals.uiBusy || this.state.loadIsPending()) { return; }
+        if (common.state.uiBusy || this.state.loadIsPending()) { return; }
         this.load({
             isRefresh: true
         });
     };
 
-    List.prototype.saveConfig = function(key, val) {
+    List.prototype.saveConfig = function() {
         var self = this;
         reqwest({
-            url: globals.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({ 
                 config: {
-                    contentApiQuery: this.config.contentApiQuery(),
+                    contentApiQuery: this.config.contentApiQuery() || undefined,
                     min: parseInt(this.config.min(), 10) || undefined,
                     max: parseInt(this.config.max(), 10) || undefined
                 }
             })
         }).always(function(){
-            self.state.editingConfig(false);
+            self.stopEditingConfig();
         });
     };
 
