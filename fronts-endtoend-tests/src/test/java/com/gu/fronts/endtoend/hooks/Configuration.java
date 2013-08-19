@@ -1,9 +1,11 @@
 package com.gu.fronts.endtoend.hooks;
 
 import hu.meza.tools.config.Config;
-import hu.meza.tools.config.OptionalConfigurationFile;
-import hu.meza.tools.config.RequiredConfigurationFile;
-import hu.meza.tools.config.SystemPropertiesConfiguration;
+import hu.meza.tools.config.Loaders.FileConfiguration;
+import hu.meza.tools.config.Loaders.ResourceConfiguration;
+import hu.meza.tools.config.Loaders.SystemPropertiesConfiguration;
+import hu.meza.tools.config.Optional;
+import hu.meza.tools.config.Required;
 
 import java.io.File;
 
@@ -25,10 +27,10 @@ public class Configuration {
 									File.separator);
 		system = null;
 
-		File frontendConfig = new File(path);
-		config.add(new OptionalConfigurationFile(frontendConfig));
-		config.addOverriding(new RequiredConfigurationFile("environment.properties"));
-		config.addOverriding(new OptionalConfigurationFile("developer.properties"));
+		File frontendConfigFile = new File(path);
+		config.add(new Optional(new FileConfiguration(frontendConfigFile)));
+		config.addOverriding(new Required(new ResourceConfiguration("environment.properties")));
+		config.addOverriding(new Optional(new ResourceConfiguration("developer.properties")));
 		config.addHighOrder(systemPropertiesConfiguration);
 	}
 

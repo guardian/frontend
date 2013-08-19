@@ -101,7 +101,7 @@ object Frontend extends Build with Prototypes {
 			"org.json" % "org.json" % "chargebee-1.0",
 			"joda-time" % "joda-time" % "2.2",
 			"hu.meza" % "aao" % "2.0.0",
-			"hu.meza.tools" % "config" % "0.2.0",
+			"hu.meza.tools" % "config" % "0.3.0",
 			"hu.meza.tools" % "http-client-wrapper" % "0.1.9",
 			"info.cukes" % "cucumber-java" % "1.1.3",
 			"info.cukes" % "cucumber-junit" % "1.1.3",
