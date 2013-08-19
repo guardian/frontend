@@ -91,14 +91,6 @@ object ContentApiMetrics {
   val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
 }
 
-object MongoMetrics {
-  object MongoTimingMetric extends TimingMetric("performance", "database", "Mongo request", "outgoing Mongo calls")
-  object MongoOkCount extends CountMetric("database-status", "ok", "Ok", "number of mongo requests successfully completed")
-  object MongoErrorCount extends CountMetric("database-status", "error", "Error", "number of mongo requests that error")
-
-  val all: Seq[Metric] = Seq(MongoTimingMetric, MongoOkCount, MongoErrorCount)
-}
-
 object PaMetrics {
   object PaApiHttpTimingMetric extends TimingMetric(
     "pa-api",
@@ -243,7 +235,6 @@ object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
 
   lazy val contentApi = ContentApiMetrics.all
-  lazy val mongo = MongoMetrics.all
   lazy val pa = PaMetrics.all
 
   lazy val discussion = DiscussionMetrics.all
