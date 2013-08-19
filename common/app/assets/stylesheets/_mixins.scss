@@ -4,6 +4,7 @@
 @mixin font-size($size, $line-height) {
     font-size: $size*1px;
     font-size: ($size / 10)*1rem;
+    line-height: $line-height*1px;
     line-height: ($line-height / 10)*1rem;
 }
 

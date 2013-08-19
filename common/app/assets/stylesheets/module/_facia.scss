@@ -136,7 +136,7 @@ $grey: #cccccc;
         }
     }
     .trail:first-child .trail__count {
-        top:auto;
+        top: auto;
     }
     .trail:nth-child(1) {
         background-color: $blue;
@@ -144,7 +144,7 @@ $grey: #cccccc;
     .trail--feature:nth-child(1) {
         background-color: $pink;
     }
-    @include mq(0, tablet) {
+    @include mq($to: tablet) {
         @include box-sizing(border-box);
         border: none;
         .trail {
@@ -196,7 +196,7 @@ $grey: #cccccc;
 
     .trail--feature {
         background-color: $pink;
-        a,
+        .trail__link,
         .trail__title,
         .trail__standfirst,
         .trail__timestamp {
@@ -210,11 +210,11 @@ $grey: #cccccc;
         .trail__title {
             padding-top: $baseline * 2;
         }
-        .trail__timestamp i {
-            @extend .i-clock-pink;
-        }
         .trail__timestamp {
             border-left: 1px none $light-pink;
+            i {
+                @extend .i-clock-pink;
+            }
         }
         .trail__count {
             border-left-color: $light-pink;
@@ -248,17 +248,16 @@ $grey: #cccccc;
     .trail__image {
         margin-right: $gs-gutter;
     }
-    a,
+    .trail__link,
     .trail__title,
     .trail__standfirst,
     .trail__timestamp,
-    .trail__count a
-    {
+    .trail__count a {
         color: #ffffff;
     }
     .trail__title,
     .trail__standfirst {
-        margin: 0 $baseline*2 0;
+        margin: 0 $gutter/2 0;
     }
     .trail__title {
         padding-top: $baseline*2;
@@ -322,7 +321,7 @@ $grey: #cccccc;
         .trail__image {
             margin-right: $gs-gutter;
         }
-        a,
+        .trail__link,
         .trail__title,
         .trail__standfirst,
         .trail__timestamp {
@@ -374,7 +373,7 @@ $grey: #cccccc;
                 display:none;
             }
             .trail__meta {
-                left: 460px + $gs-gutter;
+                left: $featured-img-width + $gs-gutter;
                 .trail__timestamp {
                     border-left-style: solid;
                 }

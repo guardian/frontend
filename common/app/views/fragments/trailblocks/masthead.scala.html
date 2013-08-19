@@ -3,7 +3,7 @@
 <ul class="unstyled trails trails-count-@trails.size">
     @trails.zipWithIndex.map{ case (trail, index) =>
         <li class="trail @trail.tags.filter(_.id == "tone/features").headOption.map{tag => trail--feature}" data-link-name="trail | @{index + 1}" @trail.discussionId.map{ id => data-discussion-id="@id" }>
-            <a href="@LinkTo{@trail.url}">
+            <a href="@LinkTo{@trail.url}" class="trail__link">
                 @if(!(trails.size == 4 && index > 1)){
                     @trail.mainPicture(620).map{ mainPicture =>
                         <div class="trail__image-container">
@@ -14,7 +14,7 @@
                 <h2 class="trail__title">@RemoveOuterParaHtml(trail.headline)</h2>
             </a>
             <div class="trail__meta">
-                <time class="trail__timestamp trail__timestamp--js"
+                <time class="trail__timestamp js-trail__timestamp"
                       itemprop="datePublished"
                       datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
                       data-timestamp="@trail.webPublicationDate.getMillis">
