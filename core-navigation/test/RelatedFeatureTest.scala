@@ -45,7 +45,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         article.findFirst("a").getAttribute("href").length should be > 0
         article.findFirst("h3").getText.length should be > 0
         article.findFirst(".trail__text").getText.length should be > 0
-        article.findFirst("time").getAttribute("data-timestamp") should be("1344426007000")
+        article.findFirst("time").getAttribute("data-timestamp") should be("1373852700000")
 
         find("li .trail__text") should have length 5
       }
