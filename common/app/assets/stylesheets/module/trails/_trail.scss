@@ -147,15 +147,23 @@
     }
 
     .media {
-        padding: 0 0 $baseline*1 0;
+        padding: 0 0 $baseline 0;
+
+        .ab-expandable-trails--on & {
+            padding-bottom: 0;
+        }
     }
 
     .media__img { width: 35%; }
 
     .media__img img {
         width: $trailblockImgWidth;
+        margin-top: 3px; // Align with top of text
         margin-bottom: 5px;
-        margin-top: 3px;
+
+        .ab-expandable-trails--on & {
+            margin-bottom: 0;
+        }
     }
 
     .trail__text {
