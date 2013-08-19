@@ -8,6 +8,7 @@ define([
     'modules/experiments/tests/aa',
     'modules/experiments/tests/lightbox-galleries',
     'modules/experiments/tests/gallery-style',
+    'modules/experiments/tests/gallery-cta',
     'modules/experiments/tests/swipe-ctas'
 ], function (
     common,
@@ -17,6 +18,7 @@ define([
     Aa,
     LightboxGalleries,
     GalleryStyle,
+    GalleryCta,
     SwipeCtas
     ) {
 
@@ -26,6 +28,7 @@ define([
             new Aa(),
             new LightboxGalleries(),
             new GalleryStyle(),
+            new GalleryCta(),
             new SwipeCtas()
         ],
         participationsKey = 'gu.ab.participations';
