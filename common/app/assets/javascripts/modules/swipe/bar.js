@@ -50,19 +50,23 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
     };
 
     SwipeBar.prototype.show = function() {
-        if(bonzo(this.body).scrollTop() > 122) {
-            if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
-                this.$el.removeClass('is-hidden');
-                this.isVisible = true;
-            }
-        } else {
-            this.hide();
+        if(!this.isVisible && this.body.className.indexOf('has-gallery') === -1) {
+            bean.on(this.body, 'click.swipe.bar', '.js-' + this.options.btnClassName, this.navigate);
+
+            this.$el.removeClass('is-hidden');
+            this.isVisible = true;
         }
     };
 
     SwipeBar.prototype.hide = function(){
+        bean.off(this.body, 'click.swipe.bar');
         this.$el.addClass('is-hidden');
         this.isVisible = false;
+    };
+
+    SwipeBar.prototype.navigate = function(e) {
+        var dir = (e.target.getAttribute('data-direction') === 'left') ? 'prev' : 'next';
+        common.mediator.emit('module:swipenav:navigate:' + dir);
     };
 
     SwipeBar.prototype.bindListeners = function() {
@@ -72,16 +76,11 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
             self.updateCount.call(self, data);
         });
 
-        bean.on(this.body, 'click', '.js-' + this.options.btnClassName, function(e) {
-            var dir = (e.target.getAttribute('data-direction') === 'left') ? 'prev' : 'next';
-            common.mediator.emit('module:swipenav:navigate:' + dir);
-        });
-
         var debouncedHide = common.debounce(function(){
             self.hide();
-        }, 500);
+        }, 1500);
 
-        bean.on(this.body, 'touchmove', function(){
+        bean.on(this.body, 'touchstart touchmove', function(){
             common.requestAnimationFrame(function(){
                 self.show();
                 debouncedHide();

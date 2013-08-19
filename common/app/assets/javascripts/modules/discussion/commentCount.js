@@ -38,7 +38,11 @@ define([
                 var url = getContentUrl(node),
                     data = tpl.replace("[URL]", url);
 
-                bonzo(node).append(data.replace("[COUNT]", c.count));
+                // put in trail__meta, if exists
+                var meta = node.querySelector('.trail__meta'),
+                    $node = meta ? bonzo(meta) : bonzo(node);
+
+                $node.append(data.replace("[COUNT]", c.count));
                 node.removeAttribute(attributeName);
             }
         });

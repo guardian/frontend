@@ -243,13 +243,19 @@ define([
                     }
 
                     if (e.currentTarget.className.indexOf('js-top') !== -1) {
-                        self.jumpToTop();
+                        if(document.body.className.indexOf('has-swipe') !== -1) {
+                            common.mediator.emit('modules:discussion:show', self.jumpToTop);
+                        } else {
+                            self.jumpToTop();
+                        }
                     }
 
                     location.hash = 'comments';
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
+                    e.preventDefault();
+
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
 
@@ -260,7 +266,11 @@ define([
                     self.articleContainerNode.style.display = 'block';
 
                     if (e.currentTarget.className.indexOf('js-top') !== -1) {
-                        self.jumpToTop();
+                        if(document.body.className.indexOf('has-swipe') !== -1) {
+                            common.mediator.emit('modules:discussion:show', self.jumpToTop);
+                        } else {
+                            self.jumpToTop();
+                        }
                     }
 
                     // We force analytics on the Article/Byline tab, because

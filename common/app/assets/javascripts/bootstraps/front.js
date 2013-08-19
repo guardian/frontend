@@ -7,7 +7,8 @@ define([
     "modules/trailblocktoggle",
     "modules/trailblock-show-more",
     "modules/footballfixtures",
-    "modules/cricket"
+    "modules/cricket",
+    "modules/masthead-relative-dates"
 ], function (
     common,
     bonzo,
@@ -15,7 +16,8 @@ define([
     TrailblockToggle,
     TrailblockShowMore,
     FootballFixtures,
-    Cricket
+    Cricket,
+    mastheadRelativeDates
 ) {
 
     var modules = {
@@ -25,7 +27,7 @@ define([
                 Cricket.cricketTrail(config, context);
             });
         },
-            
+
         showTrailblockToggles: function () {
             var tt = new TrailblockToggle();
             common.mediator.on('page:front:ready', function(config, context) {
@@ -70,8 +72,12 @@ define([
                             break;
                         case "sport" :
                             // Sport Front
+                            // don't want to put it in the masthead trailblock
+                            var trailblocks = [].filter.call(context.querySelectorAll('.trailblock'), function(trailblock) {
+                                return bonzo(trailblock).hasClass('trailblock--masthead') === false;
+                            });
                             opts = {
-                                prependTo: context.querySelector('.trailblock ul > li'),
+                                prependTo: (trailblocks) ? trailblocks[0].querySelector('ul > li') : null,
                                 competitions: ['500', '510', '100', '400'],
                                 contextual: false,
                                 expandable: true,
@@ -86,8 +92,14 @@ define([
                     }
                 }
             });
+        },
+
+        relativiseMastheadDates: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                mastheadRelativeDates.init(context);
+            });
         }
-        
+
     };
 
     var ready = function (config, context) {
@@ -98,6 +110,7 @@ define([
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();
             modules.showCricket();
+            modules.relativiseMastheadDates();
         }
         common.mediator.emit("page:front:ready", config, context);
     };
