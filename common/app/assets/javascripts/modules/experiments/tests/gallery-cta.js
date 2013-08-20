@@ -19,7 +19,7 @@ function (common,
         this.canRun = function(config) {
             _config = config;
 
-            var isGalleryStyleTestRunning = Storage.get('gu.ab.participations').GalleryStyle.variant != "control";
+            var isGalleryStyleTestRunning = Storage.get('gu.ab.participations').GalleryStyle.variant !== "control";
             return isGalleryStyleTestRunning && config.page.contentType === 'Gallery';
         };
         this.variants = [
@@ -32,23 +32,25 @@ function (common,
             {
                 id: 'light-cta',
                 test: function (context) {
-                    var html = '<button class="gallery-launch-cta">' +
+                    var href = context.querySelector('.article .gallerythumbs a').href,
+                        html = '<a class="gallery-launch-cta" data-link-name="Launch Gallery CTA" href="' + href + '">' +
                                     label +
                                '    <i class="i i-double-arrow-right-blue"></i>' +
-                               '</button>';
+                               '</a>';
 
-                    bonzo(context.querySelector('.article__inner .gallerythumbs')).append(html);
+                    bonzo(context.querySelector('.article .gallerythumbs')).append(html);
                 }
             },
             {
                 id: 'dark-cta',
                 test: function (context) {
-                    var html = '<button class="gallery-launch-cta gallery-launch-cta--dark">' +
+                    var href = context.querySelector('.article .gallerythumbs a').href,
+                        html = '<a class="gallery-launch-cta gallery-launch-cta--dark" data-link-name="Launch Gallery CTA" href="' + href + '">' +
                                    label +
                                '    <i class="i i-double-arrow-right-white"></i>' +
-                               '</button>';
+                               '</a>';
 
-                    bonzo(context.querySelector('.article__inner .gallerythumbs')).append(html);
+                    bonzo(context.querySelector('.article .gallerythumbs')).append(html);
                 }
             }
         ];

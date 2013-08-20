@@ -66,8 +66,8 @@
 .gallery-launch-cta {
     @extend %type-7;
     line-height: 16px;
-    background-color:#FFFFFF;
-    color: #545454;
+    background-color: #FFFFFF;
+    color: #545454 !important;
     position: absolute;
     top: 0;
     left: 0;
@@ -83,8 +83,8 @@
 }
 
 .gallery-launch-cta--dark {
-    background-color:#000000;
+    background-color: #000000;
     background-color: rgba(0, 0, 0, 0.9);
-    color: #F9AF41;
+    color: #F9AF41 !important;
     padding-left: $gutter;
 }
