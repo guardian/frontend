@@ -152,10 +152,15 @@ class Video(private val delegate: ApiContent) extends Content(delegate) with Ima
 
   private implicit val ordering = EncodingOrdering
 
-  lazy val videoAsset: Option[MediaAsset] = videoAssets.headOption
+  private lazy val videoAsset: Option[MediaAsset] = videoAssets.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil).sorted
   lazy val contentType = "Video"
   lazy val source: Option[String] = videoAsset.flatMap(_.safeFields.get("source"))
+  lazy val duration: Int = videoAsset.map { videoAsset =>
+    videoAsset.fields.map { fields =>
+      fields.get("durationSeconds").getOrElse("0").toInt + (fields.get("durationMinutes").getOrElse("0").toInt * 60)
+    }.getOrElse(0)
+  }.getOrElse(0)
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))

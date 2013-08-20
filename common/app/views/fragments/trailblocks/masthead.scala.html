@@ -24,11 +24,7 @@
             </div>
             @trail match {
                 case trail: Video => {
-                    @trail.videoAsset.map { video =>
-                        @video.fields.map { fields =>
-                            <span class="trail__duration"><i class="i"></i><span class="h">Duration: </span>@fields("durationMinutes"): @fields("durationSeconds")</span>
-                        }
-                    }
+                    <span class="trail__duration"><i class="i"></i><span class="h">Duration: </span>@{trail.duration/60}: @{trail.duration%60}</span>
                 }
                 case _ => {}
             }
