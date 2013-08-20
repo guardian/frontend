@@ -100,25 +100,3 @@
 .ab-gallerytest--newstyle {
     display: none;
 }
-
-.gallery-launch-cta {
-    background-color: #FFFFFF;
-    color: $darkGrey;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border: 0;
-    text-align: left;
-    padding: $baseline*3 0 $baseline*3 $gutter;
-    width: 60%;
-
-    i {
-        float: right;
-        margin-right: 8px;
-    }
-}
-
-.gallery-launch-cta--dark {
-    background-color: #000000;
-    color: #F9AF41;
-}
