@@ -8,22 +8,21 @@
         <header>
             <div class="tool-title">Collections Editor</div>
             <div class="list-picker">
-                <span data-bind="with: $root.selectedBlock()">
-                    <a href="#" data-bind="click: $root.displayAllEditions">View in all editions &raquo;</a>
-                </span>
+                <span class="list-picker__title">Choose collections:</span>
 
-                <span class="list-picker__title">Find collections:</span>
+                <select data-bind="options: editions, value: edition, optionsCaption: 'edition...'"></select>
 
-                <select data-bind="options: editions, optionsText: 'id', value: $root.selectedEdition, optionsCaption: 'Choose Edition...'"></select>
+                <select data-bind="options: sections, value: section, enable: edition, optionsCaption: 'section...'"></select>
 
-                <span data-bind="with: $root.selectedEdition()">
-                    <select data-bind="options: sections, optionsText: 'id', value: $root.selectedSection, optionsCaption: 'Choose Section...'"></select>
+                <select data-bind="options: blocks, value: block, enable: section, optionsCaption: 'all collections'"></select>
 
-                    <span data-bind="with: $root.selectedSection()">
-                        <select data-bind="options: blocks, optionsText: 'id', value: $root.selectedBlock, optionsCaption: 'Choose Collection...'"></select>
-                    </span>
+                <button class="strong" data-bind="enable: section, click: actions.displaySelectedBlocks">Show</button>
+                
+                <!--
+                <button data-bind="enable: block,   click: actions.displayInAllEditions">in all editions</button>
+                -->
 
-                </span>
+                <button data-bind="enable: listsDisplayed().length, click: actions.clearAll">Hide all</button>
             </div>
         </header>
 
@@ -53,7 +52,7 @@
                 <div class="list-header">
                     <i class="icon-cog icon-white list-tool" data-bind="click: toggleEditingConfig"></i>
 
-                    <a data-bind="click: $parent.dropList" class="list-header__hide" title="Hide this block">HIDE</a>
+                    <a data-bind="click: $root.actions.dropList" class="list-header__hide" title="Hide this block">HIDE</a>
                     <div class="list-header__title" data-bind="foreach: crumbs">
                         <span class="list-header__title__part" data-bind="text: $data"></span> 
                     </div>
