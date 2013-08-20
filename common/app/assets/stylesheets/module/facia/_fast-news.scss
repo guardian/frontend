@@ -1,0 +1,10 @@
+.section--fast-news {
+    float: left;
+    @include mq($to: wide) {
+        max-width: gs-span(3);
+    }
+    @include mq(wide) {
+        max-width: gs-span(4);
+    }
+    margin-right: $gs-gutter;
+}
