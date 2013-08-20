@@ -162,7 +162,10 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         }
 
         if (path != realPath) {
-          Redirect(s"/$realPath")
+          Redirect(request.path.endsWith(".json") match {
+            case true => s"/$realPath.json"
+            case _ => s"/$realPath"
+          })
         } else if (trailblocks.isEmpty) {
           InternalServerError
         } else {

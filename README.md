@@ -105,12 +105,6 @@ To use in IntelliJ, see https://github.com/mpeltonen/sbt-idea
 
 Further information on using the Play console is available [here][play2-console].
 
-Virtualisation
---------------
-Virtualisation provides for robust development environments and a controlled
-system dependency solution. See the instructions in `README.vagrant.md` for
-using [Vagrant][vagrant] virtualisation with this project.
-
 
 Endpoints
 ---------
@@ -152,7 +146,6 @@ Further documentation notes and useful items can be found in `dev`.
 [play2-wiki]: https://github.com/playframework/Play20/wiki
 [sbteclipse]: https://github.com/typesafehub/sbteclipse
 [sbt-idea]: https://github.com/mpeltonen/sbt-idea
-[vagrant]: http://vagrantup.com
 [magenta]: https://github.com/guardian/deploy
 
 

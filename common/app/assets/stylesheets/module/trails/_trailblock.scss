@@ -4,7 +4,13 @@
 
 .trailblock {
     max-height: none;
-    padding: 0 $gutter;
+    padding-left: $gutter;
+    padding-right: $gutter;
+
+    .article__main-column & {
+        padding-left: 0;
+        padding-right: 0;
+    }
 
     > ul {
         margin-bottom: 0;
@@ -74,9 +80,7 @@
         background-color: transparent;
         @include box-shadow(none);
     }
-}
-
-
-    .sub-section-head .toggle-trailblock {
+    .sub-section-head & {
         color: #888;
     }
+}
