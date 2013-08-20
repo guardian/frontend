@@ -77,7 +77,7 @@ define([
                                 return bonzo(trailblock).hasClass('trailblock--masthead') === false;
                             });
                             opts = {
-                                prependTo: (trailblocks) ? trailblocks[0].querySelector('ul > li') : null,
+                                prependTo: (trailblocks.length) ? trailblocks[0].querySelector('ul > li') : null,
                                 competitions: ['500', '510', '100', '400'],
                                 contextual: false,
                                 expandable: true,
