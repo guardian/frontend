@@ -37,7 +37,7 @@ function (
                             return (/\/[\w\-]+\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
                         }
                         function isVideo(url) {
-                            return (/\/[\w\-]+\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
+                            return (/\/[\w\-]+\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+|youtube\.com|dailymotion\.com|vimeo\.com/).test(url);
                         }
                         function isGallery(url) {
                             return (/\/[\w\-]+\/gallery\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
