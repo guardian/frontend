@@ -10,6 +10,7 @@ define([
 
     return {
         config: {
+            searchPageSize:        50,
             maxDisplayableLists:   6,
             maxOphanCallsPerBlock: 10,
             cacheExpiryMs:         300000, // 300000 = five mins 

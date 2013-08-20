@@ -48,7 +48,8 @@ define([
                     var url = '/api/proxy/' + self.term() + '?show-fields=all&format=json';
                     propName = 'content';
                 } else {
-                    url  = '/api/proxy/search?show-fields=all&page-size=50&format=json';
+                    url  = '/api/proxy/search?show-fields=all&format=json';
+                    url += '&page-size=' + (common.config.searchPageSize || 25);
                     url += '&q=' + encodeURIComponent(self.term());
                     url += '&section=' + encodeURIComponent(self.section());
                     url += self.mostViewed() ? '&show-most-viewed=true' : '';
