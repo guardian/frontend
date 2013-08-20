@@ -7,7 +7,7 @@ as cards in the left sidebar will read more linked content.
 
 Update 2013-08-20: cards are improved, we now show the type of content
 it is linking to (comment, gallery, video). As a result we extend the test
-for two more weeks.
+to the end of September.
 
 ## Buckets
 
