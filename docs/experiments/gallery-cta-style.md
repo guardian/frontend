@@ -10,6 +10,8 @@ Showing a "Launch Gallery" call to action button to increase engagement
 
 # Predictions
 
-- Number of gallery engagement increases by 10%
+DV - Increases engagement by 10%
+PH - Increases engagement by 50%
+JK - Increases engagement by 26%
 
 # Summary
