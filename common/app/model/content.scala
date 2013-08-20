@@ -54,7 +54,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
     souped getOrElse Nil
   }
 
-  lazy val byline: Option[String] = fields.get("byline")
+  override lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
 
   override lazy val discussionId = Some(shortUrlPath)
