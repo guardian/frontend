@@ -10,7 +10,7 @@ define(['modules/userPrefs'], function (userPrefs) {
 
     var BASE_WIDTH     = 732,
         MEDIAN_WIDTH   = 972,
-        EXTENDED_WIDTH = 1292,  // Breakpoint where we see the left column in article pages
+        EXTENDED_WIDTH = 1052,  // Breakpoint where we see the left column in article pages
         mobileOS,
         supportsPushState;
     
