@@ -12,7 +12,7 @@ function (
     var ExperimentInlineLinkCard = function () {
 
         this.id = 'InlineLinkCard';
-        this.expiry = '2013-08-21';
+        this.expiry = '2013-09-04';
         this.audience = 1;
         this.description = 'Impact of cardifying inline links on number of linked stories read';
         this.canRun = function(config) {
