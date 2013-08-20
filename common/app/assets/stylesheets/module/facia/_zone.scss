@@ -53,9 +53,6 @@ $grey: #cccccc;
     &:last-child {
         border-bottom: 1px solid $grey;
     }
-    &.trail--feature {
-        border: none;
-    }
     .trail__image-container,
     .trail__duration {
         display: none;
@@ -73,6 +70,9 @@ $grey: #cccccc;
             display: none;
         }
     }
+    &.trail--feature .trail__title {
+        margin: 0 $baseline*2;
+    }
 }
 
 @mixin medium-card($width) {
@@ -82,6 +82,9 @@ $grey: #cccccc;
     margin-right: $gs-gutter;
     .trail__image {
         margin-bottom: $baseline*3;
+    }
+    .trail__title {
+        margin: 0 $baseline*2;
     }
     .trail__standfirst {
         display: none;
@@ -127,13 +130,19 @@ $grey: #cccccc;
             border-left-color: #ffffff;
         }
     }
+    &.trail--feature {
+        background-color: $pink;
+        .trail__timestamp {
+            border-left-color: $light-pink;
+        }
+    }
     &:last-child {
         margin-right: 0;
     }
 }
 
 .section--zone {
-    @include mq($to: wide) {
+    @include mq(tablet, wide) {
         margin-left: gs-span(3)+$gs-gutter;
     }
     @include mq(wide) {
@@ -186,13 +195,17 @@ $grey: #cccccc;
             padding-bottom: $baseline * 5;
             float: left;
             border-left: 1px solid $grey;
-            @include font($sans-serif, lighter, 12, 12);
             i {
                 margin:0;
                 position: absolute;
                 top: 0;
                 left: 4px;
             }
+        }
+        .trail__timestamp,
+        .trail__count,
+        .trail__count a{
+            @include font($sans-serif, lighter, 12, 12);
         }
         .trail__timestamp {
             min-width: 58px;
@@ -215,9 +228,6 @@ $grey: #cccccc;
                 @extend .i-comment-blue;
             }
         }
-        .trail:first-child .trail__count {
-            top: auto;
-        }
         .trail__duration {
             position: absolute;
             top: 0;
@@ -231,23 +241,60 @@ $grey: #cccccc;
                 margin-right: $baseline;
             }
         }
+        .trail--feature {
+            border: none;
+            background-color: $pink;
+            .trail__link,
+            .trail__standfirst,
+            .trail__meta,
+            .trail__count a {
+                color: #ffffff;
+            }
+            .trail__title {
+                font-weight: normal;
+            }
+            .trail__timestamp,
+            .trail__count{
+                border-color: $light-pink;
+            }
+            .trail__timestamp {
+                border-left-style: none;
+                i {
+                    @extend .i-clock-pink;
+                }
+            }
+            .trail__count i {
+                @extend .i-comment-pink;
+            }
+            .trail__duration {
+                background-color: $light-pink;
+            }
+        }
 
         @include mq($to: desktop) {
-            height: auto;
-            border: none;
+            .trail {
+                width: 100%;
+            }
             .trail__standfirst {
                 display: none;
             }
             .trail:nth-child(1) {
                 background-color: $blue;
+                &.trail--feature {
+                    background-color: $pink;
+                    .trail__count {
+                        border-color: $light-pink;
+                    }
+                }
                 .trail__image {
                     display: block;
                     float: none;
                     margin: 0;
                 }
                 .trail__link,
-                .trail__meta{
+                .trail__meta {
                     color: #ffffff;
+
                 }
                 .trail__title {
                     @include font-size(24, 28);
@@ -264,6 +311,8 @@ $grey: #cccccc;
                 padding: $baseline*2 0 $baseline*4;
                 border-top: 2px solid $blue;
                 &.trail--feature {
+                    padding-left: $baseline*2;
+                    padding-right: $baseline*2;
                     border-top: none;
                 }
                 .trail__title {
@@ -274,31 +323,6 @@ $grey: #cccccc;
                 .trail__duration {
                     display: none;
                 }
-            }
-        }
-
-        .trail--feature {
-            background-color: $pink;
-            .trail__link,
-            .trail__standfirst,
-            .trail__meta {
-                color: #ffffff;
-            }
-            .trail__title{
-                font-weight: normal;
-            }
-            .trail__timestamp,
-            .trail__count{
-                border-left-color: $light-pink;
-            }
-            .trail__timestamp i {
-                @extend .i-clock-pink;
-            }
-            .trail__count i {
-                @extend .i-comment-pink;
-            }
-            .trail__duration {
-                background-color: $light-pink;
             }
         }
     }

@@ -1,6 +1,8 @@
 .section--fast-news {
-    float: left;
-    @include mq($to: wide) {
+    @include mq(tablet) {
+        float: left;
+    }
+    @include mq(tablet, wide) {
         max-width: gs-span(3);
     }
     @include mq(wide) {
