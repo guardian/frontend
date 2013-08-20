@@ -31,7 +31,7 @@
 
     .furniture--left & {
         width: 140px;
-        height: 84px;
+        min-height: 84px;
     }
 }
 .card__title {
@@ -57,4 +57,7 @@
     font-size: 1.4rem !important;
     line-height: 20px !important;
     line-height: 2rem !important;
+}
+.card__description {
+    color: #444;
 }
