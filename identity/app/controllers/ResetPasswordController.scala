@@ -8,6 +8,7 @@ import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
 import client.Error
 import services.{IdentityUrlBuilder, IdRequestParser}
+import play.api.i18n.Messages
 
 
 @Singleton
@@ -23,9 +24,11 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
 
   val passwordResetForm = Form(
     Forms.tuple (
-      "password" ->  Forms.text,
+      "password" ->  Forms.text
+        .verifying(Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}),
       "password_confirm" ->  Forms.text
-    ) verifying("Password must match", f => f._1 == f._2  )
+        .verifying(Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20})
+    ) verifying(Messages("error.passwordsMustMatch"), { f => f._1 == f._2 }  )
   )
 
   def renderPasswordResetRequestForm(message : String = "") = Action { implicit request =>
@@ -64,7 +67,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
     boundForm.fold(
       formWithErrors => {
         log.info("bad rest password attempt")
-        Ok(views.html.reset_password(page, idRequest, idUrlBuilder, passwordResetForm, token))
+        Ok(views.html.reset_password(page, idRequest, idUrlBuilder, formWithErrors, token))
      },
      { case(password, password_confirm)  => {
          Async {
