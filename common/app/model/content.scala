@@ -8,6 +8,7 @@ import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import conf.Configuration
+import views.support.StripHtmlTagsAndUnescapeEntities
 
 class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
 
@@ -99,8 +100,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:title" -> webTitle,
     "og:url" -> webUrl,
-    "og:description" -> trailText,
-    "og:image" -> mainPicture.map(_.path).getOrElse(thumbnailPath.getOrElse(conf.Configuration.facebook.imageFallback))
+    "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
 
   override lazy val cacheSeconds = {
@@ -142,12 +142,13 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
     "og:type" -> "article",
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
-    "article:section" -> sectionName
+    "article:section" -> sectionName,
+    "og:image" -> mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback)
   ) ++ tags.map("article:tag" -> _.name) ++
-    tags.filter(_.isContributor).map("article:author" -> _.webTitle)
+    tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 }
 
-class Video(private val delegate: ApiContent) extends Content(delegate) {
+class Video(private val delegate: ApiContent) extends Content(delegate) with Images {
 
   private implicit val ordering = EncodingOrdering
 
@@ -161,7 +162,9 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:type" -> "video",
-    "og:video:type" -> "text/html"
+    "og:video:type" -> "text/html",
+    "og:video:url" -> webUrl,
+    "og:image" -> imageOfWidth(640).map(_.path).getOrElse(mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback))
   ) ++ tags.map("video:tag" -> _.name)
 }
 
@@ -176,6 +179,14 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:type" -> "article",
+    "article:published_time" -> webPublicationDate,
+    "article:modified_time" -> lastModified,
+    "article:section" -> sectionName,
+    "og:image" -> images.head.path
+  ) ++ tags.map("article:tag" -> _.name) ++
+    tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 }
 
 class Interactive(private val delegate: ApiContent) extends Content(delegate) {
