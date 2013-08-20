@@ -15,7 +15,8 @@ define([
 ) {
     return function(opts) {
 
-        var self = this,
+        var page = 1,
+            self = this,
             deBounced,
             opts = opts || {},
             container = document.querySelector('#latest-articles');
@@ -24,6 +25,7 @@ define([
         this.term       = ko.observable(common.util.queryParams().q || '');
         this.section    = ko.observable('');
         this.mostViewed = ko.observable(false);
+        this.page       = ko.observable(1);
 
         var reqwest = opts.reqwest || Reqwest;
         
@@ -50,6 +52,7 @@ define([
                 } else {
                     url  = '/api/proxy/search?show-fields=all&format=json';
                     url += '&page-size=' + (common.config.searchPageSize || 25);
+                    url += '&page=' + self.page();
                     url += '&q=' + encodeURIComponent(self.term());
                     url += '&section=' + encodeURIComponent(self.section());
                     url += self.mostViewed() ? '&show-most-viewed=true' : '';
@@ -87,12 +90,27 @@ define([
 
         this.refresh = function() {
             self.flush('Searching...');
+            self.page(1);
+            self.search();
+        }
+
+        this.pageNext = function() {
+            self.page(self.page() + 1);
+            self.flush('Loading...');
+            self.search();
+        }
+
+        this.pagePrev = function() {
+            self.page(Math.max(1, self.page() - 1));
+            self.flush('Loading...');
             self.search();
         }
 
         function _startPoller() {
             setInterval(function(){
-                self.search();
+                if (self.page() === 1) {
+                    self.search();
+                }
             }, 10000);
         }
         this.startPoller = _.once(_startPoller);

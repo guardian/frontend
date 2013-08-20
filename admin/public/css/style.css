@@ -363,6 +363,12 @@ a.cta, .cta a {
     width: 49%;
 }
 
+.fronts .finder__controls {
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+}
+
 .fronts header {
     background-color: #ccc;
     padding: 5px 5px 5px 10px;
