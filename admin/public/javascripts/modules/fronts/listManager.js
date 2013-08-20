@@ -14,6 +14,7 @@ define([
     LatestArticles
 ) {
     var collections = {},
+        sectionSearches,
         dragging = false,
         clipboard = document.querySelector('#clipboard'),
         listLoadsPending = 0,
@@ -197,6 +198,9 @@ define([
                         treeAdd(id.split('/'), collections);
                     });                    
                     model.editions(_.keys(collections));
+
+                    sectionSearches = resp.sectionSearches || {};
+
                     if (typeof callback === 'function') { callback(); }
                 },
                 function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
@@ -261,8 +265,9 @@ define([
             model.section.subscribe(function(section) {
                 model.blocks(section ? _.keys(collections[model.edition()][section]) : []);
                 model.block(undefined);
+
                 if (section) {
-                    model.latestArticles.section(section);
+                    model.latestArticles.section(sectionSearches[section] || section);
                 }
             });
 
