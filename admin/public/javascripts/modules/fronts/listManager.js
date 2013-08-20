@@ -269,17 +269,6 @@ define([
                 }
             });
 
-            fetchSchema(function(){
-                knockout.applyBindings(model);
-
-                renderLists();
-                window.onpopstate = renderLists;
-
-                startPoller();
-                model.latestArticles.search();
-                model.latestArticles.startPoller();
-            });
-
             knockout.bindingHandlers.sparkline = {
                 update: function (element, valueAccessor, allBindingsAccessor, model) {
                     var value = knockout.utils.unwrapObservable(valueAccessor()),
@@ -306,6 +295,17 @@ define([
                     listLoadsPending = 0;
                     common.util.pageReflow();
                 }
+            });
+
+            fetchSchema(function(){
+                knockout.applyBindings(model);
+
+                renderLists();
+                window.onpopstate = renderLists;
+
+                startPoller();
+                model.latestArticles.search();
+                model.latestArticles.startPoller();
             });
 
         };
