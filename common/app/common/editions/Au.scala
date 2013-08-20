@@ -5,7 +5,7 @@ import model._
 import common._
 import views.support._
 import scala.concurrent.Future
-import conf.{Switches, ContentApi}
+import conf.ContentApi
 import contentapi.QueryDefaults
 import com.gu.openplatform.contentapi.model.ItemResponse
 import common.NavItem
