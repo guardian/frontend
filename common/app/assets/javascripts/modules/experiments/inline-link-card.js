@@ -94,6 +94,8 @@ define([
             reqURL;
         if ((/^\//).test(href)) {
             reqURL = '/cards/opengraph/' + encodeURIComponent('http://www.theguardian.com' + href);
+        } else if ((/^http(?:s)?:\/\//).test(href)) {
+            reqURL = '/cards/opengraph/' + encodeURIComponent(href);
         }
 
         // make request to endpoint
