@@ -1,6 +1,0 @@
-[cloudera-cdh3]
-# Packages for Cloudera's Distribution for Hadoop, Version 3, on RedHat or CentOS 6
-name=Cloudera's Distribution for Hadoop, Version 3
-mirrorlist=http://archive.cloudera.com/redhat/6/x86_64/cdh/3/mirrors
-gpgkey = http://archive.cloudera.com/redhat/6/x86_64/cdh/RPM-GPG-KEY-cloudera    
-gpgcheck = 1
