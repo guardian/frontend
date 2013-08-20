@@ -102,6 +102,7 @@ object Au extends Edition(
   val configuredFronts = Map(
     Editionalise("", Au) -> Seq(
       ItemTrailblockDescription("", "News", numItemsVisible = 8, style = Some(Featured), showMore = true),
+      RunningOrderTrailblockDescription("news", "au/news/election2013", "Election 2013", 3, style = Some(Featured)),
       ItemTrailblockDescription("sport", "Sport", numItemsVisible = 3, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("sport/australia-sport", "Australia sport", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       Au.cultureCustomBlock,
