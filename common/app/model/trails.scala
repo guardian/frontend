@@ -95,8 +95,10 @@ object CustomTrailblockDescription {
 
 
 trait ConfiguredTrailblockDescription extends TrailblockDescription {
-  def query() = scala.concurrent.future {
-    Nil
+  def query() = configuredQuery() flatMap { q =>
+    q map {trailblockDescription =>
+      trailblockDescription.query()
+    } getOrElse Future(Nil)
   }
 
   def configuredQuery(): Future[Option[TrailblockDescription]]
