@@ -57,28 +57,28 @@ object CardController extends Controller with Logging with ExecutionContexts {
             }
           }
         }
-      // case w if (w.startsWith("http://en.wikipedia.org/wiki/")) =>
-      //   Async {
-      //     WS.url(r)
-      //       .get().map { response =>
-      //         response.status match {
-      //           case 200 =>
-      //             val fragment = Jsoup.parseBodyFragment(response.body)
-      //             val firstParagraph = fragment.select("#mw-content-text > p").first
-      //             firstParagraph.select(".reference").remove()
-      // 
-      //             val wiki = Map(
-      //               "url" -> resource,
-      //               "title" -> fragment.select("#firstHeading").text(),
-      //               "image" -> fragment.select(".image img").attr("src"),
-      //               "description" -> firstParagraph.text().split("\\.").headOption.getOrElse(""),
-      //               "site_name" -> "Wikipedia"
-      //             )
-      //             Ok(Json.toJson(wiki)).as("application/json;charset=UTF-8")
-      //           case _ => NotFound
-      //       }
-      //     }
-      //   }
+      case w if (w.startsWith("http://en.wikipedia.org/wiki/")) =>
+        Async {
+          WS.url(r)
+            .get().map { response =>
+              response.status match {
+                case 200 =>
+                  val fragment = Jsoup.parseBodyFragment(response.body)
+                  val firstParagraph = fragment.select("#mw-content-text > p").first
+                  firstParagraph.select(".reference").remove()
+
+                  val wiki = Map(
+                    "url" -> resource,
+                    "title" -> fragment.select("#firstHeading").text(),
+                    "image" -> fragment.select(".image img").attr("src"),
+                    "description" -> firstParagraph.text().split("\\.").headOption.getOrElse(""),
+                    "site_name" -> "Wikipedia"
+                  )
+                  Ok(Json.toJson(wiki)).as("application/json;charset=UTF-8")
+                case _ => NotFound
+            }
+          }
+        }
       case _ => NotFound
     }
   }

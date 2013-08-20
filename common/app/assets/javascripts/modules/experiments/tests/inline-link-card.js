@@ -45,11 +45,11 @@ function (
                         function isCif(url) {
                             return (/\/commentisfree\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
                         }
-                        // function isWikipedia(url) {
-                        //     return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.]+$/).test(url);
-                        // }
+                        function isWikipedia(url) {
+                            return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.]+$/).test(url);
+                        }
                         function isWhiteListed(url) {
-                            return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url);
+                            return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url) || isWikipedia(url);
                         }
 
                         function cardifyRelatedInBodyLink(link) {
@@ -58,7 +58,7 @@ function (
                             if (isVideo(link.getAttribute('href').trim())) { title = 'Video'; }
                             else if (isGallery(link.getAttribute('href').trim())) { title = 'Gallery'; }
                             else if (isCif(link.getAttribute('href').trim())) { title = 'Comment'; }
-                            // else if (isWikipedia(link.getAttribute('href').trim())) { title = 'Wikipedia'; }
+                            else if (isWikipedia(link.getAttribute('href').trim())) { title = 'Wikipedia'; }
 
                             new InlineLinkCard(link, link.parentNode, title).init();
                         }
