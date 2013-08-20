@@ -17,16 +17,19 @@ set -o errexit
 #
 ################################################################################
 
+function deploy {
+  URL="https://riffraff.gutools.co.uk/api/deploy/request?key=${DEPLOY_API_KEY}"
+  BODY="{ \"project\": \"$2\", \"build\": \"$3\", \"stage\": \"$1\" }"
+
+  curl --header "Content-Type: application/json" -XPOST -d "$BODY" "$URL"
+}
+
 
 case "${TEAMCITY_PROJECT_NAME}::${TEAMCITY_BUILDCONF_NAME}" in
 
   "frontend::admin")
     echo "Initiating ${TEAMCITY_BUILDCONF_NAME} deploy build ${BUILD_NUMBER} to CODE staging environment."
-
-    URL="https://riffraff.gutools.co.uk/api/deploy/request?key=${DEPLOY_API_KEY}"
-    BODY="{ \"project\": \"${TEAMCITY_PROJECT_NAME}::${TEAMCITY_BUILDCONF_NAME}\", \"build\": \"${BUILD_NUMBER}\", \"stage\": \"CODE\" }"
-
-    curl --header "Content-Type: application/json" -XPOST -d "$BODY" "$URL"
+    deploy CODE "${TEAMCITY_PROJECT_NAME}::${TEAMCITY_BUILDCONF_NAME}" "${BUILD_NUMBER}"
     ;;
 
   *)
