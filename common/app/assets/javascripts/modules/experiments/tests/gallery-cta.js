@@ -19,7 +19,11 @@ function (common,
         this.canRun = function(config) {
             _config = config;
 
-            var isGalleryStyleTestRunning = Storage.get('gu.ab.participations').GalleryStyle && Storage.get('gu.ab.participations').GalleryStyle.variant !== "control";
+            var participationsStore = Storage.get('gu.ab.participations'),
+                isGalleryStyleTestRunning = participationsStore &&
+                                            participationsStore.GalleryStyle &&
+                                            participationsStore.GalleryStyle.variant !== "control";
+
             return isGalleryStyleTestRunning && config.page.contentType === 'Gallery';
         };
         this.variants = [
