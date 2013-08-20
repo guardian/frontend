@@ -31,7 +31,9 @@ case "${TEAMCITY_PROJECT_NAME}::${TEAMCITY_BUILDCONF_NAME}" in
 
   *)
     echo "Unrecognised build for post build hook: '${TEAMCITY_PROJECT_NAME}::${TEAMCITY_BUILDCONF_NAME}'" >&2
-    exit 1
+    # TODO: Enable when all projects have been moved to use post build hooks
+    #       and CI build template updated to include step.
+    #exit 1
     ;;
 
 esac
