@@ -60,13 +60,13 @@ define([
 
         function displayInAllEditions() {
             setDisplayedLists(model.editions().map(function(edition){
-                return edition + '/' + model.section() + '/' + model.block(); 
+                return [edition, model.section(), model.block()].join('/'); 
             }));
         }
 
         function renderLists() {
             var chosen = chosenLists();
-            //model.listsDisplayed.removeAll();
+
             model.listsDisplayed.remove(function(list){
                 if (chosen.indexOf(list.id) === -1) {
                     return true;
@@ -201,7 +201,7 @@ define([
 
                     sectionSearches = resp.sectionSearches || {};
 
-                    if (typeof callback === 'function') { callback(); }
+                    if (_.isFunction(callback)) { callback(); }
                 },
                 function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
             );
@@ -211,11 +211,9 @@ define([
             var f = _.first(path),
                 r = _.rest(path);
 
+            obj[f] = obj[f] || {};
             if (r.length) {
-                obj[f] = obj[f] || {};
                 treeAdd(r, obj[f]);
-            } else {
-                obj[f] = false;
             }
         };
 
