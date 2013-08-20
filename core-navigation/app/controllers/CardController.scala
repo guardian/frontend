@@ -9,39 +9,34 @@ import play.api.libs.json.Json
 import conf.Configuration
 import org.jsoup.Jsoup
 import java.net.URI
-import scala.util.matching.Regex
 
 object CardController extends Controller with Logging with ExecutionContexts {
 
   def opengraph(resource: String) = Action { implicit request =>
     val r = new java.net.URI(resource).getPath
-
-    Async {
-      WS.url(r) // TODO - whitelist to avoid becoming an open proxy
-        .get().map { response =>
-          response.status match {
-            case 200 =>
-              val fragment = Jsoup.parseBodyFragment(response.body)
-              Ok(Json.toJson(Map(
-                "url" -> fragment.select("meta[property=og:url]").attr("content"),
-                "title" -> fragment.select("meta[property=og:title]").attr("content"),
-                "image" -> fragment.select("meta[property=og:image]").attr("content"),
-                "description" -> fragment.select("meta[property=og:description]").attr("content"),
-                "site_name" -> fragment.select("meta[property=og:site_name]").attr("content"),
-                "published_time" -> fragment.select("meta[property=article:published_time]").attr("content"),
-                "modified_time" -> fragment.select("meta[property=article:modified_time]").attr("content")
-              ))).as("application/json;charset=UTF-8")
-            case _ => NotFound
-         }
-      }
-    }
-  }
-
-  def wikipedia(resource: String) = Action { implicit request =>
-
-    val r = new java.net.URI(resource).getPath
-
-    Async {
+    r match {
+      case i if (i.startsWith("http://www.theguardian.com")) =>
+        Async {
+          WS.url(r)
+            .get().map { response =>
+              response.status match {
+                case 200 =>
+                  val fragment = Jsoup.parseBodyFragment(response.body)
+                  Ok(Json.toJson(Map(
+                    "url" -> fragment.select("meta[property=og:url]").attr("content"),
+                    "title" -> fragment.select("meta[property=og:title]").attr("content"),
+                    "image" -> fragment.select("meta[property=og:image]").attr("content"),
+                    "description" -> fragment.select("meta[property=og:description]").attr("content"),
+                    "site_name" -> fragment.select("meta[property=og:site_name]").attr("content"),
+                    "published_time" -> fragment.select("meta[property=article:published_time]").attr("content"),
+                    "modified_time" -> fragment.select("meta[property=article:modified_time]").attr("content")
+                  ))).as("application/json;charset=UTF-8")
+                case _ => NotFound
+            }
+          }
+        }
+      case w if (w.startsWith("http://en.wikipedia.org/wiki/")) =>
+        Async {
           WS.url(r)
             .get().map { response =>
               response.status match {
@@ -49,7 +44,6 @@ object CardController extends Controller with Logging with ExecutionContexts {
                   val fragment = Jsoup.parseBodyFragment(response.body)
                   val firstParagraph = fragment.select("#mw-content-text > p").first
                   firstParagraph.select(".reference").remove()
-
 
                   val wiki = Map(
                     "url" -> resource,
@@ -60,9 +54,10 @@ object CardController extends Controller with Logging with ExecutionContexts {
                   )
                   Ok(Json.toJson(wiki)).as("application/json;charset=UTF-8")
                 case _ => NotFound
-             }
+            }
           }
-      }
+        }
+      case _ => NotFound
+    }
   }
-
 }

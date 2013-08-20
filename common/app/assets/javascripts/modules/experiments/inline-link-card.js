@@ -93,11 +93,7 @@ define([
             self = this,
             reqURL;
         if ((/^\//).test(href)) {
-            reqURL = '/cards/opengraph/' + encodeURIComponent('http://www.theguardian.com' + href + '?view=desktop');
-        } else if ((/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\.\-]+$/).test(href)) {
-            reqURL = '/cards/wikipedia/' + encodeURIComponent(href);
-        } else {
-            reqURL = '/cards/opengraph/' + encodeURIComponent(href);
+            reqURL = '/cards/opengraph/' + encodeURIComponent('http://www.theguardian.com' + href);
         }
 
         // make request to endpoint

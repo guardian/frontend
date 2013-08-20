@@ -147,7 +147,6 @@ GET     /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails.json            controllers.Ta
 
 # Experimental
 GET    /cards/opengraph/*path                               controllers.CardController.opengraph(path)
-GET    /cards/wikipedia/*path                               controllers.CardController.wikipedia(path)
 
 #Articles
 GET     /*path.json                 controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])

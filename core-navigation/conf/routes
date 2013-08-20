@@ -18,4 +18,3 @@ GET    /related/*path                                       controllers.RelatedC
 
 # Experimental
 GET    /cards/opengraph/*path                               controllers.CardController.opengraph(path)
-GET    /cards/wikipedia/*path                               controllers.CardController.wikipedia(path)
