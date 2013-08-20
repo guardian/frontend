@@ -7,9 +7,9 @@
 
 form,
 .form {
-    margin: $baseline*9 auto;
-    max-width: 480px;
-    padding: 0 $gutter;
+    margin-top: $baseline*9;
+    margin-bottom: $baseline*9;
+    max-width: gs-span(5);
 }
 
 .form__heading {
@@ -76,7 +76,7 @@ label,
     color: #fff;
     font-size: 14px;
     margin: 0 $gutter 0 0;
-    min-width: 140px;
+    min-width: gs-span(2);
     padding: $baseline+1 0 $baseline*4 $gutter/4;
     text-align: left;
 

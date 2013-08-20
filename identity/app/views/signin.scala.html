@@ -5,27 +5,28 @@
 
 @main(page, conf.Switches.all){
 }{
-<form class="form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
+<div class="identity-wrapper">
+    <h1>Sign in to the Guardian</h1>
 
-    @if(signinForm.globalError.isDefined) {
-        <div class="form-field__error text-input__note">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
-    }
+    <form class="form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
+        @if(signinForm.globalError.isDefined) {
+            <div class="form-field__error text-input__note">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
+        }
 
-    <ul class="form-fields">
+        <ul class="form-fields">
 
-        @idInputEmail(signinForm("email"), '_label -> "Email address")
-        @idInputPassword(signinForm("password"), '_label -> "Password", '_help -> "<a href='/recover'>Forgotten your password?</a>")
+            @idInputEmail(signinForm("email"), '_label -> "Email address")
+            @idInputPassword(signinForm("password"), '_label -> "Password", '_help -> "<a href='/recover'>Forgotten your password?</a>")
 
+            <li>
+                <button type="submit" class="submit-input">Sign in</button>
 
-        <li>
-            <button type="submit" class="submit-input">Sign in</button>
-            
-            <label class="check-label check-label--helper">
-                @idCheckbox(signinForm("keepMeSignedIn"))
-                Remember me
-            </label>
-        </li>
-  </ul>
-</form>
+                <label class="check-label check-label--helper">
+                    @idCheckbox(signinForm("keepMeSignedIn"))
+                    Remember me
+                </label>
+            </li>
+      </ul>
+    </form>
+</div>
 }
