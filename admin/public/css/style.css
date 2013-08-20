@@ -657,12 +657,16 @@ a.cta, .cta a {
 }
 
 .fronts select {
-    width: 150px;
+    width: 125px;
     margin: -2px 0 0 0;
 }
 
 .fronts select:disabled {
     opacity: 0.5;
+}
+
+.fronts .strong {
+    font-weight: bold;
 }
 
 .fronts #clipboard {

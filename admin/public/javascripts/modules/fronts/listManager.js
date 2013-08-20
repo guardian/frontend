@@ -42,9 +42,6 @@ define([
         }
 
         function clearAll() {
-            model.selectedEdition(undefined);
-            model.selectedSection(undefined);
-            model.selectedBlock(undefined);
             setDisplayedLists([]);
         }
 
@@ -60,9 +57,9 @@ define([
             renderLists();
         }
 
-        function displayAllEditions() {
-            setDisplayedLists(model.editions.map(function(edition){
-                return edition.id + '/' + model.selectedSection().id + '/' + model.selectedBlock().id; 
+        function displayInAllEditions() {
+            setDisplayedLists(model.editions().map(function(edition){
+                return edition + '/' + model.section() + '/' + model.block(); 
             }));
         }
 
@@ -218,13 +215,13 @@ define([
             }
         };
 
-        function showSelectedBlocks() {           
-            var blocks = model.selectedBlock() ? [model.selectedBlock()] : model.blocks();
+        function displaySelectedBlocks() {           
+            var blocks = model.block() ? [model.block()] : model.blocks();
 
             blocks.forEach(function(block){
                 addList([
-                    model.selectedEdition(),
-                    model.selectedSection(),
+                    model.edition(),
+                    model.section(),
                     block
                 ].join('/'));
             })
@@ -234,36 +231,36 @@ define([
             model.latestArticles  = new LatestArticles();
             model.listsDisplayed  = knockout.observableArray();
 
-            model.editions        = knockout.observableArray();
-            model.selectedEdition = knockout.observable();
+            model.editions = knockout.observableArray();
+            model.edition  = knockout.observable();
 
-            model.sections        = knockout.observableArray();
-            model.selectedSection = knockout.observable();
+            model.sections = knockout.observableArray();
+            model.section  = knockout.observable();
 
-            model.blocks          = knockout.observableArray();
-            model.selectedBlock   = knockout.observable();
+            model.blocks   = knockout.observableArray();
+            model.block    = knockout.observable();
 
-            model.showSelectedBlocks  = showSelectedBlocks;
-            model.displayAllEditions = displayAllEditions;
-            model.dropList           = dropList;
-            model.clearAll           = clearAll;
+            model.actions = {
+                displaySelectedBlocks: displaySelectedBlocks,
+                displayInAllEditions: displayInAllEditions,
+                dropList: dropList,
+                clearAll: clearAll
+            }
 
             model.flushClipboard = function() {
                 clipboard.innerHTML = '';
             };
 
-            model.selectedEdition.subscribe(function(edition) {
+            model.edition.subscribe(function(edition) {
                 model.sections(edition ? _.keys(collections[edition]) : []);
-                model.selectedSection(undefined);
-
+                model.section(undefined);
                 model.blocks([]);
-                model.selectedBlock(undefined);
+                model.block(undefined);
             });
 
-            model.selectedSection.subscribe(function(section) {
-                model.blocks(section ? _.keys(collections[model.selectedEdition()][section]) : []);
-                model.selectedBlock(undefined);
-
+            model.section.subscribe(function(section) {
+                model.blocks(section ? _.keys(collections[model.edition()][section]) : []);
+                model.block(undefined);
                 if (section) {
                     model.latestArticles.section(section);
                 }
