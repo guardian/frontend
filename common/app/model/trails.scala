@@ -1,6 +1,6 @@
 package model
 
-import conf.{Configuration, ContentApi}
+import conf.{Configuration, FaciaContentApi, ContentApi}
 import common._
 import contentapi.QueryDefaults
 import org.joda.time.DateTime
@@ -132,7 +132,7 @@ class RunningOrderTrailblockDescription(
             }
 
             val idSearch = {
-              val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
+              val response = FaciaContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
               val results = response map {r => r.results map{new Content(_)} }
               val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
               sorted fallbackTo Future(Nil)
@@ -141,7 +141,7 @@ class RunningOrderTrailblockDescription(
             val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
               val queryParams: Map[String, String] = QueryParams.get(query).mapValues{_.mkString("")}
               val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
-              val search = ContentApi.search(edition)
+              val search = FaciaContentApi.search(edition)
               val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
               val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
 
