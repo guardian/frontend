@@ -140,10 +140,6 @@ object Switches extends Collections {
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = Off)
 
-  val InlineArticlesSwitch = Switch("Feature Switches", "inline-articles",
-    "If this switch is on then articles linked to in story packages will open inline",
-    safeState = Off)
-
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -172,6 +168,10 @@ object Switches extends Collections {
 
   val ABSwipeCtas = Switch("A/B Tests", "ab-swipe-ctas",
     "If this is switched on an AB test runs to trial the new swipe call to actions ",
+    safeState = Off)
+
+  val ABExpandableTrails = Switch("A/B Tests", "ab-expandable-trails",
+    "If this is switched on an AB test runs to trial the impact of having expandable content in trails",
     safeState = Off)
 
 
@@ -234,7 +234,7 @@ object Switches extends Collections {
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
     ABSwipeCtas,
-    InlineArticlesSwitch
+    ABExpandableTrails
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
