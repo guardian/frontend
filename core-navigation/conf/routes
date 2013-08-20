@@ -7,6 +7,7 @@ GET        /assets/*file                   controllers.Assets.at(path="/public",
 
 GET        /most-read                      controllers.MostPopularController.render(path = "")
 GET        /most-read.json                 controllers.MostPopularController.render(path = "")
+GET        /most-read/card.json            controllers.MostPopularController.renderCard()
 GET        /most-read/*path.json           controllers.MostPopularController.render(path)
 GET        /most-read/*path                controllers.MostPopularController.render(path)
 GET        /top-stories                    controllers.TopStoriesController.render()
@@ -15,4 +16,4 @@ GET        /top-stories/trails             controllers.TopStoriesController.rend
 GET        /top-stories/trails.json        controllers.TopStoriesController.renderJsonTrails()
 GET        /related/*path.json             controllers.RelatedController.render(path)
 GET        /related/*path                  controllers.RelatedController.render(path)
-GET        /recent.json                    controllers.RecentController.render()
+GET        /recent/card.json               controllers.RecentController.render()

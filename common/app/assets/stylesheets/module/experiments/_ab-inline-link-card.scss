@@ -21,11 +21,15 @@
 .furniture--right {
   position: absolute;
   width: $a-rightCol-width;
-  right: 100px;
+  right: 0px;
   bottom: $baseline*2;
 
     @include mq($a-rightCol-trigger) {
         display: block;
+    }
+
+    @include mq($from: wide) {
+        right: 100px;
     }
 
 }
@@ -37,6 +41,11 @@
 .card {
 
 }
+
+.card-wrapper {
+    &.is-hidden { display: none; }
+}
+
 .card__media {
     display: block;
     width: 100%;
@@ -78,6 +87,10 @@
 }
 
 .card--right {
+
+    &.is-hidden {
+      display: none;
+    }
 
     .card__title {        
         min-height: $unitHeight;

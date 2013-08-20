@@ -31,7 +31,7 @@ object RecentController extends Controller with Logging with JsonTrails with Exe
   }
 
   private def renderRecent(trail: Trail)(implicit request: RequestHeader) = {
-    val jsonResponse = () => views.html.fragments.cards.card(trail, "right", "Latest", "Story pack card | latest")
+    val jsonResponse = () => views.html.fragments.cards.card(trail, "right", "More from around the Guardian", "Story pack card | latest")
     renderFormat(jsonResponse, 60)
   }
 

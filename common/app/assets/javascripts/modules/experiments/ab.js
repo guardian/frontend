@@ -9,7 +9,8 @@ define([
     'modules/experiments/tests/lightbox-galleries',
     'modules/experiments/tests/gallery-style',
     'modules/experiments/tests/swipe-ctas',
-    'modules/experiments/tests/expandable-trails'
+    'modules/experiments/tests/expandable-trails',
+    'modules/experiments/tests/right-hand-card'
 ], function (
     common,
     store,
@@ -19,7 +20,8 @@ define([
     LightboxGalleries,
     GalleryStyle,
     SwipeCtas,
-    ExperimentExpandableTrails
+    ExperimentExpandableTrails,
+    RightHandCard
     ) {
 
     var TESTS = [
@@ -29,7 +31,8 @@ define([
             new LightboxGalleries(),
             new GalleryStyle(),
             new SwipeCtas(),
-            new ExperimentExpandableTrails()
+            new ExperimentExpandableTrails(),
+            new RightHandCard()
         ],
         participationsKey = 'gu.ab.participations';
 

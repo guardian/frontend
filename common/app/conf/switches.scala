@@ -174,6 +174,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of having expandable content in trails",
     safeState = Off)
 
+  val ABRightHandCard = Switch("A/B Tests", "ab-right-hand-card",
+    "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
+    safeState = On)
+
 
   // Sport Switch
 
@@ -234,7 +238,8 @@ object Switches extends Collections {
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
     ABSwipeCtas,
-    ABExpandableTrails
+    ABExpandableTrails,
+    ABRightHandCard
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

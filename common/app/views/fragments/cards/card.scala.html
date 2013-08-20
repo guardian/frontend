@@ -1,10 +1,10 @@
 @(trail: Trail, column: String, title: String, linkName: String)(implicit request: RequestHeader)
-<a href="@trail.url" class="card-wrapper" data-link-name="@linkName" aria-hidden="true">
+<a href="@trail.url" class="card-wrapper card-wrapper--@column" data-link-name="@linkName" aria-hidden="true">
     <div class="furniture furniture--@column card card--@column">
         <h2 class="card__title">@title</h2>
         @trail.thumbnailPath.map{ thumbnailPath =>
             @trail.mainPicture(width=220).map { largeCrop =>
-                <img class="card__media" data-lowsrc="@thumbnailPath"
+                <img class="card__media" src="@thumbnailPath"
                     data-thumb-width="140"
                     data-fullsrc="@largeCrop.path"
                     data-full-width="@largeCrop.width"
