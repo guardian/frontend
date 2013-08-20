@@ -94,10 +94,8 @@ figcaption:before {
 .from-content-api .block .quoted:before {
     @extend .i;
     @extend .i-livequote-before;
-    display: block;
     content: '';
-    margin: 21px 0 $baseline*2;
-    clear: both;
+    margin: 13px 0 0;
 
     @if ($svg-support) {
         .svg & {
@@ -110,9 +108,8 @@ figcaption:before {
 .from-content-api .block .quoted:after {
     @extend .i;
     @extend .i-livequote-after;
-    display: block;
     content: '';
-    margin-bottom: 22px;
+    margin-bottom: 6px;
 
     @if ($svg-support) {
         .svg & {
