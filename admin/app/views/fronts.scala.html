@@ -17,8 +17,11 @@
                 <select data-bind="options: blocks, value: block, enable: section, optionsCaption: 'all collections'"></select>
 
                 <button class="strong" data-bind="enable: section, click: actions.displaySelectedBlocks">Show</button>
+                
+                <!--
                 <button data-bind="enable: block,   click: actions.displayInAllEditions">in all editions</button>
-                &middot;
+                -->
+
                 <button data-bind="enable: listsDisplayed().length, click: actions.clearAll">Hide all</button>
             </div>
         </header>

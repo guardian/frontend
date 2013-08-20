@@ -64,8 +64,11 @@ define([
             }));
         }
 
-        function renderLists() {
-            var chosen = chosenLists();
+        function renderLists(opts) {
+            var chosen = chosenLists(),
+                first;
+
+            opts = opts || {};
 
             model.listsDisplayed.remove(function(list){
                 if (chosen.indexOf(list.id) === -1) {
@@ -79,6 +82,13 @@ define([
             chosen.forEach(function(id){
                 model.listsDisplayed.push(new List(id));
             });
+
+            if(opts.inferDefaults && chosen[0]) {
+                first = chosen[0].split('/');
+                model.edition(first.shift());
+                model.section(first.shift());
+            }
+
             connectSortableLists();
         }
 
@@ -300,7 +310,8 @@ define([
             fetchSchema(function(){
                 knockout.applyBindings(model);
 
-                renderLists();
+                renderLists({inferDefaults: true});
+
                 window.onpopstate = renderLists;
 
                 startPoller();
