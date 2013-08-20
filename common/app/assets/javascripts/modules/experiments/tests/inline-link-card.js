@@ -34,7 +34,7 @@ function (
                         common.$g('body').addClass('test-link-card--on');
 
                         function isArticle(url) {
-                            return (/\/[\w\-]+\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
+                            return (/^\/[\w\-]+\/(?:[\w\-]+\/)?[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
                         }
                         function isVideo(url) {
                             return (/\/[\w\-]+\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+|youtube\.com|dailymotion\.com|vimeo\.com/).test(url);
@@ -48,8 +48,14 @@ function (
                         function isWikipedia(url) {
                             return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.]+$/).test(url);
                         }
+                        function isNYTimes(url) {
+                            return (/^http:\/\/(?:www\.)?nytimes\.com/).test(url);
+                        }
+                        function isBBC(url) {
+                            return (/^http:\/\/(?:(?:www|m)\.)?bbc\.co\.uk/).test(url);
+                        }
                         function isWhiteListed(url) {
-                            return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url) || isWikipedia(url);
+                            return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url) || isWikipedia(url) || isNYTimes(url) || isBBC(url);
                         }
 
                         function cardifyRelatedInBodyLink(link) {
