@@ -193,7 +193,7 @@ define([
 
     Video.prototype.init = function(config) {
         var id = (config.pageId === '') ? '' : config.pageId + '/',
-            host = (window.location.hostname === "localhost") ? "m.gucode.co.uk" :  window.location.hostname,
+            host = (window.location.hostname === "localhost") ? "m.code.dev-theguardian.com" :  window.location.hostname,
             url = "http://" + config.oasHost + "//2/" + host + "/" + id + "oas.html/" + (new Date().getTime()) + "@x50";
 
         this.getVastData(url);

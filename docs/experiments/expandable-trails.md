@@ -2,8 +2,9 @@
 
 ## Hypothesis
 
-Readers who can read the beginning of a story are more likely to read
-the full story.
+Ability to expand the begining of articles will increase content consumption (measured expansion of trail articles) and dwell time.
+
+However, this may drive down the number of page views per visit.
 
 ## Buckets
 
@@ -14,7 +15,5 @@ the full story.
 
 ### Kaelig
 
-I think it may have the opposite effect.
-
-- Number of read articles content decreases by 5% - Time spent on
-article pages increases by 3%
+- Number of read articles content decreases by 5%
+- Time spent on article pages increases by 3%

@@ -32,6 +32,7 @@ $trailblockImgWidthLarge: 140px;
 // Name your breakpoints in a way that creates a ubiquitous language
 // across team members. It will improve communication between
 // stakeholders, designers, developers, and testers.
+// NB. If these change, please update detect.js to match
 
 @import 'layout/_grid-system';
 
