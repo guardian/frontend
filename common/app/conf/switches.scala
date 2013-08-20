@@ -166,6 +166,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
     safeState = Off)
 
+  val ABGalleryCta = Switch("A/B Tests", "ab-gallery-cta",
+    "If this is switched on an AB test runs to test different styles of CTAs to launch a gallery",
+    safeState = Off)
+
   val ABSwipeCtas = Switch("A/B Tests", "ab-swipe-ctas",
     "If this is switched on an AB test runs to trial the new swipe call to actions ",
     safeState = Off)
@@ -233,6 +237,7 @@ object Switches extends Collections {
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
+    ABGalleryCta,
     ABSwipeCtas,
     ABExpandableTrails
   )
