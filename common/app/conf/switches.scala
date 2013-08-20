@@ -176,7 +176,7 @@ object Switches extends Collections {
 
   val ABRightHandCard = Switch("A/B Tests", "ab-right-hand-card",
     "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
-    safeState = On)
+    safeState = Off)
 
 
   // Sport Switch
