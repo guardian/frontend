@@ -242,8 +242,12 @@ define([
                 storage.remove(storePrefix + 'linkContext');
             } else {
                 // No data-link-context, so infer the section/tag component from the url,
-                sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
-                sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
+                if("page" in config) {
+                    sequenceUrl = (config.page.section ? config.page.section : config.page.edition.toLowerCase());
+                } else {
+                    sequenceUrl = window.location.pathname.match(/^\/([^0-9]+)/);
+                    sequenceUrl = (sequenceUrl ? sequenceUrl[1] : '');
+                }
             }
         }
 
@@ -534,9 +538,10 @@ define([
             }
         };
 
-        common.mediator.on('modules:discussion:show', function() {
-            recalcHeight();
-            pushDownSidepanes();
+        common.mediator.on('modules:discussion:show', function(callback) {
+            resetScrollPos();
+            recalcHeight(true);
+            callback();
         });
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.

@@ -4,10 +4,10 @@ define(['common', 'bean'], function (common, bean) {
 
         this.id = 'ExpandableTrails';
         this.expiry = '2013-08-29';
-        this.audience = 1;
+        this.audience = 0.1;
         this.description = 'Impact of expandable trails on page views';
         this.canRun = function(config) {
-            return config.page.contentType === 'Article';
+            return (/^Video|Article|Gallery$/).test(config.page.contentType);
         };
         this.variants = [
             {

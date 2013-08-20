@@ -42,7 +42,7 @@
             <div class="media__body">
                 @trail.trailText.map { text => <div class="trail__text trail__expander-hide">@cleanTrailText(text)(Edition(request))</div> }
                 <div class="trail__expander-show">
-                    @trail.byline.map { text => <p class="byline" data-link-name="byline">@ContributorLinks(text, trail.contributors) }</p>
+                    @trail.byline.map { text => <p class="byline type-7" data-link-name="byline">@ContributorLinks(text, trail.contributors)</p> }
                     <div class="from-content-api trail__expander-content">
                         @if(!trail.leadingParagraphs.isEmpty) {
                             @trail.leadingParagraphs.take(4).map { paragraph => <p>@Html(paragraph.html())</p> }
@@ -54,12 +54,11 @@
                 </div>
             </div>
         </div>
-        <label class="trail__expander-cta" for="trail__expander-@trailId" data-link-name="@rowNum | read more article">
-            <button class="u-button-reset">
-                <span class="trail__expander-cta__button">
-                    <span class="trail__expander-hide">Read more</span>
-                    <span class="trail__expander-show">Close</span>
-                </span>
+
+        <label class="trail__expander-cta trail__expander-hide" for="trail__expander-@trailId" data-link-name="@rowNum | read more article">
+            <button class="u-button-reset trail__expander-cta__button">
+                <b>Read more</b>
+                <i class="i i-arrow-blue-down"></i>
             </button>
         </label>
     </div>

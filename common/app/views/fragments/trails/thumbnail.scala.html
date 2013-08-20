@@ -1,5 +1,4 @@
 @(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
-@import conf.Switches._
 
 <@element class="trail trail--thumbnail t@rowNum" data-link-name="trail"
     @trail.discussionId.map{ id => data-discussion-id="@id" }
@@ -29,7 +28,7 @@
                 @RemoveOuterParaHtml(trail.headline)
             </a>
         </h@headingLevel>
-
+        @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
     </div>
 
 </@element>

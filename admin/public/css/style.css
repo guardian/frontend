@@ -365,11 +365,12 @@ a.cta, .cta a {
 
 .fronts header {
     background-color: #ccc;
-    padding: 7px 5px 5px 10px;
+    padding: 5px 5px 5px 10px;
     overflow: auto;
 }
 
 .fronts header .tool-title {
+    margin: 7px 0 0 0;
     float: left;
 }
 
@@ -657,8 +658,21 @@ a.cta, .cta a {
 }
 
 .fronts select {
-    width: 150px;
-    margin: -2px 0 0 0;
+    height: 30px;
+    width: 125px;
+    margin: 0;
+}
+
+.fronts select:disabled {
+    opacity: 0.5;
+}
+
+.fronts button {
+    height: 30px;
+}
+
+.fronts .strong {
+    font-weight: bold;
 }
 
 .fronts #clipboard {

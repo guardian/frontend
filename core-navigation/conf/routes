@@ -17,3 +17,6 @@ GET        /top-stories/trails.json        controllers.TopStoriesController.rend
 GET        /related/*path.json             controllers.RelatedController.render(path)
 GET        /related/*path                  controllers.RelatedController.render(path)
 GET        /recent/card.json               controllers.RecentController.render()
+
+# Experimental
+GET    /cards/opengraph/*path              controllers.CardController.opengraph(path)
