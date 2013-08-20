@@ -132,10 +132,14 @@ class RunningOrderTrailblockDescription(
             }
 
             val idSearch = {
-              val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
-              val results = response map {r => r.results map{new Content(_)} }
-              val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
-              sorted fallbackTo Future(Nil)
+              if (articles.isEmpty) {
+                Future(Nil)
+              } else {
+                val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
+                val results = response map {r => r.results map{new Content(_)} }
+                val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
+                sorted
+              }
             }
 
             val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
