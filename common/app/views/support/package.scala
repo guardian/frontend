@@ -42,9 +42,23 @@ object Headline extends Style { val className = "headline-only" }
 object SectionFront extends Style { val className = "section-front" }
 
 /**
- * trails for the top stories component
+ * New 'collection' templates
+ */
+
+/**
+ * 'masthead' collection
  */
 object Masthead extends Style { val className = "masthead" }
+
+/**
+ * 'fast news' collection
+ */
+object FastNews extends Style { val className = "fast-news" }
+
+/**
+ * 'section zone' collection
+ */
+object SectionZone extends Style { val className = "zone" }
 
 object MetadataJson {
 
