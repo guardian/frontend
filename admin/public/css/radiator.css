@@ -79,6 +79,11 @@ a {
     text-decoration: none;
 }
 
+.pageviews-wrapper {
+    display: none; /* Disabling this for now */
+}
+
+
 
 @media screen and (min-width: 600px) {
     .charts {
