@@ -52,7 +52,7 @@ window.addEventListener('load', function() {
 
 
     $.ajax({
-        url: 'http://dashboard.ophan.co.uk/graph/pageviews/data?mins=60&platform=next-gen&callback=?',
+        url: 'http://dashboard.ophan.co.uk/graph/pageviews/data?mins=120&platform=next-gen&callback=?',
         dataType: 'jsonp',
         cache: true,
         jsonpCallback: 'ophanCallback',
@@ -64,8 +64,10 @@ window.addEventListener('load', function() {
 
             var graphData = [['time', 'pageviews']];
             todayData.forEach(function(item) {
-                var timestamp 
-                graphData.push([item.x, item.y]);
+                var time = new Date(item.x * 1000),
+                    formattedTime = time.getHours() + ':' + time.getMinutes();
+
+                graphData.push([formattedTime, item.y]);
             });
 
             new google.visualization.LineChart(document.getElementById('pageviews'))
@@ -77,8 +79,7 @@ window.addEventListener('load', function() {
                     legend: 'none',
                     fontName: 'Georgia',
                     titleTextStyle: {color: '#999'},
-                    hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
-                    //vAxis: { title: "page views", textStyle: {color: '#ccc'}, gridlines: { count: 3, color: '#ccc' } }
+                    hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' }
                 });
 
             //$('#pageviews').html(data.totalHits)
