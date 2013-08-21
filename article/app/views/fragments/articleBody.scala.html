@@ -54,7 +54,7 @@
                     @BodyCleaner(article)
                 </div>
 
-                @if(storyPackage.nonEmpty) {
+                @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
                     @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card")
                 }
             </div>
