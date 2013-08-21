@@ -13,14 +13,16 @@ define([
     Article,
     LatestArticles
 ) {
-    var dragging = false,
+    var collections = {},
+        sectionSearches,
+        dragging = false,
         clipboard = document.querySelector('#clipboard'),
         listLoadsPending = 0,
         loc = window.location;
 
     return function(selector) {
 
-        var viewModel = {},
+        var model = {},
             self = this;
 
         function chosenLists() {
@@ -40,6 +42,10 @@ define([
             common.util.pageReflow();
         }
 
+        function clearAll() {
+            setDisplayedLists([]);
+        }
+
         function setDisplayedLists(listIDs) {
             var qp = common.util.queryParams();
             qp.blocks = listIDs.join(',');
@@ -52,16 +58,19 @@ define([
             renderLists();
         }
 
-        function displayAllEditions() {
-            setDisplayedLists(viewModel.editions.map(function(edition){
-                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
+        function displayInAllEditions() {
+            setDisplayedLists(model.editions().map(function(edition){
+                return [edition, model.section(), model.block()].join('/'); 
             }));
         }
 
-        function renderLists() {
-            var chosen = chosenLists();
-            //viewModel.listsDisplayed.removeAll();
-            viewModel.listsDisplayed.remove(function(list){
+        function renderLists(opts) {
+            var chosen = chosenLists(),
+                first;
+
+            opts = opts || {};
+
+            model.listsDisplayed.remove(function(list){
                 if (chosen.indexOf(list.id) === -1) {
                     return true;
                 } else {
@@ -70,9 +79,16 @@ define([
                 }    
             });
 
-            chosen.reverse().forEach(function(id){
-                viewModel.listsDisplayed.unshift(new List(id));
+            chosen.forEach(function(id){
+                model.listsDisplayed.push(new List(id));
             });
+
+            if(opts.inferDefaults && chosen[0]) {
+                first = chosen[0].split('/');
+                model.edition(first.shift());
+                model.section(first.shift());
+            }
+
             connectSortableLists();
         }
 
@@ -173,7 +189,7 @@ define([
 
         function _startPoller() {
             setInterval(function(){
-                viewModel.listsDisplayed().forEach(function(list){
+                model.listsDisplayed().forEach(function(list){
                     if (!dragging) {
                         list.refresh();
                     }
@@ -188,64 +204,83 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    viewModel.editions = resp.editions;
-                    if (typeof callback === 'function') { callback(); }
+                    resp.collections.forEach(function(id){
+                        treeAdd(id.split('/'), collections);
+                    });                    
+                    model.editions(_.keys(collections));
+
+                    sectionSearches = resp.sectionSearches || {};
+
+                    if (_.isFunction(callback)) { callback(); }
                 },
                 function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
             );
         };
 
+        function treeAdd(path, obj) {
+            var f = _.first(path),
+                r = _.rest(path);
+
+            obj[f] = obj[f] || {};
+            if (r.length) {
+                treeAdd(r, obj[f]);
+            }
+        };
+
+        function displaySelectedBlocks() {           
+            var blocks = model.block() ? [model.block()] : model.blocks();
+
+            blocks.forEach(function(block){
+                addList([
+                    model.edition(),
+                    model.section(),
+                    block
+                ].join('/'));
+            })
+        };
+
         this.init = function(callback) {
-            viewModel.latestArticles  = new LatestArticles();
-            viewModel.listsDisplayed  = knockout.observableArray();
-            viewModel.selectedEdition = knockout.observable();
-            viewModel.selectedSection = knockout.observable();
-            viewModel.selectedBlock   = knockout.observable();
+            model.latestArticles  = new LatestArticles();
+            model.listsDisplayed  = knockout.observableArray();
 
-            viewModel.dropList           = dropList;
-            viewModel.displayAllEditions = displayAllEditions;
+            model.editions = knockout.observableArray();
+            model.edition  = knockout.observable();
 
-            viewModel.flushClipboard = function() {
+            model.sections = knockout.observableArray();
+            model.section  = knockout.observable();
+
+            model.blocks   = knockout.observableArray();
+            model.block    = knockout.observable();
+
+            model.actions = {
+                displaySelectedBlocks: displaySelectedBlocks,
+                displayInAllEditions: displayInAllEditions,
+                dropList: dropList,
+                clearAll: clearAll
+            }
+
+            model.flushClipboard = function() {
                 clipboard.innerHTML = '';
             };
 
-            viewModel.selectedEdition.subscribe(function(edition) {
-                viewModel.selectedSection(undefined);
-                viewModel.selectedBlock(undefined);
+            model.edition.subscribe(function(edition) {
+                model.sections(edition ? _.keys(collections[edition]) : []);
+                model.section(undefined);
+                model.blocks([]);
+                model.block(undefined);
             });
 
-            viewModel.selectedSection.subscribe(function(section) {
-                viewModel.selectedBlock(undefined);
-                if (section && section.id) {
-                    viewModel.latestArticles.section(section.sectionSearch || section.id);
+            model.section.subscribe(function(section) {
+                model.blocks(section ? _.keys(collections[model.edition()][section]) : []);
+                model.block(undefined);
+
+                if (section) {
+                    model.latestArticles.section(sectionSearches[section] || section);
                 }
             });
-
-            viewModel.selectedBlock.subscribe(function(block) {
-                var id;
-                if(block && block.id) {
-                    id = viewModel.selectedEdition().id + '/' +
-                         viewModel.selectedSection().id + '/' + 
-                         block.id;
-
-                    addList(id);
-                }
-            });
-
-            fetchSchema(function(){
-                knockout.applyBindings(viewModel);
-
-                renderLists();
-                window.onpopstate = renderLists;
-
-                startPoller();
-                viewModel.latestArticles.search();
-                viewModel.latestArticles.startPoller();
-            });
-
 
             knockout.bindingHandlers.sparkline = {
-                update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                update: function (element, valueAccessor, allBindingsAccessor, model) {
                     var value = knockout.utils.unwrapObservable(valueAccessor()),
                         height = Math.max(15, Math.min(30, _.max(value))),
                         options = allBindingsAccessor().sparklineOptions || {
@@ -270,6 +305,18 @@ define([
                     listLoadsPending = 0;
                     common.util.pageReflow();
                 }
+            });
+
+            fetchSchema(function(){
+                knockout.applyBindings(model);
+
+                renderLists({inferDefaults: true});
+
+                window.onpopstate = renderLists;
+
+                startPoller();
+                model.latestArticles.search();
+                model.latestArticles.startPoller();
             });
 
         };
