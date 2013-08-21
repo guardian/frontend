@@ -1,10 +1,8 @@
 
-body { background-color: #fff; margin: 0 auto; max-width: 90%; padding-top: 30px; padding-bottom: 1000px; }
+body { background-color: #fff; margin: 0 auto; max-width: 90%; padding-top: 20px; padding-bottom: 1000px; }
 
 .charts {
-    width: 50%;
     margin-bottom: 50px;
-    float: left;
 }
 
 header {
@@ -22,15 +20,23 @@ header {
 .Running { color: orange; }
 ul {
     height: 30px;
-} 
-#pingdom li, #riffraff li {
+}
+
+
+.pingdom-wrapper small,
+.deployments-wrapper small {
+    display: block;
+}
+
+#pingdom li,
+#riffraff li {
     min-width: 30px;
     min-height: 30px;
     font-size: 0;
     color: transparent;
     float: left;
     display: inline-block;
-    margin: 10px 10px 10px 0;
+    margin: 5px 5px 0 0;
 }
 
 #pingdom li.up, #riffraff li.Completed { 
@@ -41,6 +47,13 @@ ul {
     background-color: red;
 }
 
+
+
+#riffraff {
+    padding: 0;
+}
+
+
 #riffraff li.Running {
     background-color: yellow;
 }
@@ -50,7 +63,8 @@ h2 {
     color: #999;
     clear: both;
     font-weight: normal;
-    padding-top: 20px;
+    padding: 20px 0;
+    margin: 0;
 }
 h2 small {
     font-size: 14px;
@@ -59,4 +73,23 @@ h2 small {
 #logo .white {
     color: #333;
 }
+
+a {
+    color: #005689;
+    text-decoration: none;
+}
+
+
+@media screen and (min-width: 600px) {
+    .charts {
+        width: 50%;
+        float: left;
+    }
+
+    .pingdom-wrapper,
+    .deployments-wrapper {
+        float: left;
+        width: 50%;
+    }
+},
 
