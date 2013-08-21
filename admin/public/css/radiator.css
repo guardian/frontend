@@ -1,4 +1,3 @@
-
 body { background-color: #fff; margin: 0 auto; max-width: 90%; padding-top: 20px; padding-bottom: 1000px; }
 
 .charts {
@@ -49,7 +48,8 @@ ul {
 
 
 
-#riffraff {
+#riffraff,
+#pingdom {
     padding: 0;
 }
 
