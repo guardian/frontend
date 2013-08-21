@@ -80,7 +80,7 @@ window.addEventListener('load', function() {
                     title: 'Page views',
                     backgroundColor: '#fff',
                     colors: ['#333'],
-                    height: 175,
+                    height: 125,
                     legend: 'none',
                     fontName: 'Georgia',
                     titleTextStyle: {color: '#999'},
@@ -89,7 +89,7 @@ window.addEventListener('load', function() {
                 });
         },
         error: function() {
-            document.getElementById('pageviews').innerHTML = '<a href="http://dashboard.ophan.co.uk/login">Login to Ophan for Pageviews</a>';
+            document.getElementById('pageviews').innerHTML = '<a href="http://dashboard.ophan.co.uk/login" target="_new">Login to Ophan for Pageviews</a>';
         }
     })
 });
