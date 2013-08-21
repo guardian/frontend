@@ -104,4 +104,9 @@
         @include box-sizing(border-box);
         @include font($serifheadline, 700, 18, 24);
     }
+
+    .relative-timestamp {
+        position: absolute;
+        bottom: $baseline;
+    }
 }

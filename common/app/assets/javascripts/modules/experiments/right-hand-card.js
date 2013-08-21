@@ -35,6 +35,7 @@ define([
                 this.fetchData();
             }
             this.dedupe();
+            common.mediator.emit('fragment:ready:dates');
         }
     };
 
