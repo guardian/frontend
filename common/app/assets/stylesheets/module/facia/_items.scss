@@ -5,17 +5,16 @@ $pink: #AB1454;
 $light-pink: #f66980;
 $grey: #cccccc;
 
-@mixin overlay($width, $font-size) {
+@mixin item--with-overlay($width, $font-size) {
     width: $width;
     margin-right: $gs-gutter;
-    .trail__link,
-    .trail__meta {
+    .item__link,
+    .item__meta {
         color: #ffffff;
     }
-    .trail__title {
+    .item__title {
         position:absolute;
         bottom: 0;
-        margin: 0;
         background-color: $blue;
         background-color: rgba($blue, 0.7);
         padding: $baseline*3 $gutter/2 $baseline*13;
@@ -23,27 +22,27 @@ $grey: #cccccc;
         width: $width - $gs-column-width - $gs-gutter;
         @include font-size($font-size, $font-size+4);
     }
-    .trail__standfirst {
+    .item__standfirst {
         display: none;
     }
-    .trail__meta {
+    .item__meta {
         border-left-color: $light-blue;
+        .item__timestamp {
+            border-left-style: none;
+        }
     }
-    .trail__timestamp {
-        border-left-style: none;
-    }
-    &.trail--feature {
-        .trail__title {
+    &.item--feature {
+        .item__title {
             background-color: $pink;
             background-color: rgba($pink, 0.7);
         }
-        .trail__meta {
+        .item__meta {
             border-left-color: $light-blue;
         }
     }
 }
 
-@mixin small-card($num, $show-meta: false, $show-standfirst: false) {
+@mixin item--small($num, $show-meta: false, $show-standfirst: false) {
     height: 100%/$num;
     @include box-sizing(border-box);
     float: none;
@@ -52,12 +51,12 @@ $grey: #cccccc;
     &:last-child {
         border-bottom: 1px solid $grey;
     }
-    .trail__image-container,
-    .trail__duration {
+    .item__image-container,
+    .item__duration {
         display: none;
     }
     @if $show-standfirst == false {
-        .trail__standfirst {
+        .item__standfirst {
             display: none;
         }
     }
@@ -65,77 +64,248 @@ $grey: #cccccc;
         &:last-child {
             border-bottom-style: none;
         }
-        .trail__meta {
+        .item__meta {
             display: none;
         }
     }
-    &.trail--feature .trail__title {
+    &.item--feature .item__title {
         margin: 0 $baseline*2;
     }
 }
 
-@mixin medium-card($width) {
+@mixin item--medium($width) {
     width: $width;
     @include box-sizing(border-box);
     border-bottom: 1px solid $grey;
     margin-right: $gs-gutter;
-    .trail__image {
+    .item__image {
         margin-bottom: $baseline*3;
     }
-    .trail__title {
-        margin: 0 $baseline*2;
-    }
-    .trail__standfirst {
+    .item__standfirst {
         display: none;
     }
-    &.trail--feature {
+    &.item--feature {
         border-bottom-style: none;
+        .item__title {
+            margin: 0 $baseline*2;
+        }
     }
     &:last-child {
         margin-right: 0;
     }
 }
 
-@mixin large-card($width, $img-width, $show-standfirst: false) {
+@mixin item--large($width, $img-width, $show-standfirst: false) {
     width: $width;
     margin-right: $gs-gutter;
     background-color: $blue;
-    .trail__image {
+    .item__image {
         width: $img-width;
         margin-right: $gs-gutter;
     }
-    .trail__link,
-    .trail__standfirst,
-    .trail__meta{
+    .item__link,
+    .item__standfirst,
+    .item__meta {
         color: #ffffff;
     }
-    .trail__title,
-    .trail__standfirst {
+    .item__title,
+    .item__standfirst {
         margin-left: $gutter/2;
         margin-right: $gutter/2;
     }
-    .trail__title {
+    .item__title {
         padding-top: $baseline*2;
     }
-    .trail__standfirst {
+    .item__standfirst {
         @if $show-standfirst == false {
            display:none;
         }
     }
-    .trail__meta {
+    .item__meta {
         left: $img-width + $gs-gutter;
         border-left-color: $light-blue;
-        .trail__timestamp {
+        .item__timestamp {
             border-left-style: solid;
         }
     }
-    &.trail--feature {
+    &.item--feature {
         background-color: $pink;
-        .trail__meta {
+        .item__meta {
             border-left-color: $light-pink;
         }
     }
     &:last-child {
         margin-right: 0;
+    }
+}
+
+@mixin collection--stacked {
+
+    .item {
+        width: 100%;
+    }
+    .item__standfirst {
+        display: none;
+    }
+    .item:nth-child(1) {
+        background-color: $blue;
+        &.item--feature {
+            background-color: $pink;
+            .trail__meta {
+                border-color: $light-pink;
+            }
+        }
+        .item__image {
+            display: block;
+            float: none;
+            margin: 0;
+        }
+        .item__link,
+        .item__meta {
+            color: #ffffff;
+
+        }
+        .item__title {
+            @include font-size(24, 28);
+            margin: $baseline*3 $baseline*2 $baseline*10;
+        }
+        .item__timestamp {
+            border-left-style: none;
+        }
+        .trail__count {
+            border-left-color: $light-blue;
+        }
+    }
+    .item:nth-child(n+2) {
+        padding: $baseline*2 0 $baseline*4;
+        border-top: 2px solid $blue;
+        @include box-sizing(border-box);
+        &.item--feature {
+            padding-left: $baseline*2;
+            padding-right: $baseline*2;
+            border-top: none;
+        }
+        .item__title {
+            @include font-size(20, 24);
+        }
+        .item__image-container,
+        .item__meta,
+        .item__duration {
+            display: none;
+        }
+    }
+}
+
+.item {
+    float: left;
+    padding: 0;
+    border: none;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.item__image {
+    width: 100%;
+    float: left;
+}
+.item .item__link,
+.item__standfirst {
+    color: #000000;
+    font-family: $serifheadline;
+}
+.item__title {
+    color: inherit;
+    font-weight: 700;
+}
+.item__standfirst {
+    margin: $baseline*5 0 0;
+}
+.item__meta {
+    color: $grey;
+    position: absolute;
+    bottom: 0;
+    border-color: $grey;
+}
+.item__timestamp,
+.item .trail__count {
+    padding-bottom: $baseline * 5;
+    float: left;
+    border-left: 1px solid;
+    /* inherit doesn't work in above shorthand, for some reason */
+    border-color: inherit;
+    i {
+        margin:0;
+        position: absolute;
+        top: 0;
+        left: 4px;
+    }
+}
+.item__timestamp,
+.item .trail__count,
+.item .trail__count a{
+    @include font($sans-serif, lighter, 12, 12);
+}
+.item__timestamp {
+    min-width: 58px;
+    margin-right: $gutter/4;
+    padding-left: 21px;
+    i {
+        @extend .i-clock-blue;
+    }
+}
+.item .trail__count {
+    position: relative;
+    top: auto;
+    padding-left: 23px;
+    a {
+        color: inherit;
+        float: none;
+        display: inline;
+        margin: 0;
+    }
+    i {
+        @extend .i-comment-blue;
+    }
+}
+.item__duration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ffffff;
+    background-color: $light-blue;
+    @include font($sans-serif, lighter, 12, 12);
+    padding: $baseline $gutter/2;
+    i {
+        @extend .i-play;
+        margin-right: $baseline;
+    }
+}
+.item--feature {
+    border: none;
+    background-color: $pink;
+    .item__link,
+    .item__standfirst,
+    .item__meta,
+    .trail__count a {
+        color: #ffffff;
+    }
+    .item__title {
+        font-weight: normal;
+    }
+    .item__timestamp,
+    .trail__count{
+        border-color: $light-pink;
+    }
+    .item__timestamp {
+        border-style: none;
+        i {
+            @extend .i-clock-pink;
+        }
+    }
+    .trail__count i {
+        @extend .i-comment-pink;
+    }
+    .item__duration {
+        background-color: $light-pink;
     }
 }

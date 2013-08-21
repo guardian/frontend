@@ -1,8 +1,13 @@
 .section--fast-news {
+    clear: left;
+    margin-top: $baseline*4;
     @include mq(tablet) {
         float: left;
     }
-    @include mq(tablet, wide) {
+    @include mq(tablet, desktop) {
+        max-width: gs-span(5);
+    }
+    @include mq(desktop, wide) {
         max-width: gs-span(3);
     }
     @include mq(wide) {
