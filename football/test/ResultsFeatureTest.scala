@@ -22,7 +22,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         And("I should see results for previous days")
         matches should contain ("Sunderland 1-1 West Ham")
         matches should contain ("Wigan 1-1 Everton")
-        matches should contain ("Bolton 1-1 Derby")
+        matches should contain ("Chelsea 0-0 Man U")
         matches should contain ("Fulham 0-0 Norwich")
       }
     }
