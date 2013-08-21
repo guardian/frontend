@@ -21,13 +21,11 @@
         font-weight: lighter;
         padding: $baseline*2 $gutter/2 $baseline*3;
     }
-    @include mq(desktop) {
-        .collection {
-            height: gs-height(6);
-        }
-    }
     .collection {
         margin-top: $baseline * 2;
+        @include mq(desktop) {
+            height: gs-height(6);
+        }
     }
 
     @include mq($to: desktop) {
@@ -35,18 +33,17 @@
     }
 
     .item-count-1 {
-        @include mq(desktop, wide) {
-            .item{
-                @include item--large(100%, gs-span(6));
+        .item{
+            @include mq(desktop, wide) {
+                @extend %item--large;
+                @include customise-item--large(100%, gs-span(6));
                 .item__title {
                     @include font-size(28, 32);
                 }
             }
-        }
-
-        @include mq(wide) {
-            .item{
-                @include item--large(gs-span(12), gs-span(6), $show-standfirst: true);
+            @include mq(wide) {
+                @extend %item--large;
+                @include customise-item--large(gs-span(12), gs-span(6), $show-standfirst: true);
                 .item__title {
                     @include font-size(28, 32);
                 }
@@ -58,52 +55,59 @@
     }
 
     .item-count-2 {
-        @include mq($from: desktop) {
-            .item:nth-child(1) .item__title {
-                @include font-size(24, 28);
+        .item:nth-child(1) {
+            @include mq(desktop, wide) {
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(6), 24);
             }
-            .item:nth-child(2) .item__title {
-                @include font-size(20, 24);
-            }
-        }
-        @include mq(desktop, wide) {
-            .item:nth-child(1) {
-                @include item--with-overlay(gs-span(6), 24);
-            }
-            .item:nth-child(2) {
-                @include item--small(1, $show-meta: true);
+            @include mq(wide) {
+                @extend %item--large;
+                @include customise-item--large(gs-span(9), gs-span(6));
+                .item__title {
+                    @include font-size(24, 28);                    
+                }
             }
         }
-        @include mq(wide) {
-            .item:nth-child(1) {
-                @include item--large(gs-span(9), gs-span(6));
+        .item:nth-child(2) {
+            @include mq(desktop, wide) {
+                @extend %item--small;
+                @include customise-item--small(1, $show-meta: true);
+                .item__title {
+                    @include font-size(20, 24);
+                }
             }
-            .item:nth-child(2) {
-                @include item--medium(gs-span(3));
+            @include mq(wide) {
+                @extend %item--medium;
+                @include customise-item--medium(gs-span(3));
+                .item__title {
+                    @include font-size(20, 24);
+                }
             }
         }
     }
 
     .item-count-3 {
-        @include mq($from: desktop) {
-            .item:nth-child(1) {
-                @include item--with-overlay(gs-span(6), 20);
+        .item:nth-child(1) {
+            @include mq(desktop, wide){
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(6), 20);
             }
-            .item:nth-child(n+2) .item__title {
+            @include mq(wide){
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(6), 20);
+            }
+        }
+        .item:nth-child(n+2) {
+            .item__title {
                 @include font-size(20, 24);
             }
-        }
-        @include mq(desktop, wide) {
-            .item:nth-child(1) .item__title {
-                padding-top: $baseline*2;
+            @include mq(desktop, wide) {
+                @extend %item--small;
+                @include customise-item--small(2);
             }
-            .item:nth-child(n+2) {
-                @include item--small(2);
-            }
-        }
-        @include mq(wide) {
-            .item:nth-child(n+2) {
-                @include item--medium(gs-span(3));
+            @include mq(wide) {
+                @extend %item--medium;
+                @include customise-item--medium(gs-span(3));
             }
         }
     }

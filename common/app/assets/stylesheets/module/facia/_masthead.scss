@@ -1,89 +1,69 @@
 .section--masthead {
-
-    @include mq(tablet, wide) {
-        .collection {
-            height: gs-height(6);
-        }
-    }
-    @include mq(wide) {
-        .collection {
-            height: gs-height(8);
-        }
-    }
     .collection {
         margin-top: $baseline*4;
         padding: $baseline*3 0;
         border-top: 1px solid #000000;
         border-bottom: 1px solid #000000;
         max-width: gs-span(16);
+        @include mq(tablet, wide) {
+            height: gs-height(6);
+        }
+        @include mq(wide) {
+            height: gs-height(8);
+        }
+        
     }
 
     @include mq($to: tablet) {
         @include collection--stacked;
     }
 
-    .item-count-1 {
+    .item-count-1 .item {
         @include mq(tablet, desktop) {
-            .item {
-                @include item--large(100%, gs-span(6));
-                .item__title {
-                    @include font-size(24, 28);
-                }
+            @extend %item--large;
+            @include customise-item--large(100%, gs-span(6));
+            .item__title {
+                @include font-size(24, 28);
             }
         }
         @include mq(desktop, wide) {
-            .item {
-                @include item--large(100%, gs-span(6), $show-standfirst: true);
-                .item__title {
-                    @include font-size(28, 32);
-                }
-                .item__standfirst {
-                    @include font-size(20, 24);
-                }
+            @extend %item--large;
+            @include customise-item--large(100%, gs-span(6), $show-standfirst: true);
+            .item__title {
+                @include font-size(28, 32);
+            }
+            .item__standfirst {
+                @include font-size(20, 24);
             }
         }
         @include mq(wide) {
-            .item {
-                @include item--large(gs-span(16), gs-span(8), $show-standfirst: true);
-                .item__title {
-                    @include font-size(36, 40);
-                }
-                .item__standfirst {
-                    @include font-size(28, 32);
-                }
+            @extend item--large;
+            @include customise-item--large(gs-span(16), gs-span(8), $show-standfirst: true);
+            .item__title {
+                @include font-size(36, 40);
+            }
+            .item__standfirst {
+                @include font-size(28, 32);
             }
         }
     }
 
     .item-count-2 {
-        @include mq(tablet, desktop) {
-            .item:nth-child(1) {
-                @include item--with-overlay(gs-span(6), 24);
+        .item:nth-child(1) {
+            @include mq(tablet, desktop) {
+                @extent %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(6), 24);
             }
-            .item:nth-child(2) {
-                @include item--small(1, $show-meta: true);
-                .item__title {
-                    @include font-size(28, 32);
-                }
-            }
-        }
-        @include mq(desktop, wide) {
-            .item:nth-child(1) {
-                @include item--large(gs-span(9), gs-span(6));
+            @include mq(desktop, wide) {
+                @extend %item--large;
+                @include customise-item--large(gs-span(9), gs-span(6));
                 .item__title {
                     @include font-size(24, 28);
                 }
             }
-            .item:nth-child(2) {
-                @include item--small(1, $show-meta: true);
-                .item__title {
-                    @include font-size(28, 32);
-                }
-            }
-        }
-        @include mq(wide) {
-            .item:nth-child(1) {
-                @include item--large(gs-span(12), gs-span(8), $show-standfirst: true);
+            @include mq(wide) {
+                @extend %item--large;
+                @include customise-item--large(gs-span(12), gs-span(8), $show-standfirst: true);
                 .item__title {
                     @include font-size(28, 32);
                 }
@@ -91,8 +71,25 @@
                     @include font-size(20, 24);
                 }
             }
-            .item:nth-child(2) {
-                @include item--medium(gs-span(4));
+        }
+        .item:nth-child(2) {
+            @include mq(tablet, desktop) {
+                @extend %item--small;
+                @include customise-item--small(1, $show-meta: true);
+                .item__title {
+                    @include font-size(28, 32);
+                }
+            }
+            @include mq(desktop, wide) {
+                @extend %item--small;
+                @include customise-item--small(1, $show-meta: true);
+                .item__title {
+                    @include font-size(28, 32);
+                }
+            }
+            @include mq(wide) {
+                @extend %item--medium;
+                @include customise-item--medium(gs-span(4));
                 .item__title {
                     @include font-size(24, 28);
                 }
@@ -101,36 +98,41 @@
     }
 
     .item-count-3 {
-        @include mq(tablet, wide) {
-            .item:nth-child(n+2) {
-                @include item--small(2);
-                .item__title {
-                    @include font-size(20, 24);
-                }
+        .item:nth-child(1) {
+            @include mq(tablet, desktop) {
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(6), 24);
             }
-        }
-        @include mq(tablet, desktop) {
-            .item:nth-child(1) {
-                @include item--with-overlay(gs-span(6), 24);
-                .item__title {
-                    padding-top: $baseline*2;
-                }
-            }
-        }
-        @include mq(desktop, wide) {
-            .item:nth-child(1) {
-                @include item--large(gs-span(9), gs-span(6));
+            @include mq(desktop, wide) {
+                @extend %item--with-overlay;
+                @include customise-item--large(gs-span(9), gs-span(6));
                 .item__title {
                     @include font-size(24, 28);
                 }
             }
-        }
-        @include mq(wide) {
-            .item:nth-child(1) {
-                @include item--with-overlay(gs-span(8), 28);
+            @include mq(wide) {
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(8), 28);
             }
-            .item:nth-child(n+2) {
-                @include item--medium(gs-span(4));
+        }
+        .item:nth-child(n+2) {
+            @include mq(tablet, desktop) {
+                @extend %item--small;
+                @include customise-item--small(2);
+                .item__title {
+                    @include font-size(20, 24);
+                }
+            }
+            @include mq(desktop, wide) {
+                @extend %item--small;
+                @include customise-item--small(2);
+                .item__title {
+                    @include font-size(20, 24);
+                }
+            }
+            @include mq(wide) {
+                @extend %item--medium;
+                @include customise-item--medium(gs-span(4));
                 .item__title {
                     @include font-size(24, 28);
                 }
@@ -139,46 +141,56 @@
     }
 
     .item-count-4 {
-        @include mq(tablet, desktop) {
-            .item:nth-child(1) {
-                @include item--with-overlay(gs-span(6), 24);
+        .item:nth-child(1) {
+            @include mq(tablet, desktop) {
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(6), 24);
             }
-            .item:nth-child(n+2) {
-                @include item--small(3);
-                .item__title {
-                    @include font-size(20, 24);
-                }
+            @include mq(desktop, wide) {
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(6), 24);
             }
-        }
-        @include mq(desktop, wide) {
-            .item:nth-child(1) {
-                @include item--with-overlay(gs-span(6), 24);
-            }
-            .item:nth-child(2) {
-                @include item--medium(gs-span(3));
-                .item__title {
-                    @include font-size(20, 24);
-                }
-            }
-            .item:nth-child(n+3) {
-                @include item--small(2);
-                .item__title {
-                    @include font-size(20, 24);
-                }
+            @include mq(wide) {
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(8), 28);
             }
         }
-        @include mq(wide) {
-            .item:nth-child(1) {
-                @include item--with-overlay(gs-span(8), 28);
+        .item:nth-child(2) {
+            @include mq(desktop, wide) {
+                @extend %item--medium;
+                @include customise-item--medium(gs-span(3));
+                .item__title {
+                    @include font-size(20, 24);
+                }
             }
-            .item:nth-child(2) {
-                @include item--medium(gs-span(4));
+            @include mq(wide) {
+                @extend %item--medium;
+                @include customise-item--medium(gs-span(4));
                 .item__title {
                     @include font-size(24, 28);
                 }
             }
-            .item:nth-child(n+3) {
-                @include item--small(2, $show-meta: true);
+        }
+        .item:nth-child(n+2) {
+            @include mq(tablet, desktop) {
+                @extend %item--small;
+                @include customise-item--small(3);
+                .item__title {
+                    @include font-size(20, 24);
+                }
+            }
+        }
+        .item:nth-child(n+3) {
+            @include mq(desktop, wide) {
+                @extend %item--small;
+                @include customise-item--small(2);
+                .item__title {
+                    @include font-size(20, 24);
+                }
+            }
+            @include mq(wide) {
+                @extend %item--small;
+                @include customise-item--small(2, $show-meta: true);
                 .item__title {
                     @include font-size(20, 24);
                 }
