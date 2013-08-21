@@ -16,6 +16,7 @@ object `package` {
     lazy val isSudoku: Boolean = content.tags exists { _.id == "type/sudoku" }
     lazy val isGallery: Boolean = content.tags exists { _.id == "type/gallery" }
     lazy val isVideo: Boolean = content.tags exists { _.id == "type/video" }
+    lazy val isPoll: Boolean = content.tags exists { _.id == "type/poll" }
   }
 
   implicit class Content2Is(content: Content) {
@@ -23,6 +24,7 @@ object `package` {
     lazy val isSudoku: Boolean = content.tags exists { _.id == "type/sudoku" }
     lazy val isGallery: Boolean = content.tags exists { _.id == "type/gallery" }
     lazy val isVideo: Boolean = content.tags exists { _.id == "type/video" }
+    lazy val isPoll: Boolean = content.tags exists { _.id == "type/poll" }
   }
 
   implicit class Media2rich(a: MediaAsset) {
