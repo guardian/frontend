@@ -53,8 +53,9 @@ window.addEventListener('load', function() {
                 }})
 
 
+    // Page views
     $.ajax({
-        url: 'http://dashboard.ophan.co.uk/graph/pageviews/data?mins=120&platform=next-gen&callback=?',
+        url: 'http://dashboard.ophan.co.uk/graph/pageviews/data?hours=2&platform=next-gen&callback=?',
         dataType: 'jsonp',
         cache: true,
         jsonpCallback: 'ophanCallback',
