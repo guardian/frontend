@@ -135,8 +135,8 @@ class RunningOrderTrailblockDescription(
               if (articles.isEmpty) {
                 Future(Nil)
               } else {
-                val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
-                val results = response map {r => r.results map{new Content(_)} }
+                val response = ContentApi.search(edition).ids(articles.mkString(",")).showFields("all").pageSize(List(articles.size, 50).min).response
+                val results = response map {r => r.results map{Content(_)} }
                 val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
                 sorted
               }
@@ -150,7 +150,7 @@ class RunningOrderTrailblockDescription(
               val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
 
               newSearch.response map { r =>
-                r.results.map(new Content(_))
+                r.results.map(Content(_))
               }
             } getOrElse Future(Nil)
 
