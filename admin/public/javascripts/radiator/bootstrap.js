@@ -49,4 +49,39 @@ window.addEventListener('load', function() {
                     });
 
                 }})
+
+
+    $.ajax({
+        url: 'http://dashboard.ophan.co.uk/graph/pageviews/data?mins=60&platform=next-gen&callback=?',
+        dataType: 'jsonp',
+        cache: true,
+        jsonpCallback: 'ophanCallback',
+        success: function(data) {
+
+            var todayData = data.seriesData.filter(function(item) {
+               return item.name === "Today";
+            })[0].data;
+
+            var graphData = [['time', 'pageviews']];
+            todayData.forEach(function(item) {
+                var timestamp 
+                graphData.push([item.x, item.y]);
+            });
+
+            new google.visualization.LineChart(document.getElementById('pageviews'))
+                .draw(google.visualization.arrayToDataTable(graphData), {
+                    title: 'Page views',
+                    backgroundColor: '#fff',
+                    colors: ['#333'],
+                    height: 175,
+                    legend: 'none',
+                    fontName: 'Georgia',
+                    titleTextStyle: {color: '#999'},
+                    hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
+                    //vAxis: { title: "page views", textStyle: {color: '#ccc'}, gridlines: { count: 3, color: '#ccc' } }
+                });
+
+            //$('#pageviews').html(data.totalHits)
+        }
+    })
 });
