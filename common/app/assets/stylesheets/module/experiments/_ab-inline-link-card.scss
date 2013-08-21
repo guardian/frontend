@@ -19,19 +19,14 @@
 }
 
 .furniture--right {
-  position: absolute;
-  width: $a-rightCol-width;
-  right: 0px;
-  bottom: $baseline*2;
+    position: absolute;
+    width: $a-rightCol-width;
+    right: ($a-rightCol-width + $gs-gutter)*-1;
+    bottom: $baseline*2;
 
     @include mq($a-rightCol-trigger) {
         display: block;
     }
-
-    @include mq($from: wide) {
-        right: 100px;
-    }
-
 }
 
 
