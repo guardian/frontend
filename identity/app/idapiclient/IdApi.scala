@@ -61,7 +61,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     val apiPath = urlJoin("user", "user-for-token")
     val params = Iterable(("token", token))
     val response = http.GET(apiUrl(apiPath), params)
-    response map jsonBodyParser.extract[User]()
+    response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
   def resetPassword( token : String, newPassword : String ): Future[Response[OkResponse]] = {
