@@ -356,7 +356,6 @@ a.cta, .cta a {
     float: left;
     width: 300px;
     padding: 10px;
-    background-color: #ccc;
 }
 
 .fronts .finder input[type="text"] {
@@ -391,17 +390,14 @@ a.cta, .cta a {
 .fronts .list-picker__title,
 .fronts .finder__title {
     font-size: 14px;
-}
-
-.fronts .finder__title {
-    color: #666;
+    font-weight: bold;
 }
 
 .fronts .list-tool {
     float: right;
     cursor: pointer;
     margin: 3px 2px 0 0;
-    opacity: 0.6;
+    opacity: 0.4;
 }
 
 .fronts .list-tool:hover {
@@ -557,13 +553,16 @@ a.cta, .cta a {
     padding: 5px 5px 10px 10px;
     border-left: 1px solid #666;
     border-right: 1px solid #666;
-    border-bottom: 1px dotted #666;
+    border-bottom: 1px solid #666;
 }
 
 .fronts .finder .trail {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    background-color: #eee;
+    border: 0;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.fronts .finder .trail:first-child {
 }
 
 .fronts .trail:hover {
@@ -661,6 +660,7 @@ a.cta, .cta a {
 }
 
 .fronts input[type="text"] {
+    background: #fff;
 }
 
 .fronts select {
@@ -681,10 +681,27 @@ a.cta, .cta a {
     font-weight: bold;
 }
 
-.fronts #clipboard {
-    min-height: 20px;
-    margin: 5px 0 10px 0;
-    background: #ddd;
+.fronts .clipboard__wrapper {
+    position: relative;
+    margin: 5px 0 40px 0;
+}
+
+.fronts #clipboard,
+.fronts #clipboard__overlay {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 50px;
+}
+
+.fronts #clipboard__overlay {
+    position: absolute;
+    z-index: -1;
+    border: 2px dashed #ccc;
+    width: 100%;
+    padding: 5px;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
 }
 
 .fronts .needs-more {

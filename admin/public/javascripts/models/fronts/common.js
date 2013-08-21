@@ -38,8 +38,8 @@ define([
 
                 var a = document.createElement('a');
                 a.href = url;
-                a = a.pathname + a.search + a.hash;
-                a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
+                a = a.pathname;
+                a = a.indexOf('/') === 0 ? a.substr(1) : a; // because IE doesn't return a leading '/'
                 return a;
             },
 
