@@ -232,7 +232,6 @@ object Switches extends Collections {
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     LiveCricketSwitch,
-    ABLightboxGalleries,
     FilmFrontFacia,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
