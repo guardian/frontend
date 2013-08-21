@@ -37,6 +37,7 @@ function tag {
 ################################################################################
 
 PROJECT=${TEAMCITY_BUILDCONF_NAME%-integration-tests}
+TRIGGERING_BUILD_NUMBER=${TRIGGERING_BUILD_NUMBER-NONE}
 CURRENT=$(currentStaged "${PROJECT}")
 
 if [ "${CURRENT}" != "${TRIGGERING_BUILD_NUMBER}" ]
