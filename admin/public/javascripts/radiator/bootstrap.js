@@ -1,4 +1,3 @@
-
 // bootstrap for http://localhost:9003/radiator
 
 window.addEventListener('load', function() {
@@ -14,7 +13,7 @@ window.addEventListener('load', function() {
                         var li = document.createElement('li');
                         li.className = check.status;
                         li.textContent = check.name;
-                        li.setAttribute('title', textContent);
+                        li.setAttribute('title', check.name);
                         pingdom.appendChild(li);
                     })
                 }})
