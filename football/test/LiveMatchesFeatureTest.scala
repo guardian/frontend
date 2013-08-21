@@ -17,7 +17,7 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
         val matches = $(".match-desc").getTexts
         matches should contain ("Arsenal 1-0 Spurs")
         matches should contain ("Chelsea 0-0 Man U")
-        matches should contain ("Cardiff 2-0 Brighton")
+        matches should contain ("Sunderland 1-1 West Ham")
       }
     }
 
