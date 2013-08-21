@@ -14,6 +14,7 @@ window.addEventListener('load', function() {
                         var li = document.createElement('li');
                         li.className = check.status;
                         li.textContent = check.name;
+                        li.setAttribute('title', textContent);
                         pingdom.appendChild(li);
                     })
                 }})
@@ -45,6 +46,7 @@ window.addEventListener('load', function() {
                         var li = document.createElement('li');
                         li.className = d.status;
                         li.innerHTML = d.projectName;
+                        li.setAttribute('title', d.projectName);
                         riffraff.appendChild(li);
                     });
 
@@ -64,8 +66,10 @@ window.addEventListener('load', function() {
 
             var graphData = [['time', 'pageviews']];
             todayData.forEach(function(item) {
-                var time = new Date(item.x * 1000),
-                    formattedTime = time.getHours() + ':' + time.getMinutes();
+                var time  = new Date(item.x * 1000),
+                    hours = ("0" + time.getHours()).slice(-2),
+                    mins  = ("0" + time.getMinutes()).slice(-2),
+                    formattedTime = hours + ':' + mins;
 
                 graphData.push([formattedTime, item.y]);
             });
@@ -79,10 +83,12 @@ window.addEventListener('load', function() {
                     legend: 'none',
                     fontName: 'Georgia',
                     titleTextStyle: {color: '#999'},
-                    hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' }
+                    hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
+                    smoothLine: true
                 });
-
-            //$('#pageviews').html(data.totalHits)
+        },
+        error: function() {
+            document.getElementById('pageviews').innerHTML = '<a href="http://dashboard.ophan.co.uk/login">Login to Ophan for Pageviews</a>';
         }
     })
 });
