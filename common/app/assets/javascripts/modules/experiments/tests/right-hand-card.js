@@ -27,25 +27,28 @@ define([
             },
             {
                 id: 'story-package-card',
-                test: function () {
+                test: function (context) {
                     var card = new Card({
-                        type: 'story-package'
+                        type: 'story-package',
+                        context: context
                     });
                 }
             },
             {
                 id: 'most-read-card',
-                test: function () {
+                test: function (context) {
                     var card = new Card({
-                        type: 'most-read'
+                        type: 'most-read',
+                        context: context
                     });
                 }
             },
             {
                 id: 'latest-card',
-                test: function () {
+                test: function (context) {
                     var card = new Card({
-                        type: 'latest'
+                        type: 'latest',
+                        context: context
                     });
                 }
             }

@@ -21,6 +21,7 @@ define([
 
     RightHandCard.prototype.DEFAULTS = {
         cls: '.card-wrapper--right',
+        context: document,
         supportedTypes: {
             'story-package' : false,
             'most-read'     : '/most-read/card.json',
@@ -32,14 +33,24 @@ define([
         if (detect.getLayoutMode() === 'extended') {
             if(this.type !== 'story-package') {
                 this.fetchData();
-            } else {
-                document.querySelector('.related-trails .t1').remove();
             }
+            this.dedupe();
+            common.mediator.emit('fragment:ready:dates');
         }
+    };
+
+    RightHandCard.prototype.dedupe = function() {
+        var headline = this.$el[0].querySelector('.card__headline').innerHTML;
+        common.toArray(this.options.context.querySelectorAll('.trail')).forEach(function(el){
+            if(el.querySelector('.trail__headline a').innerHTML.trim() === headline) {
+                el.remove();
+            }
+        });
     };
 
     RightHandCard.prototype.replaceCard = function(html) {
         this.$el.replaceWith(html);
+        this.$el = bonzo(document.querySelector(this.options.cls));
     };
 
     RightHandCard.prototype.fetchData = function() {
