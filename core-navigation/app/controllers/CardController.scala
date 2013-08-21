@@ -26,7 +26,6 @@ object CardController extends Controller with Logging with ExecutionContexts {
       "bbc.co.uk",
       "www.bbc.co.uk",
       "m.bbc.co.uk",
-      "nytimes.com",
       "www.nytimes.com",
       "vimeo.com",
       "www.vimeo.com",
