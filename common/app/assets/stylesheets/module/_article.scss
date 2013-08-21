@@ -6,6 +6,10 @@ $a-rightCol-trigger: gs-span(11) + $gutter*2;
 $mq-breakpoints: mq-add-breakpoint(rightCol, $a-rightCol-trigger);
 $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 
+.article {
+    position: relative;
+}
+
 .article-zone {
     padding: 13px 0 14px;
     margin-left: $gutter;
@@ -94,7 +98,7 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
     }
 }
 
-.article__inner {
+.article__main-column {
     position: relative;
 }
 
@@ -108,26 +112,29 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
     margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
 
-    @include mq(tablet, leftCol) {
-        font-size: 16px;
-        font-size: 1.6rem;
+    article & {
+        @include mq(tablet, leftCol) {
+            font-size: 16px;
+            font-size: 1.6rem;
+        }
+        @include mq(rightCol) {
+            display: block;
+        }
     }
-    @include mq(rightCol) {
-        display: block;
-    }
-    @include mq(leftCol) {
+}
+@include mq(leftCol) {
+    article .byline {
         float: left;
         margin-left: ($a-leftCol-width + $gs-gutter)*-1;
         margin-bottom: $baseline*4;
         width: $a-leftCol-width;
-
-        .media-primary + & {
-            margin-left: 0;
-            margin-bottom: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+    }
+    article .media-primary + .byline {
+        margin-left: 0;
+        margin-bottom: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 }
 @include mq(tablet) {
@@ -141,7 +148,7 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
     margin-left: $gutter * -1;
     margin-right: $gutter * -1;
 }
-.article .main-image {
+.main-image {
     margin-bottom: 0;
 }
 
@@ -198,20 +205,13 @@ video {
     .article-wrapper {
         position: relative;
         max-width: none;
-
-         > .article-zone {
-            margin-right: $a-rightCol-width + $gs-gutter;
-        }
     }
-    .d-show-cta-wrapper,
-    .article-head,
-    .after-header,
-    .article__inner {
-        padding-right: $a-rightCol-width + $gs-gutter !important;
+    .article__main-column {
+        padding-right: $a-rightCol-width + $gs-gutter;
         padding-left: 0;
         max-width: gs-span(8);
     }
-    .social-wrapper {
+    article .social-wrapper {
         padding: 0 !important;
         margin: 0 !important;
         position: absolute;
@@ -223,17 +223,11 @@ video {
 
 @include mq(leftCol) {
     .article-wrapper {
-        padding: 0 $gutter;
-
-        > .article-zone {
-            margin-left: $a-leftCol-width + $gs-gutter;
-        }
+        padding-left: $gutter;
+        padding-right: $gutter;
     }
-    .d-show-cta-wrapper,
-    .article-head,
-    .after-header,
-    .article__inner {
-        padding-left: $a-leftCol-width + $gs-gutter !important;
+    .article__main-column {
+        padding-left: $a-leftCol-width + $gs-gutter;
     }
     .article-head {
         padding-top: $baseline*2;

@@ -106,7 +106,7 @@ object Switches extends Collections {
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
-    safeState = Off)
+    safeState = On)
 
   val NetworkFrontAppealSwitch = Switch("Feature Switches", "network-front-appeal",
     "Switch to show the appeal trailblock on the network front.",
@@ -122,7 +122,7 @@ object Switches extends Collections {
 
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
-    safeState = Off)
+    safeState = On)
 
   val AustraliaFrontSwitch = Switch("Feature Switches", "australia-front",
     "If this switch is on the australia front will be available. Otherwise it will 404.",
@@ -138,11 +138,7 @@ object Switches extends Collections {
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
-    safeState = Off)
-
-  val InlineArticlesSwitch = Switch("Feature Switches", "inline-articles",
-    "If this switch is on then articles linked to in story packages will open inline",
-    safeState = Off)
+    safeState = On)
 
   // A/B Test Switches
 
@@ -170,8 +166,20 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
     safeState = Off)
 
+  val ABGalleryCta = Switch("A/B Tests", "ab-gallery-cta",
+    "If this is switched on an AB test runs to test different styles of CTAs to launch a gallery",
+    safeState = Off)
+
   val ABSwipeCtas = Switch("A/B Tests", "ab-swipe-ctas",
     "If this is switched on an AB test runs to trial the new swipe call to actions ",
+    safeState = Off)
+
+  val ABExpandableTrails = Switch("A/B Tests", "ab-expandable-trails",
+    "If this is switched on an AB test runs to trial the impact of having expandable content in trails",
+    safeState = Off)
+
+  val ABRightHandCard = Switch("A/B Tests", "ab-right-hand-card",
+    "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
     safeState = Off)
 
 
@@ -233,8 +241,10 @@ object Switches extends Collections {
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
+    ABGalleryCta,
     ABSwipeCtas,
-    InlineArticlesSwitch
+    ABExpandableTrails,
+    ABRightHandCard
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

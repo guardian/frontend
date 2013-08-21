@@ -1,4 +1,4 @@
-define(['common'], function (common) {
+define(function () {
 
     var ParagraphSpacing = function () {
 
@@ -19,19 +19,19 @@ define(['common'], function (common) {
             {
                 id: 'no-spacing',
                 test: function () {
-                    common.$g('body').addClass('test-paragraph-spacing--no-spacing');
+                    document.body.className += ' test-paragraph-spacing--no-spacing';
                 }
             },
             {
                 id: 'no-spacing-indents',
                 test: function () {
-                    common.$g('body').addClass('test-paragraph-spacing--no-spacing-indents');
+                    document.body.className += ' test-paragraph-spacing--no-spacing-indents';
                 }
             },
             {
                 id: 'more-spacing',
                 test: function () {
-                    common.$g('body').addClass('test-paragraph-spacing--more-spacing');
+                    document.body.className += ' test-paragraph-spacing--more-spacing';
                 }
             }
         ];

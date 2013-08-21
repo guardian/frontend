@@ -18,6 +18,22 @@
     }
 }
 
+.furniture--right {
+  position: absolute;
+  width: $a-rightCol-width;
+  right: 0px;
+  bottom: $baseline*2;
+
+    @include mq($a-rightCol-trigger) {
+        display: block;
+    }
+
+    @include mq($from: wide) {
+        right: 100px;
+    }
+
+}
+
 
 /* Card
    ========================================================================== */
@@ -25,13 +41,18 @@
 .card {
 
 }
+
+.card-wrapper {
+    &.is-hidden { display: none; }
+}
+
 .card__media {
     display: block;
     width: 100%;
 
     .furniture--left & {
         width: 140px;
-        height: 84px;
+        min-height: 84px;
     }
 }
 .card__title {
@@ -50,6 +71,12 @@
         background: $darkMushroom;
     }
 }
+
+.card__zone {
+    @extend %type-2;
+    margin-bottom: 0;
+}
+
 .card__headline {
     font-family: $serif !important; // Override .from-content-api h3 defaults
     color: #444;
@@ -57,4 +84,29 @@
     font-size: 1.4rem !important;
     line-height: 20px !important;
     line-height: 2rem !important;
+}
+
+.card__description {
+  color: #444;
+}
+
+.card--right {
+
+    &.is-hidden {
+      display: none;
+    }
+
+    .card__title {        
+        min-height: $unitHeight;
+        margin-bottom: $baseline*3;
+        border-top: 1px solid $grey;
+        @include font($serifheadline, 700, 18, 24);
+    }
+
+    .card__body {
+        padding-top: $baseline*2;
+        min-height: 180px;
+        @include box-sizing(border-box);
+        @include font($serifheadline, 700, 18, 24);
+    }
 }

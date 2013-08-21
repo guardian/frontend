@@ -55,8 +55,6 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
 
             this.$el.removeClass('is-hidden');
             this.isVisible = true;
-        } else {
-            this.hide();
         }
     };
 
@@ -80,7 +78,7 @@ define(['common', 'bean', 'bonzo'], function(common, bean, bonzo) {
 
         var debouncedHide = common.debounce(function(){
             self.hide();
-        }, 500);
+        }, 1500);
 
         bean.on(this.body, 'touchstart touchmove', function(){
             common.requestAnimationFrame(function(){

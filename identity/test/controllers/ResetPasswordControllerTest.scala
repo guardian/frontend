@@ -86,14 +86,14 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       "should redirect to the the to the request new password form" in Fake {
         val result = resetPasswordControkller.processUpdatePasswordToken("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        redirectLocation(result).get should equal("/recover/tokenexpired")
+        redirectLocation(result).get should equal("/requestnewtoken")
       }
     }
   }
 
   "the reset password method" - {
 
-    val fakeRequest = FakeRequest(POST, "/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password_confirm" -> "newpassword")
+    val fakeRequest = FakeRequest(POST, "/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password_confirm" -> "newpassword", "email_address" -> "test@somewhere.com")
     "when the token provided is valid" - {
       when(api.resetPassword(Matchers.any[String], Matchers.any[String])).thenReturn(Future.successful(Right(OkResponse("OK"))))
       "should call the api the password with the provided new password and token" in Fake {
@@ -111,7 +111,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       "should redirect to request request new password with a token expired" in Fake {
           val result = resetPasswordControkller.resetPassword("1234")(fakeRequest)
           status(result) should equal(SEE_OTHER)
-          redirectLocation(result).get should equal("/recover/tokenexpired")
+          redirectLocation(result).get should equal("/requestnewtoken")
       }
     }
 
@@ -119,8 +119,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       when(api.resetPassword("1234", "newpassword")).thenReturn(Future.successful(Left(accesssDenied)))
       "should redirect to request new password with a problem resetting your password" in Fake {
         val result = resetPasswordControkller.resetPassword("1234")(fakeRequest)
-        status(result) should equal(SEE_OTHER)
-        redirectLocation(result).get should equal("/recover/passworderror")
+        status(result) should equal(OK)
       }
     }
   }

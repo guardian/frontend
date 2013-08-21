@@ -25,9 +25,6 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
         teams should contain("Chelsea")
 
         teams should not contain ("Wigan") // 5th in prem league not visible
-
-        teams should contain("Bolton")
-        teams should contain("Cardiff")
       }
     }
 

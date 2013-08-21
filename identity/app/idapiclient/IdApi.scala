@@ -21,7 +21,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   protected def apiUrl(path: String) = urlJoin(apiRootUrl, path)
 
   protected def urlJoin(pathParts: String*) = {
-    pathParts.filter(_.nonEmpty).map(slug => {                         0
+    pathParts.filter(_.nonEmpty).map(slug => {
       slug.stripPrefix("/").stripSuffix("/")
     }) mkString "/"
   }
@@ -61,7 +61,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     val apiPath = urlJoin("user", "user-for-token")
     val params = Iterable(("token", token))
     val response = http.GET(apiUrl(apiPath), params)
-    response map jsonBodyParser.extract[User]()
+    response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
   def resetPassword( token : String, newPassword : String ): Future[Response[OkResponse]] = {

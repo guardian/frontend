@@ -24,7 +24,6 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         And("The next 3 days fixtures")
         matches should contain("Liverpool v Man C")
         matches should contain("Wigan v Fulham")
-        matches should contain("Wolves v Burnley")
         matches should contain("Stoke v Everton")
       }
     }
