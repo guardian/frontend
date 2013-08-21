@@ -96,13 +96,13 @@ define([
 
         this.pageNext = function() {
             self.page(self.page() + 1);
-            self.flush('Loading...');
+            self.flush('Searching...');
             self.search();
         }
 
         this.pagePrev = function() {
-            self.page(Math.max(1, self.page() - 1));
-            self.flush('Loading...');
+            self.page(_.max([1, self.page() - 1]));
+            self.flush('Searching...');
             self.search();
         }
 
