@@ -184,6 +184,12 @@
         }
     }
 
+    @include mq(desktop) {
+        .trails {
+            height: gs-height(6);
+        }
+    }
+
     .trails-count-1 {
         @include mq(desktop, wide) {
             .trail{
@@ -211,9 +217,7 @@
     }
 
     .trails-count-2 {
-
         @include mq($from: desktop) {
-            height: gs-height(6);
             .trail:nth-child(1) .trail__title {
                 @include font-size(24, 28);
             }
@@ -226,7 +230,7 @@
                 @include overlay(gs-span(6), 24);
             }
             .trail:nth-child(2) {
-                @include small-card(1, $show-meta: true, $show-standfirst: true);;
+                @include small-card(1, $show-meta: true);
             }
         }
         @include mq(wide) {
@@ -241,7 +245,6 @@
 
     .trails-count-3 {
         @include mq($from: desktop) {
-            height: gs-height(6);
             .trail:nth-child(1) {
                 @include overlay(gs-span(6), 20);
             }

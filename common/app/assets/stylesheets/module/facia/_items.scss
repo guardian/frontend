@@ -8,9 +8,8 @@ $grey: #cccccc;
 @mixin overlay($width, $font-size) {
     width: $width;
     margin-right: $gs-gutter;
-    .trail__title,
-    .trail__timestamp,
-    .trail__count a {
+    .trail__link,
+    .trail__meta {
         color: #ffffff;
     }
     .trail__title {
@@ -27,19 +26,19 @@ $grey: #cccccc;
     .trail__standfirst {
         display: none;
     }
+    .trail__meta {
+        border-left-color: $light-blue;
+    }
     .trail__timestamp {
         border-left-style: none;
-    }
-    .trail__count {
-        border-left-color: $light-blue;
     }
     &.trail--feature {
         .trail__title {
             background-color: $pink;
             background-color: rgba($pink, 0.7);
         }
-        .trail__count {
-            border-left-color: $light-pink;
+        .trail__meta {
+            border-left-color: $light-blue;
         }
     }
 }
@@ -125,14 +124,14 @@ $grey: #cccccc;
     }
     .trail__meta {
         left: $img-width + $gs-gutter;
+        border-left-color: $light-blue;
         .trail__timestamp {
             border-left-style: solid;
-            border-left-color: $light-blue;
         }
     }
     &.trail--feature {
         background-color: $pink;
-        .trail__timestamp {
+        .trail__meta {
             border-left-color: $light-pink;
         }
     }

@@ -36,12 +36,15 @@
             color: $grey;
             position: absolute;
             bottom: 0;
+            border-left-color: $grey;
         }
         .trail__timestamp,
         .trail__count {
             padding-bottom: $baseline * 5;
             float: left;
-            border-left: 1px solid $grey;
+            border-left: 1px solid;
+            /* inherit doesn't wotk in above shorthand, for some reason */
+            border-left-color: inherit;
             i {
                 margin:0;
                 position: absolute;
@@ -175,17 +178,6 @@
         }
     }
 
-    @include mq(tablet, wide) {
-        .trails {
-            height: gs-height(6);
-        }
-    }
-    @include mq(wide) {
-        .trails {
-            height: gs-height(8);
-        }
-    }
-
     .trails-count-1 {
         @include mq(tablet, desktop) {
             .trail {
@@ -303,21 +295,9 @@
     }
 
     .trails-count-4 {
-        .trail__standfirst {
-            display: none;
-        }
-        .trail:nth-child(n+2) .trail__image {
-            margin-bottom: $baseline*3;
-        }
-
         @include mq(tablet, desktop) {
             .trail:nth-child(1) {
-                width: $featured-img-width;
-                margin-right: $gs-gutter;
-                @include overlay(460, 24);
-                .trail__title {
-                    padding-top: $baseline*2;
-                }
+                @include overlay(gs-span(6), 24);
             }
             .trail:nth-child(n+2) {
                 @include small-card(3);
@@ -327,46 +307,37 @@
             }
         }
         @include mq(desktop, wide) {
-            .trail:nth-child(-n+2) {
-                margin-right: $gs-gutter;
-            }
             .trail:nth-child(1) {
-                width: $featured-img-width;
-                @include overlay(460, 24);
-                .trail__title {
-                    padding-top: $baseline*2;
-                }
-            }
-            .trail:nth-child(n+2) .trail__title {
-                @include font-size(20, 24);
+                @include overlay(gs-span(6), 24);
             }
             .trail:nth-child(2) {
-                width: 220px;
-                border-bottom: 1px solid $grey;
+                @include medium-card(gs-span(3));
+                .trail__title {
+                    @include font-size(20, 24);
+                }
             }
             .trail:nth-child(n+3) {
                 @include small-card(2);
+                .trail__title {
+                    @include font-size(20, 24);
+                }
             }
         }
         @include mq(wide) {
-            .trail:nth-child(-n+2) {
-                margin-right: $gs-gutter;
-            }
             .trail:nth-child(1) {
-                width: 620px;
-                @include overlay(620, 28);
+                @include overlay(gs-span(8), 28);
             }
-            .trail:nth-child(n+2) {
+            .trail:nth-child(2) {
+                @include medium-card(gs-span(4));
                 .trail__title {
                     @include font-size(24, 28);
                 }
             }
-            .trail:nth-child(2) {
-                width: 300px;
-                border-bottom: 1px solid $grey;
-            }
             .trail:nth-child(n+3) {
-                @include small-card(2);
+                @include small-card(2, $show-meta: true);
+                .trail__title {
+                    @include font-size(20, 24);
+                }
             }
         }
     }
