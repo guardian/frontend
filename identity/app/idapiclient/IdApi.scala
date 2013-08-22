@@ -1,7 +1,6 @@
 package idapiclient
 
 import com.gu.identity.model.User
-import client.Logging
 import client.{Anonymous, Auth, Response}
 import client.connection.Http
 import scala.concurrent.{Future, ExecutionContext}
@@ -11,9 +10,10 @@ import client.connection.util.ExecutionContexts
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.DefaultFormats
 import net.liftweb.json.Serialization.write
+import utils.SafeLogging
 
 
-abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends Logging {
+abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends SafeLogging {
   implicit def executionContext: ExecutionContext
   implicit val formats = DefaultFormats
 

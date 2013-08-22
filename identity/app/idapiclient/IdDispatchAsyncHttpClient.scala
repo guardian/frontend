@@ -2,6 +2,7 @@ package idapiclient
 
 import common.ExecutionContexts
 import client.connection.dispatch.DispatchAsyncHttpClient
+import utils.SafeLogging
 
 
-class IdDispatchAsyncHttpClient extends DispatchAsyncHttpClient with ExecutionContexts
+class IdDispatchAsyncHttpClient extends DispatchAsyncHttpClient with ExecutionContexts with SafeLogging
