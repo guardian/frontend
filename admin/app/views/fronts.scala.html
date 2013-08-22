@@ -140,10 +140,12 @@
                 </div>
                 <div class="connectedList persisted" data-bind="
                     attr: {
-                        'data-list-id': id,
-                        'data-live-edit': state.liveMode()
+                        'data-list-id': id
                     },
-                    css: {pending: state.loadIsPending},
+                    css: {
+                        'pending': state.loadIsPending,
+                        'is-live': state.liveMode() 
+                    },
                     template: {name: 'template_article', foreach: state.liveMode() ? live : draft}"></div>
             </div>
         </div>

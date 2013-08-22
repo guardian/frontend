@@ -163,7 +163,7 @@ define([
                 delta = {
                     item: id,
                     draft: true,
-                    live: !!list.attr('data-live-edit')
+                    live: list.hasClass('is-live')
                 };
 
                 position = inList.next().data('url');

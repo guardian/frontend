@@ -481,14 +481,16 @@ a.cta, .cta a {
 .fronts .list-header__status__draft {
     font-size: 12px;
     float: left;
-    padding: 0 6px;    
-    margin: 2px 0 0 1px;
-    background-color: #ccc;    
+    padding: 0 6px;
+    margin: 0 0 0 1px;
+    height: 19px;
+    background-color: #999;    
     cursor: pointer;
 }
 
 .fronts .list-header__status__live.active {
-    color: #d61d00;
+    color: #47ae38;
+    height: 20px;
     background-color: #fff;    
 }
 
@@ -497,17 +499,21 @@ a.cta, .cta a {
 }
 
 .fronts .list-header__status__draft.active {
-    color: #000;
-    background-color: #fff;    
+    height: 20px;
+    color: #f89406;
+    background-color: #ededed;    
 }
 
-.fronts .list-header__status__live__title,
+.fronts .list-header__status__live__title {
+    font-weight: bold;
+}
+
 .fronts .list-header__status__draft__title {
     font-weight: bold;
 }
 
 .fronts a.list-header__status__control {
-    color: #f89406;
+    color: #005580;
     cursor: pointer;
     text-transform: uppercase;
     font-size: 10px;
@@ -549,11 +555,15 @@ a.cta, .cta a {
     box-sizing: border-box;
     height: 107px;
     cursor: move;
-    background-color: #fff;
+    background-color: #ededed;
     padding: 5px 5px 10px 10px;
     border-left: 1px solid #666;
     border-right: 1px solid #666;
     border-bottom: 1px solid #666;
+}
+
+.fronts .is-live .trail {
+    background-color: #fff;
 }
 
 .fronts .finder .trail {
