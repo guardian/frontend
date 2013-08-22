@@ -104,7 +104,7 @@ object Us extends Edition(
 
     (Editionalise("", Us), Seq(
       RunningOrderTrailblockDescription("", "us/news/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("", "us/news/top-stories", "News", 10, style = Some(FastNews)),
+      RunningOrderTrailblockDescription("", "us/news/top-stories", "Latest News", 10, style = Some(FastNews)),
       RunningOrderTrailblockDescription("sport", "us/sport/top-stories", "Sports", 3, style = Some(SectionZone)),
       RunningOrderTrailblockDescription("commentisfree", "us/comment-is-free/top-stories", "Comment is free", 3, style = Some(SectionZone)),
       RunningOrderTrailblockDescription("culture", "us/culture/top-stories", "Culture", 3, style = Some(SectionZone)),

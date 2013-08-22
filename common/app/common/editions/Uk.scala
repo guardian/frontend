@@ -111,7 +111,7 @@ object Uk extends Edition(
 
     (Editionalise("", Uk), Seq(
       RunningOrderTrailblockDescription("", "uk/news/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("", "uk/news/top-stories", "News", 10, style = Some(FastNews)),
+      RunningOrderTrailblockDescription("", "uk/news/top-stories", "Latest News", 10, style = Some(FastNews)),
       RunningOrderTrailblockDescription("sport", "uk/sport/top-stories", "Sport", 3, style = Some(SectionZone)),
       RunningOrderTrailblockDescription("commentisfree", "uk/comment-is-free/top-stories", "Comment is free", 3, style = Some(SectionZone)),
       RunningOrderTrailblockDescription("culture", "uk/culture/top-stories", "Culture", 3, style = Some(SectionZone)),
