@@ -34,13 +34,16 @@
 
     .item-count-1 {
         .item{
+            .item__title {
+                @include font-size(28, 32);
+            }
             @include mq(desktop, wide) {
                 @extend %item--large;
-                @include customise-item--large(100%, gs-span(6), $font-size: 28);
+                @include customise-item--large(100%, gs-span(6));
             }
             @include mq(wide) {
                 @extend %item--large;
-                @include customise-item--large(gs-span(12), gs-span(6), $show-standfirst: true, $font-size: 28);
+                @include customise-item--large(gs-span(12), gs-span(6), $show-standfirst: true);
             }
         }
     }
@@ -49,17 +52,16 @@
         .item:nth-child(1) {
             @include mq(desktop, wide) {
                 @extend %item--with-overlay;
-                @include customise-item--with-overlay(gs-span(6), 24);
             }
             @include mq(wide) {
                 @extend %item--large;
-                @include customise-item--large(gs-span(9), gs-span(6), $font-size: 24);
+                @include customise-item--large(gs-span(9), gs-span(6));
             }
         }
         .item:nth-child(2) {
             @include mq(desktop, wide) {
                 @extend %item--small;
-                @include customise-item--small(1, $show-meta: true, $font-size: 20);
+                @include customise-item--small($num: 1, $show-meta: true);
             }
             @include mq(wide) {
                 @extend %item--medium;
@@ -72,11 +74,9 @@
         .item:nth-child(1) {
             @include mq(desktop, wide){
                 @extend %item--with-overlay;
-                @include customise-item--with-overlay(gs-span(6), 20);
             }
             @include mq(wide){
                 @extend %item--with-overlay;
-                @include customise-item--with-overlay(gs-span(6), 20);
             }
         }
         .item:nth-child(n+2) {
@@ -85,7 +85,6 @@
             }
             @include mq(desktop, wide) {
                 @extend %item--small;
-                @include customise-item--small(2);
             }
             @include mq(wide) {
                 @extend %item--medium;
