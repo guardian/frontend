@@ -1,9 +1,30 @@
+.zone-identity {
+    /* Hide sections menu for Identity pages */
+    #header {
+        .nav-container,
+        .nav-popup-sections,
+        .control--sections,
+        &:after {
+            display: none;
+        }
+    }
+
+    /* Position in absence of section menu */
+    #preloads {
+        margin-top: 58px;
+    }
+
+    /* Ads aren't served */
+    .ad-slot {
+        display: none;
+    }
+}
+
 .identity-wrapper {
     margin-left: auto;
     margin-right: auto;
     max-width: gs-span(6);
-    padding-left: $gutter;
-    padding-right: $gutter;
+    padding: $baseline*12 $gutter;
 }
 
 .identity-section {
