@@ -39,9 +39,6 @@ $grey: #cccccc;
     }
 }
 %item--with-overlay {
-    @include mq($to: tablet) {
-        @include item--with-overlay;
-    }
     @include mq(tablet, desktop) {
         @include item--with-overlay;
     }
@@ -79,9 +76,6 @@ $grey: #cccccc;
     }
 }
 %item--small {
-    @include mq($to: tablet) {
-        @include item--small;
-    }
     @include mq(tablet, desktop) {
         @include item--small;
     }
@@ -135,12 +129,6 @@ $grey: #cccccc;
     }
 }
 %item--medium {
-    @include mq($to: tablet) {
-        @include item--medium;
-    }
-    @include mq(tablet, desktop) {
-        @include item--medium;
-    }
     @include mq(desktop, wide) {
         @include item--medium;
     }
@@ -196,9 +184,6 @@ $grey: #cccccc;
     }
 }
 %item--large {
-    @include mq($to: tablet) {
-        @include item--large;
-    }
     @include mq(tablet, desktop) {
         @include item--large;
     }
