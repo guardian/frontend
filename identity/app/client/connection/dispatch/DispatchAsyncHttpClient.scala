@@ -58,19 +58,45 @@ trait DispatchAsyncHttpClient extends Http {
   }
 
   override def GET(uri: String, urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+    logger.debug("GET request %s; params: %s; headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)))
     val req = buildRequest(url(uri), urlParameters, headers)
-    new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either.map(mapFutureToResponse)
+    val futureResponse = new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either
+    futureResponse.onFailure{ case t: Throwable =>
+      logger.error("Exception GETing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+    }
+    futureResponse.onSuccess{ case Left(t) =>
+      logger.error("GET Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+    }
+    futureResponse.map(mapFutureToResponse)
   }
 
   override def POST(uri: String, body: Option[String], urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+    logger.debug("POST request %s; params: %s; headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)))
+    logger.trace("POST body %s".format(body))
     val req = buildRequest(url(uri).POST, urlParameters, headers)
-    body.foreach(req.setBody)
-    new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either.map(mapFutureToResponse)
+    val request = body.map(req.setBody).getOrElse(req).toRequest
+    val futureResponse = new EnrichedFuture(client(request, httpResponseHandler)).either
+    futureResponse.onFailure{ case t: Throwable =>
+      logger.error("Exception POSTing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+    }
+    futureResponse.onSuccess{ case Left(t) =>
+      logger.error("POST Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+    }
+    futureResponse.map(mapFutureToResponse)
   }
 
   override def DELETE(uri: String, body: Option[String], urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+    logger.debug("DELETE request %s; params: %s; headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)))
+    logger.trace("DELETE body %s".format(body))
     val req = buildRequest(url(uri).DELETE, urlParameters, headers)
-    body.foreach(req.setBody)
-    new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either.map(mapFutureToResponse)
+    val request = body.map(req.setBody).getOrElse(req).toRequest
+    val futureResponse = new EnrichedFuture(client(request, httpResponseHandler)).either
+    futureResponse.onFailure{ case t: Throwable =>
+      logger.error("Exception DELETEing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+    }
+    futureResponse.onSuccess{ case Left(t) =>
+      logger.error("DELETE Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+    }
+    futureResponse.map(mapFutureToResponse)
   }
 }
