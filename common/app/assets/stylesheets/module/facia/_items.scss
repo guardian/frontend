@@ -92,7 +92,7 @@ $grey: #cccccc;
         @include item--small;
     }
 }
-@mixin customise-item--small($num, $show-meta: false, $show-standfirst: false) {
+@mixin customise-item--small($num, $show-meta: false, $show-standfirst: false, $font-size: false) {
     height: 100%/$num;
     @if $show-standfirst == true {
         .item__standfirst {
@@ -105,6 +105,11 @@ $grey: #cccccc;
         }
         .item__meta {
             display: block;
+        }
+    }
+    @if $font-size != false {
+        .item__title {
+            @include font-size($font-size, $font-size + 4);
         }
     }
 }
@@ -143,8 +148,13 @@ $grey: #cccccc;
         @include item--medium;
     }
 }
-@mixin customise-item--medium($width) {
+@mixin customise-item--medium($width, $font-size: false) {
     width: $width;
+    @if $font-size != false {
+        .item__title {
+            @include font-size(20, 24);
+        }
+    }
 }
 
 @mixin item--large {
@@ -199,7 +209,7 @@ $grey: #cccccc;
         @include item--large;
     }
 }
-@mixin customise-item--large($width, $img-width, $show-standfirst: false) {
+@mixin customise-item--large($width, $img-width, $show-standfirst: false, $font-size: false) {
     width: $width;
     .item__image {
         width: $img-width;
@@ -209,7 +219,15 @@ $grey: #cccccc;
     }
     @if $show-standfirst == true {
         .item__standfirst {
-           display: block;
+            display: block;
+            @if $font-size != false {
+                @include font-size($font-size - 8, $font-size - 4);
+            }
+        }
+    }
+    @if $font-size != false {
+        .item__title {
+            @include font-size($font-size, $font-size + 4);
         }
     }
 }

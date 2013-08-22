@@ -36,20 +36,11 @@
         .item{
             @include mq(desktop, wide) {
                 @extend %item--large;
-                @include customise-item--large(100%, gs-span(6));
-                .item__title {
-                    @include font-size(28, 32);
-                }
+                @include customise-item--large(100%, gs-span(6), $font-size: 28);
             }
             @include mq(wide) {
                 @extend %item--large;
-                @include customise-item--large(gs-span(12), gs-span(6), $show-standfirst: true);
-                .item__title {
-                    @include font-size(28, 32);
-                }
-                .item__standfirst {
-                    @include font-size(20, 24);
-                }
+                @include customise-item--large(gs-span(12), gs-span(6), $show-standfirst: true, $font-size: 28);
             }
         }
     }
@@ -62,26 +53,17 @@
             }
             @include mq(wide) {
                 @extend %item--large;
-                @include customise-item--large(gs-span(9), gs-span(6));
-                .item__title {
-                    @include font-size(24, 28);                    
-                }
+                @include customise-item--large(gs-span(9), gs-span(6), $font-size: 24);
             }
         }
         .item:nth-child(2) {
             @include mq(desktop, wide) {
                 @extend %item--small;
-                @include customise-item--small(1, $show-meta: true);
-                .item__title {
-                    @include font-size(20, 24);
-                }
+                @include customise-item--small(1, $show-meta: true, $font-size: 20);
             }
             @include mq(wide) {
                 @extend %item--medium;
-                @include customise-item--medium(gs-span(3));
-                .item__title {
-                    @include font-size(20, 24);
-                }
+                @include customise-item--medium(gs-span(3), $font-size: 20);
             }
         }
     }
