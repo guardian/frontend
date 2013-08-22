@@ -104,14 +104,14 @@ object Us extends Edition(
 
     (Editionalise("", Us), Seq(
       RunningOrderTrailblockDescription("", "us/news/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("", "us/news/top-stories", "News", 5, style = Some(Featured), showMore = true),
-      RunningOrderTrailblockDescription("sport", "us/sport/top-stories", "Sports", 5, style = Some(Featured), showMore = true),
-      RunningOrderTrailblockDescription("commentisfree", "us/comment-is-free/top-stories", "Comment is free", 3, style = Some(Featured), showMore = true),
-      RunningOrderTrailblockDescription("culture", "us/culture/top-stories", "Culture", 3, style = Some(Thumbnail), showMore = true),
-      RunningOrderTrailblockDescription("business", "us/business/top-stories", "Business", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("lifeandstyle", "us/life-and-style/top-stories", "Life and style", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("technology", "us/technology/top-stories", "Technology", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("travel", "us/travel/top-stories", "Travel", 1, style = Some(Thumbnail))
+      RunningOrderTrailblockDescription("", "us/news/top-stories", "News", 10, style = Some(FastNews)),
+      RunningOrderTrailblockDescription("sport", "us/sport/top-stories", "Sports", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("commentisfree", "us/comment-is-free/top-stories", "Comment is free", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("culture", "us/culture/top-stories", "Culture", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("business", "us/business/top-stories", "Business", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("lifeandstyle", "us/life-and-style/top-stories", "Life and style", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("technology", "us/technology/top-stories", "Technology", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("travel", "us/travel/top-stories", "Travel", 3, style = Some(SectionZone))
     )),
 
     (Editionalise("sport", Us), Seq(
