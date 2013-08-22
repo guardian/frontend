@@ -6,6 +6,21 @@
     padding-right: $gutter;
 }
 
+.identity-section {
+    border-top: 1px solid $mushroom;
+    @include box-sizing(border-box);
+    margin: $gutter 0;
+    padding-top: $gutter - 1;
+}
+
+.identity-section__head {
+    @extend %type-5;
+}
+
+.identity-section__text {
+    margin-top: $baseline*2;
+}
+
 .nav--registration {
     margin-top: $baseline*9;
     text-align: center;
