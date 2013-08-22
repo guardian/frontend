@@ -19,19 +19,14 @@
 }
 
 .furniture--right {
-  position: absolute;
-  width: $a-rightCol-width;
-  right: 0px;
-  bottom: $baseline*2;
+    position: absolute;
+    width: $a-rightCol-width;
+    right: ($a-rightCol-width + $gs-gutter)*-1;
+    bottom: $baseline*2;
 
     @include mq($a-rightCol-trigger) {
         display: block;
     }
-
-    @include mq($from: wide) {
-        right: 100px;
-    }
-
 }
 
 
@@ -108,5 +103,10 @@
         min-height: 180px;
         @include box-sizing(border-box);
         @include font($serifheadline, 700, 18, 24);
+    }
+
+    .relative-timestamp {
+        position: absolute;
+        bottom: $baseline;
     }
 }
