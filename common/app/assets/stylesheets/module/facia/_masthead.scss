@@ -11,7 +11,6 @@
         @include mq(wide) {
             height: gs-height(8);
         }
-
     }
 
     @include mq($to: tablet) {
@@ -29,7 +28,7 @@
         }
         @include mq(wide) {
             @extend %item--large;
-            @include customise-item--large(gs-span(16), gs-span(8), $show-standfirst: true, $font-size: 36);
+            @include customise-item--large(100%, gs-span(8), $show-standfirst: true, $font-size: 36);
         }
     }
 
@@ -52,14 +51,13 @@
                 .item__title {
                     @include font-size(28, 32);
                 }
+                @include customise-item--small($num: 1, $show-meta: true);
             }
             @include mq(tablet, desktop) {
                 @extend %item--small;
-                @include customise-item--small($num: 1, $show-meta: true);
             }
             @include mq(desktop, wide) {
                 @extend %item--small;
-                @include customise-item--small($num: 1, $show-meta: true);
             }
             @include mq(wide) {
                 @extend %item--medium;

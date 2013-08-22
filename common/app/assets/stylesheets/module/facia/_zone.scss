@@ -1,13 +1,13 @@
 .section--zone {
 
     @include mq(tablet, desktop) {
-        margin-left: gs-span(5)+$gs-gutter;
+        margin-left: gs-span(5) + $gs-gutter;
     }
     @include mq(desktop, wide) {
-        margin-left: gs-span(3)+$gs-gutter;
+        margin-left: gs-span(3) + $gs-gutter;
     }
     @include mq(wide) {
-        margin-left: gs-span(4)+$gs-gutter;
+        margin-left: gs-span(4) + $gs-gutter;
     }
     margin-top: $baseline*4;
     padding-bottom: ($baseline * 2) - 1px;
@@ -34,16 +34,20 @@
 
     .item-count-1 {
         .item{
-            .item__title {
-                @include font-size(28, 32);
+            @include mq(desktop) {
+                .item__title {
+                    @include font-size(28, 32);
+                }
+                @include customise-item--large(100%, gs-span(6));
             }
             @include mq(desktop, wide) {
                 @extend %item--large;
-                @include customise-item--large(100%, gs-span(6));
             }
             @include mq(wide) {
                 @extend %item--large;
-                @include customise-item--large(gs-span(12), gs-span(6), $show-standfirst: true);
+                .item__standfirst {
+                    display: block;
+                }
             }
         }
     }
