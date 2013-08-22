@@ -11,6 +11,7 @@ import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.DefaultFormats
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
+import idapiclient.requests.TokenPassword
 
 
 abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends SafeLogging {
