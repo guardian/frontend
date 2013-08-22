@@ -111,15 +111,15 @@ object Uk extends Edition(
 
     (Editionalise("", Uk), Seq(
       RunningOrderTrailblockDescription("", "uk/news/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("", "uk/news/top-stories", "News", 5, style = Some(Featured), showMore = true),
-      RunningOrderTrailblockDescription("sport", "uk/sport/top-stories", "Sport", 5, style = Some(Featured), showMore = true),
-      RunningOrderTrailblockDescription("commentisfree", "uk/comment-is-free/top-stories", "Comment is free", 3, style = Some(Featured), showMore = true),
-      RunningOrderTrailblockDescription("culture", "uk/culture/top-stories", "Culture", 3, style = Some(Thumbnail), showMore = true),
-      RunningOrderTrailblockDescription("business", "uk/business/top-stories", "Business", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("lifeandstyle", "uk/life-and-style/top-stories", "Life and style", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("technology", "uk/technology/top-stories", "Technology", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("money", "uk/money/top-stories", "Money", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("travel", "uk/travel/top-stories", "Travel", 1, style = Some(Thumbnail))
+      RunningOrderTrailblockDescription("", "uk/news/top-stories", "Latest News", 10, style = Some(FastNews)),
+      RunningOrderTrailblockDescription("sport", "uk/sport/top-stories", "Sport", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("commentisfree", "uk/comment-is-free/top-stories", "Comment is free", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("culture", "uk/culture/top-stories", "Culture", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("business", "uk/business/top-stories", "Business", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("lifeandstyle", "uk/life-and-style/top-stories", "Life and style", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("technology", "uk/technology/top-stories", "Technology", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("money", "uk/money/top-stories", "Money", 3, style = Some(SectionZone)),
+      RunningOrderTrailblockDescription("travel", "uk/travel/top-stories", "Travel", 3, style = Some(SectionZone))
     )),
 
     (Editionalise("sport", Uk), Seq(
