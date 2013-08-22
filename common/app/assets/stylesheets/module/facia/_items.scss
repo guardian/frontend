@@ -34,7 +34,7 @@ $grey: #cccccc;
             background-color: rgba($pink, 0.7);
         }
         .item__meta {
-            border-left-color: $light-blue;
+            border-left-color: $light-pink;
         }
     }
 }
@@ -217,6 +217,7 @@ $grey: #cccccc;
 @mixin collection--stacked {
     .item {
         width: 100%;
+        float: none;
     }
     .item__standfirst {
         display: none;
@@ -237,17 +238,19 @@ $grey: #cccccc;
         .item__link,
         .item__meta {
             color: #ffffff;
-
         }
         .item__title {
             @include font-size(24, 28);
             margin: $baseline*3 $baseline*2 $baseline*10;
         }
-        .item__timestamp {
-            border-left-style: none;
-        }
-        .trail__count {
+        .item__meta {
             border-left-color: $light-blue;
+            .item__timestamp {
+                border-style-left: none;
+            }
+        }
+        &.item--feature .item__meta {
+            border-left: $light-pink;
         }
     }
     .item:nth-child(n+2) {
@@ -366,9 +369,8 @@ $grey: #cccccc;
     .item__title {
         font-weight: normal;
     }
-    .item__timestamp,
-    .trail__count{
-        border-color: $light-pink;
+    .item__meta {
+        border-left: $light-pink;
     }
     .item__timestamp {
         border-style: none;

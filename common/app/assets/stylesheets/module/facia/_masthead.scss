@@ -11,7 +11,7 @@
         @include mq(wide) {
             height: gs-height(8);
         }
-        
+
     }
 
     @include mq($to: tablet) {
@@ -51,7 +51,7 @@
     .item-count-2 {
         .item:nth-child(1) {
             @include mq(tablet, desktop) {
-                @extent %item--with-overlay;
+                @extend %item--with-overlay;
                 @include customise-item--with-overlay(gs-span(6), 24);
             }
             @include mq(desktop, wide) {
