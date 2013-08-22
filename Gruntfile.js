@@ -95,7 +95,11 @@ module.exports = function (grunt) {
             }
         },
         casperjs: {
-            files: ['integration-tests/casper/tests/network-front.spec.js']
+            files: ['integration-tests/casper/tests/admin-fronts.spec.js'],
+            options: {
+                // Pre-prod environments have self-signed SSL certs
+                ignoreSslErrors: 'yes'
+            }
         },
 
 //        casper: {
