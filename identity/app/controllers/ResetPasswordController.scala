@@ -59,9 +59,9 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
           api.sendPasswordResetEmail(email) map(_ match {
             case Left(errors) => {
               log.info("User not found for request new password.")
-              Ok(views.html.password.reset_password_confirmation(page, "email", email))
+              Ok(views.html.password.reset_password_confirmation(page, "reset-error", email))
             }
-            case Right(apiOk) => Ok(views.html.password.reset_password_confirmation(page, "email",  email))
+            case Right(apiOk) => Ok(views.html.password.reset_password_confirmation(page, "reset",  email))
           })
         }
        }
@@ -89,6 +89,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
                  case _ => SeeOther("/recover")
                }
              }
+
              case Right(ok) => Ok(views.html.password.reset_password_confirmation(page, "reset"))})
          }
        }
