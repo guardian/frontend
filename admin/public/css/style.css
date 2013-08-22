@@ -86,7 +86,7 @@ input[type=checkbox].status {
 }
 
 .article:hover {
-    background-color: #fff;
+    background-color: #ffffff;
 }
 
 .article a {
@@ -104,7 +104,7 @@ input[type=checkbox].status {
     display: inline-block;
 }
 
-.article-id { font-size: 1em; color: #999; margin-bottom: 0; font-size: 0.9em; }
+.article-id { font-size: 1em; color: #999999; margin-bottom: 0; font-size: 0.9em; }
 
 .meta {
     color: #BFBF9F;
@@ -186,7 +186,7 @@ img.agent-picture {
     margin: 2px 0 0 -3px;
     position: absolute;
     display: none; 
-    background-color: #fff;
+    background-color: #ffffff;
 }
 
 .article:hover .article-options {
@@ -198,7 +198,7 @@ img.agent-picture {
 
 .quote {
     margin: 4px 0 0 30px;
-    color: #666;
+    color: #666666;
     min-height: 50px;
 }
 
@@ -210,7 +210,7 @@ img.agent-picture {
 
 .quote-text:before, .quote-text:after {
     content: '"';
-    color: #999;
+    color: #999999;
 }
 
 .quote-url {
@@ -279,7 +279,7 @@ img.agent-picture {
 
 .cta { 
     font-size: 11px;
-    color: #ccc;
+    color: #cccccc;
 }
 
 a.cta, .cta a {
@@ -364,12 +364,12 @@ a.cta, .cta a {
 
 .fronts .finder__controls {
     font-size: 10px;
-    color: #666;
+    color: #666666;
     text-transform: uppercase;
 }
 
 .fronts header {
-    background-color: #ccc;
+    background-color: #cccccc;
     padding: 5px 5px 5px 10px;
     overflow: auto;
 }
@@ -414,7 +414,7 @@ a.cta, .cta a {
     display: inline-block;
     padding-right: 5px;
     margin-right:  5px;
-    border-right:  1px solid #ccc;
+    border-right:  1px solid #cccccc;
 }
 
 .fronts .list-picker__item:last-child {
@@ -436,8 +436,8 @@ a.cta, .cta a {
 }
 
 .fronts .list-header {
-    background-color: #666;
-    color: #fff;
+    background-color: #666666;
+    color: #ffffff;
     padding: 0;
     overflow: auto;
 }
@@ -445,7 +445,7 @@ a.cta, .cta a {
 .fronts .list-header a,
 .fronts .list-header a:hover,
 .fronts .list-header a:visited {
-    color: #fff;
+    color: #ffffff;
 }
 
 .fronts .list-header__title {
@@ -457,7 +457,7 @@ a.cta, .cta a {
     font-size: 18px;
     display: inline-block;
     padding-left: 4px;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #cccccc;
 }
 
 .fronts .list-header__title__part:first-child {
@@ -484,14 +484,14 @@ a.cta, .cta a {
     padding: 0 6px;
     margin: 0 0 0 1px;
     height: 19px;
-    background-color: #999;    
+    background-color: #999999;    
     cursor: pointer;
 }
 
 .fronts .list-header__status__live.active {
     color: #47ae38;
     height: 20px;
-    background-color: #fff;    
+    background-color: #ffffff;    
 }
 
 .fronts .list-header__status__draft.hasUnPublishedEdits {
@@ -524,7 +524,7 @@ a.cta, .cta a {
 
 .fronts a.list-header__status__control:hover,
 .fronts a.list-header__status__control:visited {
-    color: #000;
+    color: #000000;
 }
 
 .fronts .list-header__showSettings {
@@ -557,19 +557,19 @@ a.cta, .cta a {
     cursor: move;
     background-color: #ededed;
     padding: 5px 5px 10px 10px;
-    border-left: 1px solid #666;
-    border-right: 1px solid #666;
-    border-bottom: 1px solid #666;
+    border-left: 1px solid #666666;
+    border-right: 1px solid #666666;
+    border-bottom: 1px solid #666666;
 }
 
 .fronts .is-live .trail {
-    background-color: #fff;
+    background-color: #ffffff;
 }
 
 .fronts .finder .trail {
     border: 0;
-    border-top: 1px solid #ccc;
-    background-color: #fff;
+    border-top: 1px solid #cccccc;
+    background-color: #ffffff;
 }
 
 .fronts .finder .trail:first-child {
@@ -585,8 +585,8 @@ a.cta, .cta a {
 
 .fronts .ui-sortable-placeholder {
     height: 10px;
-    border-top: 3px solid #666;
-    border-bottom: 3px solid #666;
+    border-top: 3px solid #666666;
+    border-bottom: 3px solid #666666;
     background-color: #DFF0D8;
     visibility: visible !important;
 }
@@ -625,7 +625,7 @@ a.cta, .cta a {
 .fronts .trail .webTitle {
     display: block;
     text-decoration: none;
-    color: #000;
+    color: #000000;
     margin: 0 0 5px 0;
     height: 40px;
     overflow: hidden;
@@ -636,7 +636,7 @@ a.cta, .cta a {
 }
 
 .fronts .trail .trailText {
-    color: #666;
+    color: #666666;
     font-family: EgyptianText, georgia, serif;
     font-size: 14px;
     font-weight: normal;
@@ -647,7 +647,7 @@ a.cta, .cta a {
     width: 180px;
     height: 16px;
     float: right;
-    color: #999;
+    color: #999999;
     font-size: 10px;
     line-height: 10px;
 }
@@ -658,8 +658,8 @@ a.cta, .cta a {
 
 .fronts .persisted .trail:hover .trail__meta a {
     display: inline-block;
-    color: #666;
-    border-left: 1px #ddd solid;
+    color: #666666;
+    border-left: 1px #dddddd solid;
     padding-left: 4px;
     cursor: pointer;
 }
@@ -670,7 +670,7 @@ a.cta, .cta a {
 }
 
 .fronts input[type="text"] {
-    background: #fff;
+    background: #ffffff;
 }
 
 .fronts select {
@@ -706,19 +706,19 @@ a.cta, .cta a {
 .fronts #clipboard__overlay {
     position: absolute;
     z-index: -1;
-    border: 2px dashed #ccc;
+    border: 2px dashed #cccccc;
     width: 100%;
     padding: 5px;
-    color: #999;
+    color: #999999;
     font-size: 12px;
     text-align: center;
 }
 
 .fronts .needs-more {
-    border-left: 1px solid #666;
-    border-right: 1px solid #666;
+    border-left: 1px solid #666666;
+    border-right: 1px solid #666666;
     background: #d61d00;
-    color: #fff;
+    color: #ffffff;
     padding: 0px 10px;
     font-size: 12px;
     text-transform: uppercase;    
@@ -731,8 +731,8 @@ a.cta, .cta a {
 .fronts .list-config {
     padding: 2px 7px 7px 7px;
     font-size: 10px;
-    background: #666;
-    color: #fff;
+    background: #666666;
+    color: #ffffff;
 }
 
 .fronts .list-config.editable {
@@ -740,7 +740,7 @@ a.cta, .cta a {
 }
 
 .fronts .list-config a {
-    color: #666;
+    color: #666666;
     cursor: pointer;
 }
 
@@ -808,7 +808,7 @@ a.cta, .cta a {
 
 .browser-table thead .perc,
 .browser-table tfoot .perc {
-    color: #000;
+    color: #000000;
 }
 
 .browser-table .total {
