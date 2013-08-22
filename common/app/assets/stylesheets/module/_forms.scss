@@ -1,14 +1,16 @@
 [type=checkbox] {
     height: 13px;
     margin-left: $baseline;
-    vertical-align: middle;
+    position: relative;
+    top: -2px;
+    vertical-align: bottom;
     width: 13px;
 }
 
 form,
 .form {
-    margin-top: $baseline*9;
-    margin-bottom: $baseline*9;
+    margin-top: $baseline*6;
+    margin-bottom: $baseline*6;
     max-width: gs-span(6);
 }
 
@@ -37,32 +39,36 @@ form,
     .text-input,
     .text-input:focus {
         border-color: $newsRed;
-    }   
+    }
 }
 
 .form-field__error {
     color: $newsRed;
-    margin-top: $baseline*3;
+    margin-top: 6px;
 }
 
 label,
 .label {
+    color: #333;
     cursor: pointer;
     display: block;
-    font-size: 14px;
-    margin-bottom: $baseline*3;
+    font-size: 16px;
+    font-size: 1.6rem;
+    margin-bottom: 6px;
 }
 
 .text-input {
     border: 1px solid $grey;
+    @include box-shadow(none);
     @include box-sizing(border-box);
     color: #545454;
     display: inline-block;
     font-family: $sans-serif;
-    font-size: 13px;
-    font-size: 1.3rem;
+    font-size: 14px;
+    font-size: 1.4rem;
     line-height: 1.4;
-    padding: $baseline*2;
+    padding: 8px 8px 7px;
+    @include rounded-corners(0);
     width: 100%;
 
     &:focus {
@@ -75,12 +81,17 @@ label,
     border: 0 none;
     color: #fff;
     font-size: 14px;
+    font-size: 1.4rem;
     margin: 0 $gutter 0 0;
     min-width: gs-span(2);
-    padding: $baseline+1 0 $baseline*4 $gutter/4;
+    padding: 6px 0 16px 4px;
     text-align: left;
 
-    &:active, &:hover, &:focus {
+    &:hover, &:focus {
+        background: darken($linkBlue, 5%);
+    }
+
+    &:active {
         background: #000;
     }
 }
@@ -89,7 +100,7 @@ label,
     font-family: $sans-serif;
     font-size: 12px;
     font-size: 1.2rem;
-    margin-bottom: $baseline*3;
+    margin-bottom: 6px;
 }
 
 .check-list label,
