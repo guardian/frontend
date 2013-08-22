@@ -1,7 +1,7 @@
 @(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
 
 <ul class="nav nav--registration">
-    <li class="nav__item"><a class="nav__link" href="#">FAQ</a></li>
-    <li class="nav__item"><a class="nav__link" href="mailto:userhelp@@theguardian.com">Email Userhelp</a></li>
+    <li class="nav__item"><a class="nav__link" href="http://www.theguardian.com/help/identity-faq">FAQ</a></li>
+    <li class="nav__item"><a class="nav__link" href="mailto:userhelp@@theguardian.com?subject=Account%20help">Email Userhelp</a></li>
     <li class="nav__item"><a class="nav__link" href="@idUrlBuilder.buildUrl("/recover", idRequest)">Reset password</a></li>
 </ul>
