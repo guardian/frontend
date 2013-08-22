@@ -4,7 +4,7 @@
     @trail.discussionId.map{ id => data-discussion-id="@id" }
     @CricketMatch(trail).map{ id => data-cricket-match="@id" } >
     @if(!trail.leadingParagraphs.isEmpty) {
-        <input type="checkbox" name="foo" id="trail__expander-@trailId" class="trail__expander-trigger" tabindex="-1" />
+        <input type="checkbox" name="trail__expander-trigger" id="trail__expander-@trailId" class="trail__expander-trigger" tabindex="-1" />
     }
     <div class="trail__expander-wrapper">
         @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
