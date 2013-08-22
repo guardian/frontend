@@ -106,7 +106,7 @@ object Switches extends Collections {
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
-    safeState = On)
+    safeState = Off)
 
   val NetworkFrontAppealSwitch = Switch("Feature Switches", "network-front-appeal",
     "Switch to show the appeal trailblock on the network front.",
@@ -122,7 +122,7 @@ object Switches extends Collections {
 
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
-    safeState = On)
+    safeState = Off)
 
   val AustraliaFrontSwitch = Switch("Feature Switches", "australia-front",
     "If this switch is on the australia front will be available. Otherwise it will 404.",
@@ -138,7 +138,7 @@ object Switches extends Collections {
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
-    safeState = On)
+    safeState = Off)
 
   // A/B Test Switches
 
