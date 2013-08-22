@@ -61,7 +61,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
               log.info("User not found for request new password.")
               Ok(views.html.password.reset_password_confirmation(page, idRequest, idUrlBuilder, "reset-error", email))
             }
-            case Right(apiOk) => Ok(views.html.password.reset_password_confirmation(page, idRequest, idUrlBuilder, "reset",  email))
+            case Right(apiOk) => Ok(views.html.password.reset_password_confirmation(page, idRequest, idUrlBuilder, "email",  email))
           })
         }
        }
