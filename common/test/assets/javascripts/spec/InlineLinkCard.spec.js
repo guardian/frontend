@@ -74,7 +74,7 @@ define([
 
             expect(document.querySelectorAll('#test-card .card-wrapper:nth-child(2)').length).toBe(1);
         });
-        
+
         it('Should include passed data into placeholders', function() {
             new InlineLinkCard(linkToCardify, linkContext).prependCard(href, pageconfig.data);
 
@@ -92,6 +92,18 @@ define([
             expect(document.querySelectorAll('.card-wrapper').length).toBe(1);
             expect(document.querySelectorAll('.card').length).toBe(1);
             expect(document.querySelectorAll('.card__media').length).toBe(0);
+        });
+
+        it('Should be adapted to Wikipedia articles', function() {
+            var cardTitle = 'Wikipedia';
+
+            pageconfig.data.description = 'An example sentence from a wikipedia article';
+
+            new InlineLinkCard(linkToCardify, linkContext).prependCard(href, pageconfig.data, cardTitle);
+
+            expect(document.querySelector('.card__title').innerHTML).toContain(cardTitle);
+            expect(document.querySelectorAll('.card__headline').length).toBe(0);
+            expect(document.querySelector('.card__description').innerHTML).toContain(pageconfig.data.description);
         });
 
     });
