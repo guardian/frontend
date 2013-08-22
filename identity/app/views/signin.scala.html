@@ -10,7 +10,7 @@
 
     <form class="form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
         @if(signinForm.globalError.isDefined) {
-            <div class="form-field__error text-input__note">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
+            <div class="form__error">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
         }
 
         <ul class="form-fields">
