@@ -23,16 +23,13 @@ object CardController extends Controller with Logging with ExecutionContexts {
                 case 200 =>
                   val fragment = Jsoup.parseBodyFragment(response.body)
 
-                  // Do not display any image if it is our fallback
-                  var image = fragment.select("meta[property=og:image]").attr("content")
-                  if (image.contains(conf.Configuration.facebook.imageFallback)) {
-                    image = ""
-                  }
+                  val image = Option(fragment.select("meta[property=og:image]").attr("content"))
+                  val nonFallbackImage = image filterNot { _ contains conf.Configuration.facebook.imageFallback }
 
                   JsonComponent(Json.toJson(Map(
                     "url" -> fragment.select("meta[property=og:url]").attr("content"),
                     "title" -> fragment.select("meta[property=og:title]").attr("content"),
-                    "image" -> image,
+                    "image" -> nonFallbackImage.getOrElse(""),
                     "description" -> fragment.select("meta[property=og:description]").attr("content"),
                     "site_name" -> fragment.select("meta[property=og:site_name]").attr("content"),
                     "published_time" -> fragment.select("meta[property=article:published_time]").attr("content"),
