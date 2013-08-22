@@ -31,21 +31,37 @@
             <div class="finder__title">Clipboard</div>
             <div id="clipboard" class="connectedList"></div>
 
-            <i class="icon-refresh icon-white list-tool" data-bind="click: latestArticles.refresh"></i>
-            <div class="finder__title">Search Articles</div>
+            <div data-bind="with: latestArticles">
+                <i class="icon-refresh icon-white list-tool" data-bind="click: refresh"></i>
+                <div class="finder__title">Search Articles</div>
 
-            <input type="text" placeholder="url or keyword" data-bind='
-                event: {keyup: latestArticles.search, afterpaste: latestArticles.search},
-                value: latestArticles.term,
-                valueUpdate: ["afterkeydown", "afterpaste"]'/>
+                <input type="text" placeholder="url or keyword" data-bind='
+                    event: {keyup: search, afterpaste: search},
+                    value: term,
+                    valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
-            <input type="text" placeholder="section" data-bind='
-                event: {keyup: latestArticles.search, afterpaste: latestArticles.search},
-                value: latestArticles.section,
-                valueUpdate: ["afterkeydown", "afterpaste"]'/>
+                <input type="text" placeholder="section" data-bind='
+                    event: {keyup: search, afterpaste: search},
+                    value: section,
+                    valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
-            <div id="latest-articles" class="connectedList" data-bind="template: {name: 'template_article', foreach: latestArticles.articles()}">Searching...</div>
+                <div data-bind="template: {name: 'template_search_controls'}"></div>
+
+                <div id="latest-articles" class="connectedList" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
+
+                <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length > 0"></div>
+            </div>
+
         </div>
+
+        <script type="text/html" id="template_search_controls">
+            <div class="finder__controls">
+                Page <span data-bind="text: page"></span>
+                <a data-bind="click: pageNext">next</a>
+                <a data-bind="click: pagePrev, visible: page() > 1">prev</a>
+                <a data-bind="click: refresh,  visible: page() > 2">top</a>
+            </div>
+        </script>
 
         <div id="trailblocks" data-bind="foreach: listsDisplayed">
             <div class="trailblock">
