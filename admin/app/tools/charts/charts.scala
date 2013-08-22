@@ -232,6 +232,18 @@ object ActiveUserProportionGraph extends Chart with implicits.Tuples with implic
   }
 }
 
+object SwipeABTestOutcomeGraph extends Chart with implicits.Dates {
+  val name = "Swipe A/B Test Outcome"
+
+  lazy val variantCountsPerDay = Analytics.getSwipeABTestVariantCountsPerDay()
+
+  lazy val labels = (variantCountsPerDay map {
+    case (variant, _, _, _) => variant
+  } distinct) sorted
+
+  def dataset = Seq() // TODO: return list of day -> (variant, variantDayCount)
+}
+
 case class FastlyMetricGraph(
   name: String,
   metric: String,

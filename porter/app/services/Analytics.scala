@@ -735,4 +735,29 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
       case (days, day, count) => (days, day.year.get, day.monthOfYear.get, day.dayOfMonth.get, count)
     }
   }
+
+  // TODO: might be better if csv file holds list of ungrouped data: variant, year, month, day, count and this gets grouped at other end
+  // returns map of day -> (variant, variantDayCount)
+  def getSwipeABTestVariantCountsPerDay(): Map[DateMidnight, List[(String, Long)]] = {
+    PorterConfiguration.analytics.db withSession {
+      implicit session: Session =>
+
+        val data = StaticQuery.queryNA[(String, Int, Int, Int, Long)]( """
+        select variant, last_occurrence_year, last_occurrence_month, last_occurrence_day_of_month, count(*)
+        from experiments
+        where name = 'SwipeCtas'
+        group by variant, last_occurrence_year, last_occurrence_month, last_occurrence_day_of_month
+        order by last_occurrence_year, last_occurrence_month, last_occurrence_day_of_month""").list()
+
+        data groupBy {
+          case (variant, year, month, day, count) => (new DateMidnight(year, month, day))
+        } map {
+          case (date, values) =>
+            (date, values map {
+              case (variant, year, month, day, count) => (variant, count)
+            })
+        }
+    }
+  }
+
 }

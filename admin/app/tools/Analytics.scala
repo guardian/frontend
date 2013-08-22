@@ -314,4 +314,19 @@ object Analytics extends implicits.Dates with implicits.Tuples with implicits.St
 
     uptyped groupBy { _.first } mapValues { _ map { _.second }}
   }
+
+  def getSwipeABTestVariantCountsPerDay(): List[(String, Int, Int, Int)] = {
+    val data = S3.get(s"${Configuration.environment.stage.toUpperCase}/analytics/swipe-ab-test-variant-counts-per-day.csv")
+
+    val lines = data.toList flatMap {
+      _.split("\n")
+    }
+
+    lines map {
+      CSV.parse
+    } collect {
+      case List(variant, year, month, day, count) => (variant, year.toInt, month.toInt, day.toInt, count.toLong)
+    }
+  }
+
 }
