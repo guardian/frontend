@@ -136,7 +136,6 @@ class RunningOrderTrailblockDescription(
                 Future(Nil)
               } else {
                 val response = ContentApi.search(edition).ids(articles.mkString(",")).showFields("all").pageSize(List(articles.size, 50).min).response
-                response onFailure {case t: Throwable => log.warn("%s: %s".format(blockId, t.toString))}
                 val results = response map {r => r.results map{Content(_)} }
                 val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
                 sorted
@@ -149,8 +148,6 @@ class RunningOrderTrailblockDescription(
               val search = ContentApi.search(edition)
               val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
               val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
-
-              newSearch.response onFailure {case t: Throwable => log.warn("%s (%s)".format(t.toString, query))}
 
               newSearch.response map { r =>
                 r.results.map(Content(_))
