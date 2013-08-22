@@ -264,14 +264,14 @@ define([
             };
 
             model.edition.subscribe(function(edition) {
-                model.sections(edition ? _.keys(collections[edition]) : []);
+                model.sections(edition ? _.keys(collections[edition] || {}) : []);
                 model.section(undefined);
                 model.blocks([]);
                 model.block(undefined);
             });
 
             model.section.subscribe(function(section) {
-                model.blocks(section ? _.keys(collections[model.edition()][section]) : []);
+                model.blocks(section ? _.keys(collections[model.edition()][section] || {}) : []);
                 model.block(undefined);
 
                 if (section) {
