@@ -1,0 +1,13 @@
+@(page: MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+
+@import views.html.fragments.registrationFooter
+
+@main(page, Switches.all){
+}{
+<div class="identity-wrapper">
+    <h1>There was an error changing your password</h1>
+    <p>Please <a href="@idUrlBuilder.buildUrl("/recover", idRequest)">request another password reset</a> to signin.</p>
+
+    @registrationFooter(page, idRequest, idUrlBuilder)
+</div>
+}

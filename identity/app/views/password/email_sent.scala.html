@@ -1,0 +1,17 @@
+@(page: MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, emailAddress : String)(implicit request: RequestHeader)
+
+@import views.html.fragments.registrationFooter
+
+@main(page, Switches.all){
+}{
+<div class="identity-wrapper">
+    <h1>Now check your email</h1>
+    <p>
+        We've sent an email to @emailAddress.
+        <br>
+        Follow the link in the email to reset your password.
+    </p>
+
+    @registrationFooter(page, idRequest, idUrlBuilder)
+</div>
+}
