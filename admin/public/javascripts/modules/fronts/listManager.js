@@ -292,12 +292,16 @@ define([
 
             function onDrop(event) {
                 event.preventDefault();
-                var id = event.dataTransfer.getData('Text');
+                var url = event.dataTransfer.getData('Text');
 
-                if(!id) { return true; }
+                if(!url) { return true; }
+
+                if (common.util.urlHost(url).indexOf('google') > -1) {
+                    url = decodeURIComponent(common.util.parseQueryParams(url).url);
+                };
 
                 model.clipboard.unshift(new Article({
-                    id: common.util.urlAbsPath(id)
+                    id: common.util.urlAbsPath(url)
                 }));
 
                 contentApi.decorateItems(model.clipboard());
