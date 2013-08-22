@@ -44,7 +44,7 @@
 
             @fragments.byline(article.byline, article)
 
-            <div class="js-article__container article__container">
+            <div class="js-article__container article__container cf">
                 @if(article.isLive) {
                     @fragments.autoUpdate()
                 }
@@ -53,6 +53,10 @@
                 itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                     @BodyCleaner(article)
                 </div>
+
+                @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
+                    @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card")
+                }
             </div>
 
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
@@ -60,10 +64,6 @@
             }
             @fragments.social(article)
         </div>
-
-        @if(storyPackage.nonEmpty) {
-            @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card")
-        }
 
     </article>
 
