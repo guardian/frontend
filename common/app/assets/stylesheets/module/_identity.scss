@@ -5,3 +5,14 @@
     padding-left: $gutter;
     padding-right: $gutter;
 }
+
+.nav--registration {
+    margin-top: $baseline*9;
+    text-align: center;
+}
+
+.nav--registration .nav__item + .nav__item:before {
+    content: '\b7';
+    margin-left: 4px;
+    margin-right: 9px;
+}
