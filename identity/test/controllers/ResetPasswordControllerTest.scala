@@ -25,7 +25,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
   val omnitureData = mock[OmnitureTracking]
   val identityRequest = IdentityRequest(omnitureData, None)
 
-  val resetPasswordControkller = new ResetPasswordController(api, requestParser, idUrlBuilder)
+  val resetPasswordController = new ResetPasswordController(api, requestParser, idUrlBuilder)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
 
   val userNotFound = List(Error("Not found", "Resource not found", 404))
@@ -37,7 +37,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
   "the renderPasswordRequest method" - {
     "should render the password reset request form" in Fake {
-      val result = resetPasswordControkller.renderPasswordResetRequestForm()(TestRequest())
+      val result = resetPasswordController.renderPasswordResetRequestForm()(TestRequest())
       status(result) should equal(OK)
     }
   }
@@ -49,7 +49,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     "with an api response validating the user" - {
       when(api.sendPasswordResetEmail(any[String])).thenReturn(Future.successful(Right(user)))
       "should ask the api to send a reset email to the the the specified user" in Fake {
-        resetPasswordControkller.processPasswordResetRequestForm(fakeRequest)
+        resetPasswordController.processPasswordResetRequestForm(fakeRequest)
         verify(api).sendPasswordResetEmail(emailAddress)
       }
     }
@@ -58,8 +58,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       when(api.sendPasswordResetEmail(any[String])).thenReturn(Future.successful(Left(userNotFound)))
 
         "should redirect to the form" in Fake {
-          val result = resetPasswordControkller.processPasswordResetRequestForm(fakeRequest)
-          print(result)
+          val result = resetPasswordController.processPasswordResetRequestForm(fakeRequest)
           status(result) should equal (OK)
         }
     }
@@ -71,12 +70,12 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       "when the token provided is valid" - {
          when(api.userForToken(Matchers.any[String])).thenReturn(Future.successful(Right(user)))
          "should pass the token param to to the api" in Fake {
-           resetPasswordControkller.processUpdatePasswordToken("1234")(fakeRequest)
+           resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
            verify(api).userForToken(Matchers.eq("1234"))
          }
 
          "should render the reset password form when the user token has not expired" in Fake {
-             val result = resetPasswordControkller.processUpdatePasswordToken("1234")(fakeRequest)
+             val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
              status(result) should equal(OK)
          }
       }
@@ -84,7 +83,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     "when the token provided is not valid" - {
       when(api.userForToken("1234")).thenReturn(Future.successful(Left(tokenExpired)))
       "should redirect to the the to the request new password form" in Fake {
-        val result = resetPasswordControkller.processUpdatePasswordToken("1234")(fakeRequest)
+        val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
         redirectLocation(result).get should equal("/requestnewtoken")
       }
@@ -97,11 +96,11 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     "when the token provided is valid" - {
       when(api.resetPassword(Matchers.any[String], Matchers.any[String])).thenReturn(Future.successful(Right(OkResponse("OK"))))
       "should call the api the password with the provided new password and token" in Fake {
-         resetPasswordControkller.resetPassword("1234")(fakeRequest)
+         resetPasswordController.resetPassword("1234")(fakeRequest)
          verify(api).resetPassword(Matchers.eq("1234"), Matchers.eq("newpassword"))
       }
       "should return password confirmation view in" in Fake {
-         val result = resetPasswordControkller.resetPassword("1234")(fakeRequest)
+         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
          status(result) should be (OK)
       }
     }
@@ -109,7 +108,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     "when the reset token has expired" - {
       when(api.resetPassword("1234","newpassword")).thenReturn(Future.successful(Left(tokenExpired)))
       "should redirect to request request new password with a token expired" in Fake {
-          val result = resetPasswordControkller.resetPassword("1234")(fakeRequest)
+          val result = resetPasswordController.resetPassword("1234")(fakeRequest)
           status(result) should equal(SEE_OTHER)
           redirectLocation(result).get should equal("/requestnewtoken")
       }
@@ -118,7 +117,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     "when the reset token is not valid" - {
       when(api.resetPassword("1234", "newpassword")).thenReturn(Future.successful(Left(accesssDenied)))
       "should redirect to request new password with a problem resetting your password" in Fake {
-        val result = resetPasswordControkller.resetPassword("1234")(fakeRequest)
+        val result = resetPasswordController.resetPassword("1234")(fakeRequest)
         status(result) should equal(OK)
       }
     }
