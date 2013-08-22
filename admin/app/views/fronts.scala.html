@@ -4,7 +4,7 @@
 
     <div class="splash" data-bind="visible: false">Loading Editor...</div> 
 
-    <div class="fronts" data-bind="visible: true" style="display: none">
+    <div class="fronts" data-bind="visible: true, makeDropabble: true" style="display: none">
         <header>
             <div class="tool-title">Collections Editor</div>
             <div class="list-picker">
@@ -27,13 +27,19 @@
         </header>
 
         <div class="finder">
-            <i class="icon-trash icon-white list-tool" data-bind="click: flushClipboard"></i>
+
+            <i class="icon-trash list-tool" data-bind="click: actions.flushClipboard"></i>
             <div class="finder__title">Clipboard</div>
-            <div id="clipboard" class="connectedList"></div>
+            <div class="clipboard__wrapper">
+                <div id="clipboard__overlay" data-bind="visible: clipboard().length === 0">
+                    Drag articles and drop them here. <br />Works from Guardian and Ophan sites.</div>
+                <div id="clipboard" class="connectedList" data-bind="
+                    template: {name: 'template_article', foreach: clipboard}"></div>
+            </div>
 
             <div data-bind="with: latestArticles">
-                <i class="icon-refresh icon-white list-tool" data-bind="click: refresh"></i>
-                <div class="finder__title">Search Articles</div>
+                <i class="icon-refresh list-tool" data-bind="click: refresh"></i>
+                <div class="finder__title">Latest Articles</div>
 
                 <input type="text" placeholder="url or keyword" data-bind='
                     event: {keyup: search, afterpaste: search},
@@ -134,10 +140,12 @@
                 </div>
                 <div class="connectedList persisted" data-bind="
                     attr: {
-                        'data-list-id': id,
-                        'data-live-edit': state.liveMode()
+                        'data-list-id': id
                     },
-                    css: {pending: state.loadIsPending},
+                    css: {
+                        'pending': state.loadIsPending,
+                        'is-live': state.liveMode() 
+                    },
                     template: {name: 'template_article', foreach: state.liveMode() ? live : draft}"></div>
             </div>
         </div>

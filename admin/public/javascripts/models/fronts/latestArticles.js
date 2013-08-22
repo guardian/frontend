@@ -24,7 +24,6 @@ define([
         this.articles   = ko.observableArray();
         this.term       = ko.observable(common.util.queryParams().q || '');
         this.section    = ko.observable('');
-        this.mostViewed = ko.observable(false);
         this.page       = ko.observable(1);
 
         var reqwest = opts.reqwest || Reqwest;
@@ -33,16 +32,21 @@ define([
             return self.term().match(/\//);
         }
 
-        this.term.subscribe(function(){ self.search(); });
-        this.section.subscribe(function(){ self.search(); });
-        this.mostViewed.subscribe(function(){ self.search(); });
+        this.term.subscribe(function(){ self.search({flushFirst: true}); });
+        this.section.subscribe(function(){ self.search({flushFirst: true}); });
 
         // Grab articles from Content Api
-        this.search = function() {
+        this.search = function(opts) {
+            opts = opts || {};
+
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
 
                 var url, propName;
+
+                if (!opts.noFlushFirst) {
+                    self.flush('searching...');
+                };
 
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
@@ -55,7 +59,6 @@ define([
                     url += '&page=' + self.page();
                     url += '&q=' + encodeURIComponent(self.term());
                     url += '&section=' + encodeURIComponent(self.section());
-                    url += self.mostViewed() ? '&show-most-viewed=true' : '';
                     propName = 'results';
                 }
 
@@ -89,27 +92,24 @@ define([
         }
 
         this.refresh = function() {
-            self.flush('Searching...');
             self.page(1);
             self.search();
         }
 
         this.pageNext = function() {
             self.page(self.page() + 1);
-            self.flush('Searching...');
             self.search();
         }
 
         this.pagePrev = function() {
             self.page(_.max([1, self.page() - 1]));
-            self.flush('Searching...');
             self.search();
         }
 
         function _startPoller() {
             setInterval(function(){
                 if (self.page() === 1) {
-                    self.search();
+                    self.search({noFlushFirst: true});
                 }
             }, 10000);
         }
