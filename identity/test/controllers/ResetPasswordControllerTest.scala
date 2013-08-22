@@ -44,7 +44,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
   "the processPasswordRequestForm" - {
     var emailAddress: String = "test@example.com"
-    val fakeRequest = FakeRequest(POST, "/recover").withFormUrlEncodedBody("email" -> emailAddress)
+    val fakeRequest = FakeRequest(POST, "/reset").withFormUrlEncodedBody("email" -> emailAddress)
 
     "with an api response validating the user" - {
       when(api.sendPasswordResetEmail(any[String])).thenReturn(Future.successful(Right(user)))

@@ -86,7 +86,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
                     val formWithError = requestPasswordResetForm.withError(FormError("", Messages("error.passwordReset")))
                    Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, formWithError))
                  }
-                 case _ => SeeOther("/recover")
+                 case _ => SeeOther("/reset")
                }
              }
 
