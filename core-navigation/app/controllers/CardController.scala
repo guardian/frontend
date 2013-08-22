@@ -43,10 +43,16 @@ object CardController extends Controller with Logging with ExecutionContexts {
               response.status match {
                 case 200 =>
                   val fragment = Jsoup.parseBodyFragment(response.body)
+
+                  val image = Option(fragment.select("meta[property=og:image]").attr("content"))
+                  val nonFallbackImage = image filter { !_.contains(conf.Configuration.facebook.imageFallback) }
+                  // To test a story that has no image:
+                  // /cards/opengraph/http%3A%2F%2Fwww.theguardian.com%2Fmedia%2Fgreenslade%2F2013%2Faug%2F22%2Fjournalist-safety-egypt
+
                   JsonComponent(Json.toJson(Map(
                     "url" -> fragment.select("meta[property=og:url]").attr("content"),
                     "title" -> fragment.select("meta[property=og:title]").attr("content"),
-                    "image" -> fragment.select("meta[property=og:image]").attr("content"),
+                    "image" -> nonFallbackImage.getOrElse(""),
                     "description" -> fragment.select("meta[property=og:description]").attr("content"),
                     "site_name" -> fragment.select("meta[property=og:site_name]").attr("content"),
                     "published_time" -> fragment.select("meta[property=article:published_time]").attr("content"),

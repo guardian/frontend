@@ -8,9 +8,10 @@ import client.parser.JsonBodyParser
 import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
 import client.connection.util.ExecutionContexts
 import net.liftweb.json.JsonAST.JValue
+import utils.SafeLogging
 
 
-abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends Logging {
+abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends SafeLogging {
   implicit def executionContext: ExecutionContext
 
   protected def apiUrl(path: String) = urlJoin(apiRootUrl, path)
