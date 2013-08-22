@@ -1,11 +1,13 @@
 define([
     'common',
     'modules/detect',
+    'modules/userPrefs',
     'modules/experiments/left-hand-card'
 ],
 function (
     common,
     detect,
+    userPrefs,
     Card
 ) {
 
@@ -29,9 +31,11 @@ function (
             {
                 id: 'link-card',
                 test: function () {
-                    var card = new Card({
-                        type: 'internal'
-                    });
+                    if (userPrefs.iOff('externalLinksCards')) {
+                        var card = new Card({
+                            type: 'internal'
+                        });
+                    }
                 }
             }
         ];

@@ -31,6 +31,7 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
+    'modules/experiments/left-hand-card',
     'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
@@ -69,6 +70,7 @@ define([
     AdvertsAnalytics,
     Debug,
     ab,
+    LeftHandCard,
     swipeNav,
     VideoAdvert,
     CommentCount,
@@ -272,6 +274,18 @@ define([
             });
         },
 
+        externalLinksCards: function () {
+            var key = '';
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (!userPrefs.iOff('externalLinksCards')) {
+                    document.body.className += ' ab-expandable-trails--on';
+                    var card = new LeftHandCard({
+                        type: 'external'
+                    });
+                }
+            });
+        },
+
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
@@ -394,6 +408,7 @@ define([
             modules.betaOptIn();
             modules.faciaOptToggle();
             modules.paragraphSpacing();
+            modules.externalLinksCards();
         }
         common.mediator.emit("page:common:ready", config, context);
     };
