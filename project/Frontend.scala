@@ -90,7 +90,8 @@ object Frontend extends Build with Prototypes {
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
       "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
-      "org.mockito" % "mockito-all" % "1.9.5" % "test"
+      "org.mockito" % "mockito-all" % "1.9.5" % "test",
+      "org.slf4j" % "slf4j-ext" % "1.7.5"
     )
   )
 
@@ -101,7 +102,7 @@ object Frontend extends Build with Prototypes {
       "org.json" % "org.json" % "chargebee-1.0",
       "joda-time" % "joda-time" % "2.2",
       "hu.meza" % "aao" % "2.0.0",
-      "hu.meza.tools" % "config" % "0.1.1",
+      "hu.meza.tools" % "config" % "1.0.1",
       "hu.meza.tools" % "http-client-wrapper" % "0.1.9",
       "info.cukes" % "cucumber-java" % "1.1.3",
       "info.cukes" % "cucumber-junit" % "1.1.3",

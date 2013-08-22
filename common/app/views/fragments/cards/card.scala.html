@@ -13,9 +13,10 @@
                 />
             }
         }
-        <div class="card__body u-text-hyphenate zone-@trail.sectionName">
+        <div class="card__body u-text-hyphenate zone-@trail.section">
             <h3 class="card__zone zone-color">@trail.sectionName</h3>
             <h3 class="card__headline">@trail.headline</h3>
+            @fragments.relativeDate(trail.webPublicationDate, trail.isLive)
         </div>
     </div>
 </a>

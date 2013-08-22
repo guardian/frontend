@@ -135,9 +135,9 @@ class RunningOrderTrailblockDescription(
               if (articles.isEmpty) {
                 Future(Nil)
               } else {
-                val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
+                val response = ContentApi.search(edition).ids(articles.mkString(",")).showFields("all").pageSize(List(articles.size, 50).min).response
                 response onFailure {case t: Throwable => log.warn("%s: %s".format(blockId, t.toString))}
-                val results = response map {r => r.results map{new Content(_)} }
+                val results = response map {r => r.results map{Content(_)} }
                 val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
                 sorted
               }
@@ -153,7 +153,7 @@ class RunningOrderTrailblockDescription(
               newSearch.response onFailure {case t: Throwable => log.warn("%s (%s)".format(t.toString, query))}
 
               newSearch.response map { r =>
-                r.results.map(new Content(_))
+                r.results.map(Content(_))
               }
             } getOrElse Future(Nil)
 
