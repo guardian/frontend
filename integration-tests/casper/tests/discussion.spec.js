@@ -6,6 +6,9 @@
  * Discussion feature tests 
  *
  **/
+var casper = require('casper').create(),
+    host = casper.cli.get('host') || "http://m.code.dev-theguardian.com/";
+
 casper.start(host + 'world/2013/jun/06/obama-administration-nsa-verizon-records');
 
 /**

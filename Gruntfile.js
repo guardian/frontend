@@ -1,7 +1,7 @@
 /* global module: false */
 module.exports = function (grunt) {
-    process.env['CASPERJS_EXECUTABLE'] = 'dev/casperjs/bin/casperjs';
-    process.env['PHANTOMJS_EXECUTABLE'] = 'node_modules/phantomjs/bin/phantomjs';
+//    process.env['CASPERJS_EXECUTABLE'] = 'dev/casperjs/bin/casperjs';
+//    process.env['PHANTOMJS_EXECUTABLE'] = 'node_modules/phantomjs/bin/phantomjs';
     var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1';
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -80,32 +80,50 @@ module.exports = function (grunt) {
             }
         },
 
-        casper: {
-          options : {
-            test : true,
-            direct : true,
-            includes : 'integration-tests/casper/tests/shared.js',
-            'log-level' : 'info',
-            host: 'http://localhost:9000/'
-          },           
-          common : {
-            src: ['integration-tests/casper/tests/*.spec.js'],
-            dest : function(input) {
-              var i = input.replace('/casper/tests/', '/target/casper-xunit-reports/');
-              i = i.replace(/\.js$/,'.xml');
-              console.log(i);
-              return i;
+        // Much of the CasperJS setup borrowed from smlgbl/grunt-casperjs-extra
+        env: {
+            casperjs: {
+                add: {
+                    PHANTOMJS_EXECUTABLE: "node_modules/casperjs/node_modules/.bin/phantomjs"
+                },
+                extend: {
+                    PATH: {
+                        value: 'node_modules/.bin',
+                        delimiter: ':'
+                    }
+                }
             }
-          },
-          discussion: {
-            src: ['integration-tests/casper/tests/discussion.spec.js'],
-            dest: 'integration-tests/target/casper-xunit-reports/discussion.spec.xml'
-          },
-          networkfront: {
-            src: ['integration-tests/casper/tests/network-front.spec.js'],
-            dest: 'integration-tests/target/casper-xunit-reports/network-front.spec.xml'
-          }
-        },        
+        },
+        casperjs: {
+            files: ['integration-tests/casper/tests/network-front.spec.js']
+        },
+
+//        casper: {
+//              options : {
+//                test : true,
+//                direct : true,
+//                includes : 'integration-tests/casper/tests/shared.js',
+//                'log-level' : 'info',
+//                host: 'http://localhost:9000/'
+//              },
+//              common : {
+//                src: ['integration-tests/casper/tests/*.spec.js'],
+//                dest : function(input) {
+//                  var i = input.replace('/casper/tests/', '/target/casper-xunit-reports/');
+//                  i = i.replace(/\.js$/,'.xml');
+//                  console.log(i);
+//                  return i;
+//                }
+//              },
+//              discussion: {
+//                    src: ['integration-tests/casper/tests/discussion.spec.js'],
+//                    dest: 'integration-tests/target/casper-xunit-reports/discussion.spec.xml'
+//              },
+//              networkfront: {
+//                    src: ['integration-tests/casper/tests/network-front.spec.js'],
+//                    dest: 'integration-tests/target/casper-xunit-reports/network-front.spec.xml'
+//              }
+//        },
 
         // Lint Javascript sources
         jshint: {
@@ -238,10 +256,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-webfontjson');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-casper');
+    grunt.loadNpmTasks('grunt-casperjs');
+    grunt.loadNpmTasks('grunt-env');
 
     // Standard tasks
-    grunt.registerTask('test:integration', ['casper:common']);
+    //grunt.registerTask('test:integration', ['casper:common']);
+    grunt.registerTask('test:integration',  ['env:casperjs', 'casperjs']);
     grunt.registerTask('test:common', ['jshint:common', 'casper:common']);
     grunt.registerTask('test', ['test:common']);
 
