@@ -152,7 +152,7 @@ class Video(private val delegate: ApiContent) extends Content(delegate) with Ima
 
   private implicit val ordering = EncodingOrdering
 
-  private val videoAsset: Option[MediaAsset] = videoAssets.headOption
+  lazy val videoAsset: Option[MediaAsset] = videoAssets.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil).sorted
   lazy val contentType = "Video"
   lazy val source: Option[String] = videoAsset.flatMap(_.safeFields.get("source"))

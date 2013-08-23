@@ -4,19 +4,23 @@ define([
     'models/fronts/common',
     'models/fronts/list',
     'models/fronts/article',
-    'models/fronts/latestArticles'
+    'models/fronts/latestArticles',
+    'models/fronts/contentApi',
+    'models/fronts/ophanApi'
 ], function(
     reqwest,
     knockout,
     common,
     List,
     Article,
-    LatestArticles
+    LatestArticles,
+    contentApi,
+    ophanApi
 ) {
     var collections = {},
         sectionSearches,
         dragging = false,
-        clipboard = document.querySelector('#clipboard'),
+        clipboardEl = document.querySelector('#clipboard'),
         listLoadsPending = 0,
         loc = window.location;
 
@@ -159,7 +163,7 @@ define([
                 delta = {
                     item: id,
                     draft: true,
-                    live: !!list.attr('data-live-edit')
+                    live: list.hasClass('is-live')
                 };
 
                 position = inList.next().data('url');
@@ -242,6 +246,7 @@ define([
         this.init = function(callback) {
             model.latestArticles  = new LatestArticles();
             model.listsDisplayed  = knockout.observableArray();
+            model.clipboard        = knockout.observableArray();
 
             model.editions = knockout.observableArray();
             model.edition  = knockout.observable();
@@ -256,12 +261,9 @@ define([
                 displaySelectedBlocks: displaySelectedBlocks,
                 displayInAllEditions: displayInAllEditions,
                 dropList: dropList,
-                clearAll: clearAll
+                clearAll: clearAll,
+                flushClipboard: flushClipboard
             }
-
-            model.flushClipboard = function() {
-                clipboard.innerHTML = '';
-            };
 
             model.edition.subscribe(function(edition) {
                 model.sections(edition ? _.keys(collections[edition] || {}) : []);
@@ -278,6 +280,40 @@ define([
                     model.latestArticles.section(sectionSearches[section] || section);
                 }
             });
+
+            function flushClipboard() {
+                model.clipboard.removeAll();
+                clipboardEl.innerHTML = '';
+            };
+
+            function onDragOver(event) {
+                event.preventDefault();
+            }
+
+            function onDrop(event) {
+                event.preventDefault();
+                var url = event.dataTransfer.getData('Text');
+
+                if(!url) { return true; }
+
+                if (common.util.urlHost(url).indexOf('google') > -1) {
+                    url = decodeURIComponent(common.util.parseQueryParams(url).url);
+                };
+
+                model.clipboard.unshift(new Article({
+                    id: common.util.urlAbsPath(url)
+                }));
+
+                contentApi.decorateItems(model.clipboard());
+                ophanApi.decorateItems(model.clipboard());
+            }
+
+            knockout.bindingHandlers.makeDropabble = {
+                init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                    element.addEventListener('dragover',  onDragOver,  false);
+                    element.addEventListener('drop',      onDrop,      false);
+                }
+            };
 
             knockout.bindingHandlers.sparkline = {
                 update: function (element, valueAccessor, allBindingsAccessor, model) {
