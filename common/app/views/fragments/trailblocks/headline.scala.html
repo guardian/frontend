@@ -1,11 +1,11 @@
-@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, isPanel: Boolean = false, expandable: Boolean = false)(implicit request: RequestHeader)
+@(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, isPanel: Boolean = false, headingLevel: Int = 2, expandable: Boolean = false)(implicit request: RequestHeader)
 
 <ul class="unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        @if(expandable && !trail.leadingParagraphs.isEmpty) {
-            @fragments.trails.headlineExpandable(trail, info.rowNum, related)
+        @if(expandable) {
+            @fragments.trails.headlineExpandable(trail, info.rowNum, related, headingLevel = headingLevel)
         } else {
-            @fragments.trails.headline(trail, info.rowNum, related)
+            @fragments.trails.headline(trail, info.rowNum, related, headingLevel = headingLevel)
         }
     }
 </ul>

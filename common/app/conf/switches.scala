@@ -158,10 +158,6 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABLightboxGalleries = Switch("A/B Tests", "ab-lightbox-galleries",
-    "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
-    safeState = Off)
-
   val ABGalleryStyle = Switch("A/B Tests", "ab-gallery-style",
     "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
     safeState = Off)
@@ -236,7 +232,6 @@ object Switches extends Collections {
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     LiveCricketSwitch,
-    ABLightboxGalleries,
     FilmFrontFacia,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,

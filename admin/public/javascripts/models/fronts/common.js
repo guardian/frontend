@@ -10,6 +10,7 @@ define([
 
     return {
         config: {
+            searchPageSize:        20,
             maxDisplayableLists:   6,
             maxOphanCallsPerBlock: 10,
             cacheExpiryMs:         300000, // 300000 = five mins 
@@ -24,22 +25,34 @@ define([
         util: {
             mediator: new EventEmitter(),
 
-            queryParams: function() {
-                return _.object(window.location.search.substring(1).split('&').map(function(keyVal){
+            parseQueryParams: function(url) {
+                url = url.indexOf('?') === -1 ? url: _.rest(url.split('?')).join('?');
+                return _.object(url.split('&').map(function(keyVal){
                     return keyVal.split('=').map(function(s){
                         return decodeURIComponent(s);
                     });
                 }));
             },
 
-            urlAbsPath: function(url) {
-                if(typeof url !== 'string') { return; }
+            queryParams: function() {
+                return this.parseQueryParams(window.location.search);
+            },
 
-                var a = document.createElement('a');
+            urlAbsPath: function(url) {
+                var a, path;
+                if(typeof url !== 'string') { return; }
+                a = document.createElement('a');
                 a.href = url;
-                a = a.pathname + a.search + a.hash;
-                a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
-                return a;
+                path = a.pathname;
+                return path.indexOf('/') === 0 ? path.substr(1) : path; // because IE doesn't return a leading '/'
+            },
+
+            urlHost: function(url) {
+                var a;
+                if(typeof url !== 'string') { return; }
+                a = document.createElement('a');
+                a.href = url;
+                return a.hostname;
             },
 
             fullTrim: function(str){

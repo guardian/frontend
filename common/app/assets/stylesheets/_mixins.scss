@@ -1,7 +1,7 @@
 @import "_mq";
 
 //Output based on body font-size being 10px
-@mixin font-size($size, $line-height) {
+@mixin font-size($size, $line-height: $size) {
     font-size: $size*1px;
     font-size: ($size / 10)*1rem;
     line-height: $line-height*1px;

@@ -53,6 +53,7 @@ window.addEventListener('load', function() {
 
 
     // Page views
+    /*
     $.ajax({
         url: 'http://dashboard.ophan.co.uk/graph/pageviews/data?hours=2&platform=next-gen&callback=?',
         dataType: 'jsonp',
@@ -91,4 +92,5 @@ window.addEventListener('load', function() {
             document.getElementById('pageviews').innerHTML = '<a href="http://dashboard.ophan.co.uk/login" target="_new">Login to Ophan for Pageviews</a>';
         }
     })
+    */
 });
