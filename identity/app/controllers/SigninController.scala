@@ -2,6 +2,7 @@ package controllers
 
 import play.api.mvc._
 import play.api.data._
+import play.api.data.validation.Constraints
 import model.IdentityPage
 import common.{Logging, ExecutionContexts}
 import services.{IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
@@ -30,8 +31,10 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   val form = Form(
     Forms.tuple(
-      "email" -> Forms.email,
+      "email" -> Forms.email
+        .verifying(Constraints.nonEmpty),
       "password" -> Forms.text
+        .verifying(Constraints.nonEmpty)
         .verifying(Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}),
       "keepMeSignedIn" -> Forms.boolean
     )

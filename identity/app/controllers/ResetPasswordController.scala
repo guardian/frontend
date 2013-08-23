@@ -10,6 +10,7 @@ import client.Error
 import services.{IdentityUrlBuilder, IdRequestParser}
 import play.api.i18n.Messages
 import java.net.URLEncoder
+import play.api.data.validation.Constraints
 
 
 @Singleton
@@ -20,14 +21,17 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
   val requestPasswordResetForm = Form(
     Forms.single(
       "email" -> Forms.email
+        .verifying(Constraints.nonEmpty)
     )
   )
 
   val passwordResetForm = Form(
     Forms.tuple (
       "password" ->  Forms.text
+        .verifying(Constraints.nonEmpty)
         .verifying(Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}),
       "password_confirm" ->  Forms.text
+        .verifying(Constraints.nonEmpty)
         .verifying(Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}),
       "email_address" -> Forms.text
     ) verifying(Messages("error.passwordsMustMatch"), { f => f._1 == f._2 }  )
@@ -102,7 +106,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
     Async {
       api.userForToken(token) map ( _ match {
         case Left(errors) => {
-          log.trace("Could not retrieve password reset request for token: %s".format(token))
+          log.warn("Could not retrieve password reset request for token: %s".format(token))
           SeeOther("/requestnewtoken")
         }
         case Right(user) => {
