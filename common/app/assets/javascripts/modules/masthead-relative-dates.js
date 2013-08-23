@@ -20,7 +20,7 @@ define(['common', 'bonzo'], function (common, bonzo) {
     }
 
     function init(context) {
-        [].forEach.call(context.querySelectorAll('.js-trail__timestamp'), function(timestamp) {
+        [].forEach.call(context.querySelectorAll('.js-item__timestamp'), function(timestamp) {
             var relativeTime = relativise(bonzo(timestamp).attr('datetime'));
             common.$g('.timestamp__text', timestamp).text(relativeTime);
         });
