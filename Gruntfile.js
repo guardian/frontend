@@ -105,7 +105,49 @@ module.exports = function (grunt) {
             src: ['integration-tests/casper/tests/network-front.spec.js'],
             dest: 'integration-tests/target/casper-xunit-reports/network-front.spec.xml'
           }
-        },        
+        },
+
+        jasmine: {
+          common: {
+            options: {
+              keepRunner: true,
+              specs: 'common/test/assets/javascripts/spec/OmnitureLib.spec.js',
+              vendor: [
+                'common/test/assets/javascripts/components/sinon/lib/sinon.js',
+                'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
+                'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
+                'common/test/assets/javascripts/components/sinon/lib/sinon/util/event.js',
+                'common/test/assets/javascripts/components/sinon/lib/sinon/util/fake_timers.js',
+                'common/test/assets/javascripts/components/sinon/lib/sinon/util/fake_servers.js',
+                'common/test/assets/javascripts/components/sinon/lib/sinon/util/fake_xml_http_request.js',
+                'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
+                'common/test/assets/javascripts/components/seedrandom/index.js'
+              ],
+              template: require('grunt-template-jasmine-requirejs'),
+              templateOptions: {
+                requireConfig: {
+                  baseUrl: 'common/app/assets/javascripts/',
+                  paths: {
+                    common:       'common',
+                    bonzo:        'components/bonzo/src/bonzo',
+                    qwery:        'components/qwery/mobile/qwery-mobile',
+                    bean:         'components/bean/bean',
+                    reqwest:      'components/reqwest/src/reqwest',
+                    domwrite:     'components/dom-write/dom-write',
+                    analytics:    'modules/analytics',
+                    EventEmitter: 'components/eventEmitter/EventEmitter',
+                    swipe:        'components/swipe/swipe',
+                    swipeview:    'components/swipeview/src/swipeview',
+                    omniture:     '../../../app/public/javascripts/vendor/omniture',
+                    fixtures:     '../../../test/assets/javascripts/fixtures',
+                    helpers:     '../../../test/assets/javascripts/helpers',
+                    moment:       'components/moment/moment'
+                  }
+                }
+              }
+            }
+          }
+        },
 
         // Lint Javascript sources
         jshint: {
@@ -239,8 +281,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-casper');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // Standard tasks
+    grunt.registerTask('test:unit', ['jasmine:common']);
     grunt.registerTask('test:integration', ['casper:common']);
     grunt.registerTask('test:common', ['jshint:common', 'casper:common']);
     grunt.registerTask('test', ['test:common']);
