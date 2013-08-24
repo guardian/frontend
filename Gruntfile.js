@@ -111,18 +111,16 @@ module.exports = function (grunt) {
           common: {
             options: {
               keepRunner: true,
-              specs: 'common/test/assets/javascripts/spec/OmnitureLib.spec.js',
+              specs: 'common/test/assets/javascripts/spec/*.spec.js',
               vendor: [
                 'common/test/assets/javascripts/components/sinon/lib/sinon.js',
                 'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
                 'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/util/event.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/util/fake_timers.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/util/fake_servers.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/util/fake_xml_http_request.js',
+                'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
                 'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
-                'common/test/assets/javascripts/components/seedrandom/index.js'
+                'common/test/assets/javascripts/components/seedrandom/index.js',
               ],
+              helpers: 'common/test/assets/javascripts/setup.js',
               template: require('grunt-template-jasmine-requirejs'),
               templateOptions: {
                 requireConfig: {
