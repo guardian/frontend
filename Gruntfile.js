@@ -2,7 +2,8 @@
 module.exports = function (grunt) {
     process.env['CASPERJS_EXECUTABLE'] = 'dev/casperjs/bin/casperjs';
     process.env['PHANTOMJS_EXECUTABLE'] = 'node_modules/phantomjs/bin/phantomjs';
-    var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1';
+    var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1',
+        jasmineSpec = grunt.option('spec') || '*';
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
@@ -108,41 +109,47 @@ module.exports = function (grunt) {
         },
 
         jasmine: {
-          common: {
-            options: {
-              keepRunner: true,
-              specs: 'common/test/assets/javascripts/spec/*.spec.js',
-              vendor: [
-                'common/test/assets/javascripts/components/sinon/lib/sinon.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
-                'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
-                'common/test/assets/javascripts/components/seedrandom/index.js',
-              ],
-              helpers: 'common/test/assets/javascripts/setup.js',
-              template: require('grunt-template-jasmine-requirejs'),
-              templateOptions: {
-                requireConfig: {
-                  baseUrl: 'common/app/assets/javascripts/',
-                  paths: {
-                    common:       'common',
-                    bonzo:        'components/bonzo/src/bonzo',
-                    qwery:        'components/qwery/mobile/qwery-mobile',
-                    bean:         'components/bean/bean',
-                    reqwest:      'components/reqwest/src/reqwest',
-                    domwrite:     'components/dom-write/dom-write',
-                    analytics:    'modules/analytics',
-                    EventEmitter: 'components/eventEmitter/EventEmitter',
-                    swipe:        'components/swipe/swipe',
-                    swipeview:    'components/swipeview/src/swipeview',
-                    omniture:     '../../../app/public/javascripts/vendor/omniture',
-                    fixtures:     '../../../test/assets/javascripts/fixtures',
-                    helpers:     '../../../test/assets/javascripts/helpers',
-                    moment:       'components/moment/moment'
-                  }
+          options: {
+            vendor: [
+              'common/test/assets/javascripts/components/sinon/lib/sinon.js',
+              'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
+              'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
+              'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
+              'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
+              'common/test/assets/javascripts/components/seedrandom/index.js',
+            ],
+            helpers: 'common/test/assets/javascripts/setup.js',
+            template: require('grunt-template-jasmine-requirejs'),
+            templateOptions: {
+              requireConfig: {
+                baseUrl: 'common/app/assets/javascripts/',
+                paths: {
+                  common:       'common',
+                  bonzo:        'components/bonzo/src/bonzo',
+                  qwery:        'components/qwery/mobile/qwery-mobile',
+                  bean:         'components/bean/bean',
+                  reqwest:      'components/reqwest/src/reqwest',
+                  domwrite:     'components/dom-write/dom-write',
+                  analytics:    'modules/analytics',
+                  EventEmitter: 'components/eventEmitter/EventEmitter',
+                  swipe:        'components/swipe/swipe',
+                  swipeview:    'components/swipeview/src/swipeview',
+                  omniture:     '../../../app/public/javascripts/vendor/omniture',
+                  fixtures:     '../../../test/assets/javascripts/fixtures',
+                  helpers:     '../../../test/assets/javascripts/helpers',
+                  moment:       'components/moment/moment'
                 }
               }
+            }
+          },
+          common: {
+            options: {
+              specs: 'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js'
+            }
+          },
+          admin: {
+            options: {
+              specs: 'common/test/assets/javascripts/spec/admin/' + jasmineSpec + '.spec.js'
             }
           }
         },
@@ -282,7 +289,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // Standard tasks
-    grunt.registerTask('test:unit', ['jasmine:common']);
+    grunt.registerTask('test:unit:admin', ['jasmine:admin']);
+    grunt.registerTask('test:unit:common', ['jasmine:common']);
+    grunt.registerTask('test:unit', ['jasmine']);
     grunt.registerTask('test:integration', ['casper:common']);
     grunt.registerTask('test:common', ['jshint:common', 'casper:common']);
     grunt.registerTask('test', ['test:common']);
