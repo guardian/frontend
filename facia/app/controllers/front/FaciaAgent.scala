@@ -156,5 +156,8 @@ class FaciaAgent(id: String, edition: Edition) extends Logging {
 class PageFront(id: String, edition: Edition) {
   val faciaAgent = new FaciaAgent(id, edition)
 
+  def refresh() = faciaAgent.refresh()
+  def close() = faciaAgent.close()
+
   def apply(): FaciaTrailblock = faciaAgent.trailblock
 }
