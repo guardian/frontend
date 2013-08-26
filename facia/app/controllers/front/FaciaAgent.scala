@@ -107,7 +107,8 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
           results map {
             case l: List[Content] => Items(l.toSeq)
-          } fallbackTo Future(Items(Nil))
+          }
+          //TODO: Removal of fallback forces full chain to fail
 
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
