@@ -79,7 +79,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
             }
             else {
               val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
-              response.onFailure{case t: Throwable => log.warn("ID Search Fail: %s".format(t))}
               val results = response map {r => r.results map{new Content(_)} }
               val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
               sorted
@@ -92,8 +91,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
             val search = ContentApi.search(edition)
             val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
             val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
-
-            newSearch.response.onFailure{case t: Throwable => log.warn("Content API Query: %s".format(t))}
 
             newSearch.response map { r =>
               r.results.map(new Content(_))
