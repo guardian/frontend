@@ -24,6 +24,7 @@ sealed case class Config(
 sealed case class Items(items: Seq[Trail])
 
 sealed case class FaciaTrailblock(
+  id: String,
   collections: Map[Config, Items]
                                  )
 
@@ -150,7 +151,7 @@ class FaciaAgent(id: String, edition: Edition) extends Logging {
 
   def refresh() = query.refresh()
   def close() = query.close()
-  def trailblock: FaciaTrailblock = FaciaTrailblock(query.items) //Await.result(query.getItems, Duration(10000, MILLISECONDS))
+  def trailblock: FaciaTrailblock = FaciaTrailblock(id, query.items) //Await.result(query.getItems, Duration(10000, MILLISECONDS))
 }
 
 class PageFront(id: String, edition: Edition) {
