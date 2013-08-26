@@ -7,7 +7,7 @@ import model.{Content, Trail}
 import play.api.libs.ws.{Response, WS}
 import conf.{ContentApi, Configuration}
 import play.api.libs.json.Json._
-import play.api.libs.json.JsObject
+import play.api.libs.json.{JsValue, JsObject}
 import tools.QueryParams
 
 sealed case class Config(
@@ -25,23 +25,25 @@ sealed case class FaciaTrailblock(
                                  )
 
 trait ParseConfig extends ExecutionContexts {
-  def getConfigMap(id: String): Future[Map[String, String]] = {
+  def getConfigMap(id: String): Future[Map[String, Seq[JsValue]]] = {
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/config/$id/config.json"
     WS.url(configUrl).withTimeout(2000).get map { r =>
       val json = parse(r.body)
-      json.asOpt[Map[String, String]] getOrElse Map.empty
+      json.asOpt[Map[String, Seq[JsValue]]] getOrElse Map.empty
     }
   }
   def getConfig(id: String): Future[Seq[Config]] = getConfigMap(id) map { m =>
-    Seq(Config(
-      id,
-      m.get("name") getOrElse "Lifeandstyle",
-      m.get("max") map (_.toInt) getOrElse 10,
-      None,
-      "Lifeandstyle",
-      false,
-      false
-    ))
+    m.get("collections").getOrElse(Nil).map {o =>
+      Config(
+        (o \ "id").as[String],
+        (o \ "displayName").as[String],
+        (o \ "max").as[String].toInt,
+        None,
+        "lifeandstyle",
+        false,
+        false
+      )
+    }
   }
   def parseConfig(id: String): Future[Config] = ???
 }
