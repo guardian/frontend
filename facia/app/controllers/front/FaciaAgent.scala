@@ -1,14 +1,17 @@
 package controllers.front
 
 import scala.concurrent.Future
-import common.{S3FrontsApi, ExecutionContexts, Logging, Edition}
+import common._
 import views.support.Style
 import model.{Content, Trail}
-import play.api.libs.ws.{Response, WS}
+import play.api.libs.ws.WS
 import conf.{ContentApi, Configuration}
 import play.api.libs.json.Json._
-import play.api.libs.json.{JsValue, JsObject}
+import play.api.libs.json.JsValue
 import tools.QueryParams
+import play.api.libs.ws.Response
+import scala.Some
+import play.api.libs.json.JsObject
 
 sealed case class Config(
                           id: String,
@@ -116,6 +119,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
 //, itemCache: Agent[Map[String, Content]]
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection {
+  private val agent = AkkaAgent[Map[Config, Items]](Map.empty)
 
   def getItems: Future[Map[Config, Items]] = {
     val f = getConfig(id) map {config =>
@@ -125,6 +129,14 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
       j.foldRight(Future(Map[Config, Items]()))((a, b) => for{l <- b; i <- a._2} yield l + (a._1 -> i))
     }
   }
+
+  def refresh() = getItems map {m =>
+    agent.send(m)
+  }
+
+  def close() = agent.close()
+
+  def items = agent()
 }
 
 object Query {
@@ -136,14 +148,13 @@ class FaciaAgent(id: String, edition: Edition) extends Logging {
   //private val agent: Agent[Query] = AkkaAgent[Query](Query(id, edition))
   private val query: Query = Query(id, edition)
 
-  def refresh() = {}
-  def close() = {}
-  def trailblock: Option[FaciaTrailblock] = None //Await.result(query.getItems, Duration(10000, MILLISECONDS))
+  def refresh() = query.refresh()
+  def close() = query.close()
+  def trailblock: FaciaTrailblock = FaciaTrailblock(query.items) //Await.result(query.getItems, Duration(10000, MILLISECONDS))
 }
 
 class PageFront(id: String, edition: Edition) {
   val faciaAgent = new FaciaAgent(id, edition)
 
-  //TODO: Option? It's going to be a Map
-  def apply(): Option[FaciaTrailblock] = faciaAgent.trailblock
+  def apply(): FaciaTrailblock = faciaAgent.trailblock
 }
