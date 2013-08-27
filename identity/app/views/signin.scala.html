@@ -6,7 +6,6 @@
 @main(page, conf.Switches.all){
 }{
 <form class="form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
 
     @if(signinForm.globalError.isDefined) {
         <div class="form-field__error text-input__note">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
