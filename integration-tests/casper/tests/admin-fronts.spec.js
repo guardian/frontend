@@ -55,6 +55,16 @@ casper.waitForSelector('[data-list-id="test/news/masthead"]', function(){
     casper.test.assertExists('[data-list-id="test/news/masthead"]');
 });
 
+casper.waitForSelector('[data-url="world/middle-east-live/2013/aug/27/syria-crisis-military-intervention-un-inspectors"]', function(){
+    // TEST
+    casper.test.assertExists('[data-url="world/middle-east-live/2013/aug/27/syria-crisis-military-intervention-un-inspectors"]');
+});
+
+casper.then(function() {
+    casper.viewport(1024, 768);
+    casper.captureSelector('body.png', 'body');
+});
+
 casper.run(function() {
     this.test.renderResults(true, 0, this.cli.get('save') || false);
 });
