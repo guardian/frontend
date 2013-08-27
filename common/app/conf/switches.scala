@@ -201,6 +201,11 @@ object Switches extends Collections {
     safeState = Off
   )
 
+  val AuElections2013 = Switch("Front", "front-elections-2013",
+    "Switch to use collection from fronts API under au/news/elections2013",
+    safeState = Off
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -239,7 +244,8 @@ object Switches extends Collections {
     ABGalleryCta,
     ABSwipeCtas,
     ABExpandableTrails,
-    ABRightHandCard
+    ABRightHandCard,
+    AuElections2013
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
