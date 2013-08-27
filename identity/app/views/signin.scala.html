@@ -16,9 +16,10 @@
         <ul class="form-fields">
 
             @idInputEmail(signinForm("email"), '_label -> "Email address")
-            @idInputPassword(signinForm("password"), '_label -> "Password", '_help -> "<a href='/reset'>Forgotten your password?</a>")
+            @idInputPassword(signinForm("password"), '_label -> "Password")
 
             <li>
+                <div class="form-field__note"><a href='/reset'>Forgotten your password?</a></div>
                 <button type="submit" class="submit-input">Sign in</button>
 
                 <label class="check-label check-label--helper">
