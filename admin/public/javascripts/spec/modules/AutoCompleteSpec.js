@@ -15,9 +15,12 @@ define(["AutoComplete", 'Common'], function(autoComplete, common) {
             mockEmptySearchResult = {
                 results: [ ]
             }
+            $('<div>').attr({id: 'autocomplete'}).insertBefore('body');
+            $('<div>').attr({id: 'autocomplete-after'}).insertBefore('body');
+        });
 
-            $('#autocomplete').remove();
-            $('<div>').attr({id: 'autocomplete'}).insertBefore('body')
+        afterEach(function() {
+            $('#autocomplete, #autocomplete-after').remove();
         });
 
        it("should render an auto-complete prompt after a successful tag search", function () {

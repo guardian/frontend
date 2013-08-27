@@ -151,7 +151,8 @@ module.exports = function (grunt) {
             options: {
               specs: 'admin/public/javascripts/spec/**/' + jasmineSpec + 'Spec.js',
               vendor: [
-                'admin/public/javascripts/components/jquery/jquery.js'
+                'admin/public/javascripts/components/jquery/jquery.js',
+                'admin/public/javascripts/components/js_humanized_time_span/humanized_time_span.js'
               ],
               helpers: 'admin/public/javascripts/spec/setup.js',
               templateOptions: {
