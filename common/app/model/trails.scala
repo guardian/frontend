@@ -183,6 +183,17 @@ object RunningOrderTrailblockDescription {
 class RunningOrderTrailblockDescriptionSwitch(id: String, blockId: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false, edition: Edition, isConfigured: Boolean = false, switch: Switch)
   extends RunningOrderTrailblockDescription(id, blockId, name, numItemsVisible, style, showMore, edition, isConfigured) {
 
+  override def query(): Future[Seq[Trail]] = configuredQuery() flatMap { q =>
+    q map {trailblockDescription =>
+      trailblockDescription.query()
+    } getOrElse {
+      if (switch.isSwitchedOff)
+        Future(Nil)
+      else
+        Future.failed(throw new java.util.concurrent.TimeoutException("Query Failed"))
+    }
+  }
+
   override def configuredQuery(): Future[Option[TrailblockDescription]] = {
     if (switch.isSwitchedOff) {
       Future(None)
