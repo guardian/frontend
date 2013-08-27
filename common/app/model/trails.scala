@@ -10,7 +10,6 @@ import play.api.libs.json.JsObject
 import scala.concurrent.Future
 import tools.QueryParams
 import views.support.Style
-import java.util.concurrent.TimeoutException
 
 
 trait Trail extends Images with Tags {
