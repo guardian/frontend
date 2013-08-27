@@ -25,16 +25,11 @@ define([
         util: {
             mediator: new EventEmitter(),
 
-            hasNestedProperty: function (obj /*, level1, level2, ... */) {
-                var args = Array.prototype.slice.call(arguments),
-                    obj = args.shift(),
-                    i;
-
-                for (i = 0; i < args.length; i += 1) {
-                    if (!obj.hasOwnProperty(args[i])) { return false; }
-                    obj = obj[args[i]];
+            hasNestedProperty: function (obj, path) {
+                if(obj.hasOwnProperty(path[0])) {
+                    return path.length === 1 ? true : this.hasNestedProperty(obj[path[0]], _.rest(path));
                 }
-                return true;
+                return false;
             },
 
             parseQueryParams: function(url) {

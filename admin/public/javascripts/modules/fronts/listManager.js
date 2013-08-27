@@ -267,7 +267,7 @@ define([
 
             model.edition.subscribe(function(edition) {
                 model.sections.removeAll();
-                if (common.util.hasNestedProperty(collections, edition)) {
+                if (common.util.hasNestedProperty(collections, [edition])) {
                     model.sections(_.keys(collections[edition]));
                 }
                 model.section(undefined);
@@ -278,7 +278,7 @@ define([
 
             model.section.subscribe(function(section) {
                 model.blocks.removeAll();
-                if (common.util.hasNestedProperty(collections, model.edition(), section)) {
+                if (common.util.hasNestedProperty(collections, [model.edition(), section])) {
                     model.blocks(_.keys(collections[model.edition()][section]));
                 }
                 model.block(undefined);
