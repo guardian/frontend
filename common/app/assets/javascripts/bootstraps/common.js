@@ -274,13 +274,12 @@ define([
             });
         },
 
-        externalLinksCards: function () {
-            var key = '';
+        externalLinksCards: function (config) {
             common.mediator.on('page:article:ready', function(config, context) {
-                if (!userPrefs.iOff('externalLinksCards')) {
-                    document.body.className += ' ab-expandable-trails--on';
+                if (config.switches && config.switches.externalLinksCards) {
                     var card = new LeftHandCard({
-                        type: 'external'
+                        type: 'external',
+                        context: context
                     });
                 }
             });

@@ -48,6 +48,7 @@ define([
             description = data.description || false,
             image = data.image || false,
             datePublished = data.published_time || false,
+            host = data.host || false,
             tpl,
             imageFragment = '',
             titleFragment = '',
@@ -71,6 +72,9 @@ define([
             contentFragment = '<div class="card__description type-11">' + description + '</div>';
         } else {
             contentFragment = '<h3 class="card__headline">' + headline + '</h3>';
+        }
+        if (host && !/^theguardian\.com$/.test(host)) {
+            contentFragment += '<div class="card__appendix type-12">' + host + '</div>'
         }
 
         tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +

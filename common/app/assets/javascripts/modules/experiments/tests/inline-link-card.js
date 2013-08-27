@@ -8,7 +8,7 @@ function (
     common,
     detect,
     userPrefs,
-    Card
+    LeftHandCard
 ) {
 
     var ExperimentInlineLinkCard = function () {
@@ -30,12 +30,15 @@ function (
             },
             {
                 id: 'link-card',
-                test: function () {
-                    if (userPrefs.iOff('externalLinksCards')) {
-                        var card = new Card({
-                            type: 'internal'
-                        });
-                    }
+                test: function (config, context) {
+                    common.mediator.on('page:article:ready', function(config, context) {
+                        if (!config.switches.externalLinksCards) {
+                            var card = new LeftHandCard({
+                                type: 'internal',
+                                context: context
+                            });
+                        }
+                    });
                 }
             }
         ];

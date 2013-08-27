@@ -50,13 +50,14 @@ object CardController extends Controller with Logging with ExecutionContexts {
                   // /cards/opengraph/http%3A%2F%2Fwww.theguardian.com%2Fmedia%2Fgreenslade%2F2013%2Faug%2F22%2Fjournalist-safety-egypt
 
                   JsonComponent(Json.toJson(Map(
-                    "url" -> fragment.select("meta[property=og:url]").attr("content"),
-                    "title" -> fragment.select("meta[property=og:title]").attr("content"),
-                    "image" -> nonFallbackImage.getOrElse(""),
-                    "description" -> fragment.select("meta[property=og:description]").attr("content"),
-                    "site_name" -> fragment.select("meta[property=og:site_name]").attr("content"),
-                    "published_time" -> fragment.select("meta[property=article:published_time]").attr("content"),
-                    "modified_time" -> fragment.select("meta[property=article:modified_time]").attr("content")
+                    ("url", fragment.select("meta[property=og:url]").attr("content")),
+                    ("title", fragment.select("meta[property=og:title]").attr("content")),
+                    ("image", nonFallbackImage.getOrElse("")),
+                    ("description", fragment.select("meta[property=og:description]").attr("content")),
+                    ("site_name", fragment.select("meta[property=og:site_name]").attr("content")),
+                    ("published_time", fragment.select("meta[property=article:published_time]").attr("content")),
+                    ("modified_time", fragment.select("meta[property=article:modified_time]").attr("content")),
+                    ("host", a.replaceAll("^www\\.", ""))
                   )).asInstanceOf[JsObject])
                 case _ => NotFound
             }
@@ -77,7 +78,8 @@ object CardController extends Controller with Logging with ExecutionContexts {
                     "title" -> fragment.select("#firstHeading").text(),
                     "image" -> fragment.select(".image img").attr("src"),
                     "description" -> firstParagraph.text().split("\\.").headOption.getOrElse(""),
-                    "site_name" -> "Wikipedia"
+                    "site_name" -> "Wikipedia",
+                    "host" -> "wikipedia.org"
                   )
                   JsonComponent(Json.toJson(wiki).asInstanceOf[JsObject])
                 case _ => NotFound
