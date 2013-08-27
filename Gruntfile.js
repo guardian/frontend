@@ -110,7 +110,8 @@ module.exports = function (grunt) {
 
         jasmine: {
           options: {
-            template: require('grunt-template-jasmine-requirejs')
+            template: require('grunt-template-jasmine-requirejs'),
+            keepRunner: true
           },
           common: {
             options: {
@@ -124,6 +125,7 @@ module.exports = function (grunt) {
                 'common/test/assets/javascripts/components/seedrandom/index.js',
               ],
               helpers: 'common/test/assets/javascripts/setup.js',
+              outfile: 'common-spec-runner.html',
               templateOptions: {
                 requireConfig: {
                   baseUrl: 'common/app/assets/javascripts/',
@@ -155,6 +157,7 @@ module.exports = function (grunt) {
                 'admin/public/javascripts/components/js_humanized_time_span/humanized_time_span.js'
               ],
               helpers: 'admin/public/javascripts/spec/setup.js',
+              outfile: 'admin-spec-runner.html',
               templateOptions: {
                 requireConfig: {
                   baseUrl: 'admin/public/javascripts/',
