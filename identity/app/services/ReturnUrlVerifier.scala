@@ -9,7 +9,7 @@ import common.Logging
 class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends Logging {
   val domainRegExp = """^https?://([^:/\?]+).*""".r
   val returnUrlDomains = List(conf.id.domain)
-  val defaultReturnUrl = "http://m." + conf.id.domain + "/uk"
+  val defaultReturnUrl = "http://www." + conf.id.domain
 
   def getVerifiedReturnUrl(request: Request[AnyContent]): Option[String] = {
     getVerifiedReturnUrl(
