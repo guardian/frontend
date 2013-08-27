@@ -96,11 +96,7 @@ object CustomTrailblockDescription {
 
 
 trait ConfiguredTrailblockDescription extends TrailblockDescription {
-  def query() = configuredQuery() flatMap { q =>
-    q map {trailblockDescription =>
-      trailblockDescription.query()
-    } getOrElse Future.failed(throw new java.util.concurrent.TimeoutException("Query Failed"))
-  }
+  def query(): Future[Seq[Trail]] = Future(Nil)
 
   def configuredQuery(): Future[Option[TrailblockDescription]]
 }
