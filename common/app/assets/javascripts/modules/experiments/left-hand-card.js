@@ -49,15 +49,12 @@ function (
         function isWikipedia(url) {
             return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.]+$/).test(url);
         }
-        function isNYTimes(url) {
-            return (/^http:\/\/(?:www\.)?nytimes\.com/).test(url);
-        }
         function isBBC(url) {
             return (/^http:\/\/(?:(?:www|m)\.)?bbc\.co\.uk/).test(url);
         }
         function isWhiteListed(url) {
             if (self.options.type === 'external') {
-                return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url) || isWikipedia(url) || isNYTimes(url) || isBBC(url);
+                return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url) || isWikipedia(url) || isBBC(url);
             }
             return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url);
         }
