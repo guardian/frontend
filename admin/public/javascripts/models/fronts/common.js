@@ -25,6 +25,18 @@ define([
         util: {
             mediator: new EventEmitter(),
 
+            hasNestedProperty: function (obj /*, level1, level2, ... */) {
+                var args = Array.prototype.slice.call(arguments),
+                    obj = args.shift(),
+                    i;
+
+                for (i = 0; i < args.length; i += 1) {
+                    if (!obj.hasOwnProperty(args[i])) { return false; }
+                    obj = obj[args[i]];
+                }
+                return true;
+            },
+
             parseQueryParams: function(url) {
                 url = url.indexOf('?') === -1 ? url: _.rest(url.split('?')).join('?');
                 return _.object(url.split('&').map(function(keyVal){
