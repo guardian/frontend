@@ -10,6 +10,7 @@ import play.api.libs.json.JsObject
 import scala.concurrent.Future
 import tools.QueryParams
 import views.support.Style
+import java.util.concurrent.TimeoutException
 
 
 trait Trail extends Images with Tags {
@@ -98,7 +99,7 @@ trait ConfiguredTrailblockDescription extends TrailblockDescription {
   def query() = configuredQuery() flatMap { q =>
     q map {trailblockDescription =>
       trailblockDescription.query()
-    } getOrElse Future(Nil)
+    } getOrElse Future.failed(throw new java.util.concurrent.TimeoutException("Query Failed"))
   }
 
   def configuredQuery(): Future[Option[TrailblockDescription]]
