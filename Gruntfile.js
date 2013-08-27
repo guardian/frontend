@@ -131,19 +131,19 @@ module.exports = function (grunt) {
                   baseUrl: 'common/app/assets/javascripts/',
                     paths: {
                       common:       'common',
+                      analytics:    'modules/analytics',
                       bonzo:        'components/bonzo/src/bonzo',
                       qwery:        'components/qwery/mobile/qwery-mobile',
                       bean:         'components/bean/bean',
                       reqwest:      'components/reqwest/src/reqwest',
                       domwrite:     'components/dom-write/dom-write',
-                      analytics:    'modules/analytics',
                       EventEmitter: 'components/eventEmitter/EventEmitter',
                       swipe:        'components/swipe/swipe',
                       swipeview:    'components/swipeview/src/swipeview',
+                      moment:       'components/moment/moment',
                       omniture:     '../../../app/public/javascripts/vendor/omniture',
                       fixtures:     '../../../test/assets/javascripts/fixtures',
-                      helpers:     '../../../test/assets/javascripts/helpers',
-                      moment:       'components/moment/moment'
+                      helpers:      '../../../test/assets/javascripts/helpers'
                   }
                 }
               }
@@ -162,13 +162,13 @@ module.exports = function (grunt) {
                 requireConfig: {
                   baseUrl: 'admin/public/javascripts/',
                   paths: {
-                    EventEmitter: 'components/eventEmitter/EventEmitter',
                     Common:       'common',
-                    Reqwest:      'components/reqwest/reqwest',
                     TagSearch:    'modules/TagSearch',
                     AutoComplete: 'modules/AutoComplete',
                     tagEntry:     'modules/tagEntry',
                     ItemSearch:   'modules/ItemSearch',
+                    EventEmitter: 'components/eventEmitter/EventEmitter',
+                    Reqwest:      'components/reqwest/reqwest',
                     knockout:     'components/knockout/build/output/knockout-latest'
                   }
                 }
