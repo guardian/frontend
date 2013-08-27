@@ -86,6 +86,6 @@ object S3FrontsApi extends S3 {
 
   def archive(id: String, json: String) = {
     val now = DateTime.now
-    putPrivate(s"${location}/collection/${id}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+    putPrivate(s"${location}/history/collection/${id}/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
   }
 }
