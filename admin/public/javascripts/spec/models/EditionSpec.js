@@ -1,4 +1,4 @@
-curl(['models/edition', 'Knockout']).then(
+define(['models/edition', 'Knockout']).then(
 
     function  (Edition, Knockout) {
         describe('Edition Model', function() {

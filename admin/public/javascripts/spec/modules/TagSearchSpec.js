@@ -1,4 +1,4 @@
-curl(["TagSearch", 'Common']).then(
+define(["TagSearch", 'Common']).then(
 
     function  (tagSearch, common) {
         describe("TagSearch", function() {

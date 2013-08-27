@@ -1,4 +1,4 @@
-curl(["ItemSearch", 'Common']).then(
+define(["ItemSearch", 'Common']).then(
 
     function  (itemSearch, common) {
         describe("ItemSearch", function() {
@@ -27,15 +27,15 @@ curl(["ItemSearch", 'Common']).then(
 
                  var mockResponse = { 'tag': 1 };
                  var mockEmptyResponse = { };
-                 
+
                  itemSearch.init()
                  itemSearch.validateTag(mockResponse, $('<input/>'));
-                
+
                  expect(common.mediator.emitEvent.mostRecentCall.args[0]).toEqual('modules:tagvalidation:success');
-                 
+
                  itemSearch.validateTag(mockEmptyResponse, $('<input/>'));
                  expect(common.mediator.emitEvent.mostRecentCall.args[0]).toEqual('modules:tagvalidation:failure');
-                 
+
             });
 
         })

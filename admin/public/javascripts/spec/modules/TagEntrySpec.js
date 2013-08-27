@@ -1,9 +1,9 @@
-curl(["tagEntry", 'Common']).then(
+define(["tagEntry", 'Common']).then(
 
 
     function(tagEntry, common) {
         describe("TagEntry", function() {
-        
+
             var i
               , simulateKeyPress = function(str, target) {
                     target.val(str);
@@ -17,12 +17,12 @@ curl(["tagEntry", 'Common']).then(
             beforeEach(function() {
                 i = $('#i');
                 tagEntry.init({ nodeList: i });
-                
+
                 spyOn(common.mediator, 'addListener');
                 spyOn(common.mediator, 'emitEvent');
                 jasmine.Clock.useMock();
             });
-       
+
            it("should listen for keystrokes on a given input field", function () {
                 simulateKeyPress('hello', i);
                 expect(common.mediator.emitEvent.mostRecentCall.args[0]).toEqual('ui:autocomplete:keydown');
@@ -42,12 +42,12 @@ curl(["tagEntry", 'Common']).then(
                 jasmine.Clock.tick(300);
                 expect(common.mediator.emitEvent.mostRecentCall.args[0]).toEqual('ui:autocomplete:keydown');
            });
-           
+
            it("should broadcast when the tag entry input is changed", function () {
                 i.trigger('change');
                 expect(common.mediator.emitEvent.mostRecentCall.args[0]).toEqual('modules:tagentry:onchange');
            });
-           
+
            it("should should populate the tag entry input when an autocomplete item is selected", function () {
                 tagEntry.populate('foo', i);
                 expect(common.mediator.emitEvent.mostRecentCall.args[0]).toEqual('ui:networkfronttool:tagid:selected');

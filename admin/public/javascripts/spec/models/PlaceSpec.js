@@ -1,10 +1,10 @@
-curl(['models/place', 'Knockout']).then(
+define(['models/place', 'Knockout']).then(
 
     function  (Place, Knockout) {
 
         describe('Place Model', function() {
 
-            var place; 
+            var place;
 
             beforeEach(function() {
                 place = new Place;
@@ -13,7 +13,7 @@ curl(['models/place', 'Knockout']).then(
             it('should have an id property', function() {
                 expect(place.id()).toBeDefined();
             });
-            
+
             it('should hydrate the model on construction', function() {
                 var o = { id: "foo", sameAs: [ "dog", "egg" ] }
                   , place = new Place(o);

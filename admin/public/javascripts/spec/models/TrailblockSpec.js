@@ -1,4 +1,4 @@
-curl(['models/trailblock', 'Knockout']).then(
+define(['models/trailblock', 'Knockout']).then(
 
     function  (Trailblock, Knockout) {
 
@@ -22,9 +22,9 @@ curl(['models/trailblock', 'Knockout']).then(
             beforeEach(function() {
                 trailblock = new Trailblock;
             });
-            
+
             var props = {
-        		'type': 'tag', 
+        		'type': 'tag',
                 'numItems' : 3,
                 'lead': true
             };

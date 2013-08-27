@@ -1,4 +1,4 @@
-curl(['models/networkFront', 'Knockout', 'Common']).then(
+define(['models/networkFront', 'Knockout', 'Common']).then(
 
     function  (NetworkFront, Knockout, Common) {
 

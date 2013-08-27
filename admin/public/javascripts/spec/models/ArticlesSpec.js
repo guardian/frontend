@@ -1,10 +1,10 @@
-curl(['models/articles', 'Knockout']).then(
+define(['models/articles', 'Knockout']).then(
 
     function  (Articles, Knockout) {
 
         describe('Articles Model', function() {
 
-            var articles; 
+            var articles;
 
             beforeEach(function() {
                 articles = new Articles();
@@ -25,9 +25,9 @@ curl(['models/articles', 'Knockout']).then(
 
                       });
             });
-            
+
             it('should search for an individual api item', function() {
-                
+
                 var mockReqwest = jasmine.createSpy('Reqwest');
                 var articles = new Articles( {reqwest: mockReqwest} );
                 articles.term('world/2013/jan/27/brazil-nightclub-blaze-high-death-toll');

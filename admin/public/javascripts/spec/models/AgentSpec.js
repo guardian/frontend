@@ -1,10 +1,10 @@
-curl(['models/agent', 'Knockout']).then(
+define(['models/agent', 'Knockout']).then(
 
     function  (Agent, Knockout) {
 
         describe('Agent Model', function() {
 
-            var agent; 
+            var agent;
 
             beforeEach(function() {
                 agent = new Agent();
@@ -13,7 +13,7 @@ curl(['models/agent', 'Knockout']).then(
             it('should have an id property', function() {
                 expect(agent.id()).toBeDefined();
             });
-            
+
             it('should hydrate the model on construction', function() {
                 var o = { id: "foo", name: "bar", explainer: "car", sameAs: [ "dog", "egg" ] }
                   , agent = new Agent(o);
