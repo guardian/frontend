@@ -3,53 +3,57 @@
 
 /**
  *
- * Discussion feature tests 
+ * Collections editor feature tests 
  *
  **/
-var casper = require('casper').create(),
-    host = casper.cli.get('host') || "http://localhost:9000";
 
-casper.start(host + '/admin');
 
-casper.then(function() {
+var environment = "code",    
+    target = {
+        dev:  'http://localhost:9000',
+        code: 'https://frontend.code.dev-gutools.co.uk'
+    }[environment] + '/collections';
+
+casper.start(target, function() {
     this.click('#login-button');
-});
 
-casper.waitFor(function check() {
-    return (this.getCurrentUrl().indexOf('accounts.google.com/ServiceLogin') > -1);
-    //return (this.getCurrentUrl().indexOf('/openIDCallback') > -1);
-});
+    casper.waitFor(function check() {
+        return (this.getCurrentUrl().indexOf('https://accounts.google.com/ServiceLogin') === 0);
+    });
 
-casper.then(function() {
-    this.fill('#gaia_loginform', {
-        'Email': 'test.automation@gutest.com',
-        'Passwd': 'Setup001'    
-    }, true);
+    casper.then(function() {
+        this.fill('#gaia_loginform', {
+            'Email': 'test.automation@gutest.com',
+            'Passwd': 'Setup001'    
+        }, true);
+    })
+
+    casper.waitFor(
+        function check() {
+            return (this.getCurrentUrl() === target);
+        }
+    );
+
 })
 
-casper.waitFor(
-    function check() {
-        return (this.getCurrentUrl().indexOf('/admin') > -1);
-    }, 
-    function then() { }, 
-    function timeout() {
-        casper.viewport(1024, 768);
-        casper.captureSelector('body.png', 'body');
-        this.warn(this.getCurrentUrl());
-        var foo = this.getCurrentUrl().replace(/^https/, 'http')
-        this.warn(foo);
-        // try manually redirecting
-        this.open(foo).then(function() {
-            this.warn(this.getCurrentUrl());
-        });
-    }
-);
+casper.then(function() {
+    // TEST
+    casper.test.comment('The login button is dropped');
+    casper.test.assertDoesntExist('#login-button');
 
-casper.waitFor(
-    function check() {
-        return (this.getCurrentUrl().indexOf('/admin') > -1);
-    }
-);
+    // TEST
+    casper.test.comment('The logout button is provided');
+    casper.test.assertExists('#logout-button');
+});
+
+casper.thenOpen(target + '?blocks=test/news/masthead', function(){
+    casper.test.comment('Open the "test/news/masthead" collection');
+});
+
+// TEST
+casper.waitForSelector('[data-list-id="test/news/masthead"]', function(){
+    casper.test.assertExists('[data-list-id="test/news/masthead"]');
+});
 
 casper.run(function() {
     this.test.renderResults(true, 0, this.cli.get('save') || false);

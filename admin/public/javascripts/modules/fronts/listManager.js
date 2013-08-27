@@ -266,14 +266,21 @@ define([
             }
 
             model.edition.subscribe(function(edition) {
-                model.sections(edition ? _.keys(collections[edition] || {}) : []);
+                model.sections.removeAll();
+                if (common.util.hasNestedProperty(collections, edition)) {
+                    model.sections(_.keys(collections[edition]));
+                }
                 model.section(undefined);
-                model.blocks([]);
+
+                model.blocks.removeAll();
                 model.block(undefined);
             });
 
             model.section.subscribe(function(section) {
-                model.blocks(section ? _.keys(collections[model.edition()][section] || {}) : []);
+                model.blocks.removeAll();
+                if (common.util.hasNestedProperty(collections, model.edition(), section)) {
+                    model.blocks(_.keys(collections[model.edition()][section]));
+                }
                 model.block(undefined);
 
                 if (section) {
