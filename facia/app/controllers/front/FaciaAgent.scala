@@ -25,7 +25,7 @@ sealed case class Items(items: Seq[Trail])
 
 sealed case class FaciaTrailblock(
   id: String,
-  collections: Map[Config, Items]
+  collections: List[(Config, Items)]
                                  )
 
 trait ParseConfig extends ExecutionContexts {
@@ -118,14 +118,14 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
 //, itemCache: Agent[Map[String, Content]]
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection {
-  private val agent = AkkaAgent[Map[Config, Items]](Map.empty)
+  private val agent = AkkaAgent[List[(Config, Items)]](Nil)
 
-  def getItems: Future[Map[Config, Items]] = {
+  def getItems: Future[List[(Config, Items)]] = {
     val f = getConfig(id) map {config =>
       config map {y => y -> getCollection(y.id, edition)}
     }
     f map (_.toVector) flatMap {j =>
-      j.foldRight(Future(Map[Config, Items]()))((a, b) => for{l <- b; i <- a._2} yield l + (a._1 -> i))
+      j.foldRight(Future(List[(Config, Items)]()))((a, b) => for{l <- b; i <- a._2} yield (a._1,  i) +: l)
     }
   }
 
