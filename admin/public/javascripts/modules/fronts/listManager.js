@@ -298,10 +298,11 @@ define([
             }
 
             function onDrop(event) {
-                event.preventDefault();
-                var url = event.dataTransfer.getData('Text');
+                var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
 
                 if(!url) { return true; }
+
+                event.preventDefault();
 
                 if (common.util.urlHost(url).indexOf('google') > -1) {
                     url = decodeURIComponent(common.util.parseQueryParams(url).url);

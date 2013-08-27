@@ -8,12 +8,18 @@
  **/
 
 
-var environment = "code",    
+var collectionId = 'test/dummy/collection',
+    articleId = "world/middle-east-live/2013/aug/27/syria-crisis-military-intervention-un-inspectors",
+    testAccEmail = 'test.automation@gutest.com',
+    testAccPasswd = 'Setup001',    
+
+    environment = "code",
     target = {
         dev:  'http://localhost:9000',
         code: 'https://frontend.code.dev-gutools.co.uk'
     }[environment] + '/collections';
 
+// Set up authenticated user
 casper.start(target, function() {
     this.click('#login-button');
 
@@ -23,8 +29,8 @@ casper.start(target, function() {
 
     casper.then(function() {
         this.fill('#gaia_loginform', {
-            'Email': 'test.automation@gutest.com',
-            'Passwd': 'Setup001'    
+            'Email':  testAccEmail,
+            'Passwd': testAccPasswd    
         }, true);
     })
 
@@ -36,33 +42,36 @@ casper.start(target, function() {
 
 })
 
+// Check the correct login/out buttons are present 
 casper.then(function() {
-    // TEST
-    casper.test.comment('The login button is dropped');
+    casper.test.comment('The login button isn\'t present');
     casper.test.assertDoesntExist('#login-button');
 
-    // TEST
-    casper.test.comment('The logout button is provided');
+    casper.test.comment('The logout button is present');
     casper.test.assertExists('#logout-button');
 });
 
-casper.thenOpen(target + '?blocks=test/news/masthead', function(){
-    casper.test.comment('Open the "test/news/masthead" collection');
+// Check that a collection can be specified by a query param 
+casper.thenOpen(target + '?blocks=' + collectionId, function(){});
+casper.waitForSelector('[data-list-id="' + collectionId + '"]', function(){
+    casper.test.comment('The collection loads OK');
+    casper.test.assertExists('[data-list-id="' + collectionId + '"]');
 });
 
-// TEST
-casper.waitForSelector('[data-list-id="test/news/masthead"]', function(){
-    casper.test.assertExists('[data-list-id="test/news/masthead"]');
-});
+// 'drop' an article onto the clipboard
+casper.then(function(){
+    casper.evaluate(function(){
+        var clipboard = document.querySelector('#clipboard'), 
+            event = document.createEvent("MouseEvents");
 
-casper.waitForSelector('[data-url="world/middle-east-live/2013/aug/27/syria-crisis-military-intervention-un-inspectors"]', function(){
-    // TEST
-    casper.test.assertExists('[data-url="world/middle-east-live/2013/aug/27/syria-crisis-military-intervention-un-inspectors"]');
+        event.initMouseEvent("drop", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        event.testData = articleId;
+        clipboard.dispatchEvent(event);        
+    });
 });
-
-casper.then(function() {
-    casper.viewport(1024, 768);
-    casper.captureSelector('body.png', 'body');
+casper.waitForSelector('#clipboard [data-url="' + articleId + '"]', function(){
+    casper.test.comment('The article drops into the clipboard');
+    casper.test.assertExists('#clipboard [data-url="' + articleId + '"]');
 });
 
 casper.run(function() {
