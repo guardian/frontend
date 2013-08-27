@@ -16,6 +16,7 @@
             case Some(Headline) | Some(FastNews)    => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
             case Some(SectionFront)                 => { @trailblocks.section(block.trails, block.description.numItemsVisible, numWithImages = 3 ) }
             case Some(Masthead) | Some(SectionZone) => { @trailblocks.masthead(block.trails.take(block.description.numItemsVisible)) }
+            case Some(SectionTopStories)            => { @trailblocks.sectionTopStories(block.trails.take(block.description.numItemsVisible)) }
             case _                                  => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
         }
 

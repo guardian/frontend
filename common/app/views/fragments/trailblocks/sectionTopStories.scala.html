@@ -1,0 +1,16 @@
+@(trails: Seq[Trail])(implicit request: RequestHeader)
+
+<ul class="unstyled collection item-count-@trails.size">
+    @trails.zipWithIndex.map{ case (trail, index) =>
+        <li class="item @trail.trailType.map("item--" + _) @if(trail.mainPicture(620).isEmpty) {item--without-image}" data-link-name="trail | @{index + 1}">
+            <a href="@LinkTo{@trail.url}" class="item__link">
+                @trail.mainPicture(620).map{ mainPicture =>
+                    <div class="item__image-container">
+                        <img class="item__image" src="@mainPicture.path" alt="" />
+                    </div>
+                }
+                <h2 class="item__title">@RemoveOuterParaHtml(trail.headline)</h2>
+            </a>
+        </li>
+    }
+</ul>
