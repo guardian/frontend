@@ -15,8 +15,9 @@ define([
         this.audience = 1;
         this.description = 'Introduce next story into card in right hand column and test impact';
         this.canRun = function(config) {
-            var layoutMode = detect.getLayoutMode();
-            return config.page.contentType === 'Article' && layoutMode !== 'mobile' && layoutMode !== 'tablet';
+            var layoutMode = detect.getLayoutMode(),
+                storyPackage = document.querySelector('.js-related') && document.querySelector('.js-related').innerHTML !== '';
+            return config.page.contentType === 'Article' && storyPackage && layoutMode !== 'mobile' && layoutMode !== 'tablet';
         };
         this.variants = [
             {
