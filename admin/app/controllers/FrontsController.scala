@@ -6,13 +6,14 @@ import frontsapi.model.Trail
 import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
-import common.{S3FrontsApi, Logging}
+import common.{ExecutionContexts, S3FrontsApi, Logging}
 import org.joda.time.DateTime
 import conf.Configuration
 import tools.FrontsApi
+import scala.concurrent.Future
 
 
-object FrontsController extends Controller with Logging {
+object FrontsController extends Controller with Logging with ExecutionContexts {
 
   def index() = AuthAction{ request =>
     Ok(views.html.fronts(Configuration.environment.stage))
@@ -22,6 +23,22 @@ object FrontsController extends Controller with Logging {
     S3FrontsApi.getSchema map { json: String =>
       Ok(json).as("application/json")
     } getOrElse NotFound
+  }
+
+  def listCollections = AuthAction { request =>
+    Async {
+      Future{
+        Ok(Json.toJson(S3FrontsApi.listCollectionIds))
+      }
+    }
+  }
+
+  def listConfigs = AuthAction { request =>
+    Async {
+      Future{
+        Ok(Json.toJson(S3FrontsApi.listConfigsIds))
+      }
+    }
   }
 
   def readBlock(id: String) = AuthAction{ request =>
