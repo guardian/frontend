@@ -151,13 +151,9 @@ module.exports = function (grunt) {
             options: {
               specs: 'admin/public/javascripts/spec/**/' + jasmineSpec + 'Spec.js',
               vendor: [
-                'admin/public/javascripts/components/jquery/jquery.js',
-                'admin/public/javascripts/components/jquery-ui/ui/jquery-ui.js',
-                'admin/public/javascripts/components/masonry/masonry.pkgd.min.js',
-                'admin/public/javascripts/components/sparklines/jquery.sparkline.min.js',
-                'admin/public/javascripts/components/bootstrap.css/js/bootstrap.js',
-                'admin/public/javascripts/components/underscore/underscore.js'
+                'admin/public/javascripts/components/jquery/jquery.js'
               ],
+              helpers: 'admin/public/javascripts/spec/setup.js',
               templateOptions: {
                 requireConfig: {
                   baseUrl: 'admin/public/javascripts/',
@@ -169,7 +165,7 @@ module.exports = function (grunt) {
                     AutoComplete: 'modules/AutoComplete',
                     tagEntry:     'modules/tagEntry',
                     ItemSearch:   'modules/ItemSearch',
-                    Knockout:     'components/knockout/build/output/knockout-latest'
+                    knockout:     'components/knockout/build/output/knockout-latest'
                   }
                 }
               }
