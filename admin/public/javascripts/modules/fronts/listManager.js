@@ -243,6 +243,34 @@ define([
             })
         };
 
+        function flushClipboard() {
+            model.clipboard.removeAll();
+            clipboardEl.innerHTML = '';
+        };
+
+        function onDragOver(event) {
+            event.preventDefault();
+        }
+
+        function onDrop(event) {
+            var url = event.testDataTransfer ? event.testDataTransfer : event.dataTransfer.getData('Text');
+
+            if(!url) { return true; }
+
+            event.preventDefault();
+
+            if (common.util.urlHost(url).indexOf('google') > -1) {
+                url = decodeURIComponent(common.util.parseQueryParams(url).url);
+            };
+
+            model.clipboard.unshift(new Article({
+                id: common.util.urlAbsPath(url)
+            }));
+
+            contentApi.decorateItems(model.clipboard());
+            ophanApi.decorateItems(model.clipboard());
+        }
+
         this.init = function(callback) {
             model.latestArticles  = new LatestArticles();
             model.listsDisplayed  = knockout.observableArray();
@@ -287,34 +315,6 @@ define([
                     model.latestArticles.section(sectionSearches[section] || section);
                 }
             });
-
-            function flushClipboard() {
-                model.clipboard.removeAll();
-                clipboardEl.innerHTML = '';
-            };
-
-            function onDragOver(event) {
-                event.preventDefault();
-            }
-
-            function onDrop(event) {
-                var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
-
-                if(!url) { return true; }
-
-                event.preventDefault();
-
-                if (common.util.urlHost(url).indexOf('google') > -1) {
-                    url = decodeURIComponent(common.util.parseQueryParams(url).url);
-                };
-
-                model.clipboard.unshift(new Article({
-                    id: common.util.urlAbsPath(url)
-                }));
-
-                contentApi.decorateItems(model.clipboard());
-                ophanApi.decorateItems(model.clipboard());
-            }
 
             knockout.bindingHandlers.makeDropabble = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
