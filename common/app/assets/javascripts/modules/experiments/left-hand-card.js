@@ -48,7 +48,7 @@ function (
             return (/\/commentisfree\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
         }
         function isWikipedia(url) {
-            return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.]+$/).test(url);
+            return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.\(\)\,]+$/).test(url);
         }
         function isBBC(url) {
             return (/^http:\/\/(?:(?:www|m)\.)?bbc\.co\.uk/).test(url);
