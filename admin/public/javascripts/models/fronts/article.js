@@ -68,7 +68,7 @@ function (
         var self = this;
         // If a config property (a) is set and (b) differs from the meta value, include it in post.
         reqwest({
-            url: common.config.apiBase + '/' + listId + '/' + this.meta.id(),
+            url: common.config.apiBase + '/collection/' + listId + '/' + this.meta.id(),
             method: 'post',
             type: 'json',
             contentType: 'application/json',

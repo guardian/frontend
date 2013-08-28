@@ -181,7 +181,7 @@ define([
 
                 reqwest({
                     method: 'post',
-                    url: common.config.apiBase + '/' + listId,
+                    url: common.config.apiBase + '/collection/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
@@ -204,7 +204,7 @@ define([
 
         function fetchSchema(callback) {
             reqwest({
-                url: common.config.apiBase,
+                url: common.config.apiBase + '/schema',
                 type: 'json'
             }).then(
                 function(resp) {

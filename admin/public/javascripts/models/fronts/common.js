@@ -16,7 +16,7 @@ define([
             cacheExpiryMs:         300000, // 300000 = five mins 
             defaultToLiveMode:     true,
 
-            apiBase:               '/fronts/api',
+            apiBase:               '/fronts',
             apiSearchBase:         '/api/proxy/search'
         },
 
