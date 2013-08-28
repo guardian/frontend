@@ -189,6 +189,9 @@ define(['common',
             })
         });
 
+        it("should have an AJAX url to the gallery without a hostname", function() {
+            expect(gallery.galleryEndpoint).not.toContain('://');
+        });
 
     });
 });
