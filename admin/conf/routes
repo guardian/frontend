@@ -35,7 +35,6 @@ POST    /dev/switchboard                 controllers.SwitchboardController.save(
 
 # Fronts
 GET       /collections                   controllers.FrontsController.index()
-GET       /fronts/schema                 controllers.FrontsController.schema()
 GET       /fronts/config/*id             controllers.FrontsController.getConfig(id)
 
 GET       /fronts/collection/*id         controllers.FrontsController.readBlock(id)
