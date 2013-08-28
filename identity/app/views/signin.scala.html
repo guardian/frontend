@@ -7,7 +7,6 @@
 }{
 <div class="identity-wrapper">
     <h1>Sign in to the Guardian</h1>
-
     <form class="form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
         @if(signinForm.globalError.isDefined) {
             <div class="form__error">@signinForm.globalErrors.map(_.message).mkString(", ")</div>

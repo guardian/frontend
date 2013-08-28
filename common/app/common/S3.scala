@@ -50,6 +50,20 @@ trait S3 extends Logging {
     client.putObject(request)
     client.shutdown()
   }
+
+  private def getListing(prefix: String, dropText: String): List[String] = {
+    import scala.collection.JavaConversions._
+    val summaries = client.listObjects(bucket, prefix).getObjectSummaries.toList
+    summaries
+      .map(_.getKey.split(prefix))
+      .filter(_.nonEmpty)
+      .map(_.last)
+      .filterNot(_.endsWith("/"))
+      .map(_.split(dropText).head)
+  }
+
+  def getConfigIds(prefix: String): List[String] = getListing(prefix, "/config.json")
+  def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 }
 
 object S3 extends S3
@@ -65,11 +79,13 @@ object S3FrontsApi extends S3 {
   def getSchema = get(s"${location}/schema.json")
   def getConfig(id: String) = get(s"${location}/config/${id}/config.json")
   def getBlock(id: String) = get(s"${location}/collection/${id}/collection.json")
+  def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
+  def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
   def putBlock(id: String, json: String) =
     putPublic(s"${location}/collection/${id}/collection.json", json, "application/json")
 
   def archive(id: String, json: String) = {
     val now = DateTime.now
-    putPrivate(s"${location}/collection/${id}/history/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+    putPrivate(s"${location}/history/collection/${id}/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
   }
 }

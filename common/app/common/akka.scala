@@ -1,10 +1,9 @@
 package common
 
-import akka.actor.Cancellable
 import akka.agent.Agent
 import play.api.libs.concurrent.{ Akka => PlayAkka }
-import play.api.Play
 import scala.concurrent.duration._
+import play.api.Play
 
 trait ExecutionContexts {
   implicit lazy val executionContext = play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -12,4 +11,10 @@ trait ExecutionContexts {
 
 object AkkaAgent {
   def apply[T](value: T) = Agent(value)(PlayAkka.system(Play.current))
+}
+
+object AkkaAsync extends ExecutionContexts {
+  def apply(body: => Unit) {
+    PlayAkka.system(Play.current).scheduler.scheduleOnce(1.seconds) { body }
+  }
 }
