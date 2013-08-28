@@ -34,7 +34,7 @@ function (
                     common.mediator.on('page:article:ready', function(config, context) {
                         if (!config.switches.externalLinksCards) {
                             var card = new LeftHandCard({
-                                type: 'internal',
+                                origin: 'internal',
                                 context: context
                             });
                         }
