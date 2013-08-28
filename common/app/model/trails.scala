@@ -26,6 +26,7 @@ trait Trail extends Images with Tags {
   def discussionId: Option[String] = None
   def leadingParagraphs: List[org.jsoup.nodes.Element] = Nil
   def byline: Option[String] = None
+  def trailType: Option[String] = None
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
@@ -132,10 +133,14 @@ class RunningOrderTrailblockDescription(
             }
 
             val idSearch = {
-              val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
-              val results = response map {r => r.results map{new Content(_)} }
-              val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
-              sorted fallbackTo Future(Nil)
+              if (articles.isEmpty) {
+                Future(Nil)
+              } else {
+                val response = ContentApi.search(edition).ids(articles.mkString(",")).showFields("all").pageSize(List(articles.size, 50).min).response
+                val results = response map {r => r.results map{Content(_)} }
+                val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
+                sorted
+              }
             }
 
             val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
@@ -146,7 +151,7 @@ class RunningOrderTrailblockDescription(
               val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
 
               newSearch.response map { r =>
-                r.results.map(new Content(_))
+                r.results.map(Content(_))
               }
             } getOrElse Future(Nil)
 

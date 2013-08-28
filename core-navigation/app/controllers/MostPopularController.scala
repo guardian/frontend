@@ -7,6 +7,7 @@ import play.api.mvc.{ RequestHeader, Controller, Action }
 import feed.MostPopularAgent
 
 import concurrent.Future
+import scala.util.Random
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
 
@@ -40,6 +41,17 @@ object MostPopularController extends Controller with Logging with ExecutionConte
             }
           }
       }
+    }
+  }
+
+  def renderCard() = Action { implicit request =>
+    val edition = Edition(request)
+    val trails = Random.shuffle(MostPopularAgent.mostPopular(edition))
+    if(trails.nonEmpty) {
+      val jsonResponse = () => views.html.fragments.cards.card(trails.head, "right", "Most read", "Story pack card | most read")
+      renderFormat(jsonResponse, 60)
+    } else {
+      NotFound
     }
   }
 

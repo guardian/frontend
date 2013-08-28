@@ -6,30 +6,33 @@ define([
     'modules/experiments/tests/paragraph-spacing',
     'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
-    'modules/experiments/tests/lightbox-galleries',
     'modules/experiments/tests/gallery-style',
+    'modules/experiments/tests/gallery-cta',
     'modules/experiments/tests/swipe-ctas',
-    'modules/experiments/tests/expandable-trails'
+    'modules/experiments/tests/expandable-trails',
+    'modules/experiments/tests/right-hand-card'
 ], function (
     common,
     store,
     ParagraphSpacing,
     ExperimentInlineLinkCard,
     Aa,
-    LightboxGalleries,
     GalleryStyle,
+    GalleryCta,
     SwipeCtas,
-    ExperimentExpandableTrails
+    ExperimentExpandableTrails,
+    RightHandCard
     ) {
 
     var TESTS = [
             new ParagraphSpacing(),
             new ExperimentInlineLinkCard(),
             new Aa(),
-            new LightboxGalleries(),
             new GalleryStyle(),
+            new GalleryCta(),
             new SwipeCtas(),
-            new ExperimentExpandableTrails()
+            new ExperimentExpandableTrails(),
+            new RightHandCard()
         ],
         participationsKey = 'gu.ab.participations';
 

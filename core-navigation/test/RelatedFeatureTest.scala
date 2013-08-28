@@ -1,6 +1,7 @@
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import test.`package`._
+import conf.Switches._
 
 class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -33,6 +34,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     scenario("Shows article metadata for each related link") {
 
       Given("there is an article 'Woman tortured during burglary tells of waterboarding ordeal'")
+      ABExpandableTrails.switchOff
       HtmlUnit("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
         import browser._
 

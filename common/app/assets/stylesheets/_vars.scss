@@ -32,14 +32,15 @@ $trailblockImgWidthLarge: 140px;
 // Name your breakpoints in a way that creates a ubiquitous language
 // across team members. It will improve communication between
 // stakeholders, designers, developers, and testers.
+// NB. If these change, please update detect.js to match
 
 @import 'layout/_grid-system';
 
 $mq-breakpoints: (
-    (mobile  gs-span(4) + $gutter*2)
-    (tablet  gs-span(9) + $gutter*2)
-    (desktop gs-span(12) + $gutter*2)
-    (wide    gs-span(16) + $gutter*2)
+    (mobile  gs-span(4) + $gutter*2)  // 332px
+    (tablet  gs-span(9) + $gutter*2)  // 732px
+    (desktop gs-span(12) + $gutter*2) // 972px
+    (wide    gs-span(16) + $gutter*2) // 1292px
 
     // Tweakpoints
     (desktopAd 810px)

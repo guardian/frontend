@@ -4,15 +4,21 @@ import play.api.mvc.{AnyContent, Request}
 import conf.IdentityConfiguration
 import com.google.inject.Inject
 import common.Logging
+import utils.SafeLogging
 
 
-class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends Logging {
+class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends SafeLogging {
   val domainRegExp = """^https?://([^:/\?]+).*""".r
   val returnUrlDomains = List(conf.id.domain)
   val defaultReturnUrl = "http://www." + conf.id.domain
 
   def getVerifiedReturnUrl(request: Request[AnyContent]): Option[String] = {
-    getVerifiedReturnUrl(request.queryString.get("returnUrl").flatMap(_.headOption))
+    getVerifiedReturnUrl(
+      request
+        .getQueryString("returnUrl")
+        .orElse(request.headers.get("Referer").filterNot(_.startsWith(conf.id.url))
+      )
+    )
   }
 
   def getVerifiedReturnUrl(returnUrl: Option[String]): Option[String] = {
@@ -23,7 +29,7 @@ class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends Logging {
     hasVerifiedReturnUrl(returnUrl) match {
       case true => Some(returnUrl)
       case false => {
-        log.warn("Invalid returnURL: %s".format(returnUrl))
+        logger.warn("Invalid returnURL: %s".format(returnUrl))
         None
       }
     }

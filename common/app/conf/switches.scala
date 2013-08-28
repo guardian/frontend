@@ -140,6 +140,10 @@ object Switches extends Collections {
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = Off)
 
+  val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
+    "If this switch is on, external links are turned into cards in body content on wide viewports.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -158,12 +162,12 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABLightboxGalleries = Switch("A/B Tests", "ab-lightbox-galleries",
-    "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
-    safeState = Off)
-
   val ABGalleryStyle = Switch("A/B Tests", "ab-gallery-style",
     "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
+    safeState = Off)
+
+  val ABGalleryCta = Switch("A/B Tests", "ab-gallery-cta",
+    "If this is switched on an AB test runs to test different styles of CTAs to launch a gallery",
     safeState = Off)
 
   val ABSwipeCtas = Switch("A/B Tests", "ab-swipe-ctas",
@@ -172,6 +176,10 @@ object Switches extends Collections {
 
   val ABExpandableTrails = Switch("A/B Tests", "ab-expandable-trails",
     "If this is switched on an AB test runs to trial the impact of having expandable content in trails",
+    safeState = Off)
+
+  val ABRightHandCard = Switch("A/B Tests", "ab-right-hand-card",
+    "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
     safeState = Off)
 
 
@@ -227,14 +235,16 @@ object Switches extends Collections {
     ABAa,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
+    ExternalLinksCardsSwitch,
     LiveCricketSwitch,
-    ABLightboxGalleries,
     FilmFrontFacia,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
+    ABGalleryCta,
     ABSwipeCtas,
-    ABExpandableTrails
+    ABExpandableTrails,
+    ABRightHandCard
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

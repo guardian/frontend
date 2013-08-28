@@ -6,6 +6,10 @@ $a-rightCol-trigger: gs-span(11) + $gutter*2;
 $mq-breakpoints: mq-add-breakpoint(rightCol, $a-rightCol-trigger);
 $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 
+.article {
+    position: relative;
+}
+
 .article-zone {
     padding: 13px 0 14px;
     margin-left: $gutter;
@@ -94,6 +98,7 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
     }
 }
 
+.article__container,
 .article__main-column {
     position: relative;
 }
