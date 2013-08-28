@@ -25,6 +25,13 @@ define([
         util: {
             mediator: new EventEmitter(),
 
+            hasNestedProperty: function (obj, path) {
+                if(obj.hasOwnProperty(path[0])) {
+                    return path.length === 1 ? true : this.hasNestedProperty(obj[path[0]], _.rest(path));
+                }
+                return false;
+            },
+
             parseQueryParams: function(url) {
                 url = url.indexOf('?') === -1 ? url: _.rest(url.split('?')).join('?');
                 return _.object(url.split('&').map(function(keyVal){
