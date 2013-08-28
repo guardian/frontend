@@ -109,72 +109,72 @@ module.exports = function (grunt) {
         },
 
         jasmine: {
-          options: {
-            template: require('grunt-template-jasmine-requirejs'),
-            keepRunner: true
-          },
-          common: {
             options: {
-              specs: 'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js',
-              vendor: [
-                'common/test/assets/javascripts/components/sinon/lib/sinon.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
-                'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
-                'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
-                'common/test/assets/javascripts/components/seedrandom/index.js',
-              ],
-              helpers: 'common/test/assets/javascripts/setup.js',
-              outfile: 'common-spec-runner.html',
-              templateOptions: {
-                requireConfig: {
-                  baseUrl: 'common/app/assets/javascripts/',
-                    paths: {
-                      common:       'common',
-                      analytics:    'modules/analytics',
-                      bonzo:        'components/bonzo/src/bonzo',
-                      qwery:        'components/qwery/mobile/qwery-mobile',
-                      bean:         'components/bean/bean',
-                      reqwest:      'components/reqwest/src/reqwest',
-                      domwrite:     'components/dom-write/dom-write',
-                      EventEmitter: 'components/eventEmitter/EventEmitter',
-                      swipe:        'components/swipe/swipe',
-                      swipeview:    'components/swipeview/src/swipeview',
-                      moment:       'components/moment/moment',
-                      omniture:     '../../../app/public/javascripts/vendor/omniture',
-                      fixtures:     '../../../test/assets/javascripts/fixtures',
-                      helpers:      '../../../test/assets/javascripts/helpers'
-                  }
+                template: require('grunt-template-jasmine-requirejs'),
+                keepRunner: true
+            },
+            common: {
+                options: {
+                    specs: 'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js',
+                    vendor: [
+                        'common/test/assets/javascripts/components/sinon/lib/sinon.js',
+                        'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
+                        'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
+                        'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
+                        'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
+                        'common/test/assets/javascripts/components/seedrandom/index.js',
+                    ],
+                    helpers: 'common/test/assets/javascripts/setup.js',
+                    outfile: 'common-spec-runner.html',
+                    templateOptions: {
+                        requireConfig: {
+                            baseUrl: 'common/app/assets/javascripts/',
+                            paths: {
+                                common:       'common',
+                                analytics:    'modules/analytics',
+                                bonzo:        'components/bonzo/src/bonzo',
+                                qwery:        'components/qwery/mobile/qwery-mobile',
+                                bean:         'components/bean/bean',
+                                reqwest:      'components/reqwest/src/reqwest',
+                                domwrite:     'components/dom-write/dom-write',
+                                EventEmitter: 'components/eventEmitter/EventEmitter',
+                                swipe:        'components/swipe/swipe',
+                                swipeview:    'components/swipeview/src/swipeview',
+                                moment:       'components/moment/moment',
+                                omniture:     '../../../app/public/javascripts/vendor/omniture',
+                                fixtures:     '../../../test/assets/javascripts/fixtures',
+                                helpers:      '../../../test/assets/javascripts/helpers'
+                            }
+                        }
+                    }
                 }
-              }
-            }
-          },
-          admin: {
-            options: {
-              specs: 'admin/public/javascripts/spec/**/' + jasmineSpec + 'Spec.js',
-              vendor: [
-                'admin/public/javascripts/components/jquery/jquery.js',
-                'admin/public/javascripts/components/js_humanized_time_span/humanized_time_span.js'
-              ],
-              helpers: 'admin/public/javascripts/spec/setup.js',
-              outfile: 'admin-spec-runner.html',
-              templateOptions: {
-                requireConfig: {
-                  baseUrl: 'admin/public/javascripts/',
-                  paths: {
-                    Common:       'common',
-                    TagSearch:    'modules/TagSearch',
-                    AutoComplete: 'modules/AutoComplete',
-                    tagEntry:     'modules/tagEntry',
-                    ItemSearch:   'modules/ItemSearch',
-                    EventEmitter: 'components/eventEmitter/EventEmitter',
-                    Reqwest:      'components/reqwest/reqwest',
-                    knockout:     'components/knockout/build/output/knockout-latest'
-                  }
+            },
+            admin: {
+                options: {
+                    specs: 'admin/public/javascripts/spec/**/' + jasmineSpec + 'Spec.js',
+                    vendor: [
+                        'admin/public/javascripts/components/jquery/jquery.js',
+                        'admin/public/javascripts/components/js_humanized_time_span/humanized_time_span.js'
+                    ],
+                    helpers: 'admin/public/javascripts/spec/setup.js',
+                    outfile: 'admin-spec-runner.html',
+                    templateOptions: {
+                        requireConfig: {
+                            baseUrl: 'admin/public/javascripts/',
+                            paths: {
+                                Common:       'common',
+                                TagSearch:    'modules/TagSearch',
+                                AutoComplete: 'modules/AutoComplete',
+                                tagEntry:     'modules/tagEntry',
+                                ItemSearch:   'modules/ItemSearch',
+                                EventEmitter: 'components/eventEmitter/EventEmitter',
+                                Reqwest:      'components/reqwest/reqwest',
+                                knockout:     'components/knockout/build/output/knockout-latest'
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         },
 
         // Lint Javascript sources
