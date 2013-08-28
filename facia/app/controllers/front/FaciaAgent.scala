@@ -13,6 +13,7 @@ import play.api.libs.ws.Response
 import model.Config
 import scala.Some
 import play.api.libs.json.JsObject
+import views.support._
 
 
 trait ParseConfig extends ExecutionContexts {
@@ -29,14 +30,27 @@ trait ParseConfig extends ExecutionContexts {
         (o \ "id").as[String],
         (o \ "displayName").as[String],
         (o \ "max").as[String].toInt,
-        None,
-        "lifeandstyle",
-        false,
-        false
+        getStyle((o \ "style").as[String]),
+        (o \ "section").as[String],
+        (o \ "isConfigured").as[String].toBoolean,
+        (o \ "showmore").as[String].toBoolean
       )
     }
   }
+
   def parseConfig(id: String): Future[Config] = ???
+
+  //TODO: Should probably live along side styles with object.apply
+  def getStyle(style: String): Option[Style] = style match {
+    case s if s == "featured"     => Some(Featured)
+    case s if s == "thumbnail"    => Some(Thumbnail)
+    case s if s == "headline"     => Some(Headline)
+    case s if s == "sectionfront" => Some(SectionFront)
+    case s if s == "masthead"     => Some(Masthead)
+    case s if s == "fastnews"     => Some(FastNews)
+    case s if s == "sectionzone"  => Some(SectionZone)
+    case _                        => None
+  }
 }
 
 trait ParseCollection extends ExecutionContexts with Logging {
