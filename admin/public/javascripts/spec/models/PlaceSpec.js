@@ -16,7 +16,6 @@ define(['models/place', 'knockout'], function(Place, knockout) {
             var o = { id: "foo", sameAs: [ "dog", "egg" ] }
               , place = new Place(o);
             expect(place.id()).toBe("foo");
-            expect(place.sameAs().length).toEqual(2);
         });
 
     });

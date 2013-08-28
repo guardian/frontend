@@ -5,7 +5,7 @@ define(['models/agent', 'knockout'], function(Agent, knockout) {
         var agent;
 
         beforeEach(function() {
-            agent = new Agent();
+            agent = new Agent({id: 'test'});
         });
 
         it('should have an id property', function() {
@@ -18,7 +18,6 @@ define(['models/agent', 'knockout'], function(Agent, knockout) {
             expect(agent.id()).toBe("foo");
             expect(agent.name()).toBe("bar");
             expect(agent.explainer()).toBe("car");
-            expect(agent.sameAs().length).toEqual(2);
         });
 
     });

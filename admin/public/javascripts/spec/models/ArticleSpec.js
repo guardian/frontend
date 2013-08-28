@@ -15,7 +15,6 @@ define(['models/article', 'knockout'], function(Article, knockout) {
         it('should be hydrated on construction', function() {
             var o = { id: "foo", webTitle: "bar", webPublicationDate: "2012-01-01T00:00:00", importance: 1, colour: 1, fields: { trailText: "gu" }}
             var article = new Article(o)
-            expect(article.mDot()).toBe("http://m.guardian.co.uk/foo")
             expect(article.webTitle()).toBe("bar")
             expect(article.webPublicationDate()).toBe("2012-01-01T00:00:00")
             expect(article.importance()).toBe(1)
