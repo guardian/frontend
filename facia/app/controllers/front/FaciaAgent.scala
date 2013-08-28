@@ -24,21 +24,20 @@ trait ParseConfig extends ExecutionContexts {
       json.asOpt[Map[String, Seq[JsValue]]] getOrElse Map.empty
     }
   }
-  def getConfig(id: String): Future[Seq[Config]] = getConfigMap(id) map { m =>
-    m.get("collections").getOrElse(Nil).map {o =>
-      Config(
-        (o \ "id").as[String],
-        (o \ "displayName").as[String],
-        (o \ "max").as[String].toInt,
-        getStyle((o \ "style").as[String]),
-        (o \ "section").as[String],
-        (o \ "isConfigured").as[String].toBoolean,
-        (o \ "showmore").as[String].toBoolean
-      )
-    }
+  def getConfig(id: String): Future[Seq[Config]] = getConfigMap(id) map { configMap =>
+    configMap.get("collections").getOrElse(Nil).map(parseConfig)
   }
 
-  def parseConfig(id: String): Future[Config] = ???
+  def parseConfig(json: JsValue): Config =
+    Config(
+      (json \ "id").as[String],
+      (json \ "displayName").as[String],
+      (json \ "max").as[String].toInt,
+      getStyle((json \ "style").as[String]),
+      (json \ "section").as[String],
+      (json \ "isConfigured").as[String].toBoolean,
+      (json \ "showmore").as[String].toBoolean
+    )
 
   //TODO: Should probably live along side styles with object.apply
   def getStyle(style: String): Option[Style] = style match {
