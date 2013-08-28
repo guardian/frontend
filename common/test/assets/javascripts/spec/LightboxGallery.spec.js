@@ -189,6 +189,10 @@ define(['common',
             })
         });
 
+        it("should have an AJAX url to the gallery without a hostname", function() {
+            expect(document.querySelectorAll('.overlay .gallery').length).toBe(1);
+            expect(gallery.galleryEndpoint).not.toContain('://');
+        });
 
     });
 });
