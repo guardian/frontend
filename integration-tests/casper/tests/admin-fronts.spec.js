@@ -25,7 +25,7 @@ var environment = "dev",
     targetLogin = targetBase+ "/login",
     targetPage  = targetBase+ "/collections",
 
-    collectionId = 'test/dummy/collection',
+    collectionId = 'test/news/masthead',
     articleId = "world/middle-east-live/2013/aug/27/syria-crisis-military-intervention-un-inspectors";  
 
 // Set up authenticated user
@@ -63,13 +63,42 @@ casper.then(function () {
 });
 
 // Check that a collection can be specified by a query param 
-casper.thenOpen(targetPage + '?blocks=' + collectionId, function () {
-});
+casper.thenOpen(targetPage + '?blocks=' + collectionId, function () {});
 casper.waitForSelector('[data-list-id="' + collectionId + '"]', function () {
     casper.test.comment('The collection loads OK');
     casper.test.assertExists('[data-list-id="' + collectionId + '"]');
 });
 
+// Check that the historyApi back removes the collection 
+casper.back();
+casper.waitWhileSelector('[data-list-id="' + collectionId + '"]', function () {
+    casper.test.comment('The collection unloads OK');
+    casper.test.assertDoesntExist('[data-list-id="' + collectionId + '"]');
+});
+
+/*
+casper.then(function() {
+    this.evaluate(function() {
+        document.querySelector('#searchTerm').value = 'world/middle-east-live/2013/aug/27/syria-crisis-military-intervention-un-inspectors';
+    });
+});
+*/
+
+/*
+casper.then(function () {
+    this.mouse.down(1161, 471);
+    this.mouse.move(441, 708);
+    this.mouse.up(441, 708);
+    this.capture('example.png', {
+        top: 0,
+        left: 0,
+        width: 1024,
+        height: 768
+    });
+}
+*/
+
+/*
 // 'drop' an article onto the clipboard
 casper.then(function () {
     casper.evaluate(function () {
@@ -85,6 +114,7 @@ casper.waitForSelector('[data-url="' + articleId + '"]', function () {
     casper.test.comment('The article drops into the clipboard');
     casper.test.assertExists('[data-url="' + articleId + '"]');
 });
+*/
 
 casper.run(function () {
     this.test.renderResults(true, 0, this.cli.get('save') || false);
