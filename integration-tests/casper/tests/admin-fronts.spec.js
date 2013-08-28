@@ -77,7 +77,7 @@ casper.then(function () {
             evt = document.createEvent("MouseEvents");
 
         evt.initMouseEvent("drop", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        evt.testDataTransfer = articleId;
+        evt.testData = articleId;
         clipboard.dispatchEvent(evt);
     });
 });

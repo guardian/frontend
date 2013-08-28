@@ -253,7 +253,7 @@ define([
         }
 
         function onDrop(event) {
-            var url = event.testDataTransfer ? event.testDataTransfer : event.dataTransfer.getData('Text');
+            var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
 
             if(!url) { return true; }
 
