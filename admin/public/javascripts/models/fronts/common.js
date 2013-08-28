@@ -15,6 +15,10 @@ define([
             maxOphanCallsPerBlock: 10,
             cacheExpiryMs:         300000, // 300000 = five mins 
             defaultToLiveMode:     true,
+            sectionSearches: {
+                "news": "news|uk|uk-news|world",
+                "culture": "cluture|film|music|books|artanddesign|tv-and-radio|stage"
+            },
 
             apiBase:               '/fronts',
             apiSearchBase:         '/api/proxy/search'
