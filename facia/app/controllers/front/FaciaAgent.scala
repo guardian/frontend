@@ -2,31 +2,18 @@ package controllers.front
 
 import scala.concurrent.Future
 import common._
-import views.support.Style
-import model.{Content, Trail}
+import model._
 import play.api.libs.ws.WS
 import conf.{ContentApi, Configuration}
 import play.api.libs.json.Json._
 import play.api.libs.json.JsValue
 import tools.QueryParams
+import model.FaciaTrailblock
 import play.api.libs.ws.Response
+import model.Config
 import scala.Some
 import play.api.libs.json.JsObject
 
-sealed case class Config(
-                          id: String,
-                          name: String,
-                          numItemsVisible: Int,
-                          style: Option[Style],
-                          section: String,
-                          showMore: Boolean,
-                          isConfigured: Boolean)
-sealed case class Items(items: Seq[Trail])
-
-sealed case class FaciaTrailblock(
-  id: String,
-  collections: List[(Config, Items)]
-                                 )
 
 trait ParseConfig extends ExecutionContexts {
   def getConfigMap(id: String): Future[Map[String, Seq[JsValue]]] = {
