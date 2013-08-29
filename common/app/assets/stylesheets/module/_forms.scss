@@ -100,8 +100,7 @@ label,
     font-size: 1.4rem;
     margin: 0 $gutter 0 0;
     min-width: gs-span(2);
-    padding: 6px 0 16px 4px;
-    text-align: left;
+    padding: 11px 0;
 
     &:hover, &:focus {
         background: darken($linkBlue, 5%);
