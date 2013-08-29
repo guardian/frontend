@@ -167,6 +167,7 @@ i.gallery__watermark {
         position: absolute;
         top: 85px;
     }
+
 }
 
 
@@ -200,8 +201,18 @@ i.gallery__watermark {
     background: rgb(34, 34, 34);
     background: rgba(34, 34, 34, 0.90);
 
-    .i {
+    i {
+        @extend .i-gallery-arrow;
         margin: 10px 8px;
+    }
+
+    @include mq(tablet) {
+        width: 36px;
+        height: 60px;
+
+        i {
+            @extend .i-gallery-arrow-large;
+        }
     }
 }
 
@@ -351,8 +362,12 @@ i.gallery__watermark {
 /* ==========================================================================
    Slideshow styles
    ========================================================================== */
-.gallery__images--slideshow {
-    position: relative;
+.gallery--slideshow {
+    margin-bottom: 0;
+
+    .gallery__images {
+        position: relative;
+    }
 
     .gallery__item {
         position: absolute;
@@ -360,14 +375,35 @@ i.gallery__watermark {
         left: 0;
         opacity: 0;
         display: block;
+        width: 100%;
 
-        transition: opacity 1s ease-in-out;
         -moz-transition: opacity 1s ease-in-out;
         -webkit-transition: opacity 1s ease-in-out;
+        -ms-transition: opacity 1s ease-in-out;
+        transition: opacity 1s ease-in-out;
     }
 
     .gallery__item--active {
         opacity: 1;
     }
 
+    .gallery__nav {
+        -moz-transition: opacity 1s ease-in-out;
+        -webkit-transition: opacity 1s ease-in-out;
+        -ms-transition: opacity 1s ease-in-out;
+        transition: opacity 1s ease-in-out;
+        opacity: 0;
+    }
+}
+
+.js-stop-slideshow {
+    display: none;
+}
+
+
+// Temp hack for icons
+.overlay__toolbar i {
+    width: 24px;
+    height: 24px;
+    background-size: 24px 24px;
 }
