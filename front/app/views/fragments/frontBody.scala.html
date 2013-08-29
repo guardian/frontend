@@ -2,7 +2,9 @@
 
 <div class="front-container cf" data-link-name="Front" role="main">
     @trailblocks.zipWithIndex.map{ case(block, index) =>
-        @fragments.frontBlock(block, front, index)
+        @if(block.trails.nonEmpty) {
+            @fragments.frontBlock(block, front, index)
+        }
     }
 </div>
 

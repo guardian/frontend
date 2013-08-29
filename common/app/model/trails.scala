@@ -1,6 +1,6 @@
 package model
 
-import conf.{Configuration, ContentApi}
+import conf.{Switch, Configuration, ContentApi}
 import common._
 import contentapi.QueryDefaults
 import org.joda.time.DateTime
@@ -96,9 +96,7 @@ object CustomTrailblockDescription {
 
 
 trait ConfiguredTrailblockDescription extends TrailblockDescription {
-  def query() = scala.concurrent.future {
-    Nil
-  }
+  def query(): Future[Seq[Trail]] = Future(Nil)
 
   def configuredQuery(): Future[Option[TrailblockDescription]]
 }
@@ -179,4 +177,33 @@ class RunningOrderTrailblockDescription(
 object RunningOrderTrailblockDescription {
   def apply(id: String, blockId: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false, isConfigured: Boolean = false)(implicit edition: Edition) =
     new RunningOrderTrailblockDescription(id, blockId, name, numItemsVisible, style, showMore, edition, isConfigured)
+}
+
+
+class RunningOrderTrailblockDescriptionSwitch(id: String, blockId: String, name: String, numItemsVisible: Int, style: Option[Style] = None, showMore: Boolean = false, edition: Edition, isConfigured: Boolean = false, switch: Switch)
+  extends RunningOrderTrailblockDescription(id, blockId, name, numItemsVisible, style, showMore, edition, isConfigured) {
+
+  override def query(): Future[Seq[Trail]] = configuredQuery() flatMap { q =>
+    q map {trailblockDescription =>
+      trailblockDescription.query()
+    } getOrElse {
+      if (switch.isSwitchedOff)
+        Future(Nil)
+      else
+        Future.failed(throw new java.util.concurrent.TimeoutException("Query Failed"))
+    }
+  }
+
+  override def configuredQuery(): Future[Option[TrailblockDescription]] = {
+    if (switch.isSwitchedOff) {
+      Future(None)
+    } else {
+      super.configuredQuery()
+    }
+  }
+}
+
+object RunningOrderTrailblockDescriptionSwitch {
+  def apply(id: String, blockId: String, name: String, numItemsVisible: Int, switch: Switch, style: Option[Style] = None, showMore: Boolean = false, isConfigured: Boolean = false)(implicit edition: Edition) =
+    new RunningOrderTrailblockDescriptionSwitch(id, blockId, name, numItemsVisible, style, showMore, edition, isConfigured, switch)
 }
