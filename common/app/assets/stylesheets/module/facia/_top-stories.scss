@@ -1,14 +1,44 @@
+@mixin row($row-size) {
+    &:nth-child(#{$row-size}n + 1) {
+        padding-left: 0;
+    }
+    &:nth-child(#{$row-size}n + #{$row-size}) {
+        padding-right: 0;
+        border-right-style: none;
+    }
+    &:nth-child(n + #{$row-size + 1}) {
+        padding-top: 5px;
+        border-top: 1px dotted $grey;
+        @if $row-size!= 1 {
+            min-height: gs-height(4);
+        }
+        .item__image-container {
+            display: none;
+        }
+    }
+}
+
 .section--top-stories {
     overflow: hidden;
-
+    margin: 0 auto;
+    @include mq(tablet, desktop) {
+        width: gs-span(9);
+    }
+    @include mq(desktop, wide) {
+        width: gs-span(12);
+    }
     .section__title {
         display: none;
     }
     .collection {
         font-size: 0;
+        margin-top: ($gs-gutter / 2) - 1;
+        padding: ($gs-gutter / 2) 0 ($gs-gutter / 2 - 1);
+        border-top: solid 1px $grey;
+        border-bottom: solid 1px $grey;
     }
     .item {
-        margin: $baseline * 3 0 0;
+        margin: 0;
         padding: 0 ($gs-gutter / 2 - 1) 6px $gs-gutter / 2;
         border-top-style: none;
         border-bottom-style: none;
@@ -16,35 +46,22 @@
         float: none;
         display: inline-block;
         vertical-align: top;
-        min-height: gs-height(8);
         @include box-sizing(content-box);
-        @include mq($to: mobile) {
-            width: 50%;
+        @include mq($to: tablet) {
+            @include row(1);
+            min-height: 0;
         }
-        @include mq(tablet, wide) {
+        @include mq(tablet, desktop) {
             width: gs-span(3);
+            @include row(3);
+        }
+        @include mq(desktop, wide) {
+            width: gs-span(4);
+            @include row(3);
         }
         @include mq(wide) {
             width: gs-span(4);
-        }
-        &:nth-child(4n + 1) {
-            padding-left: 0;
-        }
-        &:nth-child(4n + 4) {
-            padding-right: 0;
-            border-right-style: none;
-        }
-        &:nth-child(n + 5) {
-            margin-top: 0;
-            padding-top: 5px;
-            border-top: 1px dotted $grey;
-            min-height: gs-height(4);
-            .item__image-container {
-                display: none;
-            }
-        }
-        &:nth-child(n + 9) {
-            display: none;
+            @include row(4);
         }
     }
     .item__image-container {
@@ -75,5 +92,12 @@
                 @extend .i-clock-grey;
             }
         }
+    }
+    .collection__show-more {
+        border-style: none;
+        @extend %type-7;
+        display: block;
+        margin: 0 auto;
+        background-color: #dddddd;
     }
 }

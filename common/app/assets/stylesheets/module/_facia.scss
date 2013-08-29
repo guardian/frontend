@@ -1,3 +1,19 @@
+.facia-container {
+    .breakpoint {
+        @include mq($to: tablet) {
+            font-family: mobile;
+        }
+        @include mq(tablet, desktop) {
+            font-family: tablet;
+        }
+        @include mq(desktop, wide) {
+            font-family: desktop;
+        }
+        @include mq(wide) {
+            font-family: wide;
+        }
+    }
+}
 #popular-trails {
     clear: left;
 }
