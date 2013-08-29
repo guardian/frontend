@@ -143,6 +143,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
       }
     }
 
+    newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
     newSearch
   } getOrElse Future(Nil)
 
