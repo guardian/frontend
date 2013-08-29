@@ -4,8 +4,7 @@ GET     /assets/*file                                   controllers.Assets.at(pa
 GET     /signin                                         @controllers.SigninController.renderForm
 POST    /signin                                         @controllers.SigninController.processForm
 GET     /signout                                        @controllers.SignoutController.signout
-GET     /reset/:message                                 @controllers.ResetPasswordController.renderPasswordResetRequestForm( message: String )
-GET     /reset                                          @controllers.ResetPasswordController.renderPasswordResetRequestForm( message = "")
+GET     /reset                                          @controllers.ResetPasswordController.renderPasswordResetRequestForm
 POST    /reset                                          @controllers.ResetPasswordController.processPasswordResetRequestForm
 GET     /c/:resetToken                                  @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
 POST    /reset-password/:resetToken                     @controllers.ResetPasswordController.resetPassword( resetToken : String )

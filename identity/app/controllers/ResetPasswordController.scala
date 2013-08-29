@@ -36,16 +36,14 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
     ) verifying(Messages("error.passwordsMustMatch"), { f => f._1 == f._2 }  )
   )
 
-  def renderPasswordResetRequestForm(email : String = "") = Action { implicit request =>
+  def renderPasswordResetRequestForm = Action { implicit request =>
     val idRequest = idRequestParser(request)
-    val filledForm = requestPasswordResetForm.fill(email)
-    Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, filledForm))
+    Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, requestPasswordResetForm))
   }
 
   def requestNewToken = Action { implicit request =>
     val idRequest = idRequestParser(request)
-    val filledForm = requestPasswordResetForm.fill("")
-    Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, filledForm))
+    Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
   }
 
 
