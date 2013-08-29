@@ -11,6 +11,7 @@ import services.{IdentityUrlBuilder, IdRequestParser}
 import play.api.i18n.Messages
 import java.net.URLEncoder
 import play.api.data.validation.Constraints
+import form.Mappings.{idEmail, idPassword}
 
 
 @Singleton
@@ -20,20 +21,18 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
 
   val requestPasswordResetForm = Form(
     Forms.single(
-      "email" -> Forms.email
+      "email" -> idEmail
         .verifying(Constraints.nonEmpty)
     )
   )
 
   val passwordResetForm = Form(
     Forms.tuple (
-      "password" ->  Forms.text
-        .verifying(Constraints.nonEmpty)
-        .verifying(Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}),
-      "password_confirm" ->  Forms.text
-        .verifying(Constraints.nonEmpty)
-        .verifying(Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}),
-      "email_address" -> Forms.text
+      "password" ->  idPassword
+        .verifying(Constraints.nonEmpty),
+      "password_confirm" ->  idPassword
+        .verifying(Constraints.nonEmpty),
+      "email_address" -> idEmail
     ) verifying(Messages("error.passwordsMustMatch"), { f => f._1 == f._2 }  )
   )
 
