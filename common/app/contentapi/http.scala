@@ -33,9 +33,10 @@ trait WsHttp extends Http[Future] with ExecutionContexts {
   }
 
 
-  private def isTimeout(e: Throwable): Boolean = Option(e.getCause)
-    .map(_.getClass == classOf[TimeoutException])
-    .getOrElse(false)
+  private def isTimeout(e: Throwable): Boolean = e match {
+    case t: TimeoutException => true
+    case _  => false
+  }
 }
 
 

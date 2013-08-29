@@ -12,7 +12,9 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt-shell": "~0.2.1",
     "grunt-css-metrics": "~0.1.1",
-    "grunt-casper": "https://github.com/guardian/grunt-casper/archive/v0.0.2.tar.gz"
+    "grunt-casper": "https://github.com/guardian/grunt-casper/archive/v0.0.2.tar.gz",
+    "grunt-contrib-jasmine": "~0.5.1",
+    "grunt-template-jasmine-requirejs": "~0.1.5"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"

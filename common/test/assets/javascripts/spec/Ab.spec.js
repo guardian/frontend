@@ -1,4 +1,4 @@
-define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
+define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
 
     describe('AB Testing', function() {
 

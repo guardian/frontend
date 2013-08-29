@@ -48,6 +48,7 @@ define([
             description = data.description || false,
             image = data.image || false,
             datePublished = data.published_time || false,
+            host = data.host || false,
             tpl,
             imageFragment = '',
             titleFragment = '',
@@ -72,6 +73,9 @@ define([
         } else {
             contentFragment = '<h3 class="card__headline">' + headline + '</h3>';
         }
+        if (host && !/^theguardian\.com$/.test(host)) {
+            contentFragment += '<div class="card__appendix type-12">' + host + '</div>';
+        }
 
         tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
                   '<div class="furniture furniture--left card">' +
@@ -94,6 +98,8 @@ define([
             reqURL;
         if ((/^\//).test(href)) {
             reqURL = '/cards/opengraph/' + encodeURIComponent('http://www.theguardian.com' + href);
+        } else if ((/^http(?:s)?:\/\//).test(href)) {
+            reqURL = '/cards/opengraph/' + encodeURIComponent(href);
         }
 
         // make request to endpoint

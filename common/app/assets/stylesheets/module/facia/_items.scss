@@ -1,9 +1,10 @@
-$featured-img-width: 460px;
 $blue: #005688;
 $light-blue: #4cc7e0;
 $pink: #AB1454;
 $light-pink: #f66980;
 $grey: #cccccc;
+$green: #6ca940;
+$dark-green: #19646c;
 
 .item {
     float: left;
@@ -84,6 +85,7 @@ a.item__link,
     position: absolute;
     top: 0;
     left: 0;
+    color: #ffffff;
     background-color: $light-blue;
     @include font($sans-serif, lighter, 12, 12);
     padding: $baseline $gutter/2;
@@ -116,6 +118,43 @@ a.item__link,
     }
     .item__duration {
         background-color: $light-pink;
+    }
+}
+.item--comment {
+    color: #000000 !important;
+    background: none !important;
+    border-top: 2px solid $green;
+    border-bottom: 1px solid $grey;
+    .i-quotes-green {
+        margin-top: $baseline * 2;
+    }
+    .item__image-container {
+        display: none;
+    }
+    .item__title {
+        position: relative !important;
+        background: none !important;
+        width: auto !important;
+        padding: 0 !important;
+        margin: $baseline * 2 0 0 !important;
+    }
+    .item__byline {
+        color: $dark-green;
+        font-family: $serifheadline;
+        font-weight: bold;
+    }
+    .item__meta {
+        color: $grey  !important;
+        border-color: $grey  !important;
+    }
+    .item__timestamp {
+        border-left-style: solid  !important;
+        i {
+            @extend .i-clock-green;
+        }
+    }
+    .trail__count i {
+        @extend .i-comment-green;
     }
 }
 
@@ -294,9 +333,10 @@ a.item__link,
     }
     .item:nth-child(1) {
         background-color: $blue;
+        padding-bottom: $baseline*10;
         color: #ffffff;
         .item__title {
-            margin: $baseline*2 $baseline*2 $baseline*10;
+            margin: $baseline*2 $baseline*2 0;
         }
         .item__meta {
             color: #ffffff;

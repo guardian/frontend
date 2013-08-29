@@ -97,7 +97,7 @@ define([
         var self = this;
 
         reqwest({
-            url: common.config.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
@@ -122,7 +122,7 @@ define([
         self.state.loadIsPending(true);
         reqwest({
             method: 'delete',
-            url: common.config.apiBase + '/' + self.id,
+            url: common.config.apiBase + '/collection/' + self.id,
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -147,7 +147,7 @@ define([
         common.util.mediator.emit('list:load:start');
 
         reqwest({
-            url: common.config.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             type: 'json'
         }).always(
             function(resp) {
@@ -234,7 +234,7 @@ define([
     List.prototype.saveConfig = function() {
         var self = this;
         reqwest({
-            url: common.config.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',

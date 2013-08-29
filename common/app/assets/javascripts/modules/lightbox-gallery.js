@@ -40,7 +40,7 @@ define(["bean",
                 bonzo(context.querySelectorAll(self.selector + ' a')).attr('data-is-ajax', '1');
 
                 bean.on(context, 'click', self.selector + ' a', function(e) {
-                    var galleryUrl = e.currentTarget.href;
+                    var galleryUrl = e.currentTarget.getAttribute('href');
 
                     self.galleryEndpoint = galleryUrl.split('?')[0] + '/lightbox.json';
 
