@@ -9,7 +9,9 @@
                  data-link-context="@if(block.description.section == "news"){@edition}else{@edition/@block.description.section}">
              }
 
-        <h2 class="section__title">@block.description.name</h2>
+        @if(block.description.name) {
+            <h2 class="section__title">@block.description.name</h2>
+        }
 
         @block.description.style match {
             case Some(Thumbnail)                            => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }

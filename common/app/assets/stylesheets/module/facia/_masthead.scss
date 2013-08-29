@@ -1,5 +1,12 @@
 .section--masthead {
-
+    .section__title {
+        background-color: #3b65ad;
+        border-bottom: 4px solid #64abe1;
+        color: #ffffff;
+        @include font-size(20);
+        font-weight: lighter;
+        padding: $baseline*2 $gutter/2 $baseline*3;
+    }
     .collection {
         margin-top: $baseline*4;
         padding: $baseline*3 0;
