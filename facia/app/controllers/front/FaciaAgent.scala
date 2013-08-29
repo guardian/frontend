@@ -14,7 +14,20 @@ import model.Config
 import scala.Some
 import play.api.libs.json.JsObject
 import views.support._
+import play.api.mvc.AnyContent
+import play.mvc.Http.Request
 
+object Path {
+  def unapply[T](uri: String) = Some(uri.split('?')(0))
+  def apply[T](uri: String) = uri.split('?')(0)
+}
+
+object Seg {
+  def unapply(path: String): Option[List[String]] = path.split("/").toList match {
+    case "" :: rest => Some(rest)
+    case all => Some(all)
+  }
+}
 
 trait ParseConfig extends ExecutionContexts {
   def getConfigMap(id: String): Future[Map[String, Seq[JsValue]]] = {
@@ -85,17 +98,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
             }
           }
 
-          val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
-            val queryParams: Map[String, String] = QueryParams.get(query).mapValues{_.mkString("")}
-            val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
-            val search = ContentApi.search(edition)
-            val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
-            val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
-
-            newSearch.response map { r =>
-              r.results.map(new Content(_))
-            }
-          } getOrElse Future(Nil)
+          val contentApiQuery = executeContentApiQuery((parse(r.body) \ "contentApiQuery").asOpt[String], edition)
 
           val results = for {
             idSearchResults <- idSearch
@@ -114,6 +117,36 @@ trait ParseCollection extends ExecutionContexts with Logging {
       }
     }
   }
+
+  def executeContentApiQuery(s: Option[String], edition: Edition): Future[List[Content]] = s map { queryString =>
+    val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues{_.mkString("")}
+    val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
+
+    val newSearch = queryString match {
+      case Path(Seg("search" ::  Nil)) => {
+        val search = ContentApi.search(edition)
+        val newSearch = queryParamsWithEdition.foldLeft(search){
+          case (query, (key, value)) => query.stringParam(key, value)
+        }
+        newSearch.response map { r =>
+          r.results.map(new Content(_))
+        }
+      }
+      case Path(id)  => {
+        println("Item ID: %s".format(id))
+        val search = ContentApi.item(id, edition)
+        val newSearch = queryParamsWithEdition.foldLeft(search){
+          case (query, (key, value)) => query.stringParam(key, value)
+        }
+        newSearch.response map { r =>
+          r.results.map(new Content(_))
+        }
+      }
+    }
+
+    newSearch
+  } getOrElse Future(Nil)
+
 }
 
 //, itemCache: Agent[Map[String, Content]]
@@ -125,7 +158,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
       config map {y => y -> getCollection(y.id, edition)}
     }
     f map (_.toVector) flatMap {j =>
-      j.foldRight(Future(List[(Config, Items)]()))((a, b) => for{l <- b; i <- a._2} yield (a._1,  i) +: l)
+      j.foldRight(Future(List[(Config, Items)]()))((a, b) => for{l <- b; i <- a._2.fallbackTo(Future(Items(Nil)))} yield (a._1,  i) +: l)
     }
   }
 
