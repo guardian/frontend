@@ -11,34 +11,35 @@ function (
 
     function LeftHandCard(options) {
         this.options = common.extend(this.DEFAULTS, options);
-        this.type = this.options.type;
+        this.origin = this.options.origin;
 
-        if (typeof this.options.supportedTypes[this.type] !== 'undefined') {
+        if (typeof this.options.supportedOrigins[this.origin] !== 'undefined') {
             this.loadCard();
         }
     }
 
     LeftHandCard.prototype.DEFAULTS = {
         context: document,
-        supportedTypes: {
+        supportedOrigins: {
             'internal': true,
-            'external': true
+            'all': true
         }
     };
 
     LeftHandCard.prototype.loadCard = function() {
-        var self = this;
-        var linksToCardify = self.options.context.querySelectorAll('.article-body > p a[href]');
+        var self = this,
+            linksToCardify = self.options.context.querySelectorAll('.article-body > p a[href]');
+
         common.$g('body').addClass('test-link-card--on');
 
         function isArticle(url) {
             return (/^\/[\w\-]+\/(?:[\w\-]+\/)?[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
         }
         function isVideo(url) {
-            if (self.options.type === 'external') {
-                return (/\/[\w\-]+\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+|youtube\.com|dailymotion\.com|vimeo\.com/).test(url);
-            }
             return (/\/[\w\-]+\/video\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
+        }
+        function isExternalVideo(url) {
+            return (/youtube\.com|dailymotion\.com|vimeo\.com/).test(url);
         }
         function isGallery(url) {
             return (/\/[\w\-]+\/gallery\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
@@ -47,27 +48,36 @@ function (
             return (/\/commentisfree\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
         }
         function isWikipedia(url) {
-            return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.]+$/).test(url);
+            return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.\(\)\,]+$/).test(url);
         }
         function isBBC(url) {
             return (/^http:\/\/(?:(?:www|m)\.)?bbc\.co\.uk/).test(url);
         }
-        function isWhiteListed(url) {
-            if (self.options.type === 'external') {
-                return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url) || isWikipedia(url) || isBBC(url);
+        function isWhiteListed(url, origin) {
+            if (origin === 'all') {
+                return isCif(url) || isGallery(url) || isVideo(url) || isExternalVideo(url) || isArticle(url) || isWikipedia(url) || isBBC(url);
             }
             return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url);
         }
 
         function cardifyRelatedInBodyLink(link) {
-            var title = 'Related';
+            var href = link.getAttribute('href').trim(),
+                types = {
+                    'Related':       { test: isArticle,       title: "Related" },
+                    'BBC':           { test: isBBC,           title: "Related" },
+                    'Video':         { test: isVideo,         title: "Video" },
+                    'ExternalVideo': { test: isExternalVideo, title: "Video" },
+                    'Gallery':       { test: isGallery,       title: "Gallery" },
+                    'Comment':       { test: isCif,           title: "Comment" },
+                    'Wikipedia':     { test: isWikipedia,     title: "Wikipedia" }
+                };
 
-            if (isVideo(link.getAttribute('href').trim())) { title = 'Video'; }
-            else if (isGallery(link.getAttribute('href').trim())) { title = 'Gallery'; }
-            else if (isCif(link.getAttribute('href').trim())) { title = 'Comment'; }
-            else if (isWikipedia(link.getAttribute('href').trim())) { title = 'Wikipedia'; }
-
-            new InlineLinkCard(link, link.parentNode, title).init();
+            Object.keys(types).some(function(type) {
+                if (types[type].test(href)) {
+                    new InlineLinkCard(link, link.parentNode, types[type].title).init();
+                    return true;
+                }
+            });
         }
 
         if (linksToCardify.length > 0) {
@@ -91,7 +101,7 @@ function (
 
                 if (numberOfLinksInParagraph > 0) {
                     while (j < numberOfLinksInParagraph) {
-                        if (isWhiteListed(linksInParagraph[j].getAttribute('href').trim())) {
+                        if (isWhiteListed(linksInParagraph[j].getAttribute('href').trim(), self.options.origin)) {
                             cardifyRelatedInBodyLink(linksInParagraph[j]);
                             linkWasCardified = true;
 

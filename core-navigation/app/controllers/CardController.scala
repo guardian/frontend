@@ -62,7 +62,7 @@ object CardController extends Controller with Logging with ExecutionContexts {
             }
           }
         }
-      case w if (w.startsWith("http://en.wikipedia.org/wiki/")) =>
+      case w if (w.startsWith("en.wikipedia.org")) =>
         Async {
           WS.url(r)
             .get().map { response =>
@@ -72,15 +72,14 @@ object CardController extends Controller with Logging with ExecutionContexts {
                   val firstParagraph = fragment.select("#mw-content-text > p").first
                   firstParagraph.select(".reference").remove()
 
-                  val wiki = Map(
-                    "url" -> resource,
-                    "title" -> fragment.select("#firstHeading").text(),
-                    "image" -> fragment.select(".image img").attr("src"),
-                    "description" -> firstParagraph.text().split("\\.").headOption.getOrElse(""),
-                    "site_name" -> "Wikipedia",
-                    "host" -> "wikipedia.org"
-                  )
-                  JsonComponent(Json.toJson(wiki).asInstanceOf[JsObject])
+                  JsonComponent(Json.toJson(Map(
+                    ("url", resource),
+                    ("title", fragment.select("#firstHeading").text()),
+                    ("image", fragment.select(".image img").attr("src")),
+                    ("description", firstParagraph.text().split("\\.").headOption.getOrElse("")),
+                    ("site_name", "Wikipedia"),
+                    ("host", "wikipedia.org")
+                  )).asInstanceOf[JsObject])
                 case _ => NotFound
             }
           }

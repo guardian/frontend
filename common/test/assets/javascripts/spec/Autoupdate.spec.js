@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], function(common, ajax, bean, Autoupdate, storage) {
+define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storage'], function(common, ajax, bean, bonzo, Autoupdate, storage) {
 
     describe("Auto update", function() {
 
@@ -6,6 +6,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             delay,
             path,
             attachTo,
+            controls,
             server;
 
         // Have to stub the global guardian object
@@ -24,7 +25,8 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             storage.set('gu.prefs.auto-update', 'on');
             path = 'fixtures/autoupdate';
             delay = 1000;
-            attachTo = document.getElementById('update-area');
+            attachTo = bonzo(bonzo.create('<div>')).appendTo('body');
+            controls = bonzo(bonzo.create('<div>')).attr('class', 'update').appendTo('body');
             callback = sinon.stub();
             // set up fake server
             server = sinon.fakeServer.create();
@@ -35,6 +37,8 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
         afterEach(function() {
             callback = null;
             server.restore();
+            attachTo.remove();
+            controls.remove();
         });
 
         // json test needs to be run asynchronously
@@ -43,12 +47,12 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
             common.mediator.on('modules:autoupdate:loaded', callback);
 
-            attachTo.innerHTML = '<span>bar</span>';
+            attachTo.html('<span>bar</span>');
 
             var a = new Autoupdate({
                     path: path,
                     delay: delay,
-                    attachTo: attachTo,
+                    attachTo: attachTo[0],
                     switches: {autoRefresh: true},
                     manipulationType: 'prepend'
                 });
@@ -58,7 +62,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
 
             runs(function(){
                 expect(callback).toHaveBeenCalled();
-                expect(attachTo.innerHTML).toBe('<span>foo</span><span>bar</span>');
+                expect(attachTo.html()).toBe('<span>foo</span><span>bar</span>');
                 a.off();
             });
         });
@@ -72,7 +76,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             var a = new Autoupdate({
                     path: path,
                     delay: 10000,
-                    attachTo: attachTo,
+                    attachTo: attachTo[0],
                     switches: {autoRefresh: true},
                     loadOnInitialise: true
                 });
@@ -82,7 +86,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
 
             runs(function(){
                 expect(callback1).toHaveBeenCalled();
-                expect(attachTo.innerHTML).toBe('<span>foo</span>');
+                expect(attachTo.html()).toBe('<span>foo</span>');
                 a.off();
             });
         });
@@ -95,7 +99,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             var a = new Autoupdate({
                     path: path,
                     delay: delay,
-                    attachTo: attachTo,
+                    attachTo: attachTo[0],
                     switches: {autoRefresh: true}
                 });
 
@@ -117,7 +121,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             var a = new Autoupdate({
                     path: 'fixtures/badupdate',
                     delay: delay,
-                    attachTo: attachTo,
+                    attachTo: attachTo[0],
                     switches: {autoRefresh: true}
                 });
                 a.init();
@@ -137,7 +141,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage'], func
             var a = new Autoupdate({
                     path:path,
                     delay:delay,
-                    attachTo: attachTo
+                    attachTo: attachTo[0]
                 });
                 a.init();
 

@@ -278,7 +278,7 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches && config.switches.externalLinksCards) {
                     var card = new LeftHandCard({
-                        type: 'external',
+                        origin: 'all',
                         context: context
                     });
                 }
