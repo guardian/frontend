@@ -133,7 +133,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
         }
       }
       case Path(id)  => {
-        println("Item ID: %s".format(id))
         val search = ContentApi.item(id, edition)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
