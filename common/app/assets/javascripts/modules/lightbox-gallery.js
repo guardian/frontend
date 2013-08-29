@@ -98,6 +98,9 @@ define(["bean",
             common.mediator.on('modules:overlay:close', function() {
                 self.removeOverlay();
 
+                // Remove keyboard handlers
+                bean.off(document.body, 'keydown', self.handleKeyEvents);
+
                 // Go back to the URL that we started on
                 if (pushUrlChanges) {
                     url.pushUrl({}, document.title, pageUrl);
@@ -123,6 +126,16 @@ define(["bean",
                     common.mediator.emit('module:clickstream:interaction', 'Lightbox Gallery - Back button exit');
                 }
             });
+        };
+
+        this.handleKeyEvents = function(e) {
+            if (e.keyCode === 37) { // left
+                self.prev();
+                self.trackInteraction('keyboard:previous');
+            } else if (e.keyCode === 39) { // right
+                self.next();
+                self.trackInteraction('keyboard:next');
+            }
         };
 
         this.loadGallery = function() {
@@ -152,6 +165,9 @@ define(["bean",
                     self.layout();
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
+
+                    // Setup keyboard nav handler
+                    bean.on(document.body, 'keydown', self.handleKeyEvents);
 
                     // Register this as a page view
                     common.mediator.emit('module:lightbox-gallery:loaded', response.config, galleryNode);

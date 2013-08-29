@@ -193,5 +193,18 @@ define(['common',
             expect(gallery.galleryEndpoint).not.toContain('://');
         });
 
+        // Keyboard tests
+        it("should navigate the gallery when left/right arrow keys are pressed", function() {
+            bean.fire(document.body, 'keydown', { keyCode: 39 });
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('2');
+
+            bean.fire(document.body, 'keydown', { keyCode: 39 });
+            bean.fire(document.body, 'keydown', { keyCode: 39 });
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('4');
+
+            bean.fire(document.body, 'keydown', { keyCode: 37 });
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('3');
+        });
+
     });
 });
