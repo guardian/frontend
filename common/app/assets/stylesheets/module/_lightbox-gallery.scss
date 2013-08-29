@@ -33,14 +33,12 @@ i.gallery__watermark {
    Thumbnail/Single Full image modes
    ========================================================================== */
 
-$thumbnailOuterWidth: 156px; // 140px + 16px margins
-
-@function gridContainerWidth($n-thumbnails) {
+@function gridContainerWidth($n-thumbnails, $thumbnailOuterWidth) {
     @return $n-thumbnails * $thumbnailOuterWidth;
 }
 
-@function viewportWidth($n-thumbnails) {
-    $gridContainerWidth: gridContainerWidth($n-thumbnails);
+@function viewportWidth($n-thumbnails, $thumbnailOuterWidth) {
+    $gridContainerWidth: gridContainerWidth($n-thumbnails, $thumbnailOuterWidth);
     @return $gridContainerWidth;
 }
 
@@ -57,14 +55,26 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     .gallery__item {
         float: left;
         margin: $baseline * 2;
+
+        @include mq(tablet) {
+            margin: 6px 5px;
+        }
     }
 
     .gallery__item--portrait {
         @include fix-aspect-ratio(3, 4, 140px);
+
+        @include mq(tablet) {
+            @include fix-aspect-ratio(3, 4, 220px);
+        }
     }
 
     .gallery__item--landscape {
         @include fix-aspect-ratio(5, 3, 140px);
+
+        @include mq(tablet) {
+            @include fix-aspect-ratio(5, 3, 220px);
+        }
     }
 
     .gallery__img {
@@ -78,13 +88,25 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     }
 
     // This sets a fixed width to the gallery container, so it can be centered
-    @for $i from 2 through 8 {
-        @include mq(viewportWidth($i)) {
+    $thumbOuterWidthMobile: 156px; // 140px + 16px margins
+    $thumbOuterWidthTablet: 240px; // 220px + 20px margins
+
+    @for $i from 2 through 4 {
+        @include mq(viewportWidth($i, $thumbOuterWidthMobile)) {
             .gallery__images {
-                width: gridContainerWidth($i);
+                width: gridContainerWidth($i, $thumbOuterWidthMobile);
             }
         }
     }
+
+    @for $i from 3 through 8 {
+        @include mq(viewportWidth($i, $thumbOuterWidthTablet)) {
+            .gallery__images {
+                width: gridContainerWidth($i, $thumbOuterWidthTablet);
+            }
+        }
+    }
+
 }
 
 
