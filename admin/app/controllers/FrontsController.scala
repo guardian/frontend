@@ -16,12 +16,6 @@ object FrontsController extends Controller with Logging with ExecutionContexts {
     Ok(views.html.fronts(Configuration.environment.stage))
   }
 
-  def schema = AuthAction{ request =>
-    S3FrontsApi.getSchema map { json: String =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
-  }
-
   def listCollections = AuthAction { request =>
     Async {
       Future{

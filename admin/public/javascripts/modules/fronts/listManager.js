@@ -18,7 +18,6 @@ define([
     ophanApi
 ) {
     var collections = {},
-        sectionSearches,
         dragging = false,
         clipboardEl = document.querySelector('#clipboard'),
         listLoadsPending = 0,
@@ -181,7 +180,7 @@ define([
 
                 reqwest({
                     method: 'post',
-                    url: common.config.apiBase + '/' + listId,
+                    url: common.config.apiBase + '/collection/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
@@ -202,22 +201,20 @@ define([
         }
         var startPoller = _.once(_startPoller);
 
-        function fetchSchema(callback) {
+        function fetchCollections(callback) {
             reqwest({
-                url: common.config.apiBase,
+                url: common.config.apiBase + '/collection',
                 type: 'json'
             }).then(
                 function(resp) {
-                    resp.collections.forEach(function(id){
-                        treeAdd(id.split('/'), collections);
+                    resp.forEach(function(id){
+                        // Only use "first/three/levels" of the collection id path
+                        treeAdd(_.first(id.split('/'), 3), collections);
                     });                    
                     model.editions(_.keys(collections));
-
-                    sectionSearches = resp.sectionSearches || {};
-
                     if (_.isFunction(callback)) { callback(); }
                 },
-                function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
+                function(xhr) { alert("Oops. There was a problem listing the available collections"); }
             );
         };
 
@@ -284,7 +281,7 @@ define([
                 model.block(undefined);
 
                 if (section) {
-                    model.latestArticles.section(sectionSearches[section] || section);
+                    model.latestArticles.section(common.config.sectionSearches[section] || section);
                 }
             });
 
@@ -351,7 +348,7 @@ define([
                 }
             });
 
-            fetchSchema(function(){
+            fetchCollections(function(){
                 knockout.applyBindings(model);
 
                 renderLists({inferDefaults: true});
