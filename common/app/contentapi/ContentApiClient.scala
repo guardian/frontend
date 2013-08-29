@@ -42,31 +42,38 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   }
 }
 
-trait ApiQueryDefaults extends QueryDefaults with implicits.Collections { self: Api[Future] =>
+trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Logging { self: Api[Future] =>
 
   def item (id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
   //common fields that we use across most queries.
-  def item(id: String, edition: String): ItemQuery = item.itemId(id)
-  .edition(edition)
-  .showTags("all")
-  .showFields(trailFields)
-  .showInlineElements(inlineElements)
-  .showMedia("all")
-  .showReferences(references)
-  .showStoryPackage(true)
-  .tag(supportedTypes)
+  def item(id: String, edition: String): ItemQuery = {
+    val query = item.itemId(id)
+                .edition(edition)
+                .showTags("all")
+                .showFields(trailFields)
+                .showInlineElements(inlineElements)
+                .showMedia("all")
+                .showReferences(references)
+                .showStoryPackage(true)
+                .tag(supportedTypes)
+    query.response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
+    query
+  }
 
   //common fields that we use across most queries.
-  def search(edition: Edition): SearchQuery = search
-  .edition(edition.id)
-  .showTags("all")
-  .showInlineElements(inlineElements)
-  .showReferences(references)
-  .showFields(trailFields)
-  .showMedia("all")
-  .tag(supportedTypes)
-
+  def search(edition: Edition): SearchQuery = {
+    val query = search
+                .edition(edition.id)
+                .showTags("all")
+                .showInlineElements(inlineElements)
+                .showReferences(references)
+                .showFields(trailFields)
+                .showMedia("all")
+                .tag(supportedTypes)
+    query.response.onFailure{case t: Throwable => log.warn("%s".format(t.toString))}
+    query
+  }
 }
 
 class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp

@@ -4,11 +4,11 @@
     <label for="@elements.id">@elements.label</label>
     <div class="input">
         @if(elements.infos.nonEmpty) {
-            <div class="text-input__note">@Html(elements.infos.mkString(", "))</div>
+            <div class="form-field__note">@Html(elements.infos.mkString(", "))</div>
         }
         @elements.input
         @if(elements.errors.nonEmpty) {
-            <div class="form-field__error text-input__note">@elements.errors.mkString(", ")</div>
+            <div class="form-field__error form-field__note">@elements.errors.mkString(", ")</div>
         }
     </div>
 </li>

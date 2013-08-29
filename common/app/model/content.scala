@@ -77,6 +77,16 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val cricketMatch: Option[String] = delegate.references.find(_.`type` == "esa-cricket-match")
     .map(_.id).map(Reference(_)).map(_._2)
 
+  override lazy val trailType: Option[String] = {
+    if (tags.exists(_.id == "tone/features")) {
+      Option("feature")
+    } else if (tags.exists(_.id == "tone/comment")) {
+      Option("comment")
+    } else {
+      Option("news")
+    }
+  }
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
@@ -152,7 +162,7 @@ class Video(private val delegate: ApiContent) extends Content(delegate) with Ima
 
   private implicit val ordering = EncodingOrdering
 
-  private val videoAsset: Option[MediaAsset] = videoAssets.headOption
+  lazy val videoAsset: Option[MediaAsset] = videoAssets.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil).sorted
   lazy val contentType = "Video"
   lazy val source: Option[String] = videoAsset.flatMap(_.safeFields.get("source"))

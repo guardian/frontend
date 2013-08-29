@@ -40,6 +40,8 @@ GET       /fronts/config/*id             controllers.FrontsController.getConfig(
 GET       /fronts/api/*id                controllers.FrontsController.readBlock(id)
 POST      /fronts/api/*id                controllers.FrontsController.updateBlock(id)
 DELETE    /fronts/api/*id                controllers.FrontsController.deleteTrail(id)
+GET       /fronts/collection             controllers.FrontsController.listCollections
+GET       /fronts/config                 controllers.FrontsController.listConfigs
 
 # Analytics
 GET     /analytics/kpis                  controllers.AnalyticsController.kpis()

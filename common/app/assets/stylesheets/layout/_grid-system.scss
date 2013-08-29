@@ -1,11 +1,16 @@
 // Helpers
 $gs-gutter: 20px;
+$gs-baseline: 12px;
 $gs-column-width: 60px;
+$gs-column-height: 36px;
 $gs-max-columns: 16;
 
 
 @function gs-span($n-columns) {
     @return $n-columns * $gs-column-width + $gs-gutter * ($n-columns - 1);
+}
+@function gs-height($n-columns) {
+    @return $n-columns * $gs-column-height + $gs-baseline * ($n-columns - 1);
 }
 
 @mixin gs-container {

@@ -42,16 +42,6 @@ define([
             });
         },
 
-        promoteMostPopular: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                if (context.querySelector('.front-container--new') && window.location.pathname === '/') {
-                    bonzo(context.querySelector('.js-popular'))
-                        .appendTo(bonzo.create('<section class="front-section">'))
-                        .insertAfter(context.querySelector('section.front-section'));
-                }
-            });
-        },
-
         showFootballFixtures: function(path) {
             common.mediator.on('page:front:ready', function(config, context) {
                 if(config.page.edition === "UK") {
@@ -77,7 +67,7 @@ define([
                                 return bonzo(trailblock).hasClass('trailblock--masthead') === false;
                             });
                             opts = {
-                                prependTo: (trailblocks) ? trailblocks[0].querySelector('ul > li') : null,
+                                prependTo: (trailblocks.length) ? trailblocks[0].querySelector('ul > li') : null,
                                 competitions: ['500', '510', '100', '400'],
                                 contextual: false,
                                 expandable: true,
@@ -105,7 +95,6 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.promoteMostPopular();
             modules.showTrailblockToggles();
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();

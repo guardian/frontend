@@ -11,7 +11,7 @@
 }
 
 @if(component.hasReports){
-    <ol class="tabs tabs-multiple @if(component.hasMinByMin && component.hasReport){ type-7 }" data-link-name="Football match nav">
+    <ol class="tabs tabs-multiple @if(component.hasMinByMin && component.hasReport){type-7}" data-link-name="Football match nav">
         @component.matchReport.map{ matchReport => @report(matchReport, "Report") }
         @component.minByMin.map{ minByMin => @report(minByMin, "Min-by-min") }
         @report(component.stats, "Stats")

@@ -17,6 +17,7 @@ import scala.Some
 import idapiclient.EmailPassword
 import play.api.mvc.Cookie
 import utils.SafeLogging
+import form.Mappings.{idEmail, idPassword}
 
 
 @Singleton
@@ -31,11 +32,10 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   val form = Form(
     Forms.tuple(
-      "email" -> Forms.email
+      "email" -> idEmail
         .verifying(Constraints.nonEmpty),
-      "password" -> Forms.text
-        .verifying(Constraints.nonEmpty)
-        .verifying(Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}),
+      "password" -> idPassword
+        .verifying(Constraints.nonEmpty),
       "keepMeSignedIn" -> Forms.boolean
     )
   )
