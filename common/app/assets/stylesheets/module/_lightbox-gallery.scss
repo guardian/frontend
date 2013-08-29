@@ -27,7 +27,9 @@ i.gallery__watermark {
 
 .gallery__item {
     cursor: pointer;
+    overflow: hidden;
 }
+
 
 /* ==========================================================================
    Thumbnail/Single Full image modes
@@ -114,6 +116,10 @@ i.gallery__watermark {
     .gallery__item {
         display: none;
         text-align: center;
+    }
+
+    .gallery__item--active {
+        display: block;
     }
 
     @include mq($and: '(orientation: landscape)') {
@@ -337,4 +343,31 @@ i.gallery__watermark {
     .gallery__nav--next {
         display: none;
     }
+}
+
+
+
+
+/* ==========================================================================
+   Slideshow styles
+   ========================================================================== */
+.gallery__images--slideshow {
+    position: relative;
+
+    .gallery__item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        display: block;
+
+        transition: opacity 1s ease-in-out;
+        -moz-transition: opacity 1s ease-in-out;
+        -webkit-transition: opacity 1s ease-in-out;
+    }
+
+    .gallery__item--active {
+        opacity: 1;
+    }
+
 }

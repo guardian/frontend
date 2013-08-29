@@ -25,6 +25,8 @@ define(["bean",
             mode = 'fullimage',
             overlay,
             swipeActive,
+            slideshowActive,
+            slideshowDelay = 5000, // in milliseconds
             pushUrlChanges = true,
             $navArrows,
             $images;
@@ -68,6 +70,7 @@ define(["bean",
         this.bindEvents = function() {
             bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-grid', this.switchToGrid);
             bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-full', this.switchToFullImage);
+            bean.on(overlay.toolbarNode, 'click', '.js-start-slideshow', this.startSlideshow);
             bean.on(overlay.bodyNode,    'click', '.js-gallery-prev', this.prev);
             bean.on(overlay.bodyNode,    'click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
@@ -189,6 +192,9 @@ define(["bean",
                           '<button class="overlay__cta js-gallery-full" data-link-name="Gallery full image mode">' +
                           '  <i class="i i-gallery-fullimage-icon"></i> ' +
                           '</button>' +
+                          '<button class="overlay__cta js-start-slideshow" data-link-name="Gallery slideshow mode">' +
+                          '  <i class="i i-gallery-playslideshow-icon"></i> ' +
+                          '</button>' +
                           '<div class="overlay__cta gallery__counter">' +
                           '  <span class="js-image-index gallery__counter--current-image"></span> | '+totalImages +
                           '</div>';
@@ -209,11 +215,15 @@ define(["bean",
         // Gallery methods
         this.prev = function(e) {
             if (e) { e.preventDefault(); }
+
+            self.stopSlideshow();
             self.goTo(currentImage - 1);
         };
 
         this.next = function(e) {
             if (e) { e.preventDefault(); }
+
+            self.stopSlideshow();
             self.goTo(currentImage + 1);
         };
 
@@ -232,12 +242,14 @@ define(["bean",
                     captionControlHeight = 35; // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
 
                 if (itemIndex === index) {
-                    el.style.display = 'block';
+                    el.className += ' gallery__item--active';
 
                     // Match arrows to the height of image, minus height of the caption control to prevent overlap
                     $navArrows.css('height', ($images[index-1].offsetHeight - captionControlHeight) + 'px');
+
+                    self.currentImageNode = el;
                 } else {
-                    el.style.display = ''; // Not set to 'none' so that it doesn't hide them from the Grid view
+                    el.className = el.className.replace(' gallery__item--active', '');
                 }
             });
 
@@ -253,6 +265,10 @@ define(["bean",
 
         this.switchToGrid = function(e) {
             mode = 'grid';
+
+            if (slideshowActive) {
+                self.stopSlideshow();
+            }
 
             if (swipeActive) {
                 self.removeSwipe();
@@ -276,8 +292,11 @@ define(["bean",
         this.switchToFullImage = function(e) {
             mode = 'fullimage';
 
-            if (detect.hasTouchScreen() && !swipeActive && !self.opts.disableSwipe) {
-                self.setupSwipe();
+            if (detect.hasTouchScreen() &&
+                !swipeActive &&
+                !self.opts.disableSwipe &&
+                !slideshowActive) {
+                    self.setupSwipe();
             }
 
 
@@ -383,6 +402,28 @@ define(["bean",
             common.mediator.emit('module:clickstream:interaction', str);
         };
 
+
+
+        // Slideshow methods
+        this.startSlideshow = function() {
+            slideshowActive = true;
+            bonzo(imagesNode).addClass('gallery__images--slideshow');
+
+            if (swipeActive) {
+                self.removeSwipe();
+            }
+
+            self.slideshowTimer = setInterval(function() {
+                self.goTo(currentImage+1);
+            }, slideshowDelay);
+        };
+
+        this.stopSlideshow = function() {
+            slideshowActive = false;
+            bonzo(imagesNode).removeClass('gallery__images--slideshow');
+
+            clearInterval(self.slideshowTimer);
+        };
     }
 
     return LightboxGallery;
