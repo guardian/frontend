@@ -11,6 +11,7 @@
         margin-left: gs-span(3) + $gs-gutter;
     }
     @include mq(wide) {
+        width: gs-span(12);
         margin-left: gs-span(4) + $gs-gutter;
     }
 

@@ -27,6 +27,9 @@
     @include mq(desktop, wide) {
         width: gs-span(12);
     }
+    @include mq(wide) {
+        width: gs-span(16);
+    }
     .section__title {
         display: none;
     }
