@@ -1,7 +1,7 @@
 define([ 'common',
          'bean',
          'modules/interactive',
-         'fixtures'], function(common, bean, Interactive, fixtures) {
+         'helpers/fixtures'], function(common, bean, Interactive, fixtures) {
 
         describe("Interactive", function() {
             

@@ -2,8 +2,8 @@ define(['common',
         'ajax',
         'modules/lightbox-gallery',
         'bean',
-        'fixtures',
-        '../fixtures/lightbox-gallery'],
+        'helpers/fixtures',
+        'fixtures/lightbox-gallery'],
     function(common,
              ajax,
              LightboxGallery,
@@ -189,6 +189,9 @@ define(['common',
             })
         });
 
+        it("should have an AJAX url to the gallery without a hostname", function() {
+            expect(gallery.galleryEndpoint).not.toContain('://');
+        });
 
     });
 });

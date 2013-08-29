@@ -2,17 +2,12 @@
 .match-comment {
     text-align: center;
     display: block;
+    width: 90%;
 }
 
 .match-summary .match-aggregate,
 .match-summary .match-aggregate {
     text-align: left;
-}
-
-/* this is a filthy hack to get around weird link hover implications */
-.match-aggregate > span,
-.match-comment > span {
-    padding-right: 36px; /* to compensate for the status on above line */
 }
 
 .match-aggregate span span {

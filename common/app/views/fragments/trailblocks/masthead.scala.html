@@ -2,17 +2,21 @@
 
 <ul class="unstyled collection item-count-@trails.size">
     @trails.zipWithIndex.map{ case (trail, index) =>
-        <li class="item @trail.tags.filter(_.id == "tone/features").headOption.map{tag => item--feature}" data-link-name="trail | @{index + 1}" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+        <li class="item @trail.trailType.map("item--" + _)" data-link-name="trail | @{index + 1}" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+            @if(trail.trailType == Option("comment")) {
+                <span class="i i-quotes-green"></span>
+            }
             <a href="@LinkTo{@trail.url}" class="item__link">
-                @if(!(trails.size == 4 && index > 1)){
-                    @trail.mainPicture(620).map{ mainPicture =>
-                        <div class="item__image-container">
-                            <img class="item__image" src="@mainPicture.path" alt="" />
-                        </div>
-                    }
+                @trail.mainPicture(620).map{ mainPicture =>
+                    <div class="item__image-container">
+                        <img class="item__image" src="@mainPicture.path" alt="" />
+                    </div>
                 }
                 <h2 class="item__title">@RemoveOuterParaHtml(trail.headline)</h2>
             </a>
+            @if(trail.trailType == Option("comment")) {
+                <p class="item__byline">@trail.byline</p>
+            }
             <div class="item__meta">
                 <time class="item__timestamp js-item__timestamp"
                       itemprop="datePublished"

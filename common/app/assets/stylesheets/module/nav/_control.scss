@@ -192,7 +192,7 @@ span.control__menu.i-menu {
 .control--profile {
     float: right;
     height: 28px;
-    padding: 17px 0 13px 0;
+    padding: 17px 0 13px $gutter/2;
     width: auto;
 
     &:link,
@@ -227,7 +227,7 @@ span.control__menu.i-menu {
 }
 
 .control--profile .i-profile {
-    margin: 5px $gutter 0 $gutter/4;
+    margin: 5px $gutter 0 $gutter/2;
 
     @include mq(tablet) {
         margin-left: 0;
