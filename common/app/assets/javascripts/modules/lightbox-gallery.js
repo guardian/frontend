@@ -71,6 +71,7 @@ define(["bean",
             bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-grid', this.switchToGrid);
             bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-full', this.switchToFullImage);
             bean.on(overlay.toolbarNode, 'click', '.js-start-slideshow', this.startSlideshow);
+            bean.on(overlay.toolbarNode, 'click', '.js-stop-slideshow', this.stopSlideshow);
             bean.on(overlay.bodyNode,    'click', '.js-gallery-prev', this.prev);
             bean.on(overlay.bodyNode,    'click', '.js-gallery-next', this.next);
             bean.on(overlay.bodyNode,    'click', '.js-load-gallery', this.loadGallery);
@@ -100,6 +101,8 @@ define(["bean",
 
             common.mediator.on('modules:overlay:close', function() {
                 self.removeOverlay();
+
+                self.stopSlideshow();
 
                 // Remove keyboard handlers
                 bean.off(document.body, 'keydown', self.handleKeyEvents);
@@ -192,8 +195,11 @@ define(["bean",
                           '<button class="overlay__cta js-gallery-full" data-link-name="Gallery full image mode">' +
                           '  <i class="i i-gallery-fullimage-icon"></i> ' +
                           '</button>' +
-                          '<button class="overlay__cta js-start-slideshow" data-link-name="Gallery slideshow mode">' +
-                          '  <i class="i i-gallery-playslideshow-icon"></i> ' +
+                          '<button class="overlay__cta js-start-slideshow" data-link-name="Gallery start slideshow">' +
+                          '  <i class="i i-gallery-play-slideshow"></i> ' +
+                          '</button>' +
+                          '<button class="overlay__cta js-stop-slideshow" data-link-name="Gallery stop slideshow">' +
+                          '  <i class="i i-gallery-pause-slideshow"></i> ' +
                           '</button>' +
                           '<div class="overlay__cta gallery__counter">' +
                           '  <span class="js-image-index gallery__counter--current-image"></span> | '+totalImages +
@@ -407,7 +413,10 @@ define(["bean",
         // Slideshow methods
         this.startSlideshow = function() {
             slideshowActive = true;
-            bonzo(imagesNode).addClass('gallery__images--slideshow');
+            bonzo(galleryNode).addClass('gallery--slideshow');
+
+            overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'none';
+            overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'block';
 
             if (swipeActive) {
                 self.removeSwipe();
@@ -420,7 +429,10 @@ define(["bean",
 
         this.stopSlideshow = function() {
             slideshowActive = false;
-            bonzo(imagesNode).removeClass('gallery__images--slideshow');
+            bonzo(galleryNode).removeClass('gallery--slideshow');
+
+            overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'block';
+            overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
 
             clearInterval(self.slideshowTimer);
         };
