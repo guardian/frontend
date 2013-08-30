@@ -18,8 +18,10 @@
             @idInputPassword(signinForm("password"), '_label -> "Password")
 
             <li>
-                <div class="form-field__note"><a class="js-forgotten-password" href='/reset'>Forgotten your password?</a></div>
-                <button type="submit" class="submit-input">Sign in</button>
+                <div class="form-field__note">
+                    <a class="js-forgotten-password" href='@idUrlBuilder.buildUrl("/reset", idRequest)' data-link-name="Forgotten password">Forgotten your password?</a>
+                </div>
+                <button type="submit" class="submit-input" data-link-name="Sign in">Sign in</button>
 
                 <label class="check-label check-label--helper">
                     @idCheckbox(signinForm("keepMeSignedIn"))
