@@ -42,7 +42,7 @@ function (
 
         if(data.seriesData && data.seriesData.length) {
             simpleSeries = data.seriesData.map(function(series) {
-                return _.pluck(series.data, 'y')                
+                return _.pluck(series.data, 'count')                
             })
             // Add all the series to the first series            
             _.rest(simpleSeries).forEach(function(simples) {
@@ -58,8 +58,8 @@ function (
         cache.put('pageViews', id, {failed: true});
 
         Reqwest({
-            url: 'http://dashboard.ophan.co.uk/graph/breakdown/data?path=' + encodeURIComponent('/' + id),
-            type: 'jsonp'
+            url: '/ophan/pageviews/' + id,
+            type: 'json'
         }).then(
             function (resp) {
                 callback(resp);
