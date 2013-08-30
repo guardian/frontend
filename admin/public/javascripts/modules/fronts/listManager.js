@@ -342,7 +342,6 @@ define([
                         _.each(groupNames, function(group, i){
                             var options = {
                                 height: 30,
-                                //height: Math.max(15, Math.min(30, _.max(value))),
                                 lineColor: '#' + groupColours[i],
                                 fillColor: false,
                                 minSpotColor: false,
@@ -353,8 +352,6 @@ define([
                             $(element).sparkline(grouped[group], options);
                         });
                     }
-
-
                 }
             };
 
