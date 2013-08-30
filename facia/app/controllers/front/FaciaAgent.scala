@@ -86,17 +86,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
             (trail \ "id").as[String]
           }
 
-          val idSearch = {
-            if (articles.isEmpty) {
-              Future(Nil)
-            }
-            else {
-              val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
-              val results = response map {r => r.results map{new Content(_)} }
-              val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
-              sorted
-            }
-          }
+          val idSearch = getArticles(articles, edition)
 
           val contentApiQuery = executeContentApiQuery((parse(r.body) \ "contentApiQuery").asOpt[String], edition)
 
@@ -115,6 +105,18 @@ trait ParseCollection extends ExecutionContexts with Logging {
           // NOTE: better way of handling fallback
           Future(Items(Nil))
       }
+    }
+  }
+
+  def getArticles(articles: Seq[String], edition: Edition): Future[List[Content]] = {
+    if (articles.isEmpty) {
+      Future(Nil)
+    }
+    else {
+      val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
+      val results = response map {r => r.results map{new Content(_)} }
+      val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
+      sorted
     }
   }
 
