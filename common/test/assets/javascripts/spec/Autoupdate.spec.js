@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage', 'helpers/fixtures'], function(common, ajax, bean, Autoupdate, storage, fixtures) {
+define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/userPrefs', 'helpers/fixtures'], function(common, ajax, bean, Autoupdate, userPrefs, fixtures) {
 
     describe("Auto update", function() {
 
@@ -6,7 +6,8 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage', 'help
             delay,
             path,
             attachTo,
-            server;
+            server,
+            userPrefsStub;
 
         // Have to stub the global guardian object
         window.guardian = {
@@ -25,7 +26,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage', 'help
                 ajaxUrl: "",
                 edition: "UK"
             }});
-            storage.set('gu.prefs.auto-update', 'on');
+            userPrefsStub = sinon.stub(userPrefs, 'get').returns('on');
             path = 'fixtures/autoupdate';
             delay = 1000;
             attachTo = document.getElementById('update-area');
@@ -39,6 +40,9 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage', 'help
         afterEach(function() {
             callback = null;
             server.restore();
+            userPrefsStub.restore();
+            fixtures.clean('update');
+            common.mediator.removeListeners(['modules:autoupdate:loaded', 'modules:autoupdate:destroyed'])
         });
 
         // json test needs to be run asynchronously
@@ -93,7 +97,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage', 'help
 
         it("should get user prefs from local storage ", function(){
             server.respondWith([200, {}, '']);
-            storage.set('gu.prefs.auto-update', 'off');
+            userPrefsStub.returns('off');
 
             var a = new Autoupdate({
                 path: path,

@@ -2,17 +2,18 @@ define(['modules/experiments/aware'], function(Aware) {
 
     // make the date static so tests are stable
     var fakeLastVisit = Date.parse('2013-04-21T12:00:00+01:00'),
-        fakeNow = Date.parse('2013-04-22T12:00:00+01:00');
+        fakeNow = Date.parse('2013-04-22T12:00:00+01:00'),
+        date;
 
     describe('Aware', function() {
 
         beforeEach(function() {
             localStorage.clear();
-            sinon.useFakeTimers(fakeLastVisit, "Date");
+            date = sinon.useFakeTimers(fakeLastVisit, "Date");
         });
 
         afterEach(function() {
-            sinon.useFakeTimers().restore();
+            date.restore();
         });
 
         it('should exist', function() {
@@ -43,20 +44,20 @@ define(['modules/experiments/aware'], function(Aware) {
 
             // move day forward 6 hours
             var fakeNow = Date.parse('2013-04-22T04:00:00+01:00');
-            sinon.useFakeTimers(fakeNow, "Date");
+            date = sinon.useFakeTimers(fakeNow, "Date");
 
             // log another visit 'today' and check we only count a single visit today
             Aware.logVisit()
 
             var fakeNow = Date.parse('2013-04-22T20:00:00+01:00');
-            sinon.useFakeTimers(fakeNow, "Date");
+            date = sinon.useFakeTimers(fakeNow, "Date");
 
             Aware.logVisit()
             expect(Aware.visits()).toBe(2);
             expect(Aware.visitsToday()).toBe(2);
 
             var fakeNow = Date.parse('2013-04-25T12:00:00+01:00');
-            sinon.useFakeTimers(fakeNow, "Date");
+            date = sinon.useFakeTimers(fakeNow, "Date");
 
             Aware.logVisit()
             expect(Aware.visits()).toBe(3);

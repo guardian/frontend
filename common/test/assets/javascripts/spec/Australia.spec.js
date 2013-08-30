@@ -23,6 +23,10 @@ define(['modules/navigation/australia', "common", "bean", 'modules/userPrefs', '
             editionSwitch = document.querySelector(".edition:not(.edition-au)");
         });
 
+        afterEach(function() {
+            fixtures.clean('australia');
+        });
+
         it('should exist', function() {
             expect(Australia).toBeDefined();
         });
