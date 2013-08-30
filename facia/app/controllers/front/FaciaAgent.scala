@@ -129,7 +129,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }
         newSearch.response map { r =>
-          r.results.map(new Content(_))
+          r.results.map(Content(_))
         }
       }
       case Path(id)  => {
@@ -138,7 +138,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }
         newSearch.response map { r =>
-          r.results.map(new Content(_))
+          r.results.map(Content(_))
         }
       }
     }
