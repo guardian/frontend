@@ -15,8 +15,10 @@ class Front extends Logging {
     if (editions.contains(sectionId)) "" else sectionId
   }
 
-  lazy val faciaFronts: Map[String, PageFront] = Edition.all.map {e =>
-    e.id.toLowerCase -> new PageFront(e.id.toLowerCase, e)
+  lazy val configList: List[(Edition, String)] = Edition.all.map(e => (e, e.id)).toList ++ ConfigAgent().map(c => (Edition.defaultEdition, c))
+
+  lazy val faciaFronts: Map[String, PageFront] = configList.map {case (e, id) =>
+    id.toLowerCase -> new PageFront(id.toLowerCase, e)
   }.toMap
 
   lazy val fronts: Map[String, FrontEdition] = Edition.all.flatMap{ edition =>
@@ -28,6 +30,7 @@ class Front extends Logging {
   def refresh() {
     log.info("Refreshing Front")
     allFronts.foreach(_.refresh())
+    ConfigAgent.refresh()
     faciaFronts.values.foreach(_.refresh())
   }
 

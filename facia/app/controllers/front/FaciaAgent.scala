@@ -190,3 +190,18 @@ class PageFront(id: String, edition: Edition) {
 
   def apply(): FaciaTrailblock = FaciaTrailblock(id, query.items)
 }
+
+trait ConfigAgent {
+  private val agent = AkkaAgent[List[String]](Nil)
+
+  def refresh() = Future {
+    val ids: List[String] = S3FrontsApi.listConfigsIds
+    agent.send(ids)
+  }
+
+  def close() = agent.close()
+
+  def apply(): List[String] = agent()
+}
+
+object ConfigAgent extends ConfigAgent
