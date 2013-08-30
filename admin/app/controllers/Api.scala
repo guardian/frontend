@@ -29,7 +29,7 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
       host <- Configuration.ophanApi.host
       key  <- Configuration.ophanApi.key
     } yield {
-      val url = "%s?api-key=%s&path=/%s".format(
+      val url = "%s/breakdown?api-key=%s&path=/%s".format(
         host,
         key,
         path
