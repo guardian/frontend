@@ -175,21 +175,11 @@ object Query {
   def apply(id: String, edition: Edition): Query = new Query(id, edition)
 }
 
-class FaciaAgent(id: String, edition: Edition) extends Logging {
-
-  //private val agent: Agent[Query] = AkkaAgent[Query](Query(id, edition))
-  private val query: Query = Query(id, edition)
+class PageFront(id: String, edition: Edition) {
+  val query = Query(id, edition)
 
   def refresh() = query.refresh()
   def close() = query.close()
-  def trailblock: FaciaTrailblock = FaciaTrailblock(id, query.items) //Await.result(query.getItems, Duration(10000, MILLISECONDS))
-}
 
-class PageFront(id: String, edition: Edition) {
-  val faciaAgent = new FaciaAgent(id, edition)
-
-  def refresh() = faciaAgent.refresh()
-  def close() = faciaAgent.close()
-
-  def apply(): FaciaTrailblock = faciaAgent.trailblock
+  def apply(): FaciaTrailblock = FaciaTrailblock(id, query.items)
 }
