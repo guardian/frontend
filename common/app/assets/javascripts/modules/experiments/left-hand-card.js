@@ -107,7 +107,7 @@ function (
                         hrefPath = new RegExp(normalisedHref.split("?")[0].split("#")[0]);
                         if (
                             isWhiteListed(normalisedHref, self.options.origin)
-                            && !hrefPath.test(window.location) // No link to self
+                            && !(hrefPath).test(window.location) // No link to self
                             ) {
                             cardifyRelatedInBodyLink(linksInParagraph[j]);
                             linkWasCardified = true;
