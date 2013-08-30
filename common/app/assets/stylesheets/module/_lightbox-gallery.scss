@@ -257,6 +257,10 @@ i.gallery__watermark {
         left: 0;
         z-index: 60;
     }
+
+    @include mq(tablet) {
+        position: relative;
+    }
 }
 
 .gallerycaption__inner {
@@ -296,6 +300,10 @@ i.gallery__watermark {
 
     .gallery__arrow-cta {
         margin: 0 auto;
+    }
+
+    @include mq(tablet) {
+        height: 40px;
     }
 }
 
