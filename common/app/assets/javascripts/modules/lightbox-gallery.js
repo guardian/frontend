@@ -333,7 +333,8 @@ define(["bean",
         };
 
         this.layout = function() {
-            var orientation = detect.getOrientation();
+            var orientation = detect.getOrientation(),
+                layoutMode  = detect.getLayoutMode();
 
             // Make overlay large enough to allow the browser chrome to be hidden
             overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
@@ -341,8 +342,8 @@ define(["bean",
             // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
             $images = bonzo(galleryNode.querySelectorAll('.gallery__img'));
 
-            if (orientation === 'landscape' && mode === 'fullimage') {
-                // In landscape, size all images to the height of the screen
+            if (orientation === 'landscape' && mode === 'fullimage' && layoutMode === 'mobile') {
+                // In mobile landscape, size all images to the height of the screen
                 $images.css({'height': window.innerHeight + 'px', 'width': 'auto'});
             } else {
                 $images.removeAttr('style');
