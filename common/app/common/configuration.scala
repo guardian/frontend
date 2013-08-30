@@ -71,8 +71,8 @@ class GuardianConfiguration(
   }
 
   object ophanApi {
-    lazy val host = configuration.getStringProperty("ophan.api.host").getOrElse("")
-    lazy val key  = configuration.getStringProperty("ophan.api.key").getOrElse("")
+    lazy val host = configuration.getStringProperty("ophan.api.host").filter(_.nonEmpty)
+    lazy val key  = configuration.getStringProperty("ophan.api.key").filter(_.nonEmpty)
   }
 
   object mongo {

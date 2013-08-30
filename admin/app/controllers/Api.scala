@@ -25,19 +25,25 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
   }
 
   def ophanPageViews(path: String) = AuthAction { request =>
-    val url = "%s?api-key=%s&path=/%s".format(
-      Configuration.ophanApi.host,
-      Configuration.ophanApi.key,
-      path
-    )
+    (for {
+      host <- Configuration.ophanApi.host
+      key  <- Configuration.ophanApi.key
+    } yield {
+      val url = "%s?api-key=%s&path=/%s".format(
+        host,
+        key,
+        path
+      )
 
-    log("Proxying Ophan pageviews query to: %s" format url, request)
+      log("Proxying Ophan pageviews query to: %s" format url, request)
 
-    Async {
-      WS.url(url).get().map { response =>
-        Ok(response.body).as("application/json")
+      Async {
+        WS.url(url).get().map { response =>
+          Ok(response.body).as("application/json")
+        }
       }
-    }
+
+    }).getOrElse(Ok)
   }
 
   def tag(q: String, callback: String) = AuthAction { request =>
