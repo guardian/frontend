@@ -113,8 +113,13 @@ trait ParseCollection extends ExecutionContexts with Logging {
       Future(Nil)
     }
     else {
-      val response = ContentApi.search(edition).ids(articles.mkString(",")).showFields("all").pageSize(List(articles.size, 50).min).response
-      val results = response map {r => r.results map{Content(_)} }
+      val results = articles.foldLeft(Future[List[Content]](Nil)){(foldList, id) =>
+        val response = ContentApi.item(id, edition).showFields("all").response
+        response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
+        for {l <- foldList; itemResponse <- response} yield {
+          itemResponse.content.map(Content(_)).map(_ +: l).getOrElse(l)
+        }
+      }
       val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
       sorted
     }
