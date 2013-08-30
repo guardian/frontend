@@ -30,7 +30,7 @@ form,
 }
 
 .form-field--error {
-    label, .label {
+    .label {
         color: $newsRed;
     }
 
@@ -45,7 +45,6 @@ form,
     margin-top: $baseline*3;
 }
 
-label,
 .label {
     cursor: pointer;
     display: block;
@@ -92,7 +91,6 @@ label,
     margin-top: $baseline*3;
 }
 
-.check-list label,
 .check-label {
     display: inline-block;
     font-family: $sans-serif;
