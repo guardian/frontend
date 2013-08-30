@@ -11,7 +11,7 @@ java -DAPP_SECRET="" -jar packages/frontend-interactive/frontend-interactive.jar
 
 The frontend applications will run on port 9000, so visit that port on a browser...
 
-Eg, http://localhost:9000/world/australia-election-2013-interactive
+Eg, [http://localhost:9000/world/australia-election-2013-interactive](http://localhost:9000/world/australia-election-2013-interactive)
 
 You can point them at different environments using ~/.gu/frontend.properties file
 
@@ -20,4 +20,5 @@ content.api.key=xxx
 content.api.host=xxx
 ```
 
-And you can preview and test on various devices usingt the techniques explained in [testing-externally-on-localhost.md] 
+And you can preview and test on various devices usingt the techniques explained in
+[testing-externally-on-localhost.md](testing-externally-on-localhost.md).
