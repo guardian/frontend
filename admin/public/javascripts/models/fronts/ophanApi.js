@@ -10,11 +10,7 @@ function (
     common,
     cache
 ){
-    var enable = _.has(common.util.queryParams(), 'pageViews');
-
     function decorateItems(items) {
-        if (!enable) { return; }
-
         items.slice(0, common.config.maxOphanCallsPerBlock).forEach(function(item){
             var id = item.meta.id(),
                 data = cache.get('pageViews', id);
