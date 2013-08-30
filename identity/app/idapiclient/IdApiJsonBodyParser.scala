@@ -10,7 +10,7 @@ class IdApiJsonBodyParser extends JsonBodyParser with SafeLogging {
   override def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = {
     try {
       val idApiErrors = (json \ "errors").extract[List[IdApiError]]
-      idApiErrors.map(idApiError => Error(idApiError.message, idApiError.description, statusCode))
+      idApiErrors.map(idApiError => Error(idApiError.message, idApiError.description, statusCode, idApiError. context))
     } catch {
       case e: Throwable => {
         logger.error("Error extracting error from API response", e)

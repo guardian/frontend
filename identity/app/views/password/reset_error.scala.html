@@ -5,8 +5,8 @@
 @main(page, Switches.all){
 }{
 <div class="identity-wrapper">
-    <h1>There was an error changing your password</h1>
-    <p>Please <a href="@idUrlBuilder.buildUrl("/reset", idRequest)">request another password reset</a> to signin.</p>
+    <h1>Sorry, there's a problem with our servers. Our techies have been notified.</h1>
+    <p><a href="@idUrlBuilder.buildUrl("/reset", idRequest)">Please come back later to reset your password.</a></p>
 
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>
