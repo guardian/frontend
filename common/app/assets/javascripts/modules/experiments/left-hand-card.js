@@ -90,7 +90,9 @@ function (
                 numberOfLinksInParagraph,
                 i = 0,
                 j,
-                linkWasCardified;
+                linkWasCardified,
+                normalisedHref,
+                hrefPath;
 
             // Looking for links every insertCardEveryNParagraphs paragraphs
             while (i < (numberOfArticleParagraphs - lastParagraphsToNotCardify)) {
@@ -101,7 +103,12 @@ function (
 
                 if (numberOfLinksInParagraph > 0) {
                     while (j < numberOfLinksInParagraph) {
-                        if (isWhiteListed(linksInParagraph[j].getAttribute('href').trim(), self.options.origin)) {
+                        normalisedHref = linksInParagraph[j].getAttribute('href').trim();
+                        hrefPath = new RegExp(normalisedHref.split("?")[0].split("#")[0]);
+                        if (
+                            isWhiteListed(normalisedHref, self.options.origin)
+                            && !hrefPath.test(window.location) // No link to self
+                            ) {
                             cardifyRelatedInBodyLink(linksInParagraph[j]);
                             linkWasCardified = true;
 
