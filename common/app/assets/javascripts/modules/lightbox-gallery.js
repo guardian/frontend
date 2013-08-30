@@ -413,7 +413,6 @@ define(["bean",
 
         // Slideshow methods
         this.startSlideshow = function() {
-            slideshowActive = true;
             bonzo(galleryNode).addClass('gallery--slideshow');
 
             overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'none';
@@ -426,16 +425,21 @@ define(["bean",
             self.slideshowTimer = setInterval(function() {
                 self.goTo(currentImage+1);
             }, slideshowDelay);
+
+            slideshowActive = true;
         };
 
         this.stopSlideshow = function() {
-            slideshowActive = false;
-            bonzo(galleryNode).removeClass('gallery--slideshow');
+            if (slideshowActive) {
+                bonzo(galleryNode).removeClass('gallery--slideshow');
 
-            overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'block';
-            overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
+                overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'block';
+                overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
 
-            clearInterval(self.slideshowTimer);
+                clearInterval(self.slideshowTimer);
+
+                slideshowActive = false;
+            }
         };
     }
 
