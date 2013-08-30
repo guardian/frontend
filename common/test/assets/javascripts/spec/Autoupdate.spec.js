@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storage'], function(common, ajax, bean, bonzo, Autoupdate, storage) {
+define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/storage', 'helpers/fixtures'], function(common, ajax, bean, Autoupdate, storage, fixtures) {
 
     describe("Auto update", function() {
 
@@ -6,7 +6,6 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             delay,
             path,
             attachTo,
-            controls,
             server;
 
         // Have to stub the global guardian object
@@ -18,6 +17,10 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
         };
 
         beforeEach(function() {
+            fixtures.render({
+                id: 'update',
+                fixtures: ['<div id="update-area"></div>', '<div class="update"></div>']
+            });
             ajax.init({page: {
                 ajaxUrl: "",
                 edition: "UK"
@@ -25,8 +28,7 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             storage.set('gu.prefs.auto-update', 'on');
             path = 'fixtures/autoupdate';
             delay = 1000;
-            attachTo = bonzo(bonzo.create('<div>')).appendTo('body');
-            controls = bonzo(bonzo.create('<div>')).attr('class', 'update').appendTo('body');
+            attachTo = document.getElementById('update-area');
             callback = sinon.stub();
             // set up fake server
             server = sinon.fakeServer.create();
@@ -37,8 +39,6 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
         afterEach(function() {
             callback = null;
             server.restore();
-            attachTo.remove();
-            controls.remove();
         });
 
         // json test needs to be run asynchronously
@@ -47,22 +47,22 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
             common.mediator.on('modules:autoupdate:loaded', callback);
 
-            attachTo.html('<span class="autoupdate--new autoupdate--highlight">bar</span>');
+            attachTo.innerHTML('<span class="autoupdate--new autoupdate--highlight">bar</span>');
 
             var a = new Autoupdate({
-                    path: path,
-                    delay: delay,
-                    attachTo: attachTo[0],
-                    switches: {autoRefresh: true},
-                    manipulationType: 'prepend'
-                });
-                a.init();
+                path: path,
+                delay: delay,
+                attachTo: attachTo,
+                switches: {autoRefresh: true},
+                manipulationType: 'prepend'
+            });
+            a.init();
 
             waits(2000);
 
             runs(function(){
                 expect(callback).toHaveBeenCalled();
-                expect(attachTo.html()).toBe('<span class="autoupdate--new autoupdate--highlight">foo</span><span class="autoupdate--new autoupdate--highlight">bar</span>');
+                expect(attachTo.innerHTML()).toBe('<span class="autoupdate--new autoupdate--highlight">foo</span><span class="autoupdate--new autoupdate--highlight">bar</span>');
                 a.off();
             });
         });
@@ -74,19 +74,19 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             common.mediator.on('modules:autoupdate:loaded', callback1);
 
             var a = new Autoupdate({
-                    path: path,
-                    delay: 10000,
-                    attachTo: attachTo[0],
-                    switches: {autoRefresh: true},
-                    loadOnInitialise: true
-                });
-                a.init();
+                path: path,
+                delay: 10000,
+                attachTo: attachTo,
+                switches: {autoRefresh: true},
+                loadOnInitialise: true
+            });
+            a.init();
 
             waits(200); // should be shorter than the 'delay' param
 
             runs(function(){
                 expect(callback1).toHaveBeenCalled();
-                expect(attachTo.html()).toBe('<span>foo</span>');
+                expect(attachTo.innerHTML).toBe('<span>foo</span>');
                 a.off();
             });
         });
@@ -96,11 +96,11 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             storage.set('gu.prefs.auto-update', 'off');
 
             var a = new Autoupdate({
-                    path: path,
-                    delay: delay,
-                    attachTo: attachTo[0],
-                    switches: {autoRefresh: true}
-                });
+                path: path,
+                delay: delay,
+                attachTo: attachTo,
+                switches: {autoRefresh: true}
+            });
 
             a.init();
 
@@ -118,12 +118,12 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             common.mediator.on('modules:autoupdate:destroyed', callback);
 
             var a = new Autoupdate({
-                    path: 'fixtures/badupdate',
-                    delay: delay,
-                    attachTo: attachTo[0],
-                    switches: {autoRefresh: true}
-                });
-                a.init();
+                path: 'fixtures/badupdate',
+                delay: delay,
+                attachTo: attachTo,
+                switches: {autoRefresh: true}
+            });
+            a.init();
 
             waits(2000);
 
@@ -138,11 +138,11 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             common.mediator.on('modules:autoupdate:destroyed', callback);
 
             var a = new Autoupdate({
-                    path:path,
-                    delay:delay,
-                    attachTo: attachTo[0]
-                });
-                a.init();
+                path:path,
+                delay:delay,
+                attachTo: attachTo
+            });
+            a.init();
 
             waits(2000);
 
