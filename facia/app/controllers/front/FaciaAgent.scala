@@ -182,7 +182,7 @@ object Query {
   def apply(id: String, edition: Edition): Query = new Query(id, edition)
 }
 
-class PageFront(id: String, edition: Edition) {
+class PageFront(val id: String, edition: Edition) {
   val query = Query(id, edition)
 
   def refresh() = query.refresh()
@@ -191,7 +191,7 @@ class PageFront(id: String, edition: Edition) {
   def apply(): FaciaTrailblock = FaciaTrailblock(id, query.items)
 }
 
-trait ConfigAgent {
+trait ConfigAgent extends ExecutionContexts {
   private val agent = AkkaAgent[List[String]](Nil)
 
   def refresh() = Future {
