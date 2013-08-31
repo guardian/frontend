@@ -45,7 +45,6 @@ class Front extends Logging {
     allFronts.foreach(_.refresh())
     ConfigAgent.refresh()
     refreshAgent()
-    faciaFronts.values.foreach(_.refresh())
   }
 
   def apply(path: String): Seq[Trailblock] = fronts(path)()
