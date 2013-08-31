@@ -15,11 +15,24 @@ class Front extends Logging {
     if (editions.contains(sectionId)) "" else sectionId
   }
 
-  lazy val configList: List[(Edition, String)] = Edition.all.map(e => (e, e.id)).toList ++ ConfigAgent().map(c => (Edition.defaultEdition, c))
+  def configList: List[(Edition, String)] = Edition.all.map(e => (e, e.id)).toList ++ ConfigAgent().map(c => (Edition.defaultEdition, c))
 
-  lazy val faciaFronts: Map[String, PageFront] = configList.map {case (e, id) =>
+  def faciaFronts: Map[String, PageFront] = configList.map {case (e, id) =>
     id.toLowerCase -> new PageFront(id.toLowerCase, e)
   }.toMap
+
+  val pageFrontAgent = AkkaAgent[Map[String, PageFront]](Map.empty)
+
+  def refreshAgent() = {
+    val newFronts = faciaFronts
+    pageFrontAgent.send{ oldValue =>
+      val newFrontsFiltered = newFronts.filterNot {
+        case (id, pageFront) => oldValue.contains(id)
+      }
+      oldValue ++ newFrontsFiltered
+    }
+    pageFrontAgent().values.foreach(_.refresh())
+  }
 
   lazy val fronts: Map[String, FrontEdition] = Edition.all.flatMap{ edition =>
     edition.configuredFrontsFacia.filter{ front => isEditionalised(idFromEditionKey(front._1)) || (!isEditionalised(idFromEditionKey(front._1)) && edition == Edition.defaultEdition) }.map{
@@ -31,6 +44,7 @@ class Front extends Logging {
     log.info("Refreshing Front")
     allFronts.foreach(_.refresh())
     ConfigAgent.refresh()
+    refreshAgent()
     faciaFronts.values.foreach(_.refresh())
   }
 
