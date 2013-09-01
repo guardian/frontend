@@ -1,7 +1,5 @@
 /* global module: false */
 module.exports = function (grunt) {
-//    process.env['CASPERJS_EXECUTABLE'] = 'dev/casperjs/bin/casperjs';
-//    process.env['PHANTOMJS_EXECUTABLE'] = 'node_modules/phantomjs/bin/phantomjs';
     var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1';
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -80,12 +78,13 @@ module.exports = function (grunt) {
             }
         },
 
+        //ENVIRONMENT: (process.env.ENVIRONMENT) ? process.env.ENVIRONMENT : (isDev) ? "dev" : "code"
+
         // Much of the CasperJS setup borrowed from smlgbl/grunt-casperjs-extra
         env: {
             casperjs: {
-                add: {
-                    PHANTOMJS_EXECUTABLE: "node_modules/casperjs/node_modules/.bin/phantomjs"
-                },
+                ENVIRONMENT : "prod",
+                PHANTOMJS_EXECUTABLE : "node_modules/casperjs/node_modules/.bin/phantomjs",
                 extend: {
                     PATH: {
                         value: 'node_modules/.bin',
@@ -94,11 +93,15 @@ module.exports = function (grunt) {
                 }
             }
         },
+
         casperjs: {
-            files: ['integration-tests/casper/tests/admin/fronts.spec.js'],
             options: {
                 // Pre-prod environments have self-signed SSL certs
-                ignoreSslErrors: 'yes'
+                ignoreSslErrors: 'yes',
+                includes: ['integration-tests/casper/tests/shared.js'],
+                xunit: 'integration-tests/target/casper/results.xml',
+                loglevel: 'debug',
+                direct: true
             },
             admin: {
                 src: ['integration-tests/casper/tests/admin/*.spec.js']

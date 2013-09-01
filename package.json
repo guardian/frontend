@@ -13,8 +13,8 @@
     "grunt-shell": "~0.2.1",
     "grunt-css-metrics": "~0.1.1",
     "grunt-env": "git://github.com/smlgbl/grunt-env.git",
-    "grunt-casperjs": "~1.0.7",
-    "casperjs": "git://github.com/smlgbl/casperjs.git#feature/makeUsableByNPM"
+    "casperjs": "git://github.com/smlgbl/casperjs.git#feature/makeUsableByNPM",
+    "grunt-casperjs": "git://github.com/guardian/grunt-casperjs.git#upgrade"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
