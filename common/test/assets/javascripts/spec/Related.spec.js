@@ -31,8 +31,6 @@ define(['common', 'ajax', 'modules/related', 'helpers/fixtures'], function(commo
 
             var pageId = 'some/news';
 
-            console.log(server);
-
             server.respondWith('/related/' + pageId + '.json?_edition=UK', [200, {}, '{ "html": "<b>1</b>" }']);
 
             appendTo = document.querySelector('.js-related');
