@@ -2,7 +2,7 @@ package feed
 
 import conf.ContentApi
 import common._
-import model.Content
+import model.{SupportedContentFilter, Content}
 import scala.concurrent.duration._
 
 object MostPopularAgent extends Logging with ExecutionContexts {
@@ -17,7 +17,7 @@ object MostPopularAgent extends Logging with ExecutionContexts {
     log.info("Refreshing most popular.")
     Edition.all foreach { edition =>
       ContentApi.item("/", edition).showMostViewed(true).response.foreach{ response =>
-        val mostViewed = response.mostViewed map { new Content(_) } take 10
+        val mostViewed = SupportedContentFilter(response.mostViewed map { Content(_) }) take 10
         agent.send{ old =>
           old + (edition.id -> mostViewed)
         }

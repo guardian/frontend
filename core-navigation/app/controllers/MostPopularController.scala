@@ -32,7 +32,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
               Cached(900){
                 if (request.isJson)
                   JsonComponent(
-                    "html" -> views.html.fragments.mostPopular(popular, 5),
+                    "html" -> views.html.fragments.mostPopularExpandable(popular, 5),
                     "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
                   )
                 else
@@ -62,7 +62,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       .showMostViewed(true)
       .response.map{response =>
       val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-          val popular = SupportedContentFilter(response.mostViewed map { new Content(_) }) take (10)
+          val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)
 
           if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
     }

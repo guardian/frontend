@@ -3,7 +3,7 @@ define(['common', 'bean'], function (common, bean) {
     var ExperimentExpandableTrails = function () {
 
         this.id = 'ExpandableTrails';
-        this.expiry = '2013-08-29';
+        this.expiry = '2013-09-02';
         this.audience = 0.1;
         this.description = 'Impact of expandable trails on page views';
         this.canRun = function(config) {

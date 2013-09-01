@@ -103,7 +103,7 @@ define([
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
-                header = document.querySelector('body'),
+                header = document.body,
                 profile;
 
             if (config.switches.idProfileNavigation) {
