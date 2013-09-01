@@ -78,12 +78,10 @@ module.exports = function (grunt) {
             }
         },
 
-        //ENVIRONMENT: (process.env.ENVIRONMENT) ? process.env.ENVIRONMENT : (isDev) ? "dev" : "code"
-
         // Much of the CasperJS setup borrowed from smlgbl/grunt-casperjs-extra
         env: {
             casperjs: {
-                ENVIRONMENT : "prod",
+                ENVIRONMENT : (process.env.ENVIRONMENT) ? process.env.ENVIRONMENT : (isDev) ? "dev" : "code",
                 PHANTOMJS_EXECUTABLE : "node_modules/casperjs/node_modules/.bin/phantomjs",
                 extend: {
                     PATH: {
