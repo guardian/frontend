@@ -1,10 +1,15 @@
-define(['modules/navigation/platform-switch', 'modules/cookies', 'common', 'bean'],
-    function(PlatformSwitch, Cookies, common, bean) {
+define(['modules/navigation/platform-switch', 'modules/cookies', 'common', 'bean', 'helpers/fixtures'],
+    function(PlatformSwitch, Cookies, common, bean, fixtures) {
 
     describe('Platform switch', function() {
 
 
         beforeEach(function() {
+            fixtures.render({
+                id: 'platform-switch-fixtures',
+                fixtures: ['<a class="main-site-link" href="#foo"></a>']
+            });
+
             Cookies.cleanUp(['GU_VIEW']);
 
             common.$g('.js-main-site-link').each(function(link){
@@ -14,6 +19,10 @@ define(['modules/navigation/platform-switch', 'modules/cookies', 'common', 'bean
             });
 
             new PlatformSwitch();
+        });
+
+        afterEach(function() {
+            fixtures.clean('platform-switch-fixtures');
         });
 
         it('should set the "view" cookie when switching to desktop view', function() {

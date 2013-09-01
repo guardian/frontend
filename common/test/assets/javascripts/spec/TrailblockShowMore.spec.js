@@ -2,17 +2,16 @@ define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', 'fixtu
 
     describe("TrailblockShowMore", function() {
 
-        var server;
-
-        var fixtureTrailblock =
-            '<div class="front-container">'
-                + '<div class="js-show-more trailblock" id="trailblock-show-more-fixture">'
-                    + '<ul>'
-                        + '<li class="trail"><h2><a href="/link/one" data-link-name="1">Link one</a></h2></li>'
-                        + '<li class="trail"><h2><a href="/link/two" data-link-name="2">Link two</a></h2></li>'
-                    + '</ul>'
-                + '</div>'
-            + '</div>',
+        var server,
+            fixtureTrailblock =
+                '<div class="front-container">'
+                    + '<div class="js-show-more trailblock" id="trailblock-show-more-fixture">'
+                        + '<ul>'
+                            + '<li class="trail"><h2><a href="/link/one" data-link-name="1">Link one</a></h2></li>'
+                            + '<li class="trail"><h2><a href="/link/two" data-link-name="2">Link two</a></h2></li>'
+                        + '</ul>'
+                    + '</div>'
+                + '</div>',
             $cta;
 
         ajax.init({page: {
