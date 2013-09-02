@@ -336,7 +336,6 @@ define(["bean",
 
         this.layout = function() {
             var orientation = detect.getOrientation(),
-                layoutMode  = detect.getLayoutMode(),
                 contentHeight = window.innerHeight - overlay.headerNode.offsetHeight;
 
             // Make overlay large enough to allow the browser chrome to be hidden
@@ -368,7 +367,7 @@ define(["bean",
                 self.swipe = new Swipe(galleryNode, {
                     startSlide: currentImage - 1,
                     speed: 200,
-                    continuous: false,
+                    continuous: true,
                     callback: function(index, elm) {
                         var swipeDir = (index + 1 > currentImage) ? 'next' : 'prev';
                         self.trackInteraction('Lightbox gallery swipe - ' + swipeDir);
