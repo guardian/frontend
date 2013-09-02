@@ -160,7 +160,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
 //, itemCache: Agent[Map[String, Content]]
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection {
-  private lazy val agent = AkkaAgent[List[(Config, Items)]](Nil)
+  private lazy val queryAgent = AkkaAgent[List[(Config, Items)]](Nil)
 
   def getItems: Future[List[(Config, Items)]] = {
     val f = getConfig(id) map {config =>
@@ -172,12 +172,12 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
   }
 
   def refresh() = getItems map {m =>
-    agent.send(m)
+    queryAgent.send(m)
   }
 
-  def close() = agent.close()
+  def close() = queryAgent.close()
 
-  def items = agent()
+  def items = queryAgent()
 }
 
 object Query {
@@ -194,16 +194,16 @@ class PageFront(val id: String, edition: Edition) {
 }
 
 trait ConfigAgent extends ExecutionContexts {
-  private val agent = AkkaAgent[List[String]](Nil)
+  private val configAgent = AkkaAgent[List[String]](Nil)
 
   def refresh() = Future {
     val ids: List[String] = S3FrontsApi.listConfigsIds
-    agent.send(ids)
+    configAgent.send(ids)
   }
 
-  def close() = agent.close()
+  def close() = configAgent.close()
 
-  def apply(): List[String] = agent()
+  def apply(): List[String] = configAgent()
 }
 
 object ConfigAgent extends ConfigAgent
