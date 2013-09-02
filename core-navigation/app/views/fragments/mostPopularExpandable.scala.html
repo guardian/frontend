@@ -1,42 +1,12 @@
 @(popular: Seq[model.MostPopular], visibleTrails: Int)(implicit request: RequestHeader)
 
 @defining(popular.size > 1){ isTabbed =>
-
-    <div id="popular-trails" data-link-name="most popular">
-
-        <h2 id="most-read-head" class="type-2 article-zone">Most read</h2>
-
-        @if(isTabbed) {
-            <div class="tabs tabs--stacked">
-                <ol class="tabs__container js-tabs" id="js-popular-tabs">
-                @popular.zipWithRowInfo.map{ case (section, info) =>
-                    <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected}">
-                        <a href="#tabs-popular-@info.rowNum"  data-link-name="tab @info.rowNum @section.heading">
-                            @Html(section.heading)
-                        </a>
-                    </li>
-                }
-                </ol>
-                <div class="tabs__content">
-        }
-
-                    @popular.zipWithRowInfo.map{ case (section, info) =>
-                        <div id="tabs-popular-@info.rowNum"
-                            class="@if(isTabbed){tabs__pane @if(!info.isFirst){ js-hidden}} headline-list"
-                            data-link-name="@section.heading"
-                            data-link-context="most-read/@section.section">
-
-                            <h2 class="tabs__heading type-2 article-zone">Most read in @section.heading</h2>
-
-                            @fragments.trailblocks.thumbnail(section.trails.sortBy(-_.webPublicationDate.getMillis), numItemsVisible = 5, numThumbnails = 5, related = true, headingLevel = 3, expandable = Switches.ABExpandableTrails.isSwitchedOn)
-
-                        </div>
-                    }
-
-        @if(isTabbed) {
-                </div>
+    <div class="ab-expandable-trails--on" id="popular-trails" data-link-name="most popular">
+        @popular.zipWithRowInfo.map{ case (section, info) =>
+            <div data-link-name="@section.heading" data-link-context="most-read/@section.section">
+                <h2 class="type-2 article-zone">Most read in @section.heading</h2>
+                @fragments.trailblocks.thumbnail(section.trails.sortBy(-_.webPublicationDate.getMillis), numItemsVisible = 5, numThumbnails = 5, related = true, headingLevel = 3, expandable = true)
             </div>
         }
-
     </div>
 }

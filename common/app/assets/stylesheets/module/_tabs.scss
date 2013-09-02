@@ -90,36 +90,6 @@ $tabBorderWidth: 2px;
     }
 }
 
-/* Stacked tabs
-   ========================================================================== */
-.tabs--stacked {
-
-    @include mq(desktop) {
-        padding: 0;
-
-        .tabs__container {
-            display:none;
-        }
-
-        .tabs__content {
-            border: none;
-        }
-
-        .tabs__pane {
-            display: block !important;
-
-            & > ul {
-                margin: 0;
-            }
-        }
-
-        .tabs__heading {
-            display: block;
-        }
-    }
-}
-
-
 
 
 

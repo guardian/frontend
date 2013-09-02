@@ -171,8 +171,6 @@
     }
 }
 
-
-
 .trail--gallery {
 
     background-color: #F9F9F6;
@@ -202,7 +200,17 @@
     margin: $baseline * 4 0;
 }
 
-
+.trail--expandable {
+    &.has-image {
+        .trail__img {
+            float: left;
+        }
+        .media__body {
+            float: right;
+            width: 61%;
+        }
+    }
+}
 
 /**
  * @todo: Clean these up into proper modifiers

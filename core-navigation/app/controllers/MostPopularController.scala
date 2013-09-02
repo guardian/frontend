@@ -18,8 +18,32 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     "GFE:Most Read"
   )
 
-
   def render(path: String) = Action { implicit request =>
+    val edition = Edition(request)
+    val globalPopular = MostPopular("The Guardian", "", MostPopularAgent.mostPopular(edition))
+    val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
+    Async {
+      promiseOfSectionPopular.map {
+        sectionPopular =>
+          sectionPopular :+ globalPopular match {
+            case Nil => NotFound
+            case popular => {
+              Cached(900){
+                if (request.isJson)
+                  JsonComponent(
+                    "html" -> views.html.fragments.mostPopular(popular, 5),
+                    "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
+                  )
+                else
+                  Ok(views.html.mostPopular(page, popular))
+              }
+            }
+          }
+      }
+    }
+  }
+
+  def renderExpandable(path: String) = Action { implicit request =>
     val edition = Edition(request)
     val globalPopular = MostPopular("The Guardian", "", MostPopularAgent.mostPopular(edition))
     val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
@@ -60,6 +84,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     ContentApi.item(path, edition)
       .tag(None)
       .showMostViewed(true)
+      .showFields("all")
       .response.map{response =>
       val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
           val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)
