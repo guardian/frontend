@@ -214,7 +214,7 @@ define([
                     model.editions(_.keys(collections));
                     if (_.isFunction(callback)) { callback(); }
                 },
-                function(xhr) { alert("Oops. There was a problem listing the available collections"); }
+                function(xhr) { window.console.log("ERROR: There was a problem listing the available collections"); }
             );
         };
 
