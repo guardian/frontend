@@ -14,8 +14,6 @@ import model.Config
 import scala.Some
 import play.api.libs.json.JsObject
 import views.support._
-import play.api.mvc.AnyContent
-import play.mvc.Http.Request
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
