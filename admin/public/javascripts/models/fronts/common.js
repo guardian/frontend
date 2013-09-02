@@ -12,7 +12,7 @@ define([
         config: {
             searchPageSize:        20,
             maxDisplayableLists:   6,
-            maxOphanCallsPerBlock: 10,
+            maxOphanCallsPerBlock: 50,
             cacheExpiryMs:         300000, // 300000 = five mins 
             defaultToLiveMode:     true,
             sectionSearches: {
