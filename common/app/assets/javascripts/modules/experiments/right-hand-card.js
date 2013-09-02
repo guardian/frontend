@@ -63,7 +63,6 @@ define([
     };
 
     RightHandCard.prototype.setArticleHeight = function() {
-        console.log('called');
         var cardHeight = this.$el[0].querySelector('.card--right').offsetHeight;
         this.options.context.querySelector('.article-body').style.minHeight = cardHeight + 'px';
     };
