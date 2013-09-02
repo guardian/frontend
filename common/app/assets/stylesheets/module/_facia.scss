@@ -1,4 +1,5 @@
 .facia-container {
+    overflow: hidden;
     .breakpoint {
         @include mq($to: tablet) {
             font-family: mobile;
@@ -22,3 +23,4 @@
 @import "facia/_zone";
 @import "facia/_section-top-stories";
 @import "facia/_highlights";
+@import "facia/_popular";

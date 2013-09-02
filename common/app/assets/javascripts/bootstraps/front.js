@@ -9,7 +9,8 @@ define([
     "modules/footballfixtures",
     "modules/cricket",
     "modules/masthead-relative-dates",
-    'modules/top-stories-show-more'
+    'modules/top-stories-show-more',
+    'modules/facia-popular'
 ], function (
     common,
     bonzo,
@@ -19,7 +20,8 @@ define([
     FootballFixtures,
     Cricket,
     mastheadRelativeDates,
-    TopStoriesShowMore
+    TopStoriesShowMore,
+    faciaPopular
 ) {
 
     var modules = {
@@ -98,6 +100,12 @@ define([
                     var t = new TopStoriesShowMore(topStories);
                 });
             });
+        },
+
+        showFaciaPopular: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                faciaPopular.init(config, context);
+            });
         }
 
     };
@@ -112,6 +120,7 @@ define([
             // facia functionality
             modules.relativiseMastheadDates();
             modules.showTopStoriesShowMore();
+            modules.showFaciaPopular();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

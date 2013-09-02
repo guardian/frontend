@@ -9,13 +9,13 @@
 }
 
 .section--highlights {
-    overflow: hidden;
     padding-bottom: ($baseline * 3) - 1;
-    border-bottom: solid 1px $grey;
-    @include mq(tablet, desktop) {
+    @include mq(tablet) {
+        border-bottom: solid 1px $grey;
+        float: left;
         width: gs-span(6);
     }
-    @include mq(desktop, wide) {
+    @include mq(desktop) {
         width: gs-span(8);
     }
     @include mq(wide) {
@@ -23,68 +23,71 @@
     }
     .section__title {
         @include font($serifheadline, 800, 16, 16);
+        @include box-sizing(border-box);
         height: $baseline * 12;
         color: $blue;
         border-top: 2px solid $blue;
     }
     .collection {
-        overflow: auto;
-        font-size: 0;
         @include mq(tablet) {
+            font-size: 0;
             height: gs-height(6);
             white-space: nowrap;
+            overflow: auto;
         }
     }
     .item {
-        margin: 0;
-        display: inline-block;
-        vertical-align: top;
         float: none;
-        height: 100%;
-        white-space: normal;
+        margin: ($baseline * 2) - 1 0 0;
+        padding-top: $baseline * 2;
+        border-top: 1px solid $grey;
         @include box-sizing(content-box);
-        @include mq($to: tablet) {
-            margin-top: ($baseline * 2) - 1;
-            padding-top: $baseline * 2;
-            border-top: 1px solid $grey;
-            width: 100%;
-            &:first-child {
-                margin:0;
-                padding: 0;
-                border-top-style: none;
-            }
+        &:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            padding-left: 0;
+            border-top-style: none;
         }
         @include mq(tablet) {
+            white-space: normal;
+            display: inline-block;
+            vertical-align: top;
+            height: 100%;
+            border-top-style: none;
             border-right: 1px dotted $grey;
+            margin-top: 0;
             padding: 0 ($gs-gutter / 2 - 1) 0 $gs-gutter / 2;
             width: gs-span(3);
-        }
-        &:first-child {
-            padding-left: 0;
-        }
-        &:last-child {
-            padding-right: 0;
-            border-right-style: none;
+            &:last-child {
+                padding-right: 0;
+                border-right-style: none;
+            }
         }
     }
     .item__image {
         margin-bottom: $baseline * 2;
-        @include mq($to: tablet) {
-            display: none;
+        display: none;
+        @include mq(tablet) {
+            display:block;
         }
     }
     .item__title {
         @include font-size(22, 24);
     }
     .item__standfirst {
-        display: block;
         margin-top: $baseline;
         @include font-size(16, 20);
         color: #666666;
     }
-    @include mq($to: tablet) {
-        .item:nth-child(n + 2) .item__standfirst {
+    .item:first-child .item__standfirst {
+        display: block;
+        @include mq(tablet) {
             display: none;
+        }
+    }
+    @include mq(tablet) {
+        .item--without-image .item__standfirst {
+            display: block;
         }
     }
     .item__meta {
@@ -100,11 +103,5 @@
                 @extend .i-clock-grey;
             }
         }
-    }
-}
-
-.item--with-image .item__standfirst {
-    @include mq(tablet) {
-        display: none;
     }
 }
