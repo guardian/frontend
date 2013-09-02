@@ -41,12 +41,12 @@
                 <i class="icon-refresh list-tool" data-bind="click: refresh"></i>
                 <div class="finder__title">Latest Articles</div>
 
-                <input type="text" placeholder="url or keyword" data-bind='
+                <input id="searchTerm" type="text" placeholder="url or keyword" data-bind='
                     event: {keyup: search, afterpaste: search},
                     value: term,
                     valueUpdate: ["afterkeydown", "afterpaste"]'/>
 
-                <input type="text" placeholder="section" data-bind='
+                <input id="searchSection" type="text" placeholder="section" data-bind='
                     event: {keyup: search, afterpaste: search},
                     value: section,
                     valueUpdate: ["afterkeydown", "afterpaste"]'/>
