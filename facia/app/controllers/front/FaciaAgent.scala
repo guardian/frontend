@@ -131,10 +131,10 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi.search(edition).showFields("all")
+        val search = ContentApi.search(edition)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
-        }
+        }.showFields("all")
         newSearch.response map { r =>
           r.results.map(Content(_))
         }
