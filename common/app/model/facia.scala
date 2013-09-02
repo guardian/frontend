@@ -11,8 +11,8 @@ case class Config(
                    showMore: Boolean,
                    isConfigured: Boolean)
 
-case class Items(items: Seq[Trail])
+case class Collection(items: Seq[Trail])
 
-case class FaciaTrailblock(
-                            id: String,
-                            collections: List[(Config, Items)])
+case class FaciaPage(
+                   id: String,
+                   collections: List[(Config, Collection)])

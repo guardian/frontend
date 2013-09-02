@@ -8,7 +8,7 @@ import conf.{ContentApi, Configuration}
 import play.api.libs.json.Json._
 import play.api.libs.json.JsValue
 import tools.QueryParams
-import model.FaciaTrailblock
+import model.FaciaPage
 import play.api.libs.ws.Response
 import model.Config
 import scala.Some
@@ -66,7 +66,7 @@ trait ParseConfig extends ExecutionContexts {
 trait ParseCollection extends ExecutionContexts with Logging {
   private lazy val defaultMax = 15
 
-  def getCollection(id: String, edition: Edition): Future[Items] = {
+  def getCollection(id: String, edition: Edition): Future[Collection] = {
     // get the running order from the apiwith
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: $collectionUrl")
@@ -74,7 +74,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
     parseResponse(response, edition)
   }
 
-  private def parseResponse(response: Future[Response], edition: Edition): Future[Items] = {
+  private def parseResponse(response: Future[Response], edition: Edition): Future[Collection] = {
     response.flatMap { r =>
       r.status match {
         case 200 =>
@@ -96,14 +96,14 @@ trait ParseCollection extends ExecutionContexts with Logging {
           } yield (idSearchResults ++ contentApiResults).take(max)
 
           results map {
-            case l: List[Content] => Items(l.toSeq)
+            case l: List[Content] => Collection(l.toSeq)
           }
           //TODO: Removal of fallback forces full chain to fail
 
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
           // NOTE: better way of handling fallback
-          Future(Items(Nil))
+          Future(Collection(Nil))
       }
     }
   }
@@ -157,14 +157,14 @@ trait ParseCollection extends ExecutionContexts with Logging {
 }
 
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection {
-  private lazy val queryAgent = AkkaAgent[List[(Config, Items)]](Nil)
+  private lazy val queryAgent = AkkaAgent[List[(Config, Collection)]](Nil)
 
-  def getItems: Future[List[(Config, Items)]] = {
+  def getItems: Future[List[(Config, Collection)]] = {
     val f = getConfig(id) map {config =>
       config map {y => y -> getCollection(y.id, edition)}
     }
     f map (_.toVector) flatMap {j =>
-      j.foldRight(Future(List[(Config, Items)]()))((a, b) => for{l <- b; i <- a._2.fallbackTo(Future(Items(Nil)))} yield (a._1,  i) +: l)
+      j.foldRight(Future(List[(Config, Collection)]()))((a, b) => for{l <- b; i <- a._2.fallbackTo(Future(Collection(Nil)))} yield (a._1,  i) +: l)
     }
   }
 
@@ -187,7 +187,7 @@ class PageFront(val id: String, edition: Edition) {
   def refresh() = query.refresh()
   def close() = query.close()
 
-  def apply(): FaciaTrailblock = FaciaTrailblock(id, query.items)
+  def apply(): FaciaPage = FaciaPage(id, query.items)
 }
 
 trait ConfigAgent extends ExecutionContexts {
