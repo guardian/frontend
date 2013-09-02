@@ -148,7 +148,7 @@ class RunningOrderTrailblockDescription(
               val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
               val search = ContentApi.search(edition)
               val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
-              val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
+              val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams).showFields("all")
 
               newSearch.response map { r =>
                 r.results.map(Content(_))

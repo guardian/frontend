@@ -6,7 +6,7 @@
  * Discussion feature tests 
  *
  **/
-casper.start(host + 'world/2013/jun/06/obama-administration-nsa-verizon-records');
+casper.start(host + 'world/2013/jun/06/obama-administration-nsa-verizon-records?view=mobile');
 
 /**
  *   Scenario: Read top level comments
@@ -16,33 +16,27 @@ casper.start(host + 'world/2013/jun/06/obama-administration-nsa-verizon-records'
  *     Then I can see 10 top level comments
  *     And the first comment is authored by "tenacity"
  **/
-casper.then(function() {
-
-    casper.test.comment('Read top level comments');
-//wait for comment count to be visible
+// Check the correct login/out buttons are present
+casper.test.begin('Read top level comments', function(test) {
+    //wait for comment count to be visible
     casper.waitForText('1678', function() {
-    casper.click('.js-show-discussion.js-top');
+        casper.click('.js-show-discussion.js-top');
     },function timeout(){
-
-    casper.captureSelector('body.png', 'body');
-casper.test.fail('failed to find comment bubble');
-
+        test.fail('failed to find comment bubble');
     });
-
 
     casper.waitForSelector('.d-discussion',function(){
 
-        this.test.assertEvalEquals(function() {
-
+        test.assertEvalEquals(function() {
             return document.querySelectorAll('.d-comment--top-level').length;
-
         }, 10, 'Then I can see 10 top level comments');
 
+        test.assertSelectorHasText('.d-comment__author', 'tenacity', 'And the first comment is authored by "tenacity"');
 
-        this.test.assertSelectorHasText('.d-comment__author', 'tenacity', 'And the first comment is authored by "tenacity"');
+        test.done();
 
     },function timeout(){
-        casper.test.fail('Comments failed to load');
+        test.fail('Comments failed to load');
     });
 
 });
@@ -53,35 +47,26 @@ casper.test.fail('failed to find comment bubble');
  *     When I show more comments
  *     Then I can see 20 top level comments
  **/
-casper.then(function() {
-
-    casper.test.comment('Show more comments');
+casper.test.begin('Show more comments', function(test) {
 
     casper.click('.js-show-more-comments');
 
-    this.waitFor(function check() {
-
-        return this.evaluate(function(){
-
+    casper.waitFor(function check() {
+        return casper.evaluate(function(){
             return document.querySelectorAll('.d-comment--top-level').length === 20;
-
         });
-
     }, function then(){
-
-        this.test.assertEvalEquals(function() {
-
+        test.assertEvalEquals(function() {
             return document.querySelectorAll('.d-comment--top-level').length;
-
         }, 20, 'Then I can see 20 top level comments');
 
+        test.done();
     }, function timeout(){
-        casper.test.fail('Comments failed to load');
+        test.fail('Comments failed to load');
     });
-
 });
 
 casper.run(function() {
-    this.test.renderResults(true, 0, this.cli.get('save') || false);
+    this.test.renderResults(true, 0, this.cli.get('xunit') + 'discussion.xml');
 });
 
