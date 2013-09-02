@@ -98,7 +98,7 @@ module.exports = function (grunt) {
                 // Pre-prod environments have self-signed SSL certs
                 ignoreSslErrors: 'yes',
                 includes: ['integration-tests/casper/tests/shared.js'],
-                xunit: 'integration-tests/target/casper/results.xml',
+                xunit: 'integration-tests/target/casper/',
                 loglevel: 'debug',
                 direct: true
             },

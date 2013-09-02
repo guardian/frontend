@@ -67,6 +67,6 @@ casper.test.begin('Show more comments', function(test) {
 });
 
 casper.run(function() {
-    this.test.renderResults(true, 0, this.cli.get('xunit'));
+    this.test.renderResults(true, 0, this.cli.get('xunit') + 'discussion.xml');
 });
 
