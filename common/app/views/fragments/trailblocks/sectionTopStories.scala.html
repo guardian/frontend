@@ -2,7 +2,7 @@
 
 <ul class="unstyled collection item-count-@trails.size">
     @trails.zipWithIndex.map{ case (trail, index) =>
-        <li class="item @if(trail.mainPicture(620).isEmpty) {item--without-image}" data-link-name="trail | @{index + 1}">
+        <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image}" data-link-name="trail | @{index + 1}">
             <a href="@LinkTo{@trail.url}" class="item__link">
                 @trail.mainPicture(620).map{ mainPicture =>
                     <div class="item__image-container">
