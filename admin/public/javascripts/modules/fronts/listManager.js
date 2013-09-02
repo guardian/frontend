@@ -334,7 +334,7 @@ define([
                     }).each(function(group, i){
                         $(element).sparkline(group.data, {
                             chartRangeMax: max,
-                            height: 30,
+                            height: Math.max(10, Math.min(30, max)),
                             lineColor: '#' + group.color,
                             fillColor: _.last(group.data) > 25 ? '#eeeeee' : false,
                             spotColor: false,

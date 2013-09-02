@@ -34,7 +34,7 @@ function (
             groups = [
                 {name: 'Other',    data: [], color: 'd61d00', max: 0}, // required
                 {name: 'Google',   data: [], color: '89A54E', max: 0},
-                {name: 'Guardian', data: [], color: '666666', max: 0}
+                {name: 'Guardian', data: [], color: '4572A7', max: 0}
             ];
 
         if(data.totalHits) {
