@@ -66,6 +66,8 @@ trait ParseConfig extends ExecutionContexts {
 }
 
 trait ParseCollection extends ExecutionContexts with Logging {
+  private lazy val defaultMax = 15
+
   def getCollection(id: String, edition: Edition): Future[Items] = {
     // get the running order from the apiwith
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
@@ -79,7 +81,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
       r.status match {
         case 200 =>
           val bodyJson = parse(r.body)
-          val max = (bodyJson \ "max").asOpt[Int] getOrElse 15
+          val max = (bodyJson \ "max").asOpt[Int] getOrElse defaultMax
 
           // extract the articles
           val articles: Seq[String] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
