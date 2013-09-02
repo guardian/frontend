@@ -30,15 +30,15 @@ object Seg {
 }
 
 trait ParseConfig extends ExecutionContexts {
-  def getConfigMap(id: String): Future[Map[String, Seq[JsValue]]] = {
+  def getConfigMap(id: String): Future[Seq[JsValue]] = {
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/config/$id/config.json"
     WS.url(configUrl).withTimeout(2000).get map { r =>
       val json = parse(r.body)
-      json.asOpt[Map[String, Seq[JsValue]]] getOrElse Map.empty
+      json.asOpt[Seq[JsValue]] getOrElse Nil
     }
   }
   def getConfig(id: String): Future[Seq[Config]] = getConfigMap(id) map { configMap =>
-    configMap.get("collections").getOrElse(Nil).map(parseConfig)
+    configMap.map(parseConfig)
   }
 
   def parseConfig(json: JsValue): Config =
