@@ -130,5 +130,5 @@ casper.test.begin('Hidden section will remain hidden on refresh', {
 });
 
 casper.run(function() {
-    this.test.renderResults(true, 0, this.cli.get('xunit'));
+    this.test.renderResults(true, 0, this.cli.get('xunit') + 'network-front.xml');
 });

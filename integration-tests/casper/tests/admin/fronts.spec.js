@@ -23,7 +23,7 @@ var targetSpec = {
             domain: 'frontend.code.dev-gutools.co.uk',
             cookieVal : 'a70cfdeedb56a857c15c5fc4c3aa2e80d313a671-identity%3A%7B%22openid%22%3A%22https%3A%2F%2Fwww.google.com%2Faccounts%2Fo8%2Fid%3Fid%3DAItOawnpjHRrbmul5z6VfDRpzzWjzQDsxedYVJk%22%2C%22email%22%3A%22test.automation%40gutest.com%22%2C%22firstName%22%3A%22test%22%2C%22lastName%22%3A%22automation%22%7D',
         }
-    }[environment],
+    }['prod'],
     targetBase  = targetSpec.protocol + '://' + targetSpec.domain + (targetSpec.port ? ':' + targetSpec.port : ''),
     targetLogin = targetBase+ "/login",
     targetPage  = targetBase+ "/collections",
@@ -116,5 +116,5 @@ casper.waitForSelector('[data-url="' + articleId + '"]', function () {
 */
 
 casper.run(function () {
-    this.test.renderResults(true, 0, this.cli.get('xunit'));
+    this.test.renderResults(true, 0, this.cli.get('xunit') + 'admin.xml');
 });
