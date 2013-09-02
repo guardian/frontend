@@ -156,7 +156,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
 }
 
-//, itemCache: Agent[Map[String, Content]]
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection {
   private lazy val queryAgent = AkkaAgent[List[(Config, Items)]](Nil)
 

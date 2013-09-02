@@ -23,7 +23,7 @@ class Front extends Logging {
 
   val pageFrontAgent = AkkaAgent[Map[String, PageFront]](Map.empty)
 
-  def refreshAgent() = {
+  def refreshPageFrontAgent() = {
     val newFronts = faciaFronts
     pageFrontAgent.send{ oldValue =>
       val newFrontsFiltered = newFronts.filterNot {
@@ -44,7 +44,7 @@ class Front extends Logging {
     log.info("Refreshing Front")
     allFronts.foreach(_.refresh())
     ConfigAgent.refresh()
-    refreshAgent()
+    refreshPageFrontAgent()
   }
 
   def apply(path: String): Seq[Trailblock] = fronts(path)()
