@@ -31,7 +31,7 @@ class JsonBodyParserTest extends path.FreeSpec with ShouldMatchers {
     "returns a parse error if the JSON is not valid" in {
       TestJsonBodyParser.extractJsonOrError(invalidJSONResponse) match {
         case Right(result) => fail("extractJsonOrError did not return a Left, got %s".format(result.toString))
-        case Left(errors) => errors(0) should have('message("Failed to parse JSON"))
+        case Left(errors) => errors(0) should have('message("JSON parsing exception"))
       }
     }
 
