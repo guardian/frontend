@@ -9,6 +9,9 @@ define([
     common,
     bonzo
 ) {
+    /*jshint loopfunc:true*/
+    'use strict';
+
     function Filter(context) {
         this.context = context || document;
         this.template =
@@ -34,7 +37,7 @@ define([
         var filterButtons = self.context.getElementsByClassName('js-live-blog-toggler'),
             articleContainer = self.context.getElementsByClassName('js-article__container')[0];
 
-        for (i = 0; i < filterButtons.length; i++) {
+        for (var i = 0; i < filterButtons.length; i++) {
             filterButtons[i].addEventListener('click', function () {
                 self.showKeyEvents(articleContainer);
             }, false);
@@ -44,8 +47,6 @@ define([
     Filter.prototype.showKeyEvents = function(container) {
         bonzo(container).toggleClass('show-only-key-events');
     };
-
-
 
     return Filter;
 });
