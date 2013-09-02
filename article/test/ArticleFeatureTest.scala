@@ -431,19 +431,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
 
     }
-    
-    scenario("Story package with expandable text") {
-
-      Given("I'm on an article that has a story package and the AB test is switched on")
-      ABExpandableTrails.switchOn
-      HtmlUnit("/global-development/poverty-matters/2013/jun/03/burma-rohingya-segregation") { browser =>
-        import browser._
-
-        Then("the package should comtain the expander wrapper")
-        $(".trail__expander-wrapper") should have size (5)
-      }
-
-    }
 
     scenario("Story package with a link to a Poll") {
       Given("I'm on an article that has a story package linking to a Poll page")
