@@ -18,7 +18,6 @@ define([
     ophanApi
 ) {
     var collections = {},
-        sectionSearches,
         dragging = false,
         clipboardEl = document.querySelector('#clipboard'),
         listLoadsPending = 0,
@@ -181,7 +180,7 @@ define([
 
                 reqwest({
                     method: 'post',
-                    url: common.config.apiBase + '/' + listId,
+                    url: common.config.apiBase + '/collection/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
@@ -202,22 +201,20 @@ define([
         }
         var startPoller = _.once(_startPoller);
 
-        function fetchSchema(callback) {
+        function fetchCollections(callback) {
             reqwest({
-                url: common.config.apiBase,
+                url: common.config.apiBase + '/collection',
                 type: 'json'
             }).then(
                 function(resp) {
-                    resp.collections.forEach(function(id){
-                        treeAdd(id.split('/'), collections);
+                    resp.forEach(function(id){
+                        // Only use "first/three/levels" of the collection id path
+                        treeAdd(_.first(id.split('/'), 3), collections);
                     });                    
                     model.editions(_.keys(collections));
-
-                    sectionSearches = resp.sectionSearches || {};
-
                     if (_.isFunction(callback)) { callback(); }
                 },
-                function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
+                function(xhr) { window.console.log("ERROR: There was a problem listing the available collections"); }
             );
         };
 
@@ -243,6 +240,34 @@ define([
             })
         };
 
+        function flushClipboard() {
+            model.clipboard.removeAll();
+            clipboardEl.innerHTML = '';
+        };
+
+        function onDragOver(event) {
+            event.preventDefault();
+        }
+
+        function onDrop(event) {
+            var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
+
+            if(!url) { return true; }
+
+            event.preventDefault();
+
+            if (common.util.urlHost(url).indexOf('google') > -1) {
+                url = decodeURIComponent(common.util.parseQueryParams(url).url);
+            };
+
+            model.clipboard.unshift(new Article({
+                id: common.util.urlAbsPath(url)
+            }));
+
+            contentApi.decorateItems(model.clipboard());
+            ophanApi.decorateItems(model.clipboard());
+        }
+
         this.init = function(callback) {
             model.latestArticles  = new LatestArticles();
             model.listsDisplayed  = knockout.observableArray();
@@ -266,47 +291,27 @@ define([
             }
 
             model.edition.subscribe(function(edition) {
-                model.sections(edition ? _.keys(collections[edition] || {}) : []);
+                model.sections.removeAll();
+                if (common.util.hasNestedProperty(collections, [edition])) {
+                    model.sections(_.keys(collections[edition]));
+                }
                 model.section(undefined);
-                model.blocks([]);
+
+                model.blocks.removeAll();
                 model.block(undefined);
             });
 
             model.section.subscribe(function(section) {
-                model.blocks(section ? _.keys(collections[model.edition()][section] || {}) : []);
+                model.blocks.removeAll();
+                if (common.util.hasNestedProperty(collections, [model.edition(), section])) {
+                    model.blocks(_.keys(collections[model.edition()][section]));
+                }
                 model.block(undefined);
 
                 if (section) {
-                    model.latestArticles.section(sectionSearches[section] || section);
+                    model.latestArticles.section(common.config.sectionSearches[section] || section);
                 }
             });
-
-            function flushClipboard() {
-                model.clipboard.removeAll();
-                clipboardEl.innerHTML = '';
-            };
-
-            function onDragOver(event) {
-                event.preventDefault();
-            }
-
-            function onDrop(event) {
-                event.preventDefault();
-                var url = event.dataTransfer.getData('Text');
-
-                if(!url) { return true; }
-
-                if (common.util.urlHost(url).indexOf('google') > -1) {
-                    url = decodeURIComponent(common.util.parseQueryParams(url).url);
-                };
-
-                model.clipboard.unshift(new Article({
-                    id: common.util.urlAbsPath(url)
-                }));
-
-                contentApi.decorateItems(model.clipboard());
-                ophanApi.decorateItems(model.clipboard());
-            }
 
             knockout.bindingHandlers.makeDropabble = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -317,16 +322,35 @@ define([
 
             knockout.bindingHandlers.sparkline = {
                 update: function (element, valueAccessor, allBindingsAccessor, model) {
-                    var value = knockout.utils.unwrapObservable(valueAccessor()),
-                        height = Math.max(15, Math.min(30, _.max(value))),
-                        options = allBindingsAccessor().sparklineOptions || {
-                            lineColor: '#d61d00',
-                            fillColor: '#ffbaaf',
-                            height: height
-                        };
+                    var series = knockout.utils.unwrapObservable(valueAccessor()),
+                        groupNames = ['Other', 'Google', 'Guardian'],
+                        groupColours = ['d61d00', '89A54E', '4572A7'],
+                        grouped = {};
 
-                    if( value && _.max(value)) {
-                        $(element).sparkline(value, options);                        
+                    if (series) {
+                        _.each(series, function(s){
+
+                            // Default to 1st from groupNames, unless found in groupNames
+                            var group = groupNames[Math.max(0, groupNames.indexOf(s.name))];
+
+                            grouped[group] = grouped[group] || [];
+                            _.each(s.data, function(d,i){
+                                grouped[group][i] = (grouped[group][i] || 0) + d.count;
+                            });
+                        });
+
+                        _.each(groupNames, function(group, i){
+                            var options = {
+                                height: 30,
+                                lineColor: '#' + groupColours[i],
+                                fillColor: false,
+                                minSpotColor: false,
+                                maxSpotColor: false,
+                                lineWidth: i > 1 ? 2 : 1,
+                                composite: i > 0
+                            };
+                            $(element).sparkline(grouped[group], options);
+                        });
                     }
                 }
             };
@@ -343,7 +367,7 @@ define([
                 }
             });
 
-            fetchSchema(function(){
+            fetchCollections(function(){
                 knockout.applyBindings(model);
 
                 renderLists({inferDefaults: true});

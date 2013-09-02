@@ -6,11 +6,7 @@
  * Network front feature tests 
  *
  **/
-casper.start(host);
-
-var clearLocalStorage = function() {
-    casper.evaluate(function() { window.localStorage.clear(); });
-};
+casper.start(host + '/uk?view=mobile');
 
 /**
  * Scenario Outline: Users can view more top stories for a section
@@ -23,18 +19,16 @@ var clearLocalStorage = function() {
  *    | Comment is free |
  *    | Culture         |
  **/
-
-casper.then(function() {
-    casper.test.comment('Users can view more top stories for a section');
+casper.test.begin('Users can view more top stories for a section', function(test) {
 
     var sections = ['Sport', 'Comment is free', 'Culture'];
 
-    sections.forEach(function(section) {
+    sections.forEach(function(section, i) {
         var sectionSelector = 'section[data-link-name*="' + section + '"]';
 
         casper.waitForSelector(sectionSelector + ' .cta',function(){
 
-            casper.test.comment(section);
+            test.comment(section);
 
             casper.click(sectionSelector + ' .cta');
 
@@ -48,16 +42,14 @@ casper.then(function() {
                     return document.querySelectorAll(selector + ' ul li').length;
                 }, sectionSelector);
 
-
-                this.test.assertTruthy(trails > 5, 'Then the ' + section + ' section should have a "Show more" cta that loads in more top stories');
-
+                test.assertTruthy(trails > 5, 'Then the ' + section + ' section should have a "Show more" cta that loads in more top stories');
+                test.done();
             }, function timeout() {
-                casper.test.fail('Failed to load more stories');
+                test.fail('Failed to load more stories');
             });
 
         });
     });
-
 });
 
 /**
@@ -66,20 +58,21 @@ casper.then(function() {
  *    When I hide a section
  *    Then the section will be hidden
  **/
-casper.then(function() {
-    casper.test.comment('Users can hide sections');
+casper.test.begin('Users can hide sections', {
+    setUp: function() {
+        clearLocalStorage();
+        casper.reload();
+    },
+    test: function(test) {
+        var btn = 'section[data-link-name*="Sport"] .toggle-trailblock',
+            trailblock = 'section[data-link-name*="Sport"] .trailblock';
 
-    clearLocalStorage();
-    casper.reload();
-
-    var btn = 'section[data-link-name*="Sport"] .toggle-trailblock',
-        trailblock = 'section[data-link-name*="Sport"] .trailblock';
-
-    casper.waitForSelector(btn,function(){
-        casper.click(btn);
-        this.test.assertEquals(this.getElementBounds(trailblock).height, 0, 'When I hide a section then the section will be hidden');
-    });
-
+        casper.waitForSelector(btn, function(){
+            casper.click(btn);
+            test.assertEquals(this.getElementBounds(trailblock).height, 0, 'When I hide a section then the section will be hidden');
+            test.done();
+        });
+    }
 });
 
 /** 
@@ -89,15 +82,15 @@ casper.then(function() {
  *     When I show a section
  *     Then the section will be shown
  **/
-casper.then(function() {
-    casper.test.comment('Users can show hidden sections');
+casper.test.begin('Users can show hidden sections', function(test) {
 
     var btn = 'section[data-link-name*="Sport"] .toggle-trailblock',
         trailblock = 'section[data-link-name*="Sport"] .trailblock';
 
     casper.waitForSelector(btn,function(){
         casper.click(btn);
-        this.test.assertTruthy(this.getElementBounds(trailblock).height > 0, 'When I show a section then the section will be shown');
+        test.assertTruthy(this.getElementBounds(trailblock).height > 0, 'When I show a section then the section will be shown');
+        test.done();
     });
 
 });
@@ -109,32 +102,33 @@ casper.then(function() {
  *     When I refresh the page
  *     Then the section will remain hidden
  **/
-casper.then(function() {
-    casper.test.comment('Hidden section will remain hidden on refresh');
+casper.test.begin('Hidden section will remain hidden on refresh', {
+    setUp: function() {
+        clearLocalStorage();
+        casper.reload();
+    },
+    test: function(test) {
+        var btn = 'section[data-link-name*="Sport"] .toggle-trailblock',
+            trailblock = 'section[data-link-name*="Sport"] .trailblock';
 
-    var btn = 'section[data-link-name*="Sport"] .toggle-trailblock',
-        trailblock = 'section[data-link-name*="Sport"] .trailblock';
-
-    clearLocalStorage();
-    casper.reload();
-
-    casper.waitForSelector(btn,function(){
-        casper.click(btn);
-        casper.waitFor(function check() {
-            return this.getElementBounds(trailblock).height === 0;
-        }, function then() {
-            casper.reload(function() {
-                this.test.assertEquals(this.getElementBounds(trailblock).height, 0, 'When I refresh the page then the section will remain hidden');
-                casper.click(btn);
+        casper.waitForSelector(btn,function(){
+            casper.click(btn);
+            casper.waitFor(function check() {
+                return this.getElementBounds(trailblock).height === 0;
+            }, function then() {
+                casper.reload(function() {
+                    test.assertEquals(this.getElementBounds(trailblock).height, 0, 'When I refresh the page then the section will remain hidden');
+                    casper.click(btn);
+                    test.done();
+                });
+            }, function timeout() {
+                test.fail('Failed to keep section hidden');
             });
-        }, function timeout() {
-            casper.test.fail('Failed to keep section hidden');
+
         });
-
-    });
-
+    }
 });
 
 casper.run(function() {
-    this.test.renderResults(true, 0, this.cli.get('save') || false);
+    this.test.renderResults(true, 0, this.cli.get('xunit') + 'network-front.xml');
 });

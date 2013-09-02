@@ -92,7 +92,7 @@ trait Competitions extends CompetitionSupport with ExecutionContexts with Loggin
   val competitionDefinitions = Seq(
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true),
     /* TODO: MUST SWITCH BACK TO CORRECT PA ID AFTER QUALIFIERS */ Competition("501", "/football/championsleague", "Champions League", "Champions League", "European"),
-    Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European"),
+    /* TODO: MUST SWITCH BACK TO CORRECT PA ID AFTER QUALIFIERS */ Competition("511", "/football/uefa-europa-league", "Europa League", "Europa League", "European"),
     Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English"),
     Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English"),
     Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true),

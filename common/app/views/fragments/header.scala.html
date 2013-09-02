@@ -4,30 +4,32 @@
 
 <header id="header" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
     <div class="header__inner gs-container cf">
-        <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png"/>
-        <a href="@LinkTo{/}"
-            id="logo" class="i i-guardian-logo" data-link-name="site logo" itemprop="url">The Guardian</a>
+        <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
+        <a href="@LinkTo{/}" id="logo" class="i i-guardian-logo" data-link-name="site logo" itemprop="url">The Guardian</a>
 
         <span class="beta">Beta</span>
 
         <div class="nav-container">
             <ul class="nav nav--global" data-link-name="Sections">
-                @Edition(request).navigation(page).map{ nav =>
-                    <li class="nav__item @if(nav.currentFor(page)){is-active zone-border}">
-                        <a href="@LinkTo{@nav.name.href}" class="nav__link @if(nav.currentFor(page)){zone-color}" data-link-name="@nav.name.linkName">@nav.name.title</a>
-                    </li>
-                }
+            @Edition(request).navigation(page).map{ nav =>
+                <li class="nav__item @if(nav.currentFor(page)){is-active zone-border}">
+                    <a href="@LinkTo{@nav.name.href}" data-link-name="@nav.name.linkName"
+                       class="nav__link @if(nav.currentFor(page)){zone-color}">@nav.name.title</a>
+                </li>
+            }
             </ul>
         </div>
 
-        <a href="#footer-nav" data-link-name="Sections" data-control-for="nav-popup-sections" class="control control--sections">
+        <a href="#footer-nav" data-link-name="Sections" data-control-for="nav-popup-sections"
+           class="control control--sections">
             <i class="i i-nav-divider"></i>
             <span class="control__menu i i-menu">Sections</span>
             <i class="i i-menu-active"></i>
         </a>
 
         @if(SearchSwitch.isSwitchedOn) {
-            <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon" class="control control--search" data-control-for="nav-popup-search">
+            <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon" 
+               class="control control--search" data-control-for="nav-popup-search">
                 <i class="i i-nav-divider"></i>
                 <span class="h">Search</span>
                 <i class="i i-search"></i>
@@ -35,7 +37,7 @@
         }
 
         <a href="/top-stories" data-is-ajax data-link-name="Top stories" data-control-for="nav-popup-topstories"
-            class="control control--topstories @if(SearchSwitch.isSwitchedOff) { control--right }">
+           class="control control--topstories @if(SearchSwitch.isSwitchedOff) { control--right }">
             <i class="i i-nav-divider"></i>
             <span>Top stories</span>
             <i class="i i-top-stories"></i>
@@ -43,7 +45,8 @@
 
         @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
         <div class="js-profile-nav js-hidden">
-            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-control-for="nav-popup-profile" class="control control--profile">
+            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-control-for="nav-popup-profile"
+               class="control control--profile">
                 <span class="js-profile-info control__info">Sign in</span>
                 <i class="i i-profile"></i>
             </a>

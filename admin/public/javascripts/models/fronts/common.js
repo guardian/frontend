@@ -15,8 +15,12 @@ define([
             maxOphanCallsPerBlock: 10,
             cacheExpiryMs:         300000, // 300000 = five mins 
             defaultToLiveMode:     true,
+            sectionSearches: {
+                "news": "news|uk|uk-news|world",
+                "culture": "cluture|film|music|books|artanddesign|tv-and-radio|stage"
+            },
 
-            apiBase:               '/fronts/api',
+            apiBase:               '/fronts',
             apiSearchBase:         '/api/proxy/search'
         },
 
@@ -24,6 +28,13 @@ define([
 
         util: {
             mediator: new EventEmitter(),
+
+            hasNestedProperty: function (obj, path) {
+                if(obj.hasOwnProperty(path[0])) {
+                    return path.length === 1 ? true : this.hasNestedProperty(obj[path[0]], _.rest(path));
+                }
+                return false;
+            },
 
             parseQueryParams: function(url) {
                 url = url.indexOf('?') === -1 ? url: _.rest(url.split('?')).join('?');
