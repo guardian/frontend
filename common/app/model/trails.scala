@@ -146,7 +146,7 @@ class RunningOrderTrailblockDescription(
             val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
               val queryParams: Map[String, String] = QueryParams.get(query).mapValues{_.mkString("")}
               val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
-              val search = ContentApi.search(edition)
+              val search = ContentApi.search(edition).showFields("all")
               val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
               val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams)
 
