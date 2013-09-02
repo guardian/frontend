@@ -8,13 +8,17 @@
 
 @if(model.pageType == "live") {
     <div class="live-matches-dateline">
-       @fragments.dateline(new DateTime, true)
+        @fragments.dateline(new DateTime, true)
     </div>
 }
 
 @if(model.pageType == "live") {
     <div class="box-indent">
-        <div class="update update-live-matches" data-link-name="autoupdate"></div>
+        <div class="article-toolbar cf">
+            <!--  TODO: display filter if page is "as it happened" (tag: tone)  -->
+            @fragments.liveBlogFilter()
+            <div class="update update-live-matches" data-link-name="autoupdate"></div>
+        </div>
     </div>
 }
 

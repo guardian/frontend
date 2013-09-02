@@ -75,26 +75,19 @@
 }
 
 .update {
-    display:block;
-    background-color: $mushroom;
-    margin-bottom: $baseline*4;
-    padding: 0 0 0 $gutter/2;
+    display: block;
+    padding-bottom: $gutter/2;
     overflow: hidden;
 
     &.hidden {
         display: none;
     }
-
-    @include mq(tablet) {
-        margin-left: 0;
-        margin-right: 0;
-    }
 }
 
 .update-text {
-    float:left;
+    float: left;
     margin: 0 $gutter 0 0;
-    padding: 6px 0 0 0;
+    padding: 7px 0 0 $gutter/2;
     line-height: 32px;
 }
 

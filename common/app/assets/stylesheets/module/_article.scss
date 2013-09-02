@@ -164,6 +164,12 @@ video {
     @include user-select;
 }
 
+.article-toolbar {
+    background: $mushroom;
+    height: 46px;
+    margin-bottom: $baseline * 4;
+}
+
 
 /* Layout changes across devices
    ========================================================================== */

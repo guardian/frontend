@@ -1,6 +1,7 @@
 define([
     "common",
     "modules/autoupdate",
+    "modules/live-blog-filter",
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
@@ -8,6 +9,7 @@ define([
 ], function (
     common,
     AutoUpdate,
+    LiveBlogFilter,
     MatchNav,
     Reading,
     Discussion,
@@ -48,7 +50,8 @@ define([
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
                         manipulationType: 'prepend'
-                    }).init();
+                    }).init(),
+                    f = new LiveBlogFilter(context).init();
                 }
             });
         },

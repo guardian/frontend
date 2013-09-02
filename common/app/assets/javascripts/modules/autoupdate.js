@@ -176,7 +176,6 @@ define([
                 this.view.toggle.call(this, this.btns[1]);
             }
 
-             
             if (loadOnInitialise) {
                 that.load.call(that);
             }

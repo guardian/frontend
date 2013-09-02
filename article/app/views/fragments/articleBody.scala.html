@@ -46,11 +46,11 @@
 
             <div class="js-article__container article__container cf">
                 @if(article.isLive) {
-                    <div class="cf">
-                        @fragments.liveEventFilter()
-                        @fragments.autoUpdate()                        
+                    <div class="article-toolbar cf">
+                        <!--  TODO: display filter if page is "as it happened" (tag: tone)  -->
+                        @fragments.liveBlogFilter()
+                        @fragments.autoUpdate()
                     </div>
-
                 }
 
                 <div class="article-body from-content-api @if(article.isLive) {live-blog}"
@@ -59,7 +59,7 @@
                 </div>
 
                 @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
-                    @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card")
+                    @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card", "hidden")
                 }
             </div>
 
