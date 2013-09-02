@@ -334,7 +334,8 @@ define(["bean",
 
         this.layout = function() {
             var orientation = detect.getOrientation(),
-                layoutMode  = detect.getLayoutMode();
+                layoutMode  = detect.getLayoutMode(),
+                contentHeight = window.innerHeight - overlay.headerNode.offsetHeight;
 
             // Make overlay large enough to allow the browser chrome to be hidden
             overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
@@ -342,9 +343,9 @@ define(["bean",
             // We query for the images here, as the swipe lib can rewrite the DOM, which loses the references
             $images = bonzo(galleryNode.querySelectorAll('.gallery__img'));
 
-            if (orientation === 'landscape' && mode === 'fullimage' && layoutMode === 'mobile') {
-                // In mobile landscape, size all images to the height of the screen
-                $images.css({'height': window.innerHeight + 'px', 'width': 'auto'});
+            if (orientation === 'landscape' && mode === 'fullimage') {
+                // In landscape, size all images to the height of the screen
+                $images.css({'height': contentHeight + 'px', 'width': 'auto'});
             } else {
                 $images.removeAttr('style');
             }
@@ -413,6 +414,8 @@ define(["bean",
 
         // Slideshow methods
         this.startSlideshow = function() {
+            slideshowActive = true;
+
             bonzo(galleryNode).addClass('gallery--slideshow');
 
             overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'none';
@@ -420,25 +423,25 @@ define(["bean",
 
             if (swipeActive) {
                 self.removeSwipe();
+                self.goTo(currentImage);
             }
 
             self.slideshowTimer = setInterval(function() {
                 self.goTo(currentImage+1);
             }, slideshowDelay);
-
-            slideshowActive = true;
         };
 
         this.stopSlideshow = function() {
             if (slideshowActive) {
+                slideshowActive = false;
+
                 bonzo(galleryNode).removeClass('gallery--slideshow');
 
                 overlay.toolbarNode.querySelector('.js-start-slideshow').style.display = 'block';
                 overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
 
                 clearInterval(self.slideshowTimer);
-
-                slideshowActive = false;
+                self.goTo(currentImage);
             }
         };
     }
