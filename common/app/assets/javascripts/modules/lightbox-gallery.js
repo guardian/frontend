@@ -209,6 +209,8 @@ define(["bean",
             self.imageIndexNode = overlay.toolbarNode.querySelector('.js-image-index');
             self.gridModeCta    = overlay.headerNode.querySelector('.js-gallery-grid');
             self.fullModeCta    = overlay.headerNode.querySelector('.js-gallery-full');
+
+            overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
         };
 
         this.removeOverlay = common.debounce(function(e){

@@ -257,10 +257,6 @@ i.gallery__watermark {
         left: 0;
         z-index: 60;
     }
-
-    @include mq(tablet) {
-        position: relative;
-    }
 }
 
 .gallerycaption__inner {
@@ -402,16 +398,4 @@ i.gallery__watermark {
         transition: opacity 1s ease-in-out;
         opacity: 0;
     }
-}
-
-.js-stop-slideshow {
-    display: none;
-}
-
-
-// Temp hack for icons
-.overlay__toolbar i {
-    width: 24px;
-    height: 24px;
-    background-size: 24px 24px;
 }
