@@ -37,6 +37,7 @@ function (
         }
 
         if(data.seriesData && data.seriesData.length) {
+            /*
             simpleSeries = data.seriesData.map(function(series) {
                 return _.pluck(series.data, 'count')                
             })
@@ -47,6 +48,9 @@ function (
                 });
             });
             item.state.pageViewsSeries(_.first(simpleSeries));
+            */
+
+            item.state.pageViewsSeries(data.seriesData);
         }
     }
 
