@@ -47,6 +47,7 @@
             margin-top: ($baseline * 2) - 1;
             padding-top: $baseline * 2;
             border-top: 1px solid $grey;
+            width: 100%;
             &:first-child {
                 margin:0;
                 padding: 0;
@@ -80,6 +81,11 @@
         margin-top: $baseline;
         @include font-size(16, 20);
         color: #666666;
+    }
+    @include mq($to: tablet) {
+        .item:nth-child(n + 2) .item__standfirst {
+            display: none;
+        }
     }
     .item__meta {
         position: relative;
