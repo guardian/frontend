@@ -202,7 +202,6 @@ i.gallery__watermark {
     background: rgba(34, 34, 34, 0.90);
 
     i {
-        @extend .i-gallery-arrow;
         margin: 10px 8px;
     }
 
@@ -211,7 +210,8 @@ i.gallery__watermark {
         height: 60px;
 
         i {
-            @extend .i-gallery-arrow-large;
+            margin: 22px 8px;
+            @include transform(scale(2));
         }
     }
 }
@@ -299,7 +299,7 @@ i.gallery__watermark {
     }
 
     @include mq(tablet) {
-        height: 40px;
+        height: 48px;
     }
 }
 
