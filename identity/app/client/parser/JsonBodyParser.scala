@@ -21,7 +21,7 @@ trait JsonBodyParser extends Logging {
     } catch {
       case e: MappingException => {
         logger.error("JSON mapping exception", e)
-        Left(List(Error("JSON mapping exception: Failed to extract %s from JSON".format(man.runtimeClass.getName), e.getMessage)))
+        Left(List(Error("JSON mapping exception", "The api returned some json that did not match the expected format:" + man.runtimeClass.getName, 500, Some(man.runtimeClass.getName))))
       }
     }
   }
@@ -34,7 +34,7 @@ trait JsonBodyParser extends Logging {
     } catch {
       case e: ParseException => {
         logger.error("JSON parse exception", e)
-        Left(List(Error("Failed to parse JSON", e.getMessage)))
+        Left(List(Error("JSON parsing exception", "The api returned a response that was not valid json:" + e.getMessage)))
       }
     }
   }

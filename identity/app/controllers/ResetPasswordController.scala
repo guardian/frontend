@@ -32,9 +32,9 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
     Forms.tuple (
       "password" ->  idPassword
         .verifying(Constraints.nonEmpty),
-      "password_confirm" ->  idPassword
+      "password-confirm" ->  idPassword
         .verifying(Constraints.nonEmpty),
-      "email-address" -> idEmail
+      "email-address" -> of[String].verifying(Constraints.nonEmpty)
     ) verifying(Messages("error.passwordsMustMatch"), { f => f._1 == f._2 }  )
   )
 
@@ -62,7 +62,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
           api.sendPasswordResetEmail(email) map(_ match {
             case Left(errors) => {
               log.info("User not found for request new password.")
-              val formWithError = errors.foldLeft(requestPasswordResetForm) { (form, error) =>
+              val formWithError = errors.foldLeft(boundForm) { (form, error) =>
                 form.withError(error.context.getOrElse(""), error.description)
               }
               Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, formWithError, errors))
@@ -111,7 +111,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
       api.userForToken(token) map ( _ match {
         case Left(errors) => {
           log.warn("Could not retrieve password reset request for token: %s".format(token))
-          SeeOther("/requestnewtoken")
+          Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
         }
         case Right(user) => {
           val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress)
