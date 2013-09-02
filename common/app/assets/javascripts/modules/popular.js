@@ -1,12 +1,12 @@
 define(['common', 'modules/lazyload'], function (common, LazyLoad) {
 
-    function popular(config, context, expandable, url) {
+    function popular(config, context, isExpandable, url) {
         var container = context.querySelector('.js-popular');
 
         if (container) {
             // some pages, e.g. profiles, are flagged as 'section: global', a non-existent section - this ignores those
             var hasSection = config.page && config.page.section && config.page.section !== 'global',
-                expandable = expandable ? '/expandable' : '';
+                expandable = isExpandable ? '/expandable' : '';
 
             url = url || '/most-read' + expandable + (hasSection ? '/' + config.page.section : '');
             new LazyLoad({

@@ -1,3 +1,4 @@
+/*global guardian */
 define(['common', 'bean', 'modules/popular'], function (common, bean, popular) {
 
     var ExperimentExpandableMostPopular = function () {
@@ -12,8 +13,8 @@ define(['common', 'bean', 'modules/popular'], function (common, bean, popular) {
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    popular(config, context);
+                test: function (context) {
+                    popular(guardian.config, context);
                 }
             },
             {
@@ -29,7 +30,7 @@ define(['common', 'bean', 'modules/popular'], function (common, bean, popular) {
                             }
                         });
                     } else {
-                        popular(config, context);
+                        popular(guardian.config, context);
                     }
                 }
             }
