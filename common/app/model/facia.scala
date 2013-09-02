@@ -8,8 +8,7 @@ case class Config(
                    numItemsVisible: Int,
                    style: Option[Style],
                    section: String,
-                   showMore: Boolean,
-                   isConfigured: Boolean)
+                   showMore: Boolean)
 
 case class Collection(items: Seq[Trail])
 

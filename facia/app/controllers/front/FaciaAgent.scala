@@ -46,7 +46,6 @@ trait ParseConfig extends ExecutionContexts {
       (json \ "max").as[String].toInt,
       getStyle((json \ "style").as[String]),
       (json \ "section").as[String],
-      (json \ "isConfigured").as[String].toBoolean,
       (json \ "showmore").as[String].toBoolean
     )
 
