@@ -84,7 +84,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     ContentApi.item(path, edition)
       .tag(None)
       .showMostViewed(true)
-      .showFields("all")
+      .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
       .response.map{response =>
       val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
           val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)

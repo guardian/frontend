@@ -34,7 +34,6 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     scenario("Shows article metadata for each related link") {
 
       Given("there is an article 'Woman tortured during burglary tells of waterboarding ordeal'")
-      ABExpandableTrails.switchOff
       HtmlUnit("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
         import browser._
 
@@ -46,10 +45,10 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val article = findFirst("li")
         article.findFirst("a").getAttribute("href").length should be > 0
         article.findFirst("h3").getText.length should be > 0
-        article.findFirst(".trail__text").getText.length should be > 0
+        article.find(".trail__text") should have length 0
         article.findFirst("time").getAttribute("data-timestamp") should be("1344426007000")
 
-        find("li .trail__text") should have length 5
+        findFirst("ul").find(".trail__headline") should have length 5
       }
     }
 
