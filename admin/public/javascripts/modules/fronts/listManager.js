@@ -214,7 +214,7 @@ define([
                     model.editions(_.keys(collections));
                     if (_.isFunction(callback)) { callback(); }
                 },
-                function(xhr) { alert("Oops. There was a problem listing the available collections"); }
+                function(xhr) { window.console.log("ERROR: There was a problem listing the available collections"); }
             );
         };
 
@@ -239,6 +239,34 @@ define([
                 ].join('/'));
             })
         };
+
+        function flushClipboard() {
+            model.clipboard.removeAll();
+            clipboardEl.innerHTML = '';
+        };
+
+        function onDragOver(event) {
+            event.preventDefault();
+        }
+
+        function onDrop(event) {
+            var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
+
+            if(!url) { return true; }
+
+            event.preventDefault();
+
+            if (common.util.urlHost(url).indexOf('google') > -1) {
+                url = decodeURIComponent(common.util.parseQueryParams(url).url);
+            };
+
+            model.clipboard.unshift(new Article({
+                id: common.util.urlAbsPath(url)
+            }));
+
+            contentApi.decorateItems(model.clipboard());
+            ophanApi.decorateItems(model.clipboard());
+        }
 
         this.init = function(callback) {
             model.latestArticles  = new LatestArticles();
@@ -284,34 +312,6 @@ define([
                     model.latestArticles.section(common.config.sectionSearches[section] || section);
                 }
             });
-
-            function flushClipboard() {
-                model.clipboard.removeAll();
-                clipboardEl.innerHTML = '';
-            };
-
-            function onDragOver(event) {
-                event.preventDefault();
-            }
-
-            function onDrop(event) {
-                var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
-
-                if(!url) { return true; }
-
-                event.preventDefault();
-
-                if (common.util.urlHost(url).indexOf('google') > -1) {
-                    url = decodeURIComponent(common.util.parseQueryParams(url).url);
-                };
-
-                model.clipboard.unshift(new Article({
-                    id: common.util.urlAbsPath(url)
-                }));
-
-                contentApi.decorateItems(model.clipboard());
-                ophanApi.decorateItems(model.clipboard());
-            }
 
             knockout.bindingHandlers.makeDropabble = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
