@@ -160,11 +160,16 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
   private lazy val queryAgent = AkkaAgent[List[(Config, Collection)]](Nil)
 
   def getItems: Future[List[(Config, Collection)]] = {
-    val f = getConfig(id) map {config =>
-      config map {y => y -> getCollection(y.id, edition)}
+    val futureConfig = getConfig(id) map {config =>
+      config map {c => c -> getCollection(c.id, edition)}
     }
-    f map (_.toVector) flatMap {j =>
-      j.foldRight(Future(List[(Config, Collection)]()))((a, b) => for{l <- b; i <- a._2} yield (a._1,  i) +: l)
+    futureConfig map (_.toVector) flatMap { configMapping =>
+        configMapping.foldRight(Future(List[(Config, Collection)]()))((configMap, foldList) =>
+          for {
+            newList <- foldList
+            collection <- configMap._2
+          }
+          yield (configMap._1, collection) +: newList)
     }
   }
 
