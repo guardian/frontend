@@ -272,12 +272,21 @@ i.gallery__watermark {
     padding-bottom: $baseline * 4;
     border-bottom: 1px solid #676767;
     margin-bottom: $baseline;
+
+    @include mq(tablet) {
+        // Calling 'font' directly as @extend doesn't work properly inside mq()
+        @include font($sans-serif, normal, 16, 24);
+    }
 }
 
 .gallerycaption__credit {
     @extend %type-11;
     margin-bottom: 0;
     padding-bottom: $baseline;
+
+    @include mq(tablet) {
+        @include font($sans-serif, normal, 14, 20);
+    }
 }
 
 
