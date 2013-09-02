@@ -164,7 +164,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
       config map {y => y -> getCollection(y.id, edition)}
     }
     f map (_.toVector) flatMap {j =>
-      j.foldRight(Future(List[(Config, Collection)]()))((a, b) => for{l <- b; i <- a._2.fallbackTo(Future(Collection(Nil)))} yield (a._1,  i) +: l)
+      j.foldRight(Future(List[(Config, Collection)]()))((a, b) => for{l <- b; i <- a._2} yield (a._1,  i) +: l)
     }
   }
 
