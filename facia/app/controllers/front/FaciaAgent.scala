@@ -124,7 +124,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
   }
 
-  def executeContentApiQuery(s: Option[String], edition: Edition): Future[List[Content]] = s map { queryString =>
+  def executeContentApiQuery(s: Option[String], edition: Edition): Future[List[Content]] = s filter(_.nonEmpty) map { queryString =>
     val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues{_.mkString("")}
     val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
 
