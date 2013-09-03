@@ -62,7 +62,7 @@
         margin-bottom: $baseline * 2;
         display: none;
         @include mq(tablet) {
-            display:block;
+            display: block;
         }
     }
     .item__title {
