@@ -1,21 +1,3 @@
-.facia-container {
-    overflow: hidden;
-    .breakpoint {
-        @include mq($to: tablet) {
-            font-family: mobile;
-        }
-        @include mq(tablet, desktop) {
-            font-family: tablet;
-        }
-        @include mq(desktop, wide) {
-            font-family: desktop;
-        }
-        @include mq(wide) {
-            font-family: wide;
-        }
-    }
-}
-
 @import "facia/_items";
 @import "facia/_masthead";
 @import "facia/_fast-news";

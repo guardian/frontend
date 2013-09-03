@@ -1,4 +1,4 @@
-define(['common', 'bonzo', 'bean', 'qwery'], function (common, bonzo, bean, qwery) {
+define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common, bonzo, bean, qwery, detect) {
 
     var TopStoriesShowMore = function(topStories) {
 
@@ -20,7 +20,7 @@ define(['common', 'bonzo', 'bean', 'qwery'], function (common, bonzo, bean, qwer
                 });
             },
             _getRowSize = function () {
-                switch (common.$g('.breakpoint').css('font-family')) {
+                switch (detect.getBreakpoint()) {
                     case 'mobile':
                         return 1;
                     case 'tablet':
