@@ -1,5 +1,5 @@
-@(trail: Trail, column: String, title: String, linkName: String)(implicit request: RequestHeader)
-<a href="@trail.url" class="card-wrapper card-wrapper--@column" data-link-name="@linkName" aria-hidden="true">
+@(trail: Trail, column: String, title: String, linkName: String, state: String = "visible")(implicit request: RequestHeader)
+<a href="@trail.url" class="card-wrapper card-wrapper--@column is-@state" data-link-name="@linkName" aria-hidden="true">
     <div class="furniture furniture--@column card card--@column">
         <h2 class="card__title">@title</h2>
         @trail.thumbnailPath.map{ thumbnailPath =>
