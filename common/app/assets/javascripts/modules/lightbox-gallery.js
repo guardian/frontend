@@ -27,6 +27,7 @@ define(["bean",
             swipeActive,
             slideshowActive,
             slideshowDelay = 5000, // in milliseconds
+            captionControlHeight = 35, // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
             pushUrlChanges = true,
             $navArrows,
             $images;
@@ -246,14 +247,12 @@ define(["bean",
             }
 
             Array.prototype.forEach.call(overlay.bodyNode.querySelectorAll('.gallery__item'), function(el) {
-                var itemIndex = parseInt(el.getAttribute('data-index'), 10),
-                    captionControlHeight = 35; // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
+                var itemIndex = parseInt(el.getAttribute('data-index'), 10);
 
                 if (itemIndex === index) {
                     el.className += ' gallery__item--active';
 
-                    // Match arrows to the height of image, minus height of the caption control to prevent overlap
-                    $navArrows.css('height', ($images[index-1].offsetHeight - captionControlHeight) + 'px');
+                    self.alignNavArrows();
 
                     self.currentImageNode = el;
                 } else {
@@ -351,10 +350,16 @@ define(["bean",
                 $images.removeAttr('style');
             }
 
+            self.alignNavArrows();
         };
 
         this.jumpToContent = function() {
             window.scrollTo(0, overlay.headerNode.offsetHeight);
+        };
+
+        this.alignNavArrows = function() {
+            // Match arrows to the height of image, minus height of the caption control to prevent overlap
+            $navArrows.css('height', ($images[currentImage-1].offsetHeight - captionControlHeight) + 'px');
         };
 
 
@@ -375,10 +380,13 @@ define(["bean",
                         currentImage = index + 1;
                         self.imageIndexNode.innerHTML = currentImage;
 
+                        self.alignNavArrows();
+
                         self.preloadImages();
                     }
                 });
 
+                self.alignNavArrows();
                 swipeActive = true;
             });
         };
