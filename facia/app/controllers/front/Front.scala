@@ -2,12 +2,10 @@ package controllers.front
 
 import common._
 import common.editions.EditionalisedSections._
-import model.Trailblock
+import model.{FaciaPage, Trailblock}
 
 
 class Front extends Logging {
-
-  private def allFronts = fronts.values
 
   def idFromEditionKey(section: String): String = {
     val editions = Edition.all.map {_.id.toLowerCase}
@@ -34,20 +32,13 @@ class Front extends Logging {
     pageFrontAgent().values.foreach(_.refresh())
   }
 
-  lazy val fronts: Map[String, FrontEdition] = Edition.all.flatMap{ edition =>
-    edition.configuredFrontsFacia.filter{ front => isEditionalised(idFromEditionKey(front._1)) || (!isEditionalised(idFromEditionKey(front._1)) && edition == Edition.defaultEdition) }.map{
-      case (name, trailblockDescriptions) => name ->  new FrontEdition(edition, trailblockDescriptions)
-    }.toMap
-  }.toMap
-
   def refresh() {
     log.info("Refreshing Front")
-    allFronts.foreach(_.refresh())
     ConfigAgent.refresh()
     refreshPageFrontAgent()
   }
 
-  def apply(path: String): Seq[Trailblock] = fronts(path)()
+  def apply(path: String): FaciaPage = pageFrontAgent()(path)()
 }
 
 object Front extends Front
