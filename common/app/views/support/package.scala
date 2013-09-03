@@ -60,6 +60,10 @@ object FastNews extends Style { val className = "fast-news" }
  */
 object SectionZone extends Style { val className = "zone" }
 
+object SectionTopStories extends Style { val className = "section-top-stories" }
+
+object TopStories extends Style { val className = "top-stories" }
+
 object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {

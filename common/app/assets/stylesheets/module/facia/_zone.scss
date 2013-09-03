@@ -1,4 +1,8 @@
 .section--zone {
+    padding-top: $baseline*4;
+    padding-bottom: ($baseline * 2) - 1px;
+    border-bottom: 1px solid $grey;
+    overflow: hidden;
 
     @include mq(tablet, desktop) {
         margin-left: gs-span(5) + $gs-gutter;
@@ -7,11 +11,9 @@
         margin-left: gs-span(3) + $gs-gutter;
     }
     @include mq(wide) {
+        width: gs-span(12);
         margin-left: gs-span(4) + $gs-gutter;
     }
-    margin-top: $baseline*4;
-    padding-bottom: ($baseline * 2) - 1px;
-    border-bottom: 1px solid $grey;
 
     .section__title {
         background-color: #3b65ad;
