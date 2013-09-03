@@ -5,7 +5,7 @@ define(['common', 'modules/lightbox-gallery'], function (common, LightboxGallery
         var _config;
 
         this.id = 'GalleryStyle';
-        this.expiry = '2013-09-16';
+        this.expiry = '2013-09-19';
         this.audience = 1;
         this.description = 'Tests the new gallery style contact sheet CTA instead of the current style';
         this.canRun = function(config) {
