@@ -1,9 +1,8 @@
 define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
-    var containerTmpl =
+    var sectionTmpl =
         '<section class="section--popular">' +
             '<h2 class="section__title">Most Read</h2>' +
-            '<ul class="unstyled collection"></ul>' +
         '</section>',
         itemTmpl = '<li class="item"><a href="" class="item__link"></a></li>';
 
@@ -18,10 +17,9 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 crossOrigin: true
             }).then(
                 function(resp) {
-                    // add the popular section after the highlights
-                    bonzo(bonzo.create(containerTmpl)).insertAfter('.section--highlights');
-                    // create the trails
-                    var $trails = bonzo(bonzo.create(resp.html));
+                    var $collection = bonzo(bonzo.create('<ul class="unstyled collection"></ul>')),
+                        $trails = bonzo(bonzo.create(resp.html));
+                    // create the items (from first 5 trails)
                     common.$g('#tabs-popular-1 li:nth-child(-n + 5) a', bonzo(bonzo.create(resp.html))).each(function(trail) {
                         var $trail = bonzo(trail),
                             $item = bonzo(bonzo.create(itemTmpl));
@@ -29,9 +27,13 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                         common.$g('.item__link', $item)
                             .attr('href', $trail.attr('href'))
                             .text($trail.text());
-                        // add it to the section
-                        $item.appendTo('.section--popular .collection');
+                        // add it to the collection
+                        $item.appendTo($collection);
                     });
+                    // add the popular section after the highlights
+                    bonzo(bonzo.create(sectionTmpl))
+                        .append($collection)
+                        .insertAfter('.section--highlights');
                 },
                 function(req) {
                     common.mediator.emit('module:error', 'Failed to load facia popular: ' + req.statusText, 'modules/facia-popular.js');
