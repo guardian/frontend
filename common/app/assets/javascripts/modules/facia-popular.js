@@ -11,8 +11,9 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
         // Initialise
         init:  function (config, context) {
+            var hasSection = config.page && config.page.section && config.page.section !== 'global';
             return ajax({
-                url: '/most-read/sport.json?_edition=UK',
+                url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
                 type: 'json',
                 crossOrigin: true
             }).then(
