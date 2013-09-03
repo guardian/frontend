@@ -18,6 +18,8 @@ GET        /discussion/*shortUrl                                                
 GET        /most-read                                                                                     controllers.MostPopularController.render(path = "")
 GET        /most-read.json                                                                                controllers.MostPopularController.render(path = "")
 GET        /most-read/card.json                                                                           controllers.MostPopularController.renderCard()
+GET        /most-read/expandable/*path.json                                                               controllers.MostPopularController.renderExpandable(path)
+GET        /most-read/expandable/*path                                                                    controllers.MostPopularController.renderExpandable(path)
 GET        /most-read/*path.json                                                                          controllers.MostPopularController.render(path)
 GET        /most-read/*path                                                                               controllers.MostPopularController.render(path)
 GET        /top-stories                                                                                   controllers.TopStoriesController.render()
@@ -26,7 +28,7 @@ GET        /top-stories/trails                                                  
 GET        /top-stories/trails.json                                                                       controllers.TopStoriesController.renderJsonTrails()
 GET        /related/*path.json                                                                            controllers.RelatedController.render(path)
 GET        /related/*path                                                                                 controllers.RelatedController.render(path)
-GET        /recent/card.json                                                                                   controllers.RecentController.render()
+GET        /recent/card.json                                                                              controllers.RecentController.render()
 
 #Style-guide
 GET        /style-guide                                                                                   controllers.StyleGuideController.renderIndex
@@ -148,7 +150,7 @@ GET        /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails                            
 GET        /$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>/trails.json                                                 controllers.TagController.renderTrails(path)
 
 # Experimental
-GET    /cards/opengraph/*path                               controllers.CardController.opengraph(path)
+GET        /cards/opengraph/*path                                                                         controllers.CardController.opengraph(path)
 
 #Articles
 GET        /*path.json                                                                                    controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])

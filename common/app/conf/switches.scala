@@ -174,8 +174,8 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the new swipe call to actions ",
     safeState = Off)
 
-  val ABExpandableTrails = Switch("A/B Tests", "ab-expandable-trails",
-    "If this is switched on an AB test runs to trial the impact of having expandable content in trails",
+  val ABExpandableMostPopular = Switch("A/B Tests", "ab-expandable-most-popular",
+    "If this is switched on an AB test runs to trial the impact of having expandable content in most popular trails",
     safeState = Off)
 
   val ABRightHandCard = Switch("A/B Tests", "ab-right-hand-card",
@@ -243,7 +243,7 @@ object Switches extends Collections {
     ABGalleryStyle,
     ABGalleryCta,
     ABSwipeCtas,
-    ABExpandableTrails,
+    ABExpandableMostPopular,
     ABRightHandCard
   )
 
