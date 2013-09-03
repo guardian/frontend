@@ -1,9 +1,11 @@
 .section--highlights {
+    margin-top: $baseline * 4;
     padding-bottom: ($baseline * 3) - 1;
     @include mq(tablet) {
         border-bottom: solid 1px $grey;
         float: left;
         width: gs-span(6);
+        margin-bottom: $baseline * 4;
     }
     @include mq(desktop) {
         width: gs-span(8);

@@ -1,4 +1,5 @@
 .section--popular {
+    margin-top: $baseline * 4;
     @include mq(tablet) {
         min-height: gs-height(7);
         padding-left: $gs-gutter / 2;
