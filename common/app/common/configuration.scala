@@ -71,11 +71,6 @@ class GuardianConfiguration(
     }
   }
 
-  object ophanApi {
-    lazy val host = configuration.getStringProperty("ophan.api.host").filter(_.nonEmpty)
-    lazy val key  = configuration.getStringProperty("ophan.api.key").filter(_.nonEmpty)
-  }
-
   object mongo {
     lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
   }

@@ -28,7 +28,9 @@ GET     /api/proxy/*path                 controllers.Api.proxy(path, callback)
 GET     /api/tag                         controllers.Api.tag(q, callback)
 GET     /api/item/*path                  controllers.Api.item(path, callback)
 GET     /json/proxy/*absUrl              controllers.Api.json(absUrl)
-GET     /ophan/pageviews/*path           controllers.Api.ophanPageViews(path)
+
+# Ophan proxying for https
+GET     /ophan/pageviews/*path           controllers.OphanApi.pageViews(path)
 
 #Development endpoints
 GET     /dev/switchboard                 controllers.SwitchboardController.render()
