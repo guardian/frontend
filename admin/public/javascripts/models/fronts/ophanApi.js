@@ -10,11 +10,7 @@ function (
     common,
     cache
 ){
-    var enable = _.has(common.util.queryParams(), 'pageViews');
-
     function decorateItems(items) {
-        if (!enable) { return; }
-
         items.slice(0, common.config.maxOphanCallsPerBlock).forEach(function(item){
             var id = item.meta.id(),
                 data = cache.get('pageViews', id);
@@ -41,8 +37,9 @@ function (
         }
 
         if(data.seriesData && data.seriesData.length) {
+            /*
             simpleSeries = data.seriesData.map(function(series) {
-                return _.pluck(series.data, 'y')                
+                return _.pluck(series.data, 'count')                
             })
             // Add all the series to the first series            
             _.rest(simpleSeries).forEach(function(simples) {
@@ -51,6 +48,9 @@ function (
                 });
             });
             item.state.pageViewsSeries(_.first(simpleSeries));
+            */
+
+            item.state.pageViewsSeries(data.seriesData);
         }
     }
 
@@ -58,8 +58,8 @@ function (
         cache.put('pageViews', id, {failed: true});
 
         Reqwest({
-            url: 'http://dashboard.ophan.co.uk/graph/breakdown/data?path=' + encodeURIComponent('/' + id),
-            type: 'jsonp'
+            url: '/ophan/pageviews/' + id,
+            type: 'json'
         }).then(
             function (resp) {
                 callback(resp);

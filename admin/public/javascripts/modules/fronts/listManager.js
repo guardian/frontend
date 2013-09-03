@@ -214,7 +214,7 @@ define([
                     model.editions(_.keys(collections));
                     if (_.isFunction(callback)) { callback(); }
                 },
-                function(xhr) { alert("Oops. There was a problem listing the available collections"); }
+                function(xhr) { window.console.log("ERROR: There was a problem listing the available collections"); }
             );
         };
 
@@ -239,6 +239,34 @@ define([
                 ].join('/'));
             })
         };
+
+        function flushClipboard() {
+            model.clipboard.removeAll();
+            clipboardEl.innerHTML = '';
+        };
+
+        function onDragOver(event) {
+            event.preventDefault();
+        }
+
+        function onDrop(event) {
+            var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
+
+            if(!url) { return true; }
+
+            event.preventDefault();
+
+            if (common.util.urlHost(url).indexOf('google') > -1) {
+                url = decodeURIComponent(common.util.parseQueryParams(url).url);
+            };
+
+            model.clipboard.unshift(new Article({
+                id: common.util.urlAbsPath(url)
+            }));
+
+            contentApi.decorateItems(model.clipboard());
+            ophanApi.decorateItems(model.clipboard());
+        }
 
         this.init = function(callback) {
             model.latestArticles  = new LatestArticles();
@@ -285,34 +313,6 @@ define([
                 }
             });
 
-            function flushClipboard() {
-                model.clipboard.removeAll();
-                clipboardEl.innerHTML = '';
-            };
-
-            function onDragOver(event) {
-                event.preventDefault();
-            }
-
-            function onDrop(event) {
-                var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
-
-                if(!url) { return true; }
-
-                event.preventDefault();
-
-                if (common.util.urlHost(url).indexOf('google') > -1) {
-                    url = decodeURIComponent(common.util.parseQueryParams(url).url);
-                };
-
-                model.clipboard.unshift(new Article({
-                    id: common.util.urlAbsPath(url)
-                }));
-
-                contentApi.decorateItems(model.clipboard());
-                ophanApi.decorateItems(model.clipboard());
-            }
-
             knockout.bindingHandlers.makeDropabble = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
                     element.addEventListener('dragover',  onDragOver,  false);
@@ -322,16 +322,35 @@ define([
 
             knockout.bindingHandlers.sparkline = {
                 update: function (element, valueAccessor, allBindingsAccessor, model) {
-                    var value = knockout.utils.unwrapObservable(valueAccessor()),
-                        height = Math.max(15, Math.min(30, _.max(value))),
-                        options = allBindingsAccessor().sparklineOptions || {
-                            lineColor: '#d61d00',
-                            fillColor: '#ffbaaf',
-                            height: height
-                        };
+                    var series = knockout.utils.unwrapObservable(valueAccessor()),
+                        groupNames = ['Other', 'Google', 'Guardian'],
+                        groupColours = ['d61d00', '89A54E', '4572A7'],
+                        grouped = {};
 
-                    if( value && _.max(value)) {
-                        $(element).sparkline(value, options);                        
+                    if (series) {
+                        _.each(series, function(s){
+
+                            // Default to 1st from groupNames, unless found in groupNames
+                            var group = groupNames[Math.max(0, groupNames.indexOf(s.name))];
+
+                            grouped[group] = grouped[group] || [];
+                            _.each(s.data, function(d,i){
+                                grouped[group][i] = (grouped[group][i] || 0) + d.count;
+                            });
+                        });
+
+                        _.each(groupNames, function(group, i){
+                            var options = {
+                                height: 30,
+                                lineColor: '#' + groupColours[i],
+                                fillColor: false,
+                                minSpotColor: false,
+                                maxSpotColor: false,
+                                lineWidth: i > 1 ? 2 : 1,
+                                composite: i > 0
+                            };
+                            $(element).sparkline(grouped[group], options);
+                        });
                     }
                 }
             };

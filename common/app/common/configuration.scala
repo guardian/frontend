@@ -7,6 +7,7 @@ import java.net.InetAddress
 import play.api.Play
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
+import conf.Configuration
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
@@ -68,6 +69,11 @@ class GuardianConfiguration(
     lazy val store = configuration.getStringProperty("frontend.store") getOrElse {
       throw new IllegalStateException("Fronts Api not configured")
     }
+  }
+
+  object ophanApi {
+    lazy val host = configuration.getStringProperty("ophan.api.host").filter(_.nonEmpty)
+    lazy val key  = configuration.getStringProperty("ophan.api.key").filter(_.nonEmpty)
   }
 
   object mongo {
@@ -163,6 +169,10 @@ class GuardianConfiguration(
       .getOrElse(throw new RuntimeException("Front config url not set"))
   }
 
+  object facia {
+    lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
+  }
+
   object pa {
     lazy val apiKey = configuration.getStringProperty("pa.api.key")
       .getOrElse(throw new RuntimeException("unable to load pa api key"))
@@ -186,14 +196,14 @@ class GuardianConfiguration(
 
     lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
   }
-  
+
   object pingdom {
     lazy val url = configuration.getStringProperty("pingdom.url").getOrElse(throw new RuntimeException("Pingdom url not set"))
     lazy val user = configuration.getStringProperty("pingdom.user").getOrElse(throw new RuntimeException("Pingdom user not set"))
     lazy val password  = configuration.getStringProperty("pingdom.password").getOrElse(throw new RuntimeException("Pingdom password not set"))
     lazy val apiKey = configuration.getStringProperty("pingdom.apikey").getOrElse(throw new RuntimeException("Pingdom api key not set"))
   }
-  
+
   object riffraff {
     lazy val url = configuration.getStringProperty("riffraff.url").getOrElse(throw new RuntimeException("RiffRaff url not set"))
     lazy val apiKey = configuration.getStringProperty("riffraff.apikey").getOrElse(throw new RuntimeException("RiffRaff api key not set"))
