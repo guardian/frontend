@@ -1,9 +1,11 @@
 define([
     'common',
+    'bonzo',
     'modules/detect',
     'modules/experiments/right-hand-card'
 ], function (
     common,
+    bonzo,
     detect,
     Card
 ) {
@@ -11,19 +13,19 @@ define([
     var RightHandCard = function () {
 
         this.id = 'RightHandCard';
-        this.expiry = '2013-08-28';
+        this.expiry = '2013-09-30';
         this.audience = 1;
         this.description = 'Introduce next story into card in right hand column and test impact';
         this.canRun = function(config) {
             var layoutMode = detect.getLayoutMode(),
-                storyPackage = document.querySelector('.js-related') && document.querySelector('.js-related').innerHTML !== '';
-            return config.page.contentType === 'Article' && storyPackage && layoutMode !== 'mobile' && layoutMode !== 'tablet';
+                storyPackage = document.querySelector('.js-related');
+            return config.page.contentType === 'Article' && !storyPackage && layoutMode !== 'mobile' && layoutMode !== 'tablet';
         };
         this.variants = [
             {
                 id: 'control',
                 test: function () {
-                    document.querySelector('.card-wrapper--right').className += ' is-hidden';
+                    bonzo('.card-wrapper--right').removeClass('is-hidden');
                 }
             },
             {
