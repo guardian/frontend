@@ -1,13 +1,3 @@
-@mixin row($row-size) {
-    &:nth-child(#{$row-size}n + 1) {
-        padding-left: 0;
-    }
-    &:nth-child(#{$row-size}n + #{$row-size}) {
-        padding-right: 0;
-        border-right-style: none;
-    }
-}
-
 .section--highlights {
     padding-bottom: ($baseline * 3) - 1;
     @include mq(tablet) {
@@ -33,30 +23,33 @@
             font-size: 0;
             white-space: nowrap;
             overflow: auto;
+            height: gs-height(6);
         }
     }
     .item {
         float: none;
         margin: ($baseline * 2) - 1 0 0;
-        padding-top: $baseline * 2;
+        padding: $baseline * 2 0 gs-height(1);
         border-top: 1px solid $grey;
-        @include box-sizing(content-box);
         &:first-child {
             margin-top: 0;
             padding-top: 0;
-            padding-left: 0;
             border-top-style: none;
         }
         @include mq(tablet) {
+            @include box-sizing(content-box);
             white-space: normal;
             display: inline-block;
             vertical-align: top;
-            min-height: gs-height(6);
+            height: 100%;
             border-top-style: none;
             border-right: 1px dotted $grey;
             margin-top: 0;
-            padding: 0 ($gs-gutter / 2 - 1) 0 $gs-gutter / 2;
+            padding: 0 $gs-gutter / 2 0 ($gs-gutter / 2) - 1;
             width: gs-span(3);
+            &:first-child {
+                padding-left: 0;
+            }
             &:last-child {
                 padding-right: 0;
                 border-right-style: none;
@@ -87,11 +80,6 @@
     @include mq(tablet) {
         .item--without-image .item__standfirst {
             display: block;
-        }
-    }
-    .item__timestamp {
-        .i {
-            @extend .i-clock-grey;
         }
     }
 }
