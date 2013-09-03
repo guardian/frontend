@@ -25,7 +25,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val apiRoot = "http://example.com/"
   val http = mock[Http]
   val jsonParser = mock[JsonBodyParser]
-  val api = new SynchronousIdApi(apiRoot, http, jsonParser)
+  val api = new SynchronousIdApi(apiRoot, http, jsonParser, clientAuth)
   val errors = List(Error("Test error", "Error description", 500))
   val clientAuth = ClientAuth("clientAccessToken")
   val trackingParameters = mock[OmnitureTracking]
@@ -86,34 +86,34 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Right(validCookieResponse)))
 
       "accesses the /auth endpoint" in {
-        api.authBrowser(Anonymous, clientAuth, trackingParameters)
+        api.authBrowser(Anonymous, trackingParameters)
         verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "adds the cookie parameter to the request" in {
-        api.authBrowser(Anonymous, clientAuth, trackingParameters)
+        api.authBrowser(Anonymous, trackingParameters)
         verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("format", "cookies")))), Matchers.any[Parameters])
       }
 
       "adds the client access token parameter to the request" in {
-        api.authBrowser(Anonymous, clientAuth, trackingParameters)
+        api.authBrowser(Anonymous, trackingParameters)
         verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("accessToken", "clientAccessToken")))), Matchers.any[Parameters])
       }
 
       "passes the auth parameters to the http lib's GET method" in {
         val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
-        api.authBrowser(auth, clientAuth, trackingParameters)
+        api.authBrowser(auth, trackingParameters)
         verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
       }
 
       "passes the auth header to the http lib's GET method" in {
         val auth = TestAuth(Iterable.empty, List(("testHeader", "value")))
-        api.authBrowser(auth, clientAuth, trackingParameters)
+        api.authBrowser(auth, trackingParameters)
         verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("format", "cookies")))), argThat(new ParamsIncludes(Iterable(("testHeader", "value")))))
       }
 
       "returns a cookies response" in {
-        api.authBrowser(Anonymous, clientAuth, trackingParameters).map(_ match {
+        api.authBrowser(Anonymous, trackingParameters).map(_ match {
           case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
           case Right(cookiesResponse) => {
             cookiesResponse.expiresAt should equal(ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2013-10-30T12:21:00+00:00"))
@@ -131,7 +131,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.authBrowser(Anonymous, clientAuth, trackingParameters).map(_ match {
+        api.authBrowser(Anonymous, trackingParameters).map(_ match {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
@@ -373,7 +373,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
 
   "synchronous version" - {
-    val syncApi = new SynchronousIdApi(apiRoot, http, jsonParser)
+    val syncApi = new SynchronousIdApi(apiRoot, http, jsonParser, clientAuth)
 
     "should use current thread context" in {
       syncApi.executionContext should equal(ExecutionContexts.currentThreadContext)

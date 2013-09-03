@@ -14,7 +14,7 @@ import utils.SafeLogging
 import idapiclient.requests.TokenPassword
 
 
-abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser) extends SafeLogging {
+abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth) extends SafeLogging {
   implicit def executionContext: ExecutionContext
   implicit val formats = DefaultFormats
 
@@ -32,11 +32,11 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   // AUTH
 
   def authApp(auth: Auth, trackingData: OmnitureTracking): Future[Response[AccessTokenResponse]] = {
-    val response = http.GET(apiUrl("auth"), auth.parameters ++ trackingData.parameters, auth.headers)
+    val response = http.GET(apiUrl("auth"), auth.parameters ++ trackingData.parameters ++ clientAuth.parameters, auth.headers)
     response map jsonBodyParser.extract[AccessTokenResponse](jsonField("accessToken"))
   }
 
-  def authBrowser(userAuth: Auth, clientAuth: ClientAuth, trackingData: OmnitureTracking): Future[Response[CookiesResponse]] = {
+  def authBrowser(userAuth: Auth, trackingData: OmnitureTracking): Future[Response[CookiesResponse]] = {
     val params = userAuth.parameters ++ trackingData.parameters ++ clientAuth.parameters ++ Iterable(("format", "cookies"))
     val response = http.POST(apiUrl("auth"), None, params, userAuth.headers ++ clientAuth.headers)
     response map jsonBodyParser.extract[CookiesResponse](jsonField("cookies"))
@@ -46,13 +46,13 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
 
   def user(userId: String, auth: Auth = Anonymous): Future[Response[User]] = {
     val apiPath = urlJoin("user", userId)
-    val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
+    val response = http.GET(apiUrl(apiPath), auth.parameters ++ clientAuth.parameters, auth.headers)
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
-    val response = http.GET(apiUrl(apiPath), auth.parameters, auth.headers)
+    val response = http.GET(apiUrl(apiPath), auth.parameters ++ clientAuth.parameters, auth.headers)
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
@@ -61,21 +61,21 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   def userForToken( token : String ): Future[Response[User]] = {
     val apiPath = urlJoin("pwd-reset", "user-for-token")
     val params = Iterable(("token", token))
-    val response = http.GET(apiUrl(apiPath), params)
+    val response = http.GET(apiUrl(apiPath), params ++ clientAuth.parameters)
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
   def resetPassword( token : String, newPassword : String ): Future[Response[OkResponse]] = {
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
-    val response = http.POST(apiUrl(apiPath), Some(postBody))
+    val response = http.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters)
     response map jsonBodyParser.extract[OkResponse]()
   }
 
   def sendPasswordResetEmail( emailAddress : String ): Future[Response[User]] = {
     val apiPath = urlJoin("pwd-reset","send-password-reset-email")
     val params = Iterable(("email-address", emailAddress), ("type", "reset"))
-    val response = http.GET(apiUrl(apiPath), params)
+    val response = http.GET(apiUrl(apiPath), params ++ clientAuth.parameters)
     response.map(jsonBodyParser.extract[User](jsonField("user"))(_))
   }
 
@@ -91,7 +91,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   // ...etc
 }
 
-class SynchronousIdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser)
-  extends IdApi(apiRootUrl, http, jsonBodyParser) {
+class SynchronousIdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth)
+  extends IdApi(apiRootUrl, http, jsonBodyParser, clientAuth) {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 }

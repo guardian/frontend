@@ -58,7 +58,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
       { case (email, password, rememberMe) => {
         logger.trace("authing with ID API")
         Async {
-          api.authBrowser(EmailPassword(email, password), ClientAuth(conf.id.apiClientToken), idRequest.omnitureData) map(_ match {
+          api.authBrowser(EmailPassword(email, password), idRequest.omnitureData) map(_ match {
             case Left(errors) => {
               logger.error(errors.toString())
               logger.info("Auth failed for user")
