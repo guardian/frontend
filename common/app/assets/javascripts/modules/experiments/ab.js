@@ -171,6 +171,16 @@ define([
             });
         },
 
+        // mostly for private use
+        forceSegment: function (testId, variant) {
+            getActiveTests().filter(function (test) {
+                return test.id === testId
+            }).forEach(function (test) {
+                console.log('adding participant...', test, variant)
+                addParticipation(test, variant);
+            })
+        },
+
         run: function(config, context, options) {
             var opts = options || {};
 

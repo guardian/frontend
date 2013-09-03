@@ -110,6 +110,11 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
                 expect(localStorage.getItem(participationsKey)).toBe('{"value":{"DummyTest2":{"variant":"foo"}}}');
             });
 
+            it('should allow the forcing of users in to a given test and variant', function () {
+                ab.forceSegment('DummyTest', 'bar');
+                expect(getItem('DummyTest').variant).toBe('bar');
+            });
+
         });
     
         describe("Running tests", function () {
