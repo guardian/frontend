@@ -1,15 +1,11 @@
 .section--popular {
-    padding-bottom: ($baseline * 3) - 1;
-    border-bottom: 1px solid $grey;
     @include mq(tablet) {
         min-height: gs-height(7);
         padding-left: $gs-gutter / 2;
         border-left: 1px solid $grey;
-        width: gs-span(3);
         margin-left: gs-span(6) + ($gs-gutter / 2) - 1;
     }
     @include mq(desktop) {
-        width: gs-span(4);
         margin-left: gs-span(8) + ($gs-gutter / 2) - 1;
     }
     @include mq(wide) {
@@ -25,11 +21,13 @@
     }
     .collection {
         margin-top: $baseline * 3;
-        height: gs-height(6);
         list-style-type: decimal;
         margin: 0;
         counter-reset: most-read;
         margin-top: $baseline * 3;
+        @include mq(tablet) {
+            height: gs-height(6);
+        }
     }
     .item {
         padding: $baseline $gutter / 3 $baseline ($gutter * (3 / 2));
@@ -37,7 +35,7 @@
         float: none;
         border-top: 1px dotted $grey;
         color: #000000;
-        height: 20%;
+        height: 56px;
         @include font($serifheadline, 700, 18);
     }
     .item:before {
@@ -47,5 +45,11 @@
         position: absolute;
         top: 4px;
         left: 4px;
+    }
+    .item:last-child {
+        @include mq(tablet) {
+            height: 64px;
+            border-bottom: 1px solid $grey;
+        }
     }
 }

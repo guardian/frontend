@@ -17,14 +17,19 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 crossOrigin: true
             }).then(
                 function(resp) {
-                    var section = bonzo(bonzo.create(containerTmpl)).insertAfter('.section--highlights');
-                    resp.trails.slice(0, 5).forEach(function(itemHref) {
-                        var item = bonzo(bonzo.create(itemTmpl));
+                    // add the popular section after the highlights
+                    bonzo(bonzo.create(containerTmpl)).insertAfter('.section--highlights');
+                    // create the trails
+                    var $trails = bonzo(bonzo.create(resp.html))
+                    common.$g('#tabs-popular-1 li:nth-child(-n + 5) a', bonzo(bonzo.create(resp.html))).each(function(trail) {
+                        var $trail = bonzo(trail),
+                            $item = bonzo(bonzo.create(itemTmpl));
                         // update template
-                        common.$g('.item__link', item)
-                            .attr('href', itemHref)
-                            .text(itemHref.split('/').pop().replace(/-/g, ' '));
-                        item.appendTo('.section--popular .collection');
+                        common.$g('.item__link', $item)
+                            .attr('href', $trail.attr('href'))
+                            .text($trail.text());
+                        // add it to the section
+                        $item.appendTo('.section--popular .collection');
                     });
                 },
                 function(req) {
