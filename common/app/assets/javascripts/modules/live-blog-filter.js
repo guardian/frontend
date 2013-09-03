@@ -17,7 +17,7 @@ define([
         this.context = context || document;
         this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
         this.template =
-            '<div class="live-blog-toggler-wrapper">' +
+            '<div class="live-blog-toggler-wrapper live-blog-widget">' +
             '    <button class="live-blog-toggler live-blog-toggler--all u-button-reset js-live-blog-toggler" data-link-name="filter display key-events" title="View key events only">' +
             '        <span class="lbt__label">View</span>' +
             '        <span class="h">key events instead of</span>' +
@@ -35,7 +35,7 @@ define([
         var self = this;
         bonzo(this.context.getElementsByClassName('js-live-blog-filter')[0]).replaceWith(this.template);
 
-        self.findKeyEvents.call(self);
+        this.findKeyEvents();
 
         common.mediator.on('modules:autoupdate:loaded', function() {
             self.findKeyEvents.call(self);
