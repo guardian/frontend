@@ -46,8 +46,6 @@ function (
 
             // Run through slots and create documentWrite for each.
             // Other ad types such as iframes and custom can be plugged in here later
-
-            generateMiddleSlot(currConfig);
             
             for (var c in contexts) {
                 var els = contexts[c].querySelectorAll('.ad-slot');
@@ -59,7 +57,7 @@ function (
                     container.innerHTML = '';
                     // Load the currContext ads only
                     if (contexts[c] === currContext ) {
-                        name = els[i].getAttribute('data-' + size),
+                        name = els[i].getAttribute('data-' + size);
                         slot = new DocumentWriteSlot(name, container);
                         slot.setDimensions(dimensionMap[name]);
                         slots.push(slot);
@@ -94,16 +92,6 @@ function (
                 slots[i].render();
             }
         }
-
-        //This is a horrible hack to hide slot if no creative is returned from oas
-        //Check existence of empty tracking pixel
-        if(currConfig.page.pageId === "") {
-            var middleSlot = currContext.querySelector('.ad-slot-middle-banner-ad');
-
-            if(middleSlot && middleSlot.innerHTML.indexOf("x55/default/empty.gif")  !== -1) {
-                bonzo(middleSlot).hide();
-            }
-        }
     }
 
     function isOnScreen(el) {
@@ -111,25 +99,6 @@ function (
             el.offsetTop < (window.innerHeight + window.pageYOffset) &&
             (el.offsetTop + el.offsetHeight) > window.pageYOffset
         );
-    }
-
-    //Temporary middle slot needs better implementation in the future
-    function generateMiddleSlot() {
-        var slot,
-            prependTo;
-
-        if(currConfig.page.pageId === "") {
-            prependTo = currContext.querySelector('.front-trailblock-commentisfree li');
-
-            if(!bonzo(prependTo).hasClass('middleslot-loaded')) {
-                bonzo(prependTo).addClass('middleslot-loaded');
-
-                slot = '<div class="ad-slot-middle-banner-ad ad-slot" data-link-name="ad slot middle-banner-ad"';
-                slot+= ' data-base="x55" data-median="x55"><div class="ad-container"></div></div>';
-
-                bonzo(prependTo).after(slot);
-            }
-        }
     }
 
     return {

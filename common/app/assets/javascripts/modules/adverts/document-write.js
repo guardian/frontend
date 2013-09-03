@@ -22,7 +22,8 @@ define([
 
     function getPageUrl(config) {
         var id = (config.pageId === '') ? '' : config.pageId + '/';
-        return config.oasSiteIdHost + '/' + id + 'oas.html';
+        //return config.oasSiteIdHost + '/' + id + 'oas.html';
+        return 'm.code.dev-theguardian.com' + '/' + id + 'oas.html';
     }
 
     function getKeywords(config) {
