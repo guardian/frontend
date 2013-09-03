@@ -45,11 +45,13 @@
             @fragments.byline(article.byline, article)
 
             <div class="js-article__container article__container cf">
-                @if(article.isLive) {
-                    <div class="article-toolbar cf">
-                        <!--  TODO: display filter if page is "as it happened" (tag: tone)  -->
+                @if(article.isLiveBlog) {
+                    <div class="article-toolbar cf js-visible">
                         @fragments.liveBlogFilter()
-                        @fragments.autoUpdate()
+
+                        @if(article.isLive) {
+                            @fragments.autoUpdate()
+                        }
                     </div>
                 }
 

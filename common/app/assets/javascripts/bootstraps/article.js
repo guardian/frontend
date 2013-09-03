@@ -50,8 +50,10 @@ define([
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
                         manipulationType: 'prepend'
-                    }).init(),
-                    f = new LiveBlogFilter(context).init();
+                    }).init();
+                }
+                if (/Minute by minutes/.test(config.page.tones)) {
+                    new LiveBlogFilter(context).init();
                 }
             });
         },

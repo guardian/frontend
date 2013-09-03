@@ -168,6 +168,11 @@ video {
     background: $mushroom;
     height: 46px;
     margin-bottom: $baseline * 4;
+    font-size: .875em;
+
+    @include mq(tablet) {
+        font-size: 1em;
+    }
 }
 
 
