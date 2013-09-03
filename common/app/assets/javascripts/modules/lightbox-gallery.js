@@ -250,13 +250,13 @@ define(["bean",
                 var itemIndex = parseInt(el.getAttribute('data-index'), 10);
 
                 if (itemIndex === index) {
-                    el.className += ' gallery__item--active';
+                    bonzo(el).addClass('gallery__item--active');
 
                     self.alignNavArrows();
 
                     self.currentImageNode = el;
                 } else {
-                    el.className = el.className.replace(' gallery__item--active', '');
+                    bonzo(el).removeClass('gallery__item--active');
                 }
             });
 
