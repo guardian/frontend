@@ -26,6 +26,7 @@
         counter-reset: most-read;
         margin-top: $baseline * 3;
         @include mq(tablet) {
+            padding-bottom: ($baseline * 3) - 1;
             height: gs-height(6);
         }
     }

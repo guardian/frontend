@@ -20,7 +20,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                     // add the popular section after the highlights
                     bonzo(bonzo.create(containerTmpl)).insertAfter('.section--highlights');
                     // create the trails
-                    var $trails = bonzo(bonzo.create(resp.html))
+                    var $trails = bonzo(bonzo.create(resp.html));
                     common.$g('#tabs-popular-1 li:nth-child(-n + 5) a', bonzo(bonzo.create(resp.html))).each(function(trail) {
                         var $trail = bonzo(trail),
                             $item = bonzo(bonzo.create(itemTmpl));

@@ -31,7 +31,6 @@
     .collection {
         @include mq(tablet) {
             font-size: 0;
-            height: gs-height(6);
             white-space: nowrap;
             overflow: auto;
         }
@@ -52,7 +51,7 @@
             white-space: normal;
             display: inline-block;
             vertical-align: top;
-            height: 100%;
+            min-height: gs-height(6);
             border-top-style: none;
             border-right: 1px dotted $grey;
             margin-top: 0;
@@ -90,18 +89,9 @@
             display: block;
         }
     }
-    .item__meta {
-        position: relative;
-        margin-top: $baseline * 2;
-        .item__timestamp {
-            border-left-style: none !important;
-            @include font-size(12, 13);
-            padding-bottom: 0;
-            padding-left: 17px;
-            .i {
-                left: 0;
-                @extend .i-clock-grey;
-            }
+    .item__timestamp {
+        .i {
+            @extend .i-clock-grey;
         }
     }
 }
