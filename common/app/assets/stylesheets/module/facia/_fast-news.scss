@@ -1,7 +1,7 @@
 .section--fast-news {
     clear: left;
-    margin-top: $baseline*4;
-    margin-right: $gs-gutter;
+    padding-top: $baseline * 4;
+
     @include mq(tablet) {
         float: left;
     }

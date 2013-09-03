@@ -168,17 +168,17 @@ object Au extends Edition(
 
     (Editionalise("", Au), Seq(
       RunningOrderTrailblockDescription("", "au/news/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("", "au/news/top-stories", "Latest News", 10, style = Some(FastNews)),
-      RunningOrderTrailblockDescription("news", "au/news/election2013", "Election 2013", 3, style = Some(SectionZone)),
-      RunningOrderTrailblockDescription("sport", "au/sport/top-stories", "Sport", 3, style = Some(SectionZone)),
-      RunningOrderTrailblockDescription("sport/australia-sport", "au/sport/australia-sport", "Australia Sport", 3, style = Some(SectionZone)),
-      RunningOrderTrailblockDescription("culture", "au/culture/top-stories", "Culture", 3, style = Some(SectionZone)),
-      RunningOrderTrailblockDescription("commentisfree", "au/comment-is-free/top-stories", "Comment is free", 3, style = Some(SectionZone)),
-      RunningOrderTrailblockDescription("lifeandstyle", "au/life-and-style/top-stories", "Life and style", 3, style = Some(SectionZone)),
-      RunningOrderTrailblockDescription("technology", "au/technology/top-stories", "Technology", 3, style = Some(SectionZone)),
-      RunningOrderTrailblockDescription("travel", "au/travel/top-stories", "Travel", 3, style = Some(SectionZone)),
-      RunningOrderTrailblockDescription("science", "au/science/top-stories", "Science", 3, style = Some(SectionZone)),
-      RunningOrderTrailblockDescription("environment", "au/environment/top-stories", "Environment", 3, style = Some(SectionZone))
+      RunningOrderTrailblockDescription("", "au/news/top-stories", "Latest News", 20, style = Some(TopStories)),
+      RunningOrderTrailblockDescription("news", "au/news/election2013", "Election 2013", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("sport", "au/sport/top-stories", "Sport", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("sport/australia-sport", "au/sport/australia-sport", "Australia Sport", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("culture", "au/culture/top-stories", "Culture", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("commentisfree", "au/comment-is-free/top-stories", "Comment is free", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("lifeandstyle", "au/life-and-style/top-stories", "Life and style", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("technology", "au/technology/top-stories", "Technology", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("travel", "au/travel/top-stories", "Travel", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("science", "au/science/top-stories", "Science", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("environment", "au/environment/top-stories", "Environment", 4, style = Some(Masthead))
     )),
 
     (Editionalise("sport", Au), Seq(
