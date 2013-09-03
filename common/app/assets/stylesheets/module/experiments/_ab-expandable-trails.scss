@@ -14,6 +14,10 @@
         .trail__headline {
             @extend .article-headline;
         }
+        .trail__expander-headline {
+            float: none;
+            width: 100%;
+        }
         .trail__img {
             float: none;
             width: 100%;
@@ -39,22 +43,16 @@
     }
 }
 .trail__expander-cta {
-    padding-top: $baseline*2;
-    margin-bottom: $baseline*3;
+    margin-top: -3px;
+    margin-bottom: $baseline*2;
     text-align: center;
     cursor: pointer;
-
-    // Test on/off
-    display: none;
-
-    .ab-expandable-trails--on & {
-        display: block;
-    }
+    display: block;
 }
+
 .trail__expander-cta__button {
     display: block;
     padding: $baseline*2 0;
-    border-top: 1px solid $mushroom;
     color: #444;
     font-family: $serif;
     font-size: 14px;
