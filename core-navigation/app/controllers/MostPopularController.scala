@@ -4,7 +4,7 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import feed.MostPopularAgent
+import feed.{MostPopularExpandableAgent, MostPopularAgent}
 
 import concurrent.Future
 import scala.util.Random
@@ -45,7 +45,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
   def renderExpandable(path: String) = Action { implicit request =>
     val edition = Edition(request)
-    val globalPopular = MostPopular("The Guardian", "", MostPopularAgent.mostPopular(edition))
+    val globalPopular = MostPopular("The Guardian", "", MostPopularExpandableAgent.mostPopular(edition))
     val promiseOfSectionPopular = if (path.nonEmpty) lookupExpandable(edition, path).map(_.toList) else Future(Nil)
     Async {
       promiseOfSectionPopular.map {
