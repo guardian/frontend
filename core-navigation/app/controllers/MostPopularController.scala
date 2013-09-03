@@ -46,7 +46,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
   def renderExpandable(path: String) = Action { implicit request =>
     val edition = Edition(request)
     val globalPopular = MostPopular("The Guardian", "", MostPopularAgent.mostPopular(edition))
-    val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
+    val promiseOfSectionPopular = if (path.nonEmpty) lookupExpandable(edition, path).map(_.toList) else Future(Nil)
     Async {
       promiseOfSectionPopular.map {
         sectionPopular =>
@@ -84,12 +84,25 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     ContentApi.item(path, edition)
       .tag(None)
       .showMostViewed(true)
-      .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
       .response.map{response =>
       val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
           val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)
 
           if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
+    }
+  }
+
+  private def lookupExpandable(edition: Edition, path: String)(implicit request: RequestHeader) = {
+    log.info(s"Fetching most popular: $path for edition $edition")
+    ContentApi.item(path, edition)
+      .tag(None)
+      .showMostViewed(true)
+      .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
+      .response.map{response =>
+      val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
+      val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)
+
+      if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
     }
   }
 }
