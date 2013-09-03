@@ -4,7 +4,6 @@ define('bootstraps/app', [
     "ajax",
     'modules/detect',
     'modules/errors',
-    'modules/analytics/canary',
     'modules/fonts',
     'modules/debug',
     "modules/router",
@@ -24,7 +23,6 @@ define('bootstraps/app', [
     ajax,
     detect,
     Errors,
-    Canary,
     Fonts,
     Debug,
     Router,
@@ -53,14 +51,6 @@ define('bootstraps/app', [
             });
             e.init();
             common.mediator.on("module:error", e.log);
-        },
-       
-       // RUM on features
-       sendInTheCanary: function (config) {
-            var c = new Canary({
-                isDev: config.page.isDev
-            });
-            c.init();
         },
     
         initialiseAbTest: function (config) {
@@ -91,7 +81,6 @@ define('bootstraps/app', [
             modules.initialiseAjax(config);
             modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
-            modules.sendInTheCanary(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
 
