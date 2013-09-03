@@ -9,7 +9,7 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       "com.gu" %% "management-play" % "5.26",
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.5-SNAPSHOT",
+      "com.gu.openplatform" %% "content-api-client" % "2.5",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
