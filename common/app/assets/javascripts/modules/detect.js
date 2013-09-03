@@ -13,7 +13,7 @@ define(['modules/userPrefs'], function (userPrefs) {
         EXTENDED_WIDTH = 1052,  // Breakpoint where we see the left column in article pages
         mobileOS,
         supportsPushState;
-    
+
     /**
      * @param Number width Allow passing in of width, for testing (innerWidth read only
      * in firefox
@@ -134,7 +134,7 @@ define(['modules/userPrefs'], function (userPrefs) {
     function getFontFormatSupport(ua) {
         var format = 'woff';
             ua = ua.toLowerCase();
-            
+
         if (ua.indexOf('android') > -1) {
             format = 'ttf';
         }
@@ -232,6 +232,10 @@ define(['modules/userPrefs'], function (userPrefs) {
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
+    function getBreakpoint() {
+        return window.getComputedStyle(document.body, ':after').getPropertyValue('content');
+    }
+
     return {
         getLayoutMode: getLayoutMode,
         getMobileOS: getMobileOS,
@@ -244,7 +248,8 @@ define(['modules/userPrefs'], function (userPrefs) {
         hasSvgSupport: hasSvgSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
-        getOrientation: getOrientation
+        getOrientation: getOrientation,
+        getBreakpoint: getBreakpoint
     };
 
 });
