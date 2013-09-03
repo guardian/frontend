@@ -1,7 +1,7 @@
 @(popular: Seq[model.MostPopular], visibleTrails: Int)(implicit request: RequestHeader)
 
 @defining(popular.size > 1){ isTabbed =>
-    <div class="ab-expandable-trails--on" id="popular-trails" data-link-name="most popular">
+    <div class="ab-expandable-trails--on" data-link-name="most popular">
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div data-link-name="@section.heading" data-link-context="most-read/@section.section">
                 <h2 class="type-2 article-zone">Most read in @section.heading</h2>

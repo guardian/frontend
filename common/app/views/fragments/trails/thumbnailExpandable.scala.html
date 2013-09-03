@@ -10,7 +10,7 @@
         @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
         <div class="media">
-            <div class="media__body">
+            <div class="media__body trail__expander-headline">
                 <h@headingLevel class="trail__headline type-5">
                 <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
                 @RemoveOuterParaHtml(trail.headline)
