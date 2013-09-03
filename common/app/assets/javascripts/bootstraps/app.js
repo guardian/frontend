@@ -52,8 +52,15 @@ define('bootstraps/app', [
             e.init();
             common.mediator.on("module:error", e.log);
         },
-    
+   
+        // allow forcing in to ab tests, Eg. http://www.theguardian.com/uk#ab-swipe=control
         initialiseAbTest: function (config) {
+            var forceUserIntoTest = /^#ab/.test(window.location.hash);
+            if (forceUserIntoTest) {
+                var tokens = window.location.hash.replace('#ab-','').split('=');
+                var test = tokens[0], variant = tokens[1];
+                ab.forceSegment(test, variant);
+            }
             ab.segment(config);
         },
 
