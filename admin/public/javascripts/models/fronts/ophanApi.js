@@ -30,27 +30,33 @@ function (
     };
 
     function decorateItem(data, item) {
-        var simpleSeries;
+        var simpleSeries,
+            groups = [
+                {name: 'Other',    data: [], color: 'd61d00', max: 0}, // required
+                {name: 'Google',   data: [], color: '89A54E', max: 0},
+                {name: 'Guardian', data: [], color: '4572A7', max: 0}
+            ];
 
         if(data.totalHits) {
             item.state.pageViews(data.totalHits);
         }
 
         if(data.seriesData && data.seriesData.length) {
-            /*
-            simpleSeries = data.seriesData.map(function(series) {
-                return _.pluck(series.data, 'count')                
-            })
-            // Add all the series to the first series            
-            _.rest(simpleSeries).forEach(function(simples) {
-                simples.forEach(function(p, i){
-                    _.first(simpleSeries)[i] += p;
+            _.each(data.seriesData, function(s){
+
+                // Pick the relevant group...
+                var group = _.find(groups, function(g){ 
+                    return g.name === s.name;
+                }) || groups[0]; // ...defaulting to the first ('Other')
+
+                // ...sum the data into that group
+                _.each(s.data, function(d,i) {
+                    group.data[i] = (group.data[i] || 0) + d.count;
+                    group.max = Math.max(group.max, group.data[i]);
                 });
             });
-            item.state.pageViewsSeries(_.first(simpleSeries));
-            */
 
-            item.state.pageViewsSeries(data.seriesData);
+            item.state.pageViewsSeries(groups);
         }
     }
 
