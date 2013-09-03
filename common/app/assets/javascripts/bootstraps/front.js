@@ -95,7 +95,7 @@ define([
         showTopStoriesShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
                 common.$g('.section--top-stories', context).each(function(topStories) {
-                    new TopStoriesShowMore(topStories);
+                    var t = new TopStoriesShowMore(topStories);
                 });
             });
         }
