@@ -155,6 +155,7 @@ i.gallery__watermark {
     z-index: 50;
     -ms-touch-action: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    @include transition(opacity 1s ease-in-out);
 
     &,
     &:active,
@@ -165,7 +166,7 @@ i.gallery__watermark {
 
     .gallery__arrow-cta {
         position: absolute;
-        top: 85px;
+        margin-top: -16px;
     }
 
 }
@@ -204,16 +205,6 @@ i.gallery__watermark {
     i {
         margin: 2px -5px;
         @include transform(scale(0.5));
-    }
-
-    @include mq(tablet) {
-        width: 36px;
-        height: 60px;
-
-        i {
-            margin: 14px 4px;
-            @include transform(scale(1));
-        }
     }
 }
 
@@ -263,7 +254,7 @@ i.gallery__watermark {
 .gallerycaption__inner {
     background: rgb(34, 34, 34);
     background: rgba(34, 34, 34, 0.90);
-    padding: $baseline * 2 $gutter;
+    padding: $baseline * 4 $gutter;
 }
 
 .gallerycaption__text {
@@ -271,22 +262,16 @@ i.gallery__watermark {
     line-height: 16px;
     padding-bottom: $baseline * 4;
     border-bottom: 1px solid #676767;
-    margin-bottom: $baseline;
-
-    @include mq(tablet) {
-        // Calling 'font' directly as @extend doesn't work properly inside mq()
-        @include font($sans-serif, normal, 16, 24);
-    }
+    max-width: 620px;
+    margin: 0 auto $baseline auto;
 }
 
 .gallerycaption__credit {
     @extend %type-11;
     margin-bottom: 0;
     padding-bottom: $baseline;
-
-    @include mq(tablet) {
-        @include font($sans-serif, normal, 14, 20);
-    }
+    max-width: 620px;
+    margin: 0 auto;
 }
 
 
@@ -306,10 +291,6 @@ i.gallery__watermark {
 
     .gallery__arrow-cta {
         margin: 0 auto;
-    }
-
-    @include mq(tablet) {
-        height: 48px;
     }
 }
 
@@ -336,7 +317,7 @@ i.gallery__watermark {
     margin-left: 0;
     letter-spacing: -1px;
     line-height: 44px;
-    color: #AAAAAA;
+    color: #929497;
 }
 
 .gallery__counter--current-image {
@@ -366,7 +347,7 @@ i.gallery__watermark {
 
     .gallery__nav--prev,
     .gallery__nav--next {
-        display: none;
+        pointer-events: none;
     }
 }
 
@@ -399,7 +380,6 @@ i.gallery__watermark {
     }
 
     .gallery__nav {
-        @include transition(opacity 1s ease-in-out);
         opacity: 0;
     }
 }
