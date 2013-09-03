@@ -169,7 +169,7 @@ object Au extends Edition(
     (Editionalise("", Au), Seq(
       RunningOrderTrailblockDescription("", "au/news/masthead", "", 4, style = Some(Masthead)),
       RunningOrderTrailblockDescription("", "au/news/top-stories", "Latest News", 20, style = Some(TopStories)),
-      RunningOrderTrailblockDescription("news", "au/news/election2013", "Election 2013", 4, style = Some(Masthead)),
+      RunningOrderTrailblockDescription("", "au/news/highlights", "Highlights of the last 24 hours", 4, style = Some(Highlights)),
       RunningOrderTrailblockDescription("sport", "au/sport/top-stories", "Sport", 4, style = Some(Masthead)),
       RunningOrderTrailblockDescription("sport/australia-sport", "au/sport/australia-sport", "Australia Sport", 4, style = Some(Masthead)),
       RunningOrderTrailblockDescription("culture", "au/culture/top-stories", "Culture", 4, style = Some(Masthead)),
