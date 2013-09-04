@@ -1,3 +1,6 @@
+/* Base form styles
+   ========================================================================== */
+
 [type=checkbox] {
     height: 13px;
     margin-left: $baseline;
@@ -37,7 +40,7 @@ form,
     .text-input,
     .text-input:focus {
         border-color: $newsRed;
-    }   
+    }
 }
 
 .form-field__error {
