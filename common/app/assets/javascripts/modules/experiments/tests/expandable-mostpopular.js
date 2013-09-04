@@ -25,8 +25,8 @@ define(['common', 'bean', 'modules/popular'], function (common, bean, popular) {
                         common.toArray(related).forEach(function(el){
                             var img = el.getElementsByClassName('trail__img')[0],
                                 text = el.getElementsByClassName('trail__text')[0];
-                            if(img) img.remove();
-                            if(text) text.remove();
+                            if(img) { img.remove(); }
+                            if(text) { text.remove(); }
                         });
 
                         popular(guardian.config, context, true);
