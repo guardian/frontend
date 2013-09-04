@@ -113,6 +113,9 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
             it('should allow the forcing of users in to a given test and variant', function () {
                 ab.forceSegment('DummyTest', 'bar');
                 expect(getItem('DummyTest').variant).toBe('bar');
+                // ... and should be able to override 
+                ab.forceSegment('DummyTest', 'foo');
+                expect(getItem('DummyTest').variant).toBe('foo');
             });
 
         });
