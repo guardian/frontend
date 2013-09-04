@@ -8,7 +8,7 @@
     line-height: ($line-height / 10)*1rem;
 }
 
-@mixin font($family, $weight, $size, $line-height) {
+@mixin font($family, $weight, $size, $line-height: $size) {
     font-family: $family;
     font-weight: $weight;
     @include font-size($size, $line-height);

@@ -9,22 +9,22 @@
     &:nth-child(n + #{$row-size + 1}) {
         padding-top: 5px;
         border-top: 1px dotted $grey;
-        @if $row-size!= 1 {
-            min-height: gs-height(4);
-        }
+        min-height: gs-height(4);
+    }
+    &:nth-child(-n + #{$row-size}) {
+        min-height: gs-height(8);
         .item__image-container {
-            display: none;
+            display: block;
         }
     }
 }
 
 .section--top-stories {
-    overflow: hidden;
     margin: 0 auto;
-    @include mq(tablet, desktop) {
+    @include mq(tablet) {
         width: gs-span(9);
     }
-    @include mq(desktop, wide) {
+    @include mq(desktop) {
         width: gs-span(12);
     }
     @include mq(wide) {
@@ -42,17 +42,21 @@
     }
     .item {
         margin: 0;
-        padding: 0 ($gs-gutter / 2 - 1) 6px $gs-gutter / 2;
-        border-top-style: none;
-        border-bottom-style: none;
-        border-right: 1px dotted $grey;
+        padding-top: 5px;
+        padding-bottom: 6px;
         float: none;
-        display: inline-block;
-        vertical-align: top;
         @include box-sizing(content-box);
-        @include mq($to: tablet) {
-            @include row(1);
-            min-height: 0;
+        &:first-child {
+            padding-top: 0;
+            border-top-style: none;
+        }
+        @include mq(tablet) {
+            border-right: 1px dotted $grey;
+            display: inline-block;
+            vertical-align: top;
+            padding-top: 0;
+            padding-right: ($gs-gutter / 2 - 1);
+            padding-left: $gs-gutter / 2;
         }
         @include mq(tablet, desktop) {
             width: gs-span(3);
@@ -68,10 +72,13 @@
         }
     }
     .item__image-container {
+         display: none;
+     }
+    .item:first-child .item__image-container {
         display: block;
-        .item__image {
-            margin-bottom: $baseline * 2;
-        }
+    }
+    .item__image {
+        margin-bottom: $baseline * 2;
     }
     .item__title {
         @include font-size(22, 24);
