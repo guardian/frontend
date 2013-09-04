@@ -1,4 +1,3 @@
-
 This document explains how to create interactive content on theguardian.com.
 
 ## Interactives
@@ -126,5 +125,3 @@ For example, such a block might look like this as it comes out of Content API:-
     ...
 </body>
 ```
-
-Until the time when Composer delivers this feature `ng-interactive` - TODO
