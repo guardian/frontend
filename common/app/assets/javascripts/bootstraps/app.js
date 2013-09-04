@@ -68,7 +68,14 @@ define('bootstraps/app', [
         },
 
         initialiseAbTest: function (config) {
-            ab.segment(config);
+            var forceUserIntoTest = /^#ab/.test(window.location.hash);
+            if (forceUserIntoTest) {
+                var tokens = window.location.hash.replace('#ab-','').split('=');
+                var test = tokens[0], variant = tokens[1];
+                ab.forceSegment(test, variant);
+            } else {
+                ab.segment(config);
+            }
         },
 
         loadFonts: function(config, ua) {
