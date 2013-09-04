@@ -2,10 +2,15 @@
 
 <ul class="unstyled@if(isPanel){ panel}">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        @if(expandable) {
-            @fragments.trails.headlineExpandable(trail, info.rowNum, related, headingLevel = headingLevel)
-        } else {
-            @fragments.trails.headline(trail, info.rowNum, related, headingLevel = headingLevel)
+        @trail match {
+            case g: Gallery => { @fragments.trails.gallery(g, info.rowNum) }
+            case other => {
+                @if(expandable) {
+                    @fragments.trails.headlineExpandable(trail, info.rowNum, related, headingLevel = headingLevel)
+                } else {
+                    @fragments.trails.headline(trail, info.rowNum, related, headingLevel = headingLevel)
+                }
+            }
         }
     }
 </ul>

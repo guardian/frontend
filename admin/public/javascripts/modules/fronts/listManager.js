@@ -322,36 +322,28 @@ define([
 
             knockout.bindingHandlers.sparkline = {
                 update: function (element, valueAccessor, allBindingsAccessor, model) {
-                    var series = knockout.utils.unwrapObservable(valueAccessor()),
-                        groupNames = ['Other', 'Google', 'Guardian'],
-                        groupColours = ['d61d00', '89A54E', '4572A7'],
-                        grouped = {};
+                    var groups = knockout.utils.unwrapObservable(valueAccessor()),
+                        max = _.max(_.pluck(groups, 'max'));
 
-                    if (series) {
-                        _.each(series, function(s){
+                    if (!max) { return };
 
-                            // Default to 1st from groupNames, unless found in groupNames
-                            var group = groupNames[Math.max(0, groupNames.indexOf(s.name))];
-
-                            grouped[group] = grouped[group] || [];
-                            _.each(s.data, function(d,i){
-                                grouped[group][i] = (grouped[group][i] || 0) + d.count;
-                            });
+                    _.chain(groups)
+                    .sortBy(function(g){
+                        // Put biggest groups first, so that its fill color is behind the other groups
+                        return -1 * g.max;
+                    }).each(function(group, i){
+                        $(element).sparkline(group.data, {
+                            chartRangeMax: max,
+                            height: Math.max(10, Math.min(30, max)),
+                            lineColor: '#' + group.color,
+                            fillColor: _.last(group.data) > 25 ? '#eeeeee' : false,
+                            spotColor: false,
+                            minSpotColor: false,
+                            maxSpotColor: false,
+                            lineWidth: _.last(group.data) > 25 ? 2 : 1,
+                            composite: i > 0
                         });
-
-                        _.each(groupNames, function(group, i){
-                            var options = {
-                                height: 30,
-                                lineColor: '#' + groupColours[i],
-                                fillColor: false,
-                                minSpotColor: false,
-                                maxSpotColor: false,
-                                lineWidth: i > 1 ? 2 : 1,
-                                composite: i > 0
-                            };
-                            $(element).sparkline(grouped[group], options);
-                        });
-                    }
+                    });
                 }
             };
 

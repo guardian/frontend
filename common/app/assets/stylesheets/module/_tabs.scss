@@ -1,25 +1,32 @@
+/* ==========================================================================
+   Tabs
+   ========================================================================== */
 $tabBorderWidth: 2px;
 
-.tabs-container {
-    padding: 0 $gutter;
-}
+/* Default tabs
+   ========================================================================== */
 
 .tabs {
+
+}
+
+.tabs__container {
     margin: 0;
     padding: 0;
     border-bottom: none;
     list-style-type: none;
     overflow: hidden;
     background: #fff;
+}
 
-    li {
-        width: 50%;
-        float: left;
-        margin: 0;
-        background: $mushroom;
-    }
+.tabs__tab {
+    width: 50%;
+    float: left;
+    margin: 0;
+    background: $mushroom;
 
     a {
+        @extend type-6;
         text-align: center;
         color: #545454;
         margin: $tabBorderWidth $tabBorderWidth 0 $tabBorderWidth;
@@ -30,51 +37,60 @@ $tabBorderWidth: 2px;
 
         &:active,
         &:focus {
+            background-color: #fff;
             text-decoration: none;
+        }
+
+        @include mq($to: 300px) {
+            font-size: 14px;
+            font-size: 1.4rem;
         }
     }
 }
 
-@include mq($to: 300px) {
-    .tabs li a {
-        font-size: 14px;
-        font-size: 1.4rem;
-    }
-}
-
-.tabs .tabs-selected a {
-    background: #fff;
-    color: #333;
-    font-weight: bold;
-}
-
-.tabs a:active {
-    background-color: #fff;
-}
-
-.tabs-content {
+.tabs__content {
     clear: both;
     border: $tabBorderWidth solid $mushroom;
     border-top: none;
 }
 
-// used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
+.tabs__heading {
+    display: none;
+}
 
-.tabs-multiple {
+.tabs__tab--selected {
+    a {
+        background: #fff;
+        color: #333;
+        font-weight: bold;
+    }
+}
+
+/* Multiple tabs
+ *
+ * used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
+ *
+   ========================================================================== */
+.tabs__continer--multiple {
     display: table;
     table-layout: fixed;
     width: 100%;
     margin: 0;
     margin-bottom: 10px;
-}
 
-.tabs-multiple li {
-    display: table-cell;
-    border-left: $tabBorderWidth solid #fff;
-    width: auto;
-    float: none;
+    .tabs__tab {
+        display: table-cell;
+        border-left: $tabBorderWidth solid #fff;
+        width: auto;
+        float: none;
 
-    &:first-child {
-        border-left: none;
+        &:first-child {
+            border-left: none;
+        }
     }
 }
+
+
+
+
+
