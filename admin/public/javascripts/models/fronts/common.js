@@ -5,9 +5,6 @@ define([
     EventEmitter,
     ko
 ) {
-    var _listsContainerID = '#trailblocks',
-        _masonryEl;
-
     return {
         config: {
             searchPageSize:        20,
@@ -99,15 +96,6 @@ define([
                 _.keys(target).forEach(function(key){
                     target[key](opts[key]);
                 });
-            },
-
-            pageReflow: function() {
-                if(_masonryEl) {
-                    _masonryEl.masonry('destroy');
-                } else {
-                    _masonryEl = $(_listsContainerID);
-                }
-                _masonryEl.masonry();
             }
         }
 

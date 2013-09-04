@@ -545,7 +545,7 @@ a.cta, .cta a {
 .fronts .trailblock {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    width: 290px;
+    width: 100%;
     float: left;
     padding: 10px 0 0 10px;
 }
@@ -556,7 +556,7 @@ a.cta, .cta a {
     overflow: hidden;
     cursor: move;
     background-color: #ededed;
-    padding: 5px 5px 10px 10px;
+    padding: 2px 5px 7px 6px;
     border-left: 1px solid #666666;
     border-right: 1px solid #666666;
     border-bottom: 1px solid #666666;
@@ -609,6 +609,7 @@ a.cta, .cta a {
 .fronts .trail img {
     float: left;
     width: 75px;
+    margin: 5px 0 0 0;
     background-color: #eee;
 }
 
@@ -623,10 +624,13 @@ a.cta, .cta a {
 }
 
 .fronts .trail .webTitle {
+    margin: 0 0 0 85px;
     display: block;
     text-decoration: none;
+    font-size: 14px;
+    line-height: 16px;
     color: #000000;
-    margin: 0 0 5px 0;
+    margin: 2px 200px 5px 85px;
     overflow: hidden;
 }
 
@@ -643,12 +647,14 @@ a.cta, .cta a {
 }
 
 .fronts .trail .trail__meta {
+    float: right;
+    clear: right;
     width: 180px;
     height: 16px;
-    float: right;
     color: #999999;
     font-size: 10px;
     line-height: 10px;
+    margin: 4px 32px 0px 0;
 }
 
 .fronts .trail .trail__meta a {
@@ -755,6 +761,7 @@ a.cta, .cta a {
     width: 180px;
     height: 30px;
     float: right;
+    clear: right;
     font-size: 9px;
     line-height: 12px;
     position: relative;

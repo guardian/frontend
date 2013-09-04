@@ -292,18 +292,6 @@ define([
                 }
             };
 
-            common.util.mediator.on('list:load:start', function() {
-                listLoadsPending += 1;
-            });
-
-            common.util.mediator.on('list:load:end', function() {
-                listLoadsPending -= 1;
-                if (listLoadsPending < 1) {
-                    listLoadsPending = 0;
-                    common.util.pageReflow();
-                }
-            });
-
             fetchConfigs(function(){
                 knockout.applyBindings(model);
 
