@@ -166,12 +166,12 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     FrontPage(editionalisedPath).map{ frontPage =>
 
       // get the first trailblock
-      val faciaCollection: Option[(Config, Collection)] = front(editionalisedPath).collections.headOption
+      val collection: Option[(Config, Collection)] = front(editionalisedPath).collections.headOption
 
-      if (faciaCollection.isEmpty) {
+      if (collection.isEmpty) {
         InternalServerError
       } else {
-        val trails: Seq[Trail] = faciaCollection.map(_._2.items).getOrElse(Nil)
+        val trails: Seq[Trail] = collection.map(_._2.items).getOrElse(Nil)
         val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
         renderFormat(response, response, frontPage)
       }
