@@ -128,7 +128,9 @@ define([
 
         transcludeRelated: function () {
             common.mediator.on("page:common:ready", function(config, context){
-                related(config, context);
+                if('abExpandableMostPopular' in config.switches && !config.switches.abExpandableMostPopular) {
+                    related(config, context);
+                }
             });
         },
 
