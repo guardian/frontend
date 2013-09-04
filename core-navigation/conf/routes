@@ -8,6 +8,8 @@ GET        /assets/*file                   controllers.Assets.at(path="/public",
 GET        /most-read                      controllers.MostPopularController.render(path = "")
 GET        /most-read.json                 controllers.MostPopularController.render(path = "")
 GET        /most-read/card.json            controllers.MostPopularController.renderCard()
+GET        /most-read/expandable/*path.json     controllers.MostPopularController.renderExpandable(path)
+GET        /most-read/expandable/*path          controllers.MostPopularController.renderExpandable(path)
 GET        /most-read/*path.json           controllers.MostPopularController.render(path)
 GET        /most-read/*path                controllers.MostPopularController.render(path)
 GET        /top-stories                    controllers.TopStoriesController.render()
@@ -19,4 +21,4 @@ GET        /related/*path                  controllers.RelatedController.render(
 GET        /recent/card.json               controllers.RecentController.render()
 
 # Experimental
-GET    /cards/opengraph/*path              controllers.CardController.opengraph(path)
+GET        /cards/opengraph/*path          controllers.CardController.opengraph(path)

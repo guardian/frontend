@@ -1,11 +1,10 @@
 @(front: FrontPage, faciaTrailblock: FaciaPage)(implicit request: RequestHeader)
 
 <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
+    <div class="h breakpoint"></div>
     @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
         @if(faciaTrailblock.collections.nonEmpty) {
             @fragments.frontBlock(block._1, block._2.items, front, index)
         }
     }
 </div>
-
-@fragments.mostPopularPlaceholder(front.section)

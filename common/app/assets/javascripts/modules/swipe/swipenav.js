@@ -358,7 +358,7 @@ define([
         }
 
         el = panes.masterPages[mod3(paneNow + dir)];
-        
+
         // Only load if not already loaded into this pane
         if (el.url !== url) {
             load({
@@ -405,6 +405,7 @@ define([
         $(panes.masterPages[mod3(paneNow-1)]).css('marginTop', 0);
         // And reset the scroll
         body.scrollTop(0);
+        swipeContainerEl.scrollTop = 0;
         recalcHeight(true);
 
         visiblePaneMargin = 0;
@@ -541,7 +542,10 @@ define([
         common.mediator.on('modules:discussion:show', function(callback) {
             resetScrollPos();
             recalcHeight(true);
-            callback();
+
+            if (callback) {
+                callback();
+            }
         });
 
         // Set a periodic height adjustment for the content area. Necessary to account for diverse heights of side-panes as they slide in, and dynamic page elements.

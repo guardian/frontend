@@ -94,11 +94,20 @@ a.item__link,
         margin-right: $baseline;
     }
 }
+.item__meta--grey {
+    .item__timestamp i {
+        @extend .i-clock-grey;
+    }
+    .trail__count i {
+        @extend .i-comment-grey;
+    }
+}
 .item--feature {
     border: none;
     background-color: $pink !important;
     color: #ffffff;
     border-bottom-style: none !important;
+    border-top-color: $light-pink !important;
     .item__title {
         font-weight: normal;
         padding: 0 $baseline*2;
@@ -123,7 +132,7 @@ a.item__link,
 .item--comment {
     color: #000000 !important;
     background: none !important;
-    border-top: 2px solid $green;
+    border-top-color: $green !important;
     border-bottom: 1px solid $grey;
     .i-quotes-green {
         margin-top: $baseline * 2;

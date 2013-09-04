@@ -1,9 +1,16 @@
 .section--masthead {
+    clear: left;
+    margin-top: $baseline * 4;
+    .section__title {
+        background-color: #3b65ad;
+        border-bottom: 4px solid #64abe1;
+        color: #ffffff;
+        @include font-size(20);
+        font-weight: lighter;
+        padding: $baseline*2 $gutter/2 $baseline*3;
+    }
     .collection {
-        margin-top: $baseline*4;
-        padding: $baseline*3 0;
-        border-top: 1px solid #000000;
-        border-bottom: 1px solid #000000;
+        margin-top: $baseline * 4;
         max-width: gs-span(16);
         @include mq(tablet, wide) {
             height: gs-height(6);
