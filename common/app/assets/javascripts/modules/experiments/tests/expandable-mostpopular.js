@@ -9,8 +9,8 @@ define(['common', 'bean', 'modules/popular', 'modules/related'], function (commo
                 common.toArray(trails).forEach(function(el){
                     var img = el.getElementsByClassName('trail__img')[0],
                         text = el.getElementsByClassName('trail__text')[0];
-                    if(img) { img.remove(); }
-                    if(text) { text.remove(); }
+                    if(img) { img.parentNode.removeChild(img); }
+                    if(text) { text.parentNode.removeChild(text); }
                 });
             };
             var relatedContainer = context.getElementsByClassName('related-trails')[0];
