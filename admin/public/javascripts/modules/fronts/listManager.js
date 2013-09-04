@@ -18,7 +18,6 @@ define([
     ophanApi
 ) {
     var collections = {},
-        sectionSearches,
         dragging = false,
         clipboardEl = document.querySelector('#clipboard'),
         listLoadsPending = 0,
@@ -181,7 +180,7 @@ define([
 
                 reqwest({
                     method: 'post',
-                    url: common.config.apiBase + '/' + listId,
+                    url: common.config.apiBase + '/collection/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
@@ -202,22 +201,20 @@ define([
         }
         var startPoller = _.once(_startPoller);
 
-        function fetchSchema(callback) {
+        function fetchCollections(callback) {
             reqwest({
-                url: common.config.apiBase,
+                url: common.config.apiBase + '/collection',
                 type: 'json'
             }).then(
                 function(resp) {
-                    resp.collections.forEach(function(id){
-                        treeAdd(id.split('/'), collections);
+                    resp.forEach(function(id){
+                        // Only use "first/three/levels" of the collection id path
+                        treeAdd(_.first(id.split('/'), 3), collections);
                     });                    
                     model.editions(_.keys(collections));
-
-                    sectionSearches = resp.sectionSearches || {};
-
                     if (_.isFunction(callback)) { callback(); }
                 },
-                function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
+                function(xhr) { window.console.log("ERROR: There was a problem listing the available collections"); }
             );
         };
 
@@ -242,6 +239,34 @@ define([
                 ].join('/'));
             })
         };
+
+        function flushClipboard() {
+            model.clipboard.removeAll();
+            clipboardEl.innerHTML = '';
+        };
+
+        function onDragOver(event) {
+            event.preventDefault();
+        }
+
+        function onDrop(event) {
+            var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
+
+            if(!url) { return true; }
+
+            event.preventDefault();
+
+            if (common.util.urlHost(url).indexOf('google') > -1) {
+                url = decodeURIComponent(common.util.parseQueryParams(url).url);
+            };
+
+            model.clipboard.unshift(new Article({
+                id: common.util.urlAbsPath(url)
+            }));
+
+            contentApi.decorateItems(model.clipboard());
+            ophanApi.decorateItems(model.clipboard());
+        }
 
         this.init = function(callback) {
             model.latestArticles  = new LatestArticles();
@@ -284,37 +309,9 @@ define([
                 model.block(undefined);
 
                 if (section) {
-                    model.latestArticles.section(sectionSearches[section] || section);
+                    model.latestArticles.section(common.config.sectionSearches[section] || section);
                 }
             });
-
-            function flushClipboard() {
-                model.clipboard.removeAll();
-                clipboardEl.innerHTML = '';
-            };
-
-            function onDragOver(event) {
-                event.preventDefault();
-            }
-
-            function onDrop(event) {
-                var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
-
-                if(!url) { return true; }
-
-                event.preventDefault();
-
-                if (common.util.urlHost(url).indexOf('google') > -1) {
-                    url = decodeURIComponent(common.util.parseQueryParams(url).url);
-                };
-
-                model.clipboard.unshift(new Article({
-                    id: common.util.urlAbsPath(url)
-                }));
-
-                contentApi.decorateItems(model.clipboard());
-                ophanApi.decorateItems(model.clipboard());
-            }
 
             knockout.bindingHandlers.makeDropabble = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -325,17 +322,28 @@ define([
 
             knockout.bindingHandlers.sparkline = {
                 update: function (element, valueAccessor, allBindingsAccessor, model) {
-                    var value = knockout.utils.unwrapObservable(valueAccessor()),
-                        height = Math.max(15, Math.min(30, _.max(value))),
-                        options = allBindingsAccessor().sparklineOptions || {
-                            lineColor: '#d61d00',
-                            fillColor: '#ffbaaf',
-                            height: height
-                        };
+                    var groups = knockout.utils.unwrapObservable(valueAccessor()),
+                        max = _.max(_.pluck(groups, 'max'));
 
-                    if( value && _.max(value)) {
-                        $(element).sparkline(value, options);                        
-                    }
+                    if (!max) { return };
+
+                    _.chain(groups)
+                    .sortBy(function(g){
+                        // Put biggest groups first, so that its fill color is behind the other groups
+                        return -1 * g.max;
+                    }).each(function(group, i){
+                        $(element).sparkline(group.data, {
+                            chartRangeMax: max,
+                            height: Math.max(10, Math.min(30, max)),
+                            lineColor: '#' + group.color,
+                            fillColor: _.last(group.data) > 25 ? '#eeeeee' : false,
+                            spotColor: false,
+                            minSpotColor: false,
+                            maxSpotColor: false,
+                            lineWidth: _.last(group.data) > 25 ? 2 : 1,
+                            composite: i > 0
+                        });
+                    });
                 }
             };
 
@@ -351,7 +359,7 @@ define([
                 }
             });
 
-            fetchSchema(function(){
+            fetchCollections(function(){
                 knockout.applyBindings(model);
 
                 renderLists({inferDefaults: true});

@@ -48,7 +48,7 @@ function (
             return (/\/commentisfree\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
         }
         function isWikipedia(url) {
-            return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.]+$/).test(url);
+            return (/^http:\/\/en\.wikipedia\.org\/wiki\/[\w\-\.\(\)\,]+$/).test(url);
         }
         function isBBC(url) {
             return (/^http:\/\/(?:(?:www|m)\.)?bbc\.co\.uk/).test(url);
@@ -90,7 +90,9 @@ function (
                 numberOfLinksInParagraph,
                 i = 0,
                 j,
-                linkWasCardified;
+                linkWasCardified,
+                normalisedHref,
+                hrefPath;
 
             // Looking for links every insertCardEveryNParagraphs paragraphs
             while (i < (numberOfArticleParagraphs - lastParagraphsToNotCardify)) {
@@ -101,7 +103,12 @@ function (
 
                 if (numberOfLinksInParagraph > 0) {
                     while (j < numberOfLinksInParagraph) {
-                        if (isWhiteListed(linksInParagraph[j].getAttribute('href').trim(), self.options.origin)) {
+                        normalisedHref = linksInParagraph[j].getAttribute('href').trim();
+                        hrefPath = new RegExp(normalisedHref.split("?")[0].split("#")[0]);
+                        if (
+                            isWhiteListed(normalisedHref, self.options.origin)
+                            && !(hrefPath).test(window.location) // No link to self
+                            ) {
                             cardifyRelatedInBodyLink(linksInParagraph[j]);
                             linkWasCardified = true;
 

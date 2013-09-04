@@ -12,11 +12,15 @@ define([
         config: {
             searchPageSize:        20,
             maxDisplayableLists:   6,
-            maxOphanCallsPerBlock: 10,
+            maxOphanCallsPerBlock: 50,
             cacheExpiryMs:         300000, // 300000 = five mins 
             defaultToLiveMode:     true,
+            sectionSearches: {
+                "news": "news|uk|uk-news|world",
+                "culture": "cluture|film|music|books|artanddesign|tv-and-radio|stage"
+            },
 
-            apiBase:               '/fronts/api',
+            apiBase:               '/fronts',
             apiSearchBase:         '/api/proxy/search'
         },
 
@@ -33,8 +37,7 @@ define([
             },
 
             parseQueryParams: function(url) {
-                url = url.indexOf('?') === -1 ? url: _.rest(url.split('?')).join('?');
-                return _.object(url.split('&').map(function(keyVal){
+                return _.object(this.urlQuery(url).split('&').map(function(keyVal){
                     return keyVal.split('=').map(function(s){
                         return decodeURIComponent(s);
                     });
@@ -43,6 +46,14 @@ define([
 
             queryParams: function() {
                 return this.parseQueryParams(window.location.search);
+            },
+
+            urlQuery: function(url) {
+                var a;
+                if(typeof url !== 'string') { return; }
+                a = document.createElement('a');
+                a.href = url;
+                return a.search.slice(1);
             },
 
             urlAbsPath: function(url) {

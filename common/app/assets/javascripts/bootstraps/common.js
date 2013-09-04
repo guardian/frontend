@@ -134,7 +134,9 @@ define([
 
         transcludePopular: function () {
             common.mediator.on('page:common:ready', function(config, context) {
-                popular(config, context);
+                if('abExpandableMostPopular' in config.switches && !config.switches.abExpandableMostPopular) {
+                    popular(config, context);
+                }
             });
         },
 

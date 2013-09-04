@@ -1,11 +1,10 @@
 @(front: FrontPage, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
 
 <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
+    <div class="h breakpoint"></div>
     @trailblocks.zipWithIndex.map{ case(block, index) =>
         @if(block.trails.nonEmpty) {
             @fragments.frontBlock(block, front, index)
         }
     }
 </div>
-
-@fragments.mostPopularPlaceholder(front.section)

@@ -1,6 +1,6 @@
 define(['modules/relativedates', 
         'bonzo', 
-        'fixtures',
+        'helpers/fixtures',
         'qwery'], function(RelativeDates, bonzo, fixtures, qwery) {
     
     var conf =  {

@@ -71,7 +71,7 @@ object S3 extends S3
 object S3FrontsApi extends S3 {
 
   override lazy val bucket = Configuration.aws.bucket
-  lazy val stage = Configuration.environment.stage.toUpperCase
+  lazy val stage = Configuration.facia.stage.toUpperCase
   val namespace = "frontsapi"
   lazy val location = s"${stage}/${namespace}"
 

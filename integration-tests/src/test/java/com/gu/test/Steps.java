@@ -83,14 +83,7 @@ public class Steps {
 			String testName = test.getText();
 			webDriver.click(test);
 			// wait for 'duration' element, i.e. end of test (up to 10secs)
-            try {
-                webDriver.waitForElement(By.cssSelector("#HTMLReporter .banner .duration"), 10);
-            } catch (org.openqa.selenium.TimeoutException e) {
-              System.out.println("No reporting bar appeared for test at URL: "+ webDriver.getCurrentUrl());
-              throw new Exception("Reporting bar did not appear");
-            }
-
-
+            webDriver.waitForElement(By.cssSelector("#HTMLReporter .banner .duration"), 10);
             // get any error messages
 			List<WebElement> alertBar = webDriver.findElements(By.cssSelector("span.failingAlert.bar"));
 			if (alertBar.size() != 0) {

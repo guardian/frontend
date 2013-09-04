@@ -1,4 +1,4 @@
-define(['common', 'fixtures', 'modules/navigation/profile', 'modules/cookies'], function(common, fixtures, Profile, Cookies) {
+define(['common', 'helpers/fixtures', 'modules/navigation/profile', 'modules/cookies'], function(common, fixtures, Profile, Cookies) {
 
     describe('Profile navigation', function() {
         var context,

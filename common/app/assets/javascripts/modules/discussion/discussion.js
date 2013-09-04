@@ -137,6 +137,7 @@ define([
 
                         commentsHaveLoaded = true;
                         currentPage = response.currentPage;
+
                         common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                     },
                     error: function() {
@@ -250,11 +251,12 @@ define([
                         }
                     }
 
+                    common.mediator.emit('modules:discussion:show');
                     location.hash = 'comments';
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
-                    e.preventDefault();
+                    // No preventDefault here, as there may be links in the byline
 
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');

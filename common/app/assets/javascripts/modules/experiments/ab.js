@@ -9,7 +9,7 @@ define([
     'modules/experiments/tests/gallery-style',
     'modules/experiments/tests/gallery-cta',
     'modules/experiments/tests/swipe-ctas',
-    'modules/experiments/tests/expandable-trails',
+    'modules/experiments/tests/expandable-mostpopular',
     'modules/experiments/tests/right-hand-card'
 ], function (
     common,
@@ -20,7 +20,7 @@ define([
     GalleryStyle,
     GalleryCta,
     SwipeCtas,
-    ExperimentExpandableTrails,
+    ExperimentExpandableMostPopular,
     RightHandCard
     ) {
 
@@ -31,7 +31,7 @@ define([
             new GalleryStyle(),
             new GalleryCta(),
             new SwipeCtas(),
-            new ExperimentExpandableTrails(),
+            new ExperimentExpandableMostPopular(),
             new RightHandCard()
         ],
         participationsKey = 'gu.ab.participations';
@@ -168,6 +168,15 @@ define([
             var opts = options || {};
             getActiveTests().forEach(function(test) {
                 bucket(test, config);
+            });
+        },
+
+        // mostly for private use
+        forceSegment: function (testId, variant) {
+            getActiveTests().filter(function (test) {
+                return (test.id === testId);
+            }).forEach(function (test) {
+                addParticipation(test, variant);
             });
         },
 
