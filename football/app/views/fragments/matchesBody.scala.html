@@ -8,13 +8,15 @@
 
 @if(model.pageType == "live") {
     <div class="live-matches-dateline">
-       @fragments.dateline(new DateTime, true)
+        @fragments.dateline(new DateTime, true)
     </div>
 }
 
 @if(model.pageType == "live") {
     <div class="box-indent">
-        <div class="update update-live-matches" data-link-name="autoupdate"></div>
+        <div class="cf">
+            <div class="update update-live-matches" data-link-name="autoupdate"></div>
+        </div>
     </div>
 }
 
