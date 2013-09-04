@@ -554,7 +554,6 @@ a.cta, .cta a {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    height: 107px;
     cursor: move;
     background-color: #ededed;
     padding: 5px 5px 10px 10px;
@@ -628,7 +627,6 @@ a.cta, .cta a {
     text-decoration: none;
     color: #000000;
     margin: 0 0 5px 0;
-    height: 40px;
     overflow: hidden;
 }
 
@@ -676,7 +674,7 @@ a.cta, .cta a {
 
 .fronts select {
     height: 30px;
-    width: 125px;
+    width: 160px;
     margin: 0;
 }
 

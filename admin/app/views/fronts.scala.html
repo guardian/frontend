@@ -6,19 +6,10 @@
 
     <div class="fronts" data-bind="visible: true, makeDropabble: true" style="display: none">
         <header>
-            <div class="tool-title">Collections Editor</div>
+            <div class="tool-title">Front Collections Editor</div>
             <div class="list-picker">
-                <span class="list-picker__title">Choose collections:</span>
-
-                <select data-bind="options: editions, value: edition, optionsCaption: 'edition...'"></select>
-
-                <select data-bind="options: sections, value: section, enable: edition, optionsCaption: 'section...'"></select>
-
-                <select data-bind="options: blocks, value: block, enable: section, optionsCaption: 'all collections'"></select>
-
-                <button class="strong" data-bind="enable: section, click: actions.displaySelectedBlocks">Show</button>
-                
-                <button data-bind="enable: listsDisplayed().length, click: actions.clearAll">Hide all</button>
+                <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select>
+                <button data-bind="enable: collections().length, click: actions.clearAll">Clear</button>
             </div>
         </header>
 
@@ -65,12 +56,12 @@
             </div>
         </script>
 
-        <div id="trailblocks" data-bind="foreach: listsDisplayed">
+        <div id="trailblocks" data-bind="foreach: collections">
             <div class="trailblock">
                 <div class="list-header">
                     <i class="icon-cog icon-white list-tool" data-bind="click: toggleEditingConfig"></i>
 
-                    <a data-bind="click: $root.actions.dropList" class="list-header__hide" title="Hide this block">HIDE</a>
+                    <a data-bind="click: $root.actions.dropCollection" class="list-header__hide" title="Hide this block">HIDE</a>
                     <div class="list-header__title" data-bind="foreach: crumbs">
                         <span class="list-header__title__part" data-bind="text: $data"></span> 
                     </div>
