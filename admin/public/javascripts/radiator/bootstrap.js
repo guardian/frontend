@@ -53,26 +53,29 @@ window.addEventListener('load', function() {
 
 
     // Page views
-    /*
     $.ajax({
-        url: 'http://dashboard.ophan.co.uk/graph/pageviews/data?hours=2&platform=next-gen&callback=?',
-        dataType: 'jsonp',
+        url: '/ophan/pageviews',
         cache: true,
-        jsonpCallback: 'ophanCallback',
         success: function(data) {
 
-            var todayData = data.seriesData.filter(function(item) {
-               return item.name === "Today";
-            })[0].data;
+            var todayData = _.chain(data.seriesData)
+                             .pluck('data')
+                             .flatten()
+                             .groupBy(function(entry) { return entry.dateTime })
+                             .value();
 
+            // Build Graph
             var graphData = [['time', 'pageviews']];
-            todayData.forEach(function(item) {
-                var time  = new Date(item.x * 1000),
+            _.each(todayData, function(viewsBreakdown, timestamp) {
+
+                var epoch = parseInt(timestamp, 10),
+                    time  = new Date(epoch),
                     hours = ("0" + time.getHours()).slice(-2),
                     mins  = ("0" + time.getMinutes()).slice(-2),
-                    formattedTime = hours + ':' + mins;
+                    formattedTime = hours + ':' + mins,
+                    totalViews = _.reduce(viewsBreakdown, function(memo, entry) { return entry.count + memo }, 0);
 
-                graphData.push([formattedTime, item.y]);
+                graphData.push([formattedTime, totalViews]);
             });
 
             new google.visualization.LineChart(document.getElementById('pageviews'))
@@ -92,5 +95,4 @@ window.addEventListener('load', function() {
             document.getElementById('pageviews').innerHTML = '<a href="http://dashboard.ophan.co.uk/login" target="_new">Login to Ophan for Pageviews</a>';
         }
     })
-    */
 });

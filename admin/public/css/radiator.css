@@ -51,6 +51,10 @@ ul {
 #riffraff,
 #pingdom {
     padding: 0;
+    box-sizing: border-box;
+}
+#pingdom {
+    padding-right: 10px;
 }
 
 
@@ -78,11 +82,6 @@ a {
     color: #005689;
     text-decoration: none;
 }
-
-.pageviews-wrapper {
-    display: none; /* Disabling this for now */
-}
-
 
 
 @media screen and (min-width: 600px) {

@@ -30,4 +30,26 @@ object OphanApi extends Controller with Logging with AuthLogging with ExecutionC
     }).getOrElse(Ok)
   }
 
+  def platformPageViews() = AuthAction { request =>
+    (for {
+      host <- AdminConfiguration.ophanApi.host
+      key  <- AdminConfiguration.ophanApi.key
+    } yield {
+      val url = "%s/breakdown?platform=next-gen&hours=2&api-key=%s".format(
+        host,
+        key
+      )
+
+      log("Proxying Ophan pageviews query to: %s" format url, request)
+
+      Async {
+        WS.url(url).get().map { response =>
+          Ok(response.body).as("application/json")
+        }
+      }
+
+    }).getOrElse(Ok)
+  }
+
+
 }
