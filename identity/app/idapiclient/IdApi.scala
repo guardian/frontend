@@ -5,7 +5,7 @@ import client.{Anonymous, Auth, Response}
 import client.connection.Http
 import scala.concurrent.{Future, ExecutionContext}
 import client.parser.JsonBodyParser
-import idapiclient.responses.{OkResponse, CookiesResponse, AccessTokenResponse}
+import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
 import client.connection.util.ExecutionContexts
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.DefaultFormats
@@ -65,18 +65,18 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
-  def resetPassword( token : String, newPassword : String ): Future[Response[OkResponse]] = {
+  def resetPassword( token : String, newPassword : String ): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
     val response = http.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters)
-    response map jsonBodyParser.extract[OkResponse]()
+    response map {_.right.map({_ => })}
   }
 
-  def sendPasswordResetEmail( emailAddress : String ): Future[Response[User]] = {
+  def sendPasswordResetEmail( emailAddress : String ): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset","send-password-reset-email")
     val params = Iterable(("email-address", emailAddress), ("type", "reset"))
     val response = http.GET(apiUrl(apiPath), params ++ clientAuth.parameters)
-    response.map(jsonBodyParser.extract[User](jsonField("user"))(_))
+    response map {_.right.map({_ => })}
   }
 
 //  def register(userData: String): Future[Response[User]] = {

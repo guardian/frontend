@@ -255,8 +255,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       "returns an OkStatus object" in {
          api.resetPassword(token, newPassword).map( _ match {
             case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-            case Right(ok) => {
-               ok should have ('status("ok"))
+            case Right(_: Unit) => {
             }
          })
       }
@@ -295,13 +294,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       "returns an user object" in {
         api.sendPasswordResetEmail(testEmail).map( _ match {
           case Left(error) => fail("Got left(%s), instead of expected Right".format(error.toString()))
-          case Right(user) => {
-            user should have('id("1234"))
-            user.publicFields should have('displayName("displayName"))
-            user.publicFields should have('username("Username"))
-            user.publicFields should have('usernameLowerCase("username"))
-            user.publicFields should have('vanityUrl("vanityUrl"))
-            user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
+          case Right(_: Unit) => {
           }
         })
       }
