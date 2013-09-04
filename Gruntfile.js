@@ -114,6 +114,9 @@ module.exports = function (grunt) {
             discussion: {
                 src: ['integration-tests/casper/tests/discussion.spec.js']
             },
+            liveblog: {
+                src: ['integration-tests/casper/tests/live-blog.spec.js']
+            },
             networkfront: {
                 src: ['integration-tests/casper/tests/network-front.spec.js']
             }
@@ -331,6 +334,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test:integration',  ['env:casperjs', 'casperjs:all']);
     grunt.registerTask('test:integration:admin',  ['env:casperjs', 'casperjs:admin']);
     grunt.registerTask('test:integration:discussion',  ['env:casperjs', 'casperjs:discussion']);
+    grunt.registerTask('test:integration:liveblog',  ['env:casperjs', 'casperjs:liveblog']);
     grunt.registerTask('test:integration:front',  ['env:casperjs', 'casperjs:networkfront']);
 
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
