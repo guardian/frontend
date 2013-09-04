@@ -15,9 +15,7 @@
 @if(model.pageType == "live") {
     <div class="box-indent">
         <div class="cf">
-            <!--  TODO: display filter if page is "as it happened" (tag: tone)  -->
-            @fragments.liveFilter()
-            <div class="update update-live-matches live-widget" data-link-name="autoupdate"></div>
+            <div class="update update-live-matches" data-link-name="autoupdate"></div>
         </div>
     </div>
 }
