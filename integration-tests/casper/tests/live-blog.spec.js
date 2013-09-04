@@ -12,12 +12,12 @@ var casper = require('casper').create();
 casper.start(host+ '/football/2013/sep/02/transfer-deadline-day-2013-ozil-fellaini-herrera-bale-live');
 
 casper.test.begin('Toggle event type', function(test) {
-    casper.waitForSelector('.live-blog-toggler-wrapper', function() {
-        casper.click('.live-blog-toggler--all', "Toggle to see key events only");
+    casper.waitForSelector('.live-toggler-wrapper', function() {
+        casper.click('.live-toggler--all', "Toggle to see key events only");
         test.assertNotVisible('.article-body > .block:not(.is-key-event)', "Posts other than key events are hidden");
         test.assertVisible('.article-body > .block.is-key-event', "Key events are visible");
 
-        casper.click('.live-blog-toggler--key-events', "Toggle to see all posts");
+        casper.click('.live-toggler--key-events', "Toggle to see all posts");
         test.assertVisible('.article-body > .block', "All posts are visible");
         test.done();
     }, function timeout(){

@@ -1,4 +1,4 @@
-.live-blog-widget {
+.live-widget {
     background: $mushroom;
     height: 46px;
     margin-bottom: $baseline * 4;
@@ -9,7 +9,7 @@
     }
 }
 
-.live-blog-toggler-wrapper {
+.live-toggler-wrapper {
     float: left;
     display: none;
     width: 50%;
@@ -19,11 +19,11 @@
         float: none;
     }
 
-    .live-blog--has-key-events & {
+    .has-key-events & {
         display: block;
     }
 }
-.live-blog-toggler {
+.live-toggler {
     display: none;
     padding: 7px 0;
     line-height: 32px;
@@ -33,22 +33,22 @@
         display: block;
     }
 }
-.lbt__label {
+.lt__label {
     color: #000;
     padding-left: $gutter/2;
     padding-right: $gutter/2;
 }
-.lbt__value {
+.lt__value {
     color: $linkBlue;
     padding-right: $gutter/2;
 }
 
 @include mq(tablet) {
-    .lbt__label {
+    .lt__label {
         padding-left: $gutter;
         padding-right: $gutter*2;
     }
-    .lbt__value {
+    .lt__value {
         padding-right: $gutter;
     }
 }
@@ -57,7 +57,7 @@
 /* Filtered results
    ========================================================================== */
 
-.live-blog-toggler--all {
+.live-toggler--all {
     display: block;
 }
 .show-only-key-events {
@@ -69,10 +69,10 @@
             display: block;
         }
     }
-    .live-blog-toggler--all {
+    .live-toggler--all {
         display: none;
     }
-    .live-blog-toggler--key-events {
+    .live-toggler--key-events {
         display: block;
     }
 }

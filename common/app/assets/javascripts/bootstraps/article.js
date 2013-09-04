@@ -1,7 +1,7 @@
 define([
     "common",
     "modules/autoupdate",
-    "modules/live-blog-filter",
+    "modules/live-filter",
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
@@ -9,7 +9,7 @@ define([
 ], function (
     common,
     AutoUpdate,
-    LiveBlogFilter,
+    LiveFilter,
     MatchNav,
     Reading,
     Discussion,
@@ -53,7 +53,7 @@ define([
                     }).init();
                 }
                 if (/Minute by minutes/.test(config.page.tones)) {
-                    new LiveBlogFilter(context).init();
+                    new LiveFilter(context).init();
                 }
             });
         },

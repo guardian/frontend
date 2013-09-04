@@ -17,23 +17,23 @@ define([
         this.context = context || document;
         this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
         this.template =
-            '<div class="live-blog-toggler-wrapper live-blog-widget">' +
-            '    <button class="live-blog-toggler live-blog-toggler--all u-button-reset js-live-blog-toggler" data-link-name="filter display key-events" title="View key events only">' +
-            '        <span class="lbt__label">View</span>' +
+            '<div class="live-toggler-wrapper live-widget">' +
+            '    <button class="u-button-reset live-toggler live-toggler--all js-live-toggler" data-link-name="filter display key-events" title="Show key events only">' +
+            '        <span class="lt__label">Show</span>' +
             '        <span class="h">key events instead of</span>' +
-            '        <span class="lbt__value">All posts</span>' +
+            '        <span class="lt__value">All posts</span>' +
             '    </button>' +
-            '    <button class="live-blog-toggler live-blog-toggler--key-events u-button-reset js-live-blog-toggler" data-link-name="filter display all posts" title="View all posts">' +
-            '        <span class="lbt__label">View</span>' +
+            '    <button class="u-button-reset live-toggler live-toggler--key-events js-live-toggler" data-link-name="filter display all posts" title="Show all posts">' +
+            '        <span class="lt__label">Show</span>' +
             '        <span class="h">all posts instead of</span>' +
-            '        <span class="lbt__value">Key events</span>' +
+            '        <span class="lt__value">Key events</span>' +
             '    </button>' +
             '</div>';
     }
 
     Filter.prototype.init = function() {
         var self = this;
-        bonzo(this.context.getElementsByClassName('js-live-blog-filter')[0]).replaceWith(this.template);
+        bonzo(this.context.getElementsByClassName('js-live-filter')[0]).replaceWith(this.template);
 
         this.findKeyEvents();
 
@@ -41,7 +41,7 @@ define([
             self.findKeyEvents.call(self);
         });
 
-        bean.on(this.context, 'click', '.js-live-blog-toggler', function(e) {
+        bean.on(this.context, 'click', '.js-live-toggler', function(e) {
             e.preventDefault();
             self.showKeyEvents.call(self);
         });
@@ -49,7 +49,7 @@ define([
 
     Filter.prototype.findKeyEvents = function() {
         if (this.articleContainer.getElementsByClassName('is-key-event').length) {
-            bonzo(this.articleContainer).addClass('live-blog--has-key-events');
+            bonzo(this.articleContainer).addClass('has-key-events');
         }
     };
 
