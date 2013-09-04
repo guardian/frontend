@@ -5,6 +5,7 @@ import net.liftweb.json.JsonAST.{JString, JValue}
 import client.Error
 import client.connection.HttpResponse
 import org.scalatest.matchers.ShouldMatchers
+import net.liftweb.json.{DefaultFormats, Formats}
 
 
 class JsonBodyParserTest extends path.FreeSpec with ShouldMatchers {
@@ -17,6 +18,9 @@ class JsonBodyParserTest extends path.FreeSpec with ShouldMatchers {
   val errorJSONResponse = HttpResponse(""""error body"""", 500, "Internal server error")
 
   object TestJsonBodyParser extends JsonBodyParser {
+
+    implicit val formats = new DefaultFormats {}
+
     def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = testErrors
   }
 

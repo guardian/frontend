@@ -1,12 +1,14 @@
 package idapiclient
 
-import client.parser.JsonBodyParser
+import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import net.liftweb.json.JsonAST.JValue
 import client.Error
-import com.gu.identity.model.{Error => IdApiError}
+import com.gu.identity.model.{Error => IdApiError, LiftJsonConfig}
 import utils.SafeLogging
 
 class IdApiJsonBodyParser extends JsonBodyParser with SafeLogging {
+  override implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
+
   override def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = {
     try {
       val idApiErrors = (json \ "errors").extract[List[IdApiError]]
