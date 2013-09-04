@@ -64,6 +64,9 @@ object SectionTopStories extends Style { val className = "section-top-stories" }
 
 object TopStories extends Style { val className = "top-stories" }
 
+object Highlights extends Style { val className = "highlights" }
+
+
 object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {

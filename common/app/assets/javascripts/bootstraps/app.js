@@ -1,4 +1,5 @@
 define('bootstraps/app', [
+    "qwery",
     "common",
     "domReady",
     "ajax",
@@ -10,6 +11,7 @@ define('bootstraps/app', [
     "modules/router",
     "bootstraps/common",
     "bootstraps/front",
+    "bootstraps/facia",
     "bootstraps/football",
     "bootstraps/article",
     "bootstraps/video",
@@ -19,6 +21,7 @@ define('bootstraps/app', [
     "modules/pageconfig",
     "bootstraps/tag"
 ], function (
+    qwery,
     common,
     domReady,
     ajax,
@@ -30,6 +33,7 @@ define('bootstraps/app', [
     Router,
     bootstrapCommon,
     Front,
+    Facia,
     Football,
     Article,
     Video,
@@ -54,7 +58,7 @@ define('bootstraps/app', [
             e.init();
             common.mediator.on("module:error", e.log);
         },
-       
+
        // RUM on features
        sendInTheCanary: function (config) {
             var c = new Canary({
@@ -62,7 +66,7 @@ define('bootstraps/app', [
             });
             c.init();
         },
-    
+
         initialiseAbTest: function (config) {
             ab.segment(config);
         },
@@ -87,7 +91,7 @@ define('bootstraps/app', [
         domReady(function() {
             var context = document.getElementById('preload-1'),
                 contextHtml = context.cloneNode().innerHTML;
-            
+
             modules.initialiseAjax(config);
             modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
@@ -103,7 +107,9 @@ define('bootstraps/app', [
                 bootstrapCommon.init(config, context, contextHtml);
 
                 //Fronts
-                if(config.page.isFront){
+                if(qwery('.facia-container').length) {
+                    Facia.init(config, context);
+                } else if (config.page.isFront){
                     Front.init(config, context);
                 }
 

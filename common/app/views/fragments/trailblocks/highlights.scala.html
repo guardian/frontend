@@ -2,7 +2,8 @@
 
 <ul class="unstyled collection item-count-@trails.size">
     @trails.zipWithIndex.map{ case (trail, index) =>
-        <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image}" data-link-name="trail | @{index + 1}">
+        <li class="item @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image}" data-link-name="trail | @{index + 1}"
+            @trail.discussionId.map{ id => data-discussion-id="@id" }>
             <a href="@LinkTo{@trail.url}" class="item__link">
                 @trail.mainPicture(620).map{ mainPicture =>
                     <div class="item__image-container">
@@ -14,7 +15,7 @@
             @trail.trailText.map { text =>
                 <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>
             }
-            <div class="item__meta">
+            <div class="item__meta item__meta--grey">
                 <time class="item__timestamp js-item__timestamp"
                       itemprop="datePublished"
                       datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
