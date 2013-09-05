@@ -1,6 +1,7 @@
 /* global module: false */
 module.exports = function (grunt) {
-    var screenshotsDir = './screenshots',
+    var stage = grunt.option('stage') || 'dev',
+        screenshotsDir = './screenshots',
         timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/');
 
     // Project configuration.
@@ -23,7 +24,7 @@ module.exports = function (grunt) {
             upload: {
                 upload: [{
                     src: screenshotsDir + '/*.png',
-                    dest: 'DEV/screenshots/' + timestampDir
+                    dest: stage.toUpperCase() + '/screenshots/' + timestampDir
                 }]
             }
         }

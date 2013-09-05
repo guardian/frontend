@@ -7,3 +7,7 @@ Running
 -------
 
     $ grunt snap
+
+Running against a particular env
+
+    $ grunt snap --stage=prod
