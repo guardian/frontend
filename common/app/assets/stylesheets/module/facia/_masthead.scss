@@ -1,6 +1,15 @@
 .section--masthead {
     clear: left;
     margin-top: $baseline * 4;
+    @include mq(tablet) {
+        min-width: gs-span(9);
+    }
+    @include mq(desktop) {
+        min-width: gs-span(12);
+    }
+    @include mq(wide) {
+        width: gs-span(16);
+    }
     .section__title {
         background-color: #3b65ad;
         border-bottom: 4px solid #64abe1;
@@ -11,15 +20,13 @@
     }
     .collection {
         margin-top: $baseline * 4;
-        max-width: gs-span(16);
-        @include mq(tablet, wide) {
+        @include mq(tablet) {
             height: gs-height(6);
         }
         @include mq(wide) {
             height: gs-height(8);
         }
     }
-
     @include mq($to: tablet) {
         @include collection--stacked;
     }
