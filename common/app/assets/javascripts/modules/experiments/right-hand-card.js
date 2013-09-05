@@ -52,7 +52,7 @@ define([
         var headline = this.$el[0].querySelector('.card__headline').innerHTML;
         common.toArray(this.options.context.querySelectorAll('.trail')).forEach(function(el){
             if(el.querySelector('.trail__headline a').innerHTML.trim() === headline) {
-                el.remove();
+                el.parentNode.removeChild(el);
             }
         });
     };

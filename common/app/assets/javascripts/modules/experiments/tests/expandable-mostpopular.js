@@ -21,14 +21,7 @@ define(['common', 'bean', 'modules/popular'], function (common, bean, popular) {
                 id: 'expandable-most-popular',
                 test: function (context) {
                     if((/^Video|Article|Gallery$/).test(guardian.config.page.contentType)) {
-                        var related = context.getElementsByClassName('related-trails')[0].getElementsByClassName('trail');
-                        common.toArray(related).forEach(function(el){
-                            var img = el.getElementsByClassName('trail__img')[0],
-                                text = el.getElementsByClassName('trail__text')[0];
-                            if(img) { img.remove(); }
-                            if(text) { text.remove(); }
-                        });
-
+                        document.body.className += ' ab-expandable-most-popular';
                         popular(guardian.config, context, true);
                         bean.on(document.body, 'change', '.trail__expander-trigger', function(e) {
                             var trail = e.target.parentNode;
