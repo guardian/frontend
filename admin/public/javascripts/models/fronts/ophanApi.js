@@ -37,9 +37,7 @@ function (
                 {name: 'Guardian', data: [], color: '4572A7', max: 0}
             ];
 
-        if(data.totalHits) {
-            item.state.pageViews(data.totalHits);
-        }
+        item.state.pageViews(data.totalHits);
 
         if(data.seriesData && data.seriesData.length) {
             _.each(data.seriesData, function(s){

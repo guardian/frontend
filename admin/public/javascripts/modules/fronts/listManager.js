@@ -301,7 +301,7 @@ define([
 
                 startPoller();
                 model.latestArticles.search();
-                model.latestArticles.startPoller();
+                //model.latestArticles.startPoller();
             });
         };
 
