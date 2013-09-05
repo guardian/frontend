@@ -254,28 +254,6 @@ define([
 
         },
 
-        // Temporary - for a user zoom survey
-        paragraphSpacing: function () {
-            var key = 'paragraphSpacing';
-            common.mediator.on('page:common:ready', function(config, context) {
-                var typographyPrefs = userPrefs.get(key);
-                switch (typographyPrefs) {
-                    case 'none':
-                        common.$g('body').addClass('test-paragraph-spacing--no-spacing');
-                        break;
-                    case 'indents':
-                        common.$g('body').addClass('test-paragraph-spacing--no-spacing-indents');
-                        break;
-                    case 'more':
-                        common.$g('body').addClass('test-paragraph-spacing--more-spacing');
-                        break;
-                    case 'clear':
-                        userPrefs.remove(key);
-                        break;
-                }
-            });
-        },
-
         externalLinksCards: function (config) {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches && config.switches.externalLinksCards) {
@@ -408,7 +386,6 @@ define([
             modules.initLightboxGalleries();
             modules.betaOptIn();
             modules.faciaOptToggle();
-            modules.paragraphSpacing();
             modules.externalLinksCards();
         }
         common.mediator.emit("page:common:ready", config, context);
