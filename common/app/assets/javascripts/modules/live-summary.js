@@ -32,7 +32,6 @@ define([
     Summary.prototype.deportLatestSummary = function() {
         var summaries = this.articleContainer.getElementsByClassName('is-summary');
 
-        // TODO: Remove summaries from DOM
         // TODO: Verify if summary has actually been updated
         if (summaries.length) {
             bonzo(this.placeholder, this.context).html(summaries[0].innerHTML);
