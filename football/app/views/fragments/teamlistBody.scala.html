@@ -4,7 +4,7 @@
     <section class="sections team-list" data-link-name="Football | Teams | @HtmlFormat.raw(comp.fullName)" id="@comp.url.split("/")(2)">
         <h1 class="article-zone type-5">@comp.fullName</h1>
 
-        <ul class="nav nav--columns nav--top-border-off cf">
+        <ul class="nav nav--columns nav--top-border-off u-cf">
             @comp.teams.map{ team =>
             <li class="nav__item" data-team-id="@team.id">
                 @TeamUrl(team).map{ url => <a href="@LinkTo{@url}" class="nav__link" data-link-name="@team.name">

@@ -150,7 +150,7 @@ define([
 
                     // Insert the popup local nav
                     var localNavPopupHtml = '<div class="nav-popup-localnav nav-popup nav-popup--small is-off">' +
-                                            '  <ul class="nav nav--columns nav--top-border-off cf" data-link-name="Sub Sections">' +
+                                            '  <ul class="nav nav--columns nav--top-border-off u-cf" data-link-name="Sub Sections">' +
                                                  localNavItems.join('') +
                                             '  </ul>' +
                                             '</div>';
@@ -165,7 +165,7 @@ define([
                                           currentSection.sectionName,
 
                         localNavCtaHtml = '<div class="localnav--small">' +
-                                          '  <div class="localnav__inner cf">' +
+                                          '  <div class="localnav__inner u-cf">' +
                                           '    <h1 class="localnav__title zone-color">'+localNavTitle+'</h1>' +
                                           '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +

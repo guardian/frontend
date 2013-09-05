@@ -1,7 +1,7 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 
 @if(!isFooter){
-<header id="header" class="cf">
+<header id="header" class="u-cf">
 } else {
 <div id="navigation-footer">
     <a class="top type-8" data-link-name="back to top" href="#top">Back to top <i class="i i-arrow-small-up"></i></a>
@@ -26,7 +26,7 @@
 }
 
 <div id="@if(isFooter){sections-footer} else {sections-header}" class="nav-popup sections@if(!isFooter){ is-off}">
-    <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav-footer} cf">
+    <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav-footer} u-cf">
         @styleguide.Navigation(request, Configuration).map{ section =>
             <li>
                 <a href="@section.href"

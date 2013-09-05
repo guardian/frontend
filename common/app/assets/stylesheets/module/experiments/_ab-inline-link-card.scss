@@ -19,11 +19,6 @@
 }
 
 .furniture--right {
-    position: absolute;
-    width: $a-rightCol-width;
-    right: ($a-rightCol-width + $gs-gutter)*-1;
-    bottom: $baseline*2;
-
     @include mq($a-rightCol-trigger) {
         display: block;
     }
@@ -96,7 +91,7 @@
       display: none;
     }
 
-    .card__title {        
+    .card__title {
         min-height: $unitHeight;
         margin-bottom: $baseline*3;
         border-top: 1px solid $grey;

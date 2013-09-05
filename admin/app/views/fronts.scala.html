@@ -148,12 +148,12 @@
     </div>
 
     <script type="text/html" id="template_article">
-        <div class="trail cf" data-bind="
+        <div class="trail u-cf" data-bind="
                 attr: {'data-url': meta.id},
                 css: {redundant: $parent.config && $parent.config.max ? (0 + $index()) >= (0 + $parent.config.max()) : false}
             ">
 
-            <div class="trail_tweaks cf" data-bind="visible: state.editingConfig">
+            <div class="trail_tweaks u-cf" data-bind="visible: state.editingConfig">
                 <div>
                     Headline override:
                     <input type="text" data-bind="value: config.webTitle"/>
@@ -179,7 +179,7 @@
                 <a class="trail__meta__remove" data-bind="click: $parent.dropItem">remove</a>
             </div>
 
-            <div class="trail_stats cf">
+            <div class="trail_stats u-cf">
                 <div class="pageviews" data-bind="if: pageViewsCommas(), text: pageViewsCommas"></div>
                 <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
             </div>

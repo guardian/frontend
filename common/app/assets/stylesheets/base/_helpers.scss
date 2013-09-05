@@ -1,29 +1,6 @@
-// Some surgical layout helpers
-.pull-left {
-    float: left
-}
+/* Accessible hidden content.
+   ========================================================================== */
 
-.pull-right {
-    float: right;
-}
-
-.margin-top {
-    margin-top: $baseline*2;
-}
-
-.margin-bottom {
-    margin-bottom: $baseline*2;
-}
-
-.border-top {
-    border-top: 1px solid $mushroom;
-}
-
-.border-bottom {
-    border-bottom: 4px solid $mushroom;
-}
-
-// Accessible hidden content.
 .h {
     border: 0;
     clip: rect(0 0 0 0);
@@ -53,22 +30,22 @@
     }
 }
 
-// Micro clearfix
-// http://nicolasgallagher.com/micro-clearfix-hack/
 
-// For modern browsers
+/* Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
+   ========================================================================== */
+
+.u-cf:before,
+.u-cf:after,
 .cf:before,
 .cf:after {
     content: "";
     display: table;
 }
+.u-cf:after,
 .cf:after {
     clear: both;
 }
-// For IE 6/7 (trigger hasLayout)
-.cf {
-    zoom: 1;
-}
+
 
 /**
  * Text hyphenation
@@ -84,4 +61,45 @@
      -moz-hyphens: auto;
       -ms-hyphens: auto;
           hyphens: auto;
+}
+
+
+/**
+ * Fake table
+ */
+
+.u-table {
+    display: table;
+}
+.u-row {
+    display: table-row;
+}
+.u-cell {
+    display: table-cell;
+    width: 10000px;
+    max-width: 100%;
+}
+.u-cell--top {
+    vertical-align: top;
+}
+.u-cell--bottom {
+    vertical-align: bottom;
+}
+
+
+/**
+ * Reset button styles
+ */
+
+.u-button-reset {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    background: transparent;
+
+    &:focus {
+        outline: 0;
+    }
 }

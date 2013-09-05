@@ -103,6 +103,7 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
     position: relative;
 }
 
+.article__secondary-column,
 .byline--cloned {
     display: none;
 }
@@ -198,7 +199,7 @@ video {
     }
 }
 
-@include mq($a-rightCol-trigger) {
+@include mq(rightCol) {
 
     @include hide-discussion-tabs;
     @include comments-below-article;
@@ -212,13 +213,14 @@ video {
         padding-left: 0;
         max-width: gs-span(8);
     }
-    article .social-wrapper {
-        padding: 0 !important;
-        margin: 0 !important;
+    .article__secondary-column {
+        display: block;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 0; right: 0; bottom: 0;
         width: $a-rightCol-width;
+    }
+    .article__secondary-column__inner {
+        height: 100%;
     }
 }
 
@@ -241,3 +243,4 @@ video {
         margin-left: $gs-column-width;
     }
 }
+

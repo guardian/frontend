@@ -27,11 +27,11 @@
 
 @include mq(320px) {
     .social-wrapper {
-        margin-right: $gutter/4 * -1;
-        margin-left: $gutter/4 * -1;
         max-width: 80px * 4 + 8px * 3;
     }
     .social {
+        margin-right: $gutter/4 * -1;
+        margin-left: $gutter/4 * -1;
         display: table;
         width: 100%;
     }

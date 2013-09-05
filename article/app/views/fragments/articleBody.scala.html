@@ -34,6 +34,24 @@
             <div class="after-header"></div>
         </div>
         <div class="article__main-column">
+            <div class="article__secondary-column" aria-hidden="true">
+                <div class="u-table article__secondary-column__inner">
+                    <div class="u-row">
+                        <div class="u-cell u-cell--top">
+                            @fragments.social(article, "next to content")
+                            <div class="js-live-summary-placeholder"></div>
+                        </div>
+                    </div>
+                    <div class="u-row">
+                        <div class="u-cell u-cell--bottom">
+                            @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
+                                @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card", "hidden")
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             @if(!article.isLive && !article.hasVideoAtTop) {
                 @article.mainPicture.map{ mainPicture =>
                     @article.mainPicture(width=220).map{ smallCrop =>
@@ -44,31 +62,30 @@
 
             @fragments.byline(article.byline, article)
 
-            <div class="js-article__container article__container cf">
-                @if(article.isLiveBlog) {
-                    <div class="cf">
+            <div class="js-article__container article__container u-cf">
+                <div class="live-toolbar">
+                    @if(article.isLiveBlog) {
                         @fragments.liveFilter()
 
                         @if(article.isLive) {
                             @fragments.autoUpdate()
                         }
-                    </div>
-                }
+                    }
+                </div>
 
                 <div class="article-body from-content-api @if(article.isLive) {live-blog}"
                 itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                     @BodyCleaner(article)
                 </div>
 
-                @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
-                    @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card", "hidden")
-                }
             </div>
 
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
                 <div class="article__discussion" id="comments"></div>
             }
-            @fragments.social(article)
+            <div class="social-wrapper">
+                @fragments.social(article)
+            </div>
         </div>
 
     </article>
