@@ -401,7 +401,7 @@ a.cta, .cta a {
     float: right;
     cursor: pointer;
     margin: 3px 2px 0 0;
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 .fronts .list-tool:hover {
@@ -544,8 +544,8 @@ a.cta, .cta a {
     box-sizing: border-box;
     width: 100%;
     float: left;
-    padding: 0 0 10px 0;
-    border-top: 4px solid #999999;
+    padding: 0 0 20px 0;
+    border-top: 3px solid #999999;
 }
 
 .fronts .trailblock:first-child {
@@ -561,6 +561,7 @@ a.cta, .cta a {
     background-color: #ededed;
     padding: 2px 5px 7px 6px;
     border-bottom: 1px dashed #CCCCCC;
+    position: relative;
 }
 
 .fronts .trail:last-child {
@@ -583,21 +584,6 @@ a.cta, .cta a {
     height: 60px !important;
     background-color: #47ae38 !important;
     visibility: visible !important;
-}
-
-.fronts .trail .trail__controls {
-}
-
-.fronts .trailblock .trail .trail__controls {
-    display: block;
-    float: right;
-    font-size: 10px;
-    margin: -6px -2px 0 0;
-}
-
-.fronts .trail__controls a.trail__control {
-    font-size: 9px;
-    margin: 0 2px 0 0;
 }
 
 .fronts .trail img {
@@ -674,6 +660,17 @@ a.cta, .cta a {
     border-left: 1px #dddddd solid;
     padding-left: 4px;
     cursor: pointer;
+}
+
+.fronts .trail .trail__actions {
+    display: none;
+}
+
+.fronts .trail:hover .trail__actions {
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: 3px;
 }
 
 .fronts .trail_tweaks {

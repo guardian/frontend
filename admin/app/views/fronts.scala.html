@@ -158,7 +158,10 @@
             <div class="trail__meta">
                 <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
                 <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
-                <a class="trail__meta__remove" data-bind="click: $parent.dropItem">remove</a>
+            </div>
+
+            <div class="trail__actions">
+                <i class="icon-trash list-tool trail__actions__remove" data-bind="click: $parent.dropItem"></i>
             </div>
 
             <a class="trail_stats cf" target="_blank" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/summary?path=/' + meta.id()}">
