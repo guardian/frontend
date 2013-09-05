@@ -51,14 +51,14 @@ trait ParseConfig extends ExecutionContexts {
 
   //TODO: Should probably live along side styles with object.apply
   def getStyle(style: String): Option[Style] = style match {
-    case s if s == "featured"     => Some(Featured)
-    case s if s == "thumbnail"    => Some(Thumbnail)
-    case s if s == "headline"     => Some(Headline)
-    case s if s == "sectionfront" => Some(SectionFront)
-    case s if s == "masthead"     => Some(Masthead)
-    case s if s == "fastnews"     => Some(FastNews)
-    case s if s == "sectionzone"  => Some(SectionZone)
-    case _                        => None
+    case "featured"     => Some(Featured)
+    case "thumbnail"    => Some(Thumbnail)
+    case "headline"     => Some(Headline)
+    case "sectionfront" => Some(SectionFront)
+    case "masthead"     => Some(Masthead)
+    case "fastnews"     => Some(FastNews)
+    case "sectionzone"  => Some(SectionZone)
+    case _              => None
   }
 }
 
