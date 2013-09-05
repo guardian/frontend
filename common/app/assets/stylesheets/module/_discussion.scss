@@ -76,7 +76,7 @@ $keylineSize: 1px;
 .d-tabs__item--commentcount {
     width: 50px;
     padding-top: 14px;
-    padding-bottom: 16px;
+    padding-bottom: $baseline * 4;
     min-height: 60px;
     text-align: center;
     vertical-align: middle;
@@ -84,7 +84,7 @@ $keylineSize: 1px;
     &.d-tabs__item--is-active {
         border-top-color: $keylineColor;
         border-left: $keylineSize solid $keylineColor;
-        padding-bottom: 16px + $keylineSize;
+        padding-bottom: $baseline * 4 + $keylineSize;
     }
 }
 .d-tabs__item--is-active {
@@ -100,11 +100,11 @@ $keylineSize: 1px;
 }
 .d-thread .d-thread {
     padding-left: 28px; /* aligns with top level comment's body */
-    border-left: 8px solid $darkMushroom;
+    border-left: $gutter/2 solid $darkMushroom;
 
     @include mq(768px) {
         padding-left: 44px;
-        border-left-width: 16px;
+        border-left-width: $gutter;
     }
 }
 .d-comment {
