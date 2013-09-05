@@ -18,6 +18,7 @@ var domains = {
         tablet: 732,
         mobile: 332
     },
+    screenshotsDir = './screenshots',
     casper = require('casper').create();
 
 casper.start(host, function() {
@@ -38,7 +39,7 @@ casper.start(host, function() {
                 that.then(function() {
                     that.viewport(breakpoints[breakpoint], 1).then(function() {
                         that.echo('Capturing "' + url + '" @ ' + breakpoint + ' breakpoint');
-                        that.capture('./screenshots/' + url.replace(/\//g, '|') + '-' + breakpoint + '.png');
+                        that.capture(screenshotsDir + '/' + url.replace(/\//g, '|') + '-' + breakpoint + '.png');
                     });
                 });
             })(this, url, breakpoint);

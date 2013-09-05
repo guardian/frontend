@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "devDependencies": {
     "moment": "~2.1.0",
+    "grunt-mkdir": "~0.1.1",
+    "grunt-contrib-clean": "~0.5.0",
     "grunt-casperjs": "~1.0.9",
     "grunt-s3": "~0.2.0-alpha.2"
   }
