@@ -34,16 +34,20 @@
 /* Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
    ========================================================================== */
 
-.u-cf:before,
-.u-cf:after,
-.cf:before,
-.cf:after {
-    content: "";
-    display: table;
+@mixin clearfix {
+    &:after,
+    &:before {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
 }
-.u-cf:after,
-.cf:after {
-    clear: both;
+
+.u-cf,
+.cf {
+    @include clearfix;
 }
 
 
