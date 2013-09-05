@@ -11,7 +11,6 @@ abstract class Edition(
     val timezone: DateTimeZone
   ) {
   def configuredFronts: Map[String, Seq[TrailblockDescription]]
-  def configuredFrontsFacia: Map[String, Seq[TrailblockDescription]]
   def zones: Seq[Zone]
   def navigation(metadata: MetaData): Seq[NavItem]
 }

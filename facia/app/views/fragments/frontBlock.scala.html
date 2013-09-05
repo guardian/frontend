@@ -1,26 +1,26 @@
-@(block: Trailblock, page: FrontPage, index: Int)(implicit request: RequestHeader)
+@(config: Config, items: Seq[Trail], page: FrontPage, index: Int)(implicit request: RequestHeader)
 
-@if(block.trails.nonEmpty){
+@if(items.nonEmpty){
 
-    <section class="section--@block.description.style.map(_.className)"
-             data-link-name="block | @block.description.name"
-             data-section-id="@block.description.id"
+    <section class="section--@config.style.map(_.className)"
+            data-link-name="block | @config.name"
+            data-section-id="@config.id"
              @defining(Edition(request).id.toLowerCase()) { edition =>
-                 data-link-context="@if(block.description.section == "news"){@edition}else{@edition/@block.description.section}">
+                data-link-context="@if(config.section == "news"){@edition}else{@edition/@config.section}">
              }
 
-        @if(block.description.name) {
-            <h2 class="section__title">@block.description.name</h2>
+        @if(config.name) {
+            <h2 class="section__title">@config.name</h2>
         }
 
-        @block.description.style match {
-            case Some(Thumbnail)                            => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }
-            case Some(Headline) | Some(FastNews)            => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
-            case Some(SectionFront)                         => { @trailblocks.section(block.trails, block.description.numItemsVisible, numWithImages = 3 ) }
-            case Some(Masthead) | Some(SectionZone)         => { @trailblocks.masthead(block.trails.take(block.description.numItemsVisible)) }
-            case Some(SectionTopStories) | Some(TopStories) => { @trailblocks.sectionTopStories(block.trails.take(block.description.numItemsVisible)) }
-            case Some(Highlights)                           => { @trailblocks.highlights(block.trails.take(block.description.numItemsVisible)) }
-            case _                                          => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
+        @config.style match {
+            case Some(Thumbnail)                            => { @trailblocks.thumbnail(items, config.numItemsVisible) }
+            case Some(Headline) | Some(FastNews)            => { @trailblocks.headline(items, config.numItemsVisible) }
+            case Some(SectionFront)                         => { @trailblocks.section(items, config.numItemsVisible, numWithImages = 3 ) }
+            case Some(Masthead) | Some(SectionZone)         => { @trailblocks.masthead(items.take(config.numItemsVisible)) }
+            case Some(SectionTopStories) | Some(TopStories) => { @trailblocks.sectionTopStories(items.take(config.numItemsVisible)) }
+            case Some(Highlights)                           => { @trailblocks.highlights(items.take(config.numItemsVisible)) }
+            case _                                          => { @trailblocks.featured(items, config.numItemsVisible) }
         }
 
     </section>
