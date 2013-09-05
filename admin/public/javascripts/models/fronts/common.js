@@ -8,7 +8,7 @@ define([
     return {
         config: {
             searchPageSize:        20,
-            maxDisplayableLists:   6,
+            maxDisplayableLists:   20,
             maxOphanCallsPerBlock: 50,
             cacheExpiryMs:         300000, // 300000 = five mins 
             defaultToLiveMode:     true,
