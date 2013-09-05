@@ -75,10 +75,10 @@
 .u-table {
     display: table;
 }
-.u-row {
+.u-table__row {
     display: table-row;
 }
-.u-cell {
+.u-table__cell {
     display: table-cell;
     width: 10000px;
     max-width: 100%;
