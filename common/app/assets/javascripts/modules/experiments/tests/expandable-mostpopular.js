@@ -1,5 +1,5 @@
 /*global guardian */
-define(['common', 'bean', 'modules/popular'], function (common, bean, popular, related) {
+define(['common', 'bean', 'modules/popular'], function (common, bean, popular) {
 
     var ExperimentExpandableMostPopular = function () {
 
