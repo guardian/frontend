@@ -66,8 +66,8 @@ window.addEventListener('load', function() {
 
             // Build Graph
             var graphData = [['time', 'pageviews']];
-            _.each(todayData, function(viewsBreakdown, timestamp) {
 
+            _.each(todayData, function(viewsBreakdown, timestamp) {
                 var epoch = parseInt(timestamp, 10),
                     time  = new Date(epoch),
                     hours = ("0" + time.getHours()).slice(-2),
@@ -90,6 +90,16 @@ window.addEventListener('load', function() {
                     hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
                     smoothLine: true
                 });
+
+            // Average pageviews now
+            var lastOphanEntry = _.chain(todayData)
+                .values()
+                .last()
+                .reduce(function(memo, entry) { return entry.count + memo }, 0)
+                .value();
+            var viewsPerSecond = Math.round(lastOphanEntry/60);
+            $('.pageviews-per-second').html('(' + viewsPerSecond + ' views/sec)');
+
         },
         error: function() {
             document.getElementById('pageviews').innerHTML = '<a href="http://dashboard.ophan.co.uk/login" target="_new">Login to Ophan for Pageviews</a>';
