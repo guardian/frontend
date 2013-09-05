@@ -68,3 +68,10 @@
     padding-top: $baseline*2;
     padding-bottom: $baseline*2;
 }
+
+.ab-expandable-most-popular {
+    .related-trails {
+        .trail__img { display: none; }
+        .trail__text { display: none; }
+    }
+}
