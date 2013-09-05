@@ -22,8 +22,7 @@
                 }
 
                 new google.visualization.@{chart.form}(document.getElementById('@chart.id')).draw(data, {
-                    title: '@chart.name',
-                    legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
+                    title: '@chart.name' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
                 });
             }
         }

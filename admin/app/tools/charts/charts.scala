@@ -283,6 +283,7 @@ object ActiveUserProportionGraph extends Chart with implicits.Tuples with implic
 
 object SwipeABTestResultsGraph extends Chart {
   val name = "Swipe A/B Test Results"
+  override val yAxis = Some("Avg pvs / session")
 
   private lazy val defaultAvgPageViewsPerUserByVariantByDay = Analytics.getSwipeABTestAvgPageViewsPerSessionByVariantByDay()
 
