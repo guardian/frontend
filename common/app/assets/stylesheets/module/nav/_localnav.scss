@@ -23,7 +23,7 @@
         }
     }
 
-    h2.article-zone,
+    .article-zone:only-child,
     .section-head,
     .front-section:first-child .sub-section-head {
         display: none;
