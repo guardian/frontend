@@ -228,14 +228,24 @@ define(["bean",
             if (e) { e.preventDefault(); }
 
             self.stopSlideshow();
-            self.goTo(currentImage - 1);
+
+            if (swipeActive) {
+                self.swipe.prev();
+            } else {
+                self.goTo(currentImage - 1);
+            }
         };
 
         this.next = function(e) {
             if (e) { e.preventDefault(); }
 
             self.stopSlideshow();
-            self.goTo(currentImage + 1);
+
+            if (swipeActive) {
+                self.swipe.next();
+            } else {
+                self.goTo(currentImage + 1);
+            }
         };
 
         this.goTo = function(index, opts) {
