@@ -29,7 +29,7 @@
    ========================================================================== */
 
 .card {
-
+    position: relative;
 }
 
 .card-wrapper {
@@ -83,7 +83,7 @@
 }
 
 .card__description {
-  color: #444444;
+    color: #444444;
 }
 
 .card__appendix {
@@ -92,6 +92,7 @@
 }
 
 .card--right {
+    margin-top: $baseline*4;
 
     &.is-hidden {
       display: none;
