@@ -63,10 +63,6 @@
 /* Columning
    ========================================================================== */
 
-@mixin grid-outer-margins {
-    
-}
-
 .monocolumn-wrapper {
     padding-left: $gs-gutter / 2;
     padding-right: $gs-gutter / 2;
