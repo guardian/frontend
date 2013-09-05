@@ -13,10 +13,10 @@ var domains = {
     domain = domains[stage],
     host = 'http://' + domain + '/',
     breakpoints = {
-        mobile: 332,
-        tablet: 732,
+        wide: 1292,
         desktop: 972,
-        wide: 1292
+        tablet: 732,
+        mobile: 332
     },
     casper = require('casper').create();
 
