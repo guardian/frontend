@@ -33,9 +33,15 @@ casper.start(host, function() {
     this.thenOpen(host + url + '?view=mobile', function() {
         // take screenshot over the breakpoints
         for(var breakpoint in breakpoints) {
-            this.viewport(breakpoints[breakpoint], 1).then(function() {
-                this.capture('./screenshots/' + url.replace(/\//g, '|') + '-' + breakpoint + '.png');
-            });
+            // create closure to maintain reference to breakpoint variable
+            (function(that, url, breakpoint) {
+                that.then(function() {
+                    that.viewport(breakpoints[breakpoint], 1).then(function() {
+                        that.echo('Capturing "' + url + '" @ ' + breakpoint + ' breakpoint');
+                        that.capture('./screenshots/' + url.replace(/\//g, '|') + '-' + breakpoint + '.png');
+                    });
+                });
+            })(this, url, breakpoint);
         };
     });
 });
