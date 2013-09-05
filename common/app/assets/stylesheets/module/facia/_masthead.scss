@@ -1,0 +1,141 @@
+.section--masthead {
+    clear: left;
+    margin-top: $baseline * 4;
+    .section__title {
+        background-color: #3b65ad;
+        border-bottom: 4px solid #64abe1;
+        color: #ffffff;
+        @include font-size(20);
+        font-weight: lighter;
+        padding: $baseline*2 $gutter/2 $baseline*3;
+    }
+    .collection {
+        margin-top: $baseline * 4;
+        max-width: gs-span(16);
+        @include mq(tablet, wide) {
+            height: gs-height(6);
+        }
+        @include mq(wide) {
+            height: gs-height(8);
+        }
+    }
+
+    @include mq($to: tablet) {
+        @include collection--stacked;
+    }
+
+    .item-count-1 .item {
+        @include mq(tablet, desktop) {
+            @extend %item--large;
+            @include customise-item--large(100%, gs-span(6));
+        }
+        @include mq(desktop, wide) {
+            @extend %item--large;
+            @include customise-item--large(100%, gs-span(6), $show-standfirst: true, $font-size: 28);
+        }
+        @include mq(wide) {
+            @extend %item--large;
+            @include customise-item--large(100%, gs-span(8), $show-standfirst: true, $font-size: 36);
+        }
+    }
+
+    .item-count-2 {
+        .item:nth-child(1) {
+            @include mq(tablet, desktop) {
+                @extend %item--with-overlay;
+            }
+            @include mq(desktop, wide) {
+                @extend %item--large;
+                @include customise-item--large(gs-span(9), gs-span(6));
+            }
+            @include mq(wide) {
+                @extend %item--large;
+                @include customise-item--large(gs-span(12), gs-span(8), $show-standfirst: true, $font-size: 28);
+            }
+        }
+        .item:nth-child(2) {
+            @include mq(tablet, wide) {
+                .item__title {
+                    @include font-size(28, 32);
+                }
+                @include customise-item--small($num: 1, $show-meta: true);
+            }
+            @include mq(tablet, desktop) {
+                @extend %item--small;
+            }
+            @include mq(desktop, wide) {
+                @extend %item--small;
+            }
+            @include mq(wide) {
+                @extend %item--medium;
+            }
+        }
+    }
+
+    .item-count-3 {
+        .item:nth-child(1) {
+            @include mq(tablet, desktop) {
+                @extend %item--with-overlay;
+            }
+            @include mq(desktop, wide) {
+                @extend %item--with-overlay;
+                @include customise-item--large(gs-span(9), gs-span(6));
+            }
+            @include mq(wide) {
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(8), 28);
+            }
+        }
+        .item:nth-child(n+2) {
+            @include mq(tablet, desktop) {
+                @extend %item--small;
+            }
+            @include mq(desktop, wide) {
+                @extend %item--small;
+            }
+            @include mq(wide) {
+                @extend %item--medium;
+            }
+        }
+    }
+
+    .item-count-4 {
+        .item:nth-child(1) {
+            @include mq(tablet, desktop) {
+                @extend %item--with-overlay;
+            }
+            @include mq(desktop, wide) {
+                @extend %item--with-overlay;
+            }
+            @include mq(wide) {
+                @extend %item--with-overlay;
+                @include customise-item--with-overlay(gs-span(8), 28);
+            }
+        }
+        .item:nth-child(2) {
+            @include mq(desktop, wide) {
+                @extend %item--medium;
+                @include customise-item--medium(gs-span(3), $font-size: 20);
+            }
+            @include mq(wide) {
+                @extend %item--medium;
+            }
+        }
+        .item:nth-child(n+2) {
+            @include mq(tablet, desktop) {
+                @extend %item--small;
+                @include customise-item--small($num: 3);
+            }
+        }
+        .item:nth-child(n+3) {
+            @include mq(desktop, wide) {
+                @extend %item--small;
+            }
+            @include mq(wide) {
+                @extend %item--small;
+                @include customise-item--small($num: 2, $show-meta: true);
+            }
+        }
+    }
+
+}

@@ -77,6 +77,16 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val cricketMatch: Option[String] = delegate.references.find(_.`type` == "esa-cricket-match")
     .map(_.id).map(Reference(_)).map(_._2)
 
+  override lazy val trailType: Option[String] = {
+    if (tags.exists(_.id == "tone/features")) {
+      Option("feature")
+    } else if (tags.exists(_.id == "tone/comment")) {
+      Option("comment")
+    } else {
+      Option("news")
+    }
+  }
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = super.metaData ++ Map(
@@ -127,7 +137,6 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
   lazy val isReview = tones.exists(_.id == "tone/reviews")
   lazy val isLiveBlog = tones.exists(_.id == "tone/minutebyminute")
@@ -135,6 +144,11 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .map(e => e.hasClass("gu-video") && e.tagName() == "video")
     .getOrElse(false)
+
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    ("content-type", contentType),
+    ("isLiveBlog", isLiveBlog)
+  )
 
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 
@@ -152,7 +166,7 @@ class Video(private val delegate: ApiContent) extends Content(delegate) with Ima
 
   private implicit val ordering = EncodingOrdering
 
-  private val videoAsset: Option[MediaAsset] = videoAssets.headOption
+  lazy val videoAsset: Option[MediaAsset] = videoAssets.headOption
   lazy val encodings: Seq[Encoding] = videoAsset.map(_.encodings.map(Encoding(_))).getOrElse(Nil).sorted
   lazy val contentType = "Video"
   lazy val source: Option[String] = videoAsset.flatMap(_.safeFields.get("source"))

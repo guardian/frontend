@@ -31,6 +31,7 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
+    'modules/experiments/left-hand-card',
     'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
@@ -69,6 +70,7 @@ define([
     AdvertsAnalytics,
     Debug,
     ab,
+    LeftHandCard,
     swipeNav,
     VideoAdvert,
     CommentCount,
@@ -103,7 +105,7 @@ define([
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
-                header = document.querySelector('body'),
+                header = document.body,
                 profile;
 
             if (config.switches.idProfileNavigation) {
@@ -126,13 +128,17 @@ define([
 
         transcludeRelated: function () {
             common.mediator.on("page:common:ready", function(config, context){
-                related(config, context);
+                if('abExpandableMostPopular' in config.switches && !config.switches.abExpandableMostPopular) {
+                    related(config, context);
+                }
             });
         },
 
         transcludePopular: function () {
             common.mediator.on('page:common:ready', function(config, context) {
-                popular(config, context);
+                if('abExpandableMostPopular' in config.switches && !config.switches.abExpandableMostPopular) {
+                    popular(config, context);
+                }
             });
         },
 
@@ -272,6 +278,17 @@ define([
             });
         },
 
+        externalLinksCards: function (config) {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches && config.switches.externalLinksCards) {
+                    var card = new LeftHandCard({
+                        origin: 'all',
+                        context: context
+                    });
+                }
+            });
+        },
+
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
@@ -394,6 +411,7 @@ define([
             modules.betaOptIn();
             modules.faciaOptToggle();
             modules.paragraphSpacing();
+            modules.externalLinksCards();
         }
         common.mediator.emit("page:common:ready", config, context);
     };

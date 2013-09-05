@@ -74,7 +74,7 @@
 
 .card__headline {
     font-family: $serif !important; // Override .from-content-api h3 defaults
-    color: #444;
+    color: #444444;
     font-size: 14px !important;
     font-size: 1.4rem !important;
     line-height: 20px !important;
@@ -82,7 +82,12 @@
 }
 
 .card__description {
-  color: #444;
+  color: #444444;
+}
+
+.card__appendix {
+    color: #8c8c8c;
+    padding-top: $baseline;
 }
 
 .card--right {

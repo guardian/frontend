@@ -1,6 +1,7 @@
 import sbt._
 import sbt.Keys._
 import play.Project._
+import SbtGruntPlugin._
 
 object Frontend extends Build with Prototypes {
 
@@ -69,7 +70,8 @@ object Frontend extends Build with Prototypes {
   val admin = application("admin").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
       "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
-    )
+    ),
+    (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:admin"))
   )
   val porter = application("porter").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
@@ -90,7 +92,8 @@ object Frontend extends Build with Prototypes {
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
       "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
-      "org.mockito" % "mockito-all" % "1.9.5" % "test"
+      "org.mockito" % "mockito-all" % "1.9.5" % "test",
+      "org.slf4j" % "slf4j-ext" % "1.7.5"
     )
   )
 

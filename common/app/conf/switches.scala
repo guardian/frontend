@@ -140,6 +140,10 @@ object Switches extends Collections {
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = Off)
 
+  val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
+    "If this switch is on, external links are turned into cards in body content on wide viewports.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -170,8 +174,8 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the new swipe call to actions ",
     safeState = Off)
 
-  val ABExpandableTrails = Switch("A/B Tests", "ab-expandable-trails",
-    "If this is switched on an AB test runs to trial the impact of having expandable content in trails",
+  val ABExpandableMostPopular = Switch("A/B Tests", "ab-expandable-most-popular",
+    "If this is switched on an AB test runs to trial the impact of having expandable content in most popular trails",
     safeState = Off)
 
   val ABRightHandCard = Switch("A/B Tests", "ab-right-hand-card",
@@ -231,6 +235,7 @@ object Switches extends Collections {
     ABAa,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
+    ExternalLinksCardsSwitch,
     LiveCricketSwitch,
     FilmFrontFacia,
     FaciaSwitch,
@@ -238,7 +243,7 @@ object Switches extends Collections {
     ABGalleryStyle,
     ABGalleryCta,
     ABSwipeCtas,
-    ABExpandableTrails,
+    ABExpandableMostPopular,
     ABRightHandCard
   )
 

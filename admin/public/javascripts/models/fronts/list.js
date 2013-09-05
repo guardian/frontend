@@ -72,14 +72,17 @@ define([
         this.state.editingConfig(false);
     };
 
-    List.prototype.setLiveMode = function() {
-        this.state.liveMode(true);
+    List.prototype.setMode = function(isLiveMode) {
+        this.state.liveMode(isLiveMode);
         this.decorate();
     };
 
+    List.prototype.setLiveMode = function(isLiveMode) {
+        this.setMode(true);
+    };
+
     List.prototype.setDraftMode = function() {
-        this.state.liveMode(false);
-        this.decorate();
+        this.setMode(false);
     };
 
     List.prototype.publishDraft = function() {
@@ -90,19 +93,19 @@ define([
         this.processDraft(false);
     };
 
-    List.prototype.processDraft = function(publish) {
+    List.prototype.processDraft = function(goLive) {
         var self = this;
 
         reqwest({
-            url: common.config.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
-            data: JSON.stringify(publish ? {publish: true} : {discard: true})
+            data: JSON.stringify(goLive ? {publish: true} : {discard: true})
         }).then(
             function(resp) {
                 self.load({
-                    callback: function(){ self.setLiveMode(); }
+                    callback: function(){ self.setMode(goLive); }
                 });
             },
             function(xhr) {
@@ -119,7 +122,7 @@ define([
         self.state.loadIsPending(true);
         reqwest({
             method: 'delete',
-            url: common.config.apiBase + '/' + self.id,
+            url: common.config.apiBase + '/collection/' + self.id,
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -144,7 +147,7 @@ define([
         common.util.mediator.emit('list:load:start');
 
         reqwest({
-            url: common.config.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             type: 'json'
         }).always(
             function(resp) {
@@ -230,16 +233,22 @@ define([
 
     List.prototype.saveConfig = function() {
         var self = this;
+
+        // Normalise
+        this.config.contentApiQuery(this.config.contentApiQuery().replace(/^.*\/api\/?/, ''));
+        this.config.min(parseInt(this.config.min(), 10) || undefined);
+        this.config.max(parseInt(this.config.max(), 10) || undefined);
+
         reqwest({
-            url: common.config.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({ 
                 config: {
-                    contentApiQuery: this.config.contentApiQuery() || undefined,
-                    min: parseInt(this.config.min(), 10) || undefined,
-                    max: parseInt(this.config.max(), 10) || undefined
+                    contentApiQuery: this.config.contentApiQuery(),
+                    min: this.config.min(),
+                    max: this.config.max()
                 }
             })
         }).always(function(){

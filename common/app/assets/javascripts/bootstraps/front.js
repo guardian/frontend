@@ -8,7 +8,9 @@ define([
     "modules/trailblock-show-more",
     "modules/footballfixtures",
     "modules/cricket",
-    "modules/masthead-relative-dates"
+    "modules/masthead-relative-dates",
+    'modules/top-stories-show-more',
+    'modules/facia-popular'
 ], function (
     common,
     bonzo,
@@ -16,8 +18,7 @@ define([
     TrailblockToggle,
     TrailblockShowMore,
     FootballFixtures,
-    Cricket,
-    mastheadRelativeDates
+    Cricket
 ) {
 
     var modules = {
@@ -39,16 +40,6 @@ define([
             var trailblockShowMore = new TrailblockShowMore();
             common.mediator.on('page:front:ready', function(config, context) {
                 trailblockShowMore.init(context);
-            });
-        },
-
-        promoteMostPopular: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                if (context.querySelector('.front-container--new') && window.location.pathname === '/') {
-                    bonzo(context.querySelector('.js-popular'))
-                        .appendTo(bonzo.create('<section class="front-section">'))
-                        .insertAfter(context.querySelector('section.front-section'));
-                }
             });
         },
 
@@ -77,7 +68,7 @@ define([
                                 return bonzo(trailblock).hasClass('trailblock--masthead') === false;
                             });
                             opts = {
-                                prependTo: (trailblocks) ? trailblocks[0].querySelector('ul > li') : null,
+                                prependTo: (trailblocks.length) ? trailblocks[0].querySelector('ul > li') : null,
                                 competitions: ['500', '510', '100', '400'],
                                 contextual: false,
                                 expandable: true,
@@ -92,12 +83,6 @@ define([
                     }
                 }
             });
-        },
-
-        relativiseMastheadDates: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                mastheadRelativeDates.init(context);
-            });
         }
 
     };
@@ -105,12 +90,10 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.promoteMostPopular();
             modules.showTrailblockToggles();
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();
             modules.showCricket();
-            modules.relativiseMastheadDates();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

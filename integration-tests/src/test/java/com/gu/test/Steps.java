@@ -83,8 +83,8 @@ public class Steps {
 			String testName = test.getText();
 			webDriver.click(test);
 			// wait for 'duration' element, i.e. end of test (up to 10secs)
-			webDriver.waitForElement(By.cssSelector("#HTMLReporter .banner .duration"), 10);
-			// get any error messages
+            webDriver.waitForElement(By.cssSelector("#HTMLReporter .banner .duration"), 10);
+            // get any error messages
 			List<WebElement> alertBar = webDriver.findElements(By.cssSelector("span.failingAlert.bar"));
 			if (alertBar.size() != 0) {
 				System.out.println(testName + " - " + alertBar.get(0).getText());

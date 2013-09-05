@@ -27,20 +27,20 @@ i.gallery__watermark {
 
 .gallery__item {
     cursor: pointer;
+    overflow: hidden;
 }
+
 
 /* ==========================================================================
    Thumbnail/Single Full image modes
    ========================================================================== */
 
-$thumbnailOuterWidth: 156px; // 140px + 16px margins
-
-@function gridContainerWidth($n-thumbnails) {
+@function gridContainerWidth($n-thumbnails, $thumbnailOuterWidth) {
     @return $n-thumbnails * $thumbnailOuterWidth;
 }
 
-@function viewportWidth($n-thumbnails) {
-    $gridContainerWidth: gridContainerWidth($n-thumbnails);
+@function viewportWidth($n-thumbnails, $thumbnailOuterWidth) {
+    $gridContainerWidth: gridContainerWidth($n-thumbnails, $thumbnailOuterWidth);
     @return $gridContainerWidth;
 }
 
@@ -57,14 +57,26 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     .gallery__item {
         float: left;
         margin: $baseline * 2;
+
+        @include mq(tablet) {
+            margin: 6px 5px;
+        }
     }
 
     .gallery__item--portrait {
         @include fix-aspect-ratio(3, 4, 140px);
+
+        @include mq(tablet) {
+            @include fix-aspect-ratio(3, 4, 220px);
+        }
     }
 
     .gallery__item--landscape {
         @include fix-aspect-ratio(5, 3, 140px);
+
+        @include mq(tablet) {
+            @include fix-aspect-ratio(5, 3, 220px);
+        }
     }
 
     .gallery__img {
@@ -78,13 +90,25 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     }
 
     // This sets a fixed width to the gallery container, so it can be centered
-    @for $i from 2 through 8 {
-        @include mq(viewportWidth($i)) {
+    $thumbOuterWidthMobile: 156px; // 140px + 16px margins
+    $thumbOuterWidthTablet: 240px; // 220px + 20px margins
+
+    @for $i from 2 through 4 {
+        @include mq(viewportWidth($i, $thumbOuterWidthMobile)) {
             .gallery__images {
-                width: gridContainerWidth($i);
+                width: gridContainerWidth($i, $thumbOuterWidthMobile);
             }
         }
     }
+
+    @for $i from 3 through 8 {
+        @include mq(viewportWidth($i, $thumbOuterWidthTablet)) {
+            .gallery__images {
+                width: gridContainerWidth($i, $thumbOuterWidthTablet);
+            }
+        }
+    }
+
 }
 
 
@@ -92,6 +116,10 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     .gallery__item {
         display: none;
         text-align: center;
+    }
+
+    .gallery__item--active {
+        display: block;
     }
 
     @include mq($and: '(orientation: landscape)') {
@@ -127,6 +155,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     z-index: 50;
     -ms-touch-action: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    @include transition(opacity 1s ease-in-out);
 
     &,
     &:active,
@@ -137,8 +166,9 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
 
     .gallery__arrow-cta {
         position: absolute;
-        top: 85px;
+        margin-top: -16px;
     }
+
 }
 
 
@@ -172,8 +202,9 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     background: rgb(34, 34, 34);
     background: rgba(34, 34, 34, 0.90);
 
-    .i {
-        margin: 10px 8px;
+    i {
+        margin: 2px -5px;
+        @include transform(scale(0.5));
     }
 }
 
@@ -223,7 +254,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
 .gallerycaption__inner {
     background: rgb(34, 34, 34);
     background: rgba(34, 34, 34, 0.90);
-    padding: $baseline * 2 $gutter;
+    padding: $baseline * 4 $gutter;
 }
 
 .gallerycaption__text {
@@ -231,13 +262,16 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     line-height: 16px;
     padding-bottom: $baseline * 4;
     border-bottom: 1px solid #676767;
-    margin-bottom: $baseline;
+    max-width: 620px;
+    margin: 0 auto $baseline auto;
 }
 
 .gallerycaption__credit {
     @extend %type-11;
     margin-bottom: 0;
     padding-bottom: $baseline;
+    max-width: 620px;
+    margin: 0 auto;
 }
 
 
@@ -283,7 +317,7 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
     margin-left: 0;
     letter-spacing: -1px;
     line-height: 44px;
-    color: #AAAAAA;
+    color: #929497;
 }
 
 .gallery__counter--current-image {
@@ -313,6 +347,39 @@ $thumbnailOuterWidth: 156px; // 140px + 16px margins
 
     .gallery__nav--prev,
     .gallery__nav--next {
-        display: none;
+        pointer-events: none;
+    }
+}
+
+
+
+
+/* ==========================================================================
+   Slideshow styles
+   ========================================================================== */
+.gallery--slideshow {
+    margin-bottom: 0;
+
+    .gallery__images {
+        position: relative;
+    }
+
+    .gallery__item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        display: block;
+        width: 100%;
+
+        @include transition(opacity 1s ease-in-out);
+    }
+
+    .gallery__item--active {
+        opacity: 1;
+    }
+
+    .gallery__nav {
+        opacity: 0;
     }
 }

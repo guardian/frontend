@@ -39,7 +39,7 @@ define([
                     data = tpl.replace("[URL]", url);
 
                 // put in trail__meta, if exists
-                var meta = node.querySelector('.trail__meta'),
+                var meta = node.querySelector('.item__meta'),
                     $node = meta ? bonzo(meta) : bonzo(node);
 
                 $node.append(data.replace("[COUNT]", c.count));

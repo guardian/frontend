@@ -2,30 +2,26 @@
 
 @if(block.trails.nonEmpty){
 
-    <section class="front-section zone-@block.description.section"
+    <section class="section--@block.description.style.map(_.className)"
              data-link-name="block | @block.description.name"
              data-section-id="@block.description.id"
              @defining(Edition(request).id.toLowerCase()) { edition =>
                  data-link-context="@if(block.description.section == "news"){@edition}else{@edition/@block.description.section}">
              }
 
-        @if(block.description.id != "" && block.description.style != Some(Masthead)) {
-            @if(index == 0 && !page.isNetworkFront) {
-                @fragments.headers.sectionHead(block.description.name)
-            } else {
-                @fragments.headers.frontSectionHead(block.description, page.isNetworkFront, Some(Edition(request)))
-            }
+        @if(block.description.name) {
+            <h2 class="section__title">@block.description.name</h2>
         }
 
-        <div class="front-trailblock-@SafeName(block.description) trailblock trailblock--@block.description.style.map(_.className) @if(block.description.showMore){ js-show-more}">
-            @block.description.style match {
-                case Some(Thumbnail)    => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }
-                case Some(Headline)     => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
-                case Some(SectionFront) => { @trailblocks.section(block.trails, block.description.numItemsVisible, numWithImages = 3 ) }
-                case Some(Masthead)     => { @trailblocks.masthead(block.trails.take(4)) }
-                case _                  => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
-            }
-        </div>
+        @block.description.style match {
+            case Some(Thumbnail)                            => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }
+            case Some(Headline) | Some(FastNews)            => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
+            case Some(SectionFront)                         => { @trailblocks.section(block.trails, block.description.numItemsVisible, numWithImages = 3 ) }
+            case Some(Masthead) | Some(SectionZone)         => { @trailblocks.masthead(block.trails.take(block.description.numItemsVisible)) }
+            case Some(SectionTopStories) | Some(TopStories) => { @trailblocks.sectionTopStories(block.trails.take(block.description.numItemsVisible)) }
+            case Some(Highlights)                           => { @trailblocks.highlights(block.trails.take(block.description.numItemsVisible)) }
+            case _                                          => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
+        }
 
     </section>
 

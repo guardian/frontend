@@ -2,8 +2,8 @@ define(['common',
         'ajax',
         'modules/lightbox-gallery',
         'bean',
-        'fixtures',
-        '../fixtures/lightbox-gallery'],
+        'helpers/fixtures',
+        'fixtures/lightbox-gallery'],
     function(common,
              ajax,
              LightboxGallery,
@@ -80,12 +80,7 @@ define(['common',
         it("should start in single image mode", function() {
             expect(document.querySelector('.gallery').className).toContain('gallery--full');
 
-            var visibleImages = 0;
-            common.$g('.gallery__item').each(function(e) {
-                if (e.style.display === 'block') {
-                    visibleImages += 1;
-                }
-            });
+            var visibleImages = document.querySelectorAll('.gallery__item--active').length;
 
             expect(visibleImages).toBe(1);
         });
@@ -113,7 +108,7 @@ define(['common',
 
 
             expect(document.querySelector('.gallery').className).toContain('gallery--fullimage-mode');
-            expect(document.querySelector('.gallery .js-gallery-item-5').style.display).toBe('block');
+            expect(document.querySelector('.gallery .js-gallery-item-5').className).toContain('gallery__item--active');
             expect(document.querySelector('.js-image-index').innerHTML).toBe('5');
         });
 
@@ -189,6 +184,55 @@ define(['common',
             })
         });
 
+        it("should have an AJAX url to the gallery without a hostname", function() {
+            expect(gallery.galleryEndpoint).not.toContain('://');
+        });
+
+        // Slideshow tests
+        it("should should show the stop CTA when the slideshow is started", function() {
+            expect(document.querySelector('.js-start-slideshow').style.display).not.toBe('none');
+            bean.fire(document.querySelector('.js-start-slideshow'), 'click');
+
+            expect(document.querySelector('.js-start-slideshow').style.display).toBe('none');
+            expect(document.querySelector('.js-stop-slideshow').style.display).toBe('block');
+
+            bean.fire(document.querySelector('.js-stop-slideshow'), 'click');
+        });
+
+        it("should should auto advance to the next image when the slideshow is started", function() {
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('1');
+            bean.fire(document.querySelector('.js-start-slideshow'), 'click');
+
+            waits(5500);
+
+            runs(function() {
+                expect(document.querySelector('.js-image-index').innerHTML).toBe('2');
+                bean.fire(document.querySelector('.js-stop-slideshow'), 'click');
+            });
+        });
+
+        it("should stop the slideshow if there is a user interaction", function() {
+            bean.fire(document.querySelector('.js-start-slideshow'), 'click');
+            expect(document.querySelector('.gallery').className).toContain('gallery--slideshow');
+
+            bean.fire(document.querySelector('.js-gallery-grid'), 'click');
+            expect(document.querySelector('.gallery').className).not.toContain('gallery--slideshow');
+            bean.fire(document.querySelector('.js-stop-slideshow'), 'click');
+        });
+
+
+        // Keyboard tests
+        it("should navigate the gallery when left/right arrow keys are pressed", function() {
+            bean.fire(document.body, 'keydown', { keyCode: 39 });
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('2');
+
+            bean.fire(document.body, 'keydown', { keyCode: 39 });
+            bean.fire(document.body, 'keydown', { keyCode: 39 });
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('4');
+
+            bean.fire(document.body, 'keydown', { keyCode: 37 });
+            expect(document.querySelector('.js-image-index').innerHTML).toBe('3');
+        });
 
     });
 });

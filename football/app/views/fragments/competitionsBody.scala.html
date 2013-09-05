@@ -5,13 +5,13 @@
         <section class="sections" data-link-name="Football | Competitions | @HtmlFormat.raw(name)">
             <h1 class="article-zone type-5">@HtmlFormat.raw(name)</h1>
             <ul class="nav nav--columns nav--top-border-off cf">
-                @filters.map{ competition =>
-                    <li class="nav__item">
-                        <a href="@LinkTo{@competition.url}" class="nav__link" data-link-name="@HtmlFormat.raw(competition.name)">
-                        @HtmlFormat.raw(competition.name)
-                        </a>
-                    </li>
-                }
+            @filters.map{ competition =>
+                <li class="nav__item">
+                    <a href="@LinkTo{@competition.url}" class="nav__link" data-link-name="@HtmlFormat.raw(competition.name)">
+                    @HtmlFormat.raw(competition.name)
+                    </a>
+                </li>
+            }
             </ul>
         </section>
     }

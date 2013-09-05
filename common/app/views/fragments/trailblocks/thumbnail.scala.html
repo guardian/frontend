@@ -6,7 +6,7 @@
         @trail match {
             case g: Gallery => { @fragments.trails.gallery(g, info.rowNum) }
             case other => { 
-                @if(expandable && !trail.leadingParagraphs.isEmpty) {
+                @if(expandable) {
                     @fragments.trails.thumbnailExpandable(other, info.rowNum, related, showThumbnail = (info.rowNum <= numThumbnails), headingLevel = headingLevel)
                 } else {
                     @fragments.trails.thumbnail(other, info.rowNum, related, showThumbnail = (info.rowNum <= numThumbnails), headingLevel = headingLevel)

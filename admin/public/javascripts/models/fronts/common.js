@@ -10,12 +10,17 @@ define([
 
     return {
         config: {
+            searchPageSize:        20,
             maxDisplayableLists:   6,
-            maxOphanCallsPerBlock: 10,
+            maxOphanCallsPerBlock: 50,
             cacheExpiryMs:         300000, // 300000 = five mins 
             defaultToLiveMode:     true,
+            sectionSearches: {
+                "news": "news|uk|uk-news|world",
+                "culture": "cluture|film|music|books|artanddesign|tv-and-radio|stage"
+            },
 
-            apiBase:               '/fronts/api',
+            apiBase:               '/fronts',
             apiSearchBase:         '/api/proxy/search'
         },
 
@@ -24,22 +29,48 @@ define([
         util: {
             mediator: new EventEmitter(),
 
-            queryParams: function() {
-                return _.object(window.location.search.substring(1).split('&').map(function(keyVal){
+            hasNestedProperty: function (obj, path) {
+                if(obj.hasOwnProperty(path[0])) {
+                    return path.length === 1 ? true : this.hasNestedProperty(obj[path[0]], _.rest(path));
+                }
+                return false;
+            },
+
+            parseQueryParams: function(url) {
+                return _.object(this.urlQuery(url).split('&').map(function(keyVal){
                     return keyVal.split('=').map(function(s){
                         return decodeURIComponent(s);
                     });
                 }));
             },
 
-            urlAbsPath: function(url) {
-                if(typeof url !== 'string') { return; }
+            queryParams: function() {
+                return this.parseQueryParams(window.location.search);
+            },
 
-                var a = document.createElement('a');
+            urlQuery: function(url) {
+                var a;
+                if(typeof url !== 'string') { return; }
+                a = document.createElement('a');
                 a.href = url;
-                a = a.pathname + a.search + a.hash;
-                a = a.indexOf('/') === 0 ? a : '/' + a; // because IE doesn't return a leading '/'
-                return a;
+                return a.search.slice(1);
+            },
+
+            urlAbsPath: function(url) {
+                var a, path;
+                if(typeof url !== 'string') { return; }
+                a = document.createElement('a');
+                a.href = url;
+                path = a.pathname;
+                return path.indexOf('/') === 0 ? path.substr(1) : path; // because IE doesn't return a leading '/'
+            },
+
+            urlHost: function(url) {
+                var a;
+                if(typeof url !== 'string') { return; }
+                a = document.createElement('a');
+                a.href = url;
+                return a.hostname;
             },
 
             fullTrim: function(str){
