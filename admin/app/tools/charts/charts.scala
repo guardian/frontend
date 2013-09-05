@@ -9,7 +9,8 @@ import org.joda.time.{DateMidnight, DateTime}
 
 case class DataPoint(name: String, values: Seq[Double]) {
 
-  def this(date: Date, values: Seq[Double]) = {
+  def this(date: Date, values: Seq[Double]) =
+  {
     this((new DateTime(date.getTime)).toString("HH:mm"), values)
   }
 }
@@ -20,11 +21,8 @@ trait Chart {
   lazy val id = UUID.randomUUID().toString
 
   def name: String
-
   def yAxis: Option[String] = None
-
   def labels: Seq[String]
-
   def dataset: Seq[DataPoint]
 
   def form: String = "LineChart"
@@ -32,12 +30,10 @@ trait Chart {
   def asDataset = s"[[$labelString], $dataString]"
 
   private def labelString = labels.map(l => s"'$l'").mkString(",")
-
   private def datapointString(point: DataPoint) = {
     val data = point.values.mkString(",")
     s"['${point.name}', $data]"
   }
-
   private def dataString = dataset.map(datapointString).mkString(",")
 }
 
@@ -52,7 +48,7 @@ case class LatencyGraph(name: String, private val metrics: Future[GetMetricStati
   lazy val dataset = datapoints.map(d => DataPoint(
     new DateTime(d.getTimestamp.getTime).toString("HH:mm"),
     Seq(d.getAverage * 1000)
-  )
+    )
   )
 }
 
@@ -75,20 +71,16 @@ object PageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Da
   val name = "Pageviews"
   lazy val labels = Seq("Date", "pageviews")
 
-  def dataset = Analytics.getPageviewsByDay().toList sortBy {
-    _.first
-  } map {
+  def dataset = Analytics.getPageviewsByDay().toList sortBy { _.first } map {
     case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
   }
 }
 
-object NewPageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
+object NewPageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Dates{
   val name = "Pageviews (new users)"
   lazy val labels = Seq("Date", "pageviews")
 
-  def dataset = Analytics.getNewPageviewsByDay().toList sortBy {
-    _.first
-  } map {
+  def dataset = Analytics.getNewPageviewsByDay().toList sortBy { _.first } map {
     case (date, total) => DataPoint(date.toString("dd/MM"), Seq(total))
   }
 }
@@ -110,19 +102,15 @@ object PageviewsByOperatingSystemTreeMapGraph extends Chart {
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("OS", "pageviews")
-
   def dataset = Analytics.getPageviewsByOperatingSystem().toList map {
     case (os, total) => DataPoint(os, Seq(total))
   }
 
   override def asDataset = s"[[$labelString], [$rootElement], $dataString]"
-
   private def labelString = "'OS','parent','pageviews'"
-
   private def rootElement = "'Operating System', null, 0"
 
   private def dataString = dataset.map(datapointString).mkString(",")
-
   private def datapointString(point: DataPoint) = {
     val data = point.values.mkString(",")
     s"['${point.name}', 'Operating System', $data]"
@@ -135,19 +123,15 @@ object PageviewsByBrowserTreeMapGraph extends Chart {
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("Browsers", "pageviews")
-
   def dataset = Analytics.getPageviewsByBrowser().toList map {
     case (browser, total) => DataPoint(browser, Seq(total))
   }
 
   override def asDataset = s"[[$labelString], [$rootElement], $dataString]"
-
   private def labelString = "'Browser','parent','getPageviewsByDay'"
-
   private def rootElement = "'Browser', null, 0"
 
   private def dataString = dataset.map(datapointString).mkString(",")
-
   private def datapointString(point: DataPoint) = {
     val data = point.values.mkString(",")
     s"['${point.name}', 'Browser', $data]"
@@ -164,9 +148,8 @@ object PageviewsPerUserGraph extends Chart with implicits.Tuples with implicits.
     val month = Analytics.getFourWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
 
     val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
-    range map {
-      date =>
-        DataPoint(date.toString("dd/MM"), Seq(day(date), week(date), month(date)))
+    range map { date =>
+      DataPoint(date.toString("dd/MM"), Seq(day(date), week(date), month(date)))
     }
   }
 }
@@ -176,19 +159,16 @@ object ReturnUsersPercentageByDayGraph extends Chart with implicits.Tuples with 
   lazy val labels = Seq("Date", "day", "week", "4 week")
 
   def dataset = {
-    val users = Analytics.getUsersByDay() mapValues {
-      _ max 1L
-    }
+    val users = Analytics.getUsersByDay() mapValues { _ max 1L }
 
     val day = Analytics.getReturnUsersByDay() withDefaultValue 0L
     val week = Analytics.getWeeklyReturnUsersByDay() withDefaultValue 0L
     val month = Analytics.getFourWeeklyReturnUsersByDay() withDefaultValue 0L
 
     val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
-    range map {
-      date =>
-        val totalUsers = users(date) / 100.0
-        DataPoint(date.toString("dd/MM"), Seq(day(date) / totalUsers, week(date) / totalUsers, month(date) / totalUsers))
+    range map { date =>
+      val totalUsers = users(date) / 100.0
+      DataPoint(date.toString("dd/MM"), Seq(day(date)/totalUsers, week(date)/totalUsers, month(date)/totalUsers))
     }
   }
 }
@@ -202,9 +182,8 @@ object DaysSeenPerUserGraph extends Chart with implicits.Tuples with implicits.D
     val month = Analytics.getFourWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
 
     val range = (week.keySet ++ month.keySet - today()).toList.sorted
-    range map {
-      date =>
-        DataPoint(date.toString("dd/MM"), Seq(week(date), month(date)))
+    range map { date =>
+      DataPoint(date.toString("dd/MM"), Seq(week(date), month(date)))
     }
   }
 }
@@ -216,47 +195,22 @@ object ActiveUsersFourDaysFromSevenOrMoreGraph extends Chart with implicits.Tupl
   def dataset = {
     val week = {
       val users = Analytics.getWeeklyDaysSeenByDay()
-      val counts = (users filterKeys {
-        _ >= 4
-      }).values flatMap {
-        _.toList
-      }
-      val grouped = counts groupBy {
-        _.first
-      } mapValues {
-        _ map {
-          _.second
-        }
-      }
-      val summed = grouped mapValues {
-        _.sum
-      }
+      val counts = (users filterKeys { _ >= 4 }).values flatMap { _.toList }
+      val grouped = counts groupBy { _.first } mapValues { _ map { _.second }}
+      val summed = grouped mapValues { _.sum }
       summed withDefaultValue 0L
     }
     val month = {
       val users = Analytics.getFourWeeklyDaysSeenByDay()
-      val counts = (users filterKeys {
-        _ >= 4
-      }).values flatMap {
-        _.toList
-      }
-      val grouped = counts groupBy {
-        _.first
-      } mapValues {
-        _ map {
-          _.second
-        }
-      }
-      val summed = grouped mapValues {
-        _.sum
-      }
+      val counts = (users filterKeys { _ >= 4 }).values flatMap { _.toList }
+      val grouped = counts groupBy { _.first } mapValues { _ map { _.second }}
+      val summed = grouped mapValues { _.sum }
       summed withDefaultValue 0L
     }
 
     val range = (week.keySet ++ month.keySet - today()).toList.sorted
-    range map {
-      date =>
-        DataPoint(date.toString("dd/MM"), Seq(week(date), month(date)))
+    range map { date =>
+      DataPoint(date.toString("dd/MM"), Seq(week(date), month(date)))
     }
   }
 }
@@ -268,15 +222,12 @@ object ActiveUserProportionGraph extends Chart with implicits.Tuples with implic
   def dataset = {
     val day = Analytics.getUsersByDay() withDefaultValue 0L
     val week = Analytics.getWeeklyUsersByDay() withDefaultValue 0L
-    val month = Analytics.getFourWeeklyUsersByDay() mapValues {
-      _ max 1L
-    }
+    val month = Analytics.getFourWeeklyUsersByDay() mapValues { _ max 1L }
 
     val range = (day.keySet ++ week.keySet ++ month.keySet - today()).toList.sorted
-    range map {
-      date =>
-        val monthlyUsers = month(date) / 100.0
-        DataPoint(date.toString("dd/MM"), Seq(day(date) / monthlyUsers, week(date) / monthlyUsers))
+    range map { date =>
+      val monthlyUsers = month(date) / 100.0
+      DataPoint(date.toString("dd/MM"), Seq(day(date)/monthlyUsers, week(date)/monthlyUsers))
     }
   }
 }
@@ -311,9 +262,9 @@ object SwipeABTestResultsGraph extends Chart {
 }
 
 case class FastlyMetricGraph(
-                              name: String,
-                              metric: String,
-                              metricResults: Future[GetMetricStatisticsResult]) extends Chart {
+  name: String,
+  metric: String,
+  metricResults: Future[GetMetricStatisticsResult]) extends Chart {
 
   override lazy val labels = Seq("Time", metric)
 
@@ -327,38 +278,34 @@ case class FastlyMetricGraph(
 }
 
 case class FastlyHitMissGraph(
-                               name: String,
-                               hitResults: Future[GetMetricStatisticsResult],
-                               missResults: Future[GetMetricStatisticsResult]) extends Chart {
+   name: String,
+   hitResults: Future[GetMetricStatisticsResult],
+   missResults: Future[GetMetricStatisticsResult]) extends Chart {
 
   override lazy val labels = Seq("'Time'", "'Hits'", "'Misses'")
   override lazy val yAxis = None
   override val dataset = Nil
-
   override def asDataset = s"[[$labelString], $dataString]"
 
   private def labelString = labels.mkString(",")
+  private def dataString =  datapoints.keys.toList.sorted map { key:Long =>
+    val points = datapoints(key)
+    val data = points._1.values ++ points._2.values mkString(",")
+    s"['${points._1.name}', $data]" } mkString(",")
 
-  private def dataString = datapoints.keys.toList.sorted map {
-    key: Long =>
-      val points = datapoints(key)
-      val data = points._1.values ++ points._2.values mkString (",")
-      s"['${points._1.name}', $data]"
-  } mkString (",")
-
-  private lazy val datapoints: LongMap[(DataPoint, DataPoint)] = {
-    val hitmap: LongMap[Datapoint] = LongMap(hitResults.get().getDatapoints.map {
+  private lazy val datapoints:LongMap[(DataPoint, DataPoint)] = {
+    val hitmap:LongMap[Datapoint] = LongMap(hitResults.get().getDatapoints.map {
       point => (point.getTimestamp.getTime, point)
-    }.toSeq: _*)
+    }.toSeq:_*)
 
-    val missMap: LongMap[Datapoint] = LongMap(missResults.get().getDatapoints.map {
+    val missMap:LongMap[Datapoint] = LongMap(missResults.get().getDatapoints.map {
       point => (point.getTimestamp.getTime, point)
-    }.toSeq: _*)
+    }.toSeq:_*)
 
     // Merge both queries into a single Map, indexed by timestamp.
-    hitmap.intersectionWith(missMap, (_, valueA: Datapoint, valueB: Datapoint) => {
+    hitmap.intersectionWith(missMap, (_, valueA:Datapoint, valueB:Datapoint) => {
       (new DataPoint(valueA.getTimestamp, Seq[Double](valueA.getAverage)),
-        new DataPoint(valueB.getTimestamp, Seq[Double](valueB.getAverage)))
+       new DataPoint(valueB.getTimestamp, Seq[Double](valueB.getAverage)))
     })
   }
 }
