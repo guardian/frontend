@@ -99,11 +99,14 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 }
 
 .article__container,
-.article__main-column {
+.article__main-column,
+.article-v2__inner,
+.article-v2__main-column {
     position: relative;
 }
 
 .article__secondary-column,
+.article-v2__secondary-column,
 .byline--cloned {
     display: none;
 }
@@ -184,6 +187,13 @@ video {
     .d-tabs__item--byline {
         padding-left: $gutter/4 !important;
     }
+    .article-v2__columning-wrapper {
+        padding-right: gs-span(1) + $gs-gutter;
+
+        .media-primary {
+            margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
+        }
+    }
 }
 
 @mixin hide-discussion-tabs {
@@ -209,8 +219,7 @@ video {
         max-width: none;
     }
     .article__main-column {
-        padding-right: $a-rightCol-width + $gs-gutter;
-        padding-left: 0;
+        padding-right: $a-rightCol-width + $gs-gutter * 2;
         max-width: gs-span(8);
     }
     .article__secondary-column {
@@ -222,6 +231,42 @@ video {
     .article__secondary-column__inner {
         height: 100%;
     }
+
+    .article-v2__inner {
+        max-width: gs-span(8);
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__main-column {
+        max-width: gs-span(8);
+        padding-right: gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__columning-wrapper {
+        display: table;
+        table-layout: fixed;
+        padding-right: 0;
+
+        .media-primary {
+            margin-right: 0 !important;
+        }
+    }
+    .article-v2__main-column {
+        display: table-cell;
+        vertical-align: top;
+    }
+    .article-v2__secondary-column {
+        position: relative;
+        display: table-cell;
+        width: $a-rightCol-width;
+    }
+    .article-v2__secondary-column__inner {
+        top: 0;
+        bottom: 0;
+        position: absolute;
+
+        > .u-table {
+            height: 100%;
+        }
+    }
 }
 
 @include mq(leftCol) {
@@ -230,6 +275,11 @@ video {
         padding-right: $gutter;
     }
     .article__main-column {
+        padding-left: $a-leftCol-width + $gs-gutter;
+    }
+
+    .article-v2__inner,
+    .article-v2__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;
     }
     .article-head {
@@ -243,4 +293,3 @@ video {
         margin-left: $gs-column-width;
     }
 }
-

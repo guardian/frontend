@@ -280,7 +280,7 @@
         float: right;
         width: 50px;
         height: 37px;
-        margin-right: -16px;
+        margin-right: $gs-gutter / -2;
         padding: 0;
         background-color: #ffffff;
 
@@ -299,7 +299,12 @@
 
 .localnav__inner {
     border-bottom: 1px solid $medianMushroom;
-    margin: 0 $gutter;
+    margin: 0 $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
 }
 
 .localnav__title {

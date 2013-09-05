@@ -7,6 +7,7 @@
     padding-left: $gutter;
     padding-right: $gutter;
 
+    .article-v2__inner &,
     .article__main-column & {
         padding-left: 0;
         padding-right: 0;

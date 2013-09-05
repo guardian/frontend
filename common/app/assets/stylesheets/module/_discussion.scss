@@ -17,8 +17,13 @@ $keylineSize: 1px;
    ========================================================================== */
 
 .d-tabs {
-    margin: 0 $gutter*-1;
+    margin: 0 $gs-gutter/-2;
     padding-bottom: $baseline*3;
+    
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter * -1;
+        margin-right: $gs-gutter * -1;
+    }
 }
 
     .d-tabs--is-live {
@@ -31,16 +36,25 @@ $keylineSize: 1px;
     width: 100%;
 }
 .d-tabs__item {
+    @include box-sizing(border-box);
     border-top: $keylineSize solid $darkMushroom;
     border-bottom: $keylineSize solid $keylineColor;
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
     display: table-cell;
     cursor: pointer;
-    @include box-sizing(border-box);
 }
 .d-tabs__item--byline {
     @extend %type-7;
     vertical-align: top;
-    padding: $baseline $gutter;
+    padding-top: $baseline;
+    padding-bottom: $baseline;
 
     a {
         pointer-events: none;
@@ -61,7 +75,8 @@ $keylineSize: 1px;
 
 .d-tabs__item--commentcount {
     width: 50px;
-    padding: 14px 12px 16px;
+    padding-top: 14px;
+    padding-bottom: 16px;
     min-height: 60px;
     text-align: center;
     vertical-align: middle;

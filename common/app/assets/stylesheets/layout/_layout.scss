@@ -63,9 +63,13 @@
 /* Columning
    ========================================================================== */
 
+@mixin grid-outer-margins {
+    
+}
+
 .monocolumn-wrapper {
-    padding-left: $gutter;
-    padding-right: $gutter;
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter / 2;
 
     .article-zone {
         margin-left: 0;
@@ -74,6 +78,11 @@
     .page-head {
         padding-left: 0;
         padding-right: 0;
+    }
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }
 
