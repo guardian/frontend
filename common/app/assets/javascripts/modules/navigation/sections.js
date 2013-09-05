@@ -169,7 +169,7 @@ define([
                                           '    <h1 class="localnav__title zone-color">'+localNavTitle+'</h1>' +
                                           '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +
-                                          '          data-control-for="nav-popup-localnav">' +
+                                          '          data-toggle="nav-popup-localnav">' +
                                           '        <i class="i i-nav-divider zone-background"></i>' +
                                           '        <i class="i i-local-nav-arrow zone-background"></i>' +
                                           '      </button></div>' +
