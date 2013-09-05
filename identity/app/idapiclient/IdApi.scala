@@ -7,7 +7,7 @@ import scala.concurrent.{Future, ExecutionContext}
 import client.parser.JsonBodyParser
 import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
 import client.connection.util.ExecutionContexts
-import net.liftweb.json.JsonAST.JValue
+import net.liftweb.json.JsonAST.{JNothing, JValue}
 import net.liftweb.json.DefaultFormats
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
@@ -69,14 +69,14 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
     val response = http.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, clientAuth.headers)
-    response map {_.right.map({_ => })}
+    response map jsonBodyParser.extract[Unit]({_ => JNothing})
   }
 
   def sendPasswordResetEmail( emailAddress : String ): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset","send-password-reset-email")
     val params = Iterable(("email-address", emailAddress), ("type", "reset"))
     val response = http.GET(apiUrl(apiPath), params ++ clientAuth.parameters, clientAuth.headers)
-    response map {_.right.map({_ => })}
+    response map jsonBodyParser.extract[Unit]({_ => JNothing})
   }
 
 //  def register(userData: String): Future[Response[User]] = {
