@@ -142,6 +142,8 @@ define(["bean",
             } else if (e.keyCode === 39) { // right
                 self.next();
                 self.trackInteraction('keyboard:next');
+            } else if (e.keyCode === 27) { // esc
+                overlay.hide();
             }
         };
 
