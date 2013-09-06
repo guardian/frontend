@@ -49,11 +49,12 @@ function (
                     }) || groups[0]; // ...defaulting to the first ('Other')
 
                 // How many 1 min points are we adding into each slot
-                var perSlot = Math.max(1, Math.floor(s.data.length / slots));
+                var minsPerSlot = Math.max(1, Math.floor(s.data.length / slots));
+                group.minsPerSlot = minsPerSlot;
 
                 // ...sum the data into each group
-                _.each(_.first(_.last(s.data, 1+perSlot*slots), perSlot*slots), function(d,index) {
-                    var i = Math.floor(index / perSlot);
+                _.each(_.first(_.last(s.data, 1+minsPerSlot*slots), minsPerSlot*slots), function(d,index) {
+                    var i = Math.floor(index / minsPerSlot);
                     group.data[i] = (group.data[i] || 0) + d.count;
                     group.max = Math.max(group.max, group.data[i]);
                 });

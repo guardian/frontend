@@ -277,18 +277,24 @@ define([
                         // Put biggest groups first, so that its fill color is behind the other groups
                         return -1 * g.max;
                     }).each(function(group, i){
-                        var data = group.data;
+
+                        group.data.pop(); // drop the last data point. 
+
+                        var data = group.data,
+                            isHot = (_.last(data)/group.minsPerSlot) > 10;
+
+                        console.log(group);
 
                         $(element).sparkline(data, {
                             chartRangeMax: max,
                             defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
                             height: Math.max(10, Math.min(30, max)),
                             lineColor: '#' + group.color,
-                            fillColor: _.last(data) > 25 ? '#eeeeee' : false,
                             spotColor: false,
                             minSpotColor: false,
                             maxSpotColor: false,
-                            lineWidth: _.last(data) > 25 ? 2 : 1,
+                            lineWidth: isHot ? 2 : 1,
+                            fillColor: isHot ? '#eeeeee' : false,
                             composite: i > 0
                         });
                     });
