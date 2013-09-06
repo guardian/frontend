@@ -283,8 +283,6 @@ define([
                         var data = group.data,
                             isHot = (_.last(data)/group.minsPerSlot) > 10;
 
-                        console.log(group);
-
                         $(element).sparkline(data, {
                             chartRangeMax: max,
                             defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
