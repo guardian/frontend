@@ -258,7 +258,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         browser =>
           import browser._
 
-          Then("I should have anchors for each block")
+          Then("I should have ids for each block")
           findFirst("h1[id='commentisfree']").getText should startWith ("Comment is free")
       }
     }
