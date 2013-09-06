@@ -42,7 +42,11 @@
    ========================================================================== */
 
     .nav--columns {
-        padding: $baseline*2 $gutter $baseline $gutter;
+        padding: $baseline*2 $gs-gutter/2 $baseline;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
 
         .nav__item {
             width: 46%;
@@ -90,7 +94,11 @@
    ========================================================================== */
 
     .nav.nav--section-divider {
-        padding: $baseline*2 $gutter;
+        padding: $baseline*2 $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
         margin: 0;
         background-color: $mushroom;
     }
@@ -123,8 +131,8 @@
 }
 
     .nav--footer .nav__link {
-            color: #fff;
-            border-top: 1px solid #2B528B;
+        color: #fff;
+        border-top: 1px solid #2B528B;
     }
 
     .nav--footer.nav--section-divider .nav__link {
@@ -145,7 +153,11 @@
     display: none;
     overflow: auto;
     width: 100%;
-    padding: 0 $gutter;
+    padding: 0 $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
     background-color: #F5F5F2;
     border-bottom: 1px solid $darkMushroom;
 
@@ -216,7 +228,11 @@
     display: none;
     overflow: auto;
     width: 100%;
-    padding: 0 $gutter;
+    padding: 0 $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
     background-color: #ffffff;
     border-bottom: 1px solid $darkMushroom;
 

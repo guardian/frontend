@@ -4,7 +4,11 @@
     background-color: $darkMushroom;
 
     > .nav {
-        padding-left: $gutter;
+        padding-left: $gs-gutter/2;
+
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+        }
     }
     .nav--stacked {
         float: left;
@@ -28,7 +32,11 @@
         @extend %type-11;
         width: 42%;
         margin: 0;
-        padding: $baseline*2 $gutter 0;
+        padding: $baseline*2 $gs-gutter/2 0;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
         float: left;
         color: $blue;
 

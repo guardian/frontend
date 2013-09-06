@@ -55,8 +55,12 @@
 #logo {
     display: block;
     float: left;
-    margin: 20px 0 18px $gutter;
+    margin: 20px 0 18px $gs-gutter/2;
     text-indent: -9999px;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+    }
 }
 
 
@@ -106,7 +110,12 @@
 }
 
 .box-indent {
-    padding: 0 $gutter $baseline*1;
+    padding: 0 $gs-gutter/2 $baseline*1;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 .inline-image {

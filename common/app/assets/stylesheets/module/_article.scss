@@ -150,8 +150,12 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 }
 
 .media-primary {
-    margin-left: $gutter * -1;
-    margin-right: $gutter * -1;
+    margin-left: $gs-gutter / -2;
+    margin-right: $gs-gutter / -2;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / -1;
+        margin-right: $gs-gutter / -1;
+    }
 }
 .main-image {
     margin-bottom: 0;
