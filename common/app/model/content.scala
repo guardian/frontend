@@ -5,6 +5,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.Reference
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import conf.Configuration
@@ -126,6 +127,7 @@ object Content {
     delegate match {
       case gallery if delegate.isGallery => new Gallery(delegate)
       case video if delegate.isVideo => new Video(delegate)
+      case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
       case article if delegate.isArticle => new Article(delegate)
       case d => new Content(d)
     }
@@ -140,7 +142,6 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
   lazy val isReview = tones.exists(_.id == "tone/reviews")
-  lazy val isLiveBlog = tones.exists(_.id == "tone/minutebyminute")
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .map(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -156,6 +157,11 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
     "og:image" -> mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback)
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+}
+
+class LiveBlog(private val delegate: ApiContent) extends Article(delegate) {
+  lazy val summary: Option[String] = Jsoup.parseBodyFragment(body).body().select(".is-summary").headOption.map(_.html)
+  lazy val keyEvents: Option[String] = Jsoup.parseBodyFragment(body).body().select(".is-key-event").headOption.map(_.html)
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) with Images {

@@ -1,7 +1,8 @@
-@(model: ArticlePage)(implicit request: RequestHeader)
+@(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
+
     <div class="article-wrapper monocolumn-wrapper">
         <div class="article__main-column">
             <h2 class="article-zone type-1">
@@ -9,7 +10,7 @@
             </h2>
         </div>
         <article id="article" class="article @if(article.isLive){is-live}"
-            itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+        itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article__main-column">
                 <header class="article-head">
                     @fragments.dateline(article.webPublicationDate, article.isLive)
@@ -20,7 +21,7 @@
                         @article.cricketMatch.map { id =>
                             <div class="after-headline">
                                 <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
-                                    itemprop="significantLink" id="schema-WebPage">View full scorecard
+                                itemprop="significantLink" id="schema-WebPage">View full scorecard
                                     <i class="i i-sport-arrow-small"></i>
                                 </a>
                             </div>
@@ -52,7 +53,7 @@
 
                     <div class="article-body from-content-api @if(article.isLive) {live-blog}"
                     itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-                            @BodyCleaner(article)
+                        @BodyCleaner(article)
                     </div>
 
                     @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
@@ -73,14 +74,14 @@
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
                 <div class="d-show-cta-wrapper">
                     <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion@article.shortUrlId}"
-                       data-is-ajax data-link-name="View all comments">
+                    data-is-ajax data-link-name="View all comments">
                         View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
                     </a>
                 </div>
             }
             @if(storyPackage.nonEmpty) {
                 <aside role="complementary" data-link-context="@article.section">
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+                @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
                 </aside>
             } else {
                 <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
