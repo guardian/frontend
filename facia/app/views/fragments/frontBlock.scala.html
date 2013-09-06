@@ -14,13 +14,13 @@
         }
 
         @config.style match {
-            case Some(Thumbnail)                            => { @trailblocks.thumbnail(items, config.numItemsVisible) }
-            case Some(Headline) | Some(FastNews)            => { @trailblocks.headline(items, config.numItemsVisible) }
-            case Some(SectionFront)                         => { @trailblocks.section(items, config.numItemsVisible, numWithImages = 3 ) }
-            case Some(Masthead) | Some(SectionZone)         => { @trailblocks.masthead(items.take(config.numItemsVisible)) }
-            case Some(SectionTopStories) | Some(TopStories) => { @trailblocks.sectionTopStories(items.take(config.numItemsVisible)) }
-            case Some(Highlights)                           => { @trailblocks.highlights(items.take(config.numItemsVisible)) }
-            case _                                          => { @trailblocks.featured(items, config.numItemsVisible) }
+            case Some(Thumbnail)    => { @trailblocks.thumbnail(items, config.numItemsVisible) }
+            case Some(Headline)     => { @trailblocks.headline(items, config.numItemsVisible) }
+            case Some(SectionFront) => { @trailblocks.section(items, config.numItemsVisible, numWithImages = 3 ) }
+            case Some(Masthead)     => { @trailblocks.masthead(items.take(config.numItemsVisible)) }
+            case Some(TopStories)   => { @trailblocks.topStories(items.take(config.numItemsVisible)) }
+            case Some(Highlights)   => { @trailblocks.highlights(items.take(config.numItemsVisible)) }
+            case _                  => { @trailblocks.featured(items, config.numItemsVisible) }
         }
 
     </section>
