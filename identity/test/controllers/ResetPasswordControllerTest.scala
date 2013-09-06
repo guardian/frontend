@@ -31,7 +31,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
   val accesssDenied = List(Error("Access Denied", "Access Denied"))
 
   val user = mock[User]
-  when(user.getPrimaryEmailAddress).thenReturn("someone@test.com")
+  when(user.primaryEmailAddress).thenReturn("someone@test.com")
 
   "the renderPasswordRequest method" - {
     "should render the password reset request form" in Fake {
@@ -42,7 +42,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
   "the processPasswordRequestForm" - {
     var emailAddress: String = "test@example.com"
-    val fakeRequest = FakeRequest(POST, "/reset").withFormUrlEncodedBody("email" -> emailAddress)
+    val fakeRequest = FakeRequest(POST, "/reset").withFormUrlEncodedBody("email-address" -> emailAddress)
 
     "with an api response validating the user" - {
       when(api.sendPasswordResetEmail(any[String])).thenReturn(Future.successful(Right()))
@@ -63,34 +63,32 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
   }
 
   "the handle render method" - {
+    val fakeRequest = FakeRequest(GET, "/c/1234")
+    "when the token provided is valid" - {
+       when(api.userForToken(Matchers.any[String])).thenReturn(Future.successful(Right(user)))
+       "should pass the token param to to the api" in Fake {
+         resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
+         verify(api).userForToken(Matchers.eq("1234"))
+       }
 
-      val fakeRequest = FakeRequest(GET, "/c/1234")
-      "when the token provided is valid" - {
-         when(api.userForToken(Matchers.any[String])).thenReturn(Future.successful(Right(user)))
-         "should pass the token param to to the api" in Fake {
-           resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
-           verify(api).userForToken(Matchers.eq("1234"))
-         }
+       "should render the reset password form when the user token has not expired" in Fake {
+         val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
+         status(result) should equal(OK)
+       }
+    }
 
-         "should render the reset password form when the user token has not expired" in Fake {
-             val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
-             status(result) should equal(OK)
-         }
-      }
-
-    "when the token provided is not valid" - {
+    "should render the reset password form when the user token is not valid" - {
       when(api.userForToken("1234")).thenReturn(Future.successful(Left(tokenExpired)))
-      "should redirect to the the to the request new password form" in Fake {
+      "should render to the the to the request new password form" in Fake {
         val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
-        status(result) should equal(SEE_OTHER)
-        redirectLocation(result).get should equal("/requestnewtoken")
+        status(result) should equal(OK)
       }
     }
   }
 
   "the reset password method" - {
 
-    val fakeRequest = FakeRequest(POST, "/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password_confirm" -> "newpassword", "email_address" -> "test@somewhere.com")
+    val fakeRequest = FakeRequest(POST, "/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password-confirm" -> "newpassword", "email-address" -> "test@somewhere.com")
     "when the token provided is valid" - {
       when(api.resetPassword(Matchers.any[String], Matchers.any[String])).thenReturn(Future.successful(Right()))
       "should call the api the password with the provided new password and token" in Fake {
@@ -106,9 +104,8 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     "when the reset token has expired" - {
       when(api.resetPassword("1234","newpassword")).thenReturn(Future.successful(Left(tokenExpired)))
       "should redirect to request request new password with a token expired" in Fake {
-          val result = resetPasswordController.resetPassword("1234")(fakeRequest)
-          status(result) should equal(SEE_OTHER)
-          redirectLocation(result).get should equal("/requestnewtoken")
+        val result = resetPasswordController.resetPassword("1234")(fakeRequest)
+        status(result) should equal(OK)
       }
     }
 
