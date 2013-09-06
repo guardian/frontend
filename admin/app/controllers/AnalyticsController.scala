@@ -3,6 +3,8 @@ package controllers
 import play.api.mvc.Controller
 import common.Logging
 import tools._
+import conf.Configuration
+import tools.charts.SwipeAvgPageViewsPerSessionGraph
 
 
 object AnalyticsController extends Controller with Logging with AuthLogging {
@@ -27,12 +29,19 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
         PageviewsByOperatingSystemTreeMapGraph
       )))
   }
-  
+
   def browsers() = AuthAction { request =>
-      Ok(views.html.browsers("PROD",
-          Analytics.getPageviewsByOperatingSystem(),
-          Analytics.getPageviewsByBrowser(),
-          Analytics.getPageviewsByOperatingSystemAndBrowser()
-        ))
+    Ok(views.html.browsers("PROD",
+      Analytics.getPageviewsByOperatingSystem(),
+      Analytics.getPageviewsByBrowser(),
+      Analytics.getPageviewsByOperatingSystemAndBrowser()
+    ))
+  }
+
+  def abtests() = AuthAction {
+    request =>
+      Ok(views.html.abtests(Configuration.environment.stage.toUpperCase,
+        Seq(SwipeAvgPageViewsPerSessionGraph)
+      ))
   }
 }
