@@ -13,7 +13,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
         select year, month, day_of_month, count(*) as total
         from pageviews
-        where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+        where (host = 'www.theguardian.com')
         group by year, month, day_of_month
       """).list()
 
@@ -42,7 +42,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
         select year, month, day_of_month, count(*) as total
         from pageviews
-        where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+        where (host = 'www.theguardian.com')
         and new_or_existing = 'N'
         group by year, month, day_of_month
       """).list()
@@ -72,7 +72,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
       val data: List[(String, Long)] = StaticQuery.queryNA[(String, Long)]("""
         select country, count(*) as total
         from pageviews
-        where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+        where (host = 'www.theguardian.com')
         group by country
       """).list()
 
@@ -95,6 +95,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
       StaticQuery.queryNA[(String, String, String, String, Long)]( """
         select os_family, os_version_major, browser_family, browser_version_major, count(*) as total
         from pageviews
+        where (host = 'www.theguardian.com')
         group by os_family, os_version_major, browser_family, browser_version_major
         order by total desc
         limit 1000
@@ -114,6 +115,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
       StaticQuery.queryNA[(String, String, Long)]( """
         select os_family, os_version_major, count(*) as total
         from pageviews
+        where (host = 'www.theguardian.com')
         group by os_family, os_version_major
         order by total desc
         limit 64
@@ -133,6 +135,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
       StaticQuery.queryNA[(String, String, Long)]( """
         select browser_family, browser_version_major, count(*) as total
         from pageviews
+        where (host = 'www.theguardian.com')
         group by browser_family, browser_version_major
         order by total desc
         limit 64
@@ -153,7 +156,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         select year, month, day_of_month, user_pageviews_for_day, count(*) as count from
         (
           select year, month, day_of_month, count(*) as user_pageviews_for_day from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, ophan
         )
         group by year, month, day_of_month, user_pageviews_for_day
@@ -192,7 +195,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan, count(*) as pageviews
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         )
         select year, month, day_of_month, user_pageviews_for_week, count(*) as count
@@ -241,7 +244,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan, count(*) as pageviews
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         )
         select year, month, day_of_month, user_pageviews_for_four_weeks, count(*) as count
@@ -291,7 +294,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         from (
           select year, month, day_of_month, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, ophan
         )
         group by year, month, day_of_month
@@ -323,7 +326,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         ), range as (
           select year, month, day_of_month, days_since_epoch
@@ -367,7 +370,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         ), range as (
           select year, month, day_of_month, days_since_epoch
@@ -411,7 +414,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         )
         select year, month, day_of_month, count(*) as count
@@ -452,7 +455,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         )
         select year, month, day_of_month, count(*) as count
@@ -494,7 +497,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         )
         select year, month, day_of_month, count(*) as count
@@ -536,7 +539,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         )
         select year, month, day_of_month, user_days_seen_for_week, count(*) as count
@@ -585,7 +588,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         )
         select year, month, day_of_month, user_days_seen_for_week, count(*) as count
@@ -639,7 +642,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         )
         select year, month, day_of_month, user_days_seen_for_four_weeks, count(*) as count
@@ -688,7 +691,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
           from pageviews
-          where (host = 'm.guardian.co.uk' or host = 'm.guardiannews.com')
+          where (host = 'www.theguardian.com')
           group by year, month, day_of_month, days_since_epoch, ophan
         )
         select year, month, day_of_month, user_days_seen_for_four_weeks, count(*) as count
