@@ -7,7 +7,7 @@
 </h2>
 
 @if(model.pageType == "live") {
-    <div class="live-matches-dateline">
+    <div class="live-matches-dateline box-indent">
         @fragments.dateline(new DateTime, true)
     </div>
 }
@@ -38,4 +38,6 @@
 
 @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
 
-@fragments.mostPopularPlaceholder("sport")
+<div class="box-indent article-zone-no-indent">
+    @fragments.mostPopularPlaceholder("sport")
+</div>

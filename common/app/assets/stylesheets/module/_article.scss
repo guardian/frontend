@@ -12,8 +12,12 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 
 .article-zone {
     padding: 13px 0 14px;
-    margin-left: $gutter;
-    margin-right: $gutter;
+    margin-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
     font-weight: bolder;
     line-height: 1;
     border-bottom: 1px solid $mushroom;
@@ -24,6 +28,11 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 
     .js-popular & {
         border-bottom: none;
+    }
+    .article-zone-no-indent &,
+    .monocolumn-wrapper & {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
