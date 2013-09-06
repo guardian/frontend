@@ -55,7 +55,7 @@ class JsonBodyParserTest extends path.FreeSpec with ShouldMatchers {
       }
     }
 
-    "extracts the provided type from the JSON body of a successful response" in {
+    "extracts the provided type from the JSON body of a successful unit response" in {
       TestJsonBodyParser.extract[Unit]()(Right(emptyResponse)) match {
         case Left(result) =>  fail("extract did not return a Right, got Left(%s)".format(result.toString()))
         case Right(testObject: Unit) => //good
