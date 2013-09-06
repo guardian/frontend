@@ -1,6 +1,6 @@
-@(front: FrontPage, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
+@(front: FrontPage, page: FaciaPage)(implicit request: RequestHeader)
 
 @main(front, Switches.all){
 }{
-    @fragments.frontBody(front, trailblocks)
+    @fragments.frontBody(front, page)
 }

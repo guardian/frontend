@@ -45,7 +45,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
       "so api is not called" in Fake {
         signinController.processForm()(fakeRequest)
-        verify(api, never).authBrowser(any[Auth], any[ClientAuth], same(omnitureData))
+        verify(api, never).authBrowser(any[Auth], same(omnitureData))
       }
 
       "form is re-shown with errors" in Fake {
@@ -59,12 +59,13 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
       val clientAuth = ClientAuth("frontend-dev-client-token")
 
       "if api call succeeds" - {
-        when(api.authBrowser(any[Auth], any[ClientAuth], same(omnitureData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
+        when(api.authBrowser(any[Auth], same(omnitureData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
 
         "should call authBrowser with provided credentials" in Fake {
           signinController.processForm()(fakeRequest)
-          verify(api).authBrowser(auth, clientAuth, omnitureData)
+          verify(api).authBrowser(auth, omnitureData)
         }
+
 
         "should redirect the user to the returnUrl" in Fake {
           when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))

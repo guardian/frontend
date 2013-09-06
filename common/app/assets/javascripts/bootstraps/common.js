@@ -17,11 +17,11 @@ define([
     'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/navigation/control',
     'modules/navigation/australia',
     'modules/navigation/edition-switch',
     'modules/navigation/platform-switch',
     'modules/tabs',
+    'modules/toggles',
     'modules/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
@@ -56,11 +56,11 @@ define([
     Profile,
     Sections,
     Search,
-    NavControl,
     Australia,
     EditionSwitch,
     PlatformSwitch,
     Tabs,
+    Toggles,
     RelativeDates,
     Clickstream,
     Omniture,
@@ -98,7 +98,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            var navControl = new NavControl(),
+            var toggles = new Toggles(),
                 topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
@@ -116,13 +116,13 @@ define([
             }
 
             sections.init(header);
-            navControl.init(header);
+            toggles.init(header);
             topStories.load(config, header);
             search.init(header);
             aus.init(header);
 
             common.mediator.on('page:common:ready', function(){
-                navControl.reset();
+                toggles.reset();
             });
         },
 
@@ -144,6 +144,13 @@ define([
             var tabs = new Tabs();
             common.mediator.on('modules:popular:loaded', function(el) {
                 tabs.init(el);
+            });
+        },
+
+        showToggles: function() {
+            var toggles = new Toggles();
+            common.mediator.on('page:common:ready', function(config, context) {
+                toggles.init(context);
             });
         },
 
@@ -393,6 +400,7 @@ define([
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.showToggles();
             modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();

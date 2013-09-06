@@ -147,13 +147,13 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       FrontPage(editionalisedPath).map { frontPage =>
 
         // get the trailblocks
-        val trailblocks: Seq[Trailblock] = front(editionalisedPath)
+        val faciaPage: FaciaPage = front(editionalisedPath)
 
-        if (trailblocks.isEmpty) {
+        if (faciaPage.collections.isEmpty) {
           InternalServerError
         } else {
-          val htmlResponse = () => views.html.front(frontPage, trailblocks)
-          val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
+          val htmlResponse = () => views.html.front(frontPage, faciaPage)
+          val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
           renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
@@ -166,12 +166,12 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     FrontPage(editionalisedPath).map{ frontPage =>
 
       // get the first trailblock
-      val trailblock: Option[Trailblock] = front(editionalisedPath).headOption
+      val collection: Option[(Config, Collection)] = front(editionalisedPath).collections.headOption
 
-      if (trailblock.isEmpty) {
+      if (collection.isEmpty) {
         InternalServerError
       } else {
-        val trails: Seq[Trail] = trailblock.map(_.trails).getOrElse(Nil)
+        val trails: Seq[Trail] = collection.map(_._2.items).getOrElse(Nil)
         val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
         renderFormat(response, response, frontPage)
       }
