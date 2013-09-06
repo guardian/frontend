@@ -616,7 +616,7 @@ a.cta, .cta a {
 
 .fronts .trailblock .trail .webTitle {
     font-size: 15px;
-    margin-right: 200px;
+    margin-right: 140px;
 }
 
 .fronts .trail .webTitle--override {
@@ -666,7 +666,7 @@ a.cta, .cta a {
     display: none;
 }
 
-.fronts .trail:hover .trail__actions {
+.fronts .trailblock .trail:hover .trail__actions {
     display: block;
     position: absolute;
     top: 2px;
