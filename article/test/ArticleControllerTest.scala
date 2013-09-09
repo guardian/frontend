@@ -8,10 +8,22 @@ import org.scalatest.FlatSpec
 class ArticleControllerTest extends FlatSpec with ShouldMatchers {
   
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
+  val liveBlogUrl = "/global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
+  val sudokuUrl = "/lifeandstyle/2013/sep/09/sudoku-2599-easy"
   val callbackName = "aFunction"
 
   "Article Controller" should "200 when content type is article" in Fake {
     val result = controllers.ArticleController.render(articleUrl)(TestRequest())
+    status(result) should be(200)
+  }
+
+  "Article Controller" should "200 when content type is live blog" in Fake {
+    val result = controllers.ArticleController.render(liveBlogUrl)(TestRequest())
+    status(result) should be(200)
+  }
+
+  "Article Controller" should "200 when content type is sudoku" in Fake {
+    val result = controllers.ArticleController.render(sudokuUrl)(TestRequest())
     status(result) should be(200)
   }
 
