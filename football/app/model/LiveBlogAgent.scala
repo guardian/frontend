@@ -49,6 +49,6 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
   }
 }
 
-object LiveBlog extends LiveBlogAgent {
+object LiveBlogAgent extends LiveBlogAgent {
   def apply(edition: Edition) = blogFor(edition)()
 }
