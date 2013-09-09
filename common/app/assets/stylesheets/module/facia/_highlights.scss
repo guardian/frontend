@@ -1,11 +1,9 @@
 .section--highlights {
-    margin-top: $baseline * 4;
-    padding-bottom: ($baseline * 3) - 1;
+    margin-top: $gs-baseline;
     @include mq(tablet) {
-        border-bottom: solid 1px $grey;
         float: left;
         width: gs-span(6);
-        margin-bottom: $baseline * 4;
+        margin-bottom: $gs-baseline;
     }
     @include mq(desktop) {
         width: gs-span(8);
@@ -14,41 +12,44 @@
         width: gs-span(12);
     }
     .section__title {
-        @include font($serifheadline, 800, 16, 16);
+        @include font($serifheadline, 800, 16);
         @include box-sizing(border-box);
-        height: $baseline * 12;
-        color: $blue;
-        border-top: 2px solid $blue;
+        height: gs-height(1);
+        padding: $gs-baseline/3 0 0 $gs-baseline/3;
+        color: #ffffff;
+        background-color: $blue;
+        border-top: $baseline solid $light-blue;
     }
     .collection {
         @include mq(tablet) {
+            margin-top: $gs-baseline;
             font-size: 0;
             white-space: nowrap;
-            overflow: auto;
-            height: gs-height(6);
+            height: gs-height(8);
+        }
+        @include mq(tablet, wide) {
+            overflow-x: scroll;
+            overflow-y: hidden;
         }
     }
     .item {
         float: none;
-        margin: ($baseline * 2) - 1 0 0;
-        padding: $baseline * 2 0 gs-height(1);
-        border-top: 1px solid $grey;
-        &:first-child {
-            margin-top: 0;
-            padding-top: 0;
-            border-top-style: none;
+        margin-right: 0;
+        @include mq($to: tablet) {
+            margin-top: ($baseline*2) - 1;
+            padding-top: $baseline*2;
+            border-top: 1px solid $grey;
         }
         @include mq(tablet) {
             @include box-sizing(content-box);
+            height: auto;
             white-space: normal;
             display: inline-block;
             vertical-align: top;
-            height: 100%;
-            border-top-style: none;
             border-right: 1px dotted $grey;
-            margin-top: 0;
-            padding: 0 $gs-gutter / 2 0 ($gs-gutter / 2) - 1;
-            width: gs-span(3);
+            padding-left: $gs-gutter/2 - 1;
+            padding-right: $gs-gutter/2;
+            width: gs-span(4);
             &:first-child {
                 padding-left: 0;
             }
@@ -59,29 +60,43 @@
         }
     }
     .item__image {
-        margin-bottom: $baseline * 2;
         display: none;
         @include mq(tablet) {
             display: block;
         }
     }
     .item__title {
-        @include font-size(22, 24);
-    }
-    .item__standfirst {
-        margin-top: $baseline;
-        @include font-size(16, 20);
-        color: #666666;
-    }
-    .item:first-child .item__standfirst {
-        display: block;
+        @include font-size(26, 28);
+        font-weight: normal;
         @include mq(tablet) {
-            display: none;
+            border-top: 2px solid $blue;
+            padding-top: $gs-baseline/3;
+            min-height: gs-height(3) + $gs-baseline;
+            margin-bottom: gs-height(1) + $gs-baseline;
         }
     }
-    @include mq(tablet) {
-        .item--without-image .item__standfirst {
-            display: block;
+    .item__meta {
+        position: absolute;
+        bottom: gs-height(4) + $gs-baseline;
+        height: gs-height(1) - $gs-baseline;
+    }
+    .item__timestamp {
+        height: 100%;
+        min-width: gs-span(1) - 16;
+        padding: 0 $gs-gutter/2 0 16px;
+        margin-right: 0;
+        border-left-style: none;
+        padding-bottom: 0;
+        i {
+            left: 0;
+        }
+    }
+    .trail__count {
+        height: 100%;
+        padding-bottom: 0;
+        padding-left: 24px;
+        i {
+            right: $gs-gutter/2;
         }
     }
 }
