@@ -350,11 +350,15 @@ a.cta, .cta a {
 .cf:after{clear:both}
 .cf{zoom:1}
 
+.fronts {
+    color: #000000;
+}
+
 .fronts .finder {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
-    width: 300px;
+    width: 350px;
     padding: 10px;
 }
 
@@ -397,7 +401,7 @@ a.cta, .cta a {
     float: right;
     cursor: pointer;
     margin: 3px 2px 0 0;
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 .fronts .list-tool:hover {
@@ -426,8 +430,7 @@ a.cta, .cta a {
 }
 
 .fronts #trailblocks .connectedList {
-    min-height: 100px;
-    background: #eee;
+    min-height: 50px;
 }
 
 .fronts #trailblocks .connectedList.pending {
@@ -436,38 +439,40 @@ a.cta, .cta a {
 }
 
 .fronts .list-header {
-    background-color: #666666;
-    color: #ffffff;
-    padding: 0;
+    padding: 5px 0 0 0;
     overflow: auto;
 }
 
 .fronts .list-header a,
 .fronts .list-header a:hover,
 .fronts .list-header a:visited {
-    color: #ffffff;
+    color: #999999;
 }
 
 .fronts .list-header__title {
-    font-size: 18px;
-    padding: 3px 0 0 6px;
+    padding: 2px 0 2px 7px;
 }
 
 .fronts .list-header__title__part {
-    font-size: 18px;
+    font-size: 16px;
     display: inline-block;
-    padding-left: 4px;
-    border-left: 1px solid #cccccc;
+    padding-left: 0px;
+    text-transform: uppercase;
 }
 
 .fronts .list-header__title__part:first-child {
-    padding-left: 0;
-    border-left: 0;
+    color: #999999;
+}
+
+.fronts .list-header__title__part:last-child {
+    font-weight: bold;
 }
 
 .fronts .list-header__meta {
-    padding: 0 6px;
+    padding: 0 0 0 5px;
     font-size: 10px;
+    float: left;
+    color: #ccc;
 }
 
 .fronts .list-header__meta__last-updated {
@@ -482,34 +487,26 @@ a.cta, .cta a {
     font-size: 12px;
     float: left;
     padding: 0 6px;
-    margin: 0 0 0 1px;
+    margin: 0 1px;
     height: 19px;
-    background-color: #999999;    
     cursor: pointer;
+    color: #666666;
+    font-weight: bold;
 }
 
 .fronts .list-header__status__live.active {
     color: #47ae38;
     height: 20px;
-    background-color: #ffffff;    
 }
 
 .fronts .list-header__status__draft.hasUnPublishedEdits {
-    background-color: #f89406;
+    color: #f89406;
 }
 
 .fronts .list-header__status__draft.active {
     height: 20px;
     color: #f89406;
     background-color: #ededed;    
-}
-
-.fronts .list-header__status__live__title {
-    font-weight: bold;
-}
-
-.fronts .list-header__status__draft__title {
-    font-weight: bold;
 }
 
 .fronts a.list-header__status__control {
@@ -539,41 +536,40 @@ a.cta, .cta a {
 }
 
 .fronts #trailblocks {
-    margin: 0 0 0 300px;
+    margin: 0 0 0 350px;
 }
 
 .fronts .trailblock {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    width: 290px;
+    width: 100%;
     float: left;
-    padding: 10px 0 0 10px;
+    padding: 0 0 20px 0;
+    border-top: 3px solid #999999;
+}
+
+.fronts .trailblock:first-child {
+    border-top: 0;
+    margin-top: 25px;
 }
 
 .fronts .trail {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    height: 107px;
     cursor: move;
     background-color: #ededed;
-    padding: 5px 5px 10px 10px;
-    border-left: 1px solid #666666;
-    border-right: 1px solid #666666;
-    border-bottom: 1px solid #666666;
+    padding: 2px 5px 7px 6px;
+    border-bottom: 1px dashed #CCCCCC;
+    position: relative;
+}
+
+.fronts .trail:last-child {
+    border-bottom: 0;
 }
 
 .fronts .is-live .trail {
     background-color: #ffffff;
-}
-
-.fronts .finder .trail {
-    border: 0;
-    border-top: 1px solid #cccccc;
-    background-color: #ffffff;
-}
-
-.fronts .finder .trail:first-child {
 }
 
 .fronts .trail:hover {
@@ -584,33 +580,18 @@ a.cta, .cta a {
     opacity: 0.2;
 }
 
-.fronts .ui-sortable-placeholder {
-    height: 10px;
-    border-top: 3px solid #666666;
-    border-bottom: 3px solid #666666;
-    background-color: #DFF0D8;
+.fronts .trail.ui-sortable-placeholder {
+    height: 60px !important;
+    background-color: #47ae38 !important;
     visibility: visible !important;
-}
-
-.fronts .trail .trail__controls {
-}
-
-.fronts .trailblock .trail .trail__controls {
-    display: block;
-    float: right;
-    font-size: 10px;
-    margin: -6px -2px 0 0;
-}
-
-.fronts .trail__controls a.trail__control {
-    font-size: 9px;
-    margin: 0 2px 0 0;
 }
 
 .fronts .trail img {
     float: left;
     width: 75px;
-    background-color: #eee;
+    height: 45px;
+    margin: 5px 0 0 0;
+    background-color: #EEEEEE;
 }
 
 .fronts .trailblock .trail img,
@@ -624,12 +605,18 @@ a.cta, .cta a {
 }
 
 .fronts .trail .webTitle {
+    margin-top: 2px;
+    margin-left: 80px;
     display: block;
     text-decoration: none;
+    font-size: 13px;
+    line-height: 16px;
     color: #000000;
-    margin: 0 0 5px 0;
-    height: 40px;
-    overflow: hidden;
+}
+
+.fronts .trailblock .trail .webTitle {
+    font-size: 15px;
+    margin-right: 140px;
 }
 
 .fronts .trail .webTitle--override {
@@ -645,12 +632,22 @@ a.cta, .cta a {
 }
 
 .fronts .trail .trail__meta {
-    width: 180px;
+    float: left;
+    clear: left;
+    width: 75px;
     height: 16px;
-    float: right;
     color: #999999;
     font-size: 10px;
     line-height: 10px;
+    margin-top: 4px;
+}
+
+.fronts .trailblock .trail .trail__meta {
+    float: right;
+    clear: right;
+    text-align: right;
+    width: inherit;
+    margin-right: 32px;
 }
 
 .fronts .trail .trail__meta a {
@@ -665,6 +662,17 @@ a.cta, .cta a {
     cursor: pointer;
 }
 
+.fronts .trail .trail__actions {
+    display: none;
+}
+
+.fronts .trailblock .trail:hover .trail__actions {
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: 3px;
+}
+
 .fronts .trail_tweaks {
     clear: both;
     margin: 0 0 10px 0;
@@ -676,7 +684,7 @@ a.cta, .cta a {
 
 .fronts select {
     height: 30px;
-    width: 125px;
+    width: 160px;
     margin: 0;
 }
 
@@ -757,6 +765,7 @@ a.cta, .cta a {
     width: 180px;
     height: 30px;
     float: right;
+    clear: right;
     font-size: 9px;
     line-height: 12px;
     position: relative;
