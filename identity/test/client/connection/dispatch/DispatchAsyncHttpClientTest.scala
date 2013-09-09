@@ -24,7 +24,7 @@ class DispatchAsyncHttpClientTest extends path.FreeSpec with ShouldMatchers with
         case Left(errors) => {
           errors.size should equal(1)
           errors(0) should have('message("java.lang.Exception"))
-          errors(0) should have('description("Test message"))
+          errors(0) should have('description("java.lang.Exception: Test message"))
         }
       }
     }

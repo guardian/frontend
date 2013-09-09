@@ -1,14 +1,14 @@
 @(elements: views.html.helper.FieldElements)
 
 <li class="@elements.args.get('_class) @if(elements.hasErrors) {form-field--error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
-    <label for="@elements.id">@elements.label</label>
+    <label class="label" for="@elements.id">@elements.label</label>
     <div class="input">
+        @if(elements.infos.nonEmpty) {
+            <div class="form-field__note">@Html(elements.infos.mkString(", "))</div>
+        }
         @elements.input
         @if(elements.errors.nonEmpty) {
-            <div class="form-field__error text-input__note">@elements.errors.mkString(", ")</div>
-        }
-        @if(elements.infos.nonEmpty) {
-            <div class="text-input__note">@Html(elements.infos.mkString(", "))</div>
+            <div class="form-field__error form-field__note">@elements.errors.mkString(", ")</div>
         }
     </div>
 </li>
