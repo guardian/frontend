@@ -4,10 +4,10 @@ import scala.concurrent.Future
 import common._
 import model._
 import play.api.libs.ws.WS
-import conf.{ContentApi, Configuration}
+import conf.Configuration
 import play.api.libs.json.Json._
 import play.api.libs.json.JsValue
-import tools.QueryParams
+import tools.{FaciaContentApi, QueryParams}
 import model.FaciaPage
 import play.api.libs.ws.Response
 import model.Config
@@ -113,7 +113,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
     else {
       val results = articles.foldLeft(Future[List[Content]](Nil)){(foldList, id) =>
-        val response = ContentApi.item(id, edition).showFields("all").response
+        val response = FaciaContentApi.item(id, edition).showFields("all").response
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
         for {l <- foldList; itemResponse <- response} yield {
           itemResponse.content.map(Content(_)).map(_ +: l).getOrElse(l)
@@ -130,7 +130,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi.search(edition)
+        val search = FaciaContentApi.search(edition)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
@@ -139,7 +139,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
         }
       }
       case Path(id)  => {
-        val search = ContentApi.item(id, edition)
+        val search = FaciaContentApi.item(id, edition)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
