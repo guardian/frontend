@@ -28,18 +28,15 @@ casper.test.begin('Page contains a culture block',function suite(test){
     casper.then(function(){
         test.assertExists(
            'section[data-link-name*="block | Culture"]',
-            'Culture should have a section block'
-
-        );
-       test.assertSelectorHasText(
+           'Culture should have a section block'
+       );
+      test.assertSelectorHasText(
       cultureBlockSelector + ' > h1', 'Culture',
       'Culture section block should have a title'
       );
-
-
-        test.done();
-    });
-       });
+      test.done();
+   });
+});
   
 /**
 * Scenario: Culture block contains five trails
@@ -65,15 +62,11 @@ casper.test.begin('Page contains a culture block',function suite(test){
 **/
 casper.test.begin('Culture block has a Show More call to action',function suite(test) {
 
-
     clearLocalStorage();
     casper.reload();
-
-        casper.waitForSelector(cultureBlockSelector + ' .cta',function(){
-        casper.click(cultureBlockSelector + ' .cta');
-
-
-        casper.waitFor(function check() {
+    casper.waitForSelector(cultureBlockSelector + ' .cta',function(){
+    casper.click(cultureBlockSelector + ' .cta');
+    casper.waitFor(function check() {
             return this.evaluate(function(selector) {
                 return document.querySelectorAll(selector + ' ul li').length > 5;
             }, cultureBlockSelector)
