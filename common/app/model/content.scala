@@ -161,7 +161,6 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
 
 class LiveBlog(private val delegate: ApiContent) extends Article(delegate) {
   lazy val summary: Option[String] = Jsoup.parseBodyFragment(body).body().select(".is-summary").headOption.map(_.html)
-  lazy val keyEvents: Option[String] = Jsoup.parseBodyFragment(body).body().select(".is-key-event").headOption.map(_.html)
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) with Images {
