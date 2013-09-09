@@ -1,4 +1,6 @@
-package common
+package services
+
+import common.Logging
 
 object Audit extends Logging {
 

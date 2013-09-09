@@ -1,7 +1,8 @@
 package tools
 
-import common.{ Logging, S3 }
+import common.Logging
 import conf.AdminConfiguration
+import services.S3
 
 trait Store extends Logging {
   lazy val configKey = AdminConfiguration.configKey
