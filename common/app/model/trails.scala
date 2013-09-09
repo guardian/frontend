@@ -8,7 +8,6 @@ import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.Json._
 import play.api.libs.json.JsObject
 import scala.concurrent.Future
-import tools.QueryParams
 import views.support.Style
 
 
