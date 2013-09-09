@@ -46,19 +46,10 @@
                 @fragments.byline(article.byline, article)
 
                 <div class="js-article__container article__container cf">
-                    @if(article.isLiveBlog) {
-                        <div class="cf">
-                            @fragments.liveFilter()
-
-                            @if(article.isLive) {
-                                @fragments.autoUpdate()
-                            }
-                        </div>
-                    }
 
                     <div class="article-body from-content-api @if(article.isLive) {live-blog}"
                     itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-                            @BodyCleaner(article)
+                            @BodyCleaner(article, article.body)
                     </div>
 
                     @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {

@@ -129,3 +129,34 @@
         padding-left: 40px;
         margin-bottom: $baseline*2;
     }
+
+/* Expander
+========================================================================== */
+.live-blog__expander-trigger { display: none; }
+
+.live-blog__previous-blocks {
+    @include transition(opacity .5s ease-out);
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.live-blog__expander-trigger:checked {
+    + .live-blog__previous-wrapper {
+        .live-blog__previous-blocks {
+            opacity: 1;
+            height: auto;
+
+            .block:first-child {
+                border-top: 2px solid #e3e3db;
+                display: block;
+                padding: 16px 0 4px;
+            }
+        }
+        .live-blog__expander-cta {
+            display: none;
+        }
+    }
+}
+
