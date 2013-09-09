@@ -94,6 +94,14 @@ a.item__link,
         margin-right: $baseline;
     }
 }
+.item__meta--grey {
+    .item__timestamp i {
+        @extend .i-clock-grey;
+    }
+    .trail__count i {
+        @extend .i-comment-grey;
+    }
+}
 .item--feature {
     border: none;
     background-color: $pink !important;

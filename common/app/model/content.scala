@@ -139,13 +139,17 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
   lazy val isReview = tones.exists(_.id == "tone/reviews")
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .map(e => e.hasClass("gu-video") && e.tagName() == "video")
     .getOrElse(false)
+
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    ("content-type", contentType),
+    ("isLiveBlog", isLiveBlog)
+  )
 
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 

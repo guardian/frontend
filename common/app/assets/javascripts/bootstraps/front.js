@@ -9,7 +9,8 @@ define([
     "modules/footballfixtures",
     "modules/cricket",
     "modules/masthead-relative-dates",
-    'modules/top-stories-show-more'
+    'modules/top-stories-show-more',
+    'modules/facia-popular'
 ], function (
     common,
     bonzo,
@@ -17,9 +18,7 @@ define([
     TrailblockToggle,
     TrailblockShowMore,
     FootballFixtures,
-    Cricket,
-    mastheadRelativeDates,
-    TopStoriesShowMore
+    Cricket
 ) {
 
     var modules = {
@@ -84,20 +83,6 @@ define([
                     }
                 }
             });
-        },
-
-        relativiseMastheadDates: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                mastheadRelativeDates.init(context);
-            });
-        },
-
-        showTopStoriesShowMore: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.section--top-stories', context).each(function(topStories) {
-                    var t = new TopStoriesShowMore(topStories);
-                });
-            });
         }
 
     };
@@ -109,9 +94,6 @@ define([
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();
             modules.showCricket();
-            // facia functionality
-            modules.relativiseMastheadDates();
-            modules.showTopStoriesShowMore();
         }
         common.mediator.emit("page:front:ready", config, context);
     };
