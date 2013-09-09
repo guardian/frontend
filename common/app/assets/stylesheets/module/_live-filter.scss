@@ -1,26 +1,27 @@
-.live-widget {
+.live-toolbar {
+    display: none;
+    width: 100%;
+    margin-bottom: $baseline * 4;
     background: $mushroom;
     height: 42px;
-    margin-bottom: $baseline * 4;
-    font-size: .875em;
 
-    @include mq(tablet) {
-        font-size: 1em;
+    .is-live &,
+    .has-key-events & {
+        display: table;
+    }
+
+    @include mq($to: tablet) {
+        font-size: .875em;
     }
 }
 
 .live-toggler-wrapper {
-    float: left;
     display: none;
     width: 50%;
-
-    &:only-child {
-        width: auto;
-        float: none;
-    }
+    text-align: center;
 
     .has-key-events & {
-        display: block;
+        display: table-cell;
     }
 }
 .live-toggler {
@@ -41,6 +42,7 @@
 .lt__value {
     color: $linkBlue;
     padding-right: $gutter/2;
+    white-space: nowrap;
 }
 
 @include mq(tablet) {
