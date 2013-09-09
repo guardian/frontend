@@ -16,18 +16,20 @@
         </header>
 
         <div class="pageviews-wrapper">
-            <h2>Pageviews</h2>
+            <h2>Pageviews <span class="pageviews-per-second"></span></h2>
             <div id="pageviews"></div>
         </div>
 
-        <div class="pingdom-wrapper">
-            <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
-            <ul id="pingdom"></ul>
-        </div>
+        <div class="monitoring-wrapper">
+            <div class="pingdom-wrapper">
+                <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
+                <ul id="pingdom"></ul>
+            </div>
 
-        <div class="deployments-wrapper">
-            <h2>Deployments <small>(the last deployment for each RiffRaff project)</small></h2>
-            <ul id="riffraff"></ul>
+            <div class="riffraff-wrapper">
+                <h2>Deployments <small>(the last deployment for each RiffRaff project)</small></h2>
+                <ul id="riffraff"></ul>
+            </div>
         </div>
 
         <h2>Cloudwatch</h2>
@@ -73,6 +75,7 @@
         <!-- TODO - add team city & pager duty -->
 
         <script src="https://www.google.com/jsapi"></script>
+        <script src="/assets/javascripts/components/underscore/underscore.js"></script>
         <script src="/assets/javascripts/components/jquery/jquery.js"></script>
         <script src="/assets/javascripts/radiator/bootstrap.js"></script>
   </body>

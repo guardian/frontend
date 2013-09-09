@@ -1,6 +1,7 @@
 define([
     "common",
     "modules/autoupdate",
+    "modules/live-filter",
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
@@ -8,6 +9,7 @@ define([
 ], function (
     common,
     AutoUpdate,
+    LiveFilter,
     MatchNav,
     Reading,
     Discussion,
@@ -20,14 +22,14 @@ define([
             var matchNav = new MatchNav();
             common.mediator.on('page:article:ready', function(config, context) {
                 if(config.page.section === "football") {
-                    var teamIds = config.referencesOfType('paFootballTeam');
-                    var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
+                    var teamIds = config.referencesOfType('paFootballTeam'),
+                        isRightTypeOfContent = config.hasTone("Match reports") || config.page.isLiveBlog;
 
                     if(teamIds.length === 2 && isRightTypeOfContent){
-                        var url = "/football/api/match-nav/";
-                            url += config.webPublicationDateAsUrlPart() + "/";
-                            url += teamIds[0] + "/" + teamIds[1];
-                            url += "?currentPage=" + encodeURIComponent(config.page.pageId);
+                        var url = "/football/api/match-nav/" +
+                                  config.webPublicationDateAsUrlPart() + "/" +
+                                  teamIds[0] + "/" + teamIds[1] +
+                                  "?currentPage=" + encodeURIComponent(config.page.pageId);
 
                         matchNav.load(url, context);
                     }
@@ -49,6 +51,9 @@ define([
                         switches: config.switches,
                         manipulationType: 'prepend'
                     }).init();
+                }
+                if (config.page.isLiveBlog) {
+                    new LiveFilter(context).init();
                 }
             });
         },

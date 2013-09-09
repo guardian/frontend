@@ -45,8 +45,14 @@
             @fragments.byline(article.byline, article)
 
             <div class="js-article__container article__container cf">
-                @if(article.isLive) {
-                    @fragments.autoUpdate()
+                @if(article.isLiveBlog) {
+                    <div class="cf">
+                        @fragments.liveFilter()
+
+                        @if(article.isLive) {
+                            @fragments.autoUpdate()
+                        }
+                    </div>
                 }
 
                 <div class="article-body from-content-api @if(article.isLive) {live-blog}"
@@ -55,7 +61,7 @@
                 </div>
 
                 @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
-                    @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card")
+                    @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card", "hidden")
                 }
             </div>
 
