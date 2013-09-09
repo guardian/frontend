@@ -9,6 +9,8 @@ import play.api.libs.ws.WS
 
 trait WsHttp extends Http[Future] with ExecutionContexts {
 
+  val defaultTimeout = 2000
+
   import System.currentTimeMillis
   import ContentApiMetrics._
   import Configuration.host
@@ -18,7 +20,7 @@ trait WsHttp extends Http[Future] with ExecutionContexts {
     val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
 
     val start = currentTimeMillis
-    val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
+    val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(defaultTimeout).get()
 
     // record metrics
     response.onSuccess {
