@@ -5,7 +5,7 @@ import play.api.GlobalSettings
 object Global extends GlobalSettings  {
 
   def scheduleJobs() {
-    Jobs.schedule("AnalyticsLoadJob", "0 0 8/24 * * ?", PorterMetrics.AnalyticsLoadTimingMetric) {
+    Jobs.schedule("AnalyticsLoadJob", "0 0 7/24 * * ?", PorterMetrics.AnalyticsLoadTimingMetric) {
       AnalyticsLoadJob.run()
     }
     Jobs.schedule("FastlyCloudwatchLoadJob", "0 0/2 * * * ?", PorterMetrics.FastlyCloudwatchLoadTimingMetric) {

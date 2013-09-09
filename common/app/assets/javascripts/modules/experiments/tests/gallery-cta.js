@@ -13,7 +13,7 @@ function (common,
         var label = (detect.hasTouchScreen() ? 'Tap' : 'Click') + ' here to launch gallery';
 
         this.id = 'GalleryCta';
-        this.expiry = '2013-09-02';
+        this.expiry = '2013-09-19';
         this.audience = 1;
         this.description = 'Tests two different styles "Launch Gallery" CTA';
         this.canRun = function(config) {

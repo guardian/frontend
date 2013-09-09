@@ -233,6 +233,12 @@ define([
 
     List.prototype.saveConfig = function() {
         var self = this;
+
+        // Normalise
+        this.config.contentApiQuery(this.config.contentApiQuery().replace(/^.*\/api\/?/, ''));
+        this.config.min(parseInt(this.config.min(), 10) || undefined);
+        this.config.max(parseInt(this.config.max(), 10) || undefined);
+
         reqwest({
             url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
@@ -240,9 +246,9 @@ define([
             contentType: 'application/json',
             data: JSON.stringify({ 
                 config: {
-                    contentApiQuery: this.config.contentApiQuery() || undefined,
-                    min: parseInt(this.config.min(), 10) || undefined,
-                    max: parseInt(this.config.max(), 10) || undefined
+                    contentApiQuery: this.config.contentApiQuery(),
+                    min: this.config.min(),
+                    max: this.config.max()
                 }
             })
         }).always(function(){

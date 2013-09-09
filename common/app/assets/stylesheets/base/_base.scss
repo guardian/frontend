@@ -6,6 +6,20 @@ body {
     background-color: #fff;
 }
 
+body:after {
+    content: "mobile";
+    display: none;
+    @include mq(tablet) {
+        content: "tablet";
+    }
+    @include mq(desktop) {
+        content: "desktop";
+    }
+    @include mq(wide) {
+        content: "wide";
+    }
+}
+
 .dateline {
     font-family: $sans-serif;
     margin: 0 0 $baseline*2;

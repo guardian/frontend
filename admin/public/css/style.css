@@ -553,6 +553,7 @@ a.cta, .cta a {
 .fronts .trail {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    overflow: hidden;
     height: 107px;
     cursor: move;
     background-color: #ededed;
@@ -762,7 +763,7 @@ a.cta, .cta a {
 }
 
 .fronts .pageviews {
-    color: #d61d00;
+    color: #666666;
     font-weight: bold;
     position: absolute;
     bottom: -2px;

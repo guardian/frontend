@@ -8,7 +8,7 @@
         role="complementary"
         aria-labelledby="related-content-head">
         @* order the related trails by date *@
-        @fragments.trailblocks.thumbnail(trails.sortBy(-_.webPublicationDate.getMillis), numItemsVisible = visibleTrails, numThumbnails = 3, related = true, headingLevel = 3, expandable = Switches.ABExpandableTrails.isSwitchedOn)
-        @fragments.trailblocks.headline(trails.sortBy(-_.webPublicationDate.getMillis).drop(visibleTrails), numItemsVisible = trails.size - visibleTrails, related = true, isPanel = true, headingLevel = 3, expandable = Switches.ABExpandableTrails.isSwitchedOn)
+        @fragments.trailblocks.thumbnail(trails.sortBy(-_.webPublicationDate.getMillis), numItemsVisible = visibleTrails, related = true, headingLevel = 3, expandable = false)
+        @fragments.trailblocks.headline(trails.sortBy(-_.webPublicationDate.getMillis).drop(visibleTrails), numItemsVisible = trails.size - visibleTrails, related = true, isPanel = true, headingLevel = 3, expandable = false)
     </div>
 }
