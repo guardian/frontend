@@ -5,18 +5,15 @@ define([
     EventEmitter,
     ko
 ) {
-    var _listsContainerID = '#trailblocks',
-        _masonryEl;
-
     return {
         config: {
             searchPageSize:        20,
-            maxDisplayableLists:   6,
+            maxDisplayableLists:   20,
             maxOphanCallsPerBlock: 50,
             cacheExpiryMs:         300000, // 300000 = five mins 
             defaultToLiveMode:     true,
             sectionSearches: {
-                "news": "news|uk|uk-news|world",
+                "default": "news|uk|uk-news|world",
                 "culture": "cluture|film|music|books|artanddesign|tv-and-radio|stage"
             },
 
@@ -99,15 +96,6 @@ define([
                 _.keys(target).forEach(function(key){
                     target[key](opts[key]);
                 });
-            },
-
-            pageReflow: function() {
-                if(_masonryEl) {
-                    _masonryEl.masonry('destroy');
-                } else {
-                    _masonryEl = $(_listsContainerID);
-                }
-                _masonryEl.masonry();
             }
         }
 
