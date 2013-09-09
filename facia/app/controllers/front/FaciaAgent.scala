@@ -12,6 +12,7 @@ import play.api.libs.ws.Response
 import model.Config
 import scala.Some
 import play.api.libs.json.JsObject
+import services.S3FrontsApi
 import views.support._
 
 object Path {

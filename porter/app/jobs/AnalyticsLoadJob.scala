@@ -2,7 +2,7 @@ package jobs
 
 import common._
 import conf.Configuration
-import services.Analytics
+import services.{ S3, Analytics }
 
 object AnalyticsLoadJob extends Logging {
 

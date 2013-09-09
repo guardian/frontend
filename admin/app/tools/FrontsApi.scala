@@ -2,8 +2,8 @@ package tools
 
 import frontsapi.model.{Trail, Block}
 import org.joda.time.DateTime
-import common.S3FrontsApi
 import play.api.libs.json.Json
+import services.S3FrontsApi
 
 trait FrontsApiRead {
   def getSchema: Option[String]
