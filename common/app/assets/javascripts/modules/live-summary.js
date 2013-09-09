@@ -15,7 +15,6 @@ define([
 
     function Summary(context) {
         this.context = context || document;
-        this.placeholder = '.js-summary-placeholder';
         this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
     }
 
@@ -24,17 +23,23 @@ define([
 
         this.deportLatestSummary();
 
-        common.mediator.on('modules:autoupdate:loaded', function() {
-            self.deportLatestSummary.call(self);
-        });
+        // common.mediator.on('modules:autoupdate:loaded', function() {
+        //     self.deportLatestSummary.call(self);
+        // });
     };
 
     Summary.prototype.deportLatestSummary = function() {
-        var summaries = this.articleContainer.getElementsByClassName('is-summary');
+        var self = this,
+            $summaries = common.$g('.is-summary', this.articleContainer),
+            summaryContent;
 
         // TODO: Verify if summary has actually been updated
-        if (summaries.length) {
-            bonzo(this.placeholder, this.context).html(summaries[0].innerHTML);
+        if ($summaries.length > 0) {
+            summaryContent = $summaries[0].innerHTML;
+
+            bonzo(common.$g('.js-summary-placeholder', self.context)).each(function(element, index) {
+                bonzo(element).html(summaryContent);
+            });
         }
     };
 
