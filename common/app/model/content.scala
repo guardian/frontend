@@ -63,6 +63,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
+  lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
@@ -128,7 +129,7 @@ object Content {
       case gallery if delegate.isGallery => new Gallery(delegate)
       case video if delegate.isVideo => new Video(delegate)
       case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
-      case article if delegate.isArticle => new Article(delegate)
+      case article if delegate.isArticle || delegate.isSudoku => new Article(delegate)
       case d => new Content(d)
     }
   }
