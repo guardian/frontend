@@ -43,6 +43,11 @@
     &:after {
         clear: both;
     }
+    @if $old-ie {
+        & {
+            zoom: 1;
+        }
+    }
 }
 
 .u-cf,
