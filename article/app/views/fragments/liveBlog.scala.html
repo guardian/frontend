@@ -1,7 +1,7 @@
-@(model: ArticlePage)(implicit request: RequestHeader)
+@(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
+@defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
     <div class="article-wrapper monocolumn-wrapper">
         <div class="article-v2__inner">
             <h2 class="article-zone type-1">
@@ -12,9 +12,20 @@
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
                 <header class="article-head">
-                    @fragments.dateline(article.webPublicationDate)
+                    @fragments.dateline(article.webPublicationDate, article.isLive)
 
                     @fragments.headline(article.headline)
+
+                    @if(LiveCricketSwitch.isSwitchedOn) {
+                        @article.cricketMatch.map { id =>
+                            <div class="after-headline">
+                                <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
+                                    itemprop="significantLink" id="schema-WebPage">View full scorecard
+                                    <i class="i i-sport-arrow-small"></i>
+                                </a>
+                            </div>
+                        }
+                    }
 
                     @fragments.standfirst(article)
                 </header>
@@ -26,7 +37,7 @@
             <div class="article-v2__columning-wrapper">
                 <div class="article-v2__main-column">
 
-                    @if(!article.hasVideoAtTop) {
+                    @if(!article.isLive && !article.hasVideoAtTop) {
                         @article.mainPicture.map{ mainPicture =>
                             @article.mainPicture(width=220).map{ smallCrop =>
                                 @fragments.img(mainPicture, smallCrop)
@@ -37,10 +48,22 @@
                     @fragments.byline(article.byline, article)
 
                     <div class="js-article__container article__container u-cf">
-                        <div class="article-body from-content-api"
+                        <div class="live-toolbar">
+                            @fragments.liveFilter()
+
+                            @if(article.isLive) {
+                                @fragments.autoUpdate()
+                            }
+                        </div>
+                        @if(LiveSummarySwitch.isSwitchedOn) {
+                            @fragments.liveSummary(toggle = true)
+                        }
+
+                        <div class="article-body from-content-api @if(article.isLive) {live-blog}"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article)
                         </div>
+
                     </div>
 
                     @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
@@ -56,6 +79,9 @@
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
                                     @fragments.social(article, "next to content")
+                                    @if(LiveSummarySwitch.isSwitchedOn) {
+                                        @fragments.liveSummary()
+                                    }
                                 </div>
                             </div>
                             <div class="u-table__row">
@@ -94,4 +120,4 @@
             <div class="js-popular" role="complementary"></div>
         </div>
     </div>
-}
+    }

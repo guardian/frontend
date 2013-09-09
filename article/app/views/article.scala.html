@@ -1,9 +1,9 @@
-@(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
+@(model: ArticlePage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@main(article, Switches.all){
+@main(model.article, Switches.all){
 }{
 
-    @fragments.articleBody(article, storyPackage)
+    @fragments.articleBody(model)
 
 }

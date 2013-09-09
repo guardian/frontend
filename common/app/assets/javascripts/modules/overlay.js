@@ -12,8 +12,8 @@ define(["bean",
 
         var self     = this,
             template = '<div class="overlay">' +
-                       '  <div class="overlay__header cf">' +
-                       '    <div class="overlay__toolbar cf"></div>' +
+                       '  <div class="overlay__header u-cf">' +
+                       '    <div class="overlay__toolbar u-cf"></div>' +
                        '    <button class="overlay__cta overlay__cta--close  js-overlay-close" data-link-name="Close overlay">' +
                        '      <i class="i i-close-icon"></i>' +
                        '    </button>' +
