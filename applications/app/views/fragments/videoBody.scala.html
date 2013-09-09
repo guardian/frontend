@@ -17,6 +17,9 @@
                 </header>
             </div>
             <div class="article__main-column">
+                <div class="article__secondary-column" aria-hidden="true">
+                    @fragments.social(video, "next to content")
+                </div>
                 <div class="player">
                     <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
                         @video.encodings.map{ encoding =>
@@ -32,8 +35,9 @@
                 <div class="video-standfirst">
                     @fragments.standfirst(video)
                 </div>
-
-                @fragments.social(video)
+                <div class="social-wrapper">
+                    @fragments.social(video)
+                </div>
             </div>
         </article>
         <div class="article__main-column">
@@ -44,9 +48,9 @@
             } else {
                 <aside class="js-related" role="complementary"></aside>
             }
+
+            @fragments.mostPopularPlaceholder(video.section)
         </div>
     </div>
-
-    @fragments.mostPopularPlaceholder(video.section)
 
 }

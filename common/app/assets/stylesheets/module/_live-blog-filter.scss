@@ -1,6 +1,6 @@
 .live-widget {
     background: $mushroom;
-    height: 46px;
+    height: 42px;
     margin-bottom: $baseline * 4;
     font-size: .875em;
 
@@ -25,8 +25,8 @@
 }
 .live-toggler {
     display: none;
-    padding: 7px 0;
-    line-height: 32px;
+    padding: 6px 0;
+    line-height: 30px;
     text-align: left;
 
     &.is-active {

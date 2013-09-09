@@ -19,11 +19,6 @@
 }
 
 .furniture--right {
-    position: absolute;
-    width: $a-rightCol-width;
-    right: ($a-rightCol-width + $gs-gutter)*-1;
-    bottom: $baseline*2;
-
     @include mq($a-rightCol-trigger) {
         display: block;
     }
@@ -34,10 +29,16 @@
    ========================================================================== */
 
 .card {
-
+    position: relative;
 }
 
 .card-wrapper {
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: none;
+    }
+
     &.is-hidden { display: none; }
 }
 
@@ -82,7 +83,7 @@
 }
 
 .card__description {
-  color: #444444;
+    color: #444444;
 }
 
 .card__appendix {
@@ -91,12 +92,13 @@
 }
 
 .card--right {
+    margin-top: $baseline*4;
 
     &.is-hidden {
       display: none;
     }
 
-    .card__title {        
+    .card__title {
         min-height: $unitHeight;
         margin-bottom: $baseline*3;
         border-top: 1px solid $grey;

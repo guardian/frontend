@@ -345,10 +345,10 @@ a.cta, .cta a {
 
 /* FRONTS MANAGER */
 
-.cf:before,
-.cf:after{content:"";display:table}
-.cf:after{clear:both}
-.cf{zoom:1}
+.u-cf:before,
+.u-cf:after{content:"";display:table}
+.u-cf:after{clear:both}
+.u-cf{zoom:1}
 
 .fronts {
     color: #000000;
