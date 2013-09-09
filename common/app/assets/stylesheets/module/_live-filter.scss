@@ -20,10 +20,6 @@
     width: 50%;
     text-align: center;
 
-    &:only-child {
-//        width: 100%;
-    }
-
     .has-key-events & {
         display: table-cell;
     }
