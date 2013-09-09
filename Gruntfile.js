@@ -116,6 +116,12 @@ module.exports = function (grunt) {
             },
             networkfront: {
                 src: ['integration-tests/casper/tests/network-front.spec.js']
+            },
+            navigationtopstories: {
+                src: ['integration-tests/casper/tests/navigation-top-stories.spec.js']
+            },
+            sectionfrontculture: {
+                src: ['integration-tests/casper/tests/section-front-culture.spec.js']
             }
         },
 
@@ -331,7 +337,9 @@ module.exports = function (grunt) {
     grunt.registerTask('test:integration',  ['env:casperjs', 'casperjs:all']);
     grunt.registerTask('test:integration:admin',  ['env:casperjs', 'casperjs:admin']);
     grunt.registerTask('test:integration:discussion',  ['env:casperjs', 'casperjs:discussion']);
+    grunt.registerTask('test:integration:navigationtopstories',  ['env:casperjs', 'casperjs:navigationtopstories']);
     grunt.registerTask('test:integration:front',  ['env:casperjs', 'casperjs:networkfront']);
+    grunt.registerTask('test:integration:sectionfrontculture',  ['env:casperjs', 'casperjs:sectionfrontculture']);
 
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
 
