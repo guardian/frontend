@@ -40,7 +40,6 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.relativiseMastheadDates();
-            modules.showTopStoriesShowMore();
             modules.showFaciaPopular();
         }
         common.mediator.emit("page:front:ready", config, context);
