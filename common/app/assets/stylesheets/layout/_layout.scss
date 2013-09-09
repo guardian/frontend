@@ -119,7 +119,10 @@
     float: left;
     clear: left;
     margin: 3px 0 0 0;
-    padding-right: 10px;
+    padding-right: $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        padding-right: $gs-gutter;
+    }
     padding-bottom: 15px;
     background: white;
 
