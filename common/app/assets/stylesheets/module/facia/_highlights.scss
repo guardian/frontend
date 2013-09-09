@@ -11,15 +11,6 @@
     @include mq(wide) {
         width: gs-span(12);
     }
-    .section__title {
-        @include font($serifheadline, 800, 16);
-        @include box-sizing(border-box);
-        height: gs-height(1);
-        padding: $gs-baseline/3 0 0 $gs-baseline/3;
-        color: #ffffff;
-        background-color: $blue;
-        border-top: $baseline solid $light-blue;
-    }
     .collection {
         @include mq(tablet) {
             margin-top: $gs-baseline;
@@ -47,9 +38,9 @@
             display: inline-block;
             vertical-align: top;
             border-right: 1px dotted $grey;
-            padding-left: $gs-gutter/2 - 1;
-            padding-right: $gs-gutter/2;
+            padding: 0 $gs-gutter/2 gs-height(5) $gs-gutter/2 - 1;
             width: gs-span(4);
+            min-height: gs-height(3) + $gs-baseline;
             &:first-child {
                 padding-left: 0;
             }
@@ -59,10 +50,9 @@
             }
         }
     }
-    .item__image {
-        display: none;
-        @include mq(tablet) {
-            display: block;
+    @include mq($to: tablet) {
+        .item__image {
+            display: none;
         }
     }
     .item__title {
@@ -71,9 +61,16 @@
         @include mq(tablet) {
             border-top: 2px solid $blue;
             padding-top: $gs-baseline/3;
-            min-height: gs-height(3) + $gs-baseline;
-            margin-bottom: gs-height(1) + $gs-baseline;
         }
+    }
+    .item__image-container {
+        position: absolute;
+        bottom: 0;
+        height: gs-height(4);
+        width: gs-span(4);
+    }
+    .item__image {
+        height: 100%;
     }
     .item__meta {
         position: absolute;
@@ -94,9 +91,9 @@
     .trail__count {
         height: 100%;
         padding-bottom: 0;
-        padding-left: 24px;
+        padding-left: 28px;
         i {
-            right: $gs-gutter/2;
+            left: $gs-gutter/2 - 1;
         }
     }
 }
