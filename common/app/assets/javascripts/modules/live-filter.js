@@ -1,5 +1,5 @@
 /*
-    Module: live-blog-filter.js
+    Module: live-filter.js
     Description: Filter displayed events depending on their type
 */
 define([
