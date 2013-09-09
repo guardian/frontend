@@ -348,7 +348,7 @@ a.competition-title {
 
 .live-matches-dateline {
     display: block;
-    margin-bottom: $baseline*3;
+    padding-bottom: $baseline*3;
 
     .has-localnav & {
         padding-top: 12px;
