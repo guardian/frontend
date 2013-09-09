@@ -2,6 +2,7 @@ define([
     "common",
     "modules/autoupdate",
     "modules/live-filter",
+    "modules/live-summary",
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
@@ -10,6 +11,7 @@ define([
     common,
     AutoUpdate,
     LiveFilter,
+    LiveSummary,
     MatchNav,
     Reading,
     Discussion,
@@ -54,6 +56,10 @@ define([
                 }
                 if (config.page.isLiveBlog) {
                     new LiveFilter(context).init();
+
+                    if (config.switches.LiveSummary) {
+                        new LiveSummary(context).init();
+                    }
                 }
             });
         },

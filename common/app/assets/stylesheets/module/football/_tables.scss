@@ -15,7 +15,7 @@
 .table-football-body .table-football-legend th { // can't get this less specific, sorry (MA)
     background-color: #f4f4ee;
     color: #777;
-    font-weight: normal;    
+    font-weight: normal;
 }
 
 .table-football th {
@@ -30,6 +30,7 @@
 
     &:first-child {
         border-top: none;
+        padding-left: $gutter/2;
     }
 }
 
@@ -76,6 +77,7 @@
     }
 
     .table-football-header th:first-child,
+    .table-football-body th:first-child,
     .table-football td:first-child {
         padding-left: 12px;
     }
@@ -84,7 +86,6 @@
     .table-football td:last-child {
         padding-right: 12px;
     }
-    
 }
 
 .table-football-leftaligned {

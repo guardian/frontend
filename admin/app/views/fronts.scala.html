@@ -88,7 +88,7 @@
                                     &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
                                     &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
                                 </span>
-                            </div>                    
+                            </div>
                         </div>
                         <div class="list-header__meta">
                             <!-- ko if: state.timeAgo -->
@@ -102,7 +102,7 @@
                                 Empty
                             <!-- /ko -->
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="list-config" data-bind="visible: state.editingConfig">
                     <div>
@@ -139,7 +139,7 @@
     </div>
 
     <script type="text/html" id="template_article">
-        <div class="trail cf" data-bind="
+        <div class="trail u-cf" data-bind="
                 attr: {'data-url': meta.id},
                 css: {redundant: $parent.config && $parent.config.max ? (0 + $index()) >= (0 + $parent.config.max()) : false}
             ">
@@ -164,7 +164,7 @@
                 <i class="icon-trash list-tool trail__actions__remove" data-bind="click: $parent.dropItem"></i>
             </div>
 
-            <a class="trail_stats cf" target="_blank" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + meta.id()}">
+            <a class="trail_stats u-cf" target="_blank" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + meta.id()}">
                 <div class="pageviews" data-bind="if: pageViewsCommas(), text: pageViewsCommas"></div>
                 <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
             </a>
