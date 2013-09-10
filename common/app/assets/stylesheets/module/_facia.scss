@@ -1,5 +1,14 @@
 .facia-container {
     overflow: hidden;
+    @include mq(tablet) {
+        width: gs-span(8);
+    }
+    @include mq(desktop) {
+        width: gs-span(12);
+    }
+    @include mq(wide) {
+        width: gs-span(16);
+    }
 }
 
 @import "facia/_items";

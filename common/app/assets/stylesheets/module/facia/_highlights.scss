@@ -1,9 +1,9 @@
 .section--highlights {
     margin-top: $gs-baseline;
     @include mq(tablet) {
-        float: left;
-        width: gs-span(6);
-        margin-bottom: $gs-baseline;
+        vertical-align: top;
+        display: inline-block;
+        width: gs-span(4);
     }
     @include mq(desktop) {
         width: gs-span(8);

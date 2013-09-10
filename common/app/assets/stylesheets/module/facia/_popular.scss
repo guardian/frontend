@@ -1,16 +1,12 @@
 .section--popular {
     margin-top: $gs-baseline;
     @include mq(tablet) {
+        display: inline-block;
+        width: gs-span(4);
         min-height: gs-height(7);
+        margin-left: $gs-gutter/2;
         padding-left: ($gs-gutter/2) - 1;
         border-left: 1px solid $grey;
-        margin-left: gs-span(6) + ($gs-gutter/2);
-    }
-    @include mq(desktop) {
-        margin-left: gs-span(8) + ($gs-gutter/2);
-    }
-    @include mq(wide) {
-        margin-left: gs-span(12) + ($gs-gutter/2);
     }
     .collection {
         margin-top: $baseline*3;

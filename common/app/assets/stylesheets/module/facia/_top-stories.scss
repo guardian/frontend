@@ -1,15 +1,5 @@
 .section--top-stories {
     overflow: hidden;
-    margin: 0 auto;
-    @include mq(tablet) {
-        width: gs-span(8);
-    }
-    @include mq(desktop) {
-        width: gs-span(12);
-    }
-    @include mq(wide) {
-        width: gs-span(16);
-    }
     .collection {
         margin-top: $gs-baseline;
     }
