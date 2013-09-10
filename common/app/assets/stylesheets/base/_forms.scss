@@ -10,7 +10,6 @@
     width: 13px;
 }
 
-form,
 .form {
     margin-top: $baseline*6;
     margin-bottom: $baseline*6;
@@ -123,17 +122,4 @@ form,
 .check-label--helper {
     position: relative;
     top: $baseline;
-}
-
-.u-button-reset {
-    display: block;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    width: 100%;
-    background: transparent;
-
-    &:focus {
-        outline: 0;
-    }
 }

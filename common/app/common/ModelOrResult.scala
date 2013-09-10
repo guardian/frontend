@@ -9,7 +9,7 @@ object ModelOrResult extends Results {
   def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, Result] =
     item.map(Left(_)).orElse {
       response.content.map {
-        case a if a.isArticle => internalRedirect("type/article", a.id)
+        case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
         case v if v.isVideo => internalRedirect("type/video", v.id)
         case g if g.isGallery => internalRedirect("type/gallery", g.id)
         case unsupportedContent => Right(Redirect(unsupportedContent.webUrl, Map("view" -> Seq("desktop"))))

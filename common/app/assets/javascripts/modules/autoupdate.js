@@ -41,7 +41,6 @@ define([
             originalPageTitle;
 
         this.template =
-            '<div class="live-widget">' +
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--on"' +
             '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
             '    <span class="lt__label">Auto update</span>' +
@@ -55,8 +54,7 @@ define([
             '    <span class="h">is</span>' +
             '    <span class="lt__value">Off</span>' +
             '    <span class="h">(turn on)</span>' +
-            '  </button>'+
-            '</div>';
+            '  </button>';
 
         // View
         this.view = {

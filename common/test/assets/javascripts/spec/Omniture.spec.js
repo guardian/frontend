@@ -124,6 +124,16 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             });
         });
 
+
+        it("should send event46 when a page has comments", function(){
+            config.page.contentType = 'Article';
+            config.page.commentable = true;
+            var o = new Omniture(s).go(config);
+
+            expect(s.apl).toHaveBeenCalled();
+            expect(s.apl.args[0][1]).toBe('event46');
+        });
+
         it("should log a clickstream event", function() {
 
             var o = new Omniture(s),

@@ -55,8 +55,12 @@
 #logo {
     display: block;
     float: left;
-    margin: 20px 0 18px $gutter;
+    margin: 20px 0 18px $gs-gutter/2;
     text-indent: -9999px;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+    }
 }
 
 
@@ -64,16 +68,17 @@
    ========================================================================== */
 
 .monocolumn-wrapper {
-    padding-left: $gutter;
-    padding-right: $gutter;
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter / 2;
 
-    .article-zone {
-        margin-left: 0;
-        margin-right: 0;
-    }
     .page-head {
         padding-left: 0;
         padding-right: 0;
+    }
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }
 
@@ -101,7 +106,12 @@
 }
 
 .box-indent {
-    padding: 0 $gutter $baseline*1;
+    padding: 0 $gs-gutter/2 $baseline*1;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 .inline-image {

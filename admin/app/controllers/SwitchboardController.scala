@@ -6,6 +6,7 @@ import conf.{ Switches, Configuration }
 import play.api.mvc._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
+import services.{Notification, Audit}
 import tools.Store
 
 object SwitchboardController extends Controller with AuthLogging with Logging with ExecutionContexts {

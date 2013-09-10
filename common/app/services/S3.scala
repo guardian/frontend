@@ -1,6 +1,7 @@
-package common
+package services
 
 import conf.Configuration
+import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
