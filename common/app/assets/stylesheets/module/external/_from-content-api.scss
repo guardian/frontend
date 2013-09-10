@@ -41,12 +41,6 @@
             line-height: 28px;
             line-height: 2.8rem;
         }
-        @include mq(desktop) {
-            font-size: 22px;
-            font-size: 2.2rem;
-            line-height: 28px;
-            line-height: 2.8rem;
-        }
     }
     h3 {
         @extend %type-5;
@@ -165,7 +159,8 @@ figure {
         border-top: 1px solid #B3B3B4;
     }
 
-    th, td {
+    th,
+    td {
         @extend %type-11;
         padding: $baseline*2;
         color: #676767;
