@@ -1,8 +1,9 @@
 package tools.charts
 
 import tools.{Chart, DataPoint}
-import common.{CSV, S3}
+import common.CSV
 import conf.Configuration
+import services.S3
 
 
 trait ABTestResultGraph extends Chart with implicits.Dates {

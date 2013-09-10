@@ -2,7 +2,7 @@ package jobs
 
 import common._
 import conf.Configuration
-import services.ABTestResults
+import services.{S3, ABTestResults}
 
 object ABTestResultsLoadJob extends Logging {
 
