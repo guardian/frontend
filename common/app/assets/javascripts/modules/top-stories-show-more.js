@@ -21,18 +21,19 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
             },
             _getRowSize = function () {
                 switch (detect.getBreakpoint()) {
-                    case 'mobile':
-                        return 1;
-                    case 'tablet':
+                    case 'wide':
+                        return 4;
                     case 'desktop':
                         return 3;
+                    case 'tablet':
+                        return 2;
                     default:
                         return 4;
                 }
             };
 
         // hide stories
-        common.$g('.item:nth-child(n + ' + ((_getRowSize() * 2) + 1) + ')', topStories).each(function(item) {
+        common.$g('.item:nth-child(n + ' + (_getRowSize() + 1) + ')', topStories).each(function(item) {
             bonzo(item).addClass('u-h');
         });
         // add toggle button

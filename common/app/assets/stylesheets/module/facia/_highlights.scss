@@ -12,7 +12,6 @@
     }
     .collection {
         @include mq(tablet) {
-            margin-top: $gs-baseline;
             font-size: 0;
             white-space: nowrap;
             height: gs-height(8);
@@ -56,9 +55,6 @@
         }
     }
     @include mq($to: tablet) {
-        .item:first-child {
-            margin-top: $gs-baseline;
-        }
         .item__image {
             display: none;
         }

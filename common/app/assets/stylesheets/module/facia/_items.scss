@@ -416,7 +416,6 @@ a.item__link,
     .item__title {
         border-top: 2px solid $blue;
         padding-top: $gs-baseline/2;
-        padding-right: $gs-gutter/2;
     }
 }
 .item--feature-new {
@@ -429,6 +428,9 @@ a.item__link,
     .item__meta-new {
         margin-left: $gs-gutter/2;
     }
+    .item__standfirst {
+        margin-right: $gs-gutter/2;
+    }
 }
 .section__title {
     @include font($serifheadline, 800, 16);
@@ -439,4 +441,15 @@ a.item__link,
     background-color: $blue;
     border-top: $gs-baseline/3 solid $light-blue;
     margin-bottom: $gs-baseline;
+}
+.collection__show-more {
+    background-color: #9b9b9b;
+    border-style: none;
+    min-width: gs-span(2);
+    min-height: gs-height(1);
+    color: #ffffff;
+    @include font($serifheadline, 800, 14);
+    position: relative;
+    left: 50%;
+    margin-left: -(gs-span(1) + $gs-gutter/2);
 }

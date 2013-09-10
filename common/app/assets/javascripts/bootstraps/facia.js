@@ -22,7 +22,7 @@ define([
 
         showTopStoriesShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.section--top-stories', context).each(function(topStories) {
+                common.$g('.section--small-stories', context).each(function(topStories) {
                     var t = new TopStoriesShowMore(topStories);
                 });
             });
@@ -40,6 +40,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.relativiseMastheadDates();
+            modules.showTopStoriesShowMore();
             modules.showFaciaPopular();
         }
         common.mediator.emit("page:front:ready", config, context);

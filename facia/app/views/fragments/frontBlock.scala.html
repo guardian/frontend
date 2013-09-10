@@ -19,6 +19,7 @@
             case Some(SectionFront) => { @trailblocks.section(items, config.numItemsVisible, numWithImages = 3 ) }
             case Some(Masthead)     => { @trailblocks.masthead(items.take(config.numItemsVisible)) }
             case Some(TopStories)   => { @trailblocks.topStories(items.take(config.numItemsVisible)) }
+            case Some(SmallStories) => { @trailblocks.smallStories(items.take(config.numItemsVisible)) }
             case Some(Highlights)   => { @trailblocks.highlights(items.take(config.numItemsVisible)) }
             case _                  => { @trailblocks.featured(items, config.numItemsVisible) }
         }

@@ -57,6 +57,7 @@ trait ParseConfig extends ExecutionContexts {
     case "sectionfront" => Some(SectionFront)
     case "masthead"     => Some(Masthead)
     case "topStories"   => Some(TopStories)
+    case "smallStories" => Some(SmallStories)
     case "highlights"   => Some(Highlights)
     case _              => None
   }
