@@ -33,6 +33,13 @@
     transform: $args;
 }
 
+@mixin keyframes($name) {
+    @-webkit-keyframes $name { @content; }
+    @-moz-keyframes $name { @content; }
+    @-ms-keyframes $name { @content; }
+    @keyframes $name { @content; }
+}
+
 @mixin rounded-corners($radius: 5px) {
     -webkit-border-radius: $radius;
     -moz-border-radius: $radius;

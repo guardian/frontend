@@ -145,29 +145,7 @@
     }
 }
 
-
-@-webkit-keyframes new-block-animation {
-    0%   { opacity: 0; background: #f4f4ee; max-height: 0; }
-    20%  { opacity: 1; }
-    90%  { background: #f4f4ee; max-height: 1000px; }
-    99%  { max-height: 1000px; }
-    100% { background: transparent; max-height: none; }
-}
-@-moz-keyframes new-block-animation {
-    0%   { opacity: 0; background: #f4f4ee; max-height: 0; }
-    20%  { opacity: 1; }
-    90%  { background: #f4f4ee; max-height: 1000px; }
-    99%  { max-height: 1000px; }
-    100% { background: transparent; max-height: none; }
-}
-@-ms-keyframes new-block-animation {
-    0%   { opacity: 0; background: #f4f4ee; max-height: 0; }
-    20%  { opacity: 1; }
-    90%  { background: #f4f4ee; max-height: 1000px; }
-    99%  { max-height: 1000px; }
-    100% { background: transparent; max-height: none; }
-}
-@keyframes new-block-animation {
+@include keyframes(new-block-animation) {
     0%   { opacity: 0; background: #f4f4ee; max-height: 0; }
     20%  { opacity: 1; }
     90%  { background: #f4f4ee; max-height: 1000px; }
