@@ -8,14 +8,16 @@ define([
     'bonzo',
     'bean',
     'qwery',
-    'modules/userPrefs'
+    'modules/userPrefs',
+    'modules/detect'
 ], function (
     common,
     ajax,
     bonzo,
     bean,
     qwery,
-    userPrefs
+    userPrefs,
+    detect
 ) {
     /*
         @param {Object} options hash of configuration options:
@@ -34,6 +36,9 @@ define([
             'prefName': 'auto-update',
             'manipulationType' : 'html'
         }, config);
+
+        var unread = 0,
+            originalPageTitle;
 
         this.template =
             '<div class="live-widget">' +
@@ -60,6 +65,8 @@ define([
                     manipulation = options.manipulationType,
                     date = new Date().toString();
 
+                //res.html = '<div id="block-'+date+'" class="block">new block</div>';
+
                 //Check if we are handling single fragment
                 if(attachTo.nodeType) {
                     var $attachTo = bonzo(attachTo);
@@ -67,7 +74,11 @@ define([
                     if (options.responseSelector) {
                         $attachTo[manipulation](common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
                     } else {
-                        $attachTo[manipulation](res.html);
+                        var elementsToAdd = bonzo.create('<div>' + res.html + '</div>')[0];
+                        bonzo(elementsToAdd.children).addClass('autoupdate--new');
+
+                        $attachTo[manipulation](elementsToAdd.innerHTML);
+
                     }
                     // add a timestamp to the attacher
                     $attachTo.attr('data-last-updated', date);
@@ -82,6 +93,28 @@ define([
                         }
                     }
                 }
+
+                console.log(manipulation);
+                if (manipulation === 'prepend') {
+                    var newElements = attachTo.querySelectorAll('.autoupdate--new');
+
+                    unread += newElements.length;
+
+                    if (options.showUnreadCounter && unread && !detect.pageVisible()) {
+                        this.updatePageTitle(unread);
+
+                    } else {
+                        unread = 0;
+                        this.restorePageTitle();
+                    }
+
+
+                    if (detect.pageVisible()) {
+                        this.revealNewElements();
+                    }
+                }
+
+
                 common.mediator.emit('modules:autoupdate:render');
             },
 
@@ -104,8 +137,28 @@ define([
             destroy: function () {
                 bonzo('.update').remove();
                 common.mediator.emit('modules:autoupdate:destroyed');
+            },
+
+            revealNewElements: function() {
+                var newElements = options.attachTo.querySelectorAll('.autoupdate--new');
+                bonzo(newElements).addClass('autoupdate--highlight');
+
+                setTimeout(function() {
+                    bonzo(newElements).removeClass('autoupdate--new')
+                        .removeClass('autoupdate--highlight');
+                }, 5000);
+            },
+
+            updatePageTitle: function(count) {
+                document.title = '(' + count + ') ' + originalPageTitle;
+            },
+
+            restorePageTitle: function() {
+                document.title = originalPageTitle;
             }
         };
+
+
 
         // Model
         this.load = function (url) {
@@ -162,6 +215,21 @@ define([
             var that = this,
                 loadOnInitialise = options.loadOnInitialise || false,
                 pref = this.getPref();
+
+
+            if (options.animateInserts) {
+                bonzo(options.attachTo).addClass('autoupdate--has-animation');
+            }
+
+            // Save original page title
+            originalPageTitle = document.title;
+
+            detect.initPageVisibility();
+
+            common.mediator.on('modules:detect:pagevisibility:visible', function() {
+                that.view.restorePageTitle();
+                that.view.revealNewElements();
+            });
 
             // add the component to the page, and show it
             common.$g('.update').html(this.template).removeClass('hidden');

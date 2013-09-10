@@ -44,12 +44,16 @@ define([
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
                                 path = window.location.pathname;
+
+                           //id = 'block-522ed1a2e4b0b4804819a4bd';
                            return path + '.json' + '?lastUpdate=' + id;
                         },
-                        delay: 60000,
+                        delay: 10000,
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
-                        manipulationType: 'prepend'
+                        manipulationType: 'prepend',
+                        animateInserts: true,
+                        showUnreadCounter: true
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
