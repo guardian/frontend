@@ -1,0 +1,22 @@
+@(page: MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, returnUrl : String)(implicit request: RequestHeader)
+
+@import views.html.fragments.registrationFooter
+
+
+
+@main(page, Switches.all){
+}{
+<div class="identity-wrapper">
+    <h1>Welcome to the guardian</h1>
+    <p>Now check your email.</p>
+    <form >
+        <ul class="form-fields">
+            <li>
+               <button type="submit" href="@returnUrl">Continue</button>
+            </li>
+        </ul>
+    </form>
+
+    @registrationFooter(page, idRequest, idUrlBuilder)
+</div>
+}
