@@ -1,0 +1,43 @@
+.live-summary__expander-trigger,
+.live-summary__expander-show {
+    display: none;
+}
+
+.live-summary__expander-trigger {
+    + .live-summary__expander-wrapper {
+        .live-summary__expander-content {
+            @include transition(opacity .5s ease-out);
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+    }
+    &:checked {
+        + .live-summary__expander-wrapper {
+            .live-summary__expander-content {
+                opacity: 1;
+                height: auto;
+            }
+            .live-summary__expander-show {
+                display: block;
+            }
+            .live-summary__expander-hide {
+                display: none;
+            }
+        }
+    }
+}
+
+.live-summary__expander-cta__button {
+    text-transform: uppercase;
+    font-size: .875em;
+    float: right;
+    width: auto;
+    color: $linkBlue;
+    padding: $baseline $gutter;
+}
+
+.live-summary__title {
+    color: $articleOrange;
+}
