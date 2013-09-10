@@ -108,3 +108,14 @@ a.item__link,
         border-top-color: $green;
     }
 }
+.collection__show-more {
+    background-color: #9b9b9b;
+    border-style: none;
+    min-width: gs-span(2);
+    min-height: gs-height(1);
+    color: #ffffff;
+    @include font($serifheadline, 800, 14);
+    position: relative;
+    left: 50%;
+    margin-left: -(gs-span(1) + $gs-gutter/2);
+}
