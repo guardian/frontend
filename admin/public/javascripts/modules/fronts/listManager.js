@@ -32,10 +32,6 @@ define([
             return [].concat(_.filter((common.util.queryParams().collections || "").split(","), function(str){ return !!str; }));
         }
 
-        function dropCollection(list) {
-            setDisplayedLists(_.reject(chosenCollections(), function(id){ return id === list.id; }));
-        }
-
         function clearAll() {
             model.config(undefined);
             setDisplayedLists([]);
@@ -57,10 +53,23 @@ define([
             model.collections.removeAll();
             model.collections(
                 chosenCollections().map(function(id){
+                    console.log(configs[id]);
                     return new List(id);
                 })
             );
             connectSortableLists();
+        }
+
+        function renderCollections(configId) {
+            model.collections.removeAll();
+            if (configs[configId]) {
+                model.collections(
+                    configs[configId].map(function(collection){
+                        return new List(collection);
+                    })
+                );
+                connectSortableLists();                
+            };
         }
 
         function connectSortableLists() {
@@ -191,7 +200,7 @@ define([
                 },
                 function(xhr) { window.console.log("ERROR: There was a problem listing the configs"); }
             );
-            //window.configs = configs;
+            window.configs = configs;
         };
 
         function fetchConfig(id, callback) {
@@ -243,11 +252,14 @@ define([
             model.collections = knockout.observableArray();
 
             model.actions = {
-                dropCollection: dropCollection,
                 clearAll: clearAll,
                 flushClipboard: flushClipboard
             }
 
+            model.config.subscribe(function(config) {
+                renderCollections(config);
+            });
+            /*
             model.config.subscribe(function(config) {
                 if (!config) { return; }
 
@@ -257,6 +269,7 @@ define([
 
                 setDisplayedLists(_.pluck(configs[config], 'id'));
             });
+            */
 
             knockout.bindingHandlers.makeDropabble = {
                 init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {

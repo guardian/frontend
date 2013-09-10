@@ -58,72 +58,74 @@
 
         <div id="trailblocks" data-bind="foreach: collections">
             <div class="trailblock">
-                <div class="list-header">
-                    <i class="icon-cog list-tool" data-bind="click: toggleEditingConfig"></i>
 
-                    <a data-bind="click: $root.actions.dropCollection" class="list-header__hide" title="Hide this block">HIDE</a>
-                    <div class="list-header__title" data-bind="foreach: crumbs">
-                        <span class="list-header__title__part" data-bind="text: $data"></span> 
+                <div class="list-header" data-bind="if: !state.editingConfig()">
+
+                    <div class="list-header__title">
+                        <span class="list-header__role" data-bind="text: configMeta.roleName"></span>
+
+                        <span class="list-header__display">title:</span>
+                        <a class="list-header__display__name" data-bind="
+                            text: configMeta.displayName,
+                            click: toggleEditingConfig"></a>
+
+                        <span class="list-header__role__description">
+                            role: <span data-bind="text: configMeta.roleDescription"></span>
+                        </span>
                     </div>
-                    <div data-bind="visible: !state.editingConfig()">
-                        <div class="list-header__status">
-                            <div class="list-header__status__live" data-bind="
-                                css: {
-                                    active: state.liveMode()
-                                }">
-                                <span class="list-header__status__live__title" data-bind="click: setLiveMode">LIVE</span>
-                            </div>                    
-                            <div class="list-header__status__draft" data-bind="
-                                css: {
-                                    active: !state.liveMode(),
-                                    hasUnPublishedEdits: state.hasUnPublishedEdits()
-                                }">
-                                <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
-                                    DRAFT
-                                    <span data-bind="if: state.hasUnPublishedEdits()">
-                                        has edits
-                                    </span>
+
+                    <div class="list-header__status">
+                        <div class="list-header__status__live" data-bind="
+                            css: {
+                                active: state.liveMode()
+                            }">
+                            <span class="list-header__status__live__title" data-bind="click: setLiveMode">LIVE</span>
+                        </div>                    
+                        <div class="list-header__status__draft" data-bind="
+                            css: {
+                                active: !state.liveMode(),
+                                hasUnPublishedEdits: state.hasUnPublishedEdits()
+                            }">
+                            <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
+                                DRAFT
+                                <span data-bind="if: state.hasUnPublishedEdits()">
+                                    has edits
                                 </span>
-                                <span data-bind="if: !state.liveMode() && state.hasUnPublishedEdits()">
-                                    &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
-                                    &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
-                                </span>
-                            </div>
+                            </span>
+                            <span data-bind="if: !state.liveMode() && state.hasUnPublishedEdits()">
+                                &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
+                                &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
+                            </span>
                         </div>
-                        <div class="list-header__meta">
-                            <!-- ko if: state.timeAgo -->
-                                updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span> 
-                                by <a class="list-header__meta__user" data-bind="
-                                    text: meta.updatedBy,
-                                    attr: {href: 'mailto:' + meta.updatedEmail}
-                                    "></a>
-                            <!-- /ko -->
-                            <!-- ko ifnot: state.timeAgo -->
-                                Empty
-                            <!-- /ko -->
-                        </div>
+                    </div>
+                    <div class="list-header__meta">
+                        <!-- ko if: state.timeAgo -->
+                            updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span> 
+                            by <a class="list-header__meta__user" data-bind="
+                                text: collectionMeta.updatedBy,
+                                attr: {href: 'mailto:' + collectionMeta.updatedEmail}
+                                "></a>
+                        <!-- /ko -->
+                        <!-- ko ifnot: state.timeAgo -->
+                            Empty
+                        <!-- /ko -->
                     </div>
                 </div>
+
                 <div class="list-config" data-bind="visible: state.editingConfig">
+                    <span class="list-header__role" data-bind="text: configMeta.roleName"></span>
+
+                    <div>Title for display:</div>
                     <div>
-                        Number of articles:
-                    </div>
-                    <div>
-                        <input type="number" class="tiny" data-bind="value: config.min"/> Minumum
-                    </div>
-                    <div>
-                        <input type="number" class="tiny" data-bind="value: config.max"/> Maximum
-                    </div>
-                    <div>ContentApi query for collection automation:</div>
-                    <div>
-                        <input type="text" data-bind="value: config.contentApiQuery"/>
+                        <input type="text" data-bind="value: configMeta.displayName"/>
                     </div>
                     <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
                     <button class="btn" value="Cancel" data-bind="click: stopEditingConfig">Cancel</button>
                 </div>
+
                 <div class="needs-more" data-bind="if: needsMore">
-                    Needs at least <span class="needs-more__num" data-bind="text: config.min"></span> 
-                    article<span data-bind="text: config.min() > 1 ? 's' : ''"></span>
+                    Needs at least <span class="needs-more__num" data-bind="text: collectionMeta.min"></span> 
+                    article<span data-bind="text: collectionMeta.min() > 1 ? 's' : ''"></span>
                 </div>
                 <div class="connectedList persisted" data-bind="
                     attr: {
@@ -141,7 +143,7 @@
     <script type="text/html" id="template_article">
         <div class="trail u-cf" data-bind="
                 attr: {'data-url': meta.id},
-                css: {redundant: $parent.config && $parent.config.max ? (0 + $index()) >= (0 + $parent.config.max()) : false}
+                css: {redundant: $parent.collectionMeta && $parent.collectionMeta.max ? (0 + $index()) >= (0 + $parent.collectionMeta.max()) : false}
             ">
 
             <div class="trail_tweaks cf" data-bind="visible: state.editingConfig">
