@@ -253,7 +253,8 @@ object Switches extends Collections {
     ABGalleryCta,
     ABSwipeCtas,
     ABExpandableMostPopular,
-    ABRightHandCard
+    ABRightHandCard,
+    ABLiveBlogShowMore
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
