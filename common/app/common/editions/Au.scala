@@ -65,7 +65,7 @@ object Au extends Edition(
       .showMedia("all")
       .showReferences(references)
       .showStoryPackage(true)
-      .tag(s"world/australia")
+      .tag("world/australia")
       .response
 
     promiseOfAustralianVideo.map(_.results.map(new Content(_)))

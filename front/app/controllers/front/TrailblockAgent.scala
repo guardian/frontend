@@ -13,21 +13,7 @@ class TrailblockAgent(val description: TrailblockDescription) extends ExecutionC
   def refresh() { description.query map refreshTrails }
 
   def refreshTrails(newTrails: Seq[Trail]) {
-    agent.send{ old =>
-
-      val oldUrls = old.toList.flatMap(_.trails).map(_.url).toList
-      val newUrls = newTrails.map(_.url).toList
-
-      newUrls.diff(oldUrls).foreach { url =>
-        log.info(s"added item: $url")
-      }
-
-      oldUrls.diff(newUrls).foreach { url =>
-        log.info(s"removed item: $url")
-      }
-
-      Some(Trailblock(description, newTrails))
-    }
+    agent send { _ => Some(Trailblock(description, newTrails)) }
   }
 
   def close() {agent.close()}
