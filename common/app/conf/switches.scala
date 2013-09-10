@@ -186,6 +186,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
     safeState = Off)
 
+  val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
+    "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
+    safeState = Off)
+
 
   // Sport Switch
 
