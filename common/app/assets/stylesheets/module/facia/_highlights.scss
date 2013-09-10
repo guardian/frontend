@@ -1,5 +1,4 @@
 .section--highlights {
-    margin-top: $gs-baseline;
     @include mq(tablet) {
         vertical-align: top;
         display: inline-block;
@@ -26,11 +25,6 @@
     .item {
         float: none;
         margin-right: 0;
-        @include mq($to: tablet) {
-            margin-top: ($baseline*2) - 1;
-            padding-top: $baseline*2;
-            border-top: 1px solid $grey;
-        }
         @include mq(tablet) {
             @include box-sizing(content-box);
             height: auto;
@@ -38,9 +32,8 @@
             display: inline-block;
             vertical-align: top;
             border-right: 1px dotted $grey;
-            padding: 0 $gs-gutter/2 gs-height(5) $gs-gutter/2 - 1;
+            padding: 0 $gs-gutter/2 gs-height(4) $gs-gutter/2 - 1;
             width: gs-span(4);
-            min-height: gs-height(3) + $gs-baseline;
             &:first-child {
                 padding-left: 0;
             }
@@ -48,9 +41,24 @@
                 padding-right: 0;
                 border-right-style: none;
             }
+            .item__title {
+                min-height: gs-height(4) + $gs-baseline;
+                padding-bottom: gs-height(1);
+            }
+        }
+    }
+    .item--feature-new {
+        @include mq(tablet) {
+            background-color: #ffffff;
+        }
+        .item__title {
+             background-color: #ededed;
         }
     }
     @include mq($to: tablet) {
+        .item:first-child {
+            margin-top: $gs-baseline;
+        }
         .item__image {
             display: none;
         }
@@ -58,10 +66,6 @@
     .item__title {
         @include font-size(26, 28);
         font-weight: normal;
-        @include mq(tablet) {
-            border-top: 2px solid $blue;
-            padding-top: $gs-baseline/3;
-        }
     }
     .item__image-container {
         position: absolute;
@@ -72,28 +76,10 @@
     .item__image {
         height: 100%;
     }
-    .item__meta {
-        position: absolute;
-        bottom: gs-height(4) + $gs-baseline;
-        height: gs-height(1) - $gs-baseline;
-    }
-    .item__timestamp {
-        height: 100%;
-        min-width: gs-span(1) - 16;
-        padding: 0 $gs-gutter/2 0 16px;
-        margin-right: 0;
-        border-left-style: none;
-        padding-bottom: 0;
-        i {
-            left: 0;
-        }
-    }
-    .trail__count {
-        height: 100%;
-        padding-bottom: 0;
-        padding-left: 28px;
-        i {
-            left: $gs-gutter/2 - 1;
+    .item__meta-new {
+        @include mq(tablet) {
+            position: absolute;
+            bottom: gs-height(4) + $gs-baseline;
         }
     }
 }

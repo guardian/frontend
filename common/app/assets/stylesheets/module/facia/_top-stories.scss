@@ -1,16 +1,22 @@
 .section--top-stories {
     overflow: hidden;
-    .collection {
-        margin-top: $gs-baseline;
-    }
     .item {
         margin-right: 0;
-        border: 10px none #ffffff;
         @include box-sizing(border-box);
+        @include mq($to: tablet) {
+            float: none;
+        }
         @include mq(tablet) {
+            border: 10px none #ffffff;
             width: 50%;
             padding-bottom: gs-height(5);
             min-height: gs-height(8);
+            &:first-child {
+                border-right-style: solid;
+            }
+            &:last-child {
+                border-left-style: solid;
+            }
         }
         @include mq(desktop) {
             padding-bottom: gs-height(7);
@@ -21,15 +27,7 @@
             min-height: gs-height(12);
         }
     }
-    .item:first-child {
-        border-right-style: solid;
-    }
-    .item:last-child {
-        border-left-style: solid;
-    }
     .item__title {
-        border-top: 2px solid $blue;
-        padding-top: $gs-baseline/3;
         font-weight: normal;
         @include mq(tablet) {
             @include font-size(26, 28);
@@ -39,9 +37,12 @@
         }
     }
     .item__image-container {
-        position: absolute;
-        bottom: 0;
+        @include mq($to: tablet) {
+            display:none;
+        }
         @include mq(tablet) {
+            position: absolute;
+            bottom: 0;
             height: gs-height(4);
         }
         @include mq(desktop) {
@@ -63,10 +64,9 @@
             font-weight: normal;
         }
     }
-    .item__meta {
-        position: absolute;
-        height: gs-height(1) - $gs-baseline;
+    .item__meta-new {
         @include mq(tablet) {
+            position: absolute;
             bottom: gs-height(4) + $gs-baseline;
         }
         @include mq(desktop) {
@@ -74,25 +74,6 @@
         }
         @include mq(wide) {
             bottom: gs-height(8) + $gs-baseline;
-        }
-    }
-    .item__timestamp {
-        height: 100%;
-        min-width: gs-span(1) - 16;
-        padding: 0 $gs-gutter/2 0 16px;
-        margin-right: 0;
-        border-left-style: none;
-        padding-bottom: 0;
-        i {
-            left: 0;
-        }
-    }
-    .trail__count {
-        height: 100%;
-        padding-bottom: 0;
-        padding-left: 28px;
-        i {
-            left: $gs-gutter/2 - 1;
         }
     }
 }

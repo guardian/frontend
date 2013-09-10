@@ -1,5 +1,4 @@
 .section--popular {
-    margin-top: $gs-baseline;
     @include mq(tablet) {
         display: inline-block;
         width: gs-span(4);
