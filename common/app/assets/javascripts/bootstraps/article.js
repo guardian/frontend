@@ -58,7 +58,6 @@ define([
                 }
                 if (config.page.isLiveBlog) {
                     new LiveFilter(context).init();
-                    var showMore = new LiveShowMore();
 
                     if (config.switches.LiveSummary) {
                         new LiveSummary(context).init();
