@@ -3,7 +3,6 @@ package controllers
 import play.api.mvc.Controller
 import common.Logging
 import tools._
-import conf.Configuration
 import tools.charts._
 
 
@@ -40,8 +39,9 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
 
   def abtests() = AuthAction {
     request =>
-      Ok(views.html.abtests(Configuration.environment.stage.toUpperCase,
-        Seq(SwipeAvgPageViewsPerSessionGraph, SwipeAvgSessionDurationGraph)
+      Ok(views.html.abtests("PROD",
+        SwipeAvgPageViewsPerSessionGraph,
+        SwipeAvgSessionDurationGraph
       ))
   }
 }
