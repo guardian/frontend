@@ -17,16 +17,16 @@ define([
         this.context = context || document;
         this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
         this.template =
-            '<div class="live-toggler-wrapper live-widget">' +
+            '<div class="live-toggler-wrapper">' +
             '  <button class="u-button-reset live-toggler live-toggler--all js-live-toggler"' +
             '          data-link-name="filter show key-events" title="Show key events only">' +
-            '    <span class="lt__label">Show</span>' +
+            '    <span class="lt__label">Showing</span>' +
             '    <span class="h">key events instead of</span>' +
             '    <span class="lt__value">All posts</span>' +
             '  </button>' +
             '  <button class="u-button-reset live-toggler live-toggler--key-events js-live-toggler"' +
             '          data-link-name="filter show all posts" title="Show all posts">' +
-            '    <span class="lt__label">Show</span>' +
+            '    <span class="lt__label">Showing</span>' +
             '    <span class="h">all posts instead of</span>' +
             '    <span class="lt__value">Key events</span>' +
             '  </button>' +

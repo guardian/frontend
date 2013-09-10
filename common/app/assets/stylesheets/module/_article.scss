@@ -100,7 +100,7 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
     font-size: 13px;
     display: inline-block;
     color: #999999;
-    margin: $baseline/2 4px 0 0;
+    margin: $baseline/2 4px $baseline/-2 0;
 
     &:first-of-type {
         margin-top: $baseline;
