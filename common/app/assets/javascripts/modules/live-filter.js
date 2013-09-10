@@ -47,6 +47,18 @@ define([
             e.preventDefault();
             self.showKeyEvents.call(self);
         });
+
+        bean.on(window, 'hashchange', function() {
+            // Disable the filter on url hash changes
+            // Prevents linking to blocks which may otherwise be hidden
+            var hash = window.location.hash;
+
+            if (hash.indexOf('#block-') === 0) {
+                self.disable();
+                var blockEl = document.getElementById(hash.replace('#', ''));
+                window.scrollTo(0, bonzo(blockEl).offset().top);
+            }
+        });
     };
 
     Filter.prototype.findKeyEvents = function() {
@@ -57,6 +69,10 @@ define([
 
     Filter.prototype.showKeyEvents = function() {
         bonzo(this.articleContainer).toggleClass('show-only-key-events');
+    };
+
+    Filter.prototype.disable = function() {
+        bonzo(this.articleContainer).removeClass('show-only-key-events');
     };
 
     return Filter;
