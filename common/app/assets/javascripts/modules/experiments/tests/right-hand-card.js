@@ -24,8 +24,8 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    bonzo('.card-wrapper--right').removeClass('is-hidden');
+                test: function (context) {
+                    common.$g('.card-wrapper--right', context).removeClass('is-hidden');
                 }
             },
             {
