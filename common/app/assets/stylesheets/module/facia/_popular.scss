@@ -9,7 +9,6 @@
     }
     .collection {
         margin-top: $baseline*3;
-        list-style-type: decimal;
         counter-reset: most-read;
         @include mq(tablet) {
             min-height: gs-height(8);
@@ -17,8 +16,6 @@
     }
     .item {
         padding: $gs-baseline/3 $gs-gutter/5 $gs-baseline/3 $gs-gutter;
-        margin: 0;
-        float: none;
         border-top: 1px dotted $grey;
         color: #000000;
         @include font($serifheadline, normal, 18);

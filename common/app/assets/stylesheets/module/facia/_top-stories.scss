@@ -1,12 +1,8 @@
 .section--top-stories {
     overflow: hidden;
     .item {
-        margin-right: 0;
-        @include box-sizing(border-box);
-        @include mq($to: tablet) {
-            float: none;
-        }
         @include mq(tablet) {
+            float: left;
             border: 10px none #ffffff;
             width: 50%;
             padding-bottom: gs-height(5);
@@ -28,7 +24,6 @@
         }
     }
     .item__title {
-        font-weight: normal;
         @include mq(tablet) {
             @include font-size(26, 28);
         }
@@ -52,19 +47,22 @@
             height: gs-height(8);
         }
     }
+    @include mq($to: wide) {
+        .item__standfirst {
+            display: none;
+        }
+    }
     .item__image {
         height: 100%;
-        width: auto;
     }
     @include mq(wide) {
         .item__standfirst {
             display: block;
             margin-top: $gs-baseline;
             @include font-size(20, 24);
-            font-weight: normal;
         }
     }
-    .item__meta-new {
+    .item__meta {
         @include mq(tablet) {
             position: absolute;
             bottom: gs-height(4) + $gs-baseline;
