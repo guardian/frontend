@@ -46,7 +46,7 @@
 
 .live-summary__block-clone { // Look like a block
     border-bottom: 2px solid $darkMushroom;
-    padding-bottom: $baseline*3;
+    margin-bottom: $baseline*4;
 }
 
 @include mq(rightCol) {
