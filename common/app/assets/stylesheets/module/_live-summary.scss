@@ -1,3 +1,4 @@
+.live-summary__expander-content .published-time,
 .live-summary__expander-trigger,
 .live-summary__expander-show {
     display: none;
@@ -18,6 +19,7 @@
             .live-summary__expander-content {
                 opacity: 1;
                 height: auto;
+                overflow: visible;
             }
             .live-summary__expander-show {
                 display: block;
@@ -31,13 +33,24 @@
 
 .live-summary__expander-cta__button {
     text-transform: uppercase;
-    font-size: .875em;
+    @include font-size(12);
     float: right;
     width: auto;
     color: $linkBlue;
-    padding: $baseline $gutter;
+    padding: 6px 0 6px $gutter;
 }
 
 .live-summary__title {
     color: $articleOrange;
+}
+
+.live-summary__block-clone { // Look like a block
+    border-bottom: 2px solid $darkMushroom;
+    padding-bottom: $baseline*3;
+}
+
+@include mq(rightCol) {
+    .live-summary--before {
+        display: none;
+    }
 }

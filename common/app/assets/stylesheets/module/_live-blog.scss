@@ -4,8 +4,8 @@
 .timestamp,
 .published-time {
     @extend %type-9;
-    border-top: 2px solid $darkMushroom;
     display: block;
+    border-top: 2px solid $darkMushroom;
     padding: $baseline*4 0 $baseline;
     margin-top: $baseline*2;
 }

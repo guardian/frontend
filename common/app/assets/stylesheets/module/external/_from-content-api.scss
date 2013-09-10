@@ -47,7 +47,22 @@
         margin: 0;
         font-family: georgia, serif;
     }
+}
 
+.from-content-api--small {
+    @extend %type-7;
+
+    @include mq(tablet) {
+        // @extend %type-6; (extends do not work in media queries)
+        @include font($serif, normal, 16, 24);
+    }
+    h2 {
+        @extend %type-5;
+
+        @include mq(tablet) {
+            @extend %type-4;
+        }
+    }
 }
 
 .article blockquote,
@@ -124,6 +139,7 @@ figure {
 
 /* Citations
    ========================================================================== */
+
 .from-content-api {
     cite {
         @extend %type-7;
@@ -146,12 +162,13 @@ figure {
 
 /* Tables
    ========================================================================== */
+
 .from-content-api {
     table {
         margin-bottom: $baseline*4;
     }
 
-    //This is a weird xml output from the api
+    // This is a weird xml output from the api
     table caption {
         @extend %type-5;
         padding: $baseline*2 0;
