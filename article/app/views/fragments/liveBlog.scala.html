@@ -54,23 +54,18 @@
                     <div class="article-body from-content-api @if(article.isLive) {live-blog}"
                     itemprop="@if(article.isReview){reviewBody} else {articleBody}">
 
-                        <div class="live-blog_recent-blocks">
-                            @BodyCleaner(article, article.recentBlocks)
-                        </div>
-
-                        @article.previousBlocks.map { blocks =>
-                            <input type="checkbox" name="live-blog__expander-trigger" id="live-blog__expander-trigger"  class="live-blog__expander-trigger" tabindex="-1" />
-                            <div class="live-blog__previous-wrapper">
-                                <label class="live-blog__expander-cta" for="live-blog__expander-trigger" data-link-name="live blog | read more">
-                                    <button class="u-button-reset cta">
-                                        <b>Read more</b>
-                                    </button>
-                                </label>
-                                <div class="live-blog__previous-blocks">
-                                    @BodyCleaner(article, blocks)
-                                </div>
+                        @article.groupedBlocks.map{ blockGroup =>
+                            <div class="live-blog__blocks">
+                                @BodyCleaner(article, blockGroup)
                             </div>
                         }
+
+                        @if(article.groupedBlocks.nonEmpty) {
+                            <button class="u-button-reset cta" data-link-name="live blog | read more">
+                                <b>Read more</b>
+                            </button>
+                        }
+
                     </div>
 
                     @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {

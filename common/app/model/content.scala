@@ -168,9 +168,9 @@ class LiveBlog(private val delegate: ApiContent) extends Article(delegate) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val blockCount: Int = soupedBody.select(".block").size()
   lazy val summary: Option[String] = soupedBody.select(".is-summary").headOption.map(_.toString)
-  lazy val groupedBlocks: Option[List[String]] = Some(soupedBody.select(".block").toList.grouped(10).map { group =>
+  lazy val groupedBlocks: List[String]= soupedBody.select(".block").toList.grouped(10).map { group =>
     group.map(_.toString).mkString
-  }.toList)
+  }.toList
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) with Images {
