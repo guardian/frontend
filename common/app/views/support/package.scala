@@ -48,6 +48,8 @@ object Masthead extends Style { val className = "masthead" }
 
 object TopStories extends Style { val className = "top-stories" }
 
+object MediumStories extends Style { val className = "medium-stories" }
+
 object SmallStories extends Style { val className = "small-stories" }
 
 object Highlights extends Style { val className = "highlights" }
