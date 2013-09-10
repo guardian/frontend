@@ -5,7 +5,7 @@ import collection.immutable.LongMap
 import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, Datapoint}
 import java.util.concurrent.Future
 import java.util.{UUID, Date}
-import org.joda.time.DateTime
+import org.joda.time.{DateMidnight, DateTime}
 
 case class DataPoint(name: String, values: Seq[Double]) {
 
@@ -229,6 +229,35 @@ object ActiveUserProportionGraph extends Chart with implicits.Tuples with implic
       val monthlyUsers = month(date) / 100.0
       DataPoint(date.toString("dd/MM"), Seq(day(date)/monthlyUsers, week(date)/monthlyUsers))
     }
+  }
+}
+
+object SwipeABTestResultsGraph extends Chart {
+  val name = "Swipe A/B Test Results"
+  override val yAxis = Some("Avg pvs / session")
+
+  private lazy val defaultAvgPageViewsPerUserByVariantByDay = Analytics.getSwipeABTestAvgPageViewsPerSessionByVariantByDay()
+
+  lazy val labels = extractLabels(defaultAvgPageViewsPerUserByVariantByDay)
+
+  def extractLabels(avgPageViewsPerUserByVariantByDay: Map[DateMidnight, List[(String, Double)]]) = {
+    val variants = (for {
+      (day, variantAvgPageViews) <- avgPageViewsPerUserByVariantByDay
+      (variant, _) <- variantAvgPageViews
+    } yield variant).toList.distinct.sorted
+    "Date" :: variants
+  }
+
+  def dataset = buildDataset(defaultAvgPageViewsPerUserByVariantByDay)
+
+  def buildDataset(avgPageViewsPerUserByVariantByDay: Map[DateMidnight, List[(String, Double)]]) = {
+    (for {
+      (day, variantAvgPageViews) <- avgPageViewsPerUserByVariantByDay
+    } yield {
+      DataPoint(day.toString("dd/MM"), for {
+        (_, avgPageViews) <- variantAvgPageViews
+      } yield avgPageViews)
+    }).toList
   }
 }
 

@@ -140,5 +140,12 @@ object AnalyticsLoadJob extends Logging {
       Analytics.getFourWeeklyDaysSeenByDayDateExpanded() map { CSV.write } mkString "\n",
       "text/csv"
     )
+
+    log.info("Generating analytics for Swipe A/B test average page views per session by variant by day and uploading to S3.")
+    S3.putPrivate(
+      s"${Configuration.environment.stage.toUpperCase}/analytics/swipe-ab-test-session-page-views-by-variant-by-day.csv",
+      Analytics.getSwipeABTestAvgPageViewsPerSessionByVariantByDay map CSV.write mkString "\n",
+      "text/csv"
+    )
   }
 }

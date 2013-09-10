@@ -5,6 +5,7 @@ import conf.PorterConfiguration
 import scala.slick.jdbc.StaticQuery
 import scala.slick.session.Session
 import org.joda.time.DateMidnight
+import BigDecimal.RoundingMode
 
 object Analytics extends Logging with implicits.Dates with implicits.Collections with implicits.Tuples with implicits.Statistics {
 
@@ -735,4 +736,40 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
       case (days, day, count) => (days, day.year.get, day.monthOfYear.get, day.dayOfMonth.get, count)
     }
   }
+
+  def getSwipeABTestAvgPageViewsPerSessionByVariantByDay: List[(String, Int, Int, Int, Double)] = {
+
+    val data = PorterConfiguration.analytics.db withSession {
+      implicit session: Session =>
+        StaticQuery.queryNA[(String, Int, Int, Int, String, Int)](
+          """select e.variant, p.year, p.month, p.day_of_month, p.ophan_visit sessions, count(*) page_views
+              from pageviews p, experiments e
+              where p.ophan = e.ophan
+              and e.name = 'SwipeCtas'
+              and p.days_since_epoch >= e.enrolled_days_since_epoch
+              and p.days_since_epoch <= e.last_occurrence_days_since_epoch
+              group by e.variant, p.year, p.month, p.day_of_month, p.ophan_visit"""
+        ).list()
+    }
+
+    val cleanedData = data filterNot {
+      case (_, year, month, day, session, _) => year == 0 || month == 0 || day == 0 || session == null
+    }
+
+    cleanedData.groupBy {
+      case (variant, year, month, day, _, _) => (variant, year, month, day)
+    }.mapValues {
+      case values => {
+        val variant = values(0)._1
+        val year = values(0)._2
+        val month = values(0)._3
+        val day = values(0)._4
+        val variantDayPageViews = values.map(_._6).sum
+        val variantDaySessions = values.size
+        val avgPageViewsPerSession = BigDecimal(variantDayPageViews.toDouble / variantDaySessions).setScale(4, RoundingMode.HALF_UP).toDouble
+        (variant, year, month, day, avgPageViewsPerSession)
+      }
+    }.values.toList
+  }
+
 }

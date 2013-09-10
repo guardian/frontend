@@ -13,7 +13,8 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
       ReturnUsersPercentageByDayGraph,
       DaysSeenPerUserGraph,
       ActiveUserProportionGraph,
-      ActiveUsersFourDaysFromSevenOrMoreGraph
+      ActiveUsersFourDaysFromSevenOrMoreGraph,
+      SwipeABTestResultsGraph
     )))
   }
 
