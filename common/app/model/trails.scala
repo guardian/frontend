@@ -8,7 +8,7 @@ import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.Json._
 import play.api.libs.json.JsObject
 import scala.concurrent.Future
-import tools.QueryParams
+import services.S3FrontsApi
 import views.support.Style
 
 
@@ -148,7 +148,7 @@ class RunningOrderTrailblockDescription(
               val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
               val search = ContentApi.search(edition)
               val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
-              val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams).showFields("all")
+              val newSearch = search.withParameters(search.parameterHolder ++ queryParamsAsStringParams).showFields("all")
 
               newSearch.response map { r =>
                 r.results.map(Content(_))

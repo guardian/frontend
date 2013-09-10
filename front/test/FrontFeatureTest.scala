@@ -252,6 +252,16 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
       }
     }
 
+    scenario("Front block anchors") {
+      Given("I visit the network front")
+      HtmlUnit("/uk") {
+        browser =>
+          import browser._
+
+          Then("I should have ids for each block")
+          findFirst("h1[id='commentisfree']").getText should startWith ("Comment is free")
+      }
+    }
 
     // this is so that the load balancer knows this server has a problem
     scenario("Return error if front is empty") {

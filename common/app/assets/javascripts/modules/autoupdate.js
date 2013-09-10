@@ -30,17 +30,26 @@ define([
 
         var options = common.extend({
             'activeClass': 'is-active',
-            'btnClass' : '.update-btn',
+            'btnClass' : '.js-auto-update',
             'prefName': 'auto-update',
-            'iconClass' : 'is-updating',
             'manipulationType' : 'html'
         }, config);
 
         this.template =
-            '<p class="update-text type-6">Auto update</p>' +
-            '<i class="'+ options.iconClass + '"/></i>' +
-            '<button class="update-btn type-8" data-action="off" data-link-name="autoupdate off">Off</button>' +
-            '<button class="update-btn type-8" data-action="on" data-link-name="autoupdate on">On</button>';
+            '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--on"' +
+            '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
+            '    <span class="lt__label">Auto update</span>' +
+            '    <span class="h">is</span>' +
+            '    <span class="lt__value">On</span>' +
+            '    <span class="h">(turn off)</span>' +
+            '  </button>' +
+            '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--off"' +
+            '          data-action="on" data-link-name="autoupdate on" title="Turn auto update on">' +
+            '    <span class="lt__label">Auto update</span>' +
+            '    <span class="h">is</span>' +
+            '    <span class="lt__value">Off</span>' +
+            '    <span class="h">(turn on)</span>' +
+            '  </button>';
 
         // View
         this.view = {
@@ -78,16 +87,15 @@ define([
                 var action = btn.getAttribute('data-action');
 
                 bonzo(this.btns).removeClass(options.activeClass);
-                bonzo(this.icon).removeClass(options.activeClass);
 
                 if(action === 'on') {
                     this.on();
-                    bonzo(this.icon).addClass(options.activeClass);
                 } else {
                     this.off();
                 }
 
-                bonzo(btn).addClass(options.activeClass);
+                btn.parentNode.getElementsByClassName('js-auto-update--' + action)[0].className += ' ' + options.activeClass;
+
                 this.setPref(action);
             },
 
@@ -156,17 +164,13 @@ define([
             // add the component to the page, and show it
             common.$g('.update').html(this.template).removeClass('hidden');
 
-            this.icon = common.$g('.' + options.iconClass);
             this.btns = common.$g(options.btnClass);
 
             this.btns.each(function (btn) {
                 bean.add(btn, 'click', function (e) {
                     e.preventDefault();
 
-                    var isActive = bonzo(this).hasClass(options.activeClass);
-                    if(!isActive) {
-                        that.view.toggle.call(that, this);
-                    }
+                    that.view.toggle.call(that, this);
                 });
             });
 
@@ -176,7 +180,6 @@ define([
                 this.view.toggle.call(this, this.btns[1]);
             }
 
-             
             if (loadOnInitialise) {
                 that.load.call(that);
             }

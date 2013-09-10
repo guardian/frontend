@@ -3,7 +3,6 @@ define([
     'modules/storage',
 
     //Current tests
-    'modules/experiments/tests/paragraph-spacing',
     'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
     'modules/experiments/tests/gallery-style',
@@ -14,7 +13,7 @@ define([
 ], function (
     common,
     store,
-    ParagraphSpacing,
+    
     ExperimentInlineLinkCard,
     Aa,
     GalleryStyle,
@@ -25,7 +24,6 @@ define([
     ) {
 
     var TESTS = [
-            new ParagraphSpacing(),
             new ExperimentInlineLinkCard(),
             new Aa(),
             new GalleryStyle(),
@@ -168,6 +166,15 @@ define([
             var opts = options || {};
             getActiveTests().forEach(function(test) {
                 bucket(test, config);
+            });
+        },
+
+        // mostly for private use
+        forceSegment: function (testId, variant) {
+            getActiveTests().filter(function (test) {
+                return (test.id === testId);
+            }).forEach(function (test) {
+                addParticipation(test, variant);
             });
         },
 

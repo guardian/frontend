@@ -1,0 +1,13 @@
+@(page: MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+
+@import views.html.fragments.registrationFooter
+
+@main(page, Switches.all){
+}{
+<div class="identity-wrapper">
+    <h1>Sorry, there's a problem with our servers. Our techies have been notified.</h1>
+    <p><a href="@idUrlBuilder.buildUrl("/reset", idRequest)" data-link-name="Reset password after error">Please come back later to reset your password.</a></p>
+
+    @registrationFooter(page, idRequest, idUrlBuilder)
+</div>
+}

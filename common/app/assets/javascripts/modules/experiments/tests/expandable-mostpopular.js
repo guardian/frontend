@@ -21,6 +21,7 @@ define(['common', 'bean', 'modules/popular'], function (common, bean, popular) {
                 id: 'expandable-most-popular',
                 test: function (context) {
                     if((/^Video|Article|Gallery$/).test(guardian.config.page.contentType)) {
+                        document.body.className += ' ab-expandable-most-popular';
                         popular(guardian.config, context, true);
                         bean.on(document.body, 'change', '.trail__expander-trigger', function(e) {
                             var trail = e.target.parentNode;

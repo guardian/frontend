@@ -11,7 +11,7 @@
      data-home-stat="@home" data-home-percent="@homePercent"
      data-away-stat="@away" data-away-percent="@awayPercent">
     <h5 class="type-7"><b>@title</b></h5>
-    <ol class="unstyled cf">
+    <ol class="unstyled u-cf">
         <li class="match-stat__item" style="width:@{NudgePercent(homePercent, awayPercent)}%">
             <div class="home-num type-7" >@home@if(home+away == 100){%}</div>
             <div class="home-stat">&nbsp;</div>
@@ -55,7 +55,7 @@
 @defining((page.theMatch, page.theMatch.homeTeam, page.theMatch.awayTeam)){ case (theMatch, homeTeam, awayTeam) =>
 
   @if(page.matchStarted){
-    <div class="cf">
+    <div class="u-cf">
         <h5 class="home-header type-5">@homeTeam.name</h5>
         <h5 class="away-header type-5">@awayTeam.name</h5>
     </div>
@@ -72,7 +72,7 @@
   }
 
   <h3 class="type-2 section-divider">Teams</h3>
-  <div class="cf">
+  <div class="u-cf">
       <h5 class="team-list-name type-5">@homeTeam.name</h5>
       <h5 class="team-list-name type-5">@awayTeam.name</h5>
   </div>
@@ -81,7 +81,7 @@
     <p class="type-7 place-holder">Team lineups will be available once announced.</p>
 
   } else {
-    <div class="cf">
+    <div class="u-cf">
         <div class="lineup">
             @team(page.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
         </div>
@@ -90,7 +90,7 @@
         </div>
     </div>
     <h3 class="type-5 item-divider">Unused substitutes</h3>
-    <div class="cf">
+    <div class="u-cf">
         <div class="lineup">
             @team(page.lineUp.homeTeam.players.filter{_.isUnusedSub})
         </div>

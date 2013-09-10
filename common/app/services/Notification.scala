@@ -1,5 +1,6 @@
-package common
+package services
 
+import common.{AkkaAsync, Logging}
 import com.amazonaws.services.sns.AmazonSNSAsyncClient
 import com.amazonaws.services.sns.model.PublishRequest
 import conf.Configuration

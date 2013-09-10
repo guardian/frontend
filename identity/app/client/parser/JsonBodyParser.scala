@@ -1,39 +1,37 @@
 package client.parser
 
-import net.liftweb.json.{MappingException, DefaultFormats}
+import net.liftweb.json.{Formats, MappingException, DefaultFormats}
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.JsonParser._
 import client.{Logging, Error, Response}
 import client.connection.HttpResponse
 
 trait JsonBodyParser extends Logging {
-  implicit val formats = DefaultFormats + new JodaJsonSerializer
+  implicit val formats: Formats
 
   def responseIsError(json: JValue, statusCode: Int): Boolean = statusCode > 299
   def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error]
 
-  def extract[T](extractJsonObj: JValue => JValue = {json => json})(httpResponse: Response[HttpResponse])(implicit man: Manifest[T]): Response[T] = {
-    try {
-      httpResponse.right.flatMap(response => {
-        extractJsonOrError(response).right.map { extractJsonObj(_).extract[T] }
-      })
-    } catch {
-      case e: MappingException => {
-        logger.error("JSON mapping exception", e)
-        Left(List(Error("JSON mapping exception: Failed to extract %s from JSON".format(man.runtimeClass.getName), e.getMessage)))
-      }
-    }
-  }
-
-  def extractJsonOrError(httpResponse: HttpResponse): Response[JValue] = {
-    try {
-      val json = parse(httpResponse.body)
-      if (responseIsError(json, httpResponse.statusCode)) Left(extractErrorFromResponse(json, httpResponse.statusCode))
-      else Right(json)
-    } catch {
-      case e: ParseException => {
-        logger.error("JSON parse exception", e)
-        Left(List(Error("Failed to parse JSON", e.getMessage)))
+  def extract[T](extractJsonObj: JValue => JValue = {json => json})(httpResponseResponse: Response[HttpResponse])(implicit successType: Manifest[T]): Response[T] = {
+    httpResponseResponse.right.flatMap { httpResponse =>
+      try {
+        (successType, httpResponse) match {
+          case (_, HttpResponse(body, status, message)) if status > 299 =>
+            Left(extractErrorFromResponse(parse(body), httpResponse.statusCode))
+          case (extractType, HttpResponse(body, status, message)) if extractType == manifest[Unit] =>
+            Right().asInstanceOf[Right[List[client.Error], T]]
+          case (_, HttpResponse(body, status, message)) =>
+            Right(extractJsonObj(parse(body)).extract[T])
+        }
+      } catch {
+        case e: MappingException => {
+          logger.error("JSON mapping exception", e)
+          Left(List(Error("JSON mapping exception", "The api returned some json that did not match the expected format:" + successType.runtimeClass.getName, 500, Some(successType.runtimeClass.getName))))
+        }
+        case e: ParseException => {
+          logger.error("JSON parse exception", e)
+          Left(List(Error("JSON parsing exception", "The api returned a response that was not valid json:" + e.getMessage)))
+        }
       }
     }
   }

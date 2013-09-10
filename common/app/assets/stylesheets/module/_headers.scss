@@ -16,7 +16,11 @@
 
     a {
         display: block;
-        padding: 15px $gutter;
+        padding: 15px $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
     }
 }
 
@@ -39,7 +43,11 @@
     line-height: 1;
     font-weight: bolder;
     padding: 14px 0 15px;
-    margin: 0 $gutter;
+    margin: 0 $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
     border-top: 4px solid $mushroom;
     border-bottom: 1px solid $mushroom;
     @include box-sizing(border-box);
@@ -56,7 +64,11 @@
 
 .page-head {
     @extend %type-4;
-    padding: 0 $gutter $baseline*2;
+    padding: 0 $gs-gutter/2 $baseline*2;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 

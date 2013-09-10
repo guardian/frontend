@@ -1,0 +1,87 @@
+.section--highlights {
+    margin-top: $baseline * 4;
+    padding-bottom: ($baseline * 3) - 1;
+    @include mq(tablet) {
+        border-bottom: solid 1px $grey;
+        float: left;
+        width: gs-span(6);
+        margin-bottom: $baseline * 4;
+    }
+    @include mq(desktop) {
+        width: gs-span(8);
+    }
+    @include mq(wide) {
+        width: gs-span(12);
+    }
+    .section__title {
+        @include font($serifheadline, 800, 16, 16);
+        @include box-sizing(border-box);
+        height: $baseline * 12;
+        color: $blue;
+        border-top: 2px solid $blue;
+    }
+    .collection {
+        @include mq(tablet) {
+            font-size: 0;
+            white-space: nowrap;
+            overflow: auto;
+            height: gs-height(6);
+        }
+    }
+    .item {
+        float: none;
+        margin: ($baseline * 2) - 1 0 0;
+        padding: $baseline * 2 0 gs-height(1);
+        border-top: 1px solid $grey;
+        &:first-child {
+            margin-top: 0;
+            padding-top: 0;
+            border-top-style: none;
+        }
+        @include mq(tablet) {
+            @include box-sizing(content-box);
+            white-space: normal;
+            display: inline-block;
+            vertical-align: top;
+            height: 100%;
+            border-top-style: none;
+            border-right: 1px dotted $grey;
+            margin-top: 0;
+            padding: 0 $gs-gutter / 2 0 ($gs-gutter / 2) - 1;
+            width: gs-span(3);
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+                border-right-style: none;
+            }
+        }
+    }
+    .item__image {
+        margin-bottom: $baseline * 2;
+        display: none;
+        @include mq(tablet) {
+            display: block;
+        }
+    }
+    .item__title {
+        @include font-size(22, 24);
+    }
+    .item__standfirst {
+        margin-top: $baseline;
+        @include font-size(16, 20);
+        color: #666666;
+    }
+    .item:first-child .item__standfirst {
+        display: block;
+        @include mq(tablet) {
+            display: none;
+        }
+    }
+    @include mq(tablet) {
+        .item--without-image .item__standfirst {
+            display: block;
+        }
+    }
+}

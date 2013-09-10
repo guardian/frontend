@@ -5,6 +5,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.Reference
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import conf.Configuration
@@ -62,6 +63,7 @@ class Content(delegate: ApiContent) extends Trail with Tags with MetaData {
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
 
   lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
+  lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
 
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
@@ -126,7 +128,8 @@ object Content {
     delegate match {
       case gallery if delegate.isGallery => new Gallery(delegate)
       case video if delegate.isVideo => new Video(delegate)
-      case article if delegate.isArticle => new Article(delegate)
+      case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
+      case article if delegate.isArticle || delegate.isSudoku => new Article(delegate)
       case d => new Content(d)
     }
   }
@@ -137,14 +140,17 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   override lazy val inBodyPictureCount = body.split("class='gu-image'").size - 1
   lazy val isReview = tones.exists(_.id == "tone/reviews")
-  lazy val isLiveBlog = tones.exists(_.id == "tone/minutebyminute")
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .map(e => e.hasClass("gu-video") && e.tagName() == "video")
     .getOrElse(false)
+
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    ("content-type", contentType),
+    ("isLiveBlog", isLiveBlog)
+  )
 
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 
@@ -156,6 +162,10 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
     "og:image" -> mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback)
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+}
+
+class LiveBlog(private val delegate: ApiContent) extends Article(delegate) {
+  lazy val summary: Option[String] = Jsoup.parseBodyFragment(body).body().select(".is-summary").headOption.map(_.html)
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) with Images {

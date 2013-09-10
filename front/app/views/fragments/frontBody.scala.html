@@ -1,9 +1,10 @@
 @(front: FrontPage, trailblocks: Seq[Trailblock])(implicit request: RequestHeader)
 
-<div class="front-container cf" data-link-name="Front" role="main">
+<div class="front-container u-cf" data-link-name="Front" role="main">
     @trailblocks.zipWithIndex.map{ case(block, index) =>
         @fragments.frontBlock(block, front, index)
     }
 </div>
-
-@fragments.mostPopularPlaceholder(front.section)
+<div class="box-indent article-zone-no-indent">
+    @fragments.mostPopularPlaceholder(front.section)
+</div>
