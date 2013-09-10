@@ -33,12 +33,15 @@ This is applicable to [GMG employees](http://www.gmgplc.co.uk/).
 
 - Understand what you are trying to achieve with the change (what does success look like?)
 - Fork the code and make your changes.
-- Ensure your branch is built succesfully by TeamCity, both [builds](http://teamcity.gudev.gnl:8111/project.html?projectId=project35&tab=projectOverview) and [intergration tests](http://teamcity.gudev.gnl:8111/project.html?projectId=project41&tab=projectOverview).
+- Test your branch locally by running unit and integration tests:
+    - ./sbt012 project &lt;project> test
+    - grunt test:integration:&lt;project>
 - Open a pull request.
     - Explain why you are making this change in the pull request
     - Include information about how you plan to measure success (e.g. links to analytics reports)
     - If this change is not measurable be very clear about that fact.
 - A member of the team will review the changes. Once they are satisfied they will add +1 to the pull request.
+- If there are no broken or ongoing builds in Teamcity, merge your branch and then ensure the master branch is built successfully: both [builds](http://teamcity.gudev.gnl:8111/project.html?projectId=project35&tab=projectOverview) and [integration tests](http://teamcity.gudev.gnl:8111/project.html?projectId=project41&tab=projectOverview).
 - Deploy the code yourself, first to CODE then to PROD.
 - Pay close attention to our [monitoring](http://graphite.guprod.gnl/dashboard/dashboards-dev/gdn-frontend.php?time=1d&env=PROD).
 
