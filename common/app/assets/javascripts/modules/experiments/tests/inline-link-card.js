@@ -40,6 +40,19 @@ function (
                         }
                     });
                 }
+            },
+            {
+                id: 'link-card-all-origins',
+                test: function (config, context) {
+                    common.mediator.on('page:article:ready', function(config, context) {
+                        if (!config.switches.externalLinksCards) {
+                            var card = new LeftHandCard({
+                                origin: 'all',
+                                context: context
+                            });
+                        }
+                    });
+                }
             }
         ];
     };

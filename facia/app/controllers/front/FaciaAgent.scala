@@ -7,12 +7,12 @@ import play.api.libs.ws.WS
 import conf.{ContentApi, Configuration}
 import play.api.libs.json.Json._
 import play.api.libs.json.JsValue
-import tools.QueryParams
 import model.FaciaPage
 import play.api.libs.ws.Response
 import model.Config
 import scala.Some
 import play.api.libs.json.JsObject
+import services.S3FrontsApi
 import views.support._
 
 object Path {

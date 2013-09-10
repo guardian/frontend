@@ -144,6 +144,10 @@ object Switches extends Collections {
     "If this switch is on, external links are turned into cards in body content on wide viewports.",
     safeState = Off)
 
+  val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
+    "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -236,6 +240,7 @@ object Switches extends Collections {
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     ExternalLinksCardsSwitch,
+    LiveSummarySwitch,
     LiveCricketSwitch,
     FilmFrontFacia,
     FaciaSwitch,

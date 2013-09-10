@@ -51,6 +51,7 @@ GET       /fronts/config                 controllers.FrontsController.listConfig
 GET     /analytics/kpis                  controllers.AnalyticsController.kpis()
 GET     /analytics/pageviews             controllers.AnalyticsController.pageviews()
 GET     /analytics/browsers              controllers.AnalyticsController.browsers()
+GET     /analytics/abtests               controllers.AnalyticsController.abtests()
 
 # Metrics
 GET     /metrics/loadbalancers           controllers.metrics.DashboardController.render()
