@@ -16,7 +16,11 @@ class Front extends Logging {
 
   def refresh() {
     log.info("Refreshing Front")
-    allFronts.foreach(_.refresh())
+    refreshJobs().foreach(body => body())
+  }
+
+  def refreshJobs(): List[() => Unit] =allFronts.toList map { front =>
+    () => front.refresh()
   }
 
   def apply(path: String): Seq[Trailblock] = fronts(path)()
