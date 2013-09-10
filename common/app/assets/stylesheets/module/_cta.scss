@@ -10,6 +10,10 @@
     background-color: $mushroom;
     text-shadow: none;
 
+    &:hover {
+        background-color: $darkMushroom;
+    }
+
     &:link,
     &:visited {
         color: #545454;
