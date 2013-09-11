@@ -52,7 +52,7 @@ RecommendComments.recommendComment = function(id) {
 };
 
 RecommendComments.success = function(resp) {
-    console.log(this, resp);
+    // TODO: publish an event
 };
 
 RecommendComments.fail = function(resp) {
