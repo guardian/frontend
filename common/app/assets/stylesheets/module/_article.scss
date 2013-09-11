@@ -1,11 +1,3 @@
-$a-leftCol-width:    gs-span(2);
-$a-leftCol-trigger:  gs-span(13) + $gutter*2;
-$a-rightCol-width:   gs-span(4);
-$a-rightCol-trigger: gs-span(11) + $gutter*2;
-
-$mq-breakpoints: mq-add-breakpoint(rightCol, $a-rightCol-trigger);
-$mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
-
 .article {
     position: relative;
 }

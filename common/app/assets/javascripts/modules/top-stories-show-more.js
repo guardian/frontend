@@ -12,7 +12,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                             if (index === rowSize) {
                                 return true;
                             }
-                            bonzo(item).removeClass('h');
+                            bonzo(item).removeClass('u-h');
                         });
                     if (!moreHidden) {
                         bonzo(_button).remove();
@@ -33,7 +33,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
 
         // hide stories
         common.$g('.item:nth-child(n + ' + ((_getRowSize() * 2) + 1) + ')', topStories).each(function(item) {
-            bonzo(item).addClass('h');
+            bonzo(item).addClass('u-h');
         });
         // add toggle button
         _renderToggle(topStories);

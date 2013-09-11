@@ -33,6 +33,9 @@
         display: table;
         width: 100%;
     }
+    ul.social {
+        margin-bottom: $baseline*4;
+    }
     .social__item {
         float: left;
         width: gs-span(4) / 4;
