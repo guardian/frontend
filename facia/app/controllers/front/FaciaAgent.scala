@@ -174,13 +174,13 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
   }
 
   def refresh() =
-    getItems map {m =>
-      queryAgent.send{ old =>
-        lazy val oldConfigMap = old.map{case (c, e) => (c.id, e)}.toMap
-        m.flatMap{collection =>
-          collection match {
-            case (config, Left(t)) => oldConfigMap.get(config.id).map(c => (config, c))
-            case (config, Right(c)) => Some((config, c))
+    getItems map { newConfigList =>
+      queryAgent.send { oldConfigList =>
+        lazy val oldConfigMap = oldConfigList.map{case (config, collection) => (config.id, collection)}.toMap
+        newConfigList flatMap { collectionConfig =>
+          collectionConfig match {
+            case (config, Left(exception)) => oldConfigMap.get(config.id).map(oldCollection => (config, oldCollection))
+            case (config, Right(newCollection)) => Some((config, newCollection))
           }
         }
       }
