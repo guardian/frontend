@@ -3,7 +3,7 @@
     width: gs-span(6);
     color: #ffffff;
     .item__title {
-        position:absolute;
+        position: absolute;
         bottom: 0;
         background-color: $blue;
         background-color: rgba($blue, 0.7);
@@ -67,10 +67,10 @@
     }
 }
 @mixin customise-item--small($num: false, $show-meta: false, $font-size: false) {
-    @if $num != false {
+    @if $num {
         height: 100% / $num;
     }
-    @if $show-meta == true {
+    @if $show-meta {
         &:last-child {
             border-bottom: 1px solid $grey
         }
@@ -78,7 +78,7 @@
             display: block;
         }
     }
-    @if $font-size != false {
+    @if $font-size {
         .item__title {
             @include font-size($font-size, $font-size + 4);
         }
@@ -154,12 +154,12 @@
     @if $show-standfirst == true {
         .item__standfirst {
             display: block;
-            @if $font-size != false {
+            @if $font-size {
                 @include font-size($font-size - 8, $font-size - 4);
             }
         }
     }
-    @if $font-size != false {
+    @if $font-size {
         .item__title {
             @include font-size($font-size, $font-size + 4);
         }
