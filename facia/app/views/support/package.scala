@@ -13,8 +13,7 @@ object FindStyle {
     "regular-stories" -> TopStories,
     "lesser-stories" -> MediumStories,
     "other-stories" -> SmallStories,
-    "featured-stories" -> Highlights,
-    "section-stories" -> Highlights
+    "featured-stories" -> Highlights
   )
 
   /**
@@ -22,18 +21,24 @@ object FindStyle {
    */
   val specificStyles: Map[String, Map[String, Style]] = Map(
     ("uk", Map(
-      ("uk/travel/regular-stories", Masthead)
+      ("uk/sport/regular-stories", Highlights),
+      ("uk/commentisfree/regular-stories", Highlights),
+      ("uk/culture/regular-stories", Highlights),
+      ("uk/business/regular-stories", Highlights),
+      ("uk/lifeandstyle/regular-stories", Highlights),
+      ("uk/technology/regular-stories", Highlights),
+      ("uk/money/regular-stories", Highlights),
+      ("uk/travel/regular-stories", Highlights)
     ))
   )
 
   def apply(path: String, config: Config): Style = {
-    val collectionType = config.id.split("/").last
     // first check if we have a specific style
     specificStyles.get(path).flatMap { frontStyles =>
-      frontStyles.get(collectionType)
+      frontStyles.get(config.id)
     }.getOrElse {
       // else use general, defaulting to Highlights
-      generalStyles.get(collectionType).getOrElse(Highlights)
+      generalStyles.get(config.id.split("/").last).getOrElse(Highlights)
     }
   }
 
