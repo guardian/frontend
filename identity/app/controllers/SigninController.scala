@@ -18,6 +18,7 @@ import idapiclient.EmailPassword
 import play.api.mvc.Cookie
 import utils.SafeLogging
 import form.Mappings.{idEmail, idPassword}
+import client.Error
 
 
 @Singleton
@@ -62,9 +63,12 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
             case Left(errors) => {
               logger.error(errors.toString())
               logger.info("Auth failed for user")
-              val formWithErrors = errors.find(_.message == "Rate limit exceeded").map { e =>
-                boundForm.withError(FormError("", e.description))
-              }.getOrElse(boundForm.withError(FormError("", Messages("error.login"))))
+              val formWithErrors = errors.foldLeft(boundForm) { (formFold, error) =>
+                val errorMessage =
+                  if ("Invalid email or password" == error.message) Messages("error.login")
+                  else error.description
+                formFold.withError(error.context.getOrElse(""), errorMessage)
+              }
               Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
             }
             case Right(apiCookiesResponse) => {

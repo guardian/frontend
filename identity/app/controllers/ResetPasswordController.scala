@@ -63,10 +63,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
             case Left(errors) => {
               log.info("User not found for request new password.")
               val formWithError = errors.foldLeft(boundForm) { (form, error) =>
-                error match {
-                  case Error(_, description, _, context) =>
-                    form.withError(context.getOrElse(""), description)
-                }
+                form.withError(error.context.getOrElse(""), error.description)
               }
               Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, formWithError, errors))
             }
