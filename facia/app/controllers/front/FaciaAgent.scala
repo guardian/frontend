@@ -155,7 +155,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
 }
 
-class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection {
+class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging {
   private lazy val queryAgent = AkkaAgent[List[(Config, Collection)]](Nil)
 
   def getItems: Future[List[(Config, Either[Throwable, Collection])]] = {
@@ -179,7 +179,10 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
         lazy val oldConfigMap = oldConfigList.map{case (config, collection) => (config.id, collection)}.toMap
         newConfigList flatMap { collectionConfig =>
           collectionConfig match {
-            case (config, Left(exception)) => oldConfigMap.get(config.id).map(oldCollection => (config, oldCollection))
+            case (config, Left(exception)) => {
+              log.warn("Updating ID %s failed".format(config.id))
+              oldConfigMap.get(config.id).map(oldCollection => (config, oldCollection))
+            }
             case (config, Right(newCollection)) => Some((config, newCollection))
           }
         }
