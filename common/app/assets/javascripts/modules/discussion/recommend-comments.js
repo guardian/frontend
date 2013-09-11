@@ -27,14 +27,23 @@ RecommendComments.CONFIG = {
  * Bind to all buttons
  */
 RecommendComments.bindEvents = function(context) {
-    bean.one(context, 'click', '.'+ RecommendComments.CONFIG.classes.button, RecommendComments.handleClick);
+    // Clicking
+    var buttonClass = '.'+ RecommendComments.CONFIG.classes.button,
+        buttons = context.querySelectorAll(buttonClass);
+
+    if (buttons) {
+        Array.prototype.forEach.call(buttons, function(button) {
+            button.innerHTML = button.innerHTML.replace('Recommended', 'Recommend');
+        });
+        bean.on(context, 'click', buttonClass, RecommendComments.handleClick);
+    }
 };
 
 /**
  * @param {Event} e
  */
 RecommendComments.handleClick = function(e) {
-    var elem = e.target,
+    var elem = e.srcElement,
         id = elem.getAttribute('data-comment-id'),
         result = RecommendComments.recommendComment(id);
 
@@ -51,12 +60,19 @@ RecommendComments.recommendComment = function(id) {
     return ajax({ url: url });
 };
 
+/**
+ * @param {Object} resp
+ */
 RecommendComments.success = function(resp) {
     common.mediator.emit('discussion:comment:recommended', parseInt(this.getAttribute('data-recommend-count'), 10));
 };
 
-RecommendComments.fail = function(resp) {
+/**
+ * @param {XMLHttpRequest} xhr
+ */
+RecommendComments.fail = function(xhr) {
     RecommendComments.renderRecommendation(this, true);
+    bean.one(this, 'click', RecommendComments.handleClick);
 };
 
 /**
