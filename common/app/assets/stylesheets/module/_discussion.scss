@@ -253,14 +253,23 @@ $keylineSize: 1px;
 }
 
 .d-comment__action {
+    color: #767676;
     font-size: .85714285714em;
-}
-
-.d-comment__action--report {
+    
     &:link,
     &:visited {
         color: #767676;
     }
+}
+
+.d-comment__action--recommend {
+    display: table-cell; /* 1 */
+    max-width: 100%;
+    width: 10000px; /* 2 */
+    *width: auto; /* 3 */
+    *zoom:1; /* 4 */
+    margin-left: $gs-gutter;
+    text-align: right;
 }
 
 

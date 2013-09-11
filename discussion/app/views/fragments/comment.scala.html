@@ -21,16 +21,15 @@
                 </div>
 
                 <div>
-                    @*********************
-                    Responding to...
-                    <a href="#" class="d-meta-item d-comment__meta-item">@@Kaelig</a> <span class="d-meta-separator">&nbsp;|&nbsp;</span>
-                    *********************@
                     <time class="d-meta-item d-comment__meta-item js-timestamp"
                           datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
                         @Format(comment.date, "d MMM y")
                     </time>
                 </div>
             </div>
+            @if(comment.numRecommends != 0){
+                <div class="d-comment__action d-comment__action--recommend">Recommended (@comment.numRecommends)</div>
+            }
         </div>
         <div class="d-comment__main">
             <div class="d-comment__body">
