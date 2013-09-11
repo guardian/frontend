@@ -65,7 +65,7 @@ RecommendComments.fail = function(resp) {
  */
 RecommendComments.renderRecommendation = function(elem, unrecommend) {
     var recommendCountElem = elem.querySelector('.'+ RecommendComments.CONFIG.classes.count),
-        currentCount = parseInt(recommendCountElem.getAttribute('data-recommend-count')),
+        currentCount = parseInt(recommendCountElem.getAttribute('data-recommend-count'), 10),
         newCount = !unrecommend ? currentCount+1 : currentCount-1;
 
     recommendCountElem.innerHTML = newCount;
