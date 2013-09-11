@@ -62,7 +62,9 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
             case Left(errors) => {
               logger.error(errors.toString())
               logger.info("Auth failed for user")
-              val formWithErrors = boundForm.withError(FormError("", Messages("error.login")))
+              val formWithErrors = errors.find(_.message == "Rate limit exceeded").map { e =>
+                boundForm.withError(FormError("", e.description))
+              }.getOrElse(boundForm.withError(FormError("", Messages("error.login"))))
               Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
             }
             case Right(apiCookiesResponse) => {
