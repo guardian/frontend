@@ -36,6 +36,27 @@ casper.test.begin("Show key events only / all posts", function(test) {
     }, 10000);
 });
 
+
+
+casper.test.begin("Display latest summary before events on small viewports", function(test) {
+    if (casper.exists('.js-article__summary')) {
+        casper.viewport(320, 480);
+        test.assertNotVisible('[data-link-name="summary after content"]');
+        test.assertVisible('[data-link-name="summary before content"]');
+        test.done();
+    }
+});
+
+casper.test.begin("Display latest summary on the right side of article on wide viewports", function(test) {
+    if (casper.exists('.js-article__summary')) {
+        casper.viewport(1024, 768);
+        test.assertVisible('[data-link-name="summary after content"]');
+        test.assertNotVisible('[data-link-name="summary before content"]');
+        test.done();
+    }
+});
+
+
 casper.run(function() {
     this.test.renderResults(true, 0, this.cli.get("xunit") + "live-blog.xml");
 });

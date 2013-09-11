@@ -64,6 +64,13 @@ window.addEventListener('load', function() {
                              .groupBy(function(entry) { return entry.dateTime })
                              .value();
 
+
+            // Remove first & last Ophan entries, as they always seem slightly off
+            var keys = _.keys(todayData);
+            delete todayData[_.first(keys)];
+            delete todayData[_.last(keys)];
+
+
             // Build Graph
             var graphData = [['time', 'pageviews']];
 
@@ -102,7 +109,7 @@ window.addEventListener('load', function() {
 
         },
         error: function() {
-            document.getElementById('pageviews').innerHTML = '<a href="http://dashboard.ophan.co.uk/login" target="_new">Login to Ophan for Pageviews</a>';
+            document.getElementById('pageviews').innerHTML = 'Error loading Ophan data';
         }
     })
 });
