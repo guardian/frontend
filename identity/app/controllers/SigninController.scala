@@ -60,8 +60,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
         Async {
           api.authBrowser(EmailPassword(email, password), idRequest.omnitureData) map(_ match {
             case Left(errors) => {
-              logger.error(errors.toString())
-              logger.info("Auth failed for user")
+              logger.info("Auth failed for user, " + errors.toString())
               val formWithErrors = boundForm.withError(FormError("", Messages("error.login")))
               Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
             }

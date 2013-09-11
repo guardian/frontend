@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ExecutionContexts, Logging}
+import common.ExecutionContexts
 import model.IdentityPage
 import play.api.data.{Forms, Form}
 import play.api.mvc._
@@ -12,13 +12,13 @@ import play.api.i18n.Messages
 import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-
-
-import form.Mappings.{idEmail, idPassword}
+import form.Mappings.idPassword
+import utils.SafeLogging
 
 
 @Singleton
-class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdRequestParser, idUrlBuilder: IdentityUrlBuilder ) extends Controller with ExecutionContexts with Logging {
+class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdRequestParser, idUrlBuilder: IdentityUrlBuilder )
+  extends Controller with ExecutionContexts with SafeLogging {
 
   val page = new IdentityPage("/reset-password", "Reset Password", "reset-password")
 
@@ -54,14 +54,14 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
     val boundForm = requestPasswordResetForm.bindFromRequest
     boundForm.fold(
       formWithErrors => {
-        log.info("bad password reset request form submission")
+        logger.info("bad password reset request form submission")
         Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, formWithErrors, Nil))
       },
       { case(email) => {
         Async {
           api.sendPasswordResetEmail(email) map(_ match {
             case Left(errors) => {
-              log.info("User not found for request new password.")
+              logger.info("Request new password returned errors" + errors.toString())
               val formWithError = errors.foldLeft(boundForm) { (form, error) =>
                 error match {
                   case Error(_, description, _, context) =>
@@ -82,25 +82,23 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
     val boundForm = passwordResetForm.bindFromRequest
     boundForm.fold(
       formWithErrors => {
-        log.info("bad rest password attempt")
+        logger.info("form errors in reset password attempt")
         Ok(views.html.password.reset_password(page, idRequest, idUrlBuilder, formWithErrors, token))
      },
      { case(password, password_confirm, email_address)  => {
          Async {
            api.resetPassword(token,password) map ( _ match {
              case Left(errors) => {
-               errors match {
-                 case List( Error("Token expired", _, _, _)) =>
-                   Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
-                 case errors => {
-                   val formWithError = errors.foldLeft(requestPasswordResetForm) { (form, error) =>
-                     form.withError(error.context.getOrElse(""), error.description)
-                   }
-                   Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, formWithError, errors))
+               logger.info("reset password errors, " + errors.toString())
+               if (errors.exists("Token expired" == _.message))
+                 Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
+               else {
+                 val formWithError = errors.foldLeft(requestPasswordResetForm) { (form, error) =>
+                   form.withError(error.context.getOrElse(""), error.description)
                  }
+                 Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, formWithError, errors))
                }
              }
-
              case Right(ok) => Ok(views.html.password.password_reset_confirmation(page, idRequest, idUrlBuilder))})
          }
        }
@@ -113,7 +111,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
     Async {
       api.userForToken(token) map ( _ match {
         case Left(errors) => {
-          log.warn("Could not retrieve password reset request for token: %s".format(token))
+          logger.warn("Could not retrieve password reset request for token: %s, errors: %s".format(token, errors))
           Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
         }
         case Right(user) => {
