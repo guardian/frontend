@@ -4,11 +4,7 @@ import views.support.Style
 
 case class Config(
                    id: String,
-                   name: String,
-                   numItemsVisible: Int,
-                   style: Option[Style],
-                   section: String,
-                   showMore: Boolean)
+                   name: String)
 
 case class Collection(items: Seq[Trail])
 
