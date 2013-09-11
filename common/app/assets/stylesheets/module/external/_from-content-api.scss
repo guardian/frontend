@@ -53,14 +53,13 @@
     @extend %type-7;
 
     @include mq(tablet) {
-        // @extend %type-6; (extends do not work in media queries)
         @include font($serif, normal, 16, 24);
     }
     h2 {
         @extend %type-5;
 
         @include mq(tablet) {
-            @extend %type-4;
+            @include font($serif, 700, 18, 24);
         }
     }
 }

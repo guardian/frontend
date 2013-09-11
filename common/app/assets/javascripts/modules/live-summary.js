@@ -32,17 +32,17 @@ define([
     Summary.prototype.findSummaries = function() {
         var self = this,
             $summaries = common.$g('.is-summary', this.articleContainer),
-            $hiddenSummaryPlaceholders = common.$g('.js-article__summary.is-off');
+            $hiddenSummaryPlaceholders = common.$g('.js-article__summary.u-h');
 
         if ($summaries.length > 0 && $hiddenSummaryPlaceholders.length > 0) {
             bonzo($hiddenSummaryPlaceholders).each(function(element, index) {
-                bonzo(element).removeClass('is-off');
+                bonzo(element).removeClass('u-h');
             });
             // Hide latest summary
             bonzo($summaries).each(function(element, index) {
-                bonzo(element).removeClass('is-off');
+                bonzo(element).removeClass('u-h');
             });
-            bonzo($summaries[0]).addClass('is-off');
+            bonzo($summaries[0]).addClass('u-h');
         }
     };
 
