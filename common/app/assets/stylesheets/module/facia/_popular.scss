@@ -1,4 +1,4 @@
-.section--popular {
+.collection--popular {
     @include mq(tablet) {
         display: inline-block;
         width: gs-span(4);
@@ -7,7 +7,7 @@
         padding-left: ($gs-gutter/2) - 1;
         border-left: 1px solid $grey;
     }
-    .collection {
+    .items {
         margin-top: $baseline*3;
         counter-reset: most-read;
         @include mq(tablet) {

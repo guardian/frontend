@@ -1,6 +1,6 @@
 @(trails: Seq[Trail])(implicit request: RequestHeader)
 
-<ul class="unstyled collection item-count-@trails.size">
+<ul class="unstyled items item-count-@trails.size">
     @trails.zipWithIndex.map{ case (trail, index) =>
         <li class="item @trail.trailType.map("item--" + _) @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image}" data-link-name="trail | @{index + 1}"
             @trail.discussionId.map{ id => data-discussion-id="@id" }>

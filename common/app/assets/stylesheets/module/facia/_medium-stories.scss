@@ -1,8 +1,8 @@
-.section--medium-stories {
-    .section__title {
+.collection--medium-stories {
+    .collection__title {
         display: none;
     }
-    .collection {
+    .items {
         @include mq(tablet) {
             font-size: 0;
             white-space: nowrap;

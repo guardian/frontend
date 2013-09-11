@@ -2,7 +2,7 @@
 
 @if(items.nonEmpty){
 
-    <section class="section--@config.style.map(_.className)"
+    <section class="collection collection--@config.style.map(_.className)"
             data-link-name="block | @config.name"
             data-section-id="@config.id"
              @defining(Edition(request).id.toLowerCase()) { edition =>
@@ -10,7 +10,7 @@
              }
 
         @if(config.name) {
-            <h2 class="section__title">@config.name</h2>
+            <h2 class="collection__title">@config.name</h2>
         }
 
         @config.style match {

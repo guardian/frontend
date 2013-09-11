@@ -1,8 +1,8 @@
-.section--small-stories {
-    .section__title {
+.collection--small-stories {
+    .collection__title {
         display: none;
     }
-    .collection {
+    .items {
         @include mq(tablet) {
             font-size: 0;
         }
@@ -65,7 +65,7 @@
     }
 
     $arrow-height: $gs-gutter*(2/3);
-    .collection__show-more {
+    .items__show-more {
         background-color: #9b9b9b;
         border-style: none;
         min-width: gs-span(2);
@@ -77,7 +77,7 @@
         margin-left: -(gs-span(1) + $gs-gutter/2);
         margin-bottom: $arrow-height;
     }
-    .collection__show-more:after {
+    .items__show-more:after {
         width: 0;
         height: 0;
         border-left: $arrow-height solid transparent;

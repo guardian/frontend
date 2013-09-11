@@ -22,7 +22,7 @@ define([
 
         showTopStoriesShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.section--small-stories', context).each(function(topStories) {
+                common.$g('.collection--small-stories', context).each(function(topStories) {
                     var t = new TopStoriesShowMore(topStories);
                 });
             });

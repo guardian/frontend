@@ -2,13 +2,13 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
 
     var TopStoriesShowMore = function(topStories) {
 
-        var _button = bonzo.create('<button class="collection__show-more">Show more news</button>')[0],
+        var _button = bonzo.create('<button class="items__show-more">Show more news</button>')[0],
             _renderToggle = function(section) {
                 bonzo(section).append(_button);
                 bean.on(_button, 'click', function(e) {
                     // show x more, depending on current breakpoint
                     var rowSize = _getRowSize(),
-                        moreHidden = qwery('.item.h', topStories).some(function(item, index) {
+                        moreHidden = qwery('.item.u-h', topStories).some(function(item, index) {
                             if (index === rowSize) {
                                 return true;
                             }

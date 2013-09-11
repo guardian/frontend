@@ -8,7 +8,7 @@
     @include mq(wide) {
         width: gs-span(16);
     }
-    section {
+    .collection {
         margin-top: $gs-baseline;
     }
 }

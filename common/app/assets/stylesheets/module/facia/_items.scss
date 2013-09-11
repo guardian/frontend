@@ -6,7 +6,7 @@ $grey: #cccccc;
 $green: #6ca940;
 $dark-green: #19646c;
 
-.section__title {
+.collection__title {
     @include font($serifheadline, 800, 16);
     @include box-sizing(border-box);
     height: gs-height(1);

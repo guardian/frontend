@@ -202,7 +202,7 @@
     }
 }
 
-.section--masthead {
+.collection--masthead {
     .item {
         float: left;
         height: 100%;
@@ -235,7 +235,7 @@
         border-top-color: $pink !important;
     }
 
-    .collection {
+    .items {
         @include mq(tablet) {
             height: gs-height(6);
         }

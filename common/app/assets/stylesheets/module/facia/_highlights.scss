@@ -1,4 +1,4 @@
-.section--highlights {
+.collection--highlights {
     @include mq(tablet) {
         vertical-align: top;
         display: inline-block;
@@ -10,7 +10,7 @@
     @include mq(wide) {
         width: gs-span(12);
     }
-    .collection {
+    .items {
         @include mq(tablet) {
             font-size: 0;
             white-space: nowrap;
