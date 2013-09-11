@@ -52,7 +52,7 @@ RecommendComments.recommendComment = function(id) {
 };
 
 RecommendComments.success = function(resp) {
-    // TODO: publish an event
+    common.mediator.emit('discussion:comment:recommended', parseInt(this.getAttribute('data-recommend-count'), 10));
 };
 
 RecommendComments.fail = function(resp) {
