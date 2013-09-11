@@ -55,10 +55,10 @@ define([
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
-                    new LiveFilter(context).init();
+                    var lf = new LiveFilter(context).init();
 
                     if (config.switches.liveSummary) {
-                        new LiveSummary(context).init();
+                        var ls = new LiveSummary(context).init();
                     }
                 }
             });
