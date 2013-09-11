@@ -18,7 +18,7 @@ trait WsHttp extends Http[Future] with ExecutionContexts {
     val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
 
     val start = currentTimeMillis
-    val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(5000).get() // DONT CHECK IN
+    val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(2000).get() // DONT CHECK IN
 
     // record metrics
     response.onSuccess {
