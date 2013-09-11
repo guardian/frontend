@@ -38,8 +38,6 @@
     &:focus {
         text-decoration: none;
     }
-
-    &.is-hidden { display: none; }
 }
 
 .card__media {
@@ -93,10 +91,6 @@
 
 .card--right {
     margin-top: $baseline*4;
-
-    &.is-hidden {
-      display: none;
-    }
 
     .card__title {
         min-height: $unitHeight;

@@ -13,8 +13,9 @@
     width: 1px;
 }
 
+.is-hidden,
 [hidden] {
-    display: none;
+    display: none !important;
 }
 
 .mobile-only {

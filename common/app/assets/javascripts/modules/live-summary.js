@@ -30,32 +30,32 @@ define([
     };
 
     Summary.prototype.findSummaries = function() {
-        var self = this,
-            $summaries = common.$g('.is-summary', this.articleContainer),
-            $hiddenSummaryPlaceholders = common.$g('.js-article__summary.u-h');
+        var summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
+            hiddenSummaryContainers = common.toArray(this.context.querySelectorAll('.js-article__summary.is-hidden'));
 
-        if ($summaries.length > 0 && $hiddenSummaryPlaceholders.length > 0) {
-            bonzo($hiddenSummaryPlaceholders).each(function(element, index) {
-                bonzo(element).removeClass('u-h');
+        if (summaries.length > 0 && hiddenSummaryContainers.length > 0) {
+            hiddenSummaryContainers.forEach(function(element, index) {
+                bonzo(element).removeClass('is-hidden');
             });
             // Hide latest summary
-            bonzo($summaries).each(function(element, index) {
-                bonzo(element).removeClass('u-h');
+            summaries.forEach(function(element, index) {
+                bonzo(element).removeClass('is-hidden');
             });
-            bonzo($summaries[0]).addClass('u-h');
+            bonzo(summaries[0]).addClass('is-hidden');
         }
     };
 
     Summary.prototype.deportLatestSummary = function() {
-        var self = this,
-            $summaries = common.$g('.is-summary', this.articleContainer),
-            summaryContent;
+        var summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
+            summaryContent,
+            summaryPlaceholders;
 
         // TODO: Verify if summary has actually been updated
-        if ($summaries.length > 0) {
-            summaryContent = $summaries[0].innerHTML;
+        if (summaries.length > 0) {
+            summaryContent = summaries[0].innerHTML;
+            summaryPlaceholders = common.toArray(this.context.getElementsByClassName('js-summary-placeholder'));
 
-            bonzo(common.$g('.js-summary-placeholder', self.context)).each(function(element, index) {
+            summaryPlaceholders.forEach(function(element, index) {
                 bonzo(element).html(summaryContent);
             });
         }
