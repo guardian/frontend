@@ -19,7 +19,7 @@ define(['common'], function (common) {
             createImage = function(url) {
                 var image = new Image();
                 image.id = 'js-canary';
-                image.className = 'h';
+                image.className = 'u-h';
                 image.src = url;
                 body.appendChild(image);
             },
