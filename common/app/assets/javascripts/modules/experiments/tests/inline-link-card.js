@@ -33,10 +33,14 @@ function (
                 test: function (config, context) {
                     common.mediator.on('page:article:ready', function(config, context) {
                         if (!config.switches.externalLinksCards) {
-                            var card = new LeftHandCard({
-                                origin: 'internal',
-                                context: context
-                            });
+                            var options = {
+                                    origin: 'internal',
+                                    context: context
+                                };
+                            if (config.page.isLiveBlog) {
+                                options.linksHolders = '.live-blog > .block';
+                            }
+                            var card = new LeftHandCard(options);
                         }
                     });
                 }
@@ -46,10 +50,14 @@ function (
                 test: function (config, context) {
                     common.mediator.on('page:article:ready', function(config, context) {
                         if (!config.switches.externalLinksCards) {
-                            var card = new LeftHandCard({
-                                origin: 'all',
-                                context: context
-                            });
+                            var options = {
+                                    origin: 'all',
+                                    context: context
+                                };
+                            if (config.page.isLiveBlog) {
+                                options.linksHolders = '.live-blog > .block';
+                            }
+                            var card = new LeftHandCard(options);
                         }
                     });
                 }
