@@ -373,7 +373,6 @@ a.cta, .cta a {
 }
 
 .fronts header {
-    background-color: #cccccc;
     padding: 5px 5px 5px 10px;
     overflow: auto;
 }
@@ -456,12 +455,17 @@ a.cta, .cta a {
     color: #666666;
 }
 
+.fronts .list-header__edition,
+.fronts .list-header__section,
 .fronts .list-header__role {
-    color: #000000;
     font-weight: bold;
     font-size: 14px;
     text-transform: uppercase;
 }
+
+.fronts .list-header__edition { color: #999999; }
+.fronts .list-header__section { color: #666666; }
+.fronts .list-header__role    { color: #000000; }
 
 .fronts .list-header__meta,
 .fronts .list-header__display,
@@ -508,7 +512,7 @@ a.cta, .cta a {
     margin: 0 1px;
     height: 19px;
     cursor: pointer;
-    color: #666666;
+    color: #999999;
     font-weight: bold;
 }
 
@@ -567,7 +571,7 @@ a.cta, .cta a {
 }
 
 .fronts .trailblock:first-child {
-    margin-top: 25px;
+    margin-top: 35px;
 }
 
 .fronts .trail {

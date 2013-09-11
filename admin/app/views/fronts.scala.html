@@ -9,7 +9,7 @@
             <div class="tool-title">Front Collections Editor</div>
             <div class="list-picker">
                 <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select>
-                <button data-bind="enable: collections().length, click: actions.clearAll">Clear</button>
+                <button data-bind="enable: collections().length, click: actions.unsetConfig">Clear</button>
             </div>
         </header>
 
@@ -62,15 +62,17 @@
                 <div class="list-header" data-bind="if: !state.editingConfig()">
 
                     <div class="list-header__title">
-                        <span class="list-header__role" data-bind="text: configMeta.roleName"></span>
+                        <span class="list-header__edition" data-bind="text: edition"></span>
+                        <span class="list-header__section" data-bind="text: section"></span>
+                        <span class="list-header__role"    data-bind="text: configMeta.roleName"></span>
 
-                        <span class="list-header__display">title:</span>
+                        <span class="list-header__display">Title:</span>
                         <a class="list-header__display__name" data-bind="
-                            text: configMeta.displayName,
+                            text: configMeta.displayName() ? configMeta.displayName : '[set title]',
                             click: toggleEditingConfig"></a>
 
                         <span class="list-header__role__description">
-                            role: <span data-bind="text: configMeta.roleDescription"></span>
+                            Role: <span data-bind="text: configMeta.roleDescription"></span>
                         </span>
                     </div>
 
@@ -100,7 +102,7 @@
                     </div>
                     <div class="list-header__meta">
                         <!-- ko if: state.timeAgo -->
-                            updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span> 
+                            Updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span> 
                             by <a class="list-header__meta__user" data-bind="
                                 text: collectionMeta.updatedBy,
                                 attr: {href: 'mailto:' + collectionMeta.updatedEmail}

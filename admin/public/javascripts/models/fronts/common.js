@@ -33,6 +33,15 @@ define([
                 return false;
             },
 
+            ammendedQueryStr: function(key, val) {
+                var qp = this.queryParams();
+                qp[key] = val;
+                return _.pairs(qp)
+                    .filter(function(p){ return !!p[0]; })
+                    .map(function(p){ return p[0] + (p[1] ? '=' + p[1] : ''); })
+                    .join('&');
+            },
+
             parseQueryParams: function(url) {
                 return _.object(this.urlQuery(url).split('&').map(function(keyVal){
                     return keyVal.split('=').map(function(s){

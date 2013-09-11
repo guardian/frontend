@@ -23,7 +23,9 @@ define([
 
         if (!opts.id) { return; }
 
-        this.id     = opts.id;
+        this.id      = opts.id;
+        this.edition = opts.id.split('/')[0];
+        this.section = opts.id.split('/')[1];
 
         this.live   = ko.observableArray();
         this.draft  = ko.observableArray();
@@ -234,11 +236,6 @@ define([
     List.prototype.saveConfig = function() {
         var self = this;
 
-        // Normalise
-        this.collectionMeta.contentApiQuery(this.collectionMeta.contentApiQuery().replace(/^.*\/api\/?/, ''));
-        this.collectionMeta.min(parseInt(this.collectionMeta.min(), 10) || undefined);
-        this.collectionMeta.max(parseInt(this.collectionMeta.max(), 10) || undefined);
-
         reqwest({
             url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
@@ -246,9 +243,7 @@ define([
             contentType: 'application/json',
             data: JSON.stringify({ 
                 config: {
-                    contentApiQuery: this.collectionMeta.contentApiQuery(),
-                    min: this.collectionMeta.min(),
-                    max: this.collectionMeta.max()
+                    displayName: this.configMeta.displayName()
                 }
             })
         }).always(function(){
