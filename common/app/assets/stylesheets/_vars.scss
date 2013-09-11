@@ -44,7 +44,7 @@ $a-rightCol-trigger: gs-span(11) + $gutter*2;
 
 $mq-breakpoints: (
     (mobile  gs-span(4) + $gutter*2)  // 332px
-    (tablet  gs-span(9) + $gutter*2)  // 732px
+    (tablet  gs-span(8) + $gutter*2)  // 652px
     (desktop gs-span(12) + $gutter*2) // 972px
     (wide    gs-span(16) + $gutter*2) // 1292px
 

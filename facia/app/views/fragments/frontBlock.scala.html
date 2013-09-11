@@ -2,7 +2,7 @@
 
 @if(items.nonEmpty){
 
-    <section class="section--@config.style.map(_.className)"
+    <section class="collection collection--@config.style.map(_.className)"
             data-link-name="block | @config.name"
             data-section-id="@config.id"
              @defining(Edition(request).id.toLowerCase()) { edition =>
@@ -10,17 +10,19 @@
              }
 
         @if(config.name) {
-            <h2 class="section__title">@config.name</h2>
+            <h2 class="collection__title">@config.name</h2>
         }
 
         @config.style match {
-            case Some(Thumbnail)    => { @trailblocks.thumbnail(items, config.numItemsVisible) }
-            case Some(Headline)     => { @trailblocks.headline(items, config.numItemsVisible) }
-            case Some(SectionFront) => { @trailblocks.section(items, config.numItemsVisible, numWithImages = 3 ) }
-            case Some(Masthead)     => { @trailblocks.masthead(items.take(config.numItemsVisible)) }
-            case Some(TopStories)   => { @trailblocks.topStories(items.take(config.numItemsVisible)) }
-            case Some(Highlights)   => { @trailblocks.highlights(items.take(config.numItemsVisible)) }
-            case _                  => { @trailblocks.featured(items, config.numItemsVisible) }
+            case Some(Thumbnail)     => { @trailblocks.thumbnail(items, config.numItemsVisible) }
+            case Some(Headline)      => { @trailblocks.headline(items, config.numItemsVisible) }
+            case Some(SectionFront)  => { @trailblocks.section(items, config.numItemsVisible, numWithImages = 3 ) }
+            case Some(Masthead)      => { @trailblocks.masthead(items.take(config.numItemsVisible)) }
+            case Some(TopStories)    => { @trailblocks.topStories(items.take(config.numItemsVisible)) }
+            case Some(MediumStories) => { @trailblocks.mediumStories(items.take(config.numItemsVisible)) }
+            case Some(SmallStories)  => { @trailblocks.smallStories(items.take(config.numItemsVisible)) }
+            case Some(Highlights)    => { @trailblocks.highlights(items.take(config.numItemsVisible)) }
+            case _                   => { @trailblocks.featured(items, config.numItemsVisible) }
         }
 
     </section>
