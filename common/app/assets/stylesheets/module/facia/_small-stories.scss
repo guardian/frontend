@@ -63,4 +63,28 @@
             bottom: 0;
         }
     }
+    .collection__show-more {
+        background-color: #9b9b9b;
+        border-style: none;
+        min-width: gs-span(2);
+        min-height: gs-height(1);
+        color: #ffffff;
+        @include font($serifheadline, 800, 14);
+        position: relative;
+        left: 50%;
+        margin-left: -(gs-span(1) + $gs-gutter/2);
+        margin-bottom: 8px;
+    }
+    .collection__show-more:after {
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid #9b9b9b;
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -8px;
+    }
 }
