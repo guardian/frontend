@@ -158,23 +158,34 @@ trait ParseCollection extends ExecutionContexts with Logging {
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection {
   private lazy val queryAgent = AkkaAgent[List[(Config, Collection)]](Nil)
 
-  def getItems: Future[List[(Config, Collection)]] = {
+  def getItems: Future[List[(Config, Either[Throwable, Collection])]] = {
     val futureConfig = getConfig(id) map {config =>
       config map {c => c -> getCollection(c.id, edition)}
     }
-    futureConfig map (_.toVector) flatMap { configMapping =>
-        configMapping.foldRight(Future(List[(Config, Collection)]()))((configMap, foldList) =>
+
+    futureConfig.map(_.toVector).flatMap{ configMapping =>
+        configMapping.foldRight(Future(List[(Config, Either[Throwable, Collection])]()))((configMap, foldList) =>
           for {
             newList <- foldList
-            collection <- configMap._2
+            collection <- {configMap._2.map(Right(_)).recover{case t: Throwable => Left(t)}}
           }
           yield (configMap._1, collection) +: newList)
     }
   }
 
-  def refresh() = getItems map {m =>
-    queryAgent.send(m)
-  }
+  def refresh() =
+    getItems map {m =>
+      queryAgent.send{ old =>
+        lazy val oldConfigMap = old.map{case (c, e) => (c.id, e)}.toMap
+        m.flatMap{collection =>
+          collection match {
+            case (config, Left(t)) => oldConfigMap.get(config.id).map(c => (config, c))
+            case (config, Right(c)) => Some((config, c))
+          }
+        }
+      }
+    }
+
 
   def close() = queryAgent.close()
 
