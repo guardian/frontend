@@ -15,6 +15,8 @@ define([
 
     function Summary(context) {
         this.context = context || document;
+        this.maxSummaryHeight = 250;
+        this.expandableClass = 'live-summary--expandable';
         this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
     }
 
@@ -30,19 +32,24 @@ define([
     };
 
     Summary.prototype.findSummaries = function() {
-        var summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
+        var self = this,
+            summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
             hiddenSummaryContainers = common.toArray(this.context.querySelectorAll('.js-article__summary.is-hidden'));
 
         if (summaries.length > 0 && hiddenSummaryContainers.length > 0) {
             hiddenSummaryContainers.forEach(function(element, index) {
                 bonzo(element).removeClass('is-hidden');
+                self.expandable(element, self.maxSummaryHeight, self.expandableClass);
             });
-            // Hide latest summary
-            summaries.forEach(function(element, index) {
-                bonzo(element).removeClass('is-hidden');
-            });
-            bonzo(summaries[0]).addClass('is-hidden');
+            this.hideLatestSummary(summaries);
         }
+    };
+
+    Summary.prototype.hideLatestSummary = function(summaries) {
+        summaries.forEach(function(element, index) {
+            bonzo(element).removeClass('is-hidden');
+        });
+        bonzo(summaries[0]).addClass('is-hidden');
     };
 
     Summary.prototype.deportLatestSummary = function() {
@@ -58,6 +65,15 @@ define([
             summaryPlaceholders.forEach(function(element, index) {
                 bonzo(element).html(summaryContent);
             });
+        }
+    };
+
+    Summary.prototype.expandable = function(element, maxElementHeight, expandableClass) {
+        var $element = bonzo(element);
+
+        $element.removeClass(expandableClass);
+        if (element.offsetHeight > maxElementHeight) {
+            $element.addClass(expandableClass);
         }
     };
 

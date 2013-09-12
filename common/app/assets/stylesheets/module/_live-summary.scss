@@ -1,49 +1,52 @@
-.live-summary__toggler-content .published-time,
-.live-summary__toggler-trigger,
-.live-summary__toggler-show {
+.live-summary .published-time,
+.live-summary__expander-trigger,
+.live-summary__expander-cta,
+.live-summary__expander-show {
     display: none;
 }
 
-.live-summary__toggler-trigger {
-    + .live-summary__toggler-wrapper {
-        .live-summary__toggler-content {
-            @include transition(opacity .5s ease-out);
-            opacity: 0;
-            height: 0;
-            overflow: hidden;
-            margin-bottom: 0;
+.live-summary--expandable {
+    .live-summary__expander-cta {
+        display: block;
+    }
+    .live-summary__expander-content {
+        max-height: 300px;
+        overflow: hidden;
+        position: relative;
+
+        &:after {
+            content: '';
+            z-index: 1;
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 99%,rgba(255,255,255,1) 100%);
         }
     }
-    &:checked {
-        + .live-summary__toggler-wrapper {
-            .live-summary__toggler-content {
-                opacity: 1;
-                height: auto;
-                overflow: visible;
-            }
-            .live-summary__toggler-show {
-                display: block;
-            }
-            .live-summary__toggler-hide {
+    .live-summary__expander-trigger:checked + .live-summary__expander-wrapper {
+        .live-summary__expander-content {
+            max-height: none;
+
+            &:after {
                 display: none;
             }
+        }
+        .live-summary__expander-show {
+            display: block;
+        }
+        .live-summary__expander-hide {
+            display: none;
         }
     }
 }
 
-.live-summary__toggler-cta__button {
-    text-transform: uppercase;
-    @include font-size(12);
-    float: right;
-    width: auto;
-    color: $linkBlue;
-    padding: 6px 0 6px $gutter;
+.live-summary {
+    margin-bottom: $baseline*4;
 }
 
 .live-summary__title {
     color: $articleOrange;
 }
-
 .live-summary__block-clone { // Look like a block
     border-bottom: 2px solid $darkMushroom;
     margin-bottom: $baseline*4;
