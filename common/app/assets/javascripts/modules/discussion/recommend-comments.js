@@ -134,7 +134,7 @@ RecommendComments.renderRecommendation = function(elem, unrecommend) {
 
 /**
  * @param {string} eventName
- * return null
+ * @return null
  */
 RecommendComments.getEvent = function(eventName) {
     return (RecommendComments.CONFIG.events.prefix + RecommendComments.CONFIG.events[eventName]) || null;
