@@ -70,8 +70,10 @@ define([
                     if (options.responseSelector) {
                         $attachTo[manipulation](common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
                     } else {
-                        var elementsToAdd = bonzo.create('<div>' + res.html + '</div>')[0];
-                        bonzo(elementsToAdd.children).addClass('autoupdate--new');
+                        if (manipulation === 'prepend') {
+                            var elementsToAdd = bonzo.create('<div>' + res.html + '</div>')[0];
+                            bonzo(elementsToAdd.children).addClass('autoupdate--new');
+                        }
 
                         $attachTo[manipulation](elementsToAdd.innerHTML);
                     }
@@ -101,7 +103,6 @@ define([
                         unreadBlocks = 0;
                         this.restorePageTitle();
                     }
-
 
                     if (detect.pageVisible()) {
                         this.revealNewElements();
