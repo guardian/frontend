@@ -12,7 +12,7 @@ define([
         countUrl = "/discussion/comment-counts.json?shortUrls=",
         tpl = '<span class="trail__count trail__count--commentcount">';
         tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-count-small"></i>[COUNT]';
-        tpl += '<span class="h"> comments</span></a></span>';
+        tpl += '<span class="u-h"> comments</span></a></span>';
 
     function getContentIds(context) {
         var nodes = context.querySelectorAll("[" + attributeName + "]"),
@@ -38,7 +38,11 @@ define([
                 var url = getContentUrl(node),
                     data = tpl.replace("[URL]", url);
 
-                bonzo(node).append(data.replace("[COUNT]", c.count));
+                // put in trail__meta, if exists
+                var meta = node.querySelector('.item__meta'),
+                    $node = meta ? bonzo(meta) : bonzo(node);
+
+                $node.append(data.replace("[COUNT]", c.count));
                 node.removeAttribute(attributeName);
             }
         });

@@ -4,70 +4,67 @@ define([
     'models/fronts/common',
     'models/fronts/list',
     'models/fronts/article',
-    'models/fronts/latestArticles'
+    'models/fronts/latestArticles',
+    'models/fronts/contentApi',
+    'models/fronts/ophanApi'
 ], function(
     reqwest,
     knockout,
     common,
     List,
     Article,
-    LatestArticles
+    LatestArticles,
+    contentApi,
+    ophanApi
 ) {
-    var maxDisplayableLists = 3,
-        dragging = false,
+    var clipboardEl = document.querySelector('#clipboard'),
         loc = window.location;
 
     return function(selector) {
 
-        var viewModel = {},
-            self = this;
+        var self = this,
+            model = {
+                latestArticles: new LatestArticles(),
+                clipboard:      knockout.observableArray(),
+                collections:    knockout.observableArray(),
+                configs:        knockout.observableArray(),
+                config:         knockout.observable(),
+                actions: {
+                    unsetConfig: unsetConfig,
+                    flushClipboard: flushClipboard
+                }
+            };
 
-        function chosenLists() {
-            return [].concat(_.filter((common.util.queryParams().blocks || "").split(","), function(str){ return !!str; }));
+        function getConfig() {
+            return [].concat(_.filter((common.util.queryParams().config || "").split(","), function(str){ return !!str; }));
         }
 
-        function addList(id) {
-            if(chosenLists().indexOf(id) === -1) {
-                setDisplayedLists(chosenLists().slice(1 - maxDisplayableLists).concat(id));
-            }
+        function setConfig(ids) {
+            history.pushState({}, "", loc.pathname + '?' + common.util.ammendedQueryStr('config', [].concat(ids).join(',')));
+            renderCollections();
         }
 
-        function dropList(list) {
-            setDisplayedLists(_.reject(chosenLists(), function(id){ return id === list.id; }));
+        function unsetConfig() {
+            model.config(undefined);
+            setConfig([]);
         }
 
-        function setDisplayedLists(listIDs) {
-            var qp = common.util.queryParams();
-            qp.blocks = listIDs.join(',');
-            qp = _.pairs(qp)
-                .filter(function(p){ return !!p[0]; })
-                .map(function(p){ return p[0] + (p[1] ? '=' + p[1] : ''); })
-                .join('&');
-
-            history.pushState({}, "", loc.pathname + '?' + qp);
-            renderLists();
+        function renderConfig() {
+            model.config(getConfig()[0]);
         }
 
-        function displayAllEditions() {
-            setDisplayedLists(viewModel.editions.map(function(edition){
-                return edition.id + '/' + viewModel.selectedSection().id + '/' + viewModel.selectedBlock().id; 
-            }));
-        }
-
-        function renderLists() {
-            var chosen = chosenLists();
-            viewModel.listsDisplayed.remove(function(list){
-                if (chosen.indexOf(list.id) === -1) {
-                    return true;
-                } else {
-                    chosen = _.without(chosen, list.id);
-                    return false;
-                }    
+        function renderCollections() {
+            model.collections.removeAll();
+            getConfig().map(function(config){
+                fetchConfig(config, function(collections){
+                    model.collections(
+                        (collections || []).map(function(collection){
+                            return new List(collection);
+                        })
+                    );
+                    connectSortableLists();                
+                });
             });
-            chosen.forEach(function(id){
-                viewModel.listsDisplayed.push(new List(id));
-            });
-            connectSortableLists();
         }
 
         function connectSortableLists() {
@@ -91,8 +88,7 @@ define([
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    fromListObj = knockout.dataFor(fromList[0]);
-                    
+                    fromListObj = knockout.dataFor(fromList[0]);                    
                 },
                 stop: function(event, ui) {
                     var index,
@@ -124,8 +120,8 @@ define([
                 listObj,
                 position,
                 delta;
-                
-            if (list.hasClass('throwAway')) { return; }
+
+            if (!list.hasClass('persisted')) { return; }
 
             listObj = knockout.dataFor(list[0]);
 
@@ -138,7 +134,7 @@ define([
                 delta = {
                     item: id,
                     draft: true,
-                    live: !!list.attr('data-live-edit')
+                    live: list.hasClass('is-live')
                 };
 
                 position = inList.next().data('url');
@@ -156,7 +152,7 @@ define([
 
                 reqwest({
                     method: 'post',
-                    url: common.config.apiBase + '/' + listId,
+                    url: common.config.apiBase + '/collection/' + listId,
                     type: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(delta)
@@ -168,70 +164,127 @@ define([
 
         function _startPoller() {
             setInterval(function(){
-                viewModel.listsDisplayed().forEach(function(list){
-                    if (!dragging) {
-                        list.refresh();
-                    }
+                model.collections().forEach(function(list){
+                    list.refresh();
                 });
             }, 5000);
         }
         var startPoller = _.once(_startPoller);
 
-        function fetchSchema(callback) {
+        function fetchConfigs(callback) {
             reqwest({
-                url: common.config.apiBase,
+                url: common.config.apiBase + '/config',
                 type: 'json'
             }).then(
                 function(resp) {
-                    viewModel.editions = resp.editions;
-                    if (typeof callback === 'function') { callback(); }
+                    if (!_.isArray(resp) || resp.length === 0) {
+                        window.console.log("ERROR: No configs were found");      
+                        return; 
+                    }
+                    model.configs(resp.sort());
+                    if (_.isFunction(callback)) { callback(); }
                 },
-                function(xhr) { alert("Oops. There was a problem loading the trailblock definitions file."); }
+                function(xhr) { window.console.log("ERROR: There was a problem listing the configs"); }
             );
         };
 
+        function fetchConfig(id, callback) {
+            reqwest({
+                url: common.config.apiBase + '/config/' + id,
+                type: 'json'
+            }).then(
+                function(resp) {
+                    if (_.isFunction(callback)) { callback(resp); }
+                },
+                function(xhr) { window.console.log("ERROR: There was a problem fetching the config for " + id); }
+            );
+        };
+
+        function flushClipboard() {
+            model.clipboard.removeAll();
+            clipboardEl.innerHTML = '';
+        };
+
+        function onDragOver(event) {
+            event.preventDefault();
+        }
+
+        function onDrop(event) {
+            var url = event.testData ? event.testData : event.dataTransfer.getData('Text');
+
+            if(!url) { return true; }
+
+            event.preventDefault();
+
+            if (common.util.urlHost(url).indexOf('google') > -1) {
+                url = decodeURIComponent(common.util.parseQueryParams(url).url);
+            };
+
+            model.clipboard.unshift(new Article({
+                id: common.util.urlAbsPath(url)
+            }));
+
+            contentApi.decorateItems(model.clipboard());
+            ophanApi.decorateItems(model.clipboard());
+        }
+
+        model.config.subscribe(function(config) {
+            var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
+            model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
+            setConfig(config ? [config] : []);
+        });
+
+        knockout.bindingHandlers.makeDropabble = {
+            init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                element.addEventListener('dragover',  onDragOver,  false);
+                element.addEventListener('drop',      onDrop,      false);
+            }
+        };
+
+        knockout.bindingHandlers.sparkline = {
+            update: function (element, valueAccessor, allBindingsAccessor, model) {
+                var groups = knockout.utils.unwrapObservable(valueAccessor()),
+                    max = _.max(_.pluck(groups, 'max'));
+
+                if (!max) { return };
+
+                _.chain(groups)
+                .sortBy(function(g){
+                    // Put biggest groups first, so that its fill color is behind the other groups
+                    return -1 * g.max;
+                }).each(function(group, i){
+
+                    group.data.pop(); // drop the last data point. 
+
+                    var data = group.data,
+                        isHot = (_.last(data)/group.minsPerSlot) > 10;
+
+                    $(element).sparkline(data, {
+                        chartRangeMax: max,
+                        defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
+                        height: Math.max(10, Math.min(30, max)),
+                        lineColor: '#' + group.color,
+                        spotColor: false,
+                        minSpotColor: false,
+                        maxSpotColor: false,
+                        lineWidth: isHot ? 2 : 1,
+                        fillColor: isHot ? '#eeeeee' : false,
+                        composite: i > 0
+                    });
+                });
+            }
+        };
+
         this.init = function(callback) {
-            viewModel.latestArticles  = new LatestArticles();
-            viewModel.listsDisplayed  = knockout.observableArray();
-            viewModel.selectedEdition = knockout.observable();
-            viewModel.selectedSection = knockout.observable();
-            viewModel.selectedBlock   = knockout.observable();
+            fetchConfigs(function(){
+                knockout.applyBindings(model);
 
-            viewModel.dropList           = dropList;
-            viewModel.displayAllEditions = displayAllEditions;
-
-            viewModel.selectedEdition.subscribe(function(edition) {
-                viewModel.selectedSection(undefined);
-                viewModel.selectedBlock(undefined);
-            });
-
-            viewModel.selectedSection.subscribe(function(section) {
-                viewModel.selectedBlock(undefined);
-                if (section && section.id) {
-                    viewModel.latestArticles.section(section.sectionSearch || section.id);
-                }
-            });
-
-            viewModel.selectedBlock.subscribe(function(block) {
-                var id;
-                if(block && block.id) {
-                    id = viewModel.selectedEdition().id + '/' +
-                         viewModel.selectedSection().id + '/' + 
-                         block.id;
-
-                    addList(id);
-                }
-            });
-
-            fetchSchema(function(){
-                knockout.applyBindings(viewModel);
-
-                renderLists();
-                window.onpopstate = renderLists;
+                renderConfig();
+                window.onpopstate = renderConfig;
 
                 startPoller();
-                viewModel.latestArticles.search();
-                viewModel.latestArticles.startPoller();
+                model.latestArticles.search();
+                model.latestArticles.startPoller();
             });
         };
 

@@ -5,6 +5,10 @@
 People who are presented with inline links to Guardian content
 as cards in the left sidebar will read more linked content.
 
+Update 2013-08-20: cards are improved, we now show the type of content
+it is linking to (comment, gallery, video). As a result we extend the test
+to the end of September.
+
 ## Buckets
 
 - Variant A: Viewing the original (50%)

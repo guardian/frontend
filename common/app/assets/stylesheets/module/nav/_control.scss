@@ -192,14 +192,15 @@ span.control__menu.i-menu {
 .control--profile {
     float: right;
     height: 28px;
-    padding: 17px 0 13px 0;
+    padding: 17px 0 13px $gutter/2;
     width: auto;
 
     &:link,
     &:active,
     &:hover,
     &:visited,
-    &:focus { color: #fff; }
+    &:focus     { color: #fff; }
+    &.is-active { color: $blue; }
 
     @include mq(tablet) {
         position: absolute;
@@ -209,7 +210,7 @@ span.control__menu.i-menu {
     }
 }
 
-.control--profile__info {
+.control__info {
     display: none;
     height: 28px;
     vertical-align: top;

@@ -1,21 +1,10 @@
 package controllers.front
 
-import model.Trailblock
-import common.{Edition, Logging, AkkaSupport}
-import scala.concurrent.duration._
+import common._
+import model.FaciaPage
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
-import common.editions.EditionalisedSections._
 
-//Responsible for bootstrapping the front (setting up the refresh schedule)
-class Front extends AkkaSupport with Logging {
-
-  val refreshDuration = 60.seconds
-
-  private lazy val refreshSchedule = play_akka.scheduler.every(refreshDuration, initialDelay = 5.seconds) {
-    log.info("Refreshing Front")
-    Front.refresh()
-  }
+class Front extends Logging {
 
   def idFromEditionKey(section: String): String = {
     val editions = Edition.all.map {_.id.toLowerCase}
@@ -23,29 +12,32 @@ class Front extends AkkaSupport with Logging {
     if (editions.contains(sectionId)) "" else sectionId
   }
 
-  lazy val fronts: Map[String, FrontEdition] = Edition.all.flatMap{ edition =>
-    edition.configuredFrontsFacia.filter{ front => isEditionalised(idFromEditionKey(front._1)) || (!isEditionalised(idFromEditionKey(front._1)) && edition == Edition.defaultEdition) }.map{
-      case (name, trailblockDescriptions) => name ->  new FrontEdition(edition, trailblockDescriptions)
-    }.toMap
+  def configList: List[(Edition, String)] = Edition.all.map(e => (e, e.id)).toList ++ ConfigAgent().map(c => (Edition.defaultEdition, c))
+
+  def faciaFronts: Map[String, PageFront] = configList.map {case (e, id) =>
+    id.toLowerCase -> new PageFront(id.toLowerCase, e)
   }.toMap
 
-  private def allFronts = fronts.values
+  val pageFrontAgent = AkkaAgent[Map[String, PageFront]](Map.empty)
 
-  def refresh() {
-    allFronts.foreach(_.refresh())
+  def refreshPageFrontAgent() = {
+    val newFronts = faciaFronts
+    pageFrontAgent.send{ oldValue =>
+      val newFrontsFiltered = newFronts.filterNot {
+        case (id, pageFront) => oldValue.contains(id)
+      }
+      oldValue ++ newFrontsFiltered
+    }
   }
 
-  def shutdown() {
-    refreshSchedule.cancel()
-    allFronts.foreach(_.shutDown())
-  }
+  def refresh() = refreshJobs().foreach(_())
 
-  def startup() {
-    refreshSchedule
-  }
+  def refreshJobs() = Seq(() => {
+      ConfigAgent.refresh()
+      refreshPageFrontAgent()
+    }) ++ pageFrontAgent().values.map{ agent => () => agent.refresh() }
 
-  def apply(path: String): Seq[Trailblock] = fronts(path)()
-
+  def apply(path: String): FaciaPage = pageFrontAgent()(path)()
 }
 
 object Front extends Front

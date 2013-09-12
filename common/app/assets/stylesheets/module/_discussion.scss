@@ -17,8 +17,13 @@ $keylineSize: 1px;
    ========================================================================== */
 
 .d-tabs {
-    margin: 0 $gutter*-1;
+    margin: 0 $gs-gutter/-2;
     padding-bottom: $baseline*3;
+    
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter * -1;
+        margin-right: $gs-gutter * -1;
+    }
 }
 
     .d-tabs--is-live {
@@ -31,16 +36,25 @@ $keylineSize: 1px;
     width: 100%;
 }
 .d-tabs__item {
+    @include box-sizing(border-box);
     border-top: $keylineSize solid $darkMushroom;
     border-bottom: $keylineSize solid $keylineColor;
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
     display: table-cell;
     cursor: pointer;
-    @include box-sizing(border-box);
 }
 .d-tabs__item--byline {
     @extend %type-7;
     vertical-align: top;
-    padding: $baseline $gutter;
+    padding-top: $baseline;
+    padding-bottom: $baseline;
 
     a {
         pointer-events: none;
@@ -61,7 +75,8 @@ $keylineSize: 1px;
 
 .d-tabs__item--commentcount {
     width: 50px;
-    padding: 14px 12px 16px;
+    padding-top: 14px;
+    padding-bottom: $baseline * 4;
     min-height: 60px;
     text-align: center;
     vertical-align: middle;
@@ -69,7 +84,7 @@ $keylineSize: 1px;
     &.d-tabs__item--is-active {
         border-top-color: $keylineColor;
         border-left: $keylineSize solid $keylineColor;
-        padding-bottom: 16px + $keylineSize;
+        padding-bottom: $baseline * 4 + $keylineSize;
     }
 }
 .d-tabs__item--is-active {
@@ -85,11 +100,11 @@ $keylineSize: 1px;
 }
 .d-thread .d-thread {
     padding-left: 28px; /* aligns with top level comment's body */
-    border-left: 8px solid $darkMushroom;
+    border-left: $gutter/2 solid $darkMushroom;
 
     @include mq(768px) {
         padding-left: 44px;
-        border-left-width: 16px;
+        border-left-width: $gutter;
     }
 }
 .d-comment {
@@ -238,14 +253,23 @@ $keylineSize: 1px;
 }
 
 .d-comment__action {
+    color: #767676;
     font-size: .85714285714em;
-}
-
-.d-comment__action--report {
+    
     &:link,
     &:visited {
         color: #767676;
     }
+}
+
+.d-comment__action--recommend {
+    display: table-cell; /* 1 */
+    max-width: 100%;
+    width: 10000px; /* 2 */
+    *width: auto; /* 3 */
+    *zoom:1; /* 4 */
+    margin-left: $gs-gutter;
+    text-align: right;
 }
 
 

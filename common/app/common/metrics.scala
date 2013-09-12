@@ -1,9 +1,7 @@
 package common
 
-import akka.dispatch.Dispatcher
 import com.gu.management._
 import conf.RequestMeasurementMetrics
-import scala.Some
 import java.lang.management.ManagementFactory
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
@@ -28,46 +26,6 @@ trait TimingMetricLogging extends Logging { self: TimingMetric =>
 
     result.get
   }
-}
-
-object AkkaMetrics extends AkkaSupport {
-
-  class DispatcherInhabitantsMetric(name: String, dispatcher: Dispatcher) extends GaugeMetric(
-    "akka",
-    "akka_%s_inhabitants" format name,
-    "%s inhabitants" format name,
-    "Akka %s inhabitants" format name,
-    () => dispatcher.inhabitants
-  )
-
-  class DispatcherMailBoxTypeMetric(name: String, dispatcher: Dispatcher) extends TextMetric(
-    "akka",
-    "akka_%s_mailbox_type" format name,
-    "%s mailbox type" format name,
-    "Akka %s mailbox type" format name,
-    () => dispatcher match {
-      case downcast: Dispatcher => downcast.mailboxType.getClass.getSimpleName
-      case _ => "Not an akka.dispatch.Dispatcher: Cannot determine mailbox type"
-    }
-  )
-
-  class DispatcherMaximumThroughputMetric(name: String, dispatcher: Dispatcher) extends GaugeMetric(
-    "akka",
-    "akka_%s_maximum_throughput" format name,
-    "%s maximum throughput" format name,
-    "Akka %s maximum throughput" format name,
-    () => dispatcher.throughput
-  )
-
-  object Uptime extends GaugeMetric("akka", "akka_uptime", "Akka Uptime", "Akka system uptime in seconds", () => play_akka.uptime())
-
-  val dispatcher = executionContext.asInstanceOf[Dispatcher]
-
-  object DefaultDispatcherInhabitants extends DispatcherInhabitantsMetric("default_dispatcher", dispatcher)
-  object DefaultDispatcherMailBoxType extends DispatcherMailBoxTypeMetric("default_dispatcher", dispatcher)
-  object DefaultDispatcherMaximumThroughput extends DispatcherMaximumThroughputMetric("default_dispatcher", dispatcher)
-
-  val all = Seq(Uptime, DefaultDispatcherInhabitants, DefaultDispatcherMailBoxType, DefaultDispatcherMaximumThroughput)
 }
 
 object SystemMetrics extends implicits.Numbers {
@@ -103,6 +61,18 @@ object SystemMetrics extends implicits.Numbers {
     MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric)
 }
 
+object CommonApplicationMetrics {
+  object SwitchBoardLoadTimingMetric extends TimingMetric(
+    "switchboard",
+    "switchboard-load",
+    "Switchboard load timing",
+    "Time spent running switchboard load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(SwitchBoardLoadTimingMetric)
+}
+
 object ContentApiMetrics {
   object HttpTimingMetric extends TimingMetric(
     "performance",
@@ -119,25 +89,6 @@ object ContentApiMetrics {
   )
 
   val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
-}
-
-object DiscussionMetrics {
-  object DiscussionHttpTimingMetric extends TimingMetric(
-    "performance",
-    "discussion-api-calls",
-    "Discussion API calls",
-    "outgoing requests to discussion api"
-  ) with TimingMetricLogging
-
-  val all: Seq[Metric] = Seq(DiscussionHttpTimingMetric)
-}
-
-object MongoMetrics {
-  object MongoTimingMetric extends TimingMetric("performance", "database", "Mongo request", "outgoing Mongo calls")
-  object MongoOkCount extends CountMetric("database-status", "ok", "Ok", "number of mongo requests successfully completed")
-  object MongoErrorCount extends CountMetric("database-status", "error", "Error", "number of mongo requests that error")
-
-  val all: Seq[Metric] = Seq(MongoTimingMetric, MongoOkCount, MongoErrorCount)
 }
 
 object PaMetrics {
@@ -164,6 +115,17 @@ object PaMetrics {
   )
 
   val all: Seq[Metric] = Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
+}
+
+object DiscussionMetrics {
+  object DiscussionHttpTimingMetric extends TimingMetric(
+    "performance",
+    "discussion-api-calls",
+    "Discussion API calls",
+    "outgoing requests to discussion api"
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(DiscussionHttpTimingMetric)
 }
 
 object AdminMetrics {
@@ -196,14 +158,89 @@ object PorterMetrics {
   val all: Seq[Metric] = Seq(AnalyticsLoadTimingMetric, FastlyCloudwatchLoadTimingMetric)
 }
 
-//case class DispatchStats(connectionPoolSize: Int, openChannels: Int)
+object CoreNavivationMetrics {
+  object MostPopularLoadTimingMetric extends TimingMetric(
+    "core-nav",
+    "core-nav-most-popular-load",
+    "Core Navigation Most Popular load timing",
+    "Time spent running most popular data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(MostPopularLoadTimingMetric)
+}
+
+object FrontMetrics {
+  object FrontLoadTimingMetric extends TimingMetric(
+    "front",
+    "front-load",
+    "Front load timing",
+    "Time spent running front data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(FrontLoadTimingMetric)
+}
+
+object FootballMetrics {
+  object MatchDayLoadTimingMetric extends TimingMetric(
+    "football",
+    "football-matchday-load",
+    "Football match day load timing",
+    "Time spent running football match day data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object CompetitionLoadTimingMetric extends TimingMetric(
+    "football",
+    "football-competition-load",
+    "Football competition load timing",
+    "Time spent running competition data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object CompetitionAgentLoadTimingMetric extends TimingMetric(
+    "football",
+    "football-competition-agent-load",
+    "Football competition agent load timing",
+    "Time spent running competition agent data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object LiveBlogRefreshTimingMetric extends TimingMetric(
+    "football",
+    "football-live-blog-refresh",
+    "Football live blog refresh timing",
+    "Time spent running live blog refresh jobs",
+    None
+  ) with TimingMetricLogging
+
+  object TeamTagMappingsRefreshTimingMetric extends TimingMetric(
+    "football",
+    "football-team-tag-refresh",
+    "Football team tag mappings refresh timing",
+    "Time spent running team tag mapping refresh jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(
+    MatchDayLoadTimingMetric, CompetitionLoadTimingMetric,
+    CompetitionAgentLoadTimingMetric, LiveBlogRefreshTimingMetric,
+    TeamTagMappingsRefreshTimingMetric
+  )
+}
+
 
 object Metrics {
-  lazy val common = RequestMeasurementMetrics.asMetrics ++ AkkaMetrics.all ++ SystemMetrics.all
+  lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
+
   lazy val contentApi = ContentApiMetrics.all
-  lazy val discussion = DiscussionMetrics.all
-  lazy val mongo = MongoMetrics.all
   lazy val pa = PaMetrics.all
+
+  lazy val discussion = DiscussionMetrics.all
   lazy val admin = AdminMetrics.all
   lazy val porter = PorterMetrics.all
+  lazy val coreNavigation = CoreNavivationMetrics.all
+  lazy val front = FrontMetrics.all
+  lazy val football = FootballMetrics.all
 }

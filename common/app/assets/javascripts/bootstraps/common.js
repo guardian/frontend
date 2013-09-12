@@ -17,11 +17,11 @@ define([
     'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/navigation/control',
     'modules/navigation/australia',
     'modules/navigation/edition-switch',
     'modules/navigation/platform-switch',
     'modules/tabs',
+    'modules/toggles',
     'modules/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
@@ -31,10 +31,13 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/swipenav',
+    'modules/experiments/left-hand-card',
+    'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
-    "modules/lightbox-gallery"
+    "modules/lightbox-gallery",
+    "modules/swipe/ears",
+    "modules/swipe/bar"
 ], function (
     common,
     ajax,
@@ -53,11 +56,11 @@ define([
     Profile,
     Sections,
     Search,
-    NavControl,
     Australia,
     EditionSwitch,
     PlatformSwitch,
     Tabs,
+    Toggles,
     RelativeDates,
     Clickstream,
     Omniture,
@@ -67,10 +70,13 @@ define([
     AdvertsAnalytics,
     Debug,
     ab,
+    LeftHandCard,
     swipeNav,
     VideoAdvert,
     CommentCount,
-    LightboxGallery
+    LightboxGallery,
+    ears,
+    SwipeBar
 ) {
 
     var modules = {
@@ -92,31 +98,31 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            var navControl = new NavControl(),
+            var toggles = new Toggles(),
                 topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
                 aus = new Australia(config),
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
-                header = document.querySelector('body'),
+                header = document.body,
                 profile;
 
             if (config.switches.idProfileNavigation) {
                 profile = new Profile(header, {
-                    url: config.idUrl
+                    url: config.page.idUrl
                 });
                 profile.init();
             }
 
             sections.init(header);
-            navControl.init(header);
+            toggles.init(header);
             topStories.load(config, header);
             search.init(header);
             aus.init(header);
 
             common.mediator.on('page:common:ready', function(){
-                navControl.reset();
+                toggles.reset();
             });
         },
 
@@ -128,7 +134,9 @@ define([
 
         transcludePopular: function () {
             common.mediator.on('page:common:ready', function(config, context) {
-                popular(config, context);
+                if('abExpandableMostPopular' in config.switches && !config.switches.abExpandableMostPopular) {
+                    popular(config, context);
+                }
             });
         },
 
@@ -136,6 +144,13 @@ define([
             var tabs = new Tabs();
             common.mediator.on('modules:popular:loaded', function(el) {
                 tabs.init(el);
+            });
+        },
+
+        showToggles: function() {
+            var toggles = new Toggles();
+            common.mediator.on('page:common:ready', function(config, context) {
+                toggles.init(context);
             });
         },
 
@@ -160,17 +175,21 @@ define([
         },
 
         initLightboxGalleries: function () {
+            var thisPageId;
             common.mediator.on('page:common:ready', function(config, context) {
                 var galleries = new LightboxGallery(config, context);
+                thisPageId = config.page.pageId;
                 galleries.init();
             });
 
-            // Register as a page view
+            // Register as a page view if invoked from elsewhere than its gallery page (like a trailblock)
             common.mediator.on('module:lightbox-gallery:loaded', function(config, context) {
-                common.mediator.emit('page:common:deferred:loaded', config, context);
+                if (thisPageId !== config.page.pageId) {
+                    common.mediator.emit('page:common:deferred:loaded', config, context);
+                }
             });
         },
-        
+
         runAbTests: function () {
             common.mediator.on('page:common:ready', function(config, context) {
                 ab.run(config, context);
@@ -242,24 +261,13 @@ define([
 
         },
 
-        // Temporary - for a user zoom survey
-        paragraphSpacing: function () {
-            var key = 'paragraphSpacing';
-            common.mediator.on('page:common:ready', function(config, context) {
-                var typographyPrefs = userPrefs.get(key);
-                switch (typographyPrefs) {
-                    case 'none':
-                        common.$g('body').addClass('test-paragraph-spacing--no-spacing');
-                        break;
-                    case 'indents':
-                        common.$g('body').addClass('test-paragraph-spacing--no-spacing-indents');
-                        break;
-                    case 'more':
-                        common.$g('body').addClass('test-paragraph-spacing--more-spacing');
-                        break;
-                    case 'clear':
-                        userPrefs.remove(key);
-                        break;
+        externalLinksCards: function (config) {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches && config.switches.externalLinksCards) {
+                    var card = new LeftHandCard({
+                        origin: 'all',
+                        context: context
+                    });
                 }
             });
         },
@@ -267,7 +275,7 @@ define([
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
-                    if (config.switches && config.switches.adverts) {
+                    if (config.switches && config.switches.adverts && !config.page.blockAds) {
                         Adverts.init(config, context);
                     }
                 });
@@ -298,7 +306,7 @@ define([
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
         },
-   
+
         // let large viewports opt-in to the responsive beta
         betaOptIn: function () {
             var isBeta = /#beta/.test(window.location.hash);
@@ -308,9 +316,29 @@ define([
             }
         },
 
-        initSwipe: function(config) {
+        // opt in/out of facia app
+        faciaOptToggle: function () {
+            var faciaOpt = /^#facia-opt-(.*)$/.exec(window.location.hash);
+            if (faciaOpt) {
+                var expiryDays = 365,
+                    cookieName = 'GU_FACIA';
+                if (faciaOpt[1] === 'in') {
+                    Cookies.add(cookieName, 'true', expiryDays);
+                } else {
+                    Cookies.cleanUp([cookieName]);
+                }
+            }
+        },
+
+        initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
-                swipeNav(config);
+                var swipe = swipeNav(config, contextHtml);
+
+                common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
+                common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
+            } else {
+                delete this.contextHtml;
+                return;
             }
             if (config.switches.swipeNav && detect.canSwipe()) {
                 bonzo(document.body).addClass('can-swipe');
@@ -345,11 +373,12 @@ define([
         });
     };
 
-    var ready = function (config, context) {
+    var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
             modules.upgradeImages();
             modules.showTabs();
+            modules.showToggles();
             modules.runAbTests();
             modules.showRelativeDates();
             modules.transcludeRelated();
@@ -360,17 +389,18 @@ define([
             if (config.switches.analyticsOnDomReady) {
                 modules.loadAnalytics();
             }
-            modules.initSwipe(config);
+            modules.initSwipe(config, contextHtml);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.betaOptIn();
-            modules.paragraphSpacing();
+            modules.faciaOptToggle();
+            modules.externalLinksCards();
         }
         common.mediator.emit("page:common:ready", config, context);
     };
 
-    var init = function (config, context) {
-        ready(config, context);
+    var init = function (config, context, contextHtml) {
+        ready(config, context, contextHtml);
         deferrable(config, context);
     };
 

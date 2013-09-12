@@ -3,9 +3,7 @@ package common.editions
 import common._
 import org.joda.time.DateTimeZone
 import model.{RunningOrderTrailblockDescription, ItemTrailblockDescription, MetaData}
-import views.support.{Headline, Thumbnail, Featured, SectionFront}
-import scala.Some
-import common.NavItem
+import views.support._
 
 
 object Uk extends Edition(
@@ -105,37 +103,6 @@ object Uk extends Edition(
       ItemTrailblockDescription("science", "Science", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
       ItemTrailblockDescription("environment", "Environment", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
       Au.videoCustomBlock
-
     )
-  )
-
-  val configuredFrontsFacia = Map(
-    (Editionalise("", Uk), Seq(
-      RunningOrderTrailblockDescription("news", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("news", "features", "Features", 5),
-      RunningOrderTrailblockDescription("news", "editors-picks", "Editor's Picks", 5)
-    )),
-
-    (Editionalise("culture", Uk), Seq(
-      RunningOrderTrailblockDescription("culture", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("culture", "features", "Features", 5),
-      RunningOrderTrailblockDescription("culture", "editors-picks", "Editor's Picks", 5)
-    )),
-
-    (Editionalise("fashion", Uk), Seq(
-      RunningOrderTrailblockDescription("fashion", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("fashion", "features", "Features", 5),
-      RunningOrderTrailblockDescription("fashion", "editors-picks", "Editor's Picks", 5)
-    )),
-
-    (Editionalise("technology", Uk), Seq(
-      RunningOrderTrailblockDescription("technology", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("technology", "features", "Features", 5),
-      RunningOrderTrailblockDescription("technology", "editors-picks", "Editor's Picks", 5)
-    )),
-
-    (Editionalise("film", Uk), Seq(
-      RunningOrderTrailblockDescription("film", "top-stories", "Film", 15, style = Some(SectionFront))
-    ))
   )
 }

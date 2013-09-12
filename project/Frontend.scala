@@ -1,6 +1,7 @@
 import sbt._
 import sbt.Keys._
 import play.Project._
+import SbtGruntPlugin._
 
 object Frontend extends Build with Prototypes {
 
@@ -8,7 +9,7 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       "com.gu" %% "management-play" % "5.26",
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.3",
+      "com.gu.openplatform" %% "content-api-client" % "2.6",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
@@ -20,6 +21,8 @@ object Frontend extends Build with Prototypes {
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
 
       "com.amazonaws" % "aws-java-sdk" % "1.4.7",
+
+      "org.quartz-scheduler" % "quartz" % "2.2.0",
 
       "org.jboss.dna" % "dna-common" % "0.6",
       "commons-io" % "commons-io" % "2.4",
@@ -40,7 +43,6 @@ object Frontend extends Build with Prototypes {
       "feed._"
     )
   )
-
   val sport = application("sport").dependsOn(commonWithTests)
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
   val image = application("image").dependsOn(commonWithTests).settings(
@@ -68,12 +70,11 @@ object Frontend extends Build with Prototypes {
   val admin = application("admin").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
       "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
-    )
+    ),
+    (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:admin"))
   )
   val porter = application("porter").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-camel" % "2.1.0",
-      "org.apache.camel" % "camel-quartz" % "2.11.0",
       "com.typesafe.slick" %% "slick" % "1.0.0",
       "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
     )
@@ -90,8 +91,38 @@ object Frontend extends Build with Prototypes {
       "joda-time" % "joda-time" % "1.6",
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
-      "net.databinder.dispatch" %% "dispatch-core" % "0.10.1"
+      "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
+      "org.mockito" % "mockito-all" % "1.9.5" % "test",
+      "org.slf4j" % "slf4j-ext" % "1.7.5"
     )
+  )
+
+  val endtoend = application("fronts-endtoend-tests").settings(
+    libraryDependencies ++= Seq(
+      "org.slf4j" % "slf4j-api" % "1.7.5",
+      "ch.qos.logback" % "logback-classic" % "1.0.7",
+      "org.json" % "org.json" % "chargebee-1.0",
+      "joda-time" % "joda-time" % "2.2",
+      "hu.meza" % "aao" % "2.0.0",
+      "hu.meza.tools" % "config" % "1.0.1",
+      "hu.meza.tools" % "http-client-wrapper" % "0.1.9",
+      "info.cukes" % "cucumber-java" % "1.1.3",
+      "info.cukes" % "cucumber-junit" % "1.1.3",
+      "info.cukes" % "cucumber-picocontainer" % "1.1.3",
+      "junit" % "junit" % "4.11" % "test",
+      "com.novocode" % "junit-interface" % "0.10" % "test->default"
+    ),
+    testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v"),
+    javacOptions ++= Seq("-source", "7", "-target", "1.7"),
+    autoScalaLibrary := false,
+    unmanagedSourceDirectories in Compile <+= baseDirectory(_ / "src"),
+    unmanagedSourceDirectories in Test <+= baseDirectory(_ / "src"),
+    unmanagedSourceDirectories in Runtime <+= baseDirectory(_ / "src"),
+    unmanagedResourceDirectories in Compile <+= baseDirectory(_ / "src" / "main" / "resources"),
+    unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "src" / "main" / "resources"),
+    unmanagedResourceDirectories in Test <+= baseDirectory(_ / "src" / "main" / "resources"),
+    unmanagedResourceDirectories in Test <+= baseDirectory(_ / "src" / "test" / "resources"),
+    unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "src" / "test" / "resources")
   )
 
   val dev = base("dev-build")

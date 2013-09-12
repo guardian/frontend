@@ -1,12 +1,17 @@
 @import "_mq";
 
 //Output based on body font-size being 10px
-@mixin font($family, $weight, $size, $line-height) {
-    font-family: $family;
+@mixin font-size($size, $line-height: $size) {
     font-size: $size*1px;
     font-size: ($size / 10)*1rem;
-    font-weight: $weight;
+    line-height: $line-height*1px;
     line-height: ($line-height / 10)*1rem;
+}
+
+@mixin font($family, $weight, $size, $line-height: $size) {
+    font-family: $family;
+    font-weight: $weight;
+    @include font-size($size, $line-height);
 }
 
 @mixin box-sizing($box) {
@@ -24,6 +29,7 @@
 @mixin transform($args) {
     -webkit-transform: $args;
     -moz-transform: $args;
+    -ms-transform: $args;
     transform: $args;
 }
 

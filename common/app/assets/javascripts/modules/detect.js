@@ -8,12 +8,12 @@
 
 define(['modules/userPrefs'], function (userPrefs) {
 
-    var BASE_WIDTH     = 600,
-        MEDIAN_WIDTH   = 900,
+    var BASE_WIDTH     = 732,
+        MEDIAN_WIDTH   = 972,
         EXTENDED_WIDTH = 1052,  // Breakpoint where we see the left column in article pages
         mobileOS,
         supportsPushState;
-    
+
     /**
      * @param Number width Allow passing in of width, for testing (innerWidth read only
      * in firefox
@@ -21,13 +21,13 @@ define(['modules/userPrefs'], function (userPrefs) {
     function getLayoutMode(width) {
         var mode = "mobile";
         if ("matchMedia" in window && width === undefined) {
-            if (window.matchMedia('(min-width: '+ BASE_WIDTH + ')')) {
+            if (window.matchMedia('(min-width: '+ BASE_WIDTH + 'px)').matches) {
                 mode = "tablet";
             }
-            if (window.matchMedia('(min-width: '+ MEDIAN_WIDTH + ')')) {
+        if (window.matchMedia('(min-width: '+ MEDIAN_WIDTH + 'px)').matches) {
                 mode = "desktop";
             }
-            if (window.matchMedia('(min-width: '+ EXTENDED_WIDTH + ')')) {
+            if (window.matchMedia('(min-width: '+ EXTENDED_WIDTH + 'px)').matches) {
                 mode = "extended";
             }
         } else {
@@ -134,7 +134,7 @@ define(['modules/userPrefs'], function (userPrefs) {
     function getFontFormatSupport(ua) {
         var format = 'woff';
             ua = ua.toLowerCase();
-            
+
         if (ua.indexOf('android') > -1) {
             format = 'ttf';
         }
@@ -232,6 +232,12 @@ define(['modules/userPrefs'], function (userPrefs) {
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
+    function getBreakpoint() {
+        var breakpoint = window.getComputedStyle(document.body, ':after').getPropertyValue('content');
+        // firefox seems to wrap the value in quotes
+        return breakpoint.replace(/^"([^"]*)"$/, "$1");
+    }
+
     return {
         getLayoutMode: getLayoutMode,
         getMobileOS: getMobileOS,
@@ -244,7 +250,8 @@ define(['modules/userPrefs'], function (userPrefs) {
         hasSvgSupport: hasSvgSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
-        getOrientation: getOrientation
+        getOrientation: getOrientation,
+        getBreakpoint: getBreakpoint
     };
 
 });

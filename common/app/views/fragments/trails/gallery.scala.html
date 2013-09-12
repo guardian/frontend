@@ -11,31 +11,12 @@
         </a>
     </h@headingLevel>
 
-    <ul class="gallerythumbs js-visible unstyled cf">
-        @if(trail.landscapes.length >= 3) {
-            @trail.landscapes.take(3).zipWithRowInfo.map{ case(image, info) =>
-            <li class="gallerythumbs__item">
-                <a href="@LinkTo{@trail.url?index=@image.index}" data-link-name="@info.rowNum | gallery thumb">
-                    <img class="gallerythumbs__img"
-                        @if(info.rowNum == 1) {
-                            data-lowsrc="@image.url.map(ImgSrc(_, GalleryLargeTrail))"
-                            data-thumb-width="480"
-                        } else {
-                            data-lowsrc="@image.url.map(ImgSrc(_, GallerySmallTrail))"
-                            data-thumb-width="280"
-                        }
-                        alt="@image.altText.getOrElse("")"
-                    />
-                </a>
-            </li>
-            }
-        }
-    </ul>
+    @fragments.galleryThumbs(trail)
 
     <span class="trail__count trail__count--imagecount">
         <a href="@trail.url" data-link-name="Gallery image count">
             <i class="i i-gallery"></i>
-            @trail.images.length <span class="h">images</span>
+            @trail.images.length <span class="u-h">images</span>
         </a>
     </span>
 

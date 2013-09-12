@@ -55,7 +55,8 @@ case class Comment(
   date: DateTime,
   isHighlighted: Boolean,
   isBlocked: Boolean,
-  responseTo: Option[ResponseTo] = None
+  responseTo: Option[ResponseTo] = None,
+  numRecommends: Int
 )
 
 object Comment{
@@ -71,7 +72,8 @@ object Comment{
         date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis,
         isHighlighted = (json \ "isHighlighted").as[Boolean],
         isBlocked = (json \ "status").as[String].contains("blocked"),
-        responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_))
+        responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
+        numRecommends = (json \ "numRecommends").as[Int]
     )
   }
 }

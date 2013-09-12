@@ -4,7 +4,7 @@ import org.apache.commons.httpclient.{HttpClient, MultiThreadedHttpConnectionMan
 
 
 // an implementation using the MultiThreadedHttpConnectionManager
-trait MultiThreadedApacheSyncHttpClient extends ApacheSyncHttpClient {
+class MultiThreadedApacheSyncHttpClient extends ApacheSyncHttpClient {
   val connectionManager = new MultiThreadedHttpConnectionManager
   override val httpClient = new HttpClient(connectionManager)
 
@@ -23,4 +23,3 @@ trait MultiThreadedApacheSyncHttpClient extends ApacheSyncHttpClient {
     connectionManager.getParams.setSoTimeout(ms)
   }
 }
-class DefaultMultiThreadedApacheSyncHttpClient extends MultiThreadedApacheSyncHttpClient

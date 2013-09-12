@@ -1,4 +1,5 @@
 define('bootstraps/app', [
+    "qwery",
     "common",
     "domReady",
     "ajax",
@@ -10,15 +11,18 @@ define('bootstraps/app', [
     "modules/router",
     "bootstraps/common",
     "bootstraps/front",
+    "bootstraps/facia",
     "bootstraps/football",
     "bootstraps/article",
     "bootstraps/video",
     "bootstraps/gallery",
     "bootstraps/interactive",
+    "bootstraps/identity",
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag"
 ], function (
+    qwery,
     common,
     domReady,
     ajax,
@@ -30,11 +34,13 @@ define('bootstraps/app', [
     Router,
     bootstrapCommon,
     Front,
+    Facia,
     Football,
     Article,
     Video,
     Gallery,
     Interactive,
+    Identity,
     ab,
     pageConfig,
     Tag
@@ -54,7 +60,7 @@ define('bootstraps/app', [
             e.init();
             common.mediator.on("module:error", e.log);
         },
-       
+
        // RUM on features
        sendInTheCanary: function (config) {
             var c = new Canary({
@@ -62,9 +68,16 @@ define('bootstraps/app', [
             });
             c.init();
         },
-    
+
         initialiseAbTest: function (config) {
-            ab.segment(config);
+            var forceUserIntoTest = /^#ab/.test(window.location.hash);
+            if (forceUserIntoTest) {
+                var tokens = window.location.hash.replace('#ab-','').split('=');
+                var test = tokens[0], variant = tokens[1];
+                ab.forceSegment(test, variant);
+            } else {
+                ab.segment(config);
+            }
         },
 
         loadFonts: function(config, ua) {
@@ -85,8 +98,9 @@ define('bootstraps/app', [
         var config = pageConfig(rawConfig);
 
         domReady(function() {
-            var context = document.getElementById('preload-1');
-            
+            var context = document.getElementById('preload-1'),
+                contextHtml = context.cloneNode().innerHTML;
+
             modules.initialiseAjax(config);
             modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
@@ -94,16 +108,17 @@ define('bootstraps/app', [
             modules.loadFonts(config, navigator.userAgent);
             modules.showDebug();
 
-            var pageRoute = function(config, context) {
+            var pageRoute = function(config, context, contextHtml) {
 
                 // We should rip out this router:
                 var r = new Router();
 
-                bootstrapCommon.init(config, context);
-
+                bootstrapCommon.init(config, context, contextHtml);
 
                 //Fronts
-                if(config.page.isFront){
+                if(qwery('.facia-container').length) {
+                    Facia.init(config, context);
+                } else if (config.page.isFront){
                     Front.init(config, context);
                 }
 
@@ -134,12 +149,16 @@ define('bootstraps/app', [
                     Tag.init(config, context);
                 }
 
+                if (config.page.section === "identity") {
+                    Identity.init(config, context);
+                }
+
                 //Kick it all off
                 r.init();
             };
 
             common.mediator.on('page:ready', pageRoute);
-            common.mediator.emit('page:ready', config, context);
+            common.mediator.emit('page:ready', config, context, contextHtml);
         });
     };
 

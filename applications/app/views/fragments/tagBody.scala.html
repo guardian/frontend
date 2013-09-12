@@ -1,6 +1,9 @@
 @(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
 
-<section class="front-section zone-@tag.section" data-link-name="@tag.section" role="main">
+<section class="front-section zone-@tag.section"
+    data-link-name="@tag.section"
+    data-link-context="@tag.id"
+    role="main">
 
     @fragments.headers.sectionHead(tag.name)
 
@@ -50,4 +53,6 @@
     }
 }
 
-@fragments.mostPopularPlaceholder(tag.section)
+<div class="box-indent article-zone-no-indent">
+    @fragments.mostPopularPlaceholder(tag.section)
+</div>

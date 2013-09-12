@@ -1,4 +1,4 @@
-define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
+define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
 
     describe('AB Testing', function() {
 
@@ -108,6 +108,14 @@ define(['modules/experiments/ab', '../fixtures/ab-test'], function(ab, ABTest) {
                 test.one.expiry = "2012-01-01";
                 ab.segment(switches.test_one_on);
                 expect(localStorage.getItem(participationsKey)).toBe('{"value":{"DummyTest2":{"variant":"foo"}}}');
+            });
+
+            it('should allow the forcing of users in to a given test and variant', function () {
+                ab.forceSegment('DummyTest', 'bar');
+                expect(getItem('DummyTest').variant).toBe('bar');
+                // ... and should be able to override 
+                ab.forceSegment('DummyTest', 'foo');
+                expect(getItem('DummyTest').variant).toBe('foo');
             });
 
         });

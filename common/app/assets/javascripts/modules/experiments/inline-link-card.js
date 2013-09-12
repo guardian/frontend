@@ -22,12 +22,10 @@ define([
         this.link = link;
         this.title = title || false;
         this.$linkContext = common.$g(linkContext);
-        this.hasLoadedCard = false;
     }
 
     InlineLinkCard.prototype.init = function() {
         var self = this;
-
         self.loadCard();
 
         bean.on(window, 'resize', common.debounce(function(e){
@@ -37,18 +35,25 @@ define([
 
     InlineLinkCard.prototype.loadCard = function() {
         var layoutMode = detect.getLayoutMode();
-        if(layoutMode === 'extended' && !this.hasLoadedCard) {
+
+        if (layoutMode === 'extended' && !this.link.getAttribute('data-hasbeencardified')) {
+            this.link.setAttribute('data-hasbeencardified', true);
             this.fetchData();
         }
     };
 
     InlineLinkCard.prototype.prependCard = function(href, data, title) {
         var self = this,
-            headline = data.headline || false,
-            thumbnail = data.thumbnail,
+            headline = data.title || false,
+            description = data.description || false,
+            image = data.image || false,
+            datePublished = data.published_time || false,
+            host = data.host || false,
             tpl,
-            thumbnailFragment = '',
-            titleFragment = '';
+            imageFragment = '',
+            titleFragment = '',
+            publishedFragment = '',
+            contentFragment = '';
 
         if (!headline) {
             return false;
@@ -57,35 +62,54 @@ define([
         if (title) {
             titleFragment = '<h2 class="card__title">' + title + '</h2>';
         }
-        if (thumbnail) {
-            thumbnailFragment = '<img src="' + thumbnail + '" alt="" class="card__media" />';
+        if (image) {
+            imageFragment = '<img src="' + image + '" alt="" class="card__media" />';
+        }
+        if (datePublished) {
+            publishedFragment = '<div class="dateline"><i class="i i-date relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
+        }
+        if (title === 'Wikipedia') {
+            contentFragment = '<div class="card__description type-11">' + description + '</div>';
+        } else {
+            contentFragment = '<h3 class="card__headline">' + headline + '</h3>';
+        }
+        if (host && !/^theguardian\.com$/.test(host)) {
+            contentFragment += '<div class="card__appendix type-12">' + host + '</div>';
         }
 
         tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
                   '<div class="furniture furniture--left card">' +
                       titleFragment +
-                      thumbnailFragment +
-                      '<div class="card__body u-text-hyphenate"><h3 class="card__headline">' + headline + '</h3></div>' +
+                      imageFragment +
+                      '<div class="card__body u-text-hyphenate">' +
+                          publishedFragment +
+                          contentFragment +
+                      '</div>' +
                   '</div>' +
               '</a>';
 
         self.$linkContext.before(tpl);
+        common.mediator.emit('fragment:ready:dates');
     };
 
     InlineLinkCard.prototype.fetchData = function() {
-        var href = this.link.getAttribute('href'),
-            self = this;
+        var href = this.link.getAttribute('href').trim(), // Trim because some href attributes contain spaces
+            self = this,
+            reqURL;
+        if ((/^\//).test(href)) {
+            reqURL = '/cards/opengraph/' + encodeURIComponent('http://www.theguardian.com' + href);
+        } else if ((/^http(?:s)?:\/\//).test(href)) {
+            reqURL = '/cards/opengraph/' + encodeURIComponent(href);
+        }
 
         // make request to endpoint
         ajax({
-            url: href + '.json',
+            url: reqURL,
             type: 'json',
             crossOrigin: true
         }).then(
             function(resp) {
-                self.hasLoadedCard = true;
-
-                self.prependCard(href, resp.config.page, self.title);
+                self.prependCard(href, resp, self.title);
             },
             function(req) {
                 common.mediator.emit('module:error', 'Failed to cardify in body link: ' + req.statusText, 'modules/inline-link-card.js');

@@ -141,6 +141,10 @@ define([
                 s.events = s.apl(s.events,'event58',',');
             }
 
+            if (config.page.commentable) {
+                s.events = s.apl(s.events,'event46',',');
+            }
+
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
 
             s.prop65    = config.page.headline || '';

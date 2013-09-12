@@ -3,10 +3,9 @@ package common.editions
 import common._
 import org.joda.time.DateTimeZone
 import model.{RunningOrderTrailblockDescription, MetaData, ItemTrailblockDescription}
-import views.support.{Headline, Thumbnail, Featured}
-import scala.Some
-import common.NavItem
+import views.support._
 import contentapi.QueryDefaults
+import common.NavItem
 
 object Us extends Edition(
   id = "US",
@@ -99,35 +98,5 @@ object Us extends Edition(
       ItemTrailblockDescription("environment", "Environment", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
       Au.videoCustomBlock
     )
-  )
-
-  val configuredFrontsFacia = Map(
-    (Editionalise("", Us), Seq(
-      RunningOrderTrailblockDescription("news", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("news", "features", "Features", 5),
-      RunningOrderTrailblockDescription("news", "editors-picks", "Editor's Picks", 5)
-    )),
-
-    (Editionalise("culture", Us), Seq(
-      RunningOrderTrailblockDescription("culture", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("culture", "features", "Features", 5),
-      RunningOrderTrailblockDescription("culture", "editors-picks", "Editor's Picks", 5)
-    )),
-
-    (Editionalise("fashion", Us), Seq(
-      RunningOrderTrailblockDescription("fashion", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("fashion", "features", "Features", 5),
-      RunningOrderTrailblockDescription("fashion", "editors-picks", "Editor's Picks", 5)
-    )),
-
-    (Editionalise("technology", Us), Seq(
-      RunningOrderTrailblockDescription("technology", "top-stories", "Top Stories", 5),
-      RunningOrderTrailblockDescription("technology", "features", "Features", 5),
-      RunningOrderTrailblockDescription("technology", "editors-picks", "Editor's Picks", 5)
-    )),
-
-    (Editionalise("film", Us), Seq(
-      RunningOrderTrailblockDescription("film", "top-stories", "Film", 15)
-    ))
   )
 }

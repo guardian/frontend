@@ -1,0 +1,110 @@
+$blue: #005688;
+$light-blue: #4cc7e0;
+$pink: #AB1454;
+$light-pink: #f66980;
+$grey: #cccccc;
+$green: #6ca940;
+$dark-green: #19646c;
+
+.collection__title {
+    @include font($serifheadline, 800, 16);
+    @include box-sizing(border-box);
+    height: gs-height(1);
+    padding: $gs-baseline/3 0 0 $gs-gutter/5;
+    color: #ffffff;
+    background-color: $blue;
+    border-top: $gs-baseline/3 solid $light-blue;
+    margin-bottom: $gs-baseline;
+}
+.item {
+    position: relative;
+    color: #000000;
+    font-family: $serifheadline;
+    font-weight: normal;
+    @include box-sizing(border-box);
+}
+a.item__link,
+.item__title {
+    color: inherit;
+    font-family: inherit;
+    font-weight: normal;
+}
+.item__title {
+    @include box-sizing(border-box);
+}
+.item__meta {
+    height: gs-height(1) - $gs-baseline;
+    color: $grey;
+    @include font($sans-serif, lighter, 12, 12);
+    margin-top: $gs-baseline;
+    .item__timestamp,
+    .trail__count {
+        position: relative;
+        height: 100%;
+        float: left;
+        i {
+            margin:0;
+            position: absolute;
+            top: 0;
+        }
+    }
+    .item__timestamp {
+        min-width: gs-span(1) - 16;
+        padding: 0 $gs-gutter/2 0 16px;
+        i {
+            @extend .i-clock-grey;
+            left: 0;
+        }
+    }
+    .trail__count {
+        padding-bottom: 0;
+        padding-left: 28px;
+        border-left: 1px solid $grey;
+        top: 0;
+        a {
+            color: inherit;
+        }
+        i {
+            @extend .i-comment-grey;
+            left: $gs-gutter/2 - 1;
+        }
+    }
+}
+.item__duration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ffffff;
+    background-color: $light-blue;
+    @include font($sans-serif, lighter, 12, 12);
+    padding: $baseline $gutter/2;
+    i {
+        @extend .i-play;
+        margin-right: $baseline;
+    }
+}
+.item__title {
+    border-top: 2px solid $blue;
+    padding-top: $gs-baseline/2;
+}
+.item--feature {
+    background-color: #ededed;
+    .item__title {
+        border-top-color: $pink;
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+    }
+    .item__standfirst,
+    .item__meta {
+        margin-left: $gs-gutter/2;
+    }
+    .item__standfirst {
+        margin-right: $gs-gutter/2;
+    }
+}
+
+.item--comment {
+    .item__title {
+        border-top-color: $green;
+    }
+}

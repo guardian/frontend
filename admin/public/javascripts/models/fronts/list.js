@@ -1,35 +1,63 @@
 define([
     'Reqwest',
+    'EventEmitter',
     'knockout',
     'models/fronts/common',
     'models/fronts/article',
-    'models/fronts/contentApi'
+    'models/fronts/contentApi',
+    'models/fronts/ophanApi'
 ], function(
     reqwest,
+    eventEmitter,
     ko,
     common,
     Article,
-    ContentApi
+    contentApi,
+    ophanApi
 ) {
 
-    function List(id) {
+    function List(opts) {
         var self = this;
 
-        this.id = id;
-        this.crumbs = id.split(/\//g);
+        opts = opts || {};
+
+        if (!opts.id) { return; }
+
+        this.id      = opts.id;
+        this.edition = opts.id.split('/')[0];
+        this.section = opts.id.split('/')[1];
 
         this.live   = ko.observableArray();
         this.draft  = ko.observableArray();
 
-        this.meta   = this.asObservableProps(['lastUpdated', 'updatedBy', 'updatedEmail']);
-        this.config = this.asObservableProps(['contentApiQuery', 'min', 'max']);
-        this.state  = this.asObservableProps(['liveMode', 'hasUnPublishedEdits', 'loadIsPending', 'editingConfig', 'timeAgo']);
+        // properties from the config, about this collection
+        this.configMeta   = common.util.asObservableProps([
+            'displayName',
+            'roleName',
+            'roleDescription']);
+        common.util.populateObservables(this.configMeta, opts);
+
+        // properties from the collection itself
+        this.collectionMeta = common.util.asObservableProps([ 
+            'contentApiQuery',
+            'min',
+            'max',
+            'lastUpdated',
+            'updatedBy',
+            'updatedEmail']);
+
+        this.state  = common.util.asObservableProps([
+            'liveMode',
+            'hasUnPublishedEdits',
+            'loadIsPending',
+            'editingConfig',
+            'timeAgo']);
 
         this.state.liveMode(common.config.defaultToLiveMode);
 
         this.needsMore = ko.computed(function() {
-            if (self.state.liveMode()  && self.live().length  < self.config.min()) { return true; }
-            if (!self.state.liveMode() && self.draft().length < self.config.min()) { return true; }
+            if (self.state.liveMode()  && self.live().length  < self.collectionMeta.min()) { return true; }
+            if (!self.state.liveMode() && self.draft().length < self.collectionMeta.min()) { return true; }
             return false;
         });
 
@@ -37,29 +65,38 @@ define([
             self.drop(item);
         };
 
+        this.saveItemConfig = function(item) {
+            item.saveConfig(self.id);
+            self.load();
+        }
+
+        this.forceRefresh = function() {
+            self.load();
+        }
+
         this.load();
     }
 
-    List.prototype.asObservableProps = function(props) {
-        return _.object(props.map(function(prop){
-            return [prop, ko.observable()];
-        }));
-    };
-
-    List.prototype.startEditingConfig = function() {
-        this.state.editingConfig(true);
+    List.prototype.toggleEditingConfig = function() {
+        this.state.editingConfig(!this.state.editingConfig());
     };
 
     List.prototype.stopEditingConfig = function() {
         this.state.editingConfig(false);
+        this.load();
     };
 
-    List.prototype.setLiveMode = function() {
-        this.state.liveMode(true);
+    List.prototype.setMode = function(isLiveMode) {
+        this.state.liveMode(isLiveMode);
+        this.decorate();
+    };
+
+    List.prototype.setLiveMode = function(isLiveMode) {
+        this.setMode(true);
     };
 
     List.prototype.setDraftMode = function() {
-        this.state.liveMode(false);
+        this.setMode(false);
     };
 
     List.prototype.publishDraft = function() {
@@ -70,19 +107,19 @@ define([
         this.processDraft(false);
     };
 
-    List.prototype.processDraft = function(publish) {
+    List.prototype.processDraft = function(goLive) {
         var self = this;
 
         reqwest({
-            url: common.config.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
-            data: JSON.stringify(publish ? {publish: true} : {discard: true})
+            data: JSON.stringify(goLive ? {publish: true} : {discard: true})
         }).then(
             function(resp) {
                 self.load({
-                    callback: function(){ self.state.liveMode(true); }
+                    callback: function(){ self.setMode(goLive); }
                 });
             },
             function(xhr) {
@@ -99,11 +136,11 @@ define([
         self.state.loadIsPending(true);
         reqwest({
             method: 'delete',
-            url: common.config.apiBase + '/' + self.id,
+            url: common.config.apiBase + '/collection/' + self.id,
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
-                item: item.id(),
+                item: item.meta.id(),
                 live: self.state.liveMode(),
                 draft: true
             })
@@ -121,53 +158,37 @@ define([
         var self = this;
         opts = opts || {};
 
+        common.util.mediator.emit('list:load:start');
+
         reqwest({
-            url: common.config.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             type: 'json'
         }).always(
             function(resp) {
                 self.state.loadIsPending(false);
 
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
+                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) { 
                     // noop    
                 } else {
                     self.populateLists(resp);
                 }
 
-                if (resp.lastUpdated !== self.meta.lastUpdated()) {
-                    self.populateMeta(resp);
-                }
-
                 if (!self.state.editingConfig()) {
-                    self.populateConfig(resp);
+                    common.util.populateObservables(self.collectionMeta, resp)
+                    self.state.timeAgo(self.getTimeAgo(resp.lastUpdated));
                 }
 
                 if (_.isFunction(opts.callback)) { opts.callback(); } 
+
+                common.util.mediator.emit('list:load:end');
             }
         );
     };
 
-    List.prototype.populateMeta = function(opts) {
-        var self = this;
-        opts = opts || {};
-
-        _.keys(this.meta).forEach(function(key){
-            self.meta[key](opts[key]);
-        });
-        this.state.timeAgo(this.getTimeAgo(opts.lastUpdated));
-    }
-
-    List.prototype.populateConfig = function(opts) {
-        var self = this;
-        opts = opts || {};
-
-        _.keys(this.config).forEach(function(key){
-            self.config[key](opts[key]);
-        });
-    };
-
     List.prototype.populateLists = function(opts) {
         var self = this;
+        
+
         opts = opts || {};
 
         if (common.state.uiBusy) { return; }
@@ -184,17 +205,25 @@ define([
                 self[list].removeAll();
             }
             if (opts[list] && opts[list].length) {
-                opts[list].forEach(function(item) {
+                opts[list].forEach(function(item, index) {
                     self[list].push(new Article({
                         id: item.id,
+                        index: index,
                         webTitleOverride: item.webTitleOverride
                     }));
                 });
-                ContentApi.decorateItems(self[list]());
             }
         });
 
+        self.decorate();
         this.state.hasUnPublishedEdits(opts.areEqual === false);
+    };
+
+    List.prototype.decorate = function() {
+        var list = this[this.state.liveMode() ? 'live' : 'draft']();
+
+        contentApi.decorateItems(list);
+        ophanApi.decorateItems(list);
     };
 
     List.prototype.refresh = function() {
@@ -204,18 +233,17 @@ define([
         });
     };
 
-    List.prototype.saveConfig = function(key, val) {
+    List.prototype.saveConfig = function() {
         var self = this;
+
         reqwest({
-            url: common.config.apiBase + '/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
             data: JSON.stringify({ 
                 config: {
-                    contentApiQuery: this.config.contentApiQuery() || undefined,
-                    min: parseInt(this.config.min(), 10) || undefined,
-                    max: parseInt(this.config.max(), 10) || undefined
+                    displayName: this.configMeta.displayName()
                 }
             })
         }).always(function(){

@@ -1,8 +1,7 @@
 /* global module: false */
 module.exports = function (grunt) {
-    process.env['CASPERJS_EXECUTABLE'] = 'dev/casperjs/bin/casperjs';
-    process.env['PHANTOMJS_EXECUTABLE'] = 'node_modules/phantomjs/bin/phantomjs';
-    var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1';
+    var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1',
+        jasmineSpec = grunt.option('spec') || '*';
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
@@ -80,32 +79,123 @@ module.exports = function (grunt) {
             }
         },
 
-        casper: {
-          options : {
-            test : true,
-            direct : true,
-            includes : 'integration-tests/casper/tests/shared.js',
-            'log-level' : 'info',
-            host: 'http://localhost:9000/'
-          },           
-          common : {
-            src: ['integration-tests/casper/tests/*.spec.js'],
-            dest : function(input) {
-              var i = input.replace('/casper/tests/', '/target/casper-xunit-reports/');
-              i = i.replace(/\.js$/,'.xml');
-              console.log(i);
-              return i;
+        // Much of the CasperJS setup borrowed from smlgbl/grunt-casperjs-extra
+        env: {
+            casperjs: {
+                ENVIRONMENT : (process.env.ENVIRONMENT) ? process.env.ENVIRONMENT : (isDev) ? "dev" : "code",
+                PHANTOMJS_EXECUTABLE : "node_modules/casperjs/node_modules/.bin/phantomjs",
+                extend: {
+                    PATH: {
+                        value: 'node_modules/.bin',
+                        delimiter: ':'
+                    }
+                }
             }
-          },
-          discussion: {
-            src: ['integration-tests/casper/tests/discussion.spec.js'],
-            dest: 'integration-tests/target/casper-xunit-reports/discussion.spec.xml'
-          },
-          networkfront: {
-            src: ['integration-tests/casper/tests/network-front.spec.js'],
-            dest: 'integration-tests/target/casper-xunit-reports/network-front.spec.xml'
-          }
-        },        
+        },
+
+        casperjs: {
+            options: {
+                // Pre-prod environments have self-signed SSL certs
+                ignoreSslErrors: 'yes',
+                includes: ['integration-tests/casper/tests/shared.js'],
+                xunit: 'integration-tests/target/casper/',
+                loglevel: 'debug',
+                direct: true
+            },
+            all: {
+                src: ['integration-tests/casper/tests/**/*.spec.js']
+            },
+            admin: {
+                src: ['integration-tests/casper/tests/admin/*.spec.js']
+            },
+            common : {
+                src: ['integration-tests/casper/tests/*.spec.js']
+            },
+            discussion: {
+                src: ['integration-tests/casper/tests/discussion.spec.js']
+            },
+            liveblog: {
+                src: ['integration-tests/casper/tests/live-blog.spec.js']
+            },
+            networkfront: {
+                src: ['integration-tests/casper/tests/network-front.spec.js']
+            },
+            navigationtopstories: {
+                src: ['integration-tests/casper/tests/navigation-top-stories.spec.js']
+            },
+            sectionfrontculture: {
+                src: ['integration-tests/casper/tests/section-front-culture.spec.js']
+            }
+        },
+
+        jasmine: {
+            options: {
+                template: require('grunt-template-jasmine-requirejs'),
+                keepRunner: true
+            },
+            common: {
+                options: {
+                    specs: 'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js',
+                    vendor: [
+                        'common/test/assets/javascripts/components/sinon/lib/sinon.js',
+                        'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
+                        'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
+                        'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
+                        'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
+                        'common/test/assets/javascripts/components/seedrandom/index.js',
+                    ],
+                    helpers: 'common/test/assets/javascripts/setup.js',
+                    outfile: 'common-spec-runner.html',
+                    templateOptions: {
+                        requireConfig: {
+                            baseUrl: 'common/app/assets/javascripts/',
+                            paths: {
+                                common:       'common',
+                                analytics:    'modules/analytics',
+                                bonzo:        'components/bonzo/src/bonzo',
+                                qwery:        'components/qwery/mobile/qwery-mobile',
+                                bean:         'components/bean/bean',
+                                reqwest:      'components/reqwest/src/reqwest',
+                                domwrite:     'components/dom-write/dom-write',
+                                EventEmitter: 'components/eventEmitter/EventEmitter',
+                                swipe:        'components/swipe/swipe',
+                                swipeview:    'components/swipeview/src/swipeview',
+                                moment:       'components/moment/moment',
+                                omniture:     '../../../app/public/javascripts/vendor/omniture',
+                                fixtures:     '../../../test/assets/javascripts/fixtures',
+                                helpers:      '../../../test/assets/javascripts/helpers'
+                            }
+                        }
+                    }
+                }
+            },
+            admin: {
+                options: {
+                    specs: 'admin/public/javascripts/spec/**/' + jasmineSpec + 'Spec.js',
+                    vendor: [
+                        'admin/public/javascripts/components/jquery/jquery.js',
+                        'admin/public/javascripts/components/js_humanized_time_span/humanized_time_span.js'
+                    ],
+                    helpers: 'admin/public/javascripts/spec/setup.js',
+                    outfile: 'admin-spec-runner.html',
+                    templateOptions: {
+                        requireConfig: {
+                            baseUrl: 'admin/public/javascripts/',
+                            paths: {
+                                Common:       'common',
+                                TagSearch:    'modules/TagSearch',
+                                AutoComplete: 'modules/AutoComplete',
+                                tagEntry:     'modules/tagEntry',
+                                ItemSearch:   'modules/ItemSearch',
+                                EventEmitter: 'components/eventEmitter/EventEmitter',
+                                Reqwest:      'components/reqwest/reqwest',
+                                knockout:     'components/knockout/build/output/knockout-latest'
+                            }
+                        }
+                    }
+                }
+            }
+        },
 
         // Lint Javascript sources
         jshint: {
@@ -238,12 +328,24 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-webfontjson');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-casper');
+    grunt.loadNpmTasks('grunt-casperjs');
+    grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // Standard tasks
-    grunt.registerTask('test:integration', ['casper:common']);
-    grunt.registerTask('test:common', ['jshint:common', 'casper:common']);
-    grunt.registerTask('test', ['test:common']);
+    grunt.registerTask('test:unit', ['jasmine']);
+    grunt.registerTask('test:unit:admin', ['jasmine:admin']);
+    grunt.registerTask('test:unit:common', ['jasmine:common']);
+
+    grunt.registerTask('test:integration',  ['env:casperjs', 'casperjs:all']);
+    grunt.registerTask('test:integration:admin',  ['env:casperjs', 'casperjs:admin']);
+    grunt.registerTask('test:integration:discussion',  ['env:casperjs', 'casperjs:discussion']);
+    grunt.registerTask('test:integration:navigationtopstories',  ['env:casperjs', 'casperjs:navigationtopstories']);
+    grunt.registerTask('test:integration:liveblog',  ['env:casperjs', 'casperjs:liveblog']);
+    grunt.registerTask('test:integration:front',  ['env:casperjs', 'casperjs:networkfront']);
+    grunt.registerTask('test:integration:sectionfrontculture',  ['env:casperjs', 'casperjs:sectionfrontculture']);
+
+    grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
 
     grunt.registerTask('compile:common:css', ['sass:common']);
     grunt.registerTask('compile:common:js', ['requirejs:common']);

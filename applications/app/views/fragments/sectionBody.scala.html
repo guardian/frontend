@@ -1,21 +1,18 @@
-@(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])(implicit request: RequestHeader)
+@(section: Section, trails: Seq[Trail])(implicit request: RequestHeader)
 
 <section class="front-section zone-@section.section" role="main">
 
     @fragments.headers.sectionHead(section.name)
     
-    @defining(math.max(editorsPicks.length, 15)){ numTrails =>
-	    @defining((editorsPicks ++ latestContent).take(numTrails)){ trails =>
-	        <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @section.section">
-	            @fragments.trailblocks.section(trails, numWithImages = 3, numItemsVisible = numTrails)
-	        </div>
-	    }
-	}
+    <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @section.section">
+        @fragments.trailblocks.section(trails, numWithImages = 3, numItemsVisible = trails.size)
+    </div>
 
 </section>
 
 @if(section.name == "Football") {
     @fragments.footballNav("/football")
 }
-
-@fragments.mostPopularPlaceholder(section.section)
+<div class="box-indent article-zone-no-indent">
+    @fragments.mostPopularPlaceholder(section.section)
+</div>

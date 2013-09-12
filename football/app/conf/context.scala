@@ -1,12 +1,12 @@
 package conf
 
 import common.PaMetrics._
-import common.{Logging, ExecutionContexts, Metrics}
+import common._
 import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import feed.Competitions
-import model.{TeamMap, LiveBlog}
+import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
 import play.api.{Application => PlayApp, Plugin}
 import play.api.libs.ws.WS
@@ -14,16 +14,56 @@ import scala.concurrent.Future
 
 class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
+  def scheduleJobs() {
+    Competitions.competitionIds.zipWithIndex map { case (id, index) =>
+      //stagger fixtures and results refreshes to avoid timeouts
+      val seconds = index * 5 % 60
+      val minutes = index * 5 / 60 % 5
+      val cron = s"$seconds $minutes/5 * * * ?"
+
+      Jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron, FootballMetrics.CompetitionAgentLoadTimingMetric) {
+        Competitions.refreshCompetitionAgent(id)
+      }
+    }
+
+    Jobs.schedule("MatchDayAgentRefreshJob", "0/10 * * * * ?", FootballMetrics.MatchDayLoadTimingMetric) {
+      Competitions.refreshMatchDay()
+    }
+
+    Jobs.schedule("CompetitionRefreshJob", "0 0/5 * * * ?", FootballMetrics.CompetitionLoadTimingMetric) {
+      Competitions.refreshCompetitionData()
+    }
+
+    Jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?", FootballMetrics.LiveBlogRefreshTimingMetric) {
+      LiveBlogAgent.refresh()
+    }
+
+    Jobs.schedule("TeamMapRefreshJob", "0 * * * * ?", FootballMetrics.TeamTagMappingsRefreshTimingMetric) {
+      TeamMap.refresh()
+    }
+  }
+
+  def descheduleJobs() {
+    Competitions.competitionIds map { id =>
+      Jobs.deschedule(s"CompetitionAgentRefreshJob_$id")
+    }
+    Jobs.deschedule("MatchDayAgentRefreshJob")
+    Jobs.deschedule("CompetitionRefreshJob")
+    Jobs.deschedule("LiveBlogRefreshJob")
+    Jobs.deschedule("TeamMapRefreshJob")
+  }
+
   override def onStart() {
-    Competitions.startup()
-    LiveBlog.startup()
-    TeamMap.startup()
+    descheduleJobs()
+    scheduleJobs()
   }
 
   override def onStop() {
-    Competitions.shutDown()
-    LiveBlog.shutdown()
-    TeamMap.shutdown()
+    descheduleJobs()
+
+    Competitions.stop()
+    LiveBlogAgent.stop()
+    TeamMap.stop()
   }
 }
 
@@ -65,7 +105,7 @@ class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 object Management extends GuManagement {
   val applicationName = "frontend-football"
-  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa
+  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa ++ Metrics.football
 
   lazy val pages = List(
     new ManifestPage,

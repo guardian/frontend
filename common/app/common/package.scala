@@ -69,7 +69,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     else
       Ok(htmlResponse())
   }
-  
+
   def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader) = Cached(cacheTime) {
     if (request.isJson)
       JsonComponent(jsonResponse())

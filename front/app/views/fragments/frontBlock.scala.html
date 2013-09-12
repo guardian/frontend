@@ -4,7 +4,9 @@
 <section 
     class="front-section zone-@block.description.section" 
     data-link-name="block | @block.description.name"
-    data-link-context="front-trails/@block.description.section">
+    @defining(Edition(request).id.toLowerCase()) { edition =>
+    data-link-context="@if(block.description.section == "news"){@edition}else{@edition/@block.description.section}">
+    }
 
     @if(block.description.id != "") {
 	    @if(index == 0 && !page.isNetworkFront) {

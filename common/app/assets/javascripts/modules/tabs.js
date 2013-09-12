@@ -3,15 +3,15 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
     /*
         expects the following HTML structure
 
-        <div class="tabs-container">
-            <ol class="tabs js-tabs">
-                <li class="tabs-selected"><a href="#foo">Foo</a></li>
-                <li><a href="#bar">Bar</a></li>
+        <div class="tabs">
+            <ol class="tabs__container js-tabs">
+                <li class="tabs__tab tabs__tab--selected"><a href="#foo">Foo</a></li>
+                <li class="tabs__tab"><a href="#bar">Bar</a></li>
             </ol>
 
-            <div class="tabs-content">
-                 <div class="tabs-pane" id="foo">foo</div>
-                 <div class="tabs-pane js-hidden" id="bar">bar</div>
+            <div class="tabs__content">
+                 <div class="tabs__pane" id="foo">foo</div>
+                 <div class="tabs__pane js-hidden" id="bar">bar</div>
             </div>
         </div>
     */
@@ -23,15 +23,15 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
             showTab: function (container, clickedTab, originalEvent) {
 
                 // find the active tab in the set. returns an array of 1 item, hence [0]
-                var currentTab = common.$g('.tabs-selected a', container)[0];
+                var currentTab = common.$g('.tabs__tab--selected a', container)[0];
 
                 // trim the leading # and find the matching panel element
                 var paneToShow = container.querySelector('#' + clickedTab.getAttribute('href').substring(1));
                 var paneToHide = container.querySelector('#' + currentTab.getAttribute('href').substring(1));
 
                 // show hide stuff
-                bonzo(currentTab.parentNode).removeClass('tabs-selected');
-                bonzo(clickedTab.parentNode).addClass('tabs-selected');
+                bonzo(currentTab.parentNode).removeClass('tabs__tab--selected');
+                bonzo(clickedTab.parentNode).addClass('tabs__tab--selected');
                 bonzo(paneToHide).hide();
                 bonzo(paneToShow).removeClass('js-hidden').show().focus();
 
@@ -42,9 +42,9 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
 
         this.init = function (context) {
 
-            Array.prototype.forEach.call(context.querySelectorAll('.tabs-container'), function(container) {
+            Array.prototype.forEach.call(context.querySelectorAll('.tabs'), function(container) {
 
-                var tabSet = common.$g('ol.js-tabs', container)[0],
+                var tabSet = common.$g('.js-tabs', container)[0],
                     tabSetHeight = 0,
                     vPos = 0,
                     vHeight = 0,

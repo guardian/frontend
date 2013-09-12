@@ -26,7 +26,7 @@
                 <h3 class="type-2 section-divider">Stats</h3>
             }
         </div>
-        <div class="article__inner">
+        <div class="article__main-column">
             @if(page.theMatch.isLive) {
                 <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
             }
@@ -41,4 +41,6 @@
 
 @fragments.footballNav("/football", None, None)
 
-@fragments.mostPopularPlaceholder("sport")
+<div class="article__main-column article-zone-no-indent">
+    @fragments.mostPopularPlaceholder("sport")
+</div>

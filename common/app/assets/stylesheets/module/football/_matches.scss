@@ -64,7 +64,7 @@ a.competition-title {
         padding: $baseline*2;
 
         &:active {
-            background: #666;
+            background: $darkMushroom;
             color: #fff !important;
             text-decoration: none;
         }
@@ -74,38 +74,42 @@ a.competition-title {
 
 
 .match-desc {
+    display: table;
+    width:  90%;
     color: #333;
-    position: relative;
     margin-bottom: 0;
     border: none;
     overflow: hidden;
-    margin-right: 36px; // offsets the FT/HT box
 }
 
-.match-team {
-    float: left;
-    width: 50%;
+.match-desc__team {
+    display: table-cell;
+    width: 40%;
     @include box-sizing(border-box);
 }
 
-.match-home {
-    text-align: right;
-    padding-right: $gutter;
-}
+    .match-desc__team--home {
+        text-align: right;
+        @include mq($to: tablet) {
+            padding-right: $gutter/4;
+        }
+    }
+    .match-desc__team--away {
+        text-align: left;
+        @include mq($to: tablet) {
+            padding-left: $gutter/4;
+        }
+    }
 
-.match-away {
-    padding-left: $gutter;
-}
-
-.match-result {
-    position: absolute;
-    display: block;
-    width: 40px;
-    left: 50.5%;
-    margin-left: -20px;
+.match-desc__result {
+    display: table-cell;
+    width: 10%;
     text-align: center;
     font-weight: bold;
     letter-spacing: 2px;
+
+    @include mq($from: tablet) { width: 8%; }
+    @include mq($from: desktop) { width: 6%; }
 }
 
 .match-status {
@@ -179,8 +183,7 @@ a.competition-title {
             content: "+ ";
         }
         &:active {
-            background: #666;
-            color: #fff;
+            background: $darkMushroom;
             text-decoration: none;
         }
     }
@@ -219,10 +222,6 @@ a.competition-title {
     .match-prev:before {
         content: "‹ ";
     }
-}
-
-.live-matches-dateline .dateline {
-    margin-left: $gutter;
 }
 
 .live-matches-update .update {
@@ -304,7 +303,7 @@ a.competition-title {
     background: $sportDark;
     color: #fff;
     margin-bottom: $baseline*2;
-    margin-top: $gutter;
+    margin-top: $baseline*4;
     padding: 15px 0;
 
     &:link,
@@ -317,7 +316,11 @@ a.competition-title {
 
 .football-filter {
     background: $sportBright;
-    margin: 0 $gutter $baseline*2;
+    margin: 0 $gs-gutter/2 $baseline*2;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
     color: #fff;
     border-bottom: none;
 
@@ -345,7 +348,7 @@ a.competition-title {
 
 .live-matches-dateline {
     display: block;
-    margin-bottom: $baseline*3;
+    padding-bottom: $baseline*3;
 
     .has-localnav & {
         padding-top: 12px;

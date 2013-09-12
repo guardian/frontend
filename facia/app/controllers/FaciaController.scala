@@ -5,7 +5,6 @@ import front._
 import model._
 import conf._
 import play.api.mvc._
-import scala.Some
 
 // TODO, this needs a rethink, does not seem elegant
 
@@ -119,17 +118,15 @@ object FrontPage {
     }
   )
 
-  def apply(path: String): Option[FrontPage] = fronts.find(f => path.startsWith(f.id))
+  def apply(path: String): Option[FrontPage] = fronts.find(f => path.endsWith(f.id))
 
 }
 
 
 class FaciaController extends Controller with Logging with JsonTrails with ExecutionContexts {
 
-  val EditionalisedKey = """(.*\w\w-edition)""".r
-  val FrontPath = """(\w\w-edition)?""".r
-
   val front: Front = Front
+  val EditionalisedKey = """^\w\w(/.*)?$""".r
 
   private def editionPath(path: String, edition: Edition) = path match {
     case EditionalisedKey(_) => path
@@ -143,22 +140,20 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       Action { Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film/film") }
   }
 
-
   def render(path: String) = Action { implicit request =>
-      // TODO - just using realPath while we are in the transition state. Will not be necessary after www.theguardian.com
-      // go live
-      val realPath = editionPath(path, Edition(request))
 
-      FrontPage(realPath).map { frontPage =>
+      val editionalisedPath = editionPath(path, Edition(request))
+
+      FrontPage(editionalisedPath).map { frontPage =>
 
         // get the trailblocks
-        val trailblocks: Seq[Trailblock] = front(realPath)
+        val faciaPage: FaciaPage = front(editionalisedPath)
 
-        if (trailblocks.isEmpty) {
+        if (faciaPage.collections.isEmpty) {
           InternalServerError
         } else {
-          val htmlResponse = () => views.html.front(frontPage, trailblocks)
-          val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
+          val htmlResponse = () => views.html.front(frontPage, faciaPage)
+          val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
           renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
@@ -166,16 +161,17 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
   def renderTrails(path: String) = Action { implicit request =>
 
-    val realPath = editionPath(path, Edition(request))
+    val editionalisedPath = editionPath(path, Edition(request))
 
-    FrontPage(realPath).map{ frontPage =>
+    FrontPage(editionalisedPath).map{ frontPage =>
+
       // get the first trailblock
-      val trailblock: Option[Trailblock] = front(realPath).headOption
+      val collection: Option[(Config, Collection)] = front(editionalisedPath).collections.headOption
 
-      if (trailblock.isEmpty) {
+      if (collection.isEmpty) {
         InternalServerError
       } else {
-        val trails: Seq[Trail] = trailblock.map(_.trails).getOrElse(Nil)
+        val trails: Seq[Trail] = collection.map(_._2.items).getOrElse(Nil)
         val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
         renderFormat(response, response, frontPage)
       }

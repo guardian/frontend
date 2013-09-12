@@ -1,10 +1,10 @@
 package controllers.front
 
-import model.{ConfiguredTrailblockDescription, Trail, Trailblock, TrailblockDescription}
 import common._
-import scala.Some
+import model._
 
-trait TrailblockAgent {
+
+trait TrailblockAgent extends ExecutionContexts  {
   def refresh()
   def close()
   def trailblock(): Option[Trailblock]
@@ -13,9 +13,9 @@ trait TrailblockAgent {
 /*
   Responsible for refreshing one block on the front (e.g. the Sport block) for one edition
  */
-class QueryTrailblockAgent(var description: TrailblockDescription) extends TrailblockAgent with AkkaSupport with Logging {
+class QueryTrailblockAgent(var description: TrailblockDescription) extends TrailblockAgent with Logging {
 
-  private lazy val agent = play_akka.agent[Option[Trailblock]](None)
+  private lazy val agent = AkkaAgent[Option[Trailblock]](None)
 
   def refresh() = description.query map refreshTrails
 
@@ -47,9 +47,9 @@ object QueryTrailblockAgent {
   def apply(description: TrailblockDescription): QueryTrailblockAgent = new QueryTrailblockAgent(description)
 }
 
-class ConfiguredTrailblockAgent(val description: ConfiguredTrailblockDescription) extends TrailblockAgent with AkkaSupport with Logging {
+class ConfiguredTrailblockAgent(val description: ConfiguredTrailblockDescription) extends TrailblockAgent with Logging {
 
-  private lazy val agent = play_akka.agent[Option[QueryTrailblockAgent]](Some(QueryTrailblockAgent(description)))
+  private lazy val agent = AkkaAgent[Option[QueryTrailblockAgent]](Some(QueryTrailblockAgent(description)))
 
   def close() = {
     agent().map(_.close())

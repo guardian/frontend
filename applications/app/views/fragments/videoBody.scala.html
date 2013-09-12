@@ -2,20 +2,24 @@
 
 @defining(page.video){ video =>
     <div class="article-wrapper monocolumn-wrapper">
-        <h2 class="article-zone type-1">
-            <a class="zone-color" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName)</a>
-        </h2>
-    
+        <div class="article__main-column">
+            <h2 class="article-zone type-1">
+                <a class="zone-color" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName)</a>
+            </h2>
+        </div>
+
         <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
                  itemscope itemtype="@video.schemaType" role="main">
-            
-            <header class="article-head">
-                @fragments.dateline(video.webPublicationDate, video.isLive)
-                @fragments.headline(video.headline)
-            </header>
-
-            <div class="article__inner">
-        
+            <div class="article__main-column">
+                <header class="article-head">
+                    @fragments.dateline(video.webPublicationDate, video.isLive)
+                    @fragments.headline(video.headline)
+                </header>
+            </div>
+            <div class="article__main-column">
+                <div class="article__secondary-column" aria-hidden="true">
+                    @fragments.social(video, "next to content")
+                </div>
                 <div class="player">
                     <video controls="controls" poster="@video.imageOfWidth(640).map{ image => @image.path }.getOrElse("")">
                         @video.encodings.map{ encoding =>
@@ -31,20 +35,22 @@
                 <div class="video-standfirst">
                     @fragments.standfirst(video)
                 </div>
-
-                @fragments.social(video)
+                <div class="social-wrapper">
+                    @fragments.social(video)
+                </div>
             </div>
-
         </article>
-    </div>
-    @if(page.storyPackage.nonEmpty) {
-        <aside role="complementary">
-            @fragments.relatedTrails(page.storyPackage, heading = "More on this story", visibleTrails = 5)
-        </aside>
-    } else {
-        <aside class="js-related" role="complementary"></aside>
-    }
+        <div class="article__main-column">
+            @if(page.storyPackage.nonEmpty) {
+                <aside role="complementary">
+                    @fragments.relatedTrails(page.storyPackage, heading = "More on this story", visibleTrails = 5)
+                </aside>
+            } else {
+                <aside class="js-related" role="complementary"></aside>
+            }
 
-    @fragments.mostPopularPlaceholder(video.section)
+            @fragments.mostPopularPlaceholder(video.section)
+        </div>
+    </div>
 
 }

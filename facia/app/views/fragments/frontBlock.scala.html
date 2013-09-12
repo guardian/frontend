@@ -1,28 +1,24 @@
-@(block: Trailblock, page: FrontPage)(implicit request: RequestHeader)
+@(config: Config, items: Seq[Trail], page: FrontPage, index: Int)(implicit request: RequestHeader)
 
-<section
-    class="front-section zone-@block.description.section"
-    data-link-name="block | @block.description.name"
-    data-link-context="front-trails/@block.description.section">
+@if(items.nonEmpty){
 
-    @if(block.description.id != "") {
-        @if("/" + block.description.id == request.path) {
-            @fragments.headers.sectionHead(block.description.name)
-        } else {
-            @fragments.headers.frontSectionHead(block.description, page.isNetworkFront, Some(Edition(request)))
-        }
+    @defining(FindStyle("uk", config)) { style =>
+        <section class="collection collection--@style.className" data-link-name="block | @config.name">
+
+            @if(config.name) {
+                <h2 class="collection__title">@config.name</h2>
+            }
+
+            @style match {
+                case Masthead      => { @trailblocks.masthead(items) }
+                case TopStories    => { @trailblocks.topStories(items) }
+                case MediumStories => { @trailblocks.mediumStories(items) }
+                case SmallStories  => { @trailblocks.smallStories(items) }
+                case Highlights    => { @trailblocks.highlights(items) }
+                case _             => { @trailblocks.highlights(items) }
+            }
+
+        </section>
     }
 
-    <div class="trailblock front-trailblock-@SafeName(block.description) @if(block.description.showMore){ js-show-more}"
-        data-count="@block.description.numItemsVisible"
-        data-section-id="@block.description.id">
-
-        @block.description.style match {
-            case Some(Thumbnail)    => { @trailblocks.thumbnail(block.trails, block.description.numItemsVisible) }
-            case Some(Headline)     => { @trailblocks.headline(block.trails, block.description.numItemsVisible) }
-            case Some(SectionFront) => { @trailblocks.section(block.trails, block.description.numItemsVisible, numWithImages = 3 ) }
-            case _                  => { @trailblocks.featured(block.trails, block.description.numItemsVisible) }
-        }
-    </div>
-
-</section>
+}

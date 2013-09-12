@@ -10,7 +10,7 @@ import common.Editionalise
 object FrontTestGlobal extends GlobalSettings with FrontLifecycle with DevParametersLifecycle {
 
   override def onStart(app: play.api.Application) {
-    //Front.startup()
+    //Front.start()
     Front.refresh()
 
     val start = System.currentTimeMillis

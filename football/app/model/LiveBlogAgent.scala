@@ -1,21 +1,18 @@
 package model
 
-import common.{Edition, AkkaSupport, Logging}
+import common._
 import conf.ContentApi
-import akka.actor.Cancellable
-import java.util.concurrent.TimeUnit._
-import com.gu.openplatform.contentapi.model.ItemResponse
 
-import scala.concurrent.duration._
 
-trait LiveBlogAgent extends AkkaSupport with Logging {
+trait LiveBlogAgent extends ExecutionContexts with Logging {
 
   import Edition.{all => editions}
 
-  private val agents = editions.map(edition => edition.id -> play_akka.agent[Option[Trail]](None)).toMap
+  private val agents = editions.map(edition => edition.id -> AkkaAgent[Option[Trail]](None)).toMap
 
   // TODO editions
-  def refreshLiveBlogs() = {
+  def refresh() = {
+    log.info("Refreshing Live Blogs")
     editions.foreach{ edition =>
       findBlogFor(edition).foreach(blog => agents(edition.id).send(blog))
     }
@@ -33,7 +30,7 @@ trait LiveBlogAgent extends AkkaSupport with Logging {
 
       val editorsPicksIds = editorsPicks map { _.id }
 
-      val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+      val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains c.id }
 
       // order by editors' picks first
       val liveBlogs: Seq[Content] = (editorsPicks ++ latestContent).filter(_.isLive)
@@ -47,24 +44,11 @@ trait LiveBlogAgent extends AkkaSupport with Logging {
   // TODO EDITIONS
   def blogFor(edition: Edition) = agents(edition.id)
 
-  def close() {
+  def stop() {
     agents.values.foreach(_.close())
   }
-
 }
 
-object LiveBlog extends LiveBlogAgent {
+object LiveBlogAgent extends LiveBlogAgent {
   def apply(edition: Edition) = blogFor(edition)()
-
-  private var schedule: Option[Cancellable] = None
-
-  def startup() {
-    schedule = Some(play_akka.scheduler.every(2.minutes, initialDelay = 10.seconds) {
-      refreshLiveBlogs()
-    })
-  }
-  def shutdown() {
-    close()
-    schedule.foreach(_.cancel())
-  }
 }

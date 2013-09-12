@@ -1,9 +1,18 @@
 .profile {
-    padding: 0 $gutter $baseline*4;
+    padding: 0 $gs-gutter/2 $baseline*4;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
     .profile-img {
-        margin: 5px 15px 5px 0;
+        margin: 5px $gs-gutter/2 5px 0;
+
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter;
+        }
     }
 
     .profile-bio {

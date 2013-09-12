@@ -29,22 +29,29 @@ GET     /api/tag                         controllers.Api.tag(q, callback)
 GET     /api/item/*path                  controllers.Api.item(path, callback)
 GET     /json/proxy/*absUrl              controllers.Api.json(absUrl)
 
+# Ophan proxying for https
+GET     /ophan/pageviews/*path           controllers.OphanApi.pageViews(path)
+GET     /ophan/pageviews                 controllers.OphanApi.platformPageViews()
+
 #Development endpoints
 GET     /dev/switchboard                 controllers.SwitchboardController.render()
 POST    /dev/switchboard                 controllers.SwitchboardController.save()
 
 # Fronts
-GET       /fronts                                        controllers.FrontsController.index()
-GET       /fronts/api                                    controllers.FrontsController.schema()
-GET       /fronts/api/:edition/:section/:block           controllers.FrontsController.readBlock(edition, section, block)
-POST      /fronts/api/:edition/:section/:block           controllers.FrontsController.updateBlock(edition, section, block)
-POST      /fronts/api/:edition/:section/:block/*trail    controllers.FrontsController.updateTrail(edition, section, block, trail)
-DELETE    /fronts/api/:edition/:section/:block           controllers.FrontsController.deleteTrail(edition, section, block)
+GET       /collections                   controllers.FrontsController.index()
+GET       /fronts/config/*id             controllers.FrontsController.getConfig(id)
+
+GET       /fronts/collection/*id         controllers.FrontsController.readBlock(id)
+POST      /fronts/collection/*id         controllers.FrontsController.updateBlock(id)
+DELETE    /fronts/collection/*id         controllers.FrontsController.deleteTrail(id)
+GET       /fronts/collection             controllers.FrontsController.listCollections
+GET       /fronts/config                 controllers.FrontsController.listConfigs
 
 # Analytics
 GET     /analytics/kpis                  controllers.AnalyticsController.kpis()
 GET     /analytics/pageviews             controllers.AnalyticsController.pageviews()
 GET     /analytics/browsers              controllers.AnalyticsController.browsers()
+GET     /analytics/abtests               controllers.AnalyticsController.abtests()
 
 # Metrics
 GET     /metrics/loadbalancers           controllers.metrics.DashboardController.render()

@@ -1,11 +1,9 @@
-@(article: Article, storyPackage: List[Trail])(implicit request: RequestHeader)
+@(model: ArticlePage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@main(article, Switches.all){
-    @* <!-- US has a different app id, just doing this as a test --> *@
-    @if(iPhoneAppSwitch.isSwitchedOn && Edition(request).id == "UK"){ <meta name="apple-itunes-app" content="app-id=409128287, affiliate-data=1248044, app-argument=@article.id"/> }
+@main(model.article, Switches.all){
 }{
 
-    @fragments.articleBody(article, storyPackage)
+    @fragments.articleBody(model)
 
 }

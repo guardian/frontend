@@ -7,21 +7,22 @@
         <h2 id="most-read-head" class="type-2 article-zone">Most read</h2>
 
         @if(isTabbed) {
-            <div class="tabs-container">
-                <ol class="tabs js-tabs" id="js-popular-tabs">
+            <div class="tabs">
+                <ol class="tabs__container js-tabs" id="js-popular-tabs">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
-                        <li@if(info.isFirst){ class="tabs-selected"}>
+                        <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected}">
                             <a href="#tabs-popular-@info.rowNum" class="type-6" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
                         </li>
                     }
                 </ol>
-                <div class="tabs-content">
+                <div class="tabs__content">
         }
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                class="@if(isTabbed){tabs-pane @if(!info.isFirst){ js-hidden}} headline-list"
-                data-link-name="@section.heading">
+                class="@if(isTabbed){tabs__pane @if(!info.isFirst){ js-hidden}} box-indent headline-list"
+                data-link-name="@section.heading"
+                data-link-context="most-read/@section.section">
 
                 <ul class="unstyled">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>

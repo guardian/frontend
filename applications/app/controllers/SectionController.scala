@@ -5,6 +5,7 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.libs.json._
 
 import concurrent.Future
 import play.api.templates.Html
@@ -54,9 +55,18 @@ object SectionController extends Controller with Logging with Paging with JsonTr
   }
 
   private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = {
-    val htmlResponse = () => views.html.section(model.section, model.editorsPicks, model.latestContent)
-    val jsonResponse = () => views.html.fragments.sectionBody(model.section, model.editorsPicks, model.latestContent)
-    renderFormat(htmlResponse, jsonResponse, model.section, Switches.all)
+    val numTrails = math.max(model.editorsPicks.length, 15)
+    val trails = (model.editorsPicks ++ model.latestContent).take(numTrails)
+    Cached(model.section){
+      if (request.isJson)
+        JsonComponent(
+          "html" -> views.html.fragments.sectionBody(model.section, trails),
+          "trails" -> trails.map(_.url),
+          "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.section, Switches.all).body)
+        )
+      else
+        Ok(views.html.section(model.section, trails))
+    }
   }
   
   private def renderTrailsFragment(model: SectionFrontPage)(implicit request: RequestHeader) = {

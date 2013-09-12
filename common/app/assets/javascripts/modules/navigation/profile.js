@@ -6,28 +6,33 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
      * @constructor
      */
     function Profile(context, config) {
-        // TODO(James): Wondering about passing the whole config
-        // Couples it a lot if we decide to use other bits
-        // We should perhaps be a little more specific
-        // i.e. pass the argument contentUrl
         this.context = context;
-        this.config = common.extend(config, this.config);
+        this.config = common.extend(this.config, config);
+        
+        this.dom.container = context.querySelector('.' + Profile.CONFIG.classes.container);
+        this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
+        this.dom.popup = context.querySelector('.' + Profile.CONFIG.classes.popup);
     }
 
     /** @type {Object.<string.*>} */
     Profile.CONFIG = {
+        signinText: 'Sign in',
         eventName: 'modules:profilenav',
         classes: {
-            container: 'control--profile',
-            content: 'js-profile-info'
+            container: 'js-profile-nav',
+            content: 'js-profile-info',
+            popup: 'js-profile-nav-popup',
+            signout: 'js-nav-signout'
         }
     };
 
     /** @type {Object.<string.*>} */
     Profile.prototype.config = {
-        url: 'https://profile.theguardian.com',
-        useCookie: true
+        url: 'https://profile.theguardian.com'
     };
+
+    /** @enum {Element} */
+    Profile.prototype.dom = {};
 
     /** @type {Element|null} */
     Profile.prototype.context = null;
@@ -36,62 +41,39 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
     Profile.prototype.init = function() {
         var self = this;
         
-        common.mediator.on(Profile.CONFIG.eventName + ':loaded', function(resp) {
-            self.renderControl(resp);
-        });
-
-        if (this.config.useCookie) {
-            this.setFragmentFromCookie();
-        } else {
-            this.getNavigationFragment();
-        }
-    };
-
-    /**
-     * @return {Reqwest} the reqwest promise
-     */
-    Profile.prototype.getNavigationFragment = function() {
-        var url = this.url + '/fragments/profile-nav.json';
-
-        return ajax({
-            url: url,
-            method: 'get',
-            crossOrigin: true
-        }).then(this.emitLoadedEvent, this.emitErrorEvent);
+        this.setFragmentFromCookie();
     };
 
     Profile.prototype.setFragmentFromCookie = function() {
         var user = Id.getUserFromCookie(),
-            resp = { html: user ? user.displayName : 'Sign in' };
+            $container = bonzo(this.dom.container),
+            $content = bonzo(this.dom.content),
+            $popup = bonzo(this.dom.popup);
 
-        this.emitLoadedEvent(resp);
+        $container.removeClass('js-hidden');
+        $content.html(user ? user.displayName : Profile.CONFIG.signinText);
+
+        if (user) {
+            $popup.html('<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>');
+        } else {
+            $popup.remove();
+        }
+
+        this.emitLoadedEvent(user);
     };
 
     /**
      * @param {Object} resp response from the server
      */
-    Profile.prototype.renderControl = function(resp) {
-        var content = resp.html,
-            contentElem = this.context.querySelector('.' + Profile.CONFIG.classes.content),
-            container = this.context.querySelector('.' + Profile.CONFIG.classes.container);
-
-        bonzo(container).removeClass('js-hidden');
-        bonzo(contentElem).html(content);
-        common.mediator.emit(Profile.CONFIG.eventName + ':rendered', content);
-    };
-
-    /**
-     * @param {Object} resp response from the server
-     */
-    Profile.prototype.emitLoadedEvent = function(resp) {
-        common.mediator.emit(Profile.CONFIG.eventName + ':loaded', resp);
+    Profile.prototype.emitLoadedEvent = function(user) {
+        common.mediator.emit(Profile.CONFIG.eventName + ':loaded', user);
     };
     
     /**
      * @param {Object} resp response from the server
      */
-    Profile.prototype.emitErrorEvent = function(resp) {
-        common.mediator.emit(Profile.CONFIG.eventName + ':error', resp);
+    Profile.prototype.emitErrorEvent = function() {
+        common.mediator.emit(Profile.CONFIG.eventName + ':error');
     };
 
     return Profile;

@@ -7,6 +7,7 @@ import java.net.InetAddress
 import play.api.Play
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
+import conf.Configuration
 
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
@@ -100,7 +101,9 @@ class GuardianConfiguration(
 
   object id {
     lazy val url = configuration.getStringProperty("id.url").getOrElse("")
-    lazy val domain = """^https?//(?:profile.)?([^/:])*.*$""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
+    lazy val apiRoot = configuration.getStringProperty("id.apiRoot").getOrElse("")
+    lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
+    lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
   }
 
   object static {
@@ -125,6 +128,18 @@ class GuardianConfiguration(
     lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
   }
 
+  object facebook {
+    lazy val appId = configuration.getStringProperty("guardian.page.fbAppId").getOrElse {
+      throw new IllegalStateException("Facebook app ID not configured")
+    }
+    lazy val imageFallback = "http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png"
+  }
+
+  object ios {
+    lazy val ukAppId = "409128287"
+    lazy val usAppId = "411493119"
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments
@@ -132,7 +147,7 @@ class GuardianConfiguration(
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
       "discussionApiUrl" -> "http://discussion.guardianapis.com/discussion-api",
-      "interactiveUrl" -> "http://interactive.guim.co.uk/"
+      "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/"
     )
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
@@ -147,6 +162,10 @@ class GuardianConfiguration(
   object front {
     lazy val config = configuration.getStringProperty("front.config")
       .getOrElse(throw new RuntimeException("Front config url not set"))
+  }
+
+  object facia {
+    lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
   }
 
   object pa {
@@ -172,14 +191,14 @@ class GuardianConfiguration(
 
     lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
   }
-  
+
   object pingdom {
     lazy val url = configuration.getStringProperty("pingdom.url").getOrElse(throw new RuntimeException("Pingdom url not set"))
     lazy val user = configuration.getStringProperty("pingdom.user").getOrElse(throw new RuntimeException("Pingdom user not set"))
     lazy val password  = configuration.getStringProperty("pingdom.password").getOrElse(throw new RuntimeException("Pingdom password not set"))
     lazy val apiKey = configuration.getStringProperty("pingdom.apikey").getOrElse(throw new RuntimeException("Pingdom api key not set"))
   }
-  
+
   object riffraff {
     lazy val url = configuration.getStringProperty("riffraff.url").getOrElse(throw new RuntimeException("RiffRaff url not set"))
     lazy val apiKey = configuration.getStringProperty("riffraff.apikey").getOrElse(throw new RuntimeException("RiffRaff api key not set"))

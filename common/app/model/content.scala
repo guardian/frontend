@@ -5,13 +5,13 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.Reference
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
+import conf.Configuration
+import views.support.StripHtmlTagsAndUnescapeEntities
 
-class Content protected (
-    delegate: ApiContent) extends Trail with Tags with MetaData {
-
-  private lazy val fields = delegate.safeFields
+class Content protected (delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val publication: String = fields.get("publication").getOrElse("")
   lazy val lastModified: DateTime = fields("lastModified").parseISODateTimeNoMillis
@@ -21,13 +21,12 @@ class Content protected (
   lazy val wordCount: String = fields.get("wordcount").getOrElse("")
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
-  lazy val byline: Option[String] = fields.get("byline")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
-
   lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockAds: Boolean = videoAssets.exists(_.typeData.get("blockAds").map(_.toBoolean).getOrElse(false))
+  lazy val isLiveBlog: Boolean = delegate.isLiveBlog
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -47,35 +46,52 @@ class Content protected (
     }.toMap.withDefaultValue(Nil)
   }
 
+  private lazy val fields = delegate.safeFields
+
   protected val relation = "main"
 
-  override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
-  override lazy val url: String = SupportedUrl(delegate)
-  override lazy val linkText: String = webTitle
-  override lazy val trailText: Option[String] = fields.get("trailText")
-  override lazy val id: String = delegate.id
-  override lazy val sectionName: String = delegate.sectionName.getOrElse("")
-  override lazy val section: String = delegate.sectionId.getOrElse("")
+  // Inherited from Trail
   override lazy val webPublicationDate: DateTime = delegate.webPublicationDate
+  override lazy val linkText: String = webTitle
   override lazy val headline: String = fields("headline")
-  override lazy val webTitle: String = delegate.webTitle
-  override lazy val discussionId = Some(shortUrlPath)
-  override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
+  override lazy val url: String = SupportedUrl(delegate)
+  override lazy val trailText: Option[String] = fields.get("trailText")
+  override lazy val section: String = delegate.sectionId.getOrElse("")
+  override lazy val sectionName: String = delegate.sectionName.getOrElse("")
   override lazy val thumbnail: Option[String] = fields.get("thumbnail")
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
-  override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
-  override lazy val images: List[ImageElement] = imageMap(relation)
-  override lazy val videos: List[VideoElement] = videoMap(relation) ++ videoMap("body")
+  override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
+  override lazy val discussionId = Some(shortUrlPath)
+  override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
+    val body = delegate.safeFields.get("body")
+    val souped = body flatMap { body =>
+      val souped = Jsoup.parseBodyFragment(body).body().select("p")
+      Option(souped) map { _.toList }
+    }
 
-  override lazy val cacheSeconds = {
-    if (isLive) 30 // live blogs can expect imminent updates
-    else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
-    else 900
+    souped getOrElse Nil
+  }
+  override lazy val byline: Option[String] = fields.get("byline")
+  override lazy val trailType: Option[String] = {
+    if (tags.exists(_.id == "tone/features")) {
+      Option("feature")
+    } else if (tags.exists(_.id == "tone/comment")) {
+      Option("comment")
+    } else {
+      Option("news")
+    }
   }
 
+  // Inherited from Tags
+  override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
+
+  // Inherited from MetaData
+  override lazy val id: String = delegate.id
+  override lazy val webTitle: String = delegate.webTitle
+  override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
-  override def metaData: Map[String, Any] = super.metaData ++ Map(
+  override def metaData: Map[String, Any] = { super.metaData ++ Map(
     ("keywords", keywords.map { _.name }.mkString(",")),
     ("publication", publication),
     ("headline", headline),
@@ -91,7 +107,22 @@ class Content protected (
     ("wordCount", wordCount),
     ("shortUrl", shortUrl),
     ("thumbnail", thumbnailPath.getOrElse(false))
-  ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
+    ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
+  }
+  override lazy val cacheSeconds = {
+    if (isLive) 30 // live blogs can expect imminent updates
+    else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
+    else 900
+  }
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:title" -> webTitle,
+    "og:url" -> webUrl,
+    "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
+  )
+
+  // Inherited from Trail.Elements
+  override lazy val images: List[ImageElement] = imageMap(relation)
+  override lazy val videos: List[VideoElement] = videoMap(relation) ++ videoMap("body")
 
   private def findIndex( element: ApiElement): Int =  {
     // Use the old media asset class, which defines an index, and find a media asset with a matching file path to the element
@@ -115,7 +146,8 @@ object Content {
     delegate match {
       case gallery if delegate.isGallery => new Gallery(delegate)
       case video if delegate.isVideo => new Video(delegate)
-      case article if delegate.isArticle => new Article(delegate)
+      case liveBlog if delegate.isLiveBlog => new LiveBlog(delegate)
+      case article if delegate.isArticle || delegate.isSudoku => new Article(delegate)
       case _ => new Content(delegate)
     }
   }
@@ -125,15 +157,31 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields("body")
   lazy val contentType = "Article"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
   lazy val isReview = tones.exists(_.id == "tone/reviews")
-  lazy val isLiveBlog = tones.exists(_.id == "tone/minutebyminute")
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .map(e => e.hasClass("gu-video") && e.tagName() == "video")
     .getOrElse(false)
 
+  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+    ("content-type", contentType),
+    ("isLiveBlog", isLiveBlog)
+  )
+
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
+
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:type" -> "article",
+    "article:published_time" -> webPublicationDate,
+    "article:modified_time" -> lastModified,
+    "article:section" -> sectionName,
+    "og:image" -> mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback)
+  ) ++ tags.map("article:tag" -> _.name) ++
+    tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+}
+
+class LiveBlog(private val delegate: ApiContent) extends Article(delegate) {
+  lazy val summary: Option[String] = Jsoup.parseBodyFragment(body).body().select(".is-summary").headOption.map(_.html)
 }
 
 class Video(private val delegate: ApiContent) extends Content(delegate) {
@@ -151,6 +199,13 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))
+
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:type" -> "video",
+    "og:video:type" -> "text/html",
+    "og:video:url" -> webUrl,
+    "og:image" -> imageOfWidth(640).map(_.path).getOrElse(mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback))
+  ) ++ tags.map("video:tag" -> _.name)
 }
 
 class Gallery(private val delegate: ApiContent) extends Content(delegate) {
@@ -160,10 +215,19 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   lazy val size = images.size
   lazy val contentType = "Gallery"
   lazy val landscapes = images.flatMap(_.imageCrops).filter(i => i.width > i.height)
+  lazy val portraits = images.flatMap(_.imageCrops).filter(i => i.width < i.height)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
+  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+    "og:type" -> "article",
+    "article:published_time" -> webPublicationDate,
+    "article:modified_time" -> lastModified,
+    "article:section" -> sectionName,
+    "og:image" -> images.head.path
+  ) ++ tags.map("article:tag" -> _.name) ++
+    tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
   override val relation = "gallery"
 }

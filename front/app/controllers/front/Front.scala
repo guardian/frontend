@@ -1,18 +1,11 @@
 package controllers.front
 
+import common._
 import model.Trailblock
-import common.{Edition, Logging, AkkaSupport}
-import scala.concurrent.duration._
 
-//Responsible for bootstrapping the front (setting up the refresh schedule)
-class Front extends AkkaSupport with Logging {
+class Front extends Logging {
 
-  val refreshDuration = 60.seconds
-
-  private lazy val refreshSchedule = play_akka.scheduler.every(refreshDuration, initialDelay = 5.seconds) {
-    log.info("Refreshing Front")
-    Front.refresh()
-  }
+  private def allFronts = fronts.values
 
   lazy val fronts: Map[String, ConfiguredEdition] = Edition.all.flatMap{ edition =>
     edition.configuredFronts.map{
@@ -20,23 +13,16 @@ class Front extends AkkaSupport with Logging {
     }.toMap
   }.toMap
 
-  private def allFronts = fronts.values
-
   def refresh() {
-    allFronts.foreach(_.refresh())
+    log.info("Refreshing Front")
+    refreshJobs().foreach(body => body())
   }
 
-  def shutdown() {
-    refreshSchedule.cancel()
-    allFronts.foreach(_.shutDown())
-  }
-
-  def startup() {
-    refreshSchedule
+  def refreshJobs(): List[() => Unit] =allFronts.toList map { front =>
+    () => front.refresh()
   }
 
   def apply(path: String): Seq[Trailblock] = fronts(path)()
-
 }
 
 object Front extends Front

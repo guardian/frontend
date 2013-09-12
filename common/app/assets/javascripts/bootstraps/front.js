@@ -25,7 +25,7 @@ define([
                 Cricket.cricketTrail(config, context);
             });
         },
-            
+
         showTrailblockToggles: function () {
             var tt = new TrailblockToggle();
             common.mediator.on('page:front:ready', function(config, context) {
@@ -37,16 +37,6 @@ define([
             var trailblockShowMore = new TrailblockShowMore();
             common.mediator.on('page:front:ready', function(config, context) {
                 trailblockShowMore.init(context);
-            });
-        },
-
-        promoteMostPopular: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                if (context.querySelector('.front-container--new') && window.location.pathname === '/') {
-                    bonzo(context.querySelector('.js-popular'))
-                        .appendTo(bonzo.create('<section class="front-section">'))
-                        .insertAfter(context.querySelector('section.front-section'));
-                }
             });
         },
 
@@ -62,7 +52,7 @@ define([
                             // Network Front
                             opts = {
                                 prependTo: context.querySelector('.zone-sport ul > li'),
-                                competitions: ['500', '510', '100'],
+                                competitions: ['500', '510', '100', '400'],
                                 contextual: false,
                                 expandable: true,
                                 numVisible: 3
@@ -70,9 +60,13 @@ define([
                             break;
                         case "sport" :
                             // Sport Front
+                            // don't want to put it in the masthead trailblock
+                            var trailblocks = [].filter.call(context.querySelectorAll('.trailblock'), function(trailblock) {
+                                return bonzo(trailblock).hasClass('trailblock--masthead') === false;
+                            });
                             opts = {
-                                prependTo: context.querySelector('.trailblock ul > li'),
-                                competitions: ['500', '510', '100'],
+                                prependTo: (trailblocks.length) ? trailblocks[0].querySelector('ul > li') : null,
+                                competitions: ['500', '510', '100', '400'],
                                 contextual: false,
                                 expandable: true,
                                 numVisible: 5
@@ -87,13 +81,12 @@ define([
                 }
             });
         }
-        
+
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.promoteMostPopular();
             modules.showTrailblockToggles();
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();

@@ -1,25 +1,34 @@
-@(page: MetaData, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
+@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{idInputEmail, idInputPassword, idCheckbox}
 
-@main(page, Switches.all){
+@main(page, conf.Switches.all){
 }{
-<form class="form" novalidate action="/signin" role="main" method="post">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu pharetra sapien</p>
-    <ul class="form-fields">
+<div class="identity-wrapper">
+    <h1>Sign in to the Guardian</h1>
+    <form class="form js-signin-form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
+        @if(signinForm.globalError.isDefined) {
+            <div class="form__error">@signinForm.globalErrors.map(_.message).mkString(", ")</div>
+        }
 
-        @idInputEmail(signinForm("email"), '_label -> "Email address")
-        @idInputPassword(signinForm("password"), '_label -> "Password", '_help -> "<a href='/identity/recover'>Forgotten your password?</a>")
+        <ul class="form-fields">
 
-        <li>
-            <button type="submit" class="submit-input">Sign in</button>
-            
-            <label class="check-label check-label--helper">
-                @idCheckbox(signinForm("keepMeSignedIn"))
-                Remember me
-            </label>
-        </li>
-  </ul>
-</form>
+            @idInputEmail(signinForm("email"), '_label -> "Email address", 'class -> "js-signin-email")
+            @idInputPassword(signinForm("password"), '_label -> "Password")
+
+            <li>
+                <div class="form-field__note">
+                    <a class="js-forgotten-password" href='@idUrlBuilder.buildUrl("/reset", idRequest)' data-link-name="Forgotten password">Forgotten your password?</a>
+                </div>
+                <button type="submit" class="submit-input" data-link-name="Sign in">Sign in</button>
+
+                <label class="check-label check-label--helper">
+                    @idCheckbox(signinForm("keepMeSignedIn"))
+                    Remember me
+                </label>
+            </li>
+        </ul>
+    </form>
+</div>
 }

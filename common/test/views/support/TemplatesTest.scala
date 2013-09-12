@@ -5,10 +5,6 @@ import model._
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 import xml.XML
-import com.gu.openplatform.contentapi.model.MediaAsset
-import model.Image
-import scala.Some
-import model.Tag
 import common.editions.Uk
 
 class TemplatesTest extends FlatSpec with ShouldMatchers {

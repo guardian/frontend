@@ -7,6 +7,17 @@
         <title>@title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8"/>
+        
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/32x32.ico")" />
+
+        <link rel="apple-touch-icon" sizes="144x144" href="@routes.Assets.at("images/144x144.png")" />
+        <link rel="apple-touch-icon" sizes="114x114" href="@routes.Assets.at("images/114x114.png")" />
+        <link rel="apple-touch-icon" sizes="72x72" href="@routes.Assets.at("images/72x72.png")" />
+        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("images/57x57.png")" />
+
+        <meta name="application-name" content="The Guardian" />
+        <meta name="msapplication-TileColor" content="#004983" />
+        <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
         <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet">
         <link href="@routes.Assets.at("css/style.css")" rel="stylesheet">
@@ -21,15 +32,21 @@
                     ItemSearch: 'modules/ItemSearch',
                     AutoComplete: 'modules/AutoComplete',
                     knockout: 'components/knockout/build/output/knockout-latest.js',
-                    knockoutSortable: 'components/knockout-sortable/src/knockout-sortable.js',
                     Reqwest: 'components/reqwest/reqwest',
                     EventEmitter: 'components/eventEmitter/EventEmitter',
                     bean: 'components/bean/bean',
                     bonzo: 'components/bonzo/bonzo',
-                    humanizedTimeSpan: 'components/js_humanized_time_span/humanized_time_span.js'
+                    humanizedTimeSpan: 'components/js_humanized_time_span/humanized_time_span.js',
+                    omniture: 'components/omniture.js'
                 }
             }
         </script>
+
+        <script src="@routes.Assets.at("javascripts/components/jquery/jquery.js")"></script>
+        <script src="@routes.Assets.at("javascripts/components/jquery-ui/ui/jquery-ui.js")"></script>
+        <script src="@routes.Assets.at("javascripts/components/masonry/masonry.pkgd.min.js")"></script>
+        <script src="@routes.Assets.at("javascripts/components/sparklines/jquery.sparkline.min.js")"></script>
+        <script src="@routes.Assets.at("javascripts/components/bootstrap.css/js/bootstrap.js")"></script>
         <script src="@routes.Assets.at("javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/components/underscore/underscore.js")" type="text/javascript"></script>
 
@@ -40,10 +57,8 @@
                     identity: @{Html(identity)}
                 }
             });
-            define('jquery.ui.sortable', function() {
-                require(['js!components/jquery-ui/ui/jquery.ui.sortable.js'], function() {});
-            });
         </script>
+
 
     </head>
     <body>
@@ -67,11 +82,13 @@
     
     @content
 
-    <script src="@routes.Assets.at("javascripts/components/jquery/jquery.js")"></script>
-    <script src="@routes.Assets.at("javascripts/components/jquery-ui/ui/jquery-ui.js")"></script>
-    <script src="@routes.Assets.at("javascripts/components/bootstrap.css/js/bootstrap.js")"></script>
     <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
+    <script>
+        curl(['js!omniture']).then(function () {
+            s.tl();        
+        })
+    </script>
 
     </body>
 </html>

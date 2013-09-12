@@ -11,6 +11,8 @@ import conf.Configuration
 
 object JsonComponent extends Results {
 
+  type ListOfString = List[String]
+
   lazy val allowedOrigins = Configuration.ajax.corsOrigin.map(_.split(",").map(_.trim))
 
   private val ValidCallback = """([a-zA-Z0-9_]+)""".r
@@ -55,6 +57,7 @@ object JsonComponent extends Results {
         case (name, value: Int) => (name -> toJson(value))
         case (name, value: Double) => (name -> toJson(value))
         case (name, value: Float) => (name -> toJson(value))
+        case (name, value: ListOfString) => (name -> toJson(value))
         case (name, value: JsValue) => (name -> value)
       }
     ))

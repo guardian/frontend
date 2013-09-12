@@ -30,14 +30,21 @@
     }
 }
 
+
 .gallery-nav {
     text-align: center;
-    margin-bottom: $baseline;
+    margin-bottom: $baseline*2;
 }
 
 .gallery-prev,
 .gallery-next {
-    width: 75px; // this is to ensure the "Image x of y" is centered. (MA)
+    // this is to ensure the "Image x of y" is centered. (MA)
+    width: 75px;
+
+    &.is-off {
+        display: inline-block;
+        visibility: hidden;
+    }
 }
 
 .gallery-prev {
@@ -92,4 +99,10 @@
 .gallery-swipe .gallery-fullscreen-toggle {
     display: none;
     float: right;
+}
+
+
+// Temporary, just for the A/B test
+.ab-gallerytest--newstyle {
+    display: none;
 }

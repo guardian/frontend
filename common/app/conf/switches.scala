@@ -5,7 +5,7 @@ import common._
 import implicits.Collections
 import play.api.Plugin
 import play.api.libs.ws.WS
-import scala.concurrent.duration._
+
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -140,6 +140,14 @@ object Switches extends Collections {
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = Off)
 
+  val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
+    "If this switch is on, external links are turned into cards in body content on wide viewports.",
+    safeState = Off)
+
+  val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
+    "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -158,8 +166,24 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABLightboxGalleries = Switch("A/B Tests", "ab-lightbox-galleries",
-    "If this is switched on an AB test runs to test lightbox gallery variants (lightbox and lightbox with swipe)",
+  val ABGalleryStyle = Switch("A/B Tests", "ab-gallery-style",
+    "If this is switched on an AB test runs to trial the new gallery style vs the current design ",
+    safeState = Off)
+
+  val ABGalleryCta = Switch("A/B Tests", "ab-gallery-cta",
+    "If this is switched on an AB test runs to test different styles of CTAs to launch a gallery",
+    safeState = Off)
+
+  val ABSwipeCtas = Switch("A/B Tests", "ab-swipe-ctas",
+    "If this is switched on an AB test runs to trial the new swipe call to actions ",
+    safeState = Off)
+
+  val ABExpandableMostPopular = Switch("A/B Tests", "ab-expandable-most-popular",
+    "If this is switched on an AB test runs to trial the impact of having expandable content in most popular trails",
+    safeState = Off)
+
+  val ABRightHandCard = Switch("A/B Tests", "ab-right-hand-card",
+    "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
     safeState = Off)
 
 
@@ -167,7 +191,7 @@ object Switches extends Collections {
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
     "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
-    safeState = Off);
+    safeState = Off)
 
   // Dummy Switch
 
@@ -176,9 +200,14 @@ object Switches extends Collections {
     safeState = Off)
 
   //Fronts film switch
-  val FilmFrontFacia = Switch("Facia", "facia-film-switch",
+  val FilmFrontFacia = Switch("Facia", "facia-film",
     "Switch to redirect traffic to the facia film front instead of front film front",
     safeState = Off)
+
+  val FaciaSwitch = Switch("Facia", "facia",
+    "Switch to redirect to facia if request has X-Gu-Facia=true",
+    safeState = Off
+  )
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -210,18 +239,26 @@ object Switches extends Collections {
     ABAa,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
+    ExternalLinksCardsSwitch,
+    LiveSummarySwitch,
     LiveCricketSwitch,
-    ABLightboxGalleries,
     FilmFrontFacia,
-    AdSlotImpressionStatsSwitch
+    FaciaSwitch,
+    AdSlotImpressionStatsSwitch,
+    ABGalleryStyle,
+    ABGalleryCta,
+    ABSwipeCtas,
+    ABExpandableMostPopular,
+    ABRightHandCard
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with Logging with Plugin {
 
-  private lazy val refreshSwitches = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
+class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
+
+  def refresh() {
     log.info("Refreshing switches")
     WS.url(config.switches.configurationUrl).get() foreach { response =>
       response.status match {
@@ -241,6 +278,14 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends AkkaSupport with L
     }
   }
 
-  override def onStart() { refreshSwitches }
-  override def onStop() { refreshSwitches.cancel() }
+  override def onStart() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
+      refresh()
+    }
+  }
+
+  override def onStop() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+  }
 }

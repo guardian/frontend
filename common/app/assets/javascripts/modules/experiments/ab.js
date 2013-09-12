@@ -3,24 +3,34 @@ define([
     'modules/storage',
 
     //Current tests
-    'modules/experiments/tests/paragraph-spacing',
     'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
-    'modules/experiments/tests/lightbox-galleries'
+    'modules/experiments/tests/gallery-style',
+    'modules/experiments/tests/gallery-cta',
+    'modules/experiments/tests/swipe-ctas',
+    'modules/experiments/tests/expandable-mostpopular',
+    'modules/experiments/tests/right-hand-card'
 ], function (
     common,
     store,
-    ParagraphSpacing,
+    
     ExperimentInlineLinkCard,
     Aa,
-    LightboxGalleries
+    GalleryStyle,
+    GalleryCta,
+    SwipeCtas,
+    ExperimentExpandableMostPopular,
+    RightHandCard
     ) {
 
     var TESTS = [
-            new ParagraphSpacing(),
             new ExperimentInlineLinkCard(),
             new Aa(),
-            new LightboxGalleries()
+            new GalleryStyle(),
+            new GalleryCta(),
+            new SwipeCtas(),
+            new ExperimentExpandableMostPopular(),
+            new RightHandCard()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -159,8 +169,18 @@ define([
             });
         },
 
+        // mostly for private use
+        forceSegment: function (testId, variant) {
+            getActiveTests().filter(function (test) {
+                return (test.id === testId);
+            }).forEach(function (test) {
+                addParticipation(test, variant);
+            });
+        },
+
         run: function(config, context, options) {
             var opts = options || {};
+
             getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });

@@ -6,6 +6,7 @@ import collection.JavaConversions._
 import collection.JavaConverters._
 import org.fluentlenium.core.domain.{ FluentWebElement, FluentList }
 import conf.Configuration
+import conf.Switches._
 
 class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -44,11 +45,9 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMat
       Given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
       HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         import browser._
-
         Then("all links on the page should be decorated with the Omniture meta-data attribute")
         val anchorsWithNoDataLink = find("a").filter(hasNoLinkName(_))
         anchorsWithNoDataLink should have length (0)
-
       }
 
     }

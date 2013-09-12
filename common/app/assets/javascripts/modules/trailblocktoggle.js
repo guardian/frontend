@@ -57,7 +57,10 @@ define([
 
                 trailblock = '.' + classPrefix + trailblockId;
 
-                trailblock = context.querySelector(trailblock);
+                // ignore masthead trailblock, as can have the same trailblockId - hacky
+                trailblock = [].filter.call(context.querySelectorAll(trailblock), function(trailblock) {
+                    return bonzo(trailblock).hasClass('trailblock--masthead') === false;
+                })[0];
                 bonzo(trailblock).toggleClass(classesToToggle);
 
                 var text = trigger.text();

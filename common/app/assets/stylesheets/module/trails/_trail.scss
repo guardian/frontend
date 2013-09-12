@@ -147,23 +147,29 @@
     }
 
     .media {
-        padding: 0 0 $baseline*1 0;
+        padding: 0 0 $baseline 0;
+
+        .ab-expandable-trails--on & {
+            padding-bottom: 0;
+        }
     }
 
     .media__img { width: 35%; }
 
     .media__img img {
         width: $trailblockImgWidth;
+        margin-top: 3px; // Align with top of text
         margin-bottom: 5px;
-        margin-top: 3px;
+
+        .ab-expandable-trails--on & {
+            margin-bottom: 0;
+        }
     }
 
     .trail__text {
         padding: 0;
     }
 }
-
-
 
 .trail--gallery {
 
@@ -188,56 +194,22 @@
         margin-left: $gutter/2;
         margin-right: $gutter/2;
     }
-
-    .gallerythumbs {
-        margin-top: $baseline;
-    }
-
-    .gallerythumbs__item {
-        @include fix-aspect-ratio(5, 3, 50%); // 5:3 aspect - works around thumbs being slightly different in size
-        @include box-sizing(border-box);
-        margin-bottom: 3px;
-        float: left;
-        line-height: 0;
-        overflow: hidden;
-    }
-
-    .gallerythumbs__item:nth-child(odd) {
-        border-left: 3px solid transparent;
-    }
-
-    .gallerythumbs__item:first-child {
-        @include fix-aspect-ratio(5, 3);
-        border-left: 0;
-    }
-
-    .gallerythumbs__item:last-child {
-        margin-bottom: 0;
-    }
-
-    .gallerythumbs__img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-    }
-
-    @include mq(mobileLandscape) {
-        .gallerythumbs__item:first-child {
-            @include fix-aspect-ratio(5, 3, 67%);
-            float: left;
-            border-left: 0;
-            margin-bottom: 0;
-        }
-        .gallerythumbs__item {
-            @include fix-aspect-ratio(5, 3, 33%);
-            border-left: 3px solid transparent;
-        }
-    }
 }
 
 .trail--gallery + .trail--gallery {
     margin: $baseline * 4 0;
+}
+
+.trail--expandable {
+    &.has-image {
+        .trail__img {
+            float: left;
+        }
+        .trail__expander-headline {
+            float: right;
+            width: 61%;
+        }
+    }
 }
 
 /**
@@ -252,3 +224,5 @@
     margin-top: $baseline*3;
     border-bottom: none;
 }
+
+

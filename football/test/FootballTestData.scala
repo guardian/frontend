@@ -1,15 +1,9 @@
 package test
 
-import model.Competition
 import org.scala_tools.time.Imports._
 import org.joda.time.DateTime
 import pa._
 import model.Competition
-import pa.MatchDayTeam
-import pa.MatchDay
-import pa.Stage
-import scala.Some
-import pa.Fixture
 import feed.Competitions
 import scala.concurrent.Await
 

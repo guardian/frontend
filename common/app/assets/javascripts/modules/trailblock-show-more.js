@@ -75,7 +75,7 @@ define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bon
             trailblocks.each(this.view.appendCta);
 
             // event delegation for clicking of cta
-            bean.on(context.querySelector('.front-container'), 'click', '.trailblock button.trailblock-show-more', function(e) {
+            bean.on(context.querySelector('.front-container'), 'click', 'button.trailblock-show-more', function(e) {
                 var $cta = bonzo(e.target),
                     // what's the section (default to 'top-stories')
                     section = getSection($cta);

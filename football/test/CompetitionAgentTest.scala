@@ -28,7 +28,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
 
     TestCompetitions.matches.filter(_.isFixture).map(_.id) should contain ("3519484")
 
-    TestCompetitions.shutDown()
+    TestCompetitions.stop()
   }
 
   it should "load results" in Fake {
@@ -47,7 +47,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
 
     TestCompetitions.matches.filter(_.isResult).map(_.id) should contain ("3528302")
 
-    TestCompetitions.shutDown()
+    TestCompetitions.stop()
   }
 
   it should "load live matches" in Fake {
@@ -63,7 +63,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
 
     TestCompetitions.matches.filter(_.isLive).map(_.id) should contain ("3518286")
 
-    TestCompetitions.shutDown()
+    TestCompetitions.stop()
   }
 
   it should "load league tables" in Fake {
@@ -82,7 +82,7 @@ class CompetitionAgentTest extends FlatSpec with ShouldMatchers with implicits.F
 
     TestCompetitions.competitions(0).leagueTable(0).team.id should be ("4")
 
-    TestCompetitions.shutDown()
+    TestCompetitions.stop()
   }
 
   private def await[T](f: Future[T]): T = Await.result(f, 10.seconds)

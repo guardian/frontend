@@ -42,3 +42,7 @@ style-guide/app/assets/stylesheets/styleguide.min.css
 dev/gems
 dev/casperjs
 integration-tests/target/*
+
+developer.properties
+
+*-spec-runner.html

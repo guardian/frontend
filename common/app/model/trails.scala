@@ -1,19 +1,16 @@
 package model
 
-import org.joda.time.DateTime
-import views.support.Style
-import scala.math
-import scala.concurrent.Future
 import conf.{Configuration, ContentApi}
 import common._
 import contentapi.QueryDefaults
-import play.api.libs.ws.WS
+import org.joda.time.DateTime
+import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.Json._
-import play.api.libs.ws.Response
-import scala.Some
 import play.api.libs.json.JsObject
-import java.net.URLDecoder
-import tools.QueryParams
+import scala.concurrent.Future
+import services.S3FrontsApi
+import views.support.Style
+
 
 trait Trail extends Elements with Tags {
   def webPublicationDate: DateTime
@@ -26,9 +23,10 @@ trait Trail extends Elements with Tags {
   def thumbnail: Option[String] = None
   def thumbnailPath: Option[String] = None
   def isLive: Boolean
-
   def discussionId: Option[String] = None
-
+  def leadingParagraphs: List[org.jsoup.nodes.Element] = Nil
+  def byline: Option[String] = None
+  def trailType: Option[String] = None
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])
@@ -51,16 +49,19 @@ class ItemTrailblockDescription(
     val style: Option[Style],
     val showMore: Boolean,
     val edition: Edition,
-    val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults
+    val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults with Logging
   {
     lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query() = EditorsPicsOrLeadContentAndLatest(
-    ContentApi.item(id, edition)
-      .showEditorsPicks(true)
-      .pageSize(20)
-      .response
-  )
+  def query() = {
+    log.info(s"Refreshing trailblock items for: ${edition.id}, $id")
+    EditorsPicsOrLeadContentAndLatest(
+      ContentApi.item(id, edition)
+        .showEditorsPicks(true)
+        .pageSize(20)
+        .response
+    )
+  }
 }
 
 object ItemTrailblockDescription {
@@ -90,6 +91,7 @@ object CustomTrailblockDescription {
             name: String,
             numItemsVisible: Int,
             style: Option[Style] = None,
+            showMore: Boolean = false,
             isConfigured: Boolean = false)
            (query: => Future[Seq[Trail]]): TrailblockDescription =
     CustomQueryTrailblockDescription(id, name, numItemsVisible, style, () => query, isConfigured)
@@ -113,58 +115,65 @@ class RunningOrderTrailblockDescription(
   val showMore: Boolean,
   val edition: Edition,
   val isConfigured: Boolean
-) extends ConfiguredTrailblockDescription with AkkaSupport with Logging {
+) extends ConfiguredTrailblockDescription with Logging {
 
   lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
   def configuredQuery() = {
     // get the running order from the api
-    val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/${edition.id.toLowerCase}/$section/$blockId/latest/latest.json"
+    val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$blockId/collection.json"
     log.info(s"loading running order configuration from: $configUrl")
     parseResponse(WS.url(s"$configUrl").withTimeout(2000).get())
   }
 
   private def parseResponse(response: Future[Response]): Future[Option[TrailblockDescription]] = {
-    response.map{ r =>
+    response.flatMap { r =>
       r.status match {
-        case 200 =>
-          Some(CustomTrailblockDescription(id, name, numItemsVisible, style, isConfigured){
+          case 200 =>
             // extract the articles
             val articles: Seq[String] = (parse(r.body) \ "live").as[Seq[JsObject]] map { trail =>
               (trail \ "id").as[String]
             }
 
             val idSearch = {
-              val response = ContentApi.search(edition).ids(articles.mkString(",")).pageSize(List(articles.size, 50).min).response
-              val results = response map {r => r.results map{Content(_)} }
-              val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
-              sorted fallbackTo Future(Nil)
+              if (articles.isEmpty) {
+                Future(Nil)
+              } else {
+                val response = ContentApi.search(edition).ids(articles.mkString(",")).showFields("all").pageSize(List(articles.size, 50).min).response
+                val results = response map {r => r.results map{Content(_)} }
+                val sorted = results map { _.sortBy(t => articles.indexWhere(_ == t.id))}
+                sorted
+              }
             }
 
             val contentApiQuery = (parse(r.body) \ "contentApiQuery").asOpt[String] map { query =>
               val queryParams: Map[String, String] = QueryParams.get(query).mapValues{_.mkString("")}
               val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
-              ContentApi.fetch(Configuration.contentApi.host + "/search", queryParamsWithEdition).flatMap { resp =>
-              val ids = (parse(resp) \\ "id") map {_.as[String] } mkString(",")
-              ContentApi.search(edition)
-                .ids(ids)
-                .response map { r =>
-                  r.results.map(Content(_))
-                }
-              }.fallbackTo(Future(Nil))
+              val search = ContentApi.search(edition)
+              val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
+              val newSearch = search.withParameters(search.parameterHolder ++ queryParamsAsStringParams).showFields("all")
+
+              newSearch.response map { r =>
+                r.results.map(Content(_))
+              }
             } getOrElse Future(Nil)
 
-            for {
-                idSearchResults <- idSearch
-                contentApiResults <- contentApiQuery
+            val results = for {
+              idSearchResults <- idSearch
+              contentApiResults <- contentApiQuery
             } yield idSearchResults ++ contentApiResults
 
-          })
-        case _ =>
-          log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
-          // NOTE: better way of handling fallback
-          Some(ItemTrailblockDescription(id, name, numItemsVisible)(edition))
-      }
+            results map {
+              case l: List[Content] => Some(CustomTrailblockDescription(id, name, numItemsVisible, style, isConfigured) {
+                results
+              })
+            } fallbackTo Future(None)
+
+          case _ =>
+            log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
+            // NOTE: better way of handling fallback
+            Future(Some(ItemTrailblockDescription(id, name, numItemsVisible, style, showMore, isConfigured)(edition)))
+        }
     }
   }
 

@@ -1,18 +1,20 @@
 define([
     'common',
     'modules/detect',
-    'modules/experiments/inline-link-card'
+    'modules/userPrefs',
+    'modules/experiments/left-hand-card'
 ],
 function (
     common,
     detect,
-    InlineLinkCard
+    userPrefs,
+    LeftHandCard
 ) {
 
     var ExperimentInlineLinkCard = function () {
 
         this.id = 'InlineLinkCard';
-        this.expiry = '2013-08-21';
+        this.expiry = '2013-09-30';
         this.audience = 1;
         this.description = 'Impact of cardifying inline links on number of linked stories read';
         this.canRun = function(config) {
@@ -28,54 +30,26 @@ function (
             },
             {
                 id: 'link-card',
-                test: function () {
+                test: function (config, context) {
                     common.mediator.on('page:article:ready', function(config, context) {
-                        var linksToCardify = context.querySelectorAll('.article-body > p a[href^="/"]');
-                        common.$g('body').addClass('test-link-card--on');
-
-                        function cardifyRelatedInBodyLink(link) {
-                            new InlineLinkCard(link, link.parentNode, 'Related').init();
+                        if (!config.switches.externalLinksCards) {
+                            var card = new LeftHandCard({
+                                origin: 'internal',
+                                context: context
+                            });
                         }
-                        function isArticle(url) {
-                            return (/\/[0-9]{4}\/[a-z]{3}\/[0-9]{2}\//).test(url);
-                        }
-
-                        if (linksToCardify.length > 0) {
-                            // There are multiple links
-                            var articleParagraphs = context.querySelectorAll('.article-body > p'),
-                                numberOfArticleParagraphs = articleParagraphs.length,
-                                insertCardEveryNParagraphs = 4,
-                                lastParagraphsToNotCardify = 3, // Always allow enough space to display a card
-                                linksInParagraph,
-                                numberOfLinksInParagraph,
-                                i = 0,
-                                j,
-                                linkWasCardified;
-
-                            // Looking for links every insertCardEveryNParagraphs paragraphs
-                            while (i < (numberOfArticleParagraphs - lastParagraphsToNotCardify)) {
-                                linksInParagraph = articleParagraphs[i].querySelectorAll('a[href^="/"]');
-                                numberOfLinksInParagraph = linksInParagraph.length;
-                                j = 0;
-                                linkWasCardified = false;
-
-                                if (numberOfLinksInParagraph > 0) {
-                                    while (j < numberOfLinksInParagraph) {
-                                        if (isArticle(linksInParagraph[j].href)) {
-                                            cardifyRelatedInBodyLink(linksInParagraph[j]);
-                                            linkWasCardified = true;
-
-                                            break;
-                                        }
-                                        j++;
-                                    }
-                                }
-                                if (linkWasCardified) {
-                                    i = i + insertCardEveryNParagraphs;
-                                } else {
-                                    i++;
-                                }
-                            }
+                    });
+                }
+            },
+            {
+                id: 'link-card-all-origins',
+                test: function (config, context) {
+                    common.mediator.on('page:article:ready', function(config, context) {
+                        if (!config.switches.externalLinksCards) {
+                            var card = new LeftHandCard({
+                                origin: 'all',
+                                context: context
+                            });
                         }
                     });
                 }

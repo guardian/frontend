@@ -1,12 +1,10 @@
 package jobs
 
-import common.{ CSV, PorterMetrics, S3 }
+import common._
 import conf.Configuration
-import services.Analytics
+import services.{ S3, Analytics }
 
-class AnalyticsLoadJob extends Job {
-  val cron = "0 0 8/24 * * ?"
-  val metric = PorterMetrics.AnalyticsLoadTimingMetric
+object AnalyticsLoadJob extends Logging {
 
   def run() {
     log.info("Generating analytics for pageviews by day and uploading to S3.")

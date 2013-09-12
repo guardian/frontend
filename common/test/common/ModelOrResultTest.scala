@@ -26,7 +26,7 @@ class ModelOrResultTest extends FlatSpec with ShouldMatchers {
   val testGallery = testContent.copy(tags = List(galleryTag))
   val testVideo = testContent.copy(tags = List(videoTag))
 
-  val testSection = new Section("water", "Water", "http://foo.bar", "http://foo.bar")
+  val testSection = new Section("water", "Water", "http://foo.bar", "http://foo.bar", Nil)
 
   // FML
   val stubResponse = new ItemResponse("ok", "top_tier", None, None, None, None, None, None, None, None, None, None, Nil, Nil, Nil, Nil, Nil, Nil)

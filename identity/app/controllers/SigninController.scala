@@ -1,50 +1,81 @@
 package controllers
 
 import play.api.mvc._
-import play.api.data.Forms
 import play.api.data._
-import play.api.data.validation.Constraints._
+import play.api.data.validation.Constraints
 import model.IdentityPage
-import play.api.data.Form
-import common.ExecutionContexts
-import services.ReturnUrlVerifier
+import common.{Logging, ExecutionContexts}
+import services.{IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
 import com.google.inject.{Inject, Singleton}
+import idapiclient.{ClientAuth, IdApiClient, EmailPassword}
+import org.joda.time._
+import conf.IdentityConfiguration
+import play.api.i18n.Messages
+import idapiclient.ClientAuth
+import play.api.data.FormError
+import scala.Some
+import idapiclient.EmailPassword
+import play.api.mvc.Cookie
+import utils.SafeLogging
+import form.Mappings.{idEmail, idPassword}
 
 
 @Singleton
-class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends Controller with ExecutionContexts {
+class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
+                                 api: IdApiClient,
+                                 conf: IdentityConfiguration,
+                                 idRequestParser: IdRequestParser,
+                                 idUrlBuilder: IdentityUrlBuilder)
+  extends Controller with ExecutionContexts with SafeLogging {
 
   val page = new IdentityPage("/signin", "Sign in", "signin")
 
   val form = Form(
     Forms.tuple(
-      "email" -> Forms.email.verifying(nonEmpty),
-      "password" -> Forms.nonEmptyText(6, 20).verifying(nonEmpty),
+      "email" -> idEmail
+        .verifying(Constraints.nonEmpty),
+      "password" -> idPassword
+        .verifying(Constraints.nonEmpty),
       "keepMeSignedIn" -> Forms.boolean
     )
   )
 
   def renderForm = Action { implicit request =>
+    logger.trace("Rendering signin form")
+    val idRequest = idRequestParser(request)
     val filledForm = form.fill("", "", true)
-    Ok(views.html.signin(page, filledForm))
+    Ok(views.html.signin(page, idRequest, idUrlBuilder, filledForm))
   }
 
   def processForm = Action { implicit request =>
-    form.bindFromRequest.fold(
-      formWithErrors => BadRequest(views.html.signin(page, formWithErrors)),
+    val idRequest = idRequestParser(request)
+    val boundForm = form.bindFromRequest
+    boundForm.fold(
+      formWithErrors => {
+        logger.info("Invalid login form submission")
+        Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
+      },
       { case (email, password, rememberMe) => {
-        TemporaryRedirect(returnUrlVerifier.getVerifiedReturnUrl(request))
-        // call ID API
-        if (true) {
-          // get a cookie back from api client
-
-          Ok("response")
-//            .withCookies(
-//              new Cookie("GU_U", GU_U_val, )
-//            )
-        } else {
-          // invalid username / password
-          Ok("Invalid! email: %s, password: %s, rememberMe: %s".format(email, password, rememberMe.toString))
+        logger.trace("authing with ID API")
+        Async {
+          api.authBrowser(EmailPassword(email, password), idRequest.omnitureData) map(_ match {
+            case Left(errors) => {
+              logger.error(errors.toString())
+              logger.info("Auth failed for user")
+              val formWithErrors = boundForm.withError(FormError("", Messages("error.login")))
+              Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
+            }
+            case Right(apiCookiesResponse) => {
+              logger.trace("Logging user in")
+              val maxAge = if(rememberMe) Some(Seconds.secondsBetween(DateTime.now, apiCookiesResponse.expiresAt).getSeconds) else None
+              val responseCookies = apiCookiesResponse.values.map { cookie =>
+                val secureHttpOnly = cookie.key.startsWith("SC_")
+                new Cookie(cookie.key, cookie.value, maxAge, "/", Some(conf.id.domain), secureHttpOnly, secureHttpOnly)
+              }
+              SeeOther(returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl))
+                .withCookies(responseCookies:_*)
+            }
+          })
         }
       }}
     )

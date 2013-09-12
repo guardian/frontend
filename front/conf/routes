@@ -10,6 +10,7 @@ GET     /$path<(\w\w-edition)?>                                         controll
 GET     /$path<(\w\w-edition)?>.json                                    controllers.FrontController.render(path)
 
 GET     /$path<(us|uk|au)?>                                                                         controllers.FrontController.render(path)
+GET     /$path<(us|uk|au)?>.json                                                                         controllers.FrontController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                     controllers.FrontController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json                controllers.FrontController.render(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails              controllers.FrontController.renderTrails(path)

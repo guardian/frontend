@@ -23,7 +23,7 @@ class TagControllerTest extends FlatSpec with ShouldMatchers {
     val result = TagController.render(tagUrl)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
-    contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
+    contentAsString(result) should startWith(s"""${callbackName}({\"html\"""")
   }
 
   it should "return JSON when .json format is supplied" in Fake {
@@ -34,7 +34,7 @@ class TagControllerTest extends FlatSpec with ShouldMatchers {
     val result = TagController.render(tagUrl)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
-    contentAsString(result) should startWith("{\"config\"")
+    contentAsString(result) should startWith("{\"html\"")
   }
 
   it should "internal redirect when content type is not tag" in Fake {

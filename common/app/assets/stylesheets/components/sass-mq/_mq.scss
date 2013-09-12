@@ -15,17 +15,17 @@ $mq-breakpoints: (
 ) !default;
 
 
-@function px2em($px, $base-font-size: 16px) {
+@function mq-px2em($px, $base-font-size: 16px) {
     @if (unitless($px)) {
         @warn "Assuming #{$px} to be in pixels, attempting to convert it into pixels for you";
-        @return px2em($px + 0px); // That may fail.
+        @return mq-px2em($px + 0px); // That may fail.
     } @else if (unit($px) == em) {
         @return $px;
     }
     @return ($px / $base-font-size) * 1em;
 }
 
-@function retrieve-breakpoint-width($name) {
+@function mq-retrieve-breakpoint-width($name) {
     @each $breakpoint in $mq-breakpoints {
         $breakpoint-name:  nth($breakpoint, 1);
         $breakpoint-width: nth($breakpoint, 2);
@@ -67,18 +67,18 @@ $mq-breakpoints: (
     // From: this breakpoint (inclusive)
     @if $from {
         @if type-of($from) == number {
-            $min-width: px2em($from);
+            $min-width: mq-px2em($from);
         } @else {
-            $min-width: px2em(retrieve-breakpoint-width($from));
+            $min-width: mq-px2em(mq-retrieve-breakpoint-width($from));
         }
     }
 
     // To: that breakpoint (exclusive)
     @if $to {
         @if type-of($to) == number {
-            $max-width: px2em($to);
+            $max-width: mq-px2em($to);
         } @else {
-            $max-width: px2em(retrieve-breakpoint-width($to) - 1px);
+            $max-width: mq-px2em(mq-retrieve-breakpoint-width($to) - 1px);
         }
     }
 
@@ -108,7 +108,7 @@ $mq-breakpoints: (
 // Usage: $mq-breakpoints: mq-add-breakpoint(tvscreen, 1920px);
 // Credit goes to Sam Richard (author of the `respond-to()` mixin)
 @function mq-add-breakpoint($name, $breakpoint) {
-  $breakpoint: $name $breakpoint;
-  $output: append($mq-breakpoints, $breakpoint, 'space');
-  @return $output;
+    $breakpoint: $name $breakpoint;
+    $output: append($mq-breakpoints, $breakpoint, 'space');
+    @return $output;
 }
