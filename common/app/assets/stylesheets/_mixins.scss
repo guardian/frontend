@@ -33,6 +33,13 @@
     transform: $args;
 }
 
+@mixin animation($args) {
+    -webkit-animation: $args;
+    -moz-animation: $args;
+    -ms-animation: $args;
+    animation: $args;
+}
+
 @mixin keyframes($name) {
     @-webkit-keyframes $name { @content; }
     @-moz-keyframes $name { @content; }
