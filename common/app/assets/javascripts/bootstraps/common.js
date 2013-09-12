@@ -308,11 +308,14 @@ define([
         },
 
         // let large viewports opt-in to the responsive alpha
-        optIn: function () {
+        optIn: function (context) {
             var countMeIn = /#countmein/.test(window.location.hash);
             if (countMeIn && window.screen.width >= 900) {
                 var expiryDays = 365;
                 Cookies.add("GU_VIEW", "mobile", expiryDays);
+                Array.prototype.forEach.call(context.querySelectorAll('.release-message'), function (el) {
+                    el.className = el.className.replace('u-h', '');
+                })
             }
         },
 
@@ -392,7 +395,7 @@ define([
             modules.initSwipe(config, contextHtml);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
-            modules.optIn();
+            modules.optIn(context);
             modules.faciaOptToggle();
             modules.externalLinksCards();
         }

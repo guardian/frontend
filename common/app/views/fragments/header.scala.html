@@ -1,6 +1,5 @@
 @(page: MetaData)(implicit request: RequestHeader)
-@import conf.Switches.SearchSwitch
-@import conf.Switches.IdentityProfileNavigationSwitch
+@import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
 
 <header id="header" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
     <div class="header__inner gs-container u-cf">
@@ -63,4 +62,15 @@
             @fragments.sections(page, false)
         </div>
     </div>
-</header>
+    
+    @if(!ReleaseMessageSwitch.isSwitchedOn) {
+        <div class="release-message" class="u-h">
+            <p>
+                You've opted in to an early release of the Guardian's website for desktop users.
+                We'd love to hear your <a href="mailto:userhelp@@guardian.co.uk">feedback</a>.
+                You can also <a class="main-site-link" rel="nofollow" href="@LinkTo{/}?view=desktop">opt-out</a> and continue using the existing website.
+            </p>
+        </div> 
+    }
+
+ </header>
