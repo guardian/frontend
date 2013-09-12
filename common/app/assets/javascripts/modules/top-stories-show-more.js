@@ -32,12 +32,15 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                 }
             };
 
+        var $overflowStories = common.$g('.item:nth-child(n + ' + (_getRowSize() + 1) + ')', topStories);
         // hide stories
-        common.$g('.item:nth-child(n + ' + (_getRowSize() + 1) + ')', topStories).each(function(item) {
+        $overflowStories.each(function(item) {
             bonzo(item).addClass('u-h');
         });
-        // add toggle button
-        _renderToggle(topStories);
+        // add toggle button, if we have hidden stories
+        if ($overflowStories.length) {
+            _renderToggle(topStories);
+        }
 
     };
 
