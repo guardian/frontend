@@ -35,11 +35,11 @@ button.cta {
     padding: $baseline*4 $gutter/2;
 }
 
-    .cta--read-more__icon {
-        @include rotate(90deg);
-        float: right;
-        margin-right: $gutter/2;
-    }
+.cta--read-more__icon {
+    @include rotate(90deg);
+    float: right;
+    margin-right: $gutter/2;
+}
 
 .expander {
     @extend %type-8;
