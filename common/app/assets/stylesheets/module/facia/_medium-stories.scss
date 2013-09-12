@@ -1,22 +1,14 @@
-.collection--highlights {
-    @include mq(tablet) {
-        vertical-align: top;
-        display: inline-block;
-        width: gs-span(4);
-    }
-    @include mq(desktop) {
-        width: gs-span(8);
-    }
-    @include mq(wide) {
-        width: gs-span(12);
+.collection--medium-stories {
+    margin-top: gs-height(1);
+    .collection__title {
+        display: none;
     }
     .items {
         @include mq(tablet) {
             font-size: 0;
-        }
-        @include mq(tablet, desktop) {
             white-space: nowrap;
-            height: gs-height(8);
+        }
+        @include mq(tablet, wide) {
             overflow-x: scroll;
             overflow-y: hidden;
         }
@@ -28,7 +20,7 @@
             display: inline-block;
             vertical-align: top;
             border-right: 1px dotted $grey;
-            padding: 0 $gs-gutter/2 gs-height(4) + $gs-baseline $gs-gutter/2 - 1;
+            padding: 0 $gs-gutter/2 gs-height(4) $gs-gutter/2 - 1;
             width: gs-span(4);
             background-color: #ffffff;
             &:first-child {
@@ -39,24 +31,11 @@
                 border-right-style: none;
             }
             .item__title {
-                min-height: gs-height(3) + $gs-baseline;
+                min-height: gs-height(4) + $gs-baseline;
+                padding-bottom: gs-height(1);
             }
             &.item--feature .item__title {
                 background-color: #ededed;
-            }
-        }
-        @include mq(desktop, wide) {
-            float: left;
-            &:nth-child(n + 2) {
-                padding-bottom: 0;
-                padding-right: 0;
-                border-right-style: none;
-                .item__image-container {
-                    display: none;
-                }
-            }
-            &:last-child {
-                margin-top: $gs-baseline;
             }
         }
     }
@@ -76,5 +55,11 @@
     }
     .item__image {
         height: 100%;
+    }
+    .item__meta {
+        @include mq(tablet) {
+            position: absolute;
+            bottom: gs-height(4) + $gs-baseline;
+        }
     }
 }

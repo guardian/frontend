@@ -2,27 +2,24 @@
 
 @if(items.nonEmpty){
 
-    <section class="section--@config.style.map(_.className)"
-            data-link-name="block | @config.name"
-            data-section-id="@config.id"
-             @defining(Edition(request).id.toLowerCase()) { edition =>
-                data-link-context="@if(config.section == "news"){@edition}else{@edition/@config.section}">
-             }
+    @defining(FindStyle("uk", config)) { style =>
+        <section class="collection collection--@style.className collection--@{config.section}-section" data-link-name="block | @config.name">
 
-        @if(config.name) {
-            <h2 class="section__title">@config.name</h2>
-        }
+            @if(config.name) {
+                <h2 class="collection__title">@config.name</h2>
+            }
 
-        @config.style match {
-            case Some(Thumbnail)    => { @trailblocks.thumbnail(items, config.numItemsVisible) }
-            case Some(Headline)     => { @trailblocks.headline(items, config.numItemsVisible) }
-            case Some(SectionFront) => { @trailblocks.section(items, config.numItemsVisible, numWithImages = 3 ) }
-            case Some(Masthead)     => { @trailblocks.masthead(items.take(config.numItemsVisible)) }
-            case Some(TopStories)   => { @trailblocks.topStories(items.take(config.numItemsVisible)) }
-            case Some(Highlights)   => { @trailblocks.highlights(items.take(config.numItemsVisible)) }
-            case _                  => { @trailblocks.featured(items, config.numItemsVisible) }
-        }
+            @style match {
+                case Masthead      => { @collections.masthead(items) }
+                case TopStories    => { @collections.topStories(items) }
+                case MediumStories => { @collections.mediumStories(items) }
+                case SmallStories  => { @collections.smallStories(items) }
+                case Features      => { @collections.features(items) }
+                case Highlights    => { @collections.highlights(items) }
+                case _             => { @collections.highlights(items) }
+            }
 
-    </section>
+        </section>
+    }
 
 }
