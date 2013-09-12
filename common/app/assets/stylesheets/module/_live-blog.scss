@@ -121,24 +121,19 @@
 
 
 
+
 .autoupdate--has-animation {
-    .block {
-        @include transition(background 1s ease-out);
-        overflow: hidden;
-    }
 
     .autoupdate--highlight {
-        -webkit-animation: slide-in-animation 5s ease-out;
-        -moz-animation: slide-in-animation 5s ease-out;
-        -ms-animation: slide-in-animation 5s ease-out;
-        animation: slide-in-animation 5s ease-out;
+        @include animation(new-block-animation 5s ease-out);
     }
+
 }
 
-@include keyframes(slide-in-animation) {
-    0%   { opacity: 0; background: #f4f4ee; max-height: 0; }
+
+@include keyframes(new-block-animation) {
+    0%   { opacity: 0; background: #f4f4ee; }
     20%  { opacity: 1; }
-    90%  { background: #f4f4ee; max-height: 1000px; }
-    99%  { max-height: 1000px; }
-    100% { background: transparent; max-height: none; }
+    70%  { background: #f4f4ee; }
+    100% { background: transparent; }
 }
