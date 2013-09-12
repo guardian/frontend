@@ -47,10 +47,9 @@ define([
                             var id = context.querySelector('.article-body .block').id,
                                 path = window.location.pathname;
 
-                           //id = 'block-522ed1a2e4b0b4804819a4bd';
                            return path + '.json' + '?lastUpdate=' + id;
                         },
-                        delay: 10000,
+                        delay: 60000,
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
                         manipulationType: 'prepend',
