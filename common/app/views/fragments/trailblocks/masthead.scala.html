@@ -1,7 +1,7 @@
 @(trails: Seq[Trail])(implicit request: RequestHeader)
 
 <ul class="unstyled items item-count-@trails.size">
-    @trails.zipWithIndex.map{ case (trail, index) =>
+    @trails.take(4).zipWithIndex.map{ case (trail, index) =>
         <li class="item @trail.trailType.map("item--" + _)" data-link-name="trail | @{index + 1}" @trail.discussionId.map{ id => data-discussion-id="@id" }>
             @if(trail.trailType == Option("comment")) {
                 <span class="i i-quotes-green"></span>
