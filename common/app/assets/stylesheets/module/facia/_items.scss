@@ -6,6 +6,9 @@ $grey: #cccccc;
 $green: #6ca940;
 $dark-green: #19646c;
 
+.collection {
+    margin-top: $gs-baseline;
+}
 .collection__title {
     @include font($serifheadline, 800, 16);
     @include box-sizing(border-box);
