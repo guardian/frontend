@@ -72,7 +72,9 @@ RecommendComments.handleClick = function(e) {
         result = RecommendComments.recommendComment(id);
 
     // This is used as we are using deffered events
-    elem.className = elem.className.replace(RecommendComments.CONFIG.classes.button, '').replace('d-comment__action--active', ''); 
+    elem.className = elem.className
+                        .replace(RecommendComments.CONFIG.classes.button, '')
+                        .replace('d-comment__action--active', '');
     
     RecommendComments.renderRecommendation(elem);
     return result.then(
