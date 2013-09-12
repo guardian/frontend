@@ -64,6 +64,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
         case 200 =>
           val bodyJson = parse(r.body)
           val max = (bodyJson \ "max").asOpt[Int] getOrElse defaultMax
+          val displayName = (bodyJson \ "displayName").asOpt[String].filter(_.nonEmpty)
 
           // extract the articles
           val articles: Seq[String] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
@@ -80,7 +81,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           } yield (idSearchResults ++ contentApiResults).take(max)
 
           results map {
-            case l: List[Content] => Collection(l.toSeq)
+            case l: List[Content] => Collection(l.toSeq, displayName)
           }
           //TODO: Removal of fallback forces full chain to fail
 
