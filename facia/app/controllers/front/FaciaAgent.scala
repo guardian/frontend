@@ -64,7 +64,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
       r.status match {
         case 200 =>
           val bodyJson = parse(r.body)
-          val max = (bodyJson \ "max").asOpt[Int] getOrElse defaultMax
           val displayName = (bodyJson \ "displayName").asOpt[String].filter(_.nonEmpty)
 
           // extract the articles
@@ -79,7 +78,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           val results = for {
             idSearchResults <- idSearch
             contentApiResults <- contentApiQuery
-          } yield (idSearchResults ++ contentApiResults).take(max)
+          } yield (idSearchResults ++ contentApiResults)
 
           results map {
             case l: List[Content] => Collection(l.toSeq, displayName)
