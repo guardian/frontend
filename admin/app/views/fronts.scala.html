@@ -67,16 +67,16 @@
                         <span class="list-header__edition" data-bind="text: edition"></span>
                         <span class="list-header__section" data-bind="text: section"></span>
                         <span class="list-header__role"    data-bind="text: configMeta.roleName"></span>
-
-                        <span class="list-header__display">Title:</span>
-                        <a class="list-header__display__name" data-bind="
-                            text: collectionMeta.displayName() ? collectionMeta.displayName : '[edit]',
-                            click: toggleEditingConfig"></a>
+                        <span>:</span>
+                        <span>
+                            <a class="list-header__display" data-bind="
+                                css: { 'list-header__display--is-set': !!collectionMeta.displayName() },
+                                text: collectionMeta.displayName() || 'Add Title',
+                                click: toggleEditingConfig"></a></span>
 
                         <span class="list-header__role__description">
-                            Role: <span data-bind="text: configMeta.roleDescription"></span>
+                            : <span data-bind="text: configMeta.roleDescription"></span>
                         </span>
-
                     </div>
 
                     <div class="list-header__status">
@@ -105,11 +105,8 @@
                     </div>
                     <div class="list-header__meta">
                         <!-- ko if: state.timeAgo -->
-                            Updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span> 
-                            by <a class="list-header__meta__user" data-bind="
-                                text: collectionMeta.updatedBy,
-                                attr: {href: 'mailto:' + collectionMeta.updatedEmail}
-                                "></a>
+                            Updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span>
+                            by <span class="list-header__meta__user" data-bind="text: collectionMeta.updatedBy"></span>
                         <!-- /ko -->
                         <!-- ko ifnot: state.timeAgo -->
                             Empty
@@ -118,9 +115,7 @@
                 </div>
 
                 <div class="list-config" data-bind="visible: state.editingConfig">
-                    <span class="list-header__role" data-bind="text: configMeta.roleName"></span>
-
-                    <div>Title for display:</div>
+                    <div class="list-header__display">Title:</div>
                     <div>
                         <input type="text" data-bind="value: collectionMeta.displayName"/>
                     </div>
