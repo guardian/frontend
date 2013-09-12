@@ -1,12 +1,12 @@
-.live-summary__expander-content .published-time,
-.live-summary__expander-trigger,
-.live-summary__expander-show {
+.live-summary__toggler-content .published-time,
+.live-summary__toggler-trigger,
+.live-summary__toggler-show {
     display: none;
 }
 
-.live-summary__expander-trigger {
-    + .live-summary__expander-wrapper {
-        .live-summary__expander-content {
+.live-summary__toggler-trigger {
+    + .live-summary__toggler-wrapper {
+        .live-summary__toggler-content {
             @include transition(opacity .5s ease-out);
             opacity: 0;
             height: 0;
@@ -15,23 +15,23 @@
         }
     }
     &:checked {
-        + .live-summary__expander-wrapper {
-            .live-summary__expander-content {
+        + .live-summary__toggler-wrapper {
+            .live-summary__toggler-content {
                 opacity: 1;
                 height: auto;
                 overflow: visible;
             }
-            .live-summary__expander-show {
+            .live-summary__toggler-show {
                 display: block;
             }
-            .live-summary__expander-hide {
+            .live-summary__toggler-hide {
                 display: none;
             }
         }
     }
 }
 
-.live-summary__expander-cta__button {
+.live-summary__toggler-cta__button {
     text-transform: uppercase;
     @include font-size(12);
     float: right;

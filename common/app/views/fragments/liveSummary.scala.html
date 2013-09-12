@@ -1,22 +1,22 @@
 @(summary: String, toggle: Boolean = false)(implicit request: RequestHeader)
 <div class="live-summary u-cf">
     @if(toggle){
-        <input type="checkbox" checked="checked" name="live-summary__expander-trigger" id="live-summary__expander-trigger" class="live-summary__expander-trigger" tabindex="-1" />
+        <input type="checkbox" checked="checked" name="live-summary__toggler-trigger" id="live-summary__toggler-trigger" class="live-summary__toggler-trigger" tabindex="-1" />
     }
-    <div class="live-summary__expander-wrapper">
+    <div class="live-summary__toggler-wrapper">
 
         @if(toggle){
-            <label class="live-summary__expander-cta" for="live-summary__expander-trigger" data-link-name="live summary toggle" aria-hidden="true">
-                <button class="u-button-reset live-summary__expander-cta__button live-summary__expander-show" data-link-name="live summary hide">
+            <label class="live-summary__toggler-cta" for="live-summary__toggler-trigger" data-link-name="live summary toggle" aria-hidden="true">
+                <button class="u-button-reset live-summary__toggler-cta__button live-summary__toggler-show" data-link-name="live summary hide">
                     Hide summary
                 </button>
-                <button class="u-button-reset live-summary__expander-cta__button live-summary__expander-hide" data-link-name="live summary show">
+                <button class="u-button-reset live-summary__toggler-cta__button live-summary__toggler-hide" data-link-name="live summary show">
                     Show summary
                 </button>
             </label>
         }
 
-        <div class="live-summary__body live-summary__expander-content">
+        <div class="live-summary__body live-summary__toggler-content">
             <div class="js-summary-placeholder">
                 @Html(summary)
             </div>
