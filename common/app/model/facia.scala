@@ -4,7 +4,8 @@ import views.support.Style
 
 case class Config(
                    id: String,
-                   name: String)
+                   name: String,
+                   contentApiQuery: Option[String])
 
 case class Collection(items: Seq[Trail],
                       displayName: Option[String])
