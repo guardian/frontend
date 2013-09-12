@@ -2,7 +2,7 @@ package feed
 
 import conf.ContentApi
 import common._
-import model.{Article, SupportedContentFilter, Content}
+import model.{SupportedContentFilter, Content}
 import scala.concurrent.duration._
 
 object MostPopularAgent extends Logging with ExecutionContexts {
@@ -61,19 +61,6 @@ object MostPopularFromFacebookAgent extends Logging with ExecutionContexts {
         agent.send(old => old + ("facebook" -> sortedMostViewed))
     }
   }
-
-  object OphanOrderSorter {
-    def apply(ophanList: Seq[String], contentApiList: Seq[Article]) = {
-      contentApiList sortWith {
-        case (article1, article2) => {
-          val idx1 = ophanList.indexOf(article1.id)
-          val idx2 = ophanList.indexOf(article2.id)
-          idx1.compareTo(idx2) < 0
-        }
-      }
-    }
-  }
-
 }
 
 object MostPopularExpandableAgent extends Logging with ExecutionContexts {
