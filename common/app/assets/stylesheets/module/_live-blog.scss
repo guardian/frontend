@@ -130,6 +130,7 @@
     .autoupdate--highlight {
         -webkit-animation: new-block-animation 5s ease-out;
         -moz-animation: new-block-animation 5s ease-out;
+        -ms-animation: new-block-animation 5s ease-out;
         animation: new-block-animation 5s ease-out;
     }
 }
