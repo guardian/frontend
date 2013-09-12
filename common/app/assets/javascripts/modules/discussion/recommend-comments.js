@@ -15,32 +15,56 @@ RecommendComments.CONFIG = {
         button: 'js-recommend-comment',
         count: 'js-recommend-count'
     },
-    urls: {
-        api: 'http://discussion.release.dev-guardianapis.com/discussion-api'
-    },
     endpoints: {
         recommend: '/comment/:id/recommend'
+    },
+    events: {
+        prefix: 'discussion:comment:recommend:',
+        init: 'initialised',
+        success: 'success',
+        fail: 'fail'
     }
 };
 
 /**
- * Bind to all buttons
+ * @type {Object.<string.*>}
  */
-RecommendComments.bindEvents = function(context) {
-    // Clicking
-    var buttonClass = '.'+ RecommendComments.CONFIG.classes.button,
-        buttons = context.querySelectorAll(buttonClass);
+RecommendComments.options = {
+    apiUrl: 'http://discussion.release.dev-guardianapis.com/discussion-api'
+};
+
+/**
+ * @param {Element} context
+ */
+RecommendComments.init = function(context, options) {
+    var buttons = context.querySelectorAll('.'+ RecommendComments.CONFIG.classes.button);
+
+    for (var prop in options) {
+        RecommendComments.options[prop] = options[prop];
+    }
 
     if (buttons) {
         Array.prototype.forEach.call(buttons, function(button) {
             button.innerHTML = button.innerHTML.replace('Recommended', 'Recommend');
+            button.className = button.className + ' cta';
         });
-        bean.on(context, 'click', buttonClass, RecommendComments.handleClick);
+        RecommendComments.bindEvents(context);
+        common.mediator.emit(RecommendComments.getEvent('init'));
     }
+};
+
+
+/**
+ * @param {Element} context
+ * @param {String} buttonClass
+ */
+RecommendComments.bindEvents = function(context) {
+    bean.on(context, 'click', '.'+ RecommendComments.CONFIG.classes.button, RecommendComments.handleClick);
 };
 
 /**
  * @param {Event} e
+ * @return {Reqwest}
  */
 RecommendComments.handleClick = function(e) {
     var elem = e.srcElement,
@@ -48,7 +72,10 @@ RecommendComments.handleClick = function(e) {
         result = RecommendComments.recommendComment(id);
 
     RecommendComments.renderRecommendation(elem);
-    result.then(RecommendComments.success.bind(elem), RecommendComments.fail.bind(elem));
+    return result.then(
+        RecommendComments.success.bind(elem),
+        RecommendComments.fail.bind(elem)
+    );
 };
 
 /**
@@ -56,15 +83,24 @@ RecommendComments.handleClick = function(e) {
  * @return {Reqwest}
  */
 RecommendComments.recommendComment = function(id) {
-    var url = RecommendComments.CONFIG.urls.api + RecommendComments.CONFIG.endpoints.recommend.replace(':id', id);
-    return ajax({ url: url });
+    var url = RecommendComments.options.apiUrl + RecommendComments.CONFIG.endpoints.recommend.replace(':id', id);
+    return ajax({
+        url: url,
+        type: 'json'
+    });
 };
 
 /**
  * @param {Object} resp
  */
 RecommendComments.success = function(resp) {
-    common.mediator.emit('discussion:comment:recommended', parseInt(this.getAttribute('data-recommend-count'), 10));
+    common.mediator.emit(
+        RecommendComments.getEvent('success'),
+        {
+            id: parseInt(this.getAttribute('data-comment-id'), 10),
+            count: parseInt(this.getAttribute('data-recommend-count'), 10)
+        }
+    );
 };
 
 /**
@@ -72,7 +108,15 @@ RecommendComments.success = function(resp) {
  */
 RecommendComments.fail = function(xhr) {
     RecommendComments.renderRecommendation(this, true);
-    bean.one(this, 'click', RecommendComments.handleClick);
+    bean.one(this, 'click', RecommendComments.handleClick); // this is creating overhead, but shouldn't happen that often
+
+    common.mediator.emit(
+        RecommendComments.getEvent('fail'),
+        {
+            id: parseInt(this.getAttribute('data-comment-id'), 10),
+            count: parseInt(this.getAttribute('data-recommend-count'), 10)
+        }
+    );
 };
 
 /**
@@ -81,11 +125,19 @@ RecommendComments.fail = function(xhr) {
  */
 RecommendComments.renderRecommendation = function(elem, unrecommend) {
     var recommendCountElem = elem.querySelector('.'+ RecommendComments.CONFIG.classes.count),
-        currentCount = parseInt(recommendCountElem.getAttribute('data-recommend-count'), 10),
+        currentCount = parseInt(elem.getAttribute('data-recommend-count'), 10),
         newCount = !unrecommend ? currentCount+1 : currentCount-1;
 
     recommendCountElem.innerHTML = newCount;
-    recommendCountElem.setAttribute('data-recommend-count', newCount);
+    elem.setAttribute('data-recommend-count', newCount);
+};
+
+/**
+ * @param {string} eventName
+ * return null 
+ */
+RecommendComments.getEvent = function(eventName) {
+    return (RecommendComments.CONFIG.events.prefix + RecommendComments.CONFIG.events[eventName]) || null;
 };
 
 return RecommendComments;
