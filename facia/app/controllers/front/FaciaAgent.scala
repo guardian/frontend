@@ -42,7 +42,8 @@ trait ParseConfig extends ExecutionContexts {
   def parseConfig(json: JsValue): Config =
     Config(
       (json \ "id").as[String],
-      (json \ "displayName").as[String]
+      (json \ "displayName").as[String],
+      (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty)
     )
 
 }
@@ -50,15 +51,15 @@ trait ParseConfig extends ExecutionContexts {
 trait ParseCollection extends ExecutionContexts with Logging {
   private lazy val defaultMax = 15
 
-  def getCollection(id: String, edition: Edition): Future[Collection] = {
+  def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
     // get the running order from the apiwith
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: $collectionUrl")
     val response: Future[Response] = WS.url(collectionUrl).withTimeout(2000).get()
-    parseResponse(response, edition)
+    parseResponse(response, config, edition)
   }
 
-  private def parseResponse(response: Future[Response], edition: Edition): Future[Collection] = {
+  private def parseResponse(response: Future[Response], config: Config, edition: Edition): Future[Collection] = {
     response.flatMap { r =>
       r.status match {
         case 200 =>
@@ -73,7 +74,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
           val idSearch = getArticles(articles, edition)
 
-          val contentApiQuery = executeContentApiQuery((parse(r.body) \ "contentApiQuery").asOpt[String], edition)
+          val contentApiQuery = executeContentApiQuery(config.contentApiQuery, edition)
 
           val results = for {
             idSearchResults <- idSearch
@@ -146,7 +147,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
 
   def getItems: Future[List[(Config, Collection)]] = {
     val futureConfig = getConfig(id) map {config =>
-      config map {c => c -> getCollection(c.id, edition)}
+      config map {c => c -> getCollection(c.id, c, edition)}
     }
     futureConfig map (_.toVector) flatMap { configMapping =>
         configMapping.foldRight(Future(List[(Config, Collection)]()))((configMap, foldList) =>

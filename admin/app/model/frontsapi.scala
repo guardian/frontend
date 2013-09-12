@@ -18,7 +18,6 @@ case class Block(
                   updatedEmail: String,
                   max: Option[Int],
                   min: Option[Int],
-                  contentApiQuery: Option[String],
                   displayName: Option[String]
                   ) extends JsonShape
 
@@ -107,13 +106,12 @@ trait UpdateActions {
   }
 
   def createBlock(id: String, identity: Identity, update: UpdateList) {
-    FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), List(emptyTrailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None))
+    FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), List(emptyTrailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
   }
 
   def updateTrailblockJson(id: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
     FrontsApi.getBlock(id).map { block =>
       val newBlock = block.copy(
-        contentApiQuery = updateTrailblock.config.contentApiQuery orElse None,
         min = updateTrailblock.config.min orElse Some(defaultMinimumTrailblocks),
         max = updateTrailblock.config.max orElse Some(defaultMaximumTrailblocks),
         displayName = updateTrailblock.config.displayName
