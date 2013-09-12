@@ -36,7 +36,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
         promiseOfArticle.map {
           case Left(model) if model.article.isExpired => renderExpired(model)
           case Left(model) =>
-            val html = withJsoup(BodyCleaner(model.article)){
+            val html = withJsoup(BodyCleaner(model.article, model.article.body)){
               new HtmlCleaner {
                 def clean(d: Document): Document = {
                   val blocksToKeep = d.getElementsByTag("div").takeWhile(_.attr("id") != blockId)
@@ -86,7 +86,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     model match {
       case blog: LiveBlogPage =>
         val htmlResponse = () => views.html.liveBlog(blog)
-        val jsonResponse = () => views.html.fragments.liveBlog(blog)
+        val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
         renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
       case article: ArticlePage =>
         val htmlResponse = () => views.html.article(article)
