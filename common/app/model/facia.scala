@@ -6,7 +6,12 @@ case class Config(
                    id: String,
                    name: String)
 
-case class Collection(items: Seq[Trail])
+case class Collection(items: Seq[Trail],
+                      displayName: Option[String])
+
+object Collection {
+  def apply(items: Seq[Trail]): Collection = Collection(items, None)
+}
 
 case class FaciaPage(
                    id: String,
