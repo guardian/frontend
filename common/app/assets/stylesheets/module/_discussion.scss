@@ -138,7 +138,7 @@ $keylineSize: 1px;
 
 .d-comment__pick {
     position: absolute;
-    top: $baseline * 2;
+    top: 0;
     right: 0;
 }
 
@@ -263,15 +263,18 @@ $keylineSize: 1px;
 }
 
 .d-comment__action--recommend {
-    display: table-cell; /* 1 */
-    max-width: 100%;
-    width: 10000px; /* 2 */
-    *width: auto; /* 3 */
-    *zoom:1; /* 4 */
-    margin-left: $gs-gutter;
-    text-align: right;
+    font-family: $sans-serif;
+    font-size: 12px;
+    font-size: 1.2rem;
+    position: absolute;
+    right: $gutter * 1.5;
+    top: $baseline * 4;
 }
 
+.d-comment__action--active {
+    color: #4490ce;
+    cursor: pointer;
+}
 
 /* Badges
    ========================================================================== */

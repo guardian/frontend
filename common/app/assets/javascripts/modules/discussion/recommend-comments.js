@@ -46,7 +46,7 @@ RecommendComments.init = function(context, options) {
     if (buttons) {
         Array.prototype.forEach.call(buttons, function(button) {
             button.innerHTML = button.innerHTML.replace('Recommended', 'Recommend');
-            button.className = button.className + ' cta';
+            button.className = button.className + ' d-comment__action--active';
         });
         RecommendComments.bindEvents(context);
         common.mediator.emit(RecommendComments.getEvent('init'));
@@ -67,12 +67,12 @@ RecommendComments.bindEvents = function(context) {
  * @return {Reqwest}
  */
 RecommendComments.handleClick = function(e) {
-    var elem = e.srcElement,
+    var elem = e.currentTarget,
         id = elem.getAttribute('data-comment-id'),
         result = RecommendComments.recommendComment(id);
 
     // This is used as we are using deffered events
-    elem.className = elem.className.replace(RecommendComments.CONFIG.classes.button, '');
+    elem.className = elem.className.replace(RecommendComments.CONFIG.classes.button, '').replace('d-comment__action--active', ''); 
     
     RecommendComments.renderRecommendation(elem);
     return result.then(
@@ -112,7 +112,7 @@ RecommendComments.success = function(resp) {
 RecommendComments.fail = function(xhr) {
     RecommendComments.renderRecommendation(this, true);
     // This is used as we are using deffered events
-    this.className = this.className +' '+ RecommendComments.CONFIG.classes.button;
+    this.className = this.className +' '+ RecommendComments.CONFIG.classes.button +' d-comment__action--active';
 
     common.mediator.emit(
         RecommendComments.getEvent('fail'),
