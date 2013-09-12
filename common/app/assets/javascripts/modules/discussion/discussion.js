@@ -75,9 +75,9 @@ define([
                                  '  </li>' +
                                  '  <li class="d-tabs__item d-tabs__item--commentcount js-show-discussion" data-link-name="Discussion Tab">' +
                                  '    <a href="/discussion/'+ discussionId + '" class="d-commentcount speech-bubble" data-is-ajax>' +
-                                 '       <span class="h">View all </span>' +
+                                 '       <span class="u-h">View all </span>' +
                                  '       <span class="js-commentcount__number">' + commentCount + '</span>' +
-                                 '       <span class="h"> comments</span>' +
+                                 '       <span class="u-h"> comments</span>' +
                                  '    </a>' +
                                  '  </li>' +
                                  '</ol>' +
@@ -232,7 +232,7 @@ define([
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--commentcount')).addClass('d-tabs__item--is-active');
 
-                    bonzo(context.querySelector('.d-show-cta')).addClass('h');
+                    bonzo(context.querySelector('.d-show-cta')).addClass('u-h');
                     bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');
 
                     self.discussionContainerNode.style.display = 'block';
@@ -261,7 +261,7 @@ define([
                     bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
                     bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
 
-                    bonzo(context.querySelector('.d-show-cta')).removeClass('h');
+                    bonzo(context.querySelector('.d-show-cta')).removeClass('u-h');
                     bonzo(self.mediaPrimaryNode).removeClass('media-primary--comments-on');
 
                     self.discussionContainerNode.style.display = 'none';

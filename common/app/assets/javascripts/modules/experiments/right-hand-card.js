@@ -40,10 +40,6 @@ define([
             this.dedupe();
             this.$el.removeClass('is-hidden');
 
-            this.$el[0].getElementsByTagName('img')[0].onload = function() {
-                self.setArticleHeight.call(self);
-            };
-
             common.mediator.emit('fragment:ready:dates');
         }
     };
@@ -60,11 +56,6 @@ define([
     RightHandCard.prototype.replaceCard = function(html) {
         this.$el.replaceWith(html);
         this.$el = bonzo(document.querySelector(this.options.cls));
-    };
-
-    RightHandCard.prototype.setArticleHeight = function() {
-        var cardHeight = this.$el[0].querySelector('.card--right').offsetHeight;
-        this.options.context.querySelector('.article-body').style.minHeight = cardHeight + 'px';
     };
 
     RightHandCard.prototype.fetchData = function() {

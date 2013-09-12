@@ -52,7 +52,7 @@ trait DispatchAsyncHttpClient extends Http {
 
   def mapFutureToResponse(dispatchResponse: Either[scala.Throwable, HttpResponse]): Response[HttpResponse] = {
     dispatchResponse match {
-      case Left(throwable) => Left(List(Error(throwable.getClass.getName, throwable.getMessage)))
+      case Left(throwable) => Left(List(Error(throwable.getClass.getName, throwable.toString)))
       case Right(httpResponse) => Right(httpResponse)
     }
   }

@@ -8,9 +8,9 @@
             <h1 class="article-zone type-1">@metaData.webTitle</h1>
         </header>
 
-        <section id="article-header" class="cf">
+        <section id="article-header" class="u-cf">
 
-            <h2 class="article-zone type-2 margin-bottom cf">Article header</h2>
+            <h2 class="article-zone type-2 margin-bottom u-cf">Article header</h2>
 
             @{
                 val datelineHTML = views.html.fragments.dateline(article.webPublicationDate, article.isLive).toString()
@@ -48,11 +48,11 @@
 
         </section>
 
-        <section id="article-elements" class="cf">
+        <section id="article-elements" class="u-cf">
 
-            <h2 class="article-zone type-2 margin-bottom cf">Quotes</h2>
+            <h2 class="article-zone type-2 margin-bottom u-cf">Quotes</h2>
 
-            <div class="module-container cf">
+            <div class="module-container u-cf">
 
                 <h2 class="type-5 zone-color box-indent">Tweet</h2>
                 <p class="box-indent type-7">A tweet block</p>
@@ -92,7 +92,7 @@
                 </div>
             </div>
 
-            <div class="module-container cf">
+            <div class="module-container u-cf">
 
                 <h2 class="type-5 zone-color box-indent">Quote</h2>
                 <p class="box-indent type-7">A quote.<br/><br/>
@@ -128,7 +128,7 @@
 
             </div>
 
-            <div class="module-container cf">
+            <div class="module-container u-cf">
 
                 <h2 class="type-5 zone-color box-indent">Pull quote</h2>
                 <p class="box-indent type-7">A pull quote<br/><br/>
@@ -166,8 +166,8 @@
 
         </section>
 
-        <section id="trailblocks" class="cf">
-            <h2 class="article-zone type-2 margin-bottom cf">Trailblocks</h2>
+        <section id="trailblocks" class="u-cf">
+            <h2 class="article-zone type-2 margin-bottom u-cf">Trailblocks</h2>
 
             @{
                 val trailFeaturedHTML = views.html.fragments.trailblocks.section(Seq(storyPackage(0)), numWithImages = 0, related = false, showFeatured = true).toString()
@@ -185,8 +185,8 @@
             }
         <section>
 
-        <section id="trailblocks" class="cf">
-            <h2 class="article-zone type-2 margin-bottom cf">Headers</h2>
+        <section id="trailblocks" class="u-cf">
+            <h2 class="article-zone type-2 margin-bottom u-cf">Headers</h2>
 
             @{
                 val sectionHeadHTML = views.html.fragments.headers.sectionHead("Life & Style").toString()

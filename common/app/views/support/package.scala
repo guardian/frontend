@@ -44,25 +44,13 @@ object SectionFront extends Style { val className = "section-front" }
 /**
  * New 'collection' templates
  */
-
-/**
- * 'masthead' collection
- */
 object Masthead extends Style { val className = "masthead" }
 
-/**
- * 'fast news' collection
- */
-object FastNews extends Style { val className = "fast-news" }
-
-/**
- * 'section zone' collection
- */
-object SectionZone extends Style { val className = "zone" }
-
-object SectionTopStories extends Style { val className = "section-top-stories" }
-
 object TopStories extends Style { val className = "top-stories" }
+
+object MediumStories extends Style { val className = "medium-stories" }
+
+object SmallStories extends Style { val className = "small-stories" }
 
 object Highlights extends Style { val className = "highlights" }
 

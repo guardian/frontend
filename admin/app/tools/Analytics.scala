@@ -1,8 +1,9 @@
 package tools
 
-import common.{ CSV, S3 }
+import common.CSV
 import conf.Configuration
 import org.joda.time.DateMidnight
+import services.S3
 
 object Analytics extends implicits.Dates with implicits.Tuples with implicits.Statistics {
 

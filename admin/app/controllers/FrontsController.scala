@@ -4,10 +4,11 @@ import frontsapi.model._
 import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
-import common.{ExecutionContexts, S3FrontsApi, Logging}
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FrontsApi
 import scala.concurrent.Future
+import services.S3FrontsApi
 
 
 object FrontsController extends Controller with Logging with ExecutionContexts {

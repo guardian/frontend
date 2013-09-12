@@ -1,8 +1,8 @@
 define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
     var sectionTmpl =
-        '<section class="section--popular">' +
-            '<h2 class="section__title">Most Read</h2>' +
+        '<section class="collection collection--popular">' +
+            '<h2 class="collection__title">Most Read</h2>' +
         '</section>',
         itemTmpl = '<li class="item"><a href="" class="item__link"></a></li>';
 
@@ -17,7 +17,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 crossOrigin: true
             }).then(
                 function(resp) {
-                    var $collection = bonzo(bonzo.create('<ul class="unstyled collection"></ul>')),
+                    var $collection = bonzo(bonzo.create('<ul class="unstyled items"></ul>')),
                         $trails = bonzo(bonzo.create(resp.html));
                     // create the items (from first 5 trails)
                     common.$g('#tabs-popular-1 li:nth-child(-n + 5) a', bonzo(bonzo.create(resp.html))).each(function(trail) {
@@ -33,7 +33,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                     // add the popular section after the highlights
                     bonzo(bonzo.create(sectionTmpl))
                         .append($collection)
-                        .insertAfter('.section--highlights');
+                        .insertAfter('.collection--highlights');
                 },
                 function(req) {
                     common.mediator.emit('module:error', 'Failed to load facia popular: ' + req.statusText, 'modules/facia-popular.js');

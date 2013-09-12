@@ -1,9 +1,6 @@
-package tools
+package common
 
-import implicits.Strings
-
-
-object QueryParams extends Strings {
+object QueryParams extends implicits.Strings {
   def get(enc: String) : Map[String, Seq[String]] = {
     val params = enc.dropWhile(_!='?').dropWhile(_=='?')
     val pairs: Seq[(String,String)] = params.split('&').flatMap {

@@ -16,9 +16,12 @@
             </header>
         </div>
         <div class="article__main-column">
+            <div class="article__secondary-column" aria-hidden="true">
+                @fragments.social(gallery, "next to content")
+            </div>
 
             <div class="ab-gallerytest--control">
-                <p class="js-gallery-nav box-indent gallery-nav type-11">
+                <p class="js-gallery-nav gallery-nav type-11">
 
                     @if(index > 1) {
                         <a class="js-gallery-prev gallery-prev control" data-link-name="Gallery Previous" data-is-ajax="true"
@@ -76,7 +79,9 @@
 
             @fragments.standfirst(gallery)
 
-            @fragments.social(gallery)
+            <div class="social-wrapper">
+                @fragments.social(gallery)
+            </div>
         </div>
     </article>
     <div class="article__main-column">
@@ -87,9 +92,11 @@
         } else {
             <aside class="js-related" role="complementary"></aside>
         }
+
+        @fragments.mostPopularPlaceholder(gallery.section)
+
     </div>
 </div>
 
-@fragments.mostPopularPlaceholder(gallery.section)
 
 <div class="gallery-overlay-bg"></div>
