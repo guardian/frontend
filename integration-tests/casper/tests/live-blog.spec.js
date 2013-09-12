@@ -16,17 +16,17 @@ casper.test.begin("Show key events only / all posts", function(test) {
 
         casper.click(".live-toggler--all", "Toggle to show key events only");
         test.assertNotVisible(
-            ".article-body > .block:not(.is-key-event)",
+            ".article-body .block:not(.is-key-event)",
             "Posts other than key events are hidden"
         );
         test.assertVisible(
-            ".article-body > .block.is-key-event",
+            ".article-body .block.is-key-event",
             "Key events are visible"
         );
 
         casper.click(".live-toggler--key-events", "Toggle to show all posts");
         test.assertVisible(
-            ".article-body > .block",
+            ".article-body .block",
             "All posts are visible"
         );
 
