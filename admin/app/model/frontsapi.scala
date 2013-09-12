@@ -4,6 +4,7 @@ import play.api.libs.json.{Json, JsValue}
 import tools.FrontsApi
 import controllers.Identity
 import org.joda.time.DateTime
+import play.api.templates.HtmlFormat
 
 trait JsonShape
 
@@ -110,7 +111,7 @@ trait UpdateActions {
   def updateTrailblockJson(id: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
     FrontsApi.getBlock(id).map { block =>
       val newBlock = block.copy(
-        displayName = updateTrailblock.config.displayName
+        displayName = updateTrailblock.config.displayName map HtmlFormat.escape map (_.body)
       )
       if (newBlock != block) {
         FrontsApi.putBlock(id, updateIdentity(newBlock, identity))
