@@ -3,7 +3,7 @@
 @if(items.nonEmpty){
 
     @defining(FindStyle("uk", config)) { style =>
-        <section class="collection--@style.className" data-link-name="block | @config.name">
+        <section class="collection collection--@style.className" data-link-name="block | @config.name">
 
             @if(config.name) {
                 <h2 class="collection__title">@config.name</h2>
