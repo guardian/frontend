@@ -7,6 +7,7 @@ GET        /assets/*file                   controllers.Assets.at(path="/public",
 
 GET        /most-read                      controllers.MostPopularController.render(path = "")
 GET        /most-read.json                 controllers.MostPopularController.render(path = "")
+GET        /most-read-facebook.json        controllers.MostPopularFromFacebookController.render(path = "")
 GET        /most-read/card.json            controllers.MostPopularController.renderCard()
 GET        /most-read/expandable/*path.json     controllers.MostPopularController.renderExpandable(path)
 GET        /most-read/expandable/*path          controllers.MostPopularController.renderExpandable(path)

@@ -44,7 +44,11 @@ object Frontend extends Build with Prototypes {
     )
   )
   val sport = application("sport").dependsOn(commonWithTests)
-  val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
+
+  val coreNavigation = application("core-navigation").dependsOn(commonWithTests).settings(
+    libraryDependencies += "org.mockito" % "mockito-all" % "1.9.5" % "test"
+  )
+
   val image = application("image").dependsOn(commonWithTests).settings(
     libraryDependencies ++= Seq(
       "org.imgscalr" % "imgscalr-lib" % "4.2",
