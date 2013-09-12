@@ -52,7 +52,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     }
   }.getOrElse(render(path))
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticlePage,Result]] = {
+  private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}")
     ContentApi.item(path, edition)

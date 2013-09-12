@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Element => ApiElement, Asset}
+import com.gu.openplatform.contentapi.model.{Element => ApiElement}
 
 class Element protected (val delegate: ApiElement, val index: Int) {
 
@@ -18,16 +18,16 @@ object Element {
 
 trait ImageContainer {
   self: Element =>
-  lazy val imageCrops: List[Image] = delegate.assets.filter(_.assetType == "image").map(Image(_,index)).
+  lazy val imageCrops: List[ImageAsset] = delegate.assets.filter(_.assetType == "image").map(ImageAsset(_,index)).
                                       sortBy(_.width)(Ordering[Int].reverse)
 
   // The image crop with the largest width.
-  lazy val image : Option[Image] = imageCrops.headOption
+  lazy val image : Option[ImageAsset] = imageCrops.headOption
 }
 
 trait VideoContainer {
   self: Element =>
-  lazy val videoAssets: List[Asset] = delegate.assets.filter(_.assetType == "video")
+  lazy val videoAssets: List[VideoAsset] = delegate.assets.filter(_.assetType == "video").map(VideoAsset(_))
 }
 
 class ImageElement(delegate: ApiElement, index: Int) extends Element(delegate, index) with ImageContainer

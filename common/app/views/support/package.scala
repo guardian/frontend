@@ -196,14 +196,14 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
   }
 }
 
-case class VideoPosterCleaner(videos: Seq[Asset]) extends HtmlCleaner {
+case class VideoPosterCleaner(videos: Seq[VideoAsset]) extends HtmlCleaner {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("video").filter(_.hasClass("gu-video")).foreach { videoTag =>
       videoTag.getElementsByTag("source").headOption.foreach{ source =>
         val file = Some(source.attr("src"))
-        videos.find(_.file == file).foreach{ video =>
-          video.typeData.get("stillImageUrl").foreach{ poster =>
+        videos.find(_.url == file).foreach{ video =>
+          video.stillImageUrl.foreach{ poster =>
             videoTag.attr("poster", poster)
           }
         }

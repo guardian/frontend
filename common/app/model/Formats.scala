@@ -6,8 +6,8 @@ import play.api.libs.json.Json.toJson
 import views.support.JavaScriptVariableName
 
 trait Formats {
-  implicit val imageFormat: Writes[Image] = new Writes[Image] {
-    def writes(image: Image): JsValue = toJson(
+  implicit val imageFormat: Writes[ImageAsset] = new Writes[ImageAsset] {
+    def writes(image: ImageAsset): JsValue = toJson(
       Map(
         ("index", toJson(image.index)),
         ("url", toJson(image.url)),

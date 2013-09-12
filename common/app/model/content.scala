@@ -1,14 +1,12 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Asset, Element => ApiElement}
+import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Element => ApiElement}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.Reference
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
-import conf.Configuration
 import views.support.StripHtmlTagsAndUnescapeEntities
 
 class Content protected (delegate: ApiContent) extends Trail with Tags with MetaData {
@@ -25,7 +23,7 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
   lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
   lazy val isExpired = delegate.isExpired.getOrElse(false)
-  lazy val blockAds: Boolean = videoAssets.exists(_.typeData.get("blockAds").map(_.toBoolean).getOrElse(false))
+  lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
@@ -132,10 +130,9 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   private def elements(elementType: String): Map[String,List[Element]] = {
     // Find the elements associated with a given element type, keyed by a relation string.
     // Example relations are gallery, thumbnail, main, body
-    delegate.elements.map(_.values
-      .filter(_.elementType == elementType)
-      .groupBy(_.relation)
-      .mapValues(_.map(element => Element(element, findIndex(element))).toList)
+    delegate.elements.map(_.filter(_.elementType == elementType)
+                           .groupBy(_.relation)
+                           .mapValues(_.map(element => Element(element, findIndex(element))).toList)
     ).getOrElse(Map.empty).withDefaultValue(Nil)
   }
 }
@@ -190,12 +187,14 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
   lazy val encodings: Seq[Encoding] = {
     videoAssets.toList.collect {
-      case Asset(_,Some(mimeType),Some(file),_) => Encoding(file, mimeType)
+      case video: VideoAsset => Encoding(video.url.getOrElse(""), video.mimeType.getOrElse(""))
     }.sorted
   }
 
+  lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
+
   lazy val contentType = "Video"
-  lazy val source: Option[String] = videoAssets.headOption.flatMap(_.typeData.get("source"))
+  lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))
@@ -210,7 +209,7 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
 class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 
-  def apply(index: Int): Image = images(index).image.get
+  def apply(index: Int): ImageAsset = images(index).image.get
 
   lazy val size = images.size
   lazy val contentType = "Gallery"
@@ -225,7 +224,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
-    "og:image" -> images.head.path
+    "og:image" -> mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback)
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
