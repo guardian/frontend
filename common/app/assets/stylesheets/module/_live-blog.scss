@@ -4,11 +4,10 @@
 .timestamp,
 .published-time {
     @extend %type-9;
-    border-top: 2px solid $darkMushroom;
     display: block;
+    border-top: 2px solid $darkMushroom;
     padding: $baseline*4 0 $baseline;
     margin-top: $baseline*2;
-    color: #333;
 }
 
     .is-summary .published-time {
@@ -17,16 +16,15 @@
 
 .block-time {
     line-height: 15px;
-}
 
-    .block-time.published-time {
+    &.published-time {
         margin: 0;
-        font-family: arial, sans-serif
+        font-family: $sans-serif;
     }
-
-    .block-time.updated-time {
+    &.updated-time {
         @extend %type-7;
     }
+}
 
 .live-blog__blocks:first-child {
     .timestamp:first-child,
@@ -43,20 +41,11 @@
 
 .block-title,
 .live-blog .block-title {
-    @extend %type-4;
-    color: $articleOrange;
-    border: none;
-    padding: 0;
-    margin: 0;
     margin-bottom: 10px;
 }
 
-    .block .block-title {
-        color: #333;
-    }
-
-    .is-summary .block-title,
-    .is-key-event .block-title {
+    .is-summary > .block-title,
+    .is-key-event > .block-title {
         color: $articleOrange;
     }
 
@@ -67,23 +56,23 @@
 .block blockquote {
     padding-left: 20px;
     border-left: 5px solid $darkMushroom;
-    margin: 20px 0; 
-}
+    margin: 20px 0;
 
-    .block blockquote:before,
-    .block blockquote:after {
+    &:before,
+    &:after {
         display: none !important;
     }
+}
 
     .block .quoted {
-        border-left: none; 
-        padding: 0;    
+        border-left: none;
+        padding: 0;
         margin: 0 0 10px;
-    }
 
-    .block .quoted:before,
-    .block .quoted:after {
-        display: inline-block !important; 
+        &:before,
+        &:after {
+            display: inline-block !important;
+        }
     }
 
 
@@ -94,9 +83,9 @@
     clear: both;
     background-color: #f4f4f4;
     background-image: url(../images/twitter/bird.bfb06650ca92fafdbe3b307a812047c9.png) !important;
-    background-position: $baseline*2 $baseline*2 !important;
+    background-position: $baseline*2 $gutter/2 !important;
     background-repeat: no-repeat;
-    border-top: 4px solid #3299d0;
+    border-top: $baseline solid #3299d0;
 
     @if ($svg-support) {
         .svg & {
@@ -112,8 +101,8 @@
     }
 
     .tweet:before,
-    .live-blog .tweet:before,
     .tweet:after,
+    .live-blog .tweet:before,
     .live-blog .tweet:after {
         display: none !important;
     }

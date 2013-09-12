@@ -39,16 +39,16 @@ define([
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--on"' +
             '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
             '    <span class="lt__label">Auto update</span>' +
-            '    <span class="h">is</span>' +
+            '    <span class="u-h">is</span>' +
             '    <span class="lt__value">On</span>' +
-            '    <span class="h">(turn off)</span>' +
+            '    <span class="u-h">(turn off)</span>' +
             '  </button>' +
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--off"' +
             '          data-action="on" data-link-name="autoupdate on" title="Turn auto update on">' +
             '    <span class="lt__label">Auto update</span>' +
-            '    <span class="h">is</span>' +
+            '    <span class="u-h">is</span>' +
             '    <span class="lt__value">Off</span>' +
-            '    <span class="h">(turn on)</span>' +
+            '    <span class="u-h">(turn on)</span>' +
             '  </button>';
 
         // View

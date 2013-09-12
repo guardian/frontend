@@ -119,9 +119,14 @@
     float: left;
     clear: left;
     margin: 3px 0 0 0;
-    padding-right: 10px;
+    padding-right: $gs-gutter/2;
     padding-bottom: 15px;
     background: white;
+
+    @include mq(mobileLandscape) {
+        padding-right: $gs-gutter;
+        width: gs-span(2);
+    }
 
     figcaption {
         word-wrap: break-word;

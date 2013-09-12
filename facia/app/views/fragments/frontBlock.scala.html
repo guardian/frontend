@@ -2,27 +2,23 @@
 
 @if(items.nonEmpty){
 
-    <section class="section--@config.style.map(_.className)"
-            data-link-name="block | @config.name"
-            data-section-id="@config.id"
-             @defining(Edition(request).id.toLowerCase()) { edition =>
-                data-link-context="@if(config.section == "news"){@edition}else{@edition/@config.section}">
-             }
+    @defining(FindStyle("uk", config)) { style =>
+        <section class="collection collection--@style.className" data-link-name="block | @config.name">
 
-        @if(config.name) {
-            <h2 class="section__title">@config.name</h2>
-        }
+            @if(config.name) {
+                <h2 class="collection__title">@config.name</h2>
+            }
 
-        @config.style match {
-            case Some(Thumbnail)    => { @trailblocks.thumbnail(items, config.numItemsVisible) }
-            case Some(Headline)     => { @trailblocks.headline(items, config.numItemsVisible) }
-            case Some(SectionFront) => { @trailblocks.section(items, config.numItemsVisible, numWithImages = 3 ) }
-            case Some(Masthead)     => { @trailblocks.masthead(items.take(config.numItemsVisible)) }
-            case Some(TopStories)   => { @trailblocks.topStories(items.take(config.numItemsVisible)) }
-            case Some(Highlights)   => { @trailblocks.highlights(items.take(config.numItemsVisible)) }
-            case _                  => { @trailblocks.featured(items, config.numItemsVisible) }
-        }
+            @style match {
+                case Masthead      => { @trailblocks.masthead(items) }
+                case TopStories    => { @trailblocks.topStories(items) }
+                case MediumStories => { @trailblocks.mediumStories(items) }
+                case SmallStories  => { @trailblocks.smallStories(items) }
+                case Highlights    => { @trailblocks.highlights(items) }
+                case _             => { @trailblocks.highlights(items) }
+            }
 
-    </section>
+        </section>
+    }
 
 }

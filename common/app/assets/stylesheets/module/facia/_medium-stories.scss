@@ -1,20 +1,11 @@
-.collection--highlights {
-    @include mq(tablet) {
-        vertical-align: top;
-        display: inline-block;
-        width: gs-span(4);
-    }
-    @include mq(desktop) {
-        width: gs-span(8);
-    }
-    @include mq(wide) {
-        width: gs-span(12);
+.collection--medium-stories {
+    .collection__title {
+        display: none;
     }
     .items {
         @include mq(tablet) {
             font-size: 0;
             white-space: nowrap;
-            height: gs-height(8);
         }
         @include mq(tablet, wide) {
             overflow-x: scroll;

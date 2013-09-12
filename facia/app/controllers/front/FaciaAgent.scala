@@ -42,24 +42,9 @@ trait ParseConfig extends ExecutionContexts {
   def parseConfig(json: JsValue): Config =
     Config(
       (json \ "id").as[String],
-      (json \ "displayName").as[String],
-      (json \ "max").as[String].toInt,
-      getStyle((json \ "style").as[String]),
-      (json \ "section").as[String],
-      (json \ "showmore").as[String].toBoolean
+      (json \ "displayName").as[String]
     )
 
-  //TODO: Should probably live along side styles with object.apply
-  def getStyle(style: String): Option[Style] = style match {
-    case "featured"     => Some(Featured)
-    case "thumbnail"    => Some(Thumbnail)
-    case "headline"     => Some(Headline)
-    case "sectionfront" => Some(SectionFront)
-    case "masthead"     => Some(Masthead)
-    case "topStories"   => Some(TopStories)
-    case "highlights"   => Some(Highlights)
-    case _              => None
-  }
 }
 
 trait ParseCollection extends ExecutionContexts with Logging {

@@ -56,7 +56,13 @@
                             }
                         </div>
                         @if(LiveSummarySwitch.isSwitchedOn) {
-                            @fragments.liveSummary(toggle = true)
+                            <div class="js-article__summary is-hidden live-summary--before from-content-api" data-link-name="summary before content">
+                                <div class="block live-summary__block-clone">
+                                    @article.summary.map{ summary =>
+                                        @fragments.liveSummary(summary, toggle = true)
+                                    }
+                                </div>
+                            </div>
                         }
 
                         <div class="article-body from-content-api @if(article.isLive) {live-blog} js-live-blog"
@@ -91,7 +97,13 @@
                                 <div class="u-table__cell u-table__cell--top">
                                     @fragments.social(article, "next to content")
                                     @if(LiveSummarySwitch.isSwitchedOn) {
-                                        @fragments.liveSummary()
+                                        <div class="js-article__summary is-hidden from-content-api from-content-api--small" data-link-name="summary after content" aria-hidden="true">
+                                            <div class="block">
+                                                @article.summary.map{ summary =>
+                                                    @fragments.liveSummary(summary)
+                                                }
+                                            </div>
+                                        </div>
                                     }
                                 </div>
                             </div>

@@ -13,6 +13,7 @@
     opacity: 0.95;
 
     &.is-hidden {
+        display: block !important;
         opacity: 0;
         @include transition(opacity 1s ease-out);
     }
