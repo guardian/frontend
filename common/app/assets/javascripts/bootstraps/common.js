@@ -315,7 +315,7 @@ define([
                 Cookies.add("GU_VIEW", "mobile", expiryDays);
                 Array.prototype.forEach.call(context.querySelectorAll('.release-message'), function (el) {
                     el.className = el.className.replace('u-h', '');
-                })
+                });
             }
         },
 
