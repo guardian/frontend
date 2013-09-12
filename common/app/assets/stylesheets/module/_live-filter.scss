@@ -64,10 +64,10 @@
 }
 .show-only-key-events {
     .article-body {
-        > .block {
+        .block {
             display: none;
         }
-        > .is-key-event {
+        .is-key-event {
             display: block;
         }
     }
