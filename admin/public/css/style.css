@@ -521,7 +521,7 @@ a.cta, .cta a {
     height: 20px;
 }
 
-.fronts .list-header__status__draft.hasUnPublishedEdits {
+.fronts .list-header__status__draft.has-draft {
     color: #f89406;
 }
 

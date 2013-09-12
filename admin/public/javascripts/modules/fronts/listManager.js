@@ -115,7 +115,8 @@ define([
         };
 
         function saveListDelta(id, list) {
-            var listId,
+            var isLive = list.hasClass('is-live'),
+                listId,
                 inList,
                 listObj,
                 position,
@@ -133,8 +134,8 @@ define([
             if (inList.length) {
                 delta = {
                     item: id,
-                    draft: true,
-                    live: list.hasClass('is-live')
+                    live:   isLive,
+                    draft: !isLive
                 };
 
                 position = inList.next().data('url');
