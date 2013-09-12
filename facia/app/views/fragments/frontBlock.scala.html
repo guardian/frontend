@@ -10,13 +10,13 @@
             }
 
             @style match {
-                case Masthead      => { @trailblocks.masthead(items) }
-                case TopStories    => { @trailblocks.topStories(items) }
-                case MediumStories => { @trailblocks.mediumStories(items) }
-                case SmallStories  => { @trailblocks.smallStories(items) }
-                case Features      => { @trailblocks.features(items) }
-                case Highlights    => { @trailblocks.highlights(items) }
-                case _             => { @trailblocks.highlights(items) }
+                case Masthead      => { @collections.masthead(items) }
+                case TopStories    => { @collections.topStories(items) }
+                case MediumStories => { @collections.mediumStories(items) }
+                case SmallStories  => { @collections.smallStories(items) }
+                case Features      => { @collections.features(items) }
+                case Highlights    => { @collections.highlights(items) }
+                case _             => { @collections.highlights(items) }
             }
 
         </section>
