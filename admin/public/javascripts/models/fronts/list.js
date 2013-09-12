@@ -16,23 +16,36 @@ define([
     ophanApi
 ) {
 
-    function List(id) {
+    function List(opts) {
         var self = this;
 
-        this.id = id;
-        this.crumbs = id.split(/\//g);
+        opts = opts || {};
+
+        if (!opts.id) { return; }
+
+        this.id      = opts.id;
+        this.edition = opts.id.split('/')[0];
+        this.section = opts.id.split('/')[1];
 
         this.live   = ko.observableArray();
         this.draft  = ko.observableArray();
 
-        this.meta   = common.util.asObservableProps([
+        // properties from the config, about this collection
+        this.configMeta   = common.util.asObservableProps([
+            'displayName',
+            'roleName',
+            'roleDescription']);
+        common.util.populateObservables(this.configMeta, opts);
+
+        // properties from the collection itself
+        this.collectionMeta = common.util.asObservableProps([ 
+            'contentApiQuery',
+            'min',
+            'max',
             'lastUpdated',
             'updatedBy',
             'updatedEmail']);
-        this.config = common.util.asObservableProps([
-            'contentApiQuery',
-            'min',
-            'max']);
+
         this.state  = common.util.asObservableProps([
             'liveMode',
             'hasUnPublishedEdits',
@@ -43,8 +56,8 @@ define([
         this.state.liveMode(common.config.defaultToLiveMode);
 
         this.needsMore = ko.computed(function() {
-            if (self.state.liveMode()  && self.live().length  < self.config.min()) { return true; }
-            if (!self.state.liveMode() && self.draft().length < self.config.min()) { return true; }
+            if (self.state.liveMode()  && self.live().length  < self.collectionMeta.min()) { return true; }
+            if (!self.state.liveMode() && self.draft().length < self.collectionMeta.min()) { return true; }
             return false;
         });
 
@@ -70,6 +83,7 @@ define([
 
     List.prototype.stopEditingConfig = function() {
         this.state.editingConfig(false);
+        this.load();
     };
 
     List.prototype.setMode = function(isLiveMode) {
@@ -153,18 +167,15 @@ define([
             function(resp) {
                 self.state.loadIsPending(false);
 
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
+                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) { 
                     // noop    
                 } else {
                     self.populateLists(resp);
                 }
 
-                if (resp.lastUpdated !== self.meta.lastUpdated()) {
-                    self.populateMeta(resp);
-                }
-
                 if (!self.state.editingConfig()) {
-                    self.populateConfig(resp);
+                    common.util.populateObservables(self.collectionMeta, resp)
+                    self.state.timeAgo(self.getTimeAgo(resp.lastUpdated));
                 }
 
                 if (_.isFunction(opts.callback)) { opts.callback(); } 
@@ -172,15 +183,6 @@ define([
                 common.util.mediator.emit('list:load:end');
             }
         );
-    };
-
-    List.prototype.populateMeta = function(opts) {
-        common.util.populateObservables(this.meta, opts)
-        this.state.timeAgo(this.getTimeAgo(opts.lastUpdated));
-    }
-
-    List.prototype.populateConfig = function(opts) {
-        common.util.populateObservables(this.config, opts)
     };
 
     List.prototype.populateLists = function(opts) {
@@ -234,11 +236,6 @@ define([
     List.prototype.saveConfig = function() {
         var self = this;
 
-        // Normalise
-        this.config.contentApiQuery(this.config.contentApiQuery().replace(/^.*\/api\/?/, ''));
-        this.config.min(parseInt(this.config.min(), 10) || undefined);
-        this.config.max(parseInt(this.config.max(), 10) || undefined);
-
         reqwest({
             url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
@@ -246,9 +243,7 @@ define([
             contentType: 'application/json',
             data: JSON.stringify({ 
                 config: {
-                    contentApiQuery: this.config.contentApiQuery(),
-                    min: this.config.min(),
-                    max: this.config.max()
+                    displayName: this.configMeta.displayName()
                 }
             })
         }).always(function(){
