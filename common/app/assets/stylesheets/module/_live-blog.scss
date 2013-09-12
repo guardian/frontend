@@ -26,11 +26,13 @@
     }
 }
 
-.timestamp:first-child,
-.block:first-child .published-time {
-    border-top: none;
-    margin-top: 0;
-    padding-top: 0;
+.live-blog__blocks:first-child {
+    .timestamp:first-child,
+    .block:first-child .published-time {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
+    }
 }
 
 
@@ -78,7 +80,9 @@
    ========================================================================== */
 
 .tweet {
-    clear: both;
+    display: table-cell;
+    width: 10000px;
+    max-width: 100%;
     background-color: #f4f4f4;
     background-image: url(../images/twitter/bird.bfb06650ca92fafdbe3b307a812047c9.png) !important;
     background-position: $baseline*2 $gutter/2 !important;
@@ -91,9 +95,11 @@
         }
     }
 }
+    .element-tweet {
+        margin: $baseline*3 0 $baseline*4;
+    }
     .tweet,
     .from-content-api blockquote.tweet {
-        margin: $baseline*3 0 $baseline*4;
         border-left-width: 0;
         padding: $baseline*2;
     }
@@ -118,3 +124,21 @@
         padding-left: 40px;
         margin-bottom: $baseline*2;
     }
+
+
+/* Blocks container
+   ========================================================================== */
+
+.live-blog__blocks {
+    opacity: 1;
+    height: auto;
+    background-color: transparent;
+    @include transition(opacity 2s ease-out, background-color 4s ease-out);
+}
+
+.live-blog__blocks--hidden {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    background-color: $mushroom;
+}

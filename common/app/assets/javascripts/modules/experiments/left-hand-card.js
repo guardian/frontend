@@ -20,6 +20,7 @@ function (
 
     LeftHandCard.prototype.DEFAULTS = {
         context: document,
+        linksHolders: '.article-body > p',
         supportedOrigins: {
             'internal': true,
             'all': true
@@ -28,7 +29,7 @@ function (
 
     LeftHandCard.prototype.loadCard = function() {
         var self = this,
-            linksToCardify = self.options.context.querySelectorAll('.article-body > p a[href]');
+            linksToCardify = self.options.context.querySelectorAll(self.options.linksHolders + ' a[href]');
 
         common.$g('body').addClass('test-link-card--on');
 
@@ -82,7 +83,7 @@ function (
 
         if (linksToCardify.length > 0) {
             // There are multiple links
-            var articleParagraphs = self.options.context.querySelectorAll('.article-body > p'),
+            var articleParagraphs = self.options.context.querySelectorAll(self.options.linksHolders),
                 numberOfArticleParagraphs = articleParagraphs.length,
                 insertCardEveryNParagraphs = 4,
                 lastParagraphsToNotCardify = 3, // Always allow enough space to display a card

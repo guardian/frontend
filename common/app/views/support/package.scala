@@ -51,6 +51,8 @@ object MediumStories extends Style { val className = "medium-stories" }
 
 object SmallStories extends Style { val className = "small-stories" }
 
+object Features extends Style { val className = "features" }
+
 object Highlights extends Style { val className = "highlights" }
 
 

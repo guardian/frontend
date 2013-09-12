@@ -13,7 +13,8 @@ object FindStyle {
     "regular-stories" -> TopStories,
     "lesser-stories" -> MediumStories,
     "other-stories" -> SmallStories,
-    "featured-stories" -> Highlights
+    "feature-stories" -> Features,
+    "highlight-stories" -> Highlights
   )
 
   /**
@@ -21,14 +22,14 @@ object FindStyle {
    */
   val specificStyles: Map[String, Map[String, Style]] = Map(
     ("uk", Map(
-      ("uk/sport/regular-stories", Highlights),
-      ("uk/commentisfree/regular-stories", Highlights),
-      ("uk/culture/regular-stories", Highlights),
-      ("uk/business/regular-stories", Highlights),
-      ("uk/lifeandstyle/regular-stories", Highlights),
-      ("uk/technology/regular-stories", Highlights),
-      ("uk/money/regular-stories", Highlights),
-      ("uk/travel/regular-stories", Highlights)
+      ("uk/sport/regular-stories", Masthead),
+      ("uk/commentisfree/regular-stories", Masthead),
+      ("uk/culture/regular-stories", Masthead),
+      ("uk/business/regular-stories", Masthead),
+      ("uk/lifeandstyle/regular-stories", Masthead),
+      ("uk/technology/regular-stories", Masthead),
+      ("uk/money/regular-stories", Masthead),
+      ("uk/travel/regular-stories", Masthead)
     ))
   )
 
