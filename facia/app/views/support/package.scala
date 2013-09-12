@@ -5,7 +5,7 @@ import model.Config
 object FindStyle {
 
   /**
-   * Mapping of roleName of collection to Style - in greneral, this should suffice
+   * Mapping of collection 'type' to Style - in general, this should suffice
    */
   val generalStyles: Map[String, Style] = Map(
     "epic-story" -> Masthead,
