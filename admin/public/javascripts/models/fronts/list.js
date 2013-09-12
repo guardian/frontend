@@ -197,7 +197,7 @@ define([
             this.containerEl.empty();
         }
 
-        this.state.hasDraft(_.isArray(opts.draft) && opts.draft.length > 0);
+        this.state.hasDraft(_.isArray(opts.draft));
 
         this.importList(opts, 'live', 'live');
         this.importList(opts, this.state.hasDraft() ? 'draft' : 'live', 'draft');
