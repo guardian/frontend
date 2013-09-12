@@ -71,8 +71,6 @@ RecommendComments.handleClick = function(e) {
         id = elem.getAttribute('data-comment-id'),
         result = RecommendComments.recommendComment(id);
 
-    console.log('herer')
-
     // This is used as we are using deffered events
     elem.className = elem.className.replace(RecommendComments.CONFIG.classes.button, '');
     
