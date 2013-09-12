@@ -373,7 +373,6 @@ a.cta, .cta a {
 }
 
 .fronts header {
-    background-color: #cccccc;
     padding: 5px 5px 5px 10px;
     overflow: auto;
 }
@@ -439,40 +438,63 @@ a.cta, .cta a {
 }
 
 .fronts .list-header {
-    padding: 5px 0 0 0;
     overflow: auto;
-}
-
-.fronts .list-header a,
-.fronts .list-header a:hover,
-.fronts .list-header a:visited {
-    color: #999999;
 }
 
 .fronts .list-header__title {
     padding: 2px 0 2px 7px;
 }
 
-.fronts .list-header__title__part {
-    font-size: 16px;
-    display: inline-block;
-    padding-left: 0px;
+.fronts .trailblock:hover .list-header__title {
+    background: #CCCCCC;
+}
+
+.fronts .list-header a,
+.fronts .list-header a:hover,
+.fronts .list-header a:visited {
+    color: #666666;
+}
+
+.fronts .list-header__edition,
+.fronts .list-header__section,
+.fronts .list-header__role {
+    font-weight: bold;
+    font-size: 14px;
     text-transform: uppercase;
 }
 
-.fronts .list-header__title__part:first-child {
-    color: #999999;
+.fronts .list-header__edition { color: #999999; }
+.fronts .list-header__section { color: #666666; }
+.fronts .list-header__role    { color: #000000; }
+
+.fronts .list-header__meta,
+.fronts .list-header__display,
+.fronts .list-header__role__description {
+    font-size: 10px;
+    color: #666666;
+    padding: 0 0 0 10px;
 }
 
-.fronts .list-header__title__part:last-child {
-    font-weight: bold;
+.fronts .list-header__role__description {
+    display: none;
+}
+
+.fronts .trailblock:hover .list-header__role__description {
+    display: inline-block;
+}
+
+.fronts .list-header__display__name {
+    font-size: 14px;
+    color: #666666;
+}
+
+.fronts .trailblock:hover .list-header__display__name {
+    font-size: 14px;
+    color: #005580;
 }
 
 .fronts .list-header__meta {
-    padding: 0 0 0 5px;
-    font-size: 10px;
     float: left;
-    color: #ccc;
 }
 
 .fronts .list-header__meta__last-updated {
@@ -490,7 +512,7 @@ a.cta, .cta a {
     margin: 0 1px;
     height: 19px;
     cursor: pointer;
-    color: #666666;
+    color: #999999;
     font-weight: bold;
 }
 
@@ -549,8 +571,7 @@ a.cta, .cta a {
 }
 
 .fronts .trailblock:first-child {
-    border-top: 0;
-    margin-top: 25px;
+    margin-top: 35px;
 }
 
 .fronts .trail {
@@ -740,8 +761,8 @@ a.cta, .cta a {
 .fronts .list-config {
     padding: 2px 7px 7px 7px;
     font-size: 10px;
-    background: #666666;
-    color: #ffffff;
+    background: #CCCCCC;
+    color: #000000;
 }
 
 .fronts .list-config.editable {

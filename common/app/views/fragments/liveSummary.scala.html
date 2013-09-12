@@ -1,24 +1,25 @@
-@(summary: String = "", toggle: Boolean = false)(implicit request: RequestHeader)
-<div class="live-summary">
-    <div class="live-summary__header">
+@(summary: String, toggle: Boolean = false)(implicit request: RequestHeader)
+<div class="live-summary u-cf">
+    @if(toggle){
+        <input type="checkbox" checked="checked" name="live-summary__expander-trigger" id="live-summary__expander-trigger" class="live-summary__expander-trigger" tabindex="-1" />
+    }
+    <div class="live-summary__expander-wrapper">
+
         @if(toggle){
-            <label class="live-summary__expander-cta live-summary__expander-hide" for="live-summary__expander" data-link-name="live summary toggle" aria-hidden="true">
-                <button class="u-button-reset live-summary__expander-cta__button" data-link-name="live summary hide">
-                    Hide
+            <label class="live-summary__expander-cta" for="live-summary__expander-trigger" data-link-name="live summary toggle" aria-hidden="true">
+                <button class="u-button-reset live-summary__expander-cta__button live-summary__expander-show" data-link-name="live summary hide">
+                    Hide summary
                 </button>
-                <button class="u-button-reset live-summary__expander-cta__button" data-link-name="live summary show">
-                    Show
+                <button class="u-button-reset live-summary__expander-cta__button live-summary__expander-hide" data-link-name="live summary show">
+                    Show summary
                 </button>
             </label>
         }
-        <h2>Summary</h2>
-    </div>
-    @if(toggle){
-        <input type="checkbox" name="live-summary__expander-trigger" id="live-summary__expander-trigger" class="live-summary__expander-trigger" tabindex="-1" />
-    }
-    <div class="live-summary__body">
-        <div class="js-summary-placeholder">
-            @summary
+
+        <div class="live-summary__body live-summary__expander-content">
+            <div class="js-summary-placeholder">
+                @Html(summary)
+            </div>
         </div>
     </div>
 </div>
