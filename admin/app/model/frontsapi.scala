@@ -18,7 +18,8 @@ case class Block(
                   updatedEmail: String,
                   max: Option[Int],
                   min: Option[Int],
-                  contentApiQuery: Option[String]
+                  contentApiQuery: Option[String],
+                  displayName: Option[String]
                   ) extends JsonShape
 
 case class Trail(
