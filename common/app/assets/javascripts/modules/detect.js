@@ -8,7 +8,7 @@
 
 define(['modules/userPrefs'], function (userPrefs) {
 
-    var BASE_WIDTH     = 732,
+    var BASE_WIDTH     = 652,
         MEDIAN_WIDTH   = 972,
         EXTENDED_WIDTH = 1052,  // Breakpoint where we see the left column in article pages
         mobileOS,
