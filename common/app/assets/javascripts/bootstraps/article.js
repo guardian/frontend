@@ -6,6 +6,7 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
+    "modules/discussion/recommend-comments",
     "modules/cricket"
 ], function (
     common,
@@ -15,6 +16,7 @@ define([
     MatchNav,
     Reading,
     Discussion,
+    RecommendComments,
     Cricket
 ) {
 
@@ -72,6 +74,8 @@ define([
                         context: context,
                         config: config
                     }).init();
+
+                    RecommendComments.init(context, { apiRoot: config.page.discussionApiRoot });
                 }
             });
         },

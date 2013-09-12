@@ -40,7 +40,7 @@ define([
         describe('init', function() {
             it('Should change the text from recommended to recommend', function() {
                 expect(button1.innerHTML.match(/Recommended \(/)).toBeTruthy();
-                RecommendComments.init(context, { apiUrl: '/api' });
+                RecommendComments.init(context, { apiRoot: '/api' });
                 expect(button1.innerHTML.match(/Recommended \(/)).not.toBeTruthy();
                 expect(button1.innerHTML.match(/Recommend \(/)).toBeTruthy();
             });
@@ -50,6 +50,8 @@ define([
             });
         });
 
+        // TODO: Perhaps break this into success and failure
+        //       There is multiple things each need to do (especially success)
         describe('click', function() {
             it('Should update the recommend count and remain unchanged on success', function() {
                 var currentCount = parseInt(button1.getAttribute('data-recommend-count'), 10),
@@ -64,7 +66,7 @@ define([
 
                 waitsFor(function() {
                     return successFunction.calls.length > 0;
-                }, 1000);
+                }, 500);
 
                 runs(function() {
                     expect(parseInt(button1.getAttribute('data-recommend-count'), 10)).toEqual(currentCount+1);
@@ -80,12 +82,12 @@ define([
                 server.respondWith([400, {}, '{"status": "error", "message": "wrong", "statusCode": 400}']);
 
                 runs(function() {
-                    bean.fire(button1, 'click');
+                    bean.fire(button2, 'click');
                 });
 
                 waitsFor(function() {
                     return failFunction.calls.length > 0;
-                }, 1000);
+                }, 500);
 
                 runs(function() {
                     expect(parseInt(button2.getAttribute('data-recommend-count'), 10)).toEqual(currentCount);

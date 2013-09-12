@@ -30,7 +30,7 @@ RecommendComments.CONFIG = {
  * @type {Object.<string.*>}
  */
 RecommendComments.options = {
-    apiUrl: 'http://discussion.release.dev-guardianapis.com/discussion-api'
+    apiRoot: 'http://discussion.release.dev-guardianapis.com/discussion-api'
 };
 
 /**
@@ -71,6 +71,11 @@ RecommendComments.handleClick = function(e) {
         id = elem.getAttribute('data-comment-id'),
         result = RecommendComments.recommendComment(id);
 
+    console.log('herer')
+
+    // This is used as we are using deffered events
+    elem.className = elem.className.replace(RecommendComments.CONFIG.classes.button, '');
+    
     RecommendComments.renderRecommendation(elem);
     return result.then(
         RecommendComments.success.bind(elem),
@@ -83,7 +88,7 @@ RecommendComments.handleClick = function(e) {
  * @return {Reqwest}
  */
 RecommendComments.recommendComment = function(id) {
-    var url = RecommendComments.options.apiUrl + RecommendComments.CONFIG.endpoints.recommend.replace(':id', id);
+    var url = RecommendComments.options.apiRoot + RecommendComments.CONFIG.endpoints.recommend.replace(':id', id);
     return ajax({
         url: url,
         type: 'json'
@@ -108,7 +113,8 @@ RecommendComments.success = function(resp) {
  */
 RecommendComments.fail = function(xhr) {
     RecommendComments.renderRecommendation(this, true);
-    bean.one(this, 'click', RecommendComments.handleClick); // this is creating overhead, but shouldn't happen that often
+    // This is used as we are using deffered events
+    this.className = this.className +' '+ RecommendComments.CONFIG.classes.button;
 
     common.mediator.emit(
         RecommendComments.getEvent('fail'),

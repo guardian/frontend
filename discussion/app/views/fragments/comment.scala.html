@@ -28,7 +28,7 @@
                 </div>
             </div>
             @if(comment.numRecommends != 0){
-                <div class="d-comment__action d-comment__action--recommend js-recommend-comment" data-comment-id="@comment.id">Recommended (@comment.numRecommends)</div>
+                <div class="d-comment__action d-comment__action--recommend js-recommend-comment" data-comment-id="@comment.id" data-recommend-count="@comment.numRecommends">Recommended (<span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>)</div>
             }
         </div>
         <div class="d-comment__main">

@@ -22,11 +22,13 @@ case class CommentPage(
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
-  def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
+  import conf.Configuration.discussion.apiRoot
+
+  def GET(url: String): Future[Response] = WS.url(url).withTimeout(10000).get()
 
   def commentCounts(ids: String) = {
 
-    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/getCommentCounts?short-urls=$ids"
+    val apiUrl = s"$apiRoot/getCommentCounts?short-urls=$ids"
 
     val start = currentTimeMillis
 
@@ -53,7 +55,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
     val size = if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
 
-    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=$size&page=$page&orderBy=oldest&showSwitches=true"
+    val apiUrl = s"$apiRoot/discussion/$id?pageSize=$size&page=$page&orderBy=oldest&showSwitches=true"
 
     val start = currentTimeMillis
 
