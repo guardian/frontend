@@ -128,14 +128,14 @@
     }
 
     .autoupdate--highlight {
-        -webkit-animation: new-block-animation 5s ease-out;
-        -moz-animation: new-block-animation 5s ease-out;
-        -ms-animation: new-block-animation 5s ease-out;
-        animation: new-block-animation 5s ease-out;
+        -webkit-animation: slide-in-animation 5s ease-out;
+        -moz-animation: slide-in-animation 5s ease-out;
+        -ms-animation: slide-in-animation 5s ease-out;
+        animation: slide-in-animation 5s ease-out;
     }
 }
 
-@include keyframes(new-block-animation) {
+@include keyframes(slide-in-animation) {
     0%   { opacity: 0; background: #f4f4ee; max-height: 0; }
     20%  { opacity: 1; }
     90%  { background: #f4f4ee; max-height: 1000px; }
