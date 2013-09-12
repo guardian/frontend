@@ -37,7 +37,7 @@ define([
             'manipulationType' : 'html'
         }, config);
 
-        var unread = 0,
+        var unreadBlocks = 0,
             originalPageTitle;
 
         this.template =
@@ -63,8 +63,6 @@ define([
                     manipulation = options.manipulationType,
                     date = new Date().toString();
 
-                //res.html = '<div id="block-'+date+'" class="block">new block</div>';
-
                 //Check if we are handling single fragment
                 if(attachTo.nodeType) {
                     var $attachTo = bonzo(attachTo);
@@ -76,7 +74,6 @@ define([
                         bonzo(elementsToAdd.children).addClass('autoupdate--new');
 
                         $attachTo[manipulation](elementsToAdd.innerHTML);
-
                     }
                     // add a timestamp to the attacher
                     $attachTo.attr('data-last-updated', date);
@@ -92,17 +89,16 @@ define([
                     }
                 }
 
-                console.log(manipulation);
                 if (manipulation === 'prepend') {
                     var newElements = attachTo.querySelectorAll('.autoupdate--new');
 
-                    unread += newElements.length;
+                    unreadBlocks += newElements.length;
 
-                    if (options.showUnreadCounter && unread && !detect.pageVisible()) {
-                        this.updatePageTitle(unread);
+                    if (options.showUnreadCounter && unreadBlocks && !detect.pageVisible()) {
+                        this.updatePageTitle(unreadBlocks);
 
                     } else {
-                        unread = 0;
+                        unreadBlocks = 0;
                         this.restorePageTitle();
                     }
 
@@ -143,7 +139,7 @@ define([
 
                 setTimeout(function() {
                     bonzo(newElements).removeClass('autoupdate--new')
-                        .removeClass('autoupdate--highlight');
+                                      .removeClass('autoupdate--highlight');
                 }, 5000);
             },
 
