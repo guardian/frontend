@@ -118,7 +118,10 @@ module.exports = function (grunt) {
                 src: ['integration-tests/casper/tests/article/*.spec.js']
             },
             front: {
-                src: ['integration-tests/casper/tests/front/*.spec.js']
+                src: ['integration-tests/casper/tests/front/*.js']
+            },
+            corenavigation: {
+                src: ['integration-tests/casper/tests/core-navigation/*.js']
             },
             },
 
@@ -336,6 +339,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test:integration:discussion',  ['env:casperjs', 'casperjs:discussion']);
     grunt.registerTask('test:integration:article',  ['env:casperjs', 'casperjs:article']);
     grunt.registerTask('test:integration:front',  ['env:casperjs', 'casperjs:front']);
+    grunt.registerTask('test:integration:corenavigation',  ['env:casperjs', 'casperjs:corenavigation']);
 
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
 
