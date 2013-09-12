@@ -1,6 +1,6 @@
 package controllers
 
-import conf.AdminConfiguration
+import conf.Configuration.ophanApi
 import common.{ExecutionContexts, Logging}
 import implicits.Strings
 import play.api.mvc._
@@ -9,13 +9,9 @@ import play.api.libs.ws.WS
 object OphanApi extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
   def pageViews(path: String) = AuthAction { request =>
-    (for {
-      host <- AdminConfiguration.ophanApi.host
-      key  <- AdminConfiguration.ophanApi.key
-    } yield {
       val url = "%s/breakdown?api-key=%s&path=/%s".format(
-        host,
-        key,
+        ophanApi.host,
+        ophanApi.key,
         path
       )
 
@@ -26,18 +22,12 @@ object OphanApi extends Controller with Logging with AuthLogging with ExecutionC
           Ok(response.body).as("application/json")
         }
       }
-
-    }).getOrElse(Ok)
   }
 
   def platformPageViews() = AuthAction { request =>
-    (for {
-      host <- AdminConfiguration.ophanApi.host
-      key  <- AdminConfiguration.ophanApi.key
-    } yield {
       val url = "%s/breakdown?platform=next-gen&hours=2&api-key=%s".format(
-        host,
-        key
+        ophanApi.host,
+        ophanApi.key
       )
 
       log("Proxying Ophan pageviews query to: %s" format url, request)
@@ -47,8 +37,6 @@ object OphanApi extends Controller with Logging with AuthLogging with ExecutionC
           Ok(response.body).as("application/json")
         }
       }
-
-    }).getOrElse(Ok)
   }
 
 

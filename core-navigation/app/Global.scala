@@ -12,21 +12,30 @@ trait MostPopularLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("MostPopularAgentRefreshJob")
+    Jobs.deschedule("MostPopularFromFacebookAgentRefreshJob")
+
+    // every min
     Jobs.schedule("MostPopularAgentRefreshJob",  "0 * * * * ?", CoreNavivationMetrics.MostPopularLoadTimingMetric) {
       MostPopularAgent.refresh()
-      MostPopularFromFacebookAgent.refresh()
       MostPopularExpandableAgent.refresh()
+    }
+
+    // fire every 15 mins
+    Jobs.schedule("MostPopularFromFacebookAgentRefreshJob",  "0 2/15 * * * ?", CoreNavivationMetrics.MostPopularLoadTimingMetric) {
+      MostPopularFromFacebookAgent.refresh()
     }
 
     if (Play.isTest) {
       MostPopularAgent.refresh()
-      MostPopularFromFacebookAgent.refresh()
       MostPopularAgent.await()
+      MostPopularFromFacebookAgent.refresh()
+      MostPopularFromFacebookAgent.await()
     }
   }
 
   override def onStop(app: PlayApp) {
     Jobs.deschedule("MostPopularAgentRefreshJob")
+    Jobs.deschedule("MostPopularFromFacebookAgentRefreshJob")
     super.onStop(app)
   }
 }

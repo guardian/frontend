@@ -186,6 +186,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
     safeState = Off)
 
+  val ABMostPopularFromFacebook = Switch("A/B Tests", "ab-most-popular-from-facebook",
+    "If this is switched on an AB test runs to trial presenting visitors from Facebook with Most Popular from Facebook",
+    safeState = Off)
+
 
   // Sport Switch
 
@@ -249,7 +253,8 @@ object Switches extends Collections {
     ABGalleryCta,
     ABSwipeCtas,
     ABExpandableMostPopular,
-    ABRightHandCard
+    ABRightHandCard,
+    ABMostPopularFromFacebook
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
