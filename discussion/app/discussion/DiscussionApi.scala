@@ -22,7 +22,7 @@ case class CommentPage(
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
-  def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
+  protected def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
 
   def commentCounts(ids: String) = {
 
@@ -87,16 +87,6 @@ trait DiscussionApi extends ExecutionContexts with Logging {
       }
     }
   }
-}
-
-object DiscussionApi extends DiscussionApi {
-
-  private var _http: String => Future[Response] = super.GET _
-  def http = _http
-  def http_=(http: String => Future[Response]) { _http = http }
-
-  override def GET(url: String): Future[Response] = _http(url)
-
 }
 
 
