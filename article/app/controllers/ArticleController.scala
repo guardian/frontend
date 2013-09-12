@@ -86,7 +86,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     model match {
       case blog: LiveBlogPage =>
         val htmlResponse = () => views.html.liveBlog(blog)
-        val jsonResponse = () => views.html.fragments.liveBlog(blog)
+        val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
         renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
       case article: ArticlePage =>
         val htmlResponse = () => views.html.article(article)
