@@ -20,7 +20,7 @@
             position: absolute;
             left: 0; right: 0; bottom: 0;
             height: $unitHeight * 2;
-            background: -webkit-linear-gradient(transparent, white) left repeat;
+            background: -webkit-linear-gradient(rgba(255, 255, 255, 0), white) left repeat;
             background: linear-gradient(transparent, white) left repeat;
         }
     }
