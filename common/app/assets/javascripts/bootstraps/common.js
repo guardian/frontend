@@ -307,12 +307,15 @@ define([
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
         },
 
-        // let large viewports opt-in to the responsive beta
-        betaOptIn: function () {
-            var isBeta = /#beta/.test(window.location.hash);
-            if (isBeta && window.screen.width >= 900) {
+        // let large viewports opt-in to the responsive alpha
+        optIn: function () {
+            var countMeIn = /#countmein/.test(window.location.hash);
+            if (countMeIn && window.screen.width >= 900) {
                 var expiryDays = 365;
                 Cookies.add("GU_VIEW", "mobile", expiryDays);
+                Array.prototype.forEach.call(document.querySelectorAll('.release-message'), function (el) {
+                    el.className = el.className.replace('u-h', '');
+                });
             }
         },
 
@@ -392,7 +395,7 @@ define([
             modules.initSwipe(config, contextHtml);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
-            modules.betaOptIn();
+            modules.optIn();
             modules.faciaOptToggle();
             modules.externalLinksCards();
         }
