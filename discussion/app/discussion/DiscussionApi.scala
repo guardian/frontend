@@ -24,7 +24,7 @@ case class CommentPage(
 trait DiscussionApi extends ExecutionContexts with Logging {
 
   import conf.Configuration.discussion.apiRoot
-  protected def GET(url: String): Future[Response] = WS.url(url).withTimeout(10000).get()
+  protected def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
 
   def commentCounts(ids: String) = {
 

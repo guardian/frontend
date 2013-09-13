@@ -11,7 +11,13 @@
         }
         
         @if(!(isClosedForRecommendation && comment.numRecommends == 0)){
-            <div class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted && !comment.isBlocked){ d-comment__recommend--left}" data-comment-id="@comment.id" data-recommend-count="@comment.numRecommends"><i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span></div>
+            <div
+                class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted && !comment.isBlocked){ d-comment__recommend--left}" 
+                data-comment-id="@comment.id"
+                data-recommend-count="@comment.numRecommends"
+                title="@comment.numRecommends recommendations">
+                <i class="i i-recommend@if(isClosedForRecommendation){-inactive}"></i><span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>
+            </div>
         }
         <div class="d-comment-header">
             <div class="d-comment__media">
@@ -56,7 +62,7 @@
     @if(comment.responses.nonEmpty){
         <ul class="d-thread" data-responses="@comment.responses.length">
             @comment.responses.map{ response =>
-                @fragments.comment(response, true)
+                @fragments.comment(response, isClosedForRecommendation, true)
             }
         </ul>
     }

@@ -3,7 +3,6 @@ define([
     'bean',
     'ajax'
 ], function(common, bean, ajax) {
-
 /**
  * @type {Object}
  */
@@ -13,7 +12,9 @@ var RecommendComments = {};
 RecommendComments.CONFIG = {
     classes: {
         button: 'js-recommend-comment',
-        count: 'js-recommend-count'
+        count: 'js-recommend-count',
+        icon: 'i-recommend',
+        iconInactive: 'i-recommend-inactive'
     },
     endpoints: {
         recommend: '/comment/:id/recommend'
@@ -46,6 +47,7 @@ RecommendComments.init = function(context, options) {
     if (buttons) {
         Array.prototype.forEach.call(buttons, function(button) {
             button.className = button.className + ' d-comment__recommend--active';
+            button.title = button.title += ' - recommend this comment';
         });
         RecommendComments.bindEvents(context);
         common.mediator.emit(RecommendComments.getEvent('init'));
@@ -92,7 +94,8 @@ RecommendComments.recommendComment = function(id) {
         url: url,
         type: 'json',
         method: 'post',
-        crossOrigin: true
+        crossOrigin: true,
+        headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
     });
 };
 
@@ -132,11 +135,19 @@ RecommendComments.fail = function(xhr) {
  */
 RecommendComments.renderRecommendation = function(elem, unrecommend) {
     var recommendCountElem = elem.querySelector('.'+ RecommendComments.CONFIG.classes.count),
+        iconElem = !unrecommend ? elem.querySelector('.'+ RecommendComments.CONFIG.classes.icon) : elem.querySelector('.'+ RecommendComments.CONFIG.classes.iconInactive),
         currentCount = parseInt(elem.getAttribute('data-recommend-count'), 10),
         newCount = !unrecommend ? currentCount+1 : currentCount-1;
 
-    recommendCountElem.innerHTML = newCount;
+    if (unrecommend) {
+        iconElem.className = iconElem.className.replace(RecommendComments.CONFIG.classes.iconInactive, RecommendComments.CONFIG.classes.icon);
+    } else {
+        iconElem.className = iconElem.className.replace(RecommendComments.CONFIG.classes.icon, RecommendComments.CONFIG.classes.iconInactive);
+    }
+
+    elem.title = 'You have recommended this comment';
     elem.setAttribute('data-recommend-count', newCount);
+    recommendCountElem.innerHTML = newCount;
 };
 
 /**
