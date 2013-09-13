@@ -18,6 +18,7 @@ define([
         this.maxSummaryHeight = 250;
         this.expandableClass = 'live-summary--expandable';
         this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
+        this.summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary'));
     }
 
     Summary.prototype.init = function() {
@@ -39,26 +40,24 @@ define([
 
     Summary.prototype.render = function() {
         var self = this,
-            summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
             hiddenSummaryContainers = common.toArray(this.context.querySelectorAll('.js-article__summary.is-hidden'));
 
-        if (summaries.length > 0 && hiddenSummaryContainers.length > 0) {
+        if (this.summaries.length > 0 && hiddenSummaryContainers.length > 0) {
             hiddenSummaryContainers.forEach(function(element, index) {
                 bonzo(element).removeClass('is-hidden');
                 self.expandable(element, self.maxSummaryHeight, self.expandableClass);
             });
-            bonzo(summaries[0]).addClass('is-hidden');
+            bonzo(self.summaries[0]).addClass('is-hidden');
         }
     };
 
     Summary.prototype.deportLatest = function() {
-        var summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
-            content,
+        var content,
             placeholders;
 
         // TODO: Verify if summary has actually been updated
-        if (summaries.length > 0) {
-            content = summaries[0].innerHTML;
+        if (this.summaries.length > 0) {
+            content = this.summaries[0].innerHTML;
             placeholders = common.toArray(this.context.getElementsByClassName('js-summary-placeholder'));
 
             placeholders.forEach(function(element, index) {
