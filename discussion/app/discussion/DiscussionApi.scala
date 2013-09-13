@@ -15,7 +15,8 @@ case class CommentPage(
   comments: Seq[Comment],
   contentUrl: String,
   currentPage: Int,
-  pages: Int
+  pages: Int,
+  isClosedForRecommendation: Boolean
 ) extends Page(id = id, section = "Global", webTitle = title, analyticsName = s"GFE:Article:Comment discussion page $currentPage") {
   lazy val hasMore: Boolean = currentPage < pages
 }
@@ -23,7 +24,7 @@ case class CommentPage(
 trait DiscussionApi extends ExecutionContexts with Logging {
 
   import conf.Configuration.discussion.apiRoot
-  protected def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
+  protected def GET(url: String): Future[Response] = WS.url(url).withTimeout(10000).get()
 
   def commentCounts(ids: String) = {
 
@@ -79,7 +80,8 @@ trait DiscussionApi extends ExecutionContexts with Logging {
             contentUrl = (json \ "discussion" \ "webUrl").as[String],
             comments = comments,
             currentPage =  (json \ "currentPage").as[Int],
-            pages = (json \ "pages").as[Int]
+            pages = (json \ "pages").as[Int],
+            isClosedForRecommendation = (json \ "discussion" \ "isClosedForRecommendation").as[Boolean]
           )
 
         case other =>

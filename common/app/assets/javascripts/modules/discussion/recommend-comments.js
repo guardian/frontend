@@ -45,7 +45,6 @@ RecommendComments.init = function(context, options) {
 
     if (buttons) {
         Array.prototype.forEach.call(buttons, function(button) {
-            button.innerHTML = button.innerHTML.replace('Recommended', 'Recommend');
             button.className = button.className + ' d-comment__recommend--active';
         });
         RecommendComments.bindEvents(context);
@@ -92,7 +91,8 @@ RecommendComments.recommendComment = function(id) {
     return ajax({
         url: url,
         type: 'json',
-        method: 'POST'
+        method: 'post',
+        crossOrigin: true
     });
 };
 

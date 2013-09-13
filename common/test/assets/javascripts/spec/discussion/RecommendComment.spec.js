@@ -38,15 +38,8 @@ define([
         button2 = buttons[1];
 
         describe('init', function() {
-            it('Should change the text from recommended to recommend', function() {
-                expect(button1.innerHTML.match(/Recommended \(/)).toBeTruthy();
-                RecommendComments.init(context, { apiRoot: '/api' });
-                expect(button1.innerHTML.match(/Recommended \(/)).not.toBeTruthy();
-                expect(button1.innerHTML.match(/Recommend \(/)).toBeTruthy();
-            });
-
             it('Should make buttons look clickable', function() {
-                expect(button1.className.match('cta')).toBeTruthy();
+                expect(button1.className.match('d-comment__recommend--active')).toBeTruthy();
             });
         });
 
