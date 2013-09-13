@@ -4,6 +4,7 @@ import play.api.libs.json.{Json, JsValue}
 import tools.FrontsApi
 import controllers.Identity
 import org.joda.time.DateTime
+import play.api.templates.HtmlFormat
 
 trait JsonShape
 
@@ -16,9 +17,7 @@ case class Block(
                   lastUpdated: String,
                   updatedBy: String,
                   updatedEmail: String,
-                  max: Option[Int],
-                  min: Option[Int],
-                  contentApiQuery: Option[String]
+                  displayName: Option[String]
                   ) extends JsonShape
 
 case class Trail(
@@ -31,7 +30,7 @@ case class Trail(
 
 case class BlockActionJson(publish: Option[Boolean], discard: Option[Boolean]) extends JsonShape
 case class UpdateTrailblockJson(config: UpdateTrailblockConfigJson) extends JsonShape
-case class UpdateTrailblockConfigJson(contentApiQuery: Option[String], max: Option[Int], min: Option[Int])
+case class UpdateTrailblockConfigJson(contentApiQuery: Option[String], max: Option[Int], min: Option[Int], displayName: Option[String])
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], live: Boolean, draft: Boolean) extends JsonShape
 
 trait JsonExtract {
@@ -106,15 +105,13 @@ trait UpdateActions {
   }
 
   def createBlock(id: String, identity: Identity, update: UpdateList) {
-    FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), List(emptyTrailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
+    FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), List(emptyTrailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None))
   }
 
   def updateTrailblockJson(id: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
     FrontsApi.getBlock(id).map { block =>
       val newBlock = block.copy(
-        contentApiQuery = updateTrailblock.config.contentApiQuery orElse None,
-        min = updateTrailblock.config.min orElse Some(defaultMinimumTrailblocks),
-        max = updateTrailblock.config.max orElse Some(defaultMaximumTrailblocks)
+        displayName = updateTrailblock.config.displayName map HtmlFormat.escape map (_.body)
       )
       if (newBlock != block) {
         FrontsApi.putBlock(id, updateIdentity(newBlock, identity))
