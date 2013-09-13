@@ -12,9 +12,10 @@ define(['bonzo', 'modules/popular'], function (bonzo, popular) {
             _config = config;
 
             var isArticle = config.page && config.page.contentType === "Article",
-                isFromFacebook = document.referrer.indexOf('www.facebook.com') != -1;
+                isFromFacebook = document.referrer.indexOf('facebook.com') != -1,
+                isDev = config.page.isDev;
 
-            return isArticle && isFromFacebook;
+            return isArticle && (isFromFacebook || isDev);
         };
         this.variants = [
             {
