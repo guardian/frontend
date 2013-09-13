@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Element => ApiElement}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent, Element => ApiElement, Asset}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.Reference
@@ -46,8 +46,6 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
 
   private lazy val fields = delegate.safeFields
 
-  protected val relation = "main"
-
   // Inherited from Trail
   override lazy val webPublicationDate: DateTime = delegate.webPublicationDate
   override lazy val linkText: String = webTitle
@@ -56,7 +54,6 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   override lazy val trailText: Option[String] = fields.get("trailText")
   override lazy val section: String = delegate.sectionId.getOrElse("")
   override lazy val sectionName: String = delegate.sectionName.getOrElse("")
-  override lazy val thumbnail: Option[String] = fields.get("thumbnail")
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   override lazy val discussionId = Some(shortUrlPath)
@@ -119,11 +116,14 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   )
 
   // Inherited from Trail.Elements
-  override lazy val images: List[ImageElement] = imageMap(relation)
-  override lazy val videos: List[VideoElement] = videoMap(relation) ++ videoMap("body")
+  override lazy val images: List[ImageElement] = imageMap("main")
+  override lazy val videos: List[VideoElement] = videoMap("main") ++ videoMap("body")
+  override lazy val thumbnail: Option[ImageElement] = imageMap("thumbnail").headOption
+  override lazy val mainPicture: Option[ImageAsset] = largestMainPicture.orElse(thumbnail.flatMap(_.largestImage))
 
   private def findIndex( element: ApiElement): Int =  {
     // Use the old media asset class, which defines an index, and find a media asset with a matching file path to the element
+    // This can be removed when the content api element query is implicityly ordered,
     delegate.mediaAssets.find(element.assets.flatMap(_.file) contains _.file.getOrElse("")).map(_.index).getOrElse(0)
   }
 
@@ -151,7 +151,7 @@ object Content {
 }
 
 class Article(private val delegate: ApiContent) extends Content(delegate) {
-  lazy val body: String = delegate.safeFields("body")
+  lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   lazy val isReview = tones.exists(_.id == "tone/reviews")
@@ -175,6 +175,21 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
     "og:image" -> mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback)
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+
+  override lazy val mainPicture: Option[ImageAsset] = {
+    largestMainPicture.orElse(
+      if (!videoAssets.isEmpty) {
+        val video = videoAssets.head
+        Some(ImageAsset(new Asset("image",
+                                  Some("image/jpeg"),
+                                  video.stillImageUrl,
+                                  Map("width" -> video.width.toString,
+                                      "height" -> video.height.toString)), 0))
+      } else {
+        None
+      }
+    ).orElse(thumbnail.flatMap(_.largestImage))
+  }
 }
 
 class LiveBlog(private val delegate: ApiContent) extends Article(delegate) {
@@ -214,12 +229,12 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
 
 class Gallery(private val delegate: ApiContent) extends Content(delegate) {
 
-  def apply(index: Int): ImageAsset = images(index).image.get
+  def apply(index: Int): ImageAsset = images(index).largestImage.get
 
   lazy val size = images.size
   lazy val contentType = "Gallery"
-  lazy val landscapes = images.flatMap(_.imageCrops).filter(i => i.width > i.height)
-  lazy val portraits = images.flatMap(_.imageCrops).filter(i => i.width < i.height)
+  lazy val landscapes = images.sortBy(_.index).flatMap(_.imageCrops).filter(i => i.width > i.height)
+  lazy val portraits = images.sortBy(_.index).flatMap(_.imageCrops).filter(i => i.width < i.height)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
@@ -233,7 +248,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
-  override val relation = "gallery"
+  override lazy val images: List[ImageElement] = imageMap("gallery")
 }
 
 class Interactive(private val delegate: ApiContent) extends Content(delegate) {

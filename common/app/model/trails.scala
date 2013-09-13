@@ -20,7 +20,6 @@ trait Trail extends Elements with Tags {
   def trailText: Option[String]
   def section: String //sectionId
   def sectionName: String
-  def thumbnail: Option[String] = None
   def thumbnailPath: Option[String] = None
   def isLive: Boolean
   def discussionId: Option[String] = None

@@ -56,18 +56,20 @@ trait Elements {
 
   // Find a main picture crop which matches this width.
   def mainPicture(width: Int): Option[ImageAsset] = mainImageElement.flatMap(_.imageCrops.filter(_.width == width).headOption)
-                                                .headOption.orElse(mainPicture)
+                                                    .headOption.orElse(mainPicture)
   def images: List[ImageElement]
   def videos: List[VideoElement]
+  def thumbnail: Option[ImageElement]
+  def mainPicture: Option[ImageAsset]
 
   private lazy val imageElements: List[ImageContainer] = (images ++ videos).sortBy(_.index)
   // Find the the lowest index imageContainer.
-  private lazy val mainImageElement: Option[ImageContainer] = imageElements.find(!_.image.isEmpty)
+  private lazy val mainImageElement: Option[ImageContainer] = imageElements.find(!_.largestImage.isEmpty)
   lazy val crops: List[ImageAsset] = imageElements.flatMap(_.imageCrops)
   lazy val videoAssets: List[VideoAsset] = videos.flatMap(_.videoAssets)
 
   // Return the biggest main picture crop.
-  lazy val mainPicture: Option[ImageAsset] = mainImageElement.flatMap(_.image)
+  lazy val largestMainPicture: Option[ImageAsset] = mainImageElement.flatMap(_.largestImage)
 }
 
 trait Tags {

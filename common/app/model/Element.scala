@@ -9,8 +9,8 @@ class Element protected (val delegate: ApiElement, val index: Int) {
 object Element {
   def apply(delegate: ApiElement, index: Int): Element = {
     delegate match {
-      case gallery if delegate.elementType == "image" => new ImageElement(delegate, index)
-      case video if delegate.elementType =="video" => new VideoElement(delegate, index)
+      case _ if delegate.elementType == "image" => new ImageElement(delegate, index)
+      case _ if delegate.elementType =="video" => new VideoElement(delegate, index)
       case _ => new Element(delegate, index)
     }
   }
@@ -22,7 +22,7 @@ trait ImageContainer {
                                       sortBy(_.width)(Ordering[Int].reverse)
 
   // The image crop with the largest width.
-  lazy val image : Option[ImageAsset] = imageCrops.headOption
+  lazy val largestImage : Option[ImageAsset] = imageCrops.headOption
 }
 
 trait VideoContainer {

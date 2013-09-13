@@ -35,6 +35,8 @@ case class VideoAsset(private val delegate: Asset) {
 
   lazy val url: Option[String] = delegate.file
   lazy val mimeType: Option[String] = delegate.mimeType
+  lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
+  lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
 
   // The video duration in seconds
   lazy val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
