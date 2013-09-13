@@ -4,6 +4,9 @@ import conf.ContentApi
 import common._
 import model.{SupportedContentFilter, Content}
 import scala.concurrent.duration._
+import scala.concurrent.Await
+import services.OphanApi
+
 
 object MostPopularAgent extends Logging with ExecutionContexts {
 
@@ -28,6 +31,7 @@ object MostPopularAgent extends Logging with ExecutionContexts {
   }
 }
 
+
 object MostPopularFromFacebookAgent extends Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
@@ -39,9 +43,26 @@ object MostPopularFromFacebookAgent extends Logging with ExecutionContexts {
   }
 
   def refresh() {
+
+    def getMostPopularReferredFromFacebook: Seq[String] = {
+
+      def path(url: String) = url split "/" drop 3 mkString "/"
+
+      val paths = OphanApi.getMostRead(referrer = "facebook", hours = 1) map {
+        json => {
+          val urls = (json \\ "url") map (_.as[String])
+          urls map path
+        }
+      }
+
+      for (e <- paths.failed) log error "Failed to get most popular referred from Facebook: " + e.getMessage
+
+      Await.result(paths, 2.seconds)
+    }
+
     log.info("Refreshing most popular referred from facebook.")
 
-    val ophanList = OphanApi.getMostPopularReferredFromFacebook take 10
+    val ophanList = getMostPopularReferredFromFacebook take 10
     val ophanListAsString = ophanList mkString ","
     log.debug("Ophan list of most popular referred from facebook: " + ophanListAsString)
 
@@ -62,6 +83,7 @@ object MostPopularFromFacebookAgent extends Logging with ExecutionContexts {
     }
   }
 }
+
 
 object MostPopularExpandableAgent extends Logging with ExecutionContexts {
 
