@@ -163,14 +163,19 @@ define([
             }
         };
 
-        function _startPoller() {
-            setInterval(function(){
-                model.collections().forEach(function(list){
-                    list.refresh();
+        function startPoller() {
+            var period = common.config.collectionsPollMs || 60000;
+
+            setInterval(function(){                
+                model.collections().forEach(function(list, index){
+                    setTimeout(function(){
+                        list.refresh();
+                    }, index * period / (model.collections().length + 1)); // stagger requests
                 });
-            }, 5000);
+            }, period);
+
+            startPoller = function() {}; // make idempotent
         }
-        var startPoller = _.once(_startPoller);
 
         function fetchConfigs(callback) {
             reqwest({

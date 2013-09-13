@@ -32,16 +32,15 @@ define([
 
         // properties from the config, about this collection
         this.configMeta   = common.util.asObservableProps([
-            'displayName',
+            'min',
+            'max',
             'roleName',
             'roleDescription']);
         common.util.populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
         this.collectionMeta = common.util.asObservableProps([ 
-            'contentApiQuery',
-            'min',
-            'max',
+            'displayName',
             'lastUpdated',
             'updatedBy',
             'updatedEmail']);
@@ -56,8 +55,8 @@ define([
         this.state.liveMode(common.config.defaultToLiveMode);
 
         this.needsMore = ko.computed(function() {
-            if (self.state.liveMode()  && self.live().length  < self.collectionMeta.min()) { return true; }
-            if (!self.state.liveMode() && self.draft().length < self.collectionMeta.min()) { return true; }
+            if (self.state.liveMode()  && self.live().length  < self.configMeta.min()) { return true; }
+            if (!self.state.liveMode() && self.draft().length < self.configMeta.min()) { return true; }
             return false;
         });
 
@@ -81,7 +80,7 @@ define([
         this.state.editingConfig(!this.state.editingConfig());
     };
 
-    List.prototype.stopEditingConfig = function() {
+    List.prototype.cancelEditingConfig = function() {
         this.state.editingConfig(false);
         this.load();
     };
@@ -158,8 +157,6 @@ define([
         var self = this;
         opts = opts || {};
 
-        common.util.mediator.emit('list:load:start');
-
         reqwest({
             url: common.config.apiBase + '/collection/' + this.id,
             type: 'json'
@@ -181,8 +178,6 @@ define([
                 }
 
                 if (_.isFunction(opts.callback)) { opts.callback(); } 
-
-                common.util.mediator.emit('list:load:end');
             }
         );
     };
@@ -239,6 +234,9 @@ define([
     List.prototype.saveConfig = function() {
         var self = this;
 
+        this.state.editingConfig(false);
+        this.state.loadIsPending(true);
+
         reqwest({
             url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
@@ -246,11 +244,11 @@ define([
             contentType: 'application/json',
             data: JSON.stringify({ 
                 config: {
-                    displayName: this.configMeta.displayName()
+                    displayName: this.collectionMeta.displayName()
                 }
             })
         }).always(function(){
-            self.stopEditingConfig();
+            self.load();
         });
     };
 

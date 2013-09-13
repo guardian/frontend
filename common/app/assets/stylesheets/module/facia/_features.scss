@@ -1,7 +1,7 @@
-.collection--medium-stories {
-    margin-top: gs-height(1);
+.collection--features {
     .collection__title {
-        display: none;
+        background-color: $pink;
+        border-color: $light-pink;
     }
     .items {
         @include mq(tablet) {
@@ -39,11 +39,6 @@
             }
         }
     }
-    @include mq($to: tablet) {
-        .item__image {
-            display: none;
-        }
-    }
     .item__title {
         @include font-size(26, 28);
     }
@@ -55,6 +50,9 @@
     }
     .item__image {
         height: 100%;
+        @include mq($to: tablet) {
+            display: none;
+        }
     }
     .item__meta {
         @include mq(tablet) {
