@@ -432,13 +432,27 @@ a.cta, .cta a {
     min-height: 50px;
 }
 
-.fronts #collections .connectedList.pending {
-    pointer-events: none;
+.fronts .savingIndicator {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    color: #d61d00;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.fronts .pending {
     opacity: 0.5;
+    pointer-events: none;
 }
 
 .fronts .list-header {
+    color: #999999;
     overflow: auto;
+}
+
+.fronts .list-header a {
+    color: #005580;
 }
 
 .fronts .list-header__title {
@@ -449,27 +463,24 @@ a.cta, .cta a {
     background: #CCCCCC;
 }
 
-.fronts .list-header a,
-.fronts .list-header a:hover,
-.fronts .list-header a:visited {
-    color: #666666;
-}
-
 .fronts .list-header__edition,
 .fronts .list-header__section,
-.fronts .list-header__role {
-    font-weight: bold;
-    font-size: 14px;
-    text-transform: uppercase;
-}
-
-.fronts .list-header__edition { color: #999999; }
-.fronts .list-header__section { color: #666666; }
-.fronts .list-header__role    { color: #000000; }
-
-.fronts .list-header__meta,
+.fronts .list-header__role,
 .fronts .list-header__display,
 .fronts .list-header__role__description {
+    font-size: 14px;
+    color: #999999;
+}
+
+.fronts .list-header__edition { color: #999999; font-weight: bold; text-transform: uppercase; }
+.fronts .list-header__section { color: #666666; font-weight: bold; text-transform: uppercase; }
+.fronts .list-header__role    { color: #333333; font-weight: bold; text-transform: uppercase; }
+.fronts .list-header__display { color: #333333; }
+
+.fronts .list-header__role__description { color: #ffffff; }
+.fronts .list-header__display--is-set { font-weight: bold; }
+
+.fronts .list-header__meta {
     font-size: 10px;
     color: #666666;
     padding: 0 0 0 10px;
@@ -481,16 +492,6 @@ a.cta, .cta a {
 
 .fronts .collection:hover .list-header__role__description {
     display: inline-block;
-}
-
-.fronts .list-header__display__name {
-    font-size: 14px;
-    color: #666666;
-}
-
-.fronts .collection:hover .list-header__display__name {
-    font-size: 14px;
-    color: #005580;
 }
 
 .fronts .list-header__meta {
@@ -506,7 +507,7 @@ a.cta, .cta a {
 
 .fronts .list-header__status__live,
 .fronts .list-header__status__draft {
-    font-size: 12px;
+    font-size: 10px;
     float: left;
     padding: 0 6px;
     margin: 0 1px;
@@ -568,6 +569,7 @@ a.cta, .cta a {
     float: left;
     padding: 0 0 20px 0;
     border-top: 3px solid #999999;
+    position: relative;
 }
 
 .fronts .collection:first-child {
