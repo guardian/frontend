@@ -15,49 +15,64 @@ define([
 
     function Summary(context) {
         this.context = context || document;
+        this.maxSummaryHeight = 250;
+        this.expandableClass = 'live-summary--expandable';
         this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
+        this.summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary'));
+        this.summaryContainers = common.toArray(this.context.getElementsByClassName('js-article__summary'));
+        this.hiddenSummaryContainers = common.toArray(this.context.querySelectorAll('.js-article__summary.is-hidden'));
+        this.placeholders = common.toArray(this.context.getElementsByClassName('js-summary-placeholder'));
     }
 
     Summary.prototype.init = function() {
         var self = this;
 
-        this.deportLatestSummary();
-        this.findSummaries();
+        this.deportLatest();
+        this.render();
 
         common.mediator.on('modules:autoupdate:loaded', function() {
-            self.findSummaries.call(self);
+            self.deportLatest.call(self);
+            self.render.call(self);
         });
+        bean.on(window, 'resize', common.debounce(function() {
+            self.summaryContainers.forEach(function(element, index) {
+                self.expandable(element, self.maxSummaryHeight, self.expandableClass);
+            });
+        }, 100));
     };
 
-    Summary.prototype.findSummaries = function() {
-        var summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
-            hiddenSummaryContainers = common.toArray(this.context.querySelectorAll('.js-article__summary.is-hidden'));
+    Summary.prototype.render = function() {
+        var self = this;
 
-        if (summaries.length > 0 && hiddenSummaryContainers.length > 0) {
-            hiddenSummaryContainers.forEach(function(element, index) {
+        if (this.summaries.length > 0 && this.hiddenSummaryContainers.length > 0) {
+            this.hiddenSummaryContainers.forEach(function(element, index) {
                 bonzo(element).removeClass('is-hidden');
+                self.expandable(element, self.maxSummaryHeight, self.expandableClass);
             });
-            // Hide latest summary
-            summaries.forEach(function(element, index) {
-                bonzo(element).removeClass('is-hidden');
-            });
-            bonzo(summaries[0]).addClass('is-hidden');
+            bonzo(self.summaries[0]).addClass('is-hidden');
         }
     };
 
-    Summary.prototype.deportLatestSummary = function() {
-        var summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
-            summaryContent,
-            summaryPlaceholders;
+    Summary.prototype.deportLatest = function() {
+        var content;
 
         // TODO: Verify if summary has actually been updated
-        if (summaries.length > 0) {
-            summaryContent = summaries[0].innerHTML;
-            summaryPlaceholders = common.toArray(this.context.getElementsByClassName('js-summary-placeholder'));
+        if (this.summaries.length > 0) {
+            content = this.summaries[0].innerHTML;
 
-            summaryPlaceholders.forEach(function(element, index) {
-                bonzo(element).html(summaryContent);
+            this.placeholders.forEach(function(element, index) {
+                bonzo(element).html(content);
             });
+        }
+    };
+
+    Summary.prototype.expandable = function(element, maxElementHeight, expandableClass) {
+        var $element = bonzo(element);
+
+        if (element.offsetHeight > maxElementHeight) {
+            $element.addClass(expandableClass);
+        } else {
+            $element.removeClass(expandableClass);
         }
     };
 
