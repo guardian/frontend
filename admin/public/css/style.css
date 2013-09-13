@@ -457,6 +457,8 @@ a.cta, .cta a {
 
 .fronts .list-header__title {
     padding: 0 0 0 7px;
+    height: 20px;
+    overflow: hidden;
 }
 
 .fronts .collection:hover .list-header__title {
