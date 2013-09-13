@@ -108,7 +108,10 @@ trait UpdateActions {
   }
 
   def createBlock(id: String, identity: Identity, update: UpdateList) {
-    FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), Some(List(emptyTrailWithId(update.item))), DateTime.now.toString, identity.fullName, identity.email, None, None, None))
+    if (update.live)
+      FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None))
+    else
+      FrontsApi.putBlock(id, Block(id, None, Nil, Some(List(emptyTrailWithId(update.item))), DateTime.now.toString, identity.fullName, identity.email, None, None, None))
   }
 
   def updateTrailblockJson(id: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
