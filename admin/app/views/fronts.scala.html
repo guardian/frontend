@@ -90,8 +90,8 @@
                             }">
                             <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
                                 DRAFT
-                                <span data-bind="if: state.hasDraft()">
-                                    has edits
+                                <span data-bind="if: state.hasDraft() && state.liveMode()">
+                                    EXISTS
                                 </span>
                             </span>
                             <span data-bind="if: !state.liveMode() && state.hasDraft()">

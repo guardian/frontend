@@ -91,7 +91,7 @@ define([
         this.decorate();
     };
 
-    List.prototype.setLiveMode = function(isLiveMode) {
+    List.prototype.setLiveMode = function() {
         this.setMode(true);
     };
 
@@ -119,7 +119,7 @@ define([
         }).then(
             function(resp) {
                 self.load({
-                    callback: function(){ self.setMode(goLive); }
+                    callback: function(){ self.setLiveMode(); }
                 });
             },
             function(xhr) {
@@ -167,6 +167,8 @@ define([
             function(resp) {
                 self.state.loadIsPending(false);
 
+                self.state.hasDraft(_.isArray(resp.draft));
+
                 if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) { 
                     // noop    
                 } else {
@@ -196,8 +198,6 @@ define([
         if (this.containerEl) {
             this.containerEl.empty();
         }
-
-        this.state.hasDraft(_.isArray(opts.draft));
 
         this.importList(opts, 'live', 'live');
         this.importList(opts, this.state.hasDraft() ? 'draft' : 'live', 'draft');
