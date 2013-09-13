@@ -16,7 +16,7 @@ define([
     MatchNav,
     Reading,
     Discussion,
-    Cricket
+    Cricket,
     LiveShowMore
 ) {
 
