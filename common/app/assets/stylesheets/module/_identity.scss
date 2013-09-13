@@ -1,3 +1,7 @@
+
+/* Global header and navigation
+   ========================================================================== */
+
 .zone-identity {
     /* Hide sections menu for Identity pages */
     #header {
@@ -20,6 +24,9 @@
     }
 }
 
+/* Identity and registration
+   ========================================================================== */
+
 .identity-wrapper {
     margin-left: auto;
     margin-right: auto;
@@ -32,14 +39,14 @@
     @include box-sizing(border-box);
     margin: $gutter 0;
     padding-top: $gutter - 1;
-}
 
-.identity-section__head {
-    @extend %type-5;
-}
+    .identity-section__head {
+        @extend %type-5;
+    }
 
-.identity-section__text {
-    margin-top: $baseline*2;
+    .identity-section__text {
+        margin-top: $baseline*2;
+    }
 }
 
 .nav--registration {
