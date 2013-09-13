@@ -31,9 +31,10 @@ define([
         });
         bean.on(this.btn, 'click', function() {
             bonzo(self.options.context.querySelector('.' + self.options.hiddenCls)).removeClass(self.options.hiddenCls);
-            self.blocks.some(function(el){
-                return (bonzo(el).hasClass(self.options.hiddenCls)) ? true : bonzo(self.btn).addClass('h');
+            var moreBlocks = self.blocks.some(function(el){
+                return (bonzo(el).hasClass(self.options.hiddenCls)) ? true : false;
             });
+            if(!moreBlocks) { bonzo(self.btn).addClass('h'); }
         });
         bonzo(this.btn).removeClass('h');
     };
