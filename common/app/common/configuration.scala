@@ -204,6 +204,10 @@ class GuardianConfiguration(
     lazy val apiKey = configuration.getStringProperty("riffraff.apikey").getOrElse(throw new RuntimeException("RiffRaff api key not set"))
   }
 
+  object site {
+    lazy val url = configuration.getStringProperty("site.url").getOrElse("")
+  }
+
   // log out Play config on start
   log.info("Play config ----------------------------------------------------------------------------")
   Play.maybeApplication.map(c => c.configuration.entrySet.toSeq.sortBy(_._1).foreach{ case (k,v) =>
