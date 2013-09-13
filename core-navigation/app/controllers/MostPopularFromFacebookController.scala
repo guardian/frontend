@@ -1,9 +1,8 @@
 package controllers
 
 import common._
-import conf._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.mvc.{ Controller, Action }
 import feed.MostPopularFromFacebookAgent
 
 import concurrent.Future
@@ -19,9 +18,8 @@ object MostPopularFromFacebookController extends Controller with Logging with Ex
   )
 
   def render(path: String) = Action { implicit request =>
-    val edition = Edition(request)
     val globalPopular = MostPopular("The Guardian", "", MostPopularFromFacebookAgent.mostPopular)
-    val promiseOfSectionPopular = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
+    val promiseOfSectionPopular = Future(Nil)
     Async {
       promiseOfSectionPopular.map {
         sectionPopular =>
@@ -44,9 +42,8 @@ object MostPopularFromFacebookController extends Controller with Logging with Ex
   }
 
   def renderExpandable(path: String) = Action { implicit request =>
-    val edition = Edition(request)
     val globalPopular = MostPopular("The Guardian", "", MostPopularFromFacebookAgent.mostPopular)
-    val promiseOfSectionPopular = if (path.nonEmpty) lookupExpandable(edition, path).map(_.toList) else Future(Nil)
+    val promiseOfSectionPopular = Future(Nil)
     Async {
       promiseOfSectionPopular.map {
         sectionPopular =>
@@ -69,7 +66,6 @@ object MostPopularFromFacebookController extends Controller with Logging with Ex
   }
 
   def renderCard() = Action { implicit request =>
-    val edition = Edition(request)
     val trails = Random.shuffle(MostPopularFromFacebookAgent.mostPopular)
     if(trails.nonEmpty) {
       val jsonResponse = () => views.html.fragments.cards.card(trails.head, "right", "Most read", "Story pack card | most read")
@@ -78,34 +74,4 @@ object MostPopularFromFacebookController extends Controller with Logging with Ex
       NotFound
     }
   }
-
-
-  private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
-    log.info(s"Fetching most popular: $path for edition $edition")
-    ContentApi.item(path, edition)
-      .tag(None)
-      .showMostViewed(true)
-      .response.map{response =>
-      val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-          val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take 10
-
-          if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
-    }
-  }
-
-  private def lookupExpandable(edition: Edition, path: String)(implicit request: RequestHeader) = {
-    log.info(s"Fetching most popular: $path for edition $edition")
-    ContentApi.item(path, edition)
-      .tag(None)
-      .showMostViewed(true)
-      .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
-      .response.map{response =>
-      val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-      val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)
-
-      if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
-    }
-  }
-
-
 }

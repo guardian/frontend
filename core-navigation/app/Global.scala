@@ -14,7 +14,7 @@ trait MostPopularLifecycle extends GlobalSettings {
     Jobs.deschedule("MostPopularAgentRefreshJob")
     Jobs.deschedule("MostPopularFromFacebookAgentRefreshJob")
 
-    // every min
+    // fire every min
     Jobs.schedule("MostPopularAgentRefreshJob",  "0 * * * * ?", CoreNavivationMetrics.MostPopularLoadTimingMetric) {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
