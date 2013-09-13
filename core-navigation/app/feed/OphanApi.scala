@@ -13,7 +13,7 @@ object OphanApi extends DelegateHttp with Logging {
 
     def path(url: String) = url split "/" drop 3 mkString "/"
 
-    val apiRequest = "%s/mostread?referrer=facebook&hours=3&api-key=%s" format(ophanApi.host, ophanApi.key)
+    val apiRequest = "%s/mostread?referrer=facebook&hours=1&api-key=%s" format(ophanApi.host, ophanApi.key)
     val paths = GET(apiRequest) map {
       response => {
         val json = Json.parse(response.body)
