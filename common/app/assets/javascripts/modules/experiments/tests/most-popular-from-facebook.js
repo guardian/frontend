@@ -12,7 +12,7 @@ define(['bonzo', 'modules/popular'], function (bonzo, popular) {
             _config = config;
 
             var isArticle = config.page && config.page.contentType === "Article",
-                isFromFacebook = true; //document.referrer.indexOf('www.facebook.com') != -1;
+                isFromFacebook = document.referrer.indexOf('www.facebook.com') != -1;
 
             return isArticle && isFromFacebook;
         };
