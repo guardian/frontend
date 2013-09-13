@@ -11,7 +11,7 @@ function (
     cache
 ){
     function decorateItems(items) {
-        items.slice(0, common.config.maxOphanCallsPerBlock).forEach(function(item){
+        items.slice(0, 50).forEach(function(item, index){
             var id = item.meta.id(),
                 data = cache.get('pageViews', id);
 
@@ -22,9 +22,11 @@ function (
             } else if (data) {
                 // noop. Cache'd a fail.
             } else {
-                fetchData(id, function(data){
-                    decorateItem(data, item);
-                });
+                setTimeout(function(){
+                    fetchData(id, function(data){
+                        decorateItem(data, item);
+                    });                    
+                }, index * 1000/(common.config.ophanCallsPerSecond || 4)); // stagger requests
             }
         });
     };

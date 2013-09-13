@@ -43,42 +43,28 @@ trait ParseConfig extends ExecutionContexts {
     Config(
       (json \ "id").as[String],
       (json \ "displayName").as[String],
-      (json \ "max").as[String].toInt,
-      getStyle((json \ "style").as[String]),
-      (json \ "section").as[String],
-      (json \ "showmore").as[String].toBoolean
+      (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty)
     )
 
-  //TODO: Should probably live along side styles with object.apply
-  def getStyle(style: String): Option[Style] = style match {
-    case "featured"     => Some(Featured)
-    case "thumbnail"    => Some(Thumbnail)
-    case "headline"     => Some(Headline)
-    case "sectionfront" => Some(SectionFront)
-    case "masthead"     => Some(Masthead)
-    case "topStories"   => Some(TopStories)
-    case "highlights"   => Some(Highlights)
-    case _              => None
-  }
 }
 
 trait ParseCollection extends ExecutionContexts with Logging {
   private lazy val defaultMax = 15
 
-  def getCollection(id: String, edition: Edition): Future[Collection] = {
+  def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
     // get the running order from the apiwith
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: $collectionUrl")
     val response: Future[Response] = WS.url(collectionUrl).withTimeout(2000).get()
-    parseResponse(response, edition)
+    parseResponse(response, config, edition)
   }
 
-  private def parseResponse(response: Future[Response], edition: Edition): Future[Collection] = {
+  private def parseResponse(response: Future[Response], config: Config, edition: Edition): Future[Collection] = {
     response.flatMap { r =>
       r.status match {
         case 200 =>
           val bodyJson = parse(r.body)
-          val max = (bodyJson \ "max").asOpt[Int] getOrElse defaultMax
+          val displayName = (bodyJson \ "displayName").asOpt[String].filter(_.nonEmpty)
 
           // extract the articles
           val articles: Seq[String] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
@@ -87,15 +73,15 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
           val idSearch = getArticles(articles, edition)
 
-          val contentApiQuery = executeContentApiQuery((parse(r.body) \ "contentApiQuery").asOpt[String], edition)
+          val contentApiQuery = executeContentApiQuery(config.contentApiQuery, edition)
 
           val results = for {
             idSearchResults <- idSearch
             contentApiResults <- contentApiQuery
-          } yield (idSearchResults ++ contentApiResults).take(max)
+          } yield (idSearchResults ++ contentApiResults)
 
           results map {
-            case l: List[Content] => Collection(l.toSeq)
+            case l: List[Content] => Collection(l.toSeq, displayName)
           }
           //TODO: Removal of fallback forces full chain to fail
 
@@ -160,7 +146,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
 
   def getItems: Future[List[(Config, Collection)]] = {
     val futureConfig = getConfig(id) map {config =>
-      config map {c => c -> getCollection(c.id, edition)}
+      config map {c => c -> getCollection(c.id, c, edition)}
     }
     futureConfig map (_.toVector) flatMap { configMapping =>
         configMapping.foldRight(Future(List[(Config, Collection)]()))((configMap, foldList) =>

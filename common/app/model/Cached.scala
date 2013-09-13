@@ -4,6 +4,7 @@ import conf.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.mvc.{ Result, SimpleResult, Results }
+import scala.concurrent.{ExecutionContext, Future}
 
 object Cached extends Results {
 
@@ -15,6 +16,13 @@ object Cached extends Results {
   def apply[A](metaData: MetaData)(result: Result): Result = result match {
     case ok: SimpleResult[_] if ok.header.status == 200 => cacheHeaders(metaData.cacheSeconds, ok)
     case other => other
+  }
+
+  def async[T](future: Future[T], seconds: Int = 60)(f: T => Result)(implicit executor: ExecutionContext): Result = Async {
+    future map {
+      t =>
+        apply(seconds) { f(t) }
+    }
   }
 
   private def cacheHeaders[A](seconds: Int, result: SimpleResult[A]) = {

@@ -17,50 +17,54 @@ define([
     contentApi,
     ophanApi
 ) {
-    var configs = {},
-        dragging = false,
-        clipboardEl = document.querySelector('#clipboard'),
-        listLoadsPending = 0,
+    var clipboardEl = document.querySelector('#clipboard'),
         loc = window.location;
 
     return function(selector) {
 
-        var model = {},
-            self = this;
+        var self = this,
+            model = {
+                latestArticles: new LatestArticles(),
+                clipboard:      knockout.observableArray(),
+                collections:    knockout.observableArray(),
+                configs:        knockout.observableArray(),
+                config:         knockout.observable(),
+                actions: {
+                    unsetConfig: unsetConfig,
+                    flushClipboard: flushClipboard
+                }
+            };
 
-        function chosenCollections() {
-            return [].concat(_.filter((common.util.queryParams().collections || "").split(","), function(str){ return !!str; }));
+        function getConfig() {
+            return [].concat(_.filter((common.util.queryParams().config || "").split(","), function(str){ return !!str; }));
         }
 
-        function dropCollection(list) {
-            setDisplayedLists(_.reject(chosenCollections(), function(id){ return id === list.id; }));
+        function setConfig(ids) {
+            history.pushState({}, "", loc.pathname + '?' + common.util.ammendedQueryStr('config', [].concat(ids).join(',')));
+            renderCollections();
         }
 
-        function clearAll() {
+        function unsetConfig() {
             model.config(undefined);
-            setDisplayedLists([]);
+            setConfig([]);
         }
 
-        function setDisplayedLists(listIDs) {
-            var qp = common.util.queryParams();
-            qp.collections = listIDs.join(',');
-            qp = _.pairs(qp)
-                .filter(function(p){ return !!p[0]; })
-                .map(function(p){ return p[0] + (p[1] ? '=' + p[1] : ''); })
-                .join('&');
-
-            history.pushState({}, "", loc.pathname + '?' + qp);
-            renderLists();
+        function renderConfig() {
+            model.config(getConfig()[0]);
         }
 
-        function renderLists() {
+        function renderCollections() {
             model.collections.removeAll();
-            model.collections(
-                chosenCollections().map(function(id){
-                    return new List(id);
-                })
-            );
-            connectSortableLists();
+            getConfig().map(function(config){
+                fetchConfig(config, function(collections){
+                    model.collections(
+                        (collections || []).map(function(collection){
+                            return new List(collection);
+                        })
+                    );
+                    connectSortableLists();                
+                });
+            });
         }
 
         function connectSortableLists() {
@@ -158,16 +162,19 @@ define([
             }
         };
 
-        function _startPoller() {
-            setInterval(function(){
-                model.collections().forEach(function(list){
-                    if (!dragging) {
+        function startPoller() {
+            var period = common.config.collectionsPollMs || 60000;
+
+            setInterval(function(){                
+                model.collections().forEach(function(list, index){
+                    setTimeout(function(){
                         list.refresh();
-                    }
+                    }, index * period / (model.collections().length + 1)); // stagger requests
                 });
-            }, 5000);
+            }, period);
+
+            startPoller = function() {}; // make idempotent
         }
-        var startPoller = _.once(_startPoller);
 
         function fetchConfigs(callback) {
             reqwest({
@@ -180,18 +187,10 @@ define([
                         return; 
                     }
                     model.configs(resp.sort());
-
-                    resp.forEach(function(id){
-                        fetchConfig(id, function(c){
-                            configs[id] = c; 
-                        })                        
-                    });
-
                     if (_.isFunction(callback)) { callback(); }
                 },
                 function(xhr) { window.console.log("ERROR: There was a problem listing the configs"); }
             );
-            //window.configs = configs;
         };
 
         function fetchConfig(id, callback) {
@@ -234,81 +233,63 @@ define([
             ophanApi.decorateItems(model.clipboard());
         }
 
-        this.init = function(callback) {
-            model.latestArticles  = new LatestArticles();
-            model.clipboard        = knockout.observableArray();
+        model.config.subscribe(function(config) {
+            var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
+            model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
+            setConfig(config ? [config] : []);
+        });
 
-            model.configs     = knockout.observableArray();
-            model.config      = knockout.observable();
-            model.collections = knockout.observableArray();
-
-            model.actions = {
-                dropCollection: dropCollection,
-                clearAll: clearAll,
-                flushClipboard: flushClipboard
+        knockout.bindingHandlers.makeDropabble = {
+            init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                element.addEventListener('dragover',  onDragOver,  false);
+                element.addEventListener('drop',      onDrop,      false);
             }
+        };
 
-            model.config.subscribe(function(config) {
-                if (!config) { return; }
+        knockout.bindingHandlers.sparkline = {
+            update: function (element, valueAccessor, allBindingsAccessor, model) {
+                var groups = knockout.utils.unwrapObservable(valueAccessor()),
+                    max = _.max(_.pluck(groups, 'max'));
 
-                var section = config.split('/')[1]; // assumes ids are formed "edition/section/.."
+                if (!max) { return };
 
-                model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
+                _.chain(groups)
+                .sortBy(function(g){
+                    // Put biggest groups first, so that its fill color is behind the other groups
+                    return -1 * g.max;
+                }).each(function(group, i){
 
-                setDisplayedLists(_.pluck(configs[config], 'id'));
-            });
+                    group.data.pop(); // drop the last data point. 
 
-            knockout.bindingHandlers.makeDropabble = {
-                init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-                    element.addEventListener('dragover',  onDragOver,  false);
-                    element.addEventListener('drop',      onDrop,      false);
-                }
-            };
+                    var data = group.data,
+                        isHot = (_.last(data)/group.minsPerSlot) > 10;
 
-            knockout.bindingHandlers.sparkline = {
-                update: function (element, valueAccessor, allBindingsAccessor, model) {
-                    var groups = knockout.utils.unwrapObservable(valueAccessor()),
-                        max = _.max(_.pluck(groups, 'max'));
-
-                    if (!max) { return };
-
-                    _.chain(groups)
-                    .sortBy(function(g){
-                        // Put biggest groups first, so that its fill color is behind the other groups
-                        return -1 * g.max;
-                    }).each(function(group, i){
-
-                        group.data.pop(); // drop the last data point. 
-
-                        var data = group.data,
-                            isHot = (_.last(data)/group.minsPerSlot) > 10;
-
-                        $(element).sparkline(data, {
-                            chartRangeMax: max,
-                            defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
-                            height: Math.max(10, Math.min(30, max)),
-                            lineColor: '#' + group.color,
-                            spotColor: false,
-                            minSpotColor: false,
-                            maxSpotColor: false,
-                            lineWidth: isHot ? 2 : 1,
-                            fillColor: isHot ? '#eeeeee' : false,
-                            composite: i > 0
-                        });
+                    $(element).sparkline(data, {
+                        chartRangeMax: max,
+                        defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
+                        height: Math.max(10, Math.min(30, max)),
+                        lineColor: '#' + group.color,
+                        spotColor: false,
+                        minSpotColor: false,
+                        maxSpotColor: false,
+                        lineWidth: isHot ? 2 : 1,
+                        fillColor: isHot ? '#eeeeee' : false,
+                        composite: i > 0
                     });
-                }
-            };
+                });
+            }
+        };
 
+        this.init = function(callback) {
             fetchConfigs(function(){
                 knockout.applyBindings(model);
 
-                renderLists();
-
-                window.onpopstate = renderLists;
+                renderConfig();
+                window.onpopstate = renderConfig;
 
                 startPoller();
                 model.latestArticles.search();
-                //model.latestArticles.startPoller();
+                model.latestArticles.startPoller();
             });
         };
 
