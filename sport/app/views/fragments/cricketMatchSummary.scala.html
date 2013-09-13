@@ -2,13 +2,13 @@
 
 <div class="sport-summary sport-summary--cricket" itemscope itemtype="http://schema.org/SportsEvent">
     <header>
-        <time class="sport-summary__date h" datetime="@theMatch.gameDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
+        <time class="sport-summary__date u-h" datetime="@theMatch.gameDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
             data-timestamp="@theMatch.gameDate.getMillis">@Format(theMatch.gameDate, "d MMM y")</time>
         <h3 class="sport-summary__head" itemprop="name">@theMatch.description, @theMatch.venueName</h3>
     </header>
     <div class="sport-summary__body">
         <table class="sport-summary__score">
-            <thead class="h">
+            <thead class="u-h">
                 <tr>
                     <td>Team name</td>
                     <td>Score</td>
