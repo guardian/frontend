@@ -21,18 +21,21 @@
         margin: 0;
         font-family: $sans-serif;
     }
-    &.updated-time {
-        @extend %type-7;
-    }
 }
 
-.live-blog__blocks:first-child {
-    .timestamp:first-child,
-    .block:first-child .published-time {
-        border-top: none;
-        margin-top: 0;
-        padding-top: 0;
-    }
+.updated-time {
+    margin-bottom: $baseline*4;
+    @extend %type-11;
+    color: #777;
+}
+
+.live-blog > .block:first-child .published-time:first-child,
+.live-blog__blocks:first-child .timestamp:first-child,
+.live-blog__blocks:first-child .is-hidden:first-child + .block .published-time,
+.live-blog__blocks:first-child .block:first-child .published-time {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 
@@ -40,6 +43,7 @@
    ========================================================================== */
 
 .block-title,
+.from-content-api .block-title,
 .live-blog .block-title {
     margin-bottom: 10px;
 }

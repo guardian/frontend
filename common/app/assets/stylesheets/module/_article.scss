@@ -87,6 +87,11 @@
         line-height: 2.4rem;
     }
 }
+.article-body {
+    @include mq(tablet) {
+        margin-bottom: $baseline*4;
+    }
+}
 
 .bullet {
     font-size: 13px;
@@ -98,6 +103,7 @@
         margin-top: $baseline;
     }
 }
+
 
 .article__container,
 .article__main-column,
