@@ -22,9 +22,9 @@
         font-family: $sans-serif;
     }
 }
+
 .updated-time {
     margin-bottom: $baseline*4;
-    font-family: $sans-serif;
     @extend %type-11;
     color: #777;
 }
