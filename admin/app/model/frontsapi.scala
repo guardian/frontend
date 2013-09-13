@@ -64,10 +64,10 @@ trait UpdateActions {
 
   def updateCollectionFilter(id: String, update: UpdateList, identity: Identity) = {
     FrontsApi.getBlock(id) map { block: Block =>
+      lazy val updatedLive = block.live.filterNot(_.id == update.item)
       lazy val updatedDraft = block.draft map { l =>
         l.filterNot(_.id == update.item)
-      } orElse {Some(Nil)}
-      lazy val updatedLive = block.live.filterNot(_.id == update.item)
+      } orElse Some(updatedLive)
       updateCollection(id, block, update, identity, updatedDraft, updatedLive)
     }
   }
@@ -75,7 +75,7 @@ trait UpdateActions {
   def updateCollectionList(id: String, update: UpdateList, identity: Identity) = {
     FrontsApi.getBlock(id) map { block: Block =>
       lazy val updatedDraft: Option[List[Trail]] = block.draft map { l =>
-        if (l.isEmpty) updateList(update, block.live) else updateList(update, l)
+        updateList(update, l)
       } orElse {if (update.draft) Some(updateList(update, block.live)) else None}
       lazy val updatedLive = updateList(update, block.live)
       updateCollection(id, block, update, identity, updatedDraft, updatedLive)
