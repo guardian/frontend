@@ -19,8 +19,9 @@
             z-index: 1;
             position: absolute;
             left: 0; right: 0; bottom: 0;
-            height: 40px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 99%,rgba(255,255,255,1) 100%);
+            height: $unitHeight * 2;
+            background: -webkit-linear-gradient(transparent, white) left repeat;
+            background: linear-gradient(transparent, white) left repeat;
         }
     }
     .live-summary__expander-trigger:checked + .live-summary__expander-wrapper {

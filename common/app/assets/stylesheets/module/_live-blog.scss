@@ -28,6 +28,7 @@
 
 .live-blog__blocks:first-child {
     .timestamp:first-child,
+    .is-hidden:first-child + .block .published-time,
     .block:first-child .published-time {
         border-top: none;
         margin-top: 0;
@@ -40,6 +41,7 @@
    ========================================================================== */
 
 .block-title,
+.from-content-api .block-title,
 .live-blog .block-title {
     margin-bottom: 10px;
 }
