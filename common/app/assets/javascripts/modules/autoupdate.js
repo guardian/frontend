@@ -70,8 +70,8 @@ define([
                     if (options.responseSelector) {
                         $attachTo[manipulation](common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
                     } else {
+                        var elementsToAdd = bonzo.create('<div>' + res.html + '</div>')[0];
                         if (manipulation === 'prepend') {
-                            var elementsToAdd = bonzo.create('<div>' + res.html + '</div>')[0];
                             bonzo(elementsToAdd.children).addClass('autoupdate--new');
                         }
 
@@ -96,17 +96,12 @@ define([
 
                     unreadBlocks += newElements.length;
 
-                    if (options.showUnreadCounter && unreadBlocks && !detect.pageVisible()) {
-                        this.updatePageTitle(unreadBlocks);
-
-                    } else {
-                        unreadBlocks = 0;
-                        this.restorePageTitle();
-                    }
-
                     if (detect.pageVisible()) {
+                        unreadBlocks = 0;
                         this.revealNewElements();
                     }
+
+                    common.mediator.emit('modules:autoupdate:unread', unreadBlocks);
                 }
 
 
@@ -142,14 +137,6 @@ define([
                     bonzo(newElements).removeClass('autoupdate--new')
                                       .removeClass('autoupdate--highlight');
                 }, 5000);
-            },
-
-            updatePageTitle: function(count) {
-                document.title = '(' + count + ') ' + originalPageTitle;
-            },
-
-            restorePageTitle: function() {
-                document.title = originalPageTitle;
             }
         };
 
@@ -215,9 +202,6 @@ define([
             if (options.animateInserts) {
                 bonzo(options.attachTo).addClass('autoupdate--has-animation');
             }
-
-            // Save original page title
-            originalPageTitle = document.title;
 
             detect.initPageVisibility();
 

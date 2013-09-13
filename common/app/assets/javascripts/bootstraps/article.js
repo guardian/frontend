@@ -7,7 +7,8 @@ define([
     "modules/analytics/reading",
     "modules/discussion/discussion",
     "modules/cricket",
-    "modules/experiments/live-blog-show-more"
+    "modules/experiments/live-blog-show-more",
+    "modules/notification-counter"
 ], function (
     common,
     AutoUpdate,
@@ -17,7 +18,8 @@ define([
     Reading,
     Discussion,
     Cricket,
-    LiveShowMore
+    LiveShowMore,
+    NotificationCounter
 ) {
 
     var modules = {
@@ -60,7 +62,8 @@ define([
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
-                    var lf = new LiveFilter(context).init();
+                    var lf = new LiveFilter(context).init(),
+                        nc = new NotificationCounter().init();
 
                     if (config.switches.liveSummary) {
                         var ls = new LiveSummary(context).init();
