@@ -4,10 +4,12 @@
 */
 define([
     'common',
-    'bonzo'
+    'bonzo',
+    'bean'
 ], function (
     common,
-    bonzo
+    bonzo,
+    bean
 ) {
     'use strict';
 
@@ -19,7 +21,8 @@ define([
     }
 
     Summary.prototype.init = function() {
-        var self = this;
+        var self = this,
+            summaryContainers = common.toArray(this.context.querySelectorAll('.js-article__summary'));
 
         this.deportLatest();
         this.render();
@@ -27,6 +30,11 @@ define([
         common.mediator.on('modules:autoupdate:loaded', function() {
             self.render.call(self);
         });
+        bean.on(window, 'resize', common.debounce(function() {
+            summaryContainers.forEach(function(element, index) {
+                self.expandable(element, self.maxSummaryHeight, self.expandableClass);
+            });
+        }, 100));
     };
 
     Summary.prototype.render = function() {
