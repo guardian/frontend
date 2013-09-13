@@ -21,9 +21,12 @@
         margin: 0;
         font-family: $sans-serif;
     }
-    &.updated-time {
-        @extend %type-7;
-    }
+}
+.updated-time {
+    margin-bottom: $baseline*4;
+    font-family: $sans-serif;
+    @extend %type-11;
+    color: #777;
 }
 
 .live-blog__blocks:first-child {
