@@ -57,7 +57,7 @@
                         </div>
                         @if(LiveSummarySwitch.isSwitchedOn) {
                             <div class="js-article__summary is-hidden live-summary--before from-content-api" data-link-name="summary before content">
-                                <div class="block live-summary__block-clone">
+                                <div class="block">
                                     @article.summary.map{ summary =>
                                         @fragments.liveSummary(BodyCleaner(article, summary))
                                     }

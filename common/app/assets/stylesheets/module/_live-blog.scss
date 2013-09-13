@@ -29,14 +29,13 @@
     color: #777;
 }
 
-.live-blog__blocks:first-child {
-    .timestamp:first-child,
-    .is-hidden:first-child + .block .published-time,
-    .block:first-child .published-time {
-        border-top: none;
-        margin-top: 0;
-        padding-top: 0;
-    }
+.live-blog > .block:first-child .published-time:first-child,
+.live-blog__blocks:first-child .timestamp:first-child,
+.live-blog__blocks:first-child .is-hidden:first-child + .block .published-time,
+.live-blog__blocks:first-child .block:first-child .published-time {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 
