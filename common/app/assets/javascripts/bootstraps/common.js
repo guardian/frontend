@@ -254,7 +254,7 @@ define([
                         return viewData;
                     });
 
-                    Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined);
+                    Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
                 });
 
             });
