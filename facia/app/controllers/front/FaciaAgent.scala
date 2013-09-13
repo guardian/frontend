@@ -141,26 +141,40 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
 }
 
-class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection {
+class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging {
   private lazy val queryAgent = AkkaAgent[List[(Config, Collection)]](Nil)
 
-  def getItems: Future[List[(Config, Collection)]] = {
+  def getItems: Future[List[(Config, Either[Throwable, Collection])]] = {
     val futureConfig = getConfig(id) map {config =>
       config map {c => c -> getCollection(c.id, c, edition)}
     }
-    futureConfig map (_.toVector) flatMap { configMapping =>
-        configMapping.foldRight(Future(List[(Config, Collection)]()))((configMap, foldList) =>
+
+    futureConfig.map(_.toVector).flatMap{ configMapping =>
+        configMapping.foldRight(Future(List[(Config, Either[Throwable, Collection])]()))((configMap, foldList) =>
           for {
             newList <- foldList
-            collection <- configMap._2
+            collection <- {configMap._2.map(Right(_)).recover{case t: Throwable => Left(t)}}
           }
           yield (configMap._1, collection) +: newList)
     }
   }
 
-  def refresh() = getItems map {m =>
-    queryAgent.send(m)
-  }
+  def refresh() =
+    getItems map { newConfigList =>
+      queryAgent.send { oldConfigList =>
+        lazy val oldConfigMap = oldConfigList.map{case (config, collection) => (config.id, collection)}.toMap
+        newConfigList flatMap { collectionConfig =>
+          collectionConfig match {
+            case (config, Left(exception)) => {
+              log.warn("Updating ID %s failed".format(config.id))
+              oldConfigMap.get(config.id).map(oldCollection => (config, oldCollection))
+            }
+            case (config, Right(newCollection)) => Some((config, newCollection))
+          }
+        }
+      }
+    }
+
 
   def close() = queryAgent.close()
 
