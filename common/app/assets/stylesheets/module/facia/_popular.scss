@@ -7,6 +7,14 @@
         padding-left: ($gs-gutter/2) - 1;
         border-left: 1px solid $grey;
     }
+    .collection--lifeandstyle-section + &,
+    .collection--technology-section + &,
+    .collection--travel-section + & {
+        .collection__title {
+            background-color: $pink;
+            border-color: $light-pink;
+        }
+    }
     .items {
         margin-top: $baseline*3;
         counter-reset: most-read;

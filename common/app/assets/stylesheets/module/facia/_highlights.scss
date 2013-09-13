@@ -10,6 +10,14 @@
     @include mq(wide) {
         width: gs-span(12);
     }
+    &.collection--lifeandstyle-section,
+    &.collection--technology-section,
+    &.collection--travel-section {
+        .collection__title {
+            background-color: $pink;
+            border-color: $light-pink;
+        }
+    }
     .items {
         @include mq(tablet) {
             font-size: 0;
