@@ -4,6 +4,7 @@ import frontsapi.model.{Trail, Block}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import services.S3FrontsApi
+import controllers.Identity
 
 trait FrontsApiRead {
   def getSchema: Option[String]
@@ -13,8 +14,9 @@ trait FrontsApiRead {
 }
 
 trait FrontsApiWrite {
-  def putBlock(id: String, block: Block): Unit
-  def publishBlock(id: String): Unit
+  def putBlock(id: String, block: Block, identity: Identity): Unit
+  def publishBlock(id: String, identity: Identity): Unit
+  def discardBlock(id: String, identity: Identity): Unit
   def archive(id: String, block: Block): Unit
 }
 
@@ -33,8 +35,13 @@ object FrontsApi extends FrontsApiRead with FrontsApiWrite {
 
   def getBlocksSince(since: DateTime) = ???
 
-  def putBlock(id: String, block: Block) = S3FrontsApi.putBlock(id, Json.prettyPrint(Json.toJson(block)))
-  def publishBlock(id: String) = getBlock(id) foreach { block => putBlock(id, block.copy(live = block.draft, areEqual=true))}
-  def discardBlock(id: String) = getBlock(id) foreach { block => putBlock(id, block.copy(draft = block.live, areEqual=true))}
+  def putBlock(id: String, block: Block, identity: Identity) = {
+    val newBlock = updateIdentity(block, identity)
+    S3FrontsApi.putBlock(id, Json.prettyPrint(Json.toJson(newBlock)))
+  }
+  def publishBlock(id: String, identity: Identity) = getBlock(id) map (updateIdentity(_, identity)) foreach { block => putBlock(id, block.copy(live = block.draft.getOrElse(Nil), draft = None), identity)}
+  def discardBlock(id: String, identity: Identity) = getBlock(id) map (updateIdentity(_, identity)) foreach { block => putBlock(id, block.copy(draft = None), identity)}
   def archive(id: String, block: Block) = S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(block)))
+
+  def updateIdentity(block: Block, identity: Identity): Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
 }

@@ -88,17 +88,15 @@
                         </div>                    
                         <div class="list-header__status__draft" data-bind="
                             css: {
-                                active: !state.liveMode(),
-                                hasUnPublishedEdits: state.hasUnPublishedEdits()
+                                'active':   !state.liveMode(),
+                                'has-draft': state.hasDraft()
                             }">
                             <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
                                 DRAFT
-                                <span data-bind="if: state.hasUnPublishedEdits()">
-                                    has edits
-                                </span>
+                                <span data-bind="if: state.hasDraft">EXISTS</span>
                             </span>
-                            <span data-bind="if: !state.liveMode() && state.hasUnPublishedEdits()">
-                                &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
+                            <span data-bind="if: !state.liveMode() && state.hasDraft()">
+                                &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish draft</a>
                                 &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
                             </span>
                         </div>
