@@ -16,7 +16,6 @@
         }
         @include mq(tablet, wide) {
             white-space: nowrap;
-            height: gs-height(8);
             overflow-x: scroll;
             overflow-y: hidden;
         }
@@ -70,11 +69,11 @@
         }
     }
     .item__image {
-        @include mq($to: wide) {
+        @include mq($to: tablet) {
             display: block;
             width: 100%;
         }
-        @include mq(wide) {
+        @include mq(tablet) {
             height: 100%;
         }
     }
