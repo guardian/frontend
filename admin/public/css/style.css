@@ -448,7 +448,8 @@ a.cta, .cta a {
 
 .fronts .list-header {
     color: #999999;
-    overflow: auto;
+    overflow: hidden;
+    height: 40px;
 }
 
 .fronts .list-header a {
