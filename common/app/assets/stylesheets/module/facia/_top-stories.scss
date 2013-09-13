@@ -1,63 +1,63 @@
 .collection--top-stories {
     overflow: hidden;
+    .collection__title {
+        background-color: $blue;
+        border-color: $light-blue;
+    }
     .item {
+        @include mq($to: tablet) {
+            &:first-child .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+            &:last-child {
+                margin-top: $gs-baseline*2;
+                .item__title {
+                    @include font-size(20, 24);
+                }
+                .item__image-container {
+                    display: none;
+                }
+            }
+        }
         @include mq(tablet) {
             float: left;
             border: 10px none #ffffff;
             width: 50%;
-            padding-bottom: gs-height(5);
+            padding-bottom: gs-height(5) - $gs-baseline;
             min-height: gs-height(8);
             &:first-child {
-                border-right-style: solid;
+                padding-right: $gs-gutter/2 - 1;
+                border-right: 1px dotted $grey;
             }
             &:last-child {
-                border-left-style: solid;
+                padding-left: $gs-gutter/2;
             }
         }
         @include mq(desktop) {
-            padding-bottom: gs-height(7);
+            padding-bottom: gs-height(7) - $gs-baseline;
             min-height: gs-height(9);
         }
         @include mq(wide) {
-            padding-bottom: gs-height(9);
+            padding-bottom: gs-height(9) - $gs-baseline;
             min-height: gs-height(12);
         }
     }
     .item__title {
+        @include font-size(26, 28);
         @include mq(tablet) {
-            @include font-size(26, 28);
+            border-top-style: none;
+            padding-top: 0;
         }
         @include mq(wide) {
             @include font-size(34, 36);
         }
     }
-    .item__image-container {
-        @include mq($to: tablet) {
-            display:none;
-        }
-        @include mq(tablet) {
-            position: absolute;
-            bottom: 0;
-            height: gs-height(4);
-        }
-        @include mq(desktop) {
-            height: gs-height(6);
-        }
-        @include mq(wide) {
-            height: gs-height(8);
-        }
-    }
-    @include mq($to: wide) {
-        .item__standfirst {
+    .item__standfirst {
+        @include mq($to: wide) {
             display: none;
         }
-    }
-    .item__image {
-        height: 100%;
-    }
-    @include mq(wide) {
-        .item__standfirst {
-            display: block;
+        @include mq(wide) {
             margin-top: $gs-baseline;
             @include font-size(20, 24);
         }
@@ -65,13 +65,38 @@
     .item__meta {
         @include mq(tablet) {
             position: absolute;
-            bottom: gs-height(4) + $gs-baseline;
+            bottom: gs-height(4);
         }
         @include mq(desktop) {
-            bottom: gs-height(6) + $gs-baseline;
+            bottom: gs-height(6);
         }
         @include mq(wide) {
-            bottom: gs-height(8) + $gs-baseline;
+            bottom: gs-height(8);
+        }
+    }
+    .item__image-container {
+        @include mq(tablet) {
+            position: absolute;
+            bottom: 0;
+            height: gs-height(4);
+            width: gs-span(4);
+        }
+        @include mq(desktop) {
+            height: gs-height(6);
+            width: gs-span(6);
+        }
+        @include mq(wide) {
+            height: gs-height(8);
+            width: gs-span(8);
+        }
+    }
+    .item__image {
+        @include mq($to: wide) {
+            display: block;
+            width: 100%;
+        }
+        @include mq(wide) {
+            height: 100%;
         }
     }
 }

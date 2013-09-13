@@ -28,7 +28,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     case 'tablet':
                         return 2;
                     default:
-                        return 4;
+                        return 1;
                 }
             };
 

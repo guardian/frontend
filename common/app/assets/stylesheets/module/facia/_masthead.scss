@@ -1,6 +1,6 @@
 
 @mixin item--with-overlay {
-    width: gs-span(6);
+    width: gs-span(4);
     color: #ffffff;
     .item__title {
         position: absolute;
@@ -16,9 +16,11 @@
             border-left-style: none;
         }
     }
-    &.item--feature .item__title {
-        background-color: $pink;
-        background-color: rgba($pink, 0.7);
+    &.item--feature {
+        .item__title {
+            background-color: $pink;
+            background-color: rgba($pink, 0.7);
+        }
     }
 }
 %item--with-overlay {
@@ -245,11 +247,20 @@
     .item__meta {
         position:absolute;
         bottom: 0;
+        .item__timestamp {
+            border-left-style: solid;
+            padding-left: $gs-gutter;
+            i {
+                left: 4px;
+            }
+        }
     }
     .item--feature {
         border-top-color: $pink !important;
     }
-
+    .item--comment {
+        border-top-color: $green !important;
+    }
     .items {
         @include mq(tablet) {
             height: gs-height(6);
@@ -265,7 +276,7 @@
     .item-count-1 .item {
         @include mq(tablet, desktop) {
             @extend %item--large;
-            @include customise-item--large(100%, gs-span(6));
+            @include customise-item--large(100%, gs-span(4));
         }
         @include mq(desktop, wide) {
             @extend %item--large;
