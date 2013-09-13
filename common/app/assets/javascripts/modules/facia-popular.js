@@ -41,7 +41,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                     common.mediator.emit('module:error', 'Failed to load facia popular: ' + req.statusText, 'modules/facia-popular.js');
                 }
             );
-        }
+        };
 
     };
 
