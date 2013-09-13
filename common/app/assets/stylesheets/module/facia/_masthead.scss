@@ -205,21 +205,6 @@
 }
 
 .collection--masthead {
-    &.collection--culture-section,
-    &.collection--lifeandstyle-section,
-    &.collection--technology-section,
-    &.collection--travel-section {
-        .collection__title {
-            background-color: $pink;
-            border-color: $light-pink;
-        }
-    }
-    &.collection--commentisfree-section {
-        .collection__title {
-            background-color: $green;
-            border-color: $light-green;
-        }
-    }
     .item {
         float: left;
         height: 100%;

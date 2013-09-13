@@ -30,8 +30,18 @@ define([
 
         showFaciaPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                var f = new FaciaPopular(context.querySelector('.collection--highlights.collection--sport-section'));
-                f.render();
+                var sections = [
+                    '.collection--highlights.collection--sport-section',
+                    '.collection--highlights.collection--business-section',
+                    '.collection--highlights.collection--lifeandstyle-section',
+                    '.collection--highlights.collection--technology-section',
+                    '.collection--highlights.collection--money-section',
+                    '.collection--highlights.collection--travel-section'
+                ];
+                common.toArray(context.querySelectorAll(sections.join(','))).forEach(function (section) {
+                    var f = new FaciaPopular(section);
+                    f.render();
+                });
             });
         }
 
