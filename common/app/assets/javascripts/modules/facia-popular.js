@@ -6,13 +6,15 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
         '</section>',
         itemTmpl = '<li class="item"><a href="" class="item__link"></a></li>';
 
-    var faciaPopular =  {
+    var FaciaPopular =  function(section) {
+
+        var _section = section;
 
         // Initialise
-        init:  function (config, context) {
-            var hasSection = config.page && config.page.section && config.page.section !== 'global';
+        this.render =  function () {
+            var section = bonzo(_section).attr('data-section');
             return ajax({
-                url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
+                url: '/most-read' + (section ? '/' + section : '') + '.json',
                 type: 'json',
                 crossOrigin: true
             }).then(
@@ -33,7 +35,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                     // add the popular section after the highlights
                     bonzo(bonzo.create(sectionTmpl))
                         .append($collection)
-                        .insertAfter('.collection--highlights');
+                        .insertAfter(_section);
                 },
                 function(req) {
                     common.mediator.emit('module:error', 'Failed to load facia popular: ' + req.statusText, 'modules/facia-popular.js');
@@ -43,6 +45,6 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
     };
 
-    return faciaPopular;
+    return FaciaPopular;
 
 });

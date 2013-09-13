@@ -9,7 +9,7 @@ define([
     common,
     mastheadRelativeDates,
     TopStoriesShowMore,
-    faciaPopular
+    FaciaPopular
 ) {
 
     var modules = {
@@ -30,7 +30,8 @@ define([
 
         showFaciaPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                faciaPopular.init(config, context);
+                var f = new FaciaPopular(context.querySelector('.collection--highlights.collection--sport-section'));
+                f.render();
             });
         }
 
