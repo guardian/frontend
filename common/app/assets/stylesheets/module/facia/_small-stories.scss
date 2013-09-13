@@ -1,4 +1,5 @@
 .collection--small-stories {
+    margin-top: gs-height(1);
     .collection__title {
         display: none;
     }
@@ -64,7 +65,7 @@
         }
     }
 
-    $arrow-height: $gs-gutter*(2/3);
+    $arrow-height: $gs-baseline*(2/3);
     .items__show-more {
         background-color: #9b9b9b;
         border-style: none;
