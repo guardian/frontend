@@ -262,16 +262,20 @@ $keylineSize: 1px;
     }
 }
 
-.d-comment__action--recommend {
+.d-comment__recommend {
     font-family: $sans-serif;
-    font-size: 12px;
-    font-size: 1.2rem;
+    font-size: 14px;
+    font-size: 1.4rem;
     position: absolute;
-    right: $gutter * 1.5;
+    right: 0;
     top: $baseline * 4;
 }
 
-.d-comment__action--active {
+.d-comment__recommend--left {
+    right: $gutter * 1.5;
+}
+
+.d-comment__recommend--active {
     color: #4490ce;
     cursor: pointer;
 }
