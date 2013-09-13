@@ -66,7 +66,7 @@ trait UpdateActions {
     FrontsApi.getBlock(id) map { block: Block =>
       lazy val updatedDraft = block.draft map { l =>
         l.filterNot(_.id == update.item)
-      }
+      } orElse {Some(Nil)}
       lazy val updatedLive = block.live.filterNot(_.id == update.item)
       updateCollection(id, block, update, identity, updatedDraft, updatedLive)
     }
