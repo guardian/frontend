@@ -5,8 +5,7 @@ define([
 ) {
     'use strict';
 
-    var originalPageTitle = document.title,
-        unreadCounter     = 0;
+    var originalPageTitle = document.title;
 
     function NotificationCounter() {
 
