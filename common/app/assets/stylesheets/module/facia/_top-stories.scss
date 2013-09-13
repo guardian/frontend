@@ -79,15 +79,12 @@
             position: absolute;
             bottom: 0;
             height: gs-height(4);
-            width: gs-span(4);
         }
         @include mq(desktop) {
             height: gs-height(6);
-            width: gs-span(6);
         }
         @include mq(wide) {
             height: gs-height(8);
-            width: gs-span(8);
         }
     }
     .item__image {

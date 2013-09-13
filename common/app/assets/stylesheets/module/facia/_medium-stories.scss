@@ -42,8 +42,7 @@
         }
         @include mq(tablet) {
             @include font-size(26, 28);
-            min-height: gs-height(4) + $gs-baseline;
-            padding-bottom: gs-height(1);
+            min-height: gs-height(3) + ($gs-baseline*2);
         }
     }
     .item__image-container {
@@ -54,16 +53,9 @@
             position: absolute;
             bottom: 0;
             height: gs-height(4);
-            width: gs-span(4);
         }
     }
     .item__image {
         height: 100%;
-    }
-    .item__meta {
-        @include mq(tablet) {
-            position: absolute;
-            bottom: gs-height(4) + $gs-baseline;
-        }
     }
 }
