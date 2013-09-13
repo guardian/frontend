@@ -206,6 +206,7 @@ define([
             detect.initPageVisibility();
 
             common.mediator.on('modules:detect:pagevisibility:visible', function() {
+                common.mediator.emit('modules:autoupdate:unread', 0);
                 that.view.revealNewElements();
             });
 
