@@ -206,7 +206,6 @@ define([
             detect.initPageVisibility();
 
             common.mediator.on('modules:detect:pagevisibility:visible', function() {
-                that.view.restorePageTitle();
                 that.view.revealNewElements();
             });
 

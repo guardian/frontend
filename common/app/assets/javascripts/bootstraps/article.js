@@ -57,8 +57,7 @@ define([
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
                         manipulationType: 'prepend',
-                        animateInserts: true,
-                        showUnreadCounter: true
+                        animateInserts: true
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
