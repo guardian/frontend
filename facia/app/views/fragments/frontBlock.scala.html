@@ -3,7 +3,7 @@
 @if(collection.items.nonEmpty){
 
     @defining(FindStyle("uk", config)) { style =>
-        <section class="collection collection--@style.className" data-link-name="block | @config.name">
+        <section class="collection collection--@style.className collection--@{config.section}-section" data-link-name="block | @config.name">
 
             @defining(collection.displayName.getOrElse(config.name)) { title =>
                 @if(title) {
@@ -16,6 +16,7 @@
                 case TopStories    => { @trailblocks.topStories(collection.items) }
                 case MediumStories => { @trailblocks.mediumStories(collection.items) }
                 case SmallStories  => { @trailblocks.smallStories(collection.items) }
+                case Features      => { @collections.features(collection.items) }
                 case Highlights    => { @trailblocks.highlights(collection.items) }
                 case _             => { @trailblocks.highlights(collection.items) }
             }

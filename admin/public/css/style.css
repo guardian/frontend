@@ -428,7 +428,7 @@ a.cta, .cta a {
     border-right:  0;
 }
 
-.fronts #trailblocks .connectedList {
+.fronts #collections .connectedList {
     min-height: 50px;
 }
 
@@ -459,7 +459,7 @@ a.cta, .cta a {
     padding: 2px 0 2px 7px;
 }
 
-.fronts .trailblock:hover .list-header__title {
+.fronts .collection:hover .list-header__title {
     background: #CCCCCC;
 }
 
@@ -490,7 +490,7 @@ a.cta, .cta a {
     display: none;
 }
 
-.fronts .trailblock:hover .list-header__role__description {
+.fronts .collection:hover .list-header__role__description {
     display: inline-block;
 }
 
@@ -558,11 +558,11 @@ a.cta, .cta a {
     margin: 0 2px 0 0;
 }
 
-.fronts #trailblocks {
+.fronts #collections {
     margin: 0 0 0 350px;
 }
 
-.fronts .trailblock {
+.fronts .collection {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
@@ -572,7 +572,7 @@ a.cta, .cta a {
     position: relative;
 }
 
-.fronts .trailblock:first-child {
+.fronts .collection:first-child {
     margin-top: 35px;
 }
 
@@ -617,7 +617,7 @@ a.cta, .cta a {
     background-color: #EEEEEE;
 }
 
-.fronts .trailblock .trail img,
+.fronts .collection .trail img,
 .fronts .trail:hover img {
     display: block;    
 }
@@ -637,7 +637,7 @@ a.cta, .cta a {
     color: #000000;
 }
 
-.fronts .trailblock .trail .webTitle {
+.fronts .collection .trail .webTitle {
     font-size: 15px;
     margin-right: 140px;
 }
@@ -665,7 +665,7 @@ a.cta, .cta a {
     margin-top: 4px;
 }
 
-.fronts .trailblock .trail .trail__meta {
+.fronts .collection .trail .trail__meta {
     float: right;
     clear: right;
     text-align: right;
@@ -689,7 +689,7 @@ a.cta, .cta a {
     display: none;
 }
 
-.fronts .trailblock .trail:hover .trail__actions {
+.fronts .collection .trail:hover .trail__actions {
     display: block;
     position: absolute;
     top: 2px;
