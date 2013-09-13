@@ -12,13 +12,14 @@ trait LinkTo extends Logging {
   lazy val host = Configuration.site.url
 
   private val AbsoluteGuardianUrl = "^http://www.theguardian.com/(.*)$".r
-  private val AbsolutePath = "^/(.*)+".r
+  private val AbsolutePath = "^/(.+)".r
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
   def apply(url: String, edition: Edition): String = url match {
     case "http://www.theguardian.com" => urlFor("", edition)
+    case "/" => urlFor("", edition)
     case AbsoluteGuardianUrl(path) =>  urlFor(path, edition)
     case AbsolutePath(path) => urlFor(path, edition)
     case otherUrl => otherUrl
@@ -29,3 +30,4 @@ trait LinkTo extends Logging {
 }
 
 object LinkTo extends LinkTo
+
