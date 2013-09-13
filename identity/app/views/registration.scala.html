@@ -7,14 +7,20 @@
 @main(page, conf.Switches.all){
 }{
 <div class="identity-wrapper">
-    <h1>Create your Guardian account using</h1>
+    <h1>Create your Guardian account</h1>
 
-    <ul>
-        <li>
-            <a href="@idUrlBuilder.appendQueryParams(conf.Configuration.id.webappUrl + "/facebook/signin", idUrlBuilder.queryParams(idRequest))" data-link-name="Register with Facebook">Facebook</a>
+    <ul class="social-signin">
+        <li class="social-signin__item social-signin__item--fb">
+            <a class="social-signin__action" href="@idUrlBuilder.appendQueryParams(conf.Configuration.id.webappUrl + "/facebook/signin", idUrlBuilder.queryParams(idRequest))" data-link-name="Register with Facebook">
+                <span>Sign in with Facebook</span>
+                <i class="i-fb i social-signin__icon social-signin__icon--fb"></i>
+            </a>
         </li>
-        <li>
-            <a href="@idUrlBuilder.appendQueryParams(conf.Configuration.id.webappUrl + "/google/signin", idUrlBuilder.queryParams(idRequest))" data-link-name="Register with Google">Google</a>
+        <li class="social-signin__item social-signin__item--gplus">
+            <a class="social-signin__action" href="@idUrlBuilder.appendQueryParams(conf.Configuration.id.webappUrl + "/google/signin", idUrlBuilder.queryParams(idRequest))" data-link-name="Register with Google">
+                <span>Sign in with Google</span>
+                <i class="i-gplus i social-signin__icon social-signin__icon--gplus"></i>
+            </a>
         </li>
     </ul>
 
