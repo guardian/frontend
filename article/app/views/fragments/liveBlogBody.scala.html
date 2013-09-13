@@ -59,7 +59,7 @@
                             <div class="js-article__summary is-hidden live-summary--before from-content-api" data-link-name="summary before content">
                                 <div class="block live-summary__block-clone">
                                     @article.summary.map{ summary =>
-                                        @fragments.liveSummary(summary, "before-content")
+                                        @fragments.liveSummary(BodyCleaner(article, summary))
                                     }
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                                         <div class="js-article__summary is-hidden from-content-api from-content-api--small" data-link-name="summary after content" aria-hidden="true">
                                             <div class="block">
                                                 @article.summary.map{ summary =>
-                                                    @fragments.liveSummary(summary, "after-content")
+                                                    @fragments.liveSummary(BodyCleaner(article, summary))
                                                 }
                                             </div>
                                         </div>
