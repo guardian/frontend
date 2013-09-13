@@ -93,12 +93,10 @@
                             }">
                             <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
                                 DRAFT
-                                <span data-bind="if: state.hasDraft() && state.liveMode()">
-                                    EXISTS
-                                </span>
+                                <span data-bind="if: state.hasDraft">EXISTS</span>
                             </span>
                             <span data-bind="if: !state.liveMode() && state.hasDraft()">
-                                &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish</a>
+                                &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish draft</a>
                                 &middot; <a class="list-header__status__control" data-bind="click: discardDraft">discard</a>
                             </span>
                         </div>
