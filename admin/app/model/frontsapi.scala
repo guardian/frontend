@@ -12,8 +12,7 @@ case class Block(
                   id: String,
                   name: Option[String],
                   live: List[Trail],
-                  draft: List[Trail],
-                  areEqual: Boolean,
+                  draft: Option[List[Trail]],
                   lastUpdated: String,
                   updatedBy: String,
                   updatedEmail: String,
@@ -64,15 +63,19 @@ trait UpdateActions {
 
   def updateCollectionFilter(id: String, update: UpdateList, identity: Identity) = {
     FrontsApi.getBlock(id) map { block: Block =>
-      lazy val updatedDraft = block.draft.filterNot(_.id == update.item)
       lazy val updatedLive = block.live.filterNot(_.id == update.item)
+      lazy val updatedDraft = block.draft map { l =>
+        l.filterNot(_.id == update.item)
+      } orElse Some(updatedLive)
       updateCollection(id, block, update, identity, updatedDraft, updatedLive)
     }
   }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity) = {
     FrontsApi.getBlock(id) map { block: Block =>
-      lazy val updatedDraft = updateList(update, block.draft)
+      lazy val updatedDraft: Option[List[Trail]] = block.draft map { l =>
+        updateList(update, l)
+      } orElse {if (update.draft) Some(updateList(update, block.live)) else None}
       lazy val updatedLive = updateList(update, block.live)
       updateCollection(id, block, update, identity, updatedDraft, updatedLive)
     } getOrElse {
@@ -80,18 +83,15 @@ trait UpdateActions {
     }
   }
 
-  def updateCollection(id: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => List[Trail], updatedLive: => List[Trail]): Unit = {
-      val draft = shouldUpdate(update.draft, block.draft, updatedDraft)
+  def updateCollection(id: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => Option[List[Trail]], updatedLive: => List[Trail]): Unit = {
       val live = shouldUpdate(update.live, block.live, updatedLive)
+      val draft = shouldUpdate(update.draft, block.draft, updatedDraft) filter {_ != live}
 
-      val blockWithUpdatedTrails =
+      val newBlock =
         block.copy(draft = draft)
-          .copy(live = live)
-          .copy(areEqual = draft == live)
+             .copy(live = live)
 
-      val newBlock: Block = updateIdentity(blockWithUpdatedTrails, identity)
-
-      FrontsApi.putBlock(id, newBlock)
+      FrontsApi.putBlock(id, newBlock, identity)
       FrontsApi.archive(id, block)
   }
 
@@ -105,7 +105,10 @@ trait UpdateActions {
   }
 
   def createBlock(id: String, identity: Identity, update: UpdateList) {
-    FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), List(emptyTrailWithId(update.item)), areEqual = true, DateTime.now.toString, identity.fullName, identity.email, None))
+    if (update.live)
+      FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
+    else
+      FrontsApi.putBlock(id, Block(id, None, Nil, Some(List(emptyTrailWithId(update.item))), DateTime.now.toString, identity.fullName, identity.email, None), identity)
   }
 
   def updateTrailblockJson(id: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
@@ -114,13 +117,10 @@ trait UpdateActions {
         displayName = updateTrailblock.config.displayName map HtmlFormat.escape map (_.body)
       )
       if (newBlock != block) {
-        FrontsApi.putBlock(id, updateIdentity(newBlock, identity))
+        FrontsApi.putBlock(id, newBlock, identity)
       }
     }
   }
-
-  def updateIdentity(block: Block, identity: Identity): Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
-
 }
 
 object UpdateActions extends UpdateActions
