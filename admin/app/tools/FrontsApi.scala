@@ -34,7 +34,7 @@ object FrontsApi extends FrontsApiRead with FrontsApiWrite {
   def getBlocksSince(since: DateTime) = ???
 
   def putBlock(id: String, block: Block) = S3FrontsApi.putBlock(id, Json.prettyPrint(Json.toJson(block)))
-  def publishBlock(id: String) = getBlock(id) foreach { block => putBlock(id, block.copy(live = block.draft))}
-  def discardBlock(id: String) = getBlock(id) foreach { block => putBlock(id, block.copy(draft = block.live))}
+  def publishBlock(id: String) = getBlock(id) foreach { block => putBlock(id, block.copy(live = block.draft.getOrElse(Nil), draft = None))}
+  def discardBlock(id: String) = getBlock(id) foreach { block => putBlock(id, block.copy(draft = None))}
   def archive(id: String, block: Block) = S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(block)))
 }
