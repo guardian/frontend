@@ -4,12 +4,10 @@
 */
 define([
     'common',
-    'bonzo',
-    'bean'
+    'bonzo'
 ], function (
     common,
-    bonzo,
-    bean
+    bonzo
 ) {
     'use strict';
 
@@ -23,15 +21,15 @@ define([
     Summary.prototype.init = function() {
         var self = this;
 
-        this.deportLatestSummary();
-        this.findSummaries();
+        this.deportLatest();
+        this.render();
 
         common.mediator.on('modules:autoupdate:loaded', function() {
-            self.findSummaries.call(self);
+            self.render.call(self);
         });
     };
 
-    Summary.prototype.findSummaries = function() {
+    Summary.prototype.render = function() {
         var self = this,
             summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
             hiddenSummaryContainers = common.toArray(this.context.querySelectorAll('.js-article__summary.is-hidden'));
@@ -41,29 +39,22 @@ define([
                 bonzo(element).removeClass('is-hidden');
                 self.expandable(element, self.maxSummaryHeight, self.expandableClass);
             });
-            this.hideLatestSummary(summaries);
+            bonzo(summaries[0]).addClass('is-hidden');
         }
     };
 
-    Summary.prototype.hideLatestSummary = function(summaries) {
-        summaries.forEach(function(element, index) {
-            bonzo(element).removeClass('is-hidden');
-        });
-        bonzo(summaries[0]).addClass('is-hidden');
-    };
-
-    Summary.prototype.deportLatestSummary = function() {
+    Summary.prototype.deportLatest = function() {
         var summaries = common.toArray(this.articleContainer.getElementsByClassName('is-summary')),
-            summaryContent,
-            summaryPlaceholders;
+            content,
+            placeholders;
 
         // TODO: Verify if summary has actually been updated
         if (summaries.length > 0) {
-            summaryContent = summaries[0].innerHTML;
-            summaryPlaceholders = common.toArray(this.context.getElementsByClassName('js-summary-placeholder'));
+            content = summaries[0].innerHTML;
+            placeholders = common.toArray(this.context.getElementsByClassName('js-summary-placeholder'));
 
-            summaryPlaceholders.forEach(function(element, index) {
-                bonzo(element).html(summaryContent);
+            placeholders.forEach(function(element, index) {
+                bonzo(element).html(content);
             });
         }
     };
@@ -71,9 +62,10 @@ define([
     Summary.prototype.expandable = function(element, maxElementHeight, expandableClass) {
         var $element = bonzo(element);
 
-        $element.removeClass(expandableClass);
         if (element.offsetHeight > maxElementHeight) {
             $element.addClass(expandableClass);
+        } else {
+            $element.removeClass(expandableClass);
         }
     };
 
