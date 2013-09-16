@@ -94,7 +94,7 @@ define([
                 if (manipulation === 'prepend') {
                     var newElements = attachTo.querySelectorAll('.autoupdate--new');
 
-                    unreadBlocks += newElements.length;
+                    unreadBlocks = newElements.length;
 
                     if (detect.pageVisible()) {
                         unreadBlocks = 0;
