@@ -77,5 +77,5 @@ casper.test.begin('Culture block has a Show More call to action',function suite(
 
 
 casper.run(function() {
-    this.test.renderResults(true, 0, this.cli.get('xunit') + 'section-front-culture.xml'; 
+    this.test.renderResults(true, 0, this.cli.get('save') || false);
 });
