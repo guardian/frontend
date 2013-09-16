@@ -19,8 +19,8 @@ define([
             recommendCommentFixture = {
                 id: fixturesId,
                 fixtures: [
-                    '<div class="d-comment__action d-comment__action--recommend '+ RecommendComments.CONFIG.classes.button +'" data-comment-id="246" data-recommend-count="12">Recommended (<span class="d-comment__recommend-count js-recommend-count">12</span>)</div>'+
-                    '<div class="d-comment__action d-comment__action--recommend '+ RecommendComments.CONFIG.classes.button +'" data-comment-id="32" data-recommend-count="543">Recommended (<span class="d-comment__recommend-count js-recommend-count">543</span>)</div>'
+                    '<div class="d-comment__recommend js-recommend-comment" data-comment-id="200" data-recommend-count="3" title="3 recommendations"><i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">3</span></div>'+
+                    '<div class="d-comment__recommend js-recommend-comment" data-comment-id="201" data-recommend-count="567" title="567 recommendations"><i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">567</span></div>'
                 ]
             };
 
@@ -33,9 +33,11 @@ define([
         server.autoRespond = true;
         fixtures.render(recommendCommentFixture);
         context = document.getElementById(fixturesId);
-        buttons = context.querySelectorAll('.d-comment__action--recommend');
+        buttons = context.querySelectorAll('.d-comment__recommend');
         button1 = buttons[0];
         button2 = buttons[1];
+
+        RecommendComments.init(context);
 
         describe('init', function() {
             it('Should make buttons look clickable', function() {
@@ -49,7 +51,7 @@ define([
             it('Should update the recommend count and remain unchanged on success', function() {
                 var currentCount = parseInt(button1.getAttribute('data-recommend-count'), 10),
                     successFunction = jasmine.createSpy();
-                
+
                 common.mediator.on(RecommendComments.getEvent('success'), successFunction);
                 server.respondWith([200, {}, '{"status": "ok", "message": "63 total recommendations", "statusCode": 200}']);
 
