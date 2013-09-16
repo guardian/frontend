@@ -31,7 +31,7 @@ define([
         });
         bean.on(this.btn, 'click', function() {
             bonzo(self.options.context.querySelector('.' + self.options.hiddenCls)).removeClass(self.options.hiddenCls);
-            if (!self.blocks.some(function(el) { return bonzo(el).hasClass(self.options.hiddenCls) })) {
+            if (!self.blocks.some(function(el) { return bonzo(el).hasClass(self.options.hiddenCls); })) {
                 bonzo(self.btn).addClass('h');
             }
         });
