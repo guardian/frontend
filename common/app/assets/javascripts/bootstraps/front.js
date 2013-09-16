@@ -85,7 +85,7 @@ define([
         },
 
         faciaLoadTest: function(config) {
-            if (config.switches.faciaLoadTest) {
+            if (config.switches.facia && config.switches.faciaLoadTest) {
                 common.mediator.on('page:front:ready', faciaLoad);
             }
         }
