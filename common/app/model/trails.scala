@@ -12,7 +12,7 @@ import services.S3FrontsApi
 import views.support.Style
 
 
-trait Trail extends Images with Tags {
+trait Trail extends Elements with Tags {
   def webPublicationDate: DateTime
   def linkText: String
   def headline: String
@@ -20,7 +20,6 @@ trait Trail extends Images with Tags {
   def trailText: Option[String]
   def section: String //sectionId
   def sectionName: String
-  def thumbnail: Option[String] = None
   def thumbnailPath: Option[String] = None
   def isLive: Boolean
   def discussionId: Option[String] = None
