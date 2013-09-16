@@ -103,7 +103,8 @@
     min-width: gs-span(2);
     padding: 11px 0;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         background: darken($linkBlue, 5%);
     }
 
