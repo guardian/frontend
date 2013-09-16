@@ -26,11 +26,11 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
       .showEditorsPicks(true)
       .response.map {response =>
 
-      val editorsPicks = response.editorsPicks map { new Content(_) }
+      val editorsPicks = response.editorsPicks map { Content(_) }
 
       val editorsPicksIds = editorsPicks map { _.id }
 
-      val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains c.id }
+      val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains c.id }
 
       // order by editors' picks first
       val liveBlogs: Seq[Content] = (editorsPicks ++ latestContent).filter(_.isLive)
