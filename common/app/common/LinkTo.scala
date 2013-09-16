@@ -9,7 +9,7 @@ import conf.Configuration
  */
 trait LinkTo extends Logging {
 
-  lazy val host = Configuration.site.url
+  lazy val host = Configuration.site.host
 
   private val AbsoluteGuardianUrl = "^http://www.theguardian.com/(.*)$".r
   private val AbsolutePath = "^/(.+)".r

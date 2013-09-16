@@ -205,7 +205,7 @@ class GuardianConfiguration(
   }
 
   object site {
-    lazy val url = configuration.getStringProperty("site.url").getOrElse("")
+    lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
 
   // log out Play config on start
