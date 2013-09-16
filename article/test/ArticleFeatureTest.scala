@@ -435,7 +435,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     scenario("Story package with a link to a Poll") {
       Given("I'm on an article that has a story package linking to a Poll page")
 
-      HtmlUnit("/world/2013/aug/06/french-woman-breastfeed-service-gay-couples") { browser =>
+      HtmlUnit("/science/2013/aug/15/breastfeeding-six-months-breast-cancer") { browser =>
         import browser._
 
         Then("the poll should not appear in the list")

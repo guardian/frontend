@@ -59,7 +59,7 @@ export GRUNT_ISDEV=1
 #MaxPermSize specifies the the maximum size for the permanent generation heap,
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
 
-java -Xmx4096M -XX:MaxPermSize=2048m \
+java -Xmx6144M -XX:MaxPermSize=3072m \
   -XX:ReservedCodeCacheSize=128m \
   -XX:+UseConcMarkSweepGC \
   -XX:+CMSIncrementalMode \
