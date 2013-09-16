@@ -38,7 +38,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                         .append($items)
                         .insertBefore(_$collection);
 
-                    _$collection.addClass('collection--with-popular')
+                    _$collection.addClass('collection--with-popular');
                 },
                 function(req) {
                     common.mediator.emit('module:error', 'Failed to load facia popular: ' + req.statusText, 'modules/facia-popular.js');
