@@ -3,28 +3,15 @@
         background-color: $pink;
         border-color: $light-pink;
     }
-    &.collection--commentisfree-section .collection__title {
-        background-color: $green;
-        border-color: $light-green;
-    }
     .items {
         @include mq(tablet) {
             font-size: 0;
         }
-        @include mq(tablet, wide) {
-            white-space: nowrap;
-            overflow-x: scroll;
-            overflow-y: hidden;
-        }
     }
     .item {
+        margin-top: $gs-baseline*2;
         @include mq($to: tablet) {
-            &:first-child .item__title {
-                padding-top: 0;
-                border-top-style: none;
-            }
             &:nth-child(n + 2) {
-                margin-top: $gs-baseline*2;
                 .item__title {
                     @include font-size(20, 24);
                 }
@@ -35,7 +22,6 @@
         }
         @include mq(tablet) {
             @include box-sizing(content-box);
-            white-space: normal;
             display: inline-block;
             vertical-align: top;
             padding-left: $gs-gutter/2 - 1;
@@ -43,10 +29,34 @@
             border-left: 1px dotted $grey;
             width: gs-span(4);
             &:first-child {
+                border-left-style: none;
+            }
+        }
+        @include mq(tablet, desktop) {
+            &:nth-child(2n + 1) {
                 padding-left: 0;
                 border-left-style: none;
             }
-            &:last-child {
+            &:nth-child(2n + 2) {
+                padding-right: 0;
+            }
+        }
+        @include mq(desktop, wide) {
+            &:nth-child(3n + 1) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(3n + 3) {
+                padding-right: 0;
+            }
+
+        }
+        @include mq(wide) {
+            &:nth-child(4n + 1) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(4n + 4) {
                 padding-right: 0;
             }
         }
@@ -54,9 +64,43 @@
     .item__title {
         @include font-size(26, 28);
         @include mq(tablet) {
-            padding-top: 0;
-            border-top-style: none;
             min-height: gs-height(3);
+        }
+    }
+    @include mq($to: tablet) {
+        .item:first-child {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    @include mq(tablet, desktop) {
+        .item:nth-child(-n + 2) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    @include mq(desktop, wide) {
+        .item:nth-child(-n + 3) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    @include mq(wide) {
+        .item:nth-child(-n + 4) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
         }
     }
     .item__image-container {

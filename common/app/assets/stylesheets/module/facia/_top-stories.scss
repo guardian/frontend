@@ -1,9 +1,5 @@
 .collection--top-stories {
     overflow: hidden;
-    .collection__title {
-        background-color: $blue;
-        border-color: $light-blue;
-    }
     .item {
         @include mq($to: tablet) {
             &:last-child {

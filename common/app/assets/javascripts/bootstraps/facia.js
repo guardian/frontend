@@ -3,12 +3,12 @@ define([
     "common",
     //Modules
     "modules/masthead-relative-dates",
-    'modules/top-stories-show-more',
+    'modules/facia-items-show-more',
     'modules/facia-popular'
 ], function (
     common,
     mastheadRelativeDates,
-    TopStoriesShowMore,
+    FaciaItemsShowMore,
     FaciaPopular
 ) {
 
@@ -20,10 +20,10 @@ define([
             });
         },
 
-        showTopStoriesShowMore: function () {
+        showItemsShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.collection--small-stories', context).each(function(topStories) {
-                    var t = new TopStoriesShowMore(topStories);
+                common.$g('.js-items--show-more', context).each(function(items) {
+                    var t = new FaciaItemsShowMore(items);
                 });
             });
         },
@@ -38,8 +38,8 @@ define([
                     '.collection--highlights.collection--money-section',
                     '.collection--highlights.collection--travel-section'
                 ];
-                common.toArray(context.querySelectorAll(sections.join(','))).forEach(function (section) {
-                    var f = new FaciaPopular(section);
+                common.toArray(context.querySelectorAll(sections.join(','))).forEach(function (collection) {
+                    var f = new FaciaPopular(collection);
                     f.render();
                 });
             });
@@ -51,7 +51,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.relativiseMastheadDates();
-            modules.showTopStoriesShowMore();
+            modules.showItemsShowMore();
             modules.showFaciaPopular();
         }
         common.mediator.emit("page:front:ready", config, context);
