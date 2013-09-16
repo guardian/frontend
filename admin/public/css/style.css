@@ -448,7 +448,8 @@ a.cta, .cta a {
 
 .fronts .list-header {
     color: #999999;
-    overflow: auto;
+    overflow: hidden;
+    height: 40px;
 }
 
 .fronts .list-header a {
@@ -456,7 +457,9 @@ a.cta, .cta a {
 }
 
 .fronts .list-header__title {
-    padding: 2px 0 2px 7px;
+    padding: 0 0 0 7px;
+    height: 20px;
+    overflow: hidden;
 }
 
 .fronts .collection:hover .list-header__title {
@@ -522,13 +525,13 @@ a.cta, .cta a {
     height: 20px;
 }
 
-.fronts .list-header__status__draft.hasUnPublishedEdits {
-    color: #f89406;
+.fronts .list-header__status__draft.has-draft {
+    color: #d61d00;
 }
 
 .fronts .list-header__status__draft.active {
     height: 20px;
-    color: #f89406;
+    color: #d61d00;
     background-color: #ededed;    
 }
 
