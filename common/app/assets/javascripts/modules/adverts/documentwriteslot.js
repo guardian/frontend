@@ -7,10 +7,11 @@ define([
     domwrite
 ) {
 
-    var DocWriteAdSlot = function(name, el) {
+    var DocWriteAdSlot = function(name, el, context) {
         this.name = name;
         this.el = el;
         this.loaded = false;
+        this.context = context;
     };
 
     DocWriteAdSlot.prototype.setDimensions = function(dimensions) {
@@ -23,7 +24,7 @@ define([
             var slot = this.el;
             domwrite.render(slot);
             this.loaded = true;
-            callback();
+            callback(this.context);
          } catch(e) {
              common.mediator.emit('module:error', e, 'modules/adverts/documentwriteslot.js', 27);
         }

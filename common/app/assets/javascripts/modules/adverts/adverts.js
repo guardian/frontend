@@ -60,7 +60,7 @@ function (
                     // Load the currContext ads only
                     if (contexts[c] === currContext ) {
                         name = els[i].getAttribute('data-' + size);
-                        slot = new DocumentWriteSlot(name, container);
+                        slot = new DocumentWriteSlot(name, container, contexts[c]);
                         slot.setDimensions(dimensionMap[name]);
                         slots.push(slot);
                     }
@@ -91,9 +91,11 @@ function (
         for (var i = 0, j = slots.length; i<j; ++i) {
             //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
             if (!slots[i].loaded && slots[i].el.innerHTML === '') {
-                slots[i].render(function(){
+                slots[i].render(function(context){
                     if(slots[i].name === "x07") {
-                        var s = new StickyMpu();
+                        var s = new StickyMpu({
+                            context: context
+                        });
                     }
                 });
             }

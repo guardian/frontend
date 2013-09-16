@@ -6,14 +6,15 @@ define([
 
     var StickyMpu = function (options) {
         this.options = common.extend(this.DEFAULTS, options);
-        this.el = document.getElementsByClassName(this.options.cls)[0];
+        this.el = this.options.context.getElementsByClassName(this.options.cls)[0];
         this.$el = bonzo(this.el);
-        this.top =  bonzo(document.querySelector(".js-mpu-upper[data-id=" + this.options.id + "]")).offset().top
-        this.bottom = bonzo(document.querySelector(".js-mpu-lower[data-id=" + this.options.id + "]")).offset().top - 250;
+        this.top =  bonzo(this.options.context.querySelector(".js-mpu-upper[data-id=" + this.options.id + "]")).offset().top
+        this.bottom = bonzo(this.options.context.querySelector(".js-mpu-lower[data-id=" + this.options.id + "]")).offset().top - 250;
         this.bindListeners();
     };
 
     StickyMpu.prototype.DEFAULTS = {
+        context: document,
         cls: 'ad-slot-mpu-banner-ad',
         id: 'x07'
     };
