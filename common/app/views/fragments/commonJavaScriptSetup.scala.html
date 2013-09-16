@@ -36,12 +36,13 @@
     };
 
     function loadCssFromStorage() {
-        var c = localStorage.getItem('gu.css.global'), s, sc;
-        if(c && JSON.parse(c).key === @Static("stylesheets/global.min.css").md5Key) {
+        var c = localStorage.getItem('gu.css.' + @Static("stylesheets/global.min.css").md5Key), s, sc;
+        if(c) {
             s = d.createElement('style');
             sc = d.getElementsByTagName('script')[0];
-            sc.parentNode.insertBefore(s, sc);
             s.innerHTML = JSON.parse(c).css;
+            s.setAttribute('data-loaded-from', 'local');
+            sc.parentNode.insertBefore(s, sc);
             guardian.css.loaded = true;
         }
     }
