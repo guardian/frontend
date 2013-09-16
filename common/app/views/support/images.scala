@@ -25,6 +25,10 @@ object GallerySmallTrail extends ImageType {
   val prefix = "gst"
 }
 
+object FeaturedTrail extends ImageType {
+  val prefix = "f"
+}
+
 object ImgSrc {
 
   val imageHost = Configuration.images.path
