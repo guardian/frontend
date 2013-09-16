@@ -48,8 +48,8 @@ object Uk extends Edition(
       ItemTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured), showMore = true),
       ItemTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail), showMore = true),
       ItemTrailblockDescription("business", "Business", numItemsVisible = 1, style = Some(Thumbnail)),
-      ItemTrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("fashion/fashion-weeks", "London Fashion Week", numItemsVisible = 1, style = Some(Thumbnail)),
+      ItemTrailblockDescription("lifeandstyle", "Life and style", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("technology", "Technology", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("money", "Money", numItemsVisible = 1, style = Some(Thumbnail)),
       ItemTrailblockDescription("travel", "Travel", numItemsVisible = 1, style = Some(Thumbnail))
