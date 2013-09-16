@@ -8,7 +8,7 @@ $light-green: #d2dd2e;
 $dark-green: #19646c;
 
 .collection {
-    margin-top: $gs-baseline;
+    margin-top: gs-height(1);
 }
 .collection__title {
     @include font($serifheadline, 800, 16);
@@ -42,17 +42,15 @@ a.item__link,
     margin: $gs-baseline 0 0;
 }
 .item__meta {
-    height: gs-height(1) - $gs-baseline;
     color: $grey;
     @include font($sans-serif, lighter, 12, 12);
-    margin-top: $gs-baseline;
+    margin-top: $gs-baseline*(5/3);
+    overflow: hidden;
+    min-height: 16px;
     .item__timestamp,
     .trail__count {
         position: relative;
-        height: 100%;
         float: left;
-        border-left-width: 1px;
-        border-left-color: $grey;
         i {
             margin:0;
             position: absolute;
@@ -70,9 +68,9 @@ a.item__link,
     .trail__count {
         padding-bottom: 0;
         padding-left: 28px;
-        border-left-style: solid;
         top: 0;
         a {
+            line-height: inherit;
             color: inherit;
         }
         i {
@@ -94,14 +92,38 @@ a.item__link,
         margin-right: $baseline;
     }
 }
+.items__show-more {
+    background-color: #f1f1f1;
+    border-style: none;
+    min-width: gs-span(2);
+    min-height: gs-height(1);
+    color: #666666;
+    @include font($sans-serif, normal, 14);
+    position: relative;
+    left: 50%;
+    margin-top: $gs-baseline*2;
+    margin-left: -(gs-span(1) + $gs-gutter/2);
+}
+
 .item--feature {
     .item__title {
         border-top-color: $pink;
     }
 }
-
 .item--comment {
     .item__title {
         border-top-color: $green;
+    }
+}
+.item--headline {
+    @include mq($to: tablet) {
+        .item__title {
+            @include font-size(18, 24);
+            border-top-color: $grey;
+            border-top-width: 1px;
+        }
+        .item__meta {
+            display: none;
+        }
     }
 }

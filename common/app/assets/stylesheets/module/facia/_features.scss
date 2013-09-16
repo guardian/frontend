@@ -38,16 +38,16 @@
             white-space: normal;
             display: inline-block;
             vertical-align: top;
-            border-right: 1px dotted $grey;
-            padding: 0 $gs-gutter/2 gs-height(4) $gs-gutter/2 - 1;
+            padding-left: $gs-gutter/2 - 1;
+            padding-right: $gs-gutter/2;
+            border-left: 1px dotted $grey;
             width: gs-span(4);
-            background-color: #ffffff;
             &:first-child {
                 padding-left: 0;
+                border-left-style: none;
             }
             &:last-child {
                 padding-right: 0;
-                border-right-style: none;
             }
         }
     }
@@ -56,13 +56,12 @@
         @include mq(tablet) {
             padding-top: 0;
             border-top-style: none;
-            min-height: gs-height(3) + ($gs-baseline*2);
+            min-height: gs-height(3);
         }
     }
     .item__image-container {
+        margin-top: $gs-baseline*2;
         @include mq(tablet) {
-            position: absolute;
-            bottom: 0;
             height: gs-height(4);
         }
     }

@@ -6,40 +6,30 @@
     }
     .item {
         @include mq($to: tablet) {
-            &:first-child .item__title {
-                padding-top: 0;
-                border-top-style: none;
-            }
             &:last-child {
                 margin-top: $gs-baseline*2;
-                .item__title {
-                    @include font-size(20, 24);
-                }
-                .item__image-container {
-                    display: none;
-                }
             }
         }
         @include mq(tablet) {
             float: left;
             border: 10px none #ffffff;
             width: 50%;
-            padding-bottom: gs-height(5) - $gs-baseline;
+            padding-bottom: gs-height(5);
             min-height: gs-height(8);
             &:first-child {
-                padding-right: $gs-gutter/2 - 1;
-                border-right: 1px dotted $grey;
+                padding-right: $gs-gutter/2;
             }
             &:last-child {
-                padding-left: $gs-gutter/2;
+                border-left: 1px dotted $grey;
+                padding-left: $gs-gutter/2 - 1;
             }
         }
         @include mq(desktop) {
-            padding-bottom: gs-height(7) - $gs-baseline;
+            padding-bottom: gs-height(7);
             min-height: gs-height(9);
         }
         @include mq(wide) {
-            padding-bottom: gs-height(9) - $gs-baseline;
+            padding-bottom: gs-height(9);
             min-height: gs-height(12);
         }
     }
@@ -51,6 +41,22 @@
         }
         @include mq(wide) {
             @include font-size(34, 36);
+        }
+    }
+    .item:first-child .item__title {
+        @include mq($to: tablet) {
+            padding-top: 0;
+            border-top-style: none;
+        }
+    }
+    .item:last-child {
+        @include mq($to: tablet) {
+            .item__title {
+                @include font-size(20, 24);
+            }
+            .item__image-container {
+                display: none;
+            }
         }
     }
     .item__standfirst {
@@ -65,16 +71,19 @@
     .item__meta {
         @include mq(tablet) {
             position: absolute;
-            bottom: gs-height(4);
+            bottom: gs-height(4) + ($gs-baseline*2);
         }
         @include mq(desktop) {
-            bottom: gs-height(6);
+            bottom: gs-height(6) + ($gs-baseline*2);
         }
         @include mq(wide) {
-            bottom: gs-height(8);
+            bottom: gs-height(8) + ($gs-baseline*2);
         }
     }
     .item__image-container {
+        @include mq($to: tablet) {
+            margin-top: $gs-baseline*2;
+        }
         @include mq(tablet) {
             position: absolute;
             bottom: 0;
