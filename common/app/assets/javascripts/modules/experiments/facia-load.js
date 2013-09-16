@@ -6,7 +6,7 @@ define([
 
     return function() {
         ajax({
-            url: window.location.pathname,
+            url: '/facia' + window.location.pathname,
             type: 'text', // don't parse
             headers: { 'X-Gu-Facia': 'true' }
         }).always(function(resp) {
