@@ -10,8 +10,6 @@
             float: left;
             border: 10px none #ffffff;
             width: 50%;
-            padding-bottom: gs-height(5);
-            min-height: gs-height(8);
             &:first-child {
                 padding-right: $gs-gutter/2;
             }
@@ -20,20 +18,16 @@
                 padding-left: $gs-gutter/2 - 1;
             }
         }
-        @include mq(desktop) {
-            padding-bottom: gs-height(7);
-            min-height: gs-height(9);
-        }
-        @include mq(wide) {
-            padding-bottom: gs-height(9);
-            min-height: gs-height(12);
-        }
     }
     .item__title {
         @include font-size(26, 28);
         @include mq(tablet) {
             border-top-style: none;
             padding-top: 0;
+            min-height: gs-height(3);
+        }
+        @include mq(desktop) {
+            min-height: gs-height(2);
         }
         @include mq(wide) {
             @include font-size(34, 36);
@@ -60,29 +54,14 @@
             display: none;
         }
         @include mq(wide) {
+            min-height: gs-height(2);
             margin-top: $gs-baseline;
             @include font-size(20, 24);
         }
     }
-    .item__meta {
-        @include mq(tablet) {
-            position: absolute;
-            bottom: gs-height(4) + ($gs-baseline*2);
-        }
-        @include mq(desktop) {
-            bottom: gs-height(6) + ($gs-baseline*2);
-        }
-        @include mq(wide) {
-            bottom: gs-height(8) + ($gs-baseline*2);
-        }
-    }
     .item__image-container {
-        @include mq($to: tablet) {
-            margin-top: $gs-baseline*2;
-        }
+        margin-top: $gs-baseline*2;
         @include mq(tablet) {
-            position: absolute;
-            bottom: 0;
             height: gs-height(4);
         }
         @include mq(desktop) {
@@ -94,7 +73,6 @@
     }
     .item__image {
         @include mq($to: wide) {
-            display: block;
             width: 100%;
         }
         @include mq(wide) {

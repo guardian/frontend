@@ -109,6 +109,10 @@ a.item__link,
         margin-right: $baseline;
     }
 }
+.item__image {
+    display: block;
+    margin: 0 auto;
+}
 .items__show-more {
     background-color: #f1f1f1;
     border-style: none;

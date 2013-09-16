@@ -107,7 +107,6 @@
     }
     .item__image {
         @include mq($to: tablet) {
-            display: block;
             width: 100%;
         }
         @include mq(tablet) {
