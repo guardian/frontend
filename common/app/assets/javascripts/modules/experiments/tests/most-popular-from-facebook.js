@@ -1,4 +1,4 @@
-define(['bonzo', 'modules/popular'], function (bonzo, popular) {
+define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular) {
 
     return function () {
 
@@ -22,6 +22,20 @@ define(['bonzo', 'modules/popular'], function (bonzo, popular) {
                 id: 'control',
                 test: function () {
                     return true;
+                }
+            },
+            {
+                id: 'global-links',
+                test: function () {
+                    common.mediator.on('modules:popular:loaded', function (container) {
+                        var tabs = container.querySelectorAll('.tabs__tab');
+
+                        bonzo(tabs).removeClass('tabs__tab--selected');
+                        bonzo(tabs[1]).addClass('tabs__tab--selected');
+
+                        container.querySelector('#tabs-popular-1').style.display = 'none';
+                        container.querySelector('#tabs-popular-2').style.display = 'block';
+                    });
                 }
             },
             {
