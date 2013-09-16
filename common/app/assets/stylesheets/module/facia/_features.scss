@@ -1,8 +1,4 @@
 .collection--features {
-    .collection__title {
-        background-color: $pink;
-        border-color: $light-pink;
-    }
     .items {
         @include mq(tablet) {
             font-size: 0;
