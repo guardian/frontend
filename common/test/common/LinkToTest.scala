@@ -32,4 +32,8 @@ class LinkToTest extends FlatSpec with ShouldMatchers {
     TestLinkTo("/", edition) should be ("http://www.foo.com/uk")
   }
 
+  it should "strip leading and trailing whitespace" in {
+    TestLinkTo("  http://www.foo.com/uk   ", edition) should be ("http://www.foo.com/uk")
+  }
+
 }
