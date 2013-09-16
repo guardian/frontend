@@ -24,11 +24,12 @@ trait MostPopularLifecycle extends GlobalSettings {
     Jobs.schedule("MostPopularFromFacebookAgentRefreshJob",  "0 2/15 * * * ?", CoreNavivationMetrics.MostPopularLoadTimingMetric) {
       MostPopularFromFacebookAgent.refresh()
     }
+    // refresh facebook referral list immediately to avoid initial wait of up to 15 mins
+    MostPopularFromFacebookAgent.refresh()
 
     if (Play.isTest) {
       MostPopularAgent.refresh()
       MostPopularAgent.await()
-      MostPopularFromFacebookAgent.refresh()
       MostPopularFromFacebookAgent.await()
     }
   }
