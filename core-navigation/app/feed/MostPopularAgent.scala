@@ -6,6 +6,7 @@ import model.{SupportedContentFilter, Content}
 import scala.concurrent.duration._
 import scala.concurrent.Await
 import services.OphanApi
+import scala.util.Try
 
 
 object MostPopularAgent extends Logging with ExecutionContexts {
@@ -57,7 +58,7 @@ object MostPopularFromFacebookAgent extends Logging with ExecutionContexts {
 
       for (e <- paths.failed) log error "Failed to get most popular referred from Facebook: " + e.getMessage
 
-      Await.result(paths, 2.seconds)
+      Try(Await.result(paths, 2.seconds)) getOrElse Nil
     }
 
     log.info("Refreshing most popular referred from facebook.")
