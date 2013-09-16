@@ -14,8 +14,8 @@ RecommendComments.CONFIG = {
     classes: {
         button: 'js-recommend-comment',
         count: 'js-recommend-count',
-        icon: 'i-recommend',
-        iconInactive: 'i-recommend-inactive'
+        active: 'd-comment__recommend--active',
+        userRecommended: 'd-comment__recommend--user-recommended'
     },
     endpoints: {
         recommend: '/comment/:id/recommend'
@@ -47,7 +47,7 @@ RecommendComments.init = function(context, options) {
 
     if (buttons) {
         Array.prototype.forEach.call(buttons, function(button) {
-            button.className = button.className + ' d-comment__recommend--active';
+            button.className = button.className + ' ' + RecommendComments.CONFIG.classes.active;
             button.title = button.title += ' - recommend this comment';
         });
         RecommendComments.bindEvents(context);
@@ -72,12 +72,11 @@ RecommendComments.handleClick = function(e) {
     var elem = e.currentTarget,
         id = elem.getAttribute('data-comment-id'),
         result = RecommendComments.recommendComment(id);
-
-    // This is used as we are using deffered events
-    elem.className = elem.className
-                        .replace(RecommendComments.CONFIG.classes.button, '')
-                        .replace('d-comment__recommend--active', '');
     
+    // Remove button class to remove event handler
+    // as it is delegated
+    elem.className = elem.className.replace(RecommendComments.CONFIG.classes.button, '');
+
     RecommendComments.renderRecommendation(elem);
     return result.then(
         RecommendComments.success.bind(elem),
@@ -119,8 +118,7 @@ RecommendComments.success = function(resp) {
  */
 RecommendComments.fail = function(xhr) {
     RecommendComments.renderRecommendation(this, true);
-    // This is used as we are using deffered events
-    this.className = this.className +' '+ RecommendComments.CONFIG.classes.button +' d-comment__recommend--active';
+    this.className = this.className +' '+ RecommendComments.CONFIG.classes.button;
 
     common.mediator.emit(
         RecommendComments.getEvent('fail'),
@@ -137,17 +135,19 @@ RecommendComments.fail = function(xhr) {
  */
 RecommendComments.renderRecommendation = function(elem, unrecommend) {
     var recommendCountElem = elem.querySelector('.'+ RecommendComments.CONFIG.classes.count),
-        iconElem = !unrecommend ? elem.querySelector('.'+ RecommendComments.CONFIG.classes.icon) : elem.querySelector('.'+ RecommendComments.CONFIG.classes.iconInactive),
         currentCount = parseInt(elem.getAttribute('data-recommend-count'), 10),
         newCount = !unrecommend ? currentCount+1 : currentCount-1;
 
-    if (unrecommend) {
-        iconElem.className = iconElem.className.replace(RecommendComments.CONFIG.classes.iconInactive, RecommendComments.CONFIG.classes.icon);
+    if (!unrecommend) {
+        // remove active and add recommended
+        elem.className = (elem.className + ' ' + RecommendComments.CONFIG.classes.userRecommended)
+                            .replace(RecommendComments.CONFIG.classes.active, '');
     } else {
-        iconElem.className = iconElem.className.replace(RecommendComments.CONFIG.classes.icon, RecommendComments.CONFIG.classes.iconInactive);
+        // add active and remove recommended
+        elem.className = (elem.className + ' ' + RecommendComments.CONFIG.classes.active)
+                            .replace(RecommendComments.CONFIG.classes.userRecommended, '');
     }
 
-    elem.title = 'You have recommended this comment';
     elem.setAttribute('data-recommend-count', newCount);
     recommendCountElem.innerHTML = newCount;
 };

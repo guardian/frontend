@@ -263,9 +263,11 @@ $keylineSize: 1px;
 }
 
 .d-comment__recommend {
-    font-family: $sans-serif;
+    background-color: #929497;
+    color: #fff;
     font-size: 14px;
     font-size: 1.4rem;
+    padding: $baseline $gutter/2;
     position: absolute;
     right: 0;
     top: $baseline * 4;
@@ -276,8 +278,13 @@ $keylineSize: 1px;
 }
 
 .d-comment__recommend--active {
-    color: #4490ce;
+    background-color: #4490ce;
+    color: #fff;
     cursor: pointer;
+}
+
+.d-comment__recommend--user-recommended {
+    background-color: #931c55;
 }
 
 /* Badges
