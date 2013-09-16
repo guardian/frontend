@@ -58,6 +58,8 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     val images = new Elements {
       override def images = Nil
       override def videos = Nil
+      override def thumbnail = None
+      override def mainPicture = None
     }
 
     val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(images)).body.trim)

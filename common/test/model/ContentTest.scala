@@ -20,9 +20,9 @@ class ContentTest extends FlatSpec with ShouldMatchers {
         Some("http://www.foo.com/bar"),
         Map("caption" -> "caption", "width" -> "55"))))
 
-    val elements = Map(
-      "test-picture" -> imageElement,
-      "test-audio" -> ApiElement(
+    val elements = List(
+      imageElement,
+      ApiElement(
         "test-audio",
         "main",
         "audio",
@@ -41,7 +41,7 @@ class ContentTest extends FlatSpec with ShouldMatchers {
 
     trail.linkText should be("Some article")
     trail.url should be("/foo/2012/jan/07/bar")
-    trail.images.headOption.flatMap(_.image.flatMap(_.url)) should be (Some("http://www.foo.com/bar"))
+    trail.images.headOption.flatMap(_.largestImage.flatMap(_.url)) should be (Some("http://www.foo.com/bar"))
   }
 
   "Tags" should "understand tag types" in {
@@ -105,10 +105,9 @@ class ContentTest extends FlatSpec with ShouldMatchers {
   }
 
   private def content(contentType:String, elements:List[ApiElement]): Content = {
-    val elementMap: Map[String, ApiElement] = elements.map( element => (element.id -> element)).toMap
     Content(
       ApiContent("/content", None, None, DateTime.now, "webTitle", "webUrl", "apiUrl", None,
-                 List(tag(s"type/${contentType}")), Nil,Nil, Some(elementMap), None, Nil, None)
+                 List(tag(s"type/${contentType}")), Nil,Nil, Some(elements), None, Nil, None)
     )
   }
 
