@@ -7,10 +7,9 @@ define([
     return function() {
         ajax({
             url: '/facia' + window.location.pathname,
-            type: 'text', // don't parse
-            headers: { 'X-Gu-Facia': 'true' }
+            type: 'text' // don't parse
         }).always(function(resp) {
-            resp = null;  // help the garbage collector?
+            resp = null; // help the garbage collector?
         });
     };
 
