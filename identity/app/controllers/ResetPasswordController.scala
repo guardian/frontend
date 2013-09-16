@@ -61,7 +61,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
         Async {
           api.sendPasswordResetEmail(email) map(_ match {
             case Left(errors) => {
-              logger.info("Request new password returned errors" + errors.toString())
+              logger.info(s"Request new password returned errors ${errors.toString()}")
               val formWithError = errors.foldLeft(boundForm) { (form, error) =>
                 error match {
                   case Error(_, description, _, context) =>
@@ -89,7 +89,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
          Async {
            api.resetPassword(token,password) map ( _ match {
              case Left(errors) => {
-               logger.info("reset password errors, " + errors.toString())
+               logger.info(s"reset password errors, ${errors.toString()}")
                if (errors.exists("Token expired" == _.message))
                  Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
                else {
@@ -111,7 +111,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
     Async {
       api.userForToken(token) map ( _ match {
         case Left(errors) => {
-          logger.warn("Could not retrieve password reset request for token: %s, errors: %s".format(token, errors))
+          logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")
           Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
         }
         case Right(user) => {
