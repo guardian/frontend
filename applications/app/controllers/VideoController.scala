@@ -4,8 +4,6 @@ import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.json.Json._
-import play.api.libs.json.JsObject
 
 case class VideoPage(video: Video, storyPackage: List[Trail])
 
@@ -27,11 +25,10 @@ object VideoController extends Controller with Logging with ExecutionContexts {
     log.info(s"Fetching video: $path for edition $edition")
     ContentApi.item(path, edition)
       .showExpired(true)
-      .showTags("all")
       .showFields("all")
       .response.map{response =>
         val videoOption = response.content.filter { _.isVideo } map { new Video(_) }
-        val storyPackage = response.storyPackage map { new Content(_) }
+        val storyPackage = response.storyPackage map {Content(_) }
 
         val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
         ModelOrResult(model, response)
