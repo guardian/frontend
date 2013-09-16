@@ -10,11 +10,10 @@ case class ImageAsset(private val delegate: Asset, val index: Int) {
   lazy val mediaType: String = delegate.`type`
 
   lazy val url: Option[String] = delegate.file
-  lazy val path: Option[String] = delegate.file.map(ImgSrc(_, Naked))
+  lazy val path: Option[String] = url.map(ImgSrc(_, Naked))
 
   lazy val thumbnail: Option[String] = fields.get("thumbnail")
-
-  lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
+  lazy val thumbnailPath: Option[String] = thumbnail.map(ImgSrc(_, Naked))
 
   lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
   lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
@@ -41,7 +40,7 @@ case class VideoAsset(private val delegate: Asset) {
   // The video duration in seconds
   lazy val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
                            (fields.get("durationMinutes").getOrElse("0").toInt * 60)
-  lazy val blockAds: Boolean = fields.get("blockAds").map(_.toBoolean).getOrElse(false)
+  lazy val blockAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
 
   lazy val source: Option[String] = fields.get("source")
 

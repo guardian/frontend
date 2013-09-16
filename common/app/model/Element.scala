@@ -2,15 +2,13 @@ package model
 
 import com.gu.openplatform.contentapi.model.{Element => ApiElement}
 
-class Element protected (val delegate: ApiElement, val index: Int) {
-
-}
+class Element protected (val delegate: ApiElement, val index: Int)
 
 object Element {
   def apply(delegate: ApiElement, index: Int): Element = {
-    delegate match {
-      case _ if delegate.elementType == "image" => new ImageElement(delegate, index)
-      case _ if delegate.elementType =="video" => new VideoElement(delegate, index)
+    delegate.elementType match {
+      case "image" => new ImageElement(delegate, index)
+      case "video" => new VideoElement(delegate, index)
       case _ => new Element(delegate, index)
     }
   }
@@ -19,7 +17,7 @@ object Element {
 trait ImageContainer {
   self: Element =>
   lazy val imageCrops: List[ImageAsset] = delegate.assets.filter(_.assetType == "image").map(ImageAsset(_,index)).
-                                      sortBy(_.width)(Ordering[Int].reverse)
+                                      sortBy(-_.width)
 
   // The image crop with the largest width.
   lazy val largestImage : Option[ImageAsset] = imageCrops.headOption
