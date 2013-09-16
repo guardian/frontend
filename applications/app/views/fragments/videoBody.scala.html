@@ -44,6 +44,11 @@
                     <h2 class="article__meta-heading tone-colour">Share this video</h2>
                     @fragments.social(video, "next to content")
                 </div>
+                @if(video.keywords.nonEmpty){
+                    <div class="component" data-link-name="video keywords">
+                        @fragments.keywordList(video.keywords)
+                    </div>
+                }
             </div>
         </article>
         <div class="article-v2__inner">
