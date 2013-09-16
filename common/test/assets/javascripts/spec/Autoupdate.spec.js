@@ -66,9 +66,9 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
                 a.off();
             });
         });
-        
+
         it("should optionally load the load the first update immediately after the module has initialised", function(){
-            
+
             var callback1 = sinon.stub();
             server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
             common.mediator.on('modules:autoupdate:loaded', callback1);
@@ -91,7 +91,6 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             });
         });
 
-
         it("should get user prefs from local storage ", function(){
             server.respondWith([200, {}, '']);
             storage.set('gu.prefs.auto-update', 'off');
@@ -108,9 +107,9 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             waits(2000);
 
             runs(function(){
-                 var off = common.$g('[data-action="off"]').hasClass('is-active');
+                 var off = common.$g('.js-auto-update--off').hasClass('is-active');
                  expect(off).toBe(true);
-                a.off();
+                 a.off();
             });
         });
 
@@ -133,11 +132,11 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
                 a.off();
             });
         });
-        
+
         it('should not poll if `autoRefresh` switch turned off (default)', function() {
             server.respondWith([200, {}, '']);
             common.mediator.on('modules:autoupdate:destroyed', callback);
-            
+
             var a = new Autoupdate({
                     path:path,
                     delay:delay,
@@ -152,6 +151,6 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
                 a.off();
             });
         });
-       
+
     });
 });

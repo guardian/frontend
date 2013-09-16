@@ -9,7 +9,7 @@ define(['common', 'helpers/fixtures', 'modules/navigation/profile', 'modules/coo
                 id: containerId,
                 fixtures: [
                     '<div class="' + Profile.CONFIG.classes.container + ' js-hidden">' +
-                        '<a href="/signin" data-link-name="User profile" data-control-for="nav-popup-profile" class="control control--profile">' +
+                        '<a href="/signin" data-link-name="User profile" data-toggle="nav-popup-profile" class="control control--profile">' +
                             '<i class="i i-nav-divider"></i>' +
                             '<span class="' + Profile.CONFIG.classes.content + ' control__info">Your profile</span>' +
                             '<i class="i i-profile"></i>' +

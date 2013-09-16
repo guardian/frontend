@@ -1,0 +1,31 @@
+@(summary: Html, summaryId: String = util.Random.alphanumeric.take(5).mkString)(implicit request: RequestHeader)
+<div class="live-summary u-cf">
+    <div class="live-summary__body">
+        <input type="checkbox"
+               name="live-summary__expander-trigger-@summaryId"
+               id="live-summary__expander-trigger-@summaryId"
+               class="live-summary__expander-trigger"
+               tabindex="-1" />
+
+        <div class="live-summary__expander-wrapper js-live-summary__expander-wrapper">
+            <div class="live-summary__expander-content">
+                <div class="js-summary-placeholder">
+                    summary
+                </div>
+            </div>
+            <label class="live-summary__expander-cta"
+                   for="live-summary__expander-trigger-@summaryId"
+                   data-link-name="live summary expander"
+                   aria-hidden="true">
+                <button class="u-button-reset cta live-summary__expander-cta__button live-summary__expander-show"
+                        data-link-name="live summary close">
+                    Hide summary
+                </button>
+                <button class="u-button-reset cta live-summary__expander-cta__button live-summary__expander-hide"
+                        data-link-name="live summary expand">
+                    Show full summary
+                </button>
+            </label>
+        </div>
+    </div>
+</div>

@@ -31,6 +31,7 @@ GET     /json/proxy/*absUrl              controllers.Api.json(absUrl)
 
 # Ophan proxying for https
 GET     /ophan/pageviews/*path           controllers.OphanApi.pageViews(path)
+GET     /ophan/pageviews                 controllers.OphanApi.platformPageViews()
 
 #Development endpoints
 GET     /dev/switchboard                 controllers.SwitchboardController.render()
@@ -50,6 +51,7 @@ GET       /fronts/config                 controllers.FrontsController.listConfig
 GET     /analytics/kpis                  controllers.AnalyticsController.kpis()
 GET     /analytics/pageviews             controllers.AnalyticsController.pageviews()
 GET     /analytics/browsers              controllers.AnalyticsController.browsers()
+GET     /analytics/abtests               controllers.AnalyticsController.abtests()
 
 # Metrics
 GET     /metrics/loadbalancers           controllers.metrics.DashboardController.render()

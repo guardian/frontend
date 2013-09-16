@@ -1,17 +1,23 @@
 define([
     "common",
     "modules/autoupdate",
+    "modules/live-filter",
+    "modules/live-summary",
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
-    "modules/cricket"
+    "modules/cricket",
+    "modules/experiments/live-blog-show-more"
 ], function (
     common,
     AutoUpdate,
+    LiveFilter,
+    LiveSummary,
     MatchNav,
     Reading,
     Discussion,
-    Cricket
+    Cricket,
+    LiveShowMore
 ) {
 
     var modules = {
@@ -20,14 +26,14 @@ define([
             var matchNav = new MatchNav();
             common.mediator.on('page:article:ready', function(config, context) {
                 if(config.page.section === "football") {
-                    var teamIds = config.referencesOfType('paFootballTeam');
-                    var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
+                    var teamIds = config.referencesOfType('paFootballTeam'),
+                        isRightTypeOfContent = config.hasTone("Match reports") || config.page.isLiveBlog;
 
                     if(teamIds.length === 2 && isRightTypeOfContent){
-                        var url = "/football/api/match-nav/";
-                            url += config.webPublicationDateAsUrlPart() + "/";
-                            url += teamIds[0] + "/" + teamIds[1];
-                            url += "?currentPage=" + encodeURIComponent(config.page.pageId);
+                        var url = "/football/api/match-nav/" +
+                                  config.webPublicationDateAsUrlPart() + "/" +
+                                  teamIds[0] + "/" + teamIds[1] +
+                                  "?currentPage=" + encodeURIComponent(config.page.pageId);
 
                         matchNav.load(url, context);
                     }
@@ -49,6 +55,13 @@ define([
                         switches: config.switches,
                         manipulationType: 'prepend'
                     }).init();
+                }
+                if (config.page.isLiveBlog) {
+                    var lf = new LiveFilter(context).init();
+
+                    if (config.switches.liveSummary) {
+                        var ls = new LiveSummary(context).init();
+                    }
                 }
             });
         },

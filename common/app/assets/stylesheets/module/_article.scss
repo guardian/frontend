@@ -1,19 +1,15 @@
-$a-leftCol-width:    gs-span(2);
-$a-leftCol-trigger:  gs-span(13) + $gutter*2;
-$a-rightCol-width:   gs-span(4);
-$a-rightCol-trigger: gs-span(11) + $gutter*2;
-
-$mq-breakpoints: mq-add-breakpoint(rightCol, $a-rightCol-trigger);
-$mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
-
 .article {
     position: relative;
 }
 
 .article-zone {
     padding: 13px 0 14px;
-    margin-left: $gutter;
-    margin-right: $gutter;
+    margin-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
     font-weight: bolder;
     line-height: 1;
     border-bottom: 1px solid $mushroom;
@@ -24,6 +20,11 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 
     .js-popular & {
         border-bottom: none;
+    }
+    .article-zone-no-indent &,
+    .monocolumn-wrapper & {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -86,23 +87,33 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
         line-height: 2.4rem;
     }
 }
+.article-body {
+    @include mq(tablet) {
+        margin-bottom: $baseline*4;
+    }
+}
 
 .bullet {
     font-size: 13px;
     display: inline-block;
     color: #999999;
-    margin: $baseline/2 4px 0 0;
+    margin: $baseline/2 4px $baseline/-2 0;
 
     &:first-of-type {
         margin-top: $baseline;
     }
 }
 
+
 .article__container,
-.article__main-column {
+.article__main-column,
+.article-v2__inner,
+.article-v2__main-column {
     position: relative;
 }
 
+.article__secondary-column,
+.article-v2__secondary-column,
 .byline--cloned {
     display: none;
 }
@@ -146,8 +157,12 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 }
 
 .media-primary {
-    margin-left: $gutter * -1;
-    margin-right: $gutter * -1;
+    margin-left: $gs-gutter / -2;
+    margin-right: $gs-gutter / -2;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / -1;
+        margin-right: $gs-gutter / -1;
+    }
 }
 .main-image {
     margin-bottom: 0;
@@ -183,6 +198,13 @@ video {
     .d-tabs__item--byline {
         padding-left: $gutter/4 !important;
     }
+    .article-v2__columning-wrapper {
+        padding-right: gs-span(1) + $gs-gutter;
+
+        .media-primary {
+            margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
+        }
+    }
 }
 
 @mixin hide-discussion-tabs {
@@ -198,7 +220,7 @@ video {
     }
 }
 
-@include mq($a-rightCol-trigger) {
+@include mq(rightCol) {
 
     @include hide-discussion-tabs;
     @include comments-below-article;
@@ -208,17 +230,54 @@ video {
         max-width: none;
     }
     .article__main-column {
-        padding-right: $a-rightCol-width + $gs-gutter;
-        padding-left: 0;
+        padding-right: $a-rightCol-width + $gs-gutter * 2;
         max-width: gs-span(8);
     }
-    article .social-wrapper {
-        padding: 0 !important;
-        margin: 0 !important;
+    .article__secondary-column {
+        display: block;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 0; right: 0; bottom: 0;
         width: $a-rightCol-width;
+    }
+    .article__secondary-column__inner {
+        height: 100%;
+    }
+
+    .article-v2__inner {
+        max-width: gs-span(8);
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__main-column {
+        max-width: gs-span(8);
+        padding-right: gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__columning-wrapper {
+        display: table;
+        table-layout: fixed;
+        padding-right: 0;
+        position: relative;
+
+        .media-primary {
+            margin-right: 0 !important;
+        }
+    }
+    .article-v2__main-column {
+        display: table-cell;
+        vertical-align: top;
+    }
+    .article-v2__secondary-column {
+        position: relative;
+        display: table-cell;
+        width: $a-rightCol-width;
+    }
+    .article-v2__secondary-column__inner {
+        top: 0;
+        bottom: 0;
+        position: absolute;
+
+        > .u-table {
+            height: 100%;
+        }
     }
 }
 
@@ -228,6 +287,11 @@ video {
         padding-right: $gutter;
     }
     .article__main-column {
+        padding-left: $a-leftCol-width + $gs-gutter;
+    }
+
+    .article-v2__inner,
+    .article-v2__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;
     }
     .article-head {

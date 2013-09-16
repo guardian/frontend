@@ -6,7 +6,7 @@ import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import feed.Competitions
-import model.{TeamMap, LiveBlog}
+import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
 import play.api.{Application => PlayApp, Plugin}
 import play.api.libs.ws.WS
@@ -35,7 +35,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     }
 
     Jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?", FootballMetrics.LiveBlogRefreshTimingMetric) {
-      LiveBlog.refresh()
+      LiveBlogAgent.refresh()
     }
 
     Jobs.schedule("TeamMapRefreshJob", "0 * * * * ?", FootballMetrics.TeamTagMappingsRefreshTimingMetric) {
@@ -62,7 +62,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     descheduleJobs()
 
     Competitions.stop()
-    LiveBlog.stop()
+    LiveBlogAgent.stop()
     TeamMap.stop()
   }
 }

@@ -2,6 +2,7 @@ package controllers
 
 import play.api.mvc._
 import play.api.data._
+import play.api.data.validation.Constraints
 import model.IdentityPage
 import common.{Logging, ExecutionContexts}
 import services.{IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
@@ -17,6 +18,7 @@ import idapiclient.EmailPassword
 import play.api.mvc.Cookie
 import utils.SafeLogging
 import form.Mappings.{idEmail, idPassword}
+import client.Error
 
 
 @Singleton
@@ -31,8 +33,10 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   val form = Form(
     Forms.tuple(
-      "email" -> idEmail,
-      "password" -> idPassword,
+      "email" -> idEmail
+        .verifying(Constraints.nonEmpty),
+      "password" -> idPassword
+        .verifying(Constraints.nonEmpty),
       "keepMeSignedIn" -> Forms.boolean
     )
   )
@@ -55,11 +59,16 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
       { case (email, password, rememberMe) => {
         logger.trace("authing with ID API")
         Async {
-          api.authBrowser(EmailPassword(email, password), ClientAuth(conf.id.apiClientToken), idRequest.omnitureData) map(_ match {
+          api.authBrowser(EmailPassword(email, password), idRequest.omnitureData) map(_ match {
             case Left(errors) => {
               logger.error(errors.toString())
-              logger.info("Auth failed for user")
-              val formWithErrors = boundForm.withError(FormError("", Messages("error.login")))
+              logger.info(s"Auth failed for user, ${errors.toString()}")
+              val formWithErrors = errors.foldLeft(boundForm) { (formFold, error) =>
+                val errorMessage =
+                  if ("Invalid email or password" == error.message) Messages("error.login")
+                  else error.description
+                formFold.withError(error.context.getOrElse(""), errorMessage)
+              }
               Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
             }
             case Right(apiCookiesResponse) => {

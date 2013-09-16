@@ -10,7 +10,7 @@ import views.support.InBodyLinkCleaner
 
 
 object BodyCleaner {
-  def apply(article: Article)(implicit request: RequestHeader) = withJsoup(BulletCleaner(article.body))(
+  def apply(article: Article, html: String)(implicit request: RequestHeader) = withJsoup(BulletCleaner(html))(
     InBodyElementCleaner,
     PictureCleaner(article),
     InBodyLinkCleaner("in body link")(Edition(request)),

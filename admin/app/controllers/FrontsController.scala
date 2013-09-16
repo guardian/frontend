@@ -4,10 +4,11 @@ import frontsapi.model._
 import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
-import common.{ExecutionContexts, S3FrontsApi, Logging}
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FrontsApi
 import scala.concurrent.Future
+import services.S3FrontsApi
 
 
 object FrontsController extends Controller with Logging with ExecutionContexts {
@@ -54,14 +55,15 @@ object FrontsController extends Controller with Logging with ExecutionContexts {
         Ok
       }
       case blockAction: BlockActionJson => {
+        val identity = Identity(request).get
         blockAction.publish.filter {_ == true}
           .map { _ =>
-            FrontsApi.publishBlock(id)
+            FrontsApi.publishBlock(id, identity)
             Ok
           }
           .orElse {
           blockAction.discard.filter {_ == true}.map { _ =>
-            FrontsApi.discardBlock(id)
+            FrontsApi.discardBlock(id, identity)
             Ok
           }
         } getOrElse NotFound("Invalid JSON")
