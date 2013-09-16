@@ -38,6 +38,11 @@
                 <div class="social-wrapper">
                     @fragments.social(video)
                 </div>
+                @if(video.keywords.nonEmpty){
+                    <div class="component" data-link-name="video keywords">
+                        @fragments.keywordList(video.keywords)
+                    </div>
+                }
             </div>
         </article>
         <div class="article__main-column">

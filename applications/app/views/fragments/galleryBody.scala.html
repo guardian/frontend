@@ -82,6 +82,11 @@
             <div class="social-wrapper">
                 @fragments.social(gallery)
             </div>
+            @if(gallery.keywords.nonEmpty){
+                <div class="component" data-link-name="gallery keywords">
+                    @fragments.keywordList(gallery.keywords)
+                </div>
+            }
         </div>
     </article>
     <div class="article__main-column">
