@@ -149,7 +149,9 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
         // get the trailblocks
         val faciaPage: FaciaPage = front(editionalisedPath)
 
-        if (faciaPage.collections.isEmpty) {
+        if (path != editionalisedPath) {
+          Redirect(editionalisedPath)
+        } else if (faciaPage.collections.isEmpty) {
           InternalServerError
         } else {
           val htmlResponse = () => views.html.front(frontPage, faciaPage)
@@ -168,7 +170,9 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       // get the first trailblock
       val collection: Option[(Config, Collection)] = front(editionalisedPath).collections.headOption
 
-      if (collection.isEmpty) {
+      if (path != editionalisedPath) {
+        Redirect(editionalisedPath)
+      } else if (collection.isEmpty) {
         InternalServerError
       } else {
         val trails: Seq[Trail] = collection.map(_._2.items).getOrElse(Nil)
