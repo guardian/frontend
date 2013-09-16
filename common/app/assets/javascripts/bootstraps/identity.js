@@ -16,6 +16,11 @@ define([
             common.mediator.on('page:identity:ready', function(config, context) {
                 Identity.forgottenPassword(config, context);
             });
+        },
+        passwordToggle: function () {
+            common.mediator.on('page:identity:ready', function(config, context) {
+                Identity.passwordToggle(config, context);
+            });
         }
     };
 
@@ -24,6 +29,7 @@ define([
             this.initialised = true;
             modules.forgottenEmail();
             modules.forgottenPassword();
+            modules.passwordToggle();
         }
         common.mediator.emit("page:identity:ready", config, context);
     };

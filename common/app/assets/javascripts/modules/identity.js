@@ -1,4 +1,4 @@
-define(['bean'], function (bean) {
+define(['bean', 'bonzo'], function (bean, bonzo) {
 
     function forgottenEmail(config, context) {
         var form = context.querySelector('.js-reset-form');
@@ -18,7 +18,7 @@ define(['bean'], function (bean) {
                 link = form.querySelector('.js-forgotten-password'),
                 href = link.getAttribute('href');
 
-            bean.on(link, 'click', function(e) {
+            bean.add(link, 'click', function(e) {
                 var emailAddress = email.value;
                 if (emailAddress !== '') {
                     link.setAttribute('href', href + '#email=' + emailAddress);
@@ -27,8 +27,31 @@ define(['bean'], function (bean) {
         }
     }
 
+    function passwordToggle(config, context) {
+        var form = context.querySelector('.js-register-form');
+        if (form) {
+            var password = form.querySelector('.js-register-password'),
+                toggleClass = 'js-toggle-password',
+                toggleTmpl = '<div class="form-field__note form-field__note--below form-field__note--right mobile-only">' +
+                                '<a href="#toggle-password" class="' + toggleClass + '" data-password-label="Show password"' +
+                                ' data-text-label="Hide password" data-link-name="Toggle password field">Show password</a>' +
+                             '</div>',
+                $toggle = bonzo(bonzo.create(toggleTmpl)).insertAfter(password);
+
+            bean.add($toggle[0], '.' + toggleClass, 'click', function(e) {
+                e.preventDefault();
+                var link = e.target,
+                    inputType = password.getAttribute('type') === 'password' ? 'text' : 'password',
+                    label = link.getAttribute('data-' + inputType + '-label');
+                password.setAttribute('type', inputType);
+                bonzo(link).text(label);
+            });
+        }
+    }
+
     return {
         forgottenEmail: forgottenEmail,
-        forgottenPassword: forgottenPassword
+        forgottenPassword: forgottenPassword,
+        passwordToggle: passwordToggle
     };
 });

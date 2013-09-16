@@ -35,9 +35,9 @@
 
             <ul class="form-fields">
 
-                @idInputEmail(registrationForm("user.primaryEmailAddress"), '_label -> "Email address", 'class -> "js-signin-email")
+                @idInputEmail(registrationForm("user.primaryEmailAddress"), '_label -> "Email address")
                 @idInputUsername(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only")
-                @idInputPassword(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters")
+                @idInputPassword(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password")
 
                 <li>
                     <label class="check-label">
