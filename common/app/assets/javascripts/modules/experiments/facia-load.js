@@ -12,6 +12,6 @@ define([
         }).always(function(resp) {
             resp = null;  // help the garbage collector?
         });
-    }
+    };
 
 });
