@@ -42,10 +42,6 @@ object Switches extends Collections {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = Off)
 
-  val BetaServerSwitch = Switch("Beta", "beta",
-    "If this is switced on users with a #beta in the URL will be messaged",
-    safeState = Off)
-
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
