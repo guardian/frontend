@@ -62,7 +62,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
           api.authBrowser(EmailPassword(email, password), idRequest.omnitureData) map(_ match {
             case Left(errors) => {
               logger.error(errors.toString())
-              logger.info("Auth failed for user")
+              logger.info(s"Auth failed for user, ${errors.toString()}")
               val formWithErrors = errors.foldLeft(boundForm) { (formFold, error) =>
                 val errorMessage =
                   if ("Invalid email or password" == error.message) Messages("error.login")
