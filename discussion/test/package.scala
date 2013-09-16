@@ -3,6 +3,7 @@ package test
 import recorder.HttpRecorder
 import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap, Cookie}
 import play.api.libs.ws.Response
+import play.api.Application
 import java.util
 import java.net.URI
 import java.io.{File, InputStream}
@@ -10,6 +11,7 @@ import java.nio.ByteBuffer
 import play.api.Plugin
 import discussion.DiscussionApi
 import common.ExecutionContexts
+import controllers.DiscussionApiPlugin
 
 private case class Resp(getResponseBody: String) extends NingResponse {
   def getContentType: String = "application/json"
@@ -51,22 +53,20 @@ object DiscussionApiHttpRecorder extends HttpRecorder[Response] {
   }
 }
 
-class DiscussionStubPlugin(val app: play.api.Application) extends Plugin with ExecutionContexts {
+class DiscussionApiStub(app: Application) extends DiscussionApi with Plugin{
 
-
-  override def onStart() {
-    val http = DiscussionApi.http
-    DiscussionApi.http = url => DiscussionApiHttpRecorder.load(url, Map.empty){
-      http(url)
-    }
-
-    super.onStart()
+  override protected def GET(url: String) = DiscussionApiHttpRecorder.load(url, Map.empty){
+    super.GET(url)
   }
+
 }
 
 object `package` {
   object HtmlUnit extends EditionalisedHtmlUnit
+
   object Fake extends FakeApp {
-    override def testPlugins = super.testPlugins :+ classOf[DiscussionStubPlugin].getName
+
+    override def disabledPlugins = super.disabledPlugins :+ classOf[DiscussionApiPlugin].getName
+    override def testPlugins = super.testPlugins :+ "test.DiscussionApiStub"
   }
 }

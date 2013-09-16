@@ -1,8 +1,7 @@
 package controllers.front
 
 import common._
-import common.editions.EditionalisedSections._
-import model.{FaciaPage, Trailblock}
+import model.FaciaPage
 
 
 class Front extends Logging {
@@ -29,14 +28,14 @@ class Front extends Logging {
       }
       oldValue ++ newFrontsFiltered
     }
-    pageFrontAgent().values.foreach(_.refresh())
   }
 
-  def refresh() {
-    log.info("Refreshing Front")
-    ConfigAgent.refresh()
-    refreshPageFrontAgent()
-  }
+  def refresh() = refreshJobs().foreach(_())
+
+  def refreshJobs() = Seq(() => {
+      ConfigAgent.refresh()
+      refreshPageFrontAgent()
+    }) ++ pageFrontAgent().values.map{ agent => () => agent.refresh() }
 
   def apply(path: String): FaciaPage = pageFrontAgent()(path)()
 }

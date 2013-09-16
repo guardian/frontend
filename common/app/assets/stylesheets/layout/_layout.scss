@@ -1,10 +1,12 @@
+$headerHeight: 58px;
+
 /* Global wrapper
    ========================================================================== */
 
 #preloads {
     @include gs-container;
     clear: both;
-    margin: 58px auto 0;
+    margin-top: $headerHeight;
 
     @include mq(tablet) {
         margin-top: 104px;
@@ -16,7 +18,7 @@
    ========================================================================== */
 
 #header {
-    min-height: 58px;
+    min-height: $headerHeight;
     position: absolute;
     top: 0;
     left: 0;
@@ -36,12 +38,12 @@
 
         &:before {
             top: 0;
-            height: 58px;
+            height: $headerHeight;
             background-color: $blue;
         }
 
         &:after {
-            top: 58px;
+            top: $headerHeight;
             height: 40px;
             background-color: #F5F5F2;
             border-bottom: 1px solid $darkMushroom;
@@ -119,9 +121,14 @@
     float: left;
     clear: left;
     margin: 3px 0 0 0;
-    padding-right: 10px;
+    padding-right: $gs-gutter/2;
     padding-bottom: 15px;
     background: white;
+
+    @include mq(mobileLandscape) {
+        padding-right: $gs-gutter;
+        width: gs-span(2);
+    }
 
     figcaption {
         word-wrap: break-word;
@@ -132,6 +139,7 @@
     width: auto;
     max-width: $inArticleInlineImgWidth;
 }
+
 
 /* Preloads (for swipe)
    ========================================================================== */
@@ -161,6 +169,7 @@
     #preload-1 {left:     0;}
     #preload-2 {left:  100%;}
 }
+
 
 /* Ajax loading helpers
    ========================================================================== */

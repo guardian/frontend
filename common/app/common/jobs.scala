@@ -35,4 +35,3 @@ object Jobs extends Logging {
     scheduler.deleteJob(new JobKey(name))
   }
 }
-

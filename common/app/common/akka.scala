@@ -14,7 +14,10 @@ object AkkaAgent {
 }
 
 object AkkaAsync extends ExecutionContexts {
-  def apply(body: => Unit) {
-    PlayAkka.system(Play.current).scheduler.scheduleOnce(1.seconds) { body }
+
+  def apply(body: => Unit): Unit = after(1.second){ body }
+
+  def after(delay: FiniteDuration)(body: => Unit): Unit = {
+    PlayAkka.system(Play.current).scheduler.scheduleOnce(delay) { body }
   }
 }
