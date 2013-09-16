@@ -16,9 +16,11 @@ trait WsHttp extends Http[Future] with ExecutionContexts {
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
     val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
+  
+    val contentApiTimeout = Configuration.contentApi.timeout
 
     val start = currentTimeMillis
-    val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(2000).get()
+    val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withTimeout(contentApiTimeout).get()
 
     // record metrics
     response.onSuccess {
