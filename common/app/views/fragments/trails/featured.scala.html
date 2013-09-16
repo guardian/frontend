@@ -21,8 +21,8 @@
                 data-force-upgrade="true"
                 data-thumb-width="@smallCrop.width"
                 @trail.mainPicture.map { largeCrop =>
-                    data-fullsrc="@largeCrop.path"
-                    data-full-width="@largeCrop.width"
+                    data-fullsrc="@largeCrop.url.map(ImgSrc(_, FeaturedTrail))"
+                    data-full-width="640"
                 }
                 itemprop="contentURL"
                 alt=""
