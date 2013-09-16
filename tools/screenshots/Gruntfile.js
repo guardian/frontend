@@ -19,7 +19,8 @@ module.exports = function (grunt) {
         },
         s3: {
             options: {
-                bucket: 'aws-frontend-store'
+                bucket: 'aws-frontend-store',
+		access:'public-read'
             },
             upload: {
                 upload: [{
