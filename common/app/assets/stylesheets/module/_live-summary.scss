@@ -20,8 +20,9 @@
             position: absolute;
             left: 0; right: 0; bottom: 0;
             height: $unitHeight * 2;
-            background: -webkit-linear-gradient(rgba(255, 255, 255, 0), white) left repeat;
-            background: linear-gradient(transparent, white) left repeat;
+            background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(rgba(255, 255, 255, 1)));
+            background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+            background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
         }
     }
     .live-summary__expander-trigger:checked + .live-summary__expander-wrapper {
