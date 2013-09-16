@@ -17,12 +17,13 @@ define([
         this.dimensions = dimensions;
     };
 
-    DocWriteAdSlot.prototype.render = function () {
+    DocWriteAdSlot.prototype.render = function (callback) {
          try {
             OAS_RICH(this.name);
             var slot = this.el;
             domwrite.render(slot);
             this.loaded = true;
+            callback();
          } catch(e) {
              common.mediator.emit('module:error', e, 'modules/adverts/documentwriteslot.js', 27);
         }

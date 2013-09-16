@@ -10,7 +10,8 @@ define([
     'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap',
     'modules/adverts/audience-science',
-    'modules/adverts/quantcast'
+    'modules/adverts/quantcast',
+    'modules/adverts/sticky-mpu'
 ],
 function (
     common,
@@ -24,7 +25,8 @@ function (
     DocumentWriteSlot,
     dimensionMap,
     audienceScience,
-    quantcast
+    quantcast,
+    StickyMpu
 ) {
     
     var currConfig,
@@ -37,9 +39,9 @@ function (
 
         if(id) {
 
-            contexts[id] = context;
+            contexts[id] = document;
             currConfig  = config;
-            currContext = context;
+            currContext = document;
             slots = [];
 
             var size = (window.innerWidth > 810) ? 'median' : 'base';
@@ -89,7 +91,11 @@ function (
         for (var i = 0, j = slots.length; i<j; ++i) {
             //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
             if (!slots[i].loaded && slots[i].el.innerHTML === '') {
-                slots[i].render();
+                slots[i].render(function(){
+                    if(slots[i].name === "x07") {
+                        var s = new StickyMpu();
+                    }
+                });
             }
         }
     }
