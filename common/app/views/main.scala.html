@@ -38,9 +38,23 @@
 
     @fragments.footer(metaData)
 
-    <!--[if (gt IE 8) | (IEMobile)]><!-->
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.min.css")" />
-    <!--<![endif]-->
+    <noscript>
+        <!--[if (gt IE 8) | (IEMobile)]><!-->
+            <link rel="stylesheet" id="global-css" data-key="@Static("stylesheets/global.min.css").md5Key" type="text/css" href="@Static("stylesheets/global.min.css")" />
+        <!--<![endif]-->
+    </noscript>
+    <script>
+        if(guardian.isModernBrowser && !guardian.css.loaded) {
+
+        } else {
+            var d = document;
+                l = d.createElement('link');
+                l.rel = "stylesheet"; l.type = 'text/css';
+                l.href = '@Static("stylesheets/global.min.css")';
+                sc = d.getElementsByTagName('script')[0];
+                sc.parentNode.insertBefore(l, sc);
+        }
+    </script>
 
     @fragments.analytics(metaData)
     @fragments.debug()

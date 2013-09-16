@@ -20,6 +20,7 @@
             )
         ),
         css: {
+            loaded: false,
             football: '@Static("stylesheets/football.min.css")',
             gallery: '@Static("stylesheets/gallery.min.css")',
             video: '@Static("stylesheets/video.min.css")'
@@ -34,12 +35,16 @@
         }
     };
 
-    (function(isModern) {
-        if (!isModern) { return false; }
-
-        @* we want this to happen ASAP to avoid FOUC *@
-        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
-    })(guardian.isModernBrowser);
+    function loadCssFromStorage() {
+        var c = localStorage.getItem('gu.css.global'), s, sc;
+        if(c && JSON.parse(c).key === @Static("stylesheets/global.min.css").md5Key) {
+            s = d.createElement('style');
+            sc = d.getElementsByTagName('script')[0];
+            sc.parentNode.insertBefore(s, sc);
+            s.innerHTML = JSON.parse(c).css;
+            guardian.css.loaded = true;
+        }
+    }
 
     function loadFontsFromStorage(prefs, key) {
 
@@ -78,6 +83,8 @@
 
     (function(isModern) {
         if (!isModern) { return false; }
+        @* we want this to happen ASAP to avoid FOUC *@
+        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
         loadFontsFromStorage();
 
