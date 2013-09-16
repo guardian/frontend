@@ -71,13 +71,12 @@
     margin-bottom: 12px;
 }
 
-.form-field__note--below {
-    margin-top: 6px;
-    margin-bottom: 0;
+.form-field__note--left {
+    float: left;
 }
 
 .form-field__note--right {
-    text-align: right;
+    float: right;
 }
 
 .label {

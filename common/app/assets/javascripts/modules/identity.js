@@ -32,12 +32,13 @@ define(['bean', 'bonzo'], function (bean, bonzo) {
         if (form) {
             var password = form.querySelector('.js-register-password'),
                 toggleClass = 'js-toggle-password',
-                toggleTmpl = '<div class="form-field__note form-field__note--below form-field__note--right mobile-only">' +
+                toggleTmpl = '<div class="form-field__note form-field__note--right mobile-only">' +
                                 '<a href="#toggle-password" class="' + toggleClass + '" data-password-label="Show password"' +
                                 ' data-text-label="Hide password" data-link-name="Toggle password field">Show password</a>' +
                              '</div>',
-                $toggle = bonzo(bonzo.create(toggleTmpl)).insertAfter(password);
+                $toggle = bonzo(bonzo.create(toggleTmpl)).insertBefore(password);
 
+            $toggle.previous().addClass('form-field__note--left');
             bean.add($toggle[0], '.' + toggleClass, 'click', function(e) {
                 e.preventDefault();
                 var link = e.target,
