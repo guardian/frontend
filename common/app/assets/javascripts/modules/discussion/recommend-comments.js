@@ -3,6 +3,7 @@ define([
     'bean',
     'ajax'
 ], function(common, bean, ajax) {
+
 /**
  * @type {Object}
  */
