@@ -2,20 +2,11 @@
 
 @import views.html.fragments.registrationFooter
 
-
-
 @main(page, Switches.all){
 }{
 <div class="identity-wrapper">
-    <h1>Welcome to the guardian</h1>
-    <p>Now check your email.</p>
-    <form >
-        <ul class="form-fields">
-            <li>
-               <button type="submit" href="@returnUrl">Continue</button>
-            </li>
-        </ul>
-    </form>
+    <h1>Now check your email</h1>
+    <p>Follow the link in the email to validate your address.</p>
 
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>

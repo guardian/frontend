@@ -36,7 +36,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
   def renderForm = Action { implicit request =>
     logger.trace("Rendering registration form")
     val idRequest = idRequestParser(request)
-    val filledForm = registrationForm.fill("","","",false,false)
+    val filledForm = registrationForm.fill("","","",true,false)
     Ok(views.html.registration(page, idRequest, idUrlBuilder, filledForm ))
   }
 
