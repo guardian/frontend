@@ -67,7 +67,7 @@ function (
 
         function cardifyRelatedInBodyLink(link) {
 
-            var href = stripHost(link.getAttribute('href').trim()),
+            var href = stripHost(link.getAttribute('href')),
                 types = {
                     'Related':       { test: isArticle,       title: "Related" },
                     'BBC':           { test: isBBC,           title: "Related" },
@@ -109,7 +109,7 @@ function (
 
                 if (numberOfLinksInParagraph > 0) {
                     while (j < numberOfLinksInParagraph) {
-                        normalisedHref = stripHost(linksInParagraph[j].getAttribute('href').trim());
+                        normalisedHref = stripHost(linksInParagraph[j].getAttribute('href'));
                         hrefPath = new RegExp(normalisedHref.split("?")[0].split("#")[0]);
                         if (
                             isWhiteListed(normalisedHref, self.options.origin)

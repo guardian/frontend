@@ -97,7 +97,7 @@ define([
     }
 
     InlineLinkCard.prototype.fetchData = function() {
-        var href = stripHost(this.link.getAttribute('href').trim()), // Trim because some href attributes contain spaces
+        var href = stripHost(this.link.getAttribute('href')), // Trim because some href attributes contain spaces
             self = this,
             reqURL;
         if ((/^\//).test(href)) {
