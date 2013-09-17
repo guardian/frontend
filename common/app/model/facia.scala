@@ -15,6 +15,7 @@ case class Collection(items: Seq[Trail],
 
 object Collection {
   def apply(items: Seq[Trail]): Collection = Collection(items, None)
+  def apply(items: Seq[Trail], name: String): Collection = Collection(items, Some(name))
 }
 
 case class FaciaPage(

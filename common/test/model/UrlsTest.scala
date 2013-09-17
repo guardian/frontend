@@ -23,7 +23,7 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
 
     SupportedUrl(content) should be("/foo/2012/jan/07/bar")
 
-    new Content(content).url should be("/foo/2012/jan/07/bar")
+    Content(content).url should be("/foo/2012/jan/07/bar")
   }
 
   they should "be created relative for galleries" in {
@@ -37,7 +37,7 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
 
     SupportedUrl(content) should be("/foo/gallery/2012/jan/07/bar")
 
-    new Content(content).url should be("/foo/gallery/2012/jan/07/bar")
+    Content(content).url should be("/foo/gallery/2012/jan/07/bar")
   }
 
   they should "be created absolute for unsupported content types" in {
@@ -51,7 +51,7 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
 
     SupportedUrl(content) should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
 
-    new Content(content).url should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
+    Content(content).url should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
   }
 
   they should "be created relative for tags" in {
