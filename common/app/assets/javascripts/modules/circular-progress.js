@@ -10,7 +10,7 @@ define(["bean",
         this.$el = bonzo(opts.el);
 
         var baseColour = opts.baseColour || '#cccccc',
-            activeColour = opts.activeColour || '#214583',
+            activeColour = opts.activeColour || '#ec1c1c',
             bgColour = opts.bgColour || '#f4f4ee',
             arcWidth = opts.arcWidth || 3,
             width    = this.$el.dim().width,
@@ -30,12 +30,11 @@ define(["bean",
         this.centre = width / 2;
         this.radius = (width - arcWidth) / 2;
 
-        this.pathEl = this.$el[0].querySelector('path');
+        this.pathEl = opts.el.querySelector('path');
         this.pathEl.setAttribute('transform', 'translate(' + this.centre + ', ' + this.centre + ')');
 
-        this.labelEl = this.$el[0].querySelector('.counter');
+        this.labelEl = opts.el.querySelector('.counter');
     }
-
 
     CircularProgress.prototype.render = function(label, percent) {
         // Based on http://stackoverflow.com/questions/5230148/create-svg-progress-circle
@@ -55,8 +54,6 @@ define(["bean",
         this.pathEl.setAttribute('d', pathStr.join(' '));
         this.labelEl.innerHTML = label;
     };
-
-
 
     return CircularProgress;
 });
