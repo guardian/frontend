@@ -151,8 +151,6 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
         faciaPageOption map { faciaPage =>
           if (path != editionalisedPath) {
             Redirect(editionalisedPath)
-          } else if (faciaPage.collections.isEmpty) {
-            InternalServerError
           } else {
             val htmlResponse = () => views.html.front(frontPage, faciaPage)
             val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
@@ -173,8 +171,6 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
       if (path != editionalisedPath) {
         Redirect(editionalisedPath)
-      } else if (collection.isEmpty) {
-        InternalServerError
       } else {
         val trails: Seq[Trail] = collection.map(_._2.items).getOrElse(Nil)
         val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
