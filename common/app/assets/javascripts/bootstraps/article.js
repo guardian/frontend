@@ -8,7 +8,8 @@ define([
     "modules/discussion/discussion",
     "modules/cricket",
     "modules/experiments/live-blog-show-more",
-    "modules/notification-counter"
+    "modules/notification-counter",
+    "modules/detect"
 ], function (
     common,
     AutoUpdate,
@@ -19,7 +20,8 @@ define([
     Discussion,
     Cricket,
     LiveShowMore,
-    NotificationCounter
+    NotificationCounter,
+    detect
 ) {
 
     var modules = {
@@ -46,14 +48,16 @@ define([
         initLiveBlogging: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
-                    var a = new AutoUpdate({
+
+                    var timerDelay = /desktop|extended/.test(detect.getLayoutMode()) ? 30000 : 60000,
+                        a = new AutoUpdate({
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
                                 path = window.location.pathname;
 
                            return path + '.json' + '?lastUpdate=' + id;
                         },
-                        delay: 60000,
+                        delay: timerDelay,
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
                         manipulationType: 'prepend',
