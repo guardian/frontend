@@ -47,7 +47,6 @@
         }
     }
     .item__image-container {
-        margin-top: $gs-baseline*2;
         @include mq($to: tablet) {
             display: none;
         }

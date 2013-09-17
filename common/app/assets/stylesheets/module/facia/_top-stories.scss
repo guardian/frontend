@@ -60,7 +60,6 @@
         }
     }
     .item__image-container {
-        margin-top: $gs-baseline*2;
         @include mq(tablet) {
             height: gs-height(4);
         }
