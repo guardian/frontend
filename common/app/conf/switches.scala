@@ -204,13 +204,15 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  //Fronts film switch
-  val FilmFrontFacia = Switch("Facia", "facia-film",
-    "Switch to redirect traffic to the facia film front instead of front film front",
-    safeState = Off)
+  // Facia Switches
 
   val FaciaSwitch = Switch("Facia", "facia",
     "Switch to redirect to facia if request has X-Gu-Facia=true",
+    safeState = Off
+  )
+
+  val FaciaLoadTestSwitch = Switch("Facia", "facia-load-test",
+    "Switch to make an xhr request from all fronts to Facia, just to load-test it",
     safeState = Off
   )
 
@@ -247,8 +249,8 @@ object Switches extends Collections {
     ExternalLinksCardsSwitch,
     LiveSummarySwitch,
     LiveCricketSwitch,
-    FilmFrontFacia,
     FaciaSwitch,
+    FaciaLoadTestSwitch,
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
     ABGalleryCta,
