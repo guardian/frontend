@@ -265,7 +265,8 @@ define([
                 this.liveCircleTogglerEl.style.display = 'block';
 
                 this.timerProgress = new CircularProgress({
-                    el: this.liveCircleTogglerEl.querySelector('.lt__circle-wrapper')
+                    el: this.liveCircleTogglerEl.querySelector('.lt__circle-wrapper'),
+                    activeColour: options.progressColour
                 });
             }
 

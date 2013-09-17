@@ -62,7 +62,8 @@ define([
                         switches: config.switches,
                         manipulationType: 'prepend',
                         animateInserts: true,
-                        progressToggle: true
+                        progressToggle: true,
+                        progressColour: '#ec1c1c'
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
