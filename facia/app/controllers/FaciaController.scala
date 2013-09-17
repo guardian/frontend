@@ -133,13 +133,6 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     case _ => Editionalise(path, edition)
   }
 
-  def renderFilm() = {
-    if (Switches.FilmFrontFacia.isSwitchedOn)
-      render("film")
-    else
-      Action { Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film/film") }
-  }
-
   def render(path: String) = Action { implicit request =>
 
       val editionalisedPath = editionPath(path, Edition(request))
