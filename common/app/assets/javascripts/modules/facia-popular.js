@@ -1,23 +1,25 @@
 define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
 
-    var sectionTmpl =
+    var collectionTmpl =
         '<section class="collection collection--popular">' +
             '<h2 class="collection__title">Most Read</h2>' +
         '</section>',
         itemTmpl = '<li class="item"><a href="" class="item__link"></a></li>';
 
-    var faciaPopular =  {
+    var FaciaPopular =  function(collection) {
+
+        var _$collection = bonzo(collection);
 
         // Initialise
-        init:  function (config, context) {
-            var hasSection = config.page && config.page.section && config.page.section !== 'global';
+        this.render =  function () {
+            var section = _$collection.attr('data-section');
             return ajax({
-                url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
+                url: '/most-read' + (section ? '/' + section : '') + '.json',
                 type: 'json',
                 crossOrigin: true
             }).then(
                 function(resp) {
-                    var $collection = bonzo(bonzo.create('<ul class="unstyled items"></ul>')),
+                    var $items = bonzo(bonzo.create('<ul class="unstyled items"></ul>')),
                         $trails = bonzo(bonzo.create(resp.html));
                     // create the items (from first 5 trails)
                     common.$g('#tabs-popular-1 li:nth-child(-n + 5) a', bonzo(bonzo.create(resp.html))).each(function(trail) {
@@ -28,21 +30,24 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                             .attr('href', $trail.attr('href'))
                             .text($trail.text());
                         // add it to the collection
-                        $item.appendTo($collection);
+                        $item.appendTo($items);
                     });
-                    // add the popular section after the highlights
-                    bonzo(bonzo.create(sectionTmpl))
-                        .append($collection)
-                        .insertAfter('.collection--highlights');
+                    // add the popular collection after
+                    bonzo(bonzo.create(collectionTmpl))
+                        .addClass('collection--' + section + '-section')
+                        .append($items)
+                        .insertBefore(_$collection);
+
+                    _$collection.addClass('collection--with-popular');
                 },
                 function(req) {
                     common.mediator.emit('module:error', 'Failed to load facia popular: ' + req.statusText, 'modules/facia-popular.js');
                 }
             );
-        }
+        };
 
     };
 
-    return faciaPopular;
+    return FaciaPopular;
 
 });

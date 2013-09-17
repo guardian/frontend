@@ -3,13 +3,13 @@ define([
     "common",
     //Modules
     "modules/masthead-relative-dates",
-    'modules/top-stories-show-more',
+    'modules/facia-items-show-more',
     'modules/facia-popular'
 ], function (
     common,
     mastheadRelativeDates,
-    TopStoriesShowMore,
-    faciaPopular
+    FaciaItemsShowMore,
+    FaciaPopular
 ) {
 
     var modules = {
@@ -20,17 +20,28 @@ define([
             });
         },
 
-        showTopStoriesShowMore: function () {
+        showItemsShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.collection--small-stories', context).each(function(topStories) {
-                    var t = new TopStoriesShowMore(topStories);
+                common.$g('.js-items--show-more', context).each(function(items) {
+                    var t = new FaciaItemsShowMore(items);
                 });
             });
         },
 
         showFaciaPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                faciaPopular.init(config, context);
+                var sections = [
+                    '.collection--highlights.collection--sport-section',
+                    '.collection--highlights.collection--business-section',
+                    '.collection--highlights.collection--lifeandstyle-section',
+                    '.collection--highlights.collection--technology-section',
+                    '.collection--highlights.collection--money-section',
+                    '.collection--highlights.collection--travel-section'
+                ];
+                common.toArray(context.querySelectorAll(sections.join(','))).forEach(function (collection) {
+                    var f = new FaciaPopular(collection);
+                    f.render();
+                });
             });
         }
 
@@ -40,7 +51,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.relativiseMastheadDates();
-            modules.showTopStoriesShowMore();
+            modules.showItemsShowMore();
             modules.showFaciaPopular();
         }
         common.mediator.emit("page:front:ready", config, context);
