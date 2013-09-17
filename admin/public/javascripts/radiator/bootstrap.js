@@ -35,14 +35,10 @@ window.addEventListener('load', function() {
                             
                             var project = deploy.projectName;
                             var stage = deploy.stage;
-                            console.log(stage);
                             if (!latestDeployments[stage].hasOwnProperty(project)) {
                                 latestDeployments[stage][project] = deploy;
                             }
-                        })
-
-                    console.log(latestDeployments);
-
+                        });
 
                     function renderDeploys(stage, target) {
                         Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
