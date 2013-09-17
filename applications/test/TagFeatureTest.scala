@@ -52,7 +52,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
 
   feature("Tag Pages Football Nav") {
 
-    scenario("Tags that are football compeitions that have teams, link to that place on the teams page") {
+    scenario("Tags that are football competitions that have teams, link to that place on the teams page") {
 
       Given("I visit the 'Premier League' tag page")
 

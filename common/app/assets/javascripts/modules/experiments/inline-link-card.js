@@ -92,8 +92,12 @@ define([
         common.mediator.emit('fragment:ready:dates');
     };
 
+    function stripHost(url) {
+        return url.replace("http://" + document.location.host, "");
+    }
+
     InlineLinkCard.prototype.fetchData = function() {
-        var href = this.link.getAttribute('href').trim(), // Trim because some href attributes contain spaces
+        var href = stripHost(this.link.getAttribute('href')), // Trim because some href attributes contain spaces
             self = this,
             reqURL;
         if ((/^\//).test(href)) {

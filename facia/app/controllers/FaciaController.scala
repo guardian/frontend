@@ -133,30 +133,22 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     case _ => Editionalise(path, edition)
   }
 
-  def renderFilm() = {
-    if (Switches.FilmFrontFacia.isSwitchedOn)
-      render("film")
-    else
-      Action { Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film/film") }
-  }
-
   def render(path: String) = Action { implicit request =>
 
       val editionalisedPath = editionPath(path, Edition(request))
 
-      FrontPage(editionalisedPath).map { frontPage =>
+      FrontPage(editionalisedPath).flatMap { frontPage =>
 
         // get the trailblocks
-        val faciaPage: FaciaPage = front(editionalisedPath)
-
-        if (path != editionalisedPath) {
-          Redirect(editionalisedPath)
-        } else if (faciaPage.collections.isEmpty) {
-          InternalServerError
-        } else {
-          val htmlResponse = () => views.html.front(frontPage, faciaPage)
-          val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
-          renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+        val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
+        faciaPageOption map { faciaPage =>
+          if (path != editionalisedPath) {
+            Redirect(editionalisedPath)
+          } else {
+            val htmlResponse = () => views.html.front(frontPage, faciaPage)
+            val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
+            renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+          }
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
   }
@@ -168,12 +160,10 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     FrontPage(editionalisedPath).map{ frontPage =>
 
       // get the first trailblock
-      val collection: Option[(Config, Collection)] = front(editionalisedPath).collections.headOption
+      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.headOption)
 
       if (path != editionalisedPath) {
         Redirect(editionalisedPath)
-      } else if (collection.isEmpty) {
-        InternalServerError
       } else {
         val trails: Seq[Trail] = collection.map(_._2.items).getOrElse(Nil)
         val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)

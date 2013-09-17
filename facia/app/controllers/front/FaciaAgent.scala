@@ -42,7 +42,6 @@ trait ParseConfig extends ExecutionContexts {
   def parseConfig(json: JsValue): Config =
     Config(
       (json \ "id").as[String],
-      (json \ "displayName").as[String],
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty)
     )
 
@@ -137,7 +136,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 }
 
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging {
-  private lazy val queryAgent = AkkaAgent[List[(Config, Collection)]](Nil)
+  private lazy val queryAgent = AkkaAgent[Option[List[(Config, Collection)]]](None)
 
   def getItems: Future[List[(Config, Either[Throwable, Collection])]] = {
     val futureConfig = getConfig(id) map {config =>
@@ -157,14 +156,16 @@ class Query(id: String, edition: Edition) extends ParseConfig with ParseCollecti
   def refresh() =
     getItems map { newConfigList =>
       queryAgent.send { oldConfigList =>
-        lazy val oldConfigMap = oldConfigList.map{case (config, collection) => (config.id, collection)}.toMap
-        newConfigList flatMap { collectionConfig =>
-          collectionConfig match {
-            case (config, Left(exception)) => {
-              log.warn("Updating ID %s failed".format(config.id))
-              oldConfigMap.get(config.id).map(oldCollection => (config, oldCollection))
+        lazy val oldConfigMap = oldConfigList.map{_.map{case (config, collection) => (config.id, collection)}.toMap}
+        Option {
+          newConfigList flatMap { collectionConfig =>
+            collectionConfig match {
+              case (config, Left(exception)) => {
+                log.warn("Updating ID %s failed".format(config.id))
+                oldConfigMap.flatMap{_.get(config.id).map(oldCollection => (config, oldCollection))}
+              }
+              case (config, Right(newCollection)) => Some((config, newCollection))
             }
-            case (config, Right(newCollection)) => Some((config, newCollection))
           }
         }
       }
@@ -186,7 +187,7 @@ class PageFront(val id: String, edition: Edition) {
   def refresh() = query.refresh()
   def close() = query.close()
 
-  def apply(): FaciaPage = FaciaPage(id, query.items)
+  def apply(): Option[FaciaPage] = query.items.map(FaciaPage(id, _))
 }
 
 trait ConfigAgent extends ExecutionContexts {

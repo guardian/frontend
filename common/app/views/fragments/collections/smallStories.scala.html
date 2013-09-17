@@ -1,6 +1,6 @@
 @(trails: Seq[Trail])(implicit request: RequestHeader)
 
-<ul class="unstyled items item-count-@trails.size">
+<ul class="unstyled items item-count-@trails.size js-items--show-more">
     @trails.zipWithIndex.map{ case (trail, index) =>
         <li class="item @trail.trailType.map("item--" + _)" data-link-name="trail | @{index + 1}"
             @trail.discussionId.map{ id => data-discussion-id="@id" }>
