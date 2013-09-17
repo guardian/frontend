@@ -3,15 +3,20 @@
  *     * allow multiple urls/viewport sizes
  *     * target particular elements
  */
-var domains = {
+
+system = require('system');
+environment = system.env.ENVIRONMENT;
+host = {
         prod: 'www.theguardian.com',
-        stage: 'm.code.dev-theguardian.com',
-        dev: 'localhost'
-    },
+        code: 'm.code.dev-theguardian.com',
+        dev: 'localhost:9000'
+}[environment];
+
+casper.echo('Running tests against ' + environment + ' environment');
+casper.echo('Environment host is ' + host);
+
     urls   = ['uk', 'us', 'au'],
-    stage = 'prod',
-    domain = domains[stage],
-    host = 'http://' + domain + '/',
+    host = 'http://' + host + '/';
     breakpoints = {
         wide: 1292,
         desktop: 972,
@@ -21,17 +26,20 @@ var domains = {
     screenshotsDir = './screenshots',
     casper = require('casper').create();
 
+
+
 casper.start(host, function() {
-    // add facia cookie
-    var faciaCookie = {
-        name: 'GU_FACIA',
-        value : 'true',
-        domain : domain
-    };
-    this.page.addCookie(faciaCookie);
-}).each(urls, function(self, url) {
+}).each(urls, function(self, url) 
+{
     // open our pages
-    this.thenOpen(host + url + '?view=mobile', function() {
+    casper.echo('url is '+ host + url + '?view=mobile');
+    this.thenOpen(host + url + '?view=mobile', {
+    method: "get",
+   //enable facia
+    headers: {
+      'X-Gu-Facia':'true'       
+    }
+},function() {
         // take screenshot over the breakpoints
         for(var breakpoint in breakpoints) {
             // create closure to maintain reference to breakpoint variable
@@ -46,5 +54,8 @@ casper.start(host, function() {
         };
     });
 });
+
+
+
 
 casper.run();

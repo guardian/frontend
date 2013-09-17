@@ -1,6 +1,6 @@
 /* global module: false */
 module.exports = function (grunt) {
-    var stage = grunt.option('stage') || 'dev',
+    var env = grunt.option('env') || 'dev',
         screenshotsDir = './screenshots',
         timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/');
 
@@ -12,6 +12,20 @@ module.exports = function (grunt) {
                 create: [screenshotsDir]
             }
         },
+        env: {
+            casperjs: {
+                ENVIRONMENT : env,
+                PHANTOMJS_EXECUTABLE : "node_modules/casperjs/node_modules/.bin/phantomjs",
+                extend: {
+                    PATH: {
+                        value: 'node_modules/.bin',
+                        delimiter: ':'
+                    }
+                }
+            }
+        },
+
+
         casperjs: {
             screenshot: {
                 src: ['./screenshot.js']
@@ -20,12 +34,12 @@ module.exports = function (grunt) {
         s3: {
             options: {
                 bucket: 'aws-frontend-store',
-		access:'public-read'
+		        access:'public-read'
             },
             upload: {
                 upload: [{
                     src: screenshotsDir + '/*.png',
-                    dest: stage.toUpperCase() + '/screenshots/' + timestampDir
+                    dest: env.toUpperCase() + '/screenshots/' + timestampDir
                 }]
             }
         }
@@ -36,7 +50,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-casperjs');
     grunt.loadNpmTasks('grunt-s3');
+     grunt.loadNpmTasks('grunt-env');
 
     // Create tasks
-    grunt.registerTask('snap', ['clean', 'mkdir:screenshots', 'casperjs:screenshot', 's3:upload']);
+    grunt.registerTask('snap', ['env:casperjs','clean', 'mkdir:screenshots', 'casperjs:screenshot', 's3:upload']);
 };
