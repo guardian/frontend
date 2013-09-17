@@ -144,19 +144,20 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
       val editionalisedPath = editionPath(path, Edition(request))
 
-      FrontPage(editionalisedPath).map { frontPage =>
+      FrontPage(editionalisedPath).flatMap { frontPage =>
 
         // get the trailblocks
-        val faciaPage: FaciaPage = front(editionalisedPath)
-
-        if (path != editionalisedPath) {
-          Redirect(editionalisedPath)
-        } else if (faciaPage.collections.isEmpty) {
-          InternalServerError
-        } else {
-          val htmlResponse = () => views.html.front(frontPage, faciaPage)
-          val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
-          renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+        val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
+        faciaPageOption map { faciaPage =>
+          if (path != editionalisedPath) {
+            Redirect(editionalisedPath)
+          } else if (faciaPage.collections.isEmpty) {
+            InternalServerError
+          } else {
+            val htmlResponse = () => views.html.front(frontPage, faciaPage)
+            val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
+            renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+          }
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
   }
@@ -168,7 +169,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     FrontPage(editionalisedPath).map{ frontPage =>
 
       // get the first trailblock
-      val collection: Option[(Config, Collection)] = front(editionalisedPath).collections.headOption
+      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.headOption)
 
       if (path != editionalisedPath) {
         Redirect(editionalisedPath)

@@ -37,7 +37,7 @@ class Front extends Logging {
       refreshPageFrontAgent()
     }) ++ pageFrontAgent().values.map{ agent => () => agent.refresh() }
 
-  def apply(path: String): FaciaPage = pageFrontAgent()(path)()
+  def apply(path: String): Option[FaciaPage] = pageFrontAgent().get(path).map(pageFront => pageFront())
 }
 
 object Front extends Front
