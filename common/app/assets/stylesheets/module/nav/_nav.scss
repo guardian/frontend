@@ -82,7 +82,6 @@
     }
 
 
-
     .nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
     .nav--stacked.nav--top-border-off > li:nth-child(1) a {
         border-top: none;
@@ -93,55 +92,42 @@
 /* Section divider
    ========================================================================== */
 
-    .nav.nav--section-divider {
-        padding: $baseline*2 $gs-gutter/2;
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-        margin: 0;
-        background-color: $mushroom;
+.nav-popup--small .nav--section-divider {
+    margin: 0;
+    background-color: $mushroom;
+    padding: $baseline*2 $gs-gutter/2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
+    @include mq(tablet) {
+        margin-top: -5px !important;
 
-        .nav-popup--small .nav--section-divider {
-            @include mq(tablet) {
-                margin-top: -5px !important;
+        .nav__item { margin: 0; }
+    }
+    @include mq(1248px) {
+        margin-top: -13px !important;
+    }
+}
 
-                .nav__item { margin: 0; }
-            }
-
-            @include mq(1248px) {
-                margin-top: -13px !important;
-            }
+    .control--sections .i-nav-divider {
+        @include mq(tablet) {
+            border-left: 0;
         }
-
-        .control--sections .i-nav-divider {
-            @include mq(tablet) {
-                border-left: 0;
-            }
-        }
+    }
 
 
 /* Footer navigation
    ========================================================================== */
 
-.nav--footer,
-.nav--footer.nav--section-divider {
-    background-color: $blue;
+.nav--footer {
+    
 }
 
     .nav--footer .nav__link {
         color: #fff;
         border-top: 1px solid #2B528B;
-    }
-
-    .nav--footer.nav--section-divider .nav__link {
-        border-bottom: 1px solid #2B528B;
-    }
-
-    .nav--footer.nav--section-divider {
-        color: #fff !important;
-        border-top: 2px solid #2B528B;
     }
 
 
@@ -337,13 +323,13 @@
 .nav--toolbar {
     @extend %type-10;
     display: none;
-    margin: 0 $gutter/2 0 $gutter;
+    margin: 0 $gs-gutter/2 0 $gs-gutter;
     padding: $baseline*3 0 0;
     @include mq(tablet) { display: block; }
 
     .nav__item {
         margin: $baseline 0 0 0;
-        padding: $baseline $gutter/2;
+        padding: $baseline $gs-gutter/2;
         color: #fff;
         border-right: 1px solid #94B1CA;
 

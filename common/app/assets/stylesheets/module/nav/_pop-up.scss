@@ -45,7 +45,7 @@
     }
 
     // Popup is not sticking to the edge of screen
-    @include mq(956px) {
+    @include mq(1152px) {
         border-right: 1px solid $darkMushroom;
     }
 
