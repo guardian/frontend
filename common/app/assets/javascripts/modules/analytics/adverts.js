@@ -1,13 +1,6 @@
 define(['common', 'bean', 'modules/inview'], function (common, bean, Inview) {
 
-    function AdvertsAnalytics(config, context) {
-
-        // Setup listeners
-        bean.on(context, 'inview', function(e) {
-            var inviewName = e.target.getAttribute('data-inview-name');
-
-            common.mediator.emit('module:analytics:adimpression', inviewName);
-        });
+    function InViewAdverts(config, context) {
 
         // Label up ad slots
         common.$g('.ad-slot', context).each(function() {
@@ -23,5 +16,5 @@ define(['common', 'bean', 'modules/inview'], function (common, bean, Inview) {
         var inview = new Inview('[data-inview-name]', context);
     }
 
-    return AdvertsAnalytics;
+    return InView;
 });

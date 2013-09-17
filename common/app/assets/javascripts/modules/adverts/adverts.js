@@ -1,3 +1,4 @@
+/* jshint loopfunc: true */
 define([
     'common',
     'domwrite',
@@ -11,7 +12,8 @@ define([
     'modules/adverts/dimensionMap',
     'modules/adverts/audience-science',
     'modules/adverts/quantcast',
-    'modules/adverts/sticky-mpu'
+    'modules/adverts/sticky-mpu',
+    'modules/adverts/inview'
 ],
 function (
     common,
@@ -26,7 +28,8 @@ function (
     dimensionMap,
     audienceScience,
     quantcast,
-    StickyMpu
+    StickyMpu,
+    inView
 ) {
     
     var currConfig,
@@ -36,15 +39,14 @@ function (
 
     function init(config, context) {
         var id = context.id;
+        var size = (window.innerWidth > 810) ? 'median' : 'base';
 
         if(id) {
 
-            contexts[id] = document;
+            contexts[id] = context;
             currConfig  = config;
-            currContext = document;
+            currContext = context;
             slots = [];
-
-            var size = (window.innerWidth > 810) ? 'median' : 'base';
 
             // Run through slots and create documentWrite for each.
             // Other ad types such as iframes and custom can be plugged in here later
@@ -81,6 +83,8 @@ function (
             config: currConfig,
             slots: slots
         });
+
+        size
     }
 
     function loadAds() {

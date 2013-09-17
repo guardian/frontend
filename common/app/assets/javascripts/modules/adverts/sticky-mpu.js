@@ -27,8 +27,8 @@ define([
     };
 
     StickyMpu.prototype.checkPosition = function () {
-        var scrollTop = bonzo(document.body).scrollTop();
-        self = this;
+        var scrollTop = bonzo(document.body).scrollTop(),
+            self = this;
 
         if(scrollTop > this.top) {
             common.requestAnimationFrame(function(){
