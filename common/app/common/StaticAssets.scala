@@ -16,5 +16,6 @@ class StaticAssets(val base: String = "") extends Logging {
 
 class StaticPath(path: String) {
   val asModulePath = path.replace(".js", "")
+  val md5Key = path.split('.').dropRight(1).last
   override def toString = path
 }
