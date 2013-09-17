@@ -12,7 +12,7 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
             _config = config;
 
             var isArticle = config.page && config.page.contentType === "Article",
-                isFromFacebook = document.referrer.indexOf('facebook.com') != -1,
+                isFromFacebook = document.referrer.indexOf('facebook.com') !== -1,
                 isDev = config.page.isDev;
 
             return isArticle && (isFromFacebook || isDev);
