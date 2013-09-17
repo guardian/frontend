@@ -3,7 +3,7 @@
 @import common._
 @import common.Edition
 
- <nav role="navigation" aria-label="Guardian sections"
+<nav role="navigation" aria-label="Guardian sections"
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
     <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} u-cf">
@@ -31,5 +31,4 @@
         }
         <li class="nav__item @if(isFooter){ hide-in-footer} tablet-only"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
     </ul>
- </nav>
-
+</nav>
