@@ -2,10 +2,7 @@ package implicits
 
 import pa._
 import org.joda.time.{ DateTime, DateMidnight }
-import pa.Result
-import pa.LiveMatch
-import pa.Fixture
-import model.{ MatchUrl, Image, Trail, Content }
+import model._
 
 trait Football {
 
@@ -69,21 +66,23 @@ trait Football {
       s"${m.homeTeam.name} $homeScore - $awayScore ${m.awayTeam.name}"
     }
 
-    def linkText: String = text
-    def headline: String = text
-    def trailText: Option[String] = text
+    override def linkText: String = text
+    override def headline: String = text
+    override def trailText: Option[String] = text
 
-    lazy val isLive: Boolean = m match {
+    override lazy val isLive: Boolean = m match {
       case matchDay: MatchDay => matchDay.liveMatch
       case _ => false
     }
 
-    lazy val images: Seq[Image] = Nil
-    lazy val url: String = MatchUrl(m)
-    lazy val section: String = "football"
-    lazy val videoImages: Seq[Image] = Nil
-    lazy val webPublicationDate: DateTime = m.date
-    lazy val sectionName: String = "Football"
+    override lazy val images: List[ImageElement] = Nil
+    override lazy val videos: List[VideoElement] = Nil
+    override lazy val thumbnail: Option[ImageElement] = None
+    override lazy val mainPicture: Option[ImageAsset] = None
+    override lazy val url: String = MatchUrl(m)
+    override lazy val section: String = "football"
+    override lazy val webPublicationDate: DateTime = m.date
+    override lazy val sectionName: String = "Football"
   }
 
   implicit class Match2hasStarted(m: FootballMatch) {

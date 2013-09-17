@@ -9,8 +9,10 @@ define([
         config: {
             searchPageSize:        20,
             maxDisplayableLists:   20,
-            maxOphanCallsPerBlock: 50,
-            cacheExpiryMs:         300000, // 300000 = five mins 
+            ophanCallsPerSecond:   4,     // n.b. times number of blocks
+            collectionsPollMs:     10000, // 10 seconds
+            latestArticlesPollMs:  10000, // 10 seconds
+            cacheExpiryMs:         60000, // 1 min 
             defaultToLiveMode:     true,
             sectionSearches: {
                 "default": "news|uk|uk-news|world",
@@ -31,6 +33,15 @@ define([
                     return path.length === 1 ? true : this.hasNestedProperty(obj[path[0]], _.rest(path));
                 }
                 return false;
+            },
+
+            ammendedQueryStr: function(key, val) {
+                var qp = this.queryParams();
+                qp[key] = val;
+                return _.pairs(qp)
+                    .filter(function(p){ return !!p[0]; })
+                    .map(function(p){ return p[0] + (p[1] ? '=' + p[1] : ''); })
+                    .join('&');
             },
 
             parseQueryParams: function(url) {

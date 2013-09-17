@@ -8,9 +8,6 @@
     @include mq(wide) {
         width: gs-span(16);
     }
-    .collection {
-        margin-top: $gs-baseline;
-    }
 }
 
 @import "facia/_items";
@@ -18,5 +15,6 @@
 @import "facia/_top-stories";
 @import "facia/_medium-stories";
 @import "facia/_small-stories";
+@import "facia/_features";
 @import "facia/_highlights";
 @import "facia/_popular";

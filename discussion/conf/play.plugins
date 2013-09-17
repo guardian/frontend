@@ -2,3 +2,4 @@
 
 1000:assets.AssetsPlugin
 1000:com.gu.management.play.InternalManagementPlugin
+1000:controllers.DiscussionApiPlugin

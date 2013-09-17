@@ -42,10 +42,6 @@ object Switches extends Collections {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = Off)
 
-  val BetaServerSwitch = Switch("Beta", "beta",
-    "If this is switced on users with a #beta in the URL will be messaged",
-    safeState = Off)
-
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -103,6 +99,11 @@ object Switches extends Collections {
 
 
   // Feature Switches
+  
+  val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
+    "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
+    safeState = Off)
+
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
@@ -186,6 +187,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
     safeState = Off)
 
+  val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
+    "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
+    safeState = Off)
+
 
   // Sport Switch
 
@@ -228,7 +233,7 @@ object Switches extends Collections {
     SocialSwitch,
     SearchSwitch,
     ImageServerSwitch,
-    BetaServerSwitch,
+    ReleaseMessageSwitch,
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
@@ -249,7 +254,8 @@ object Switches extends Collections {
     ABGalleryCta,
     ABSwipeCtas,
     ABExpandableMostPopular,
-    ABRightHandCard
+    ABRightHandCard,
+    ABLiveBlogShowMore
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

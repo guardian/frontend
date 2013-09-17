@@ -373,7 +373,6 @@ a.cta, .cta a {
 }
 
 .fronts header {
-    background-color: #cccccc;
     padding: 5px 5px 5px 10px;
     overflow: auto;
 }
@@ -429,50 +428,77 @@ a.cta, .cta a {
     border-right:  0;
 }
 
-.fronts #trailblocks .connectedList {
+.fronts #collections .connectedList {
     min-height: 50px;
 }
 
-.fronts #trailblocks .connectedList.pending {
-    pointer-events: none;
+.fronts .savingIndicator {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    color: #d61d00;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.fronts .pending {
     opacity: 0.5;
+    pointer-events: none;
 }
 
 .fronts .list-header {
-    padding: 5px 0 0 0;
-    overflow: auto;
+    color: #999999;
+    overflow: hidden;
+    height: 40px;
 }
 
-.fronts .list-header a,
-.fronts .list-header a:hover,
-.fronts .list-header a:visited {
-    color: #999999;
+.fronts .list-header a {
+    color: #005580;
 }
 
 .fronts .list-header__title {
-    padding: 2px 0 2px 7px;
+    padding: 0 0 0 7px;
+    height: 20px;
+    overflow: hidden;
 }
 
-.fronts .list-header__title__part {
-    font-size: 16px;
-    display: inline-block;
-    padding-left: 0px;
-    text-transform: uppercase;
+.fronts .collection:hover .list-header__title {
+    background: #CCCCCC;
 }
 
-.fronts .list-header__title__part:first-child {
+.fronts .list-header__edition,
+.fronts .list-header__section,
+.fronts .list-header__role,
+.fronts .list-header__display,
+.fronts .list-header__role__description {
+    font-size: 14px;
     color: #999999;
 }
 
-.fronts .list-header__title__part:last-child {
-    font-weight: bold;
+.fronts .list-header__edition { color: #999999; font-weight: bold; text-transform: uppercase; }
+.fronts .list-header__section { color: #666666; font-weight: bold; text-transform: uppercase; }
+.fronts .list-header__role    { color: #333333; font-weight: bold; text-transform: uppercase; }
+.fronts .list-header__display { color: #333333; }
+
+.fronts .list-header__role__description { color: #ffffff; }
+.fronts .list-header__display--is-set { font-weight: bold; }
+
+.fronts .list-header__meta {
+    font-size: 10px;
+    color: #666666;
+    padding: 0 0 0 10px;
+}
+
+.fronts .list-header__role__description {
+    display: none;
+}
+
+.fronts .collection:hover .list-header__role__description {
+    display: inline-block;
 }
 
 .fronts .list-header__meta {
-    padding: 0 0 0 5px;
-    font-size: 10px;
     float: left;
-    color: #ccc;
 }
 
 .fronts .list-header__meta__last-updated {
@@ -484,13 +510,13 @@ a.cta, .cta a {
 
 .fronts .list-header__status__live,
 .fronts .list-header__status__draft {
-    font-size: 12px;
+    font-size: 10px;
     float: left;
     padding: 0 6px;
     margin: 0 1px;
     height: 19px;
     cursor: pointer;
-    color: #666666;
+    color: #999999;
     font-weight: bold;
 }
 
@@ -499,13 +525,13 @@ a.cta, .cta a {
     height: 20px;
 }
 
-.fronts .list-header__status__draft.hasUnPublishedEdits {
-    color: #f89406;
+.fronts .list-header__status__draft.has-draft {
+    color: #d61d00;
 }
 
 .fronts .list-header__status__draft.active {
     height: 20px;
-    color: #f89406;
+    color: #d61d00;
     background-color: #ededed;    
 }
 
@@ -535,22 +561,22 @@ a.cta, .cta a {
     margin: 0 2px 0 0;
 }
 
-.fronts #trailblocks {
+.fronts #collections {
     margin: 0 0 0 350px;
 }
 
-.fronts .trailblock {
+.fronts .collection {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
     float: left;
     padding: 0 0 20px 0;
     border-top: 3px solid #999999;
+    position: relative;
 }
 
-.fronts .trailblock:first-child {
-    border-top: 0;
-    margin-top: 25px;
+.fronts .collection:first-child {
+    margin-top: 35px;
 }
 
 .fronts .trail {
@@ -594,7 +620,7 @@ a.cta, .cta a {
     background-color: #EEEEEE;
 }
 
-.fronts .trailblock .trail img,
+.fronts .collection .trail img,
 .fronts .trail:hover img {
     display: block;    
 }
@@ -614,7 +640,7 @@ a.cta, .cta a {
     color: #000000;
 }
 
-.fronts .trailblock .trail .webTitle {
+.fronts .collection .trail .webTitle {
     font-size: 15px;
     margin-right: 140px;
 }
@@ -642,7 +668,7 @@ a.cta, .cta a {
     margin-top: 4px;
 }
 
-.fronts .trailblock .trail .trail__meta {
+.fronts .collection .trail .trail__meta {
     float: right;
     clear: right;
     text-align: right;
@@ -666,7 +692,7 @@ a.cta, .cta a {
     display: none;
 }
 
-.fronts .trailblock .trail:hover .trail__actions {
+.fronts .collection .trail:hover .trail__actions {
     display: block;
     position: absolute;
     top: 2px;
@@ -740,8 +766,8 @@ a.cta, .cta a {
 .fronts .list-config {
     padding: 2px 7px 7px 7px;
     font-size: 10px;
-    background: #666666;
-    color: #ffffff;
+    background: #CCCCCC;
+    color: #000000;
 }
 
 .fronts .list-config.editable {
