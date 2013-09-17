@@ -18,7 +18,7 @@
                     </a>
                 </li>
             }
-        <li class="nav__item @if(!isFooter){ mobile-only}"><a class="nav__link" data-link-name="all sections" href="/sections">All sections</a></li>
+        <li class="nav__item @if(!isFooter){ mobile-only}"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
     </ul>
 
     <ul class="nav nav--columns nav--section-divider @if(isFooter){ nav--top-border-off nav--footer} u-cf">
@@ -29,7 +29,7 @@
         @Edition.others(request).map{ edition =>
             <li class="nav__item"><a class="nav__link edition" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="@LinkTo("/", edition)">@edition.displayName</a></li>
         }
-        <li class="nav__item @if(isFooter){ hide-in-footer} tablet-only"><a class="nav__link" data-link-name="all sections" href="/sections">All sections</a></li>
+        <li class="nav__item @if(isFooter){ hide-in-footer} tablet-only"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
     </ul>
  </nav>
 
