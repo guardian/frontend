@@ -33,6 +33,10 @@ function (
 
         common.$g('body').addClass('test-link-card--on');
 
+        function stripHost(url) {
+            return url.replace("http://" + document.location.host, "");
+        }
+
         function isArticle(url) {
             return (/^\/[\w\-]+\/(?:[\w\-]+\/)?[0-9]{4}\/[a-z]{3}\/[0-9]{2}\/[\w\-]+/).test(url);
         }
@@ -62,7 +66,8 @@ function (
         }
 
         function cardifyRelatedInBodyLink(link) {
-            var href = link.getAttribute('href').trim(),
+
+            var href = stripHost(link.getAttribute('href')),
                 types = {
                     'Related':       { test: isArticle,       title: "Related" },
                     'BBC':           { test: isBBC,           title: "Related" },
@@ -104,7 +109,7 @@ function (
 
                 if (numberOfLinksInParagraph > 0) {
                     while (j < numberOfLinksInParagraph) {
-                        normalisedHref = linksInParagraph[j].getAttribute('href').trim();
+                        normalisedHref = stripHost(linksInParagraph[j].getAttribute('href'));
                         hrefPath = new RegExp(normalisedHref.split("?")[0].split("#")[0]);
                         if (
                             isWhiteListed(normalisedHref, self.options.origin)
