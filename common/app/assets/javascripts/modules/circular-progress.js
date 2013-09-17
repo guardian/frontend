@@ -44,7 +44,7 @@ define(["bean",
         if (!detect.hasTouchScreen()) {
             this.$el.addClass('circular-progress--no-touch');
         }
-    };
+    }
 
     CircularProgress.prototype.enable = function() {
         this.$el.addClass('circular-progress--is-on')
@@ -74,7 +74,11 @@ define(["bean",
                           x, y
                        ];
 
-        if (!percent) { pathStr = ['M', 0, 0] }; // Ensure there's no artifacts when at 0
+        if (!percent) {
+            // Ensure there's no artifacts when at 0
+            pathStr = ['M', 0, 0];
+        }
+
         this.pathEl.setAttribute('d', pathStr.join(' '));
         this.labelEl.innerHTML = label;
         return this;
