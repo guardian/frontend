@@ -11,6 +11,7 @@
                     case SmallStories  => { @collections.smallStories(block._1, block._2) }
                     case Features      => { @collections.features(block._1, block._2) }
                     case Highlights    => { @collections.highlights(block._1, block._2) }
+                    case Comment       => { @collections.comment(block._1, block._2) }
                     case _             => { @collections.features(block._1, block._2) }
                 }
             }
