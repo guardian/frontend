@@ -209,6 +209,11 @@ object Switches extends Collections {
     safeState = Off
   )
 
+  val FaciaLoadTestSwitch = Switch("Facia", "facia-load-test",
+    "Switch to make an xhr request from all fronts to Facia, just to load-test it",
+    safeState = Off
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -243,6 +248,7 @@ object Switches extends Collections {
     LiveSummarySwitch,
     LiveCricketSwitch,
     FaciaSwitch,
+    FaciaLoadTestSwitch,
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
     ABGalleryCta,
