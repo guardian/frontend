@@ -1,52 +1,53 @@
-.live-summary__expander-content .published-time,
+.live-summary .published-time,
 .live-summary__expander-trigger,
+.live-summary__expander-cta,
 .live-summary__expander-show {
     display: none;
 }
 
-.live-summary__expander-trigger {
-    + .live-summary__expander-wrapper {
-        .live-summary__expander-content {
-            @include transition(opacity .5s ease-out);
-            opacity: 0;
-            height: 0;
-            overflow: hidden;
-            margin-bottom: 0;
+.live-summary--expandable {
+    .live-summary__expander-cta {
+        display: block;
+    }
+    .live-summary__expander-content {
+        max-height: 300px;
+        overflow: hidden;
+        position: relative;
+
+        &:after {
+            content: '';
+            z-index: 1;
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: $unitHeight * 2;
+            background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(rgba(255, 255, 255, 1)));
+            background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+            background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
         }
     }
-    &:checked {
-        + .live-summary__expander-wrapper {
-            .live-summary__expander-content {
-                opacity: 1;
-                height: auto;
-                overflow: visible;
-            }
-            .live-summary__expander-show {
-                display: block;
-            }
-            .live-summary__expander-hide {
+    .live-summary__expander-trigger:checked + .live-summary__expander-wrapper {
+        .live-summary__expander-content {
+            max-height: none;
+
+            &:after {
                 display: none;
             }
+        }
+        .live-summary__expander-show {
+            display: block;
+        }
+        .live-summary__expander-hide {
+            display: none;
         }
     }
 }
 
-.live-summary__expander-cta__button {
-    text-transform: uppercase;
-    @include font-size(12);
-    float: right;
-    width: auto;
-    color: $linkBlue;
-    padding: 6px 0 6px $gutter;
+.live-summary {
+    margin-bottom: $baseline*4;
 }
 
 .live-summary__title {
     color: $articleOrange;
-}
-
-.live-summary__block-clone { // Look like a block
-    border-bottom: 2px solid $darkMushroom;
-    margin-bottom: $baseline*4;
 }
 
 @include mq(rightCol) {

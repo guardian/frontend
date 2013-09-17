@@ -76,7 +76,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
       .toDate(matchDate.plusDays(2))
       .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
       .response.map{ response =>
-        response.results.map(new Content(_))
+        response.results.map(Content(_))
     }
   }
 
