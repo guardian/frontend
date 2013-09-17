@@ -4,18 +4,13 @@ import play.api.mvc._
 import play.api.data._
 import play.api.data.validation.Constraints
 import model.IdentityPage
-import common.{Logging, ExecutionContexts}
-import services.{IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
+import common.ExecutionContexts
+import services.{PlaySigninService, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
 import com.google.inject.{Inject, Singleton}
-import idapiclient.{ClientAuth, IdApiClient, EmailPassword}
-import org.joda.time._
-import conf.IdentityConfiguration
+import idapiclient.IdApiClient
 import play.api.i18n.Messages
-import idapiclient.ClientAuth
 import play.api.data.FormError
-import scala.Some
 import idapiclient.EmailPassword
-import play.api.mvc.Cookie
 import utils.SafeLogging
 import form.Mappings.{idEmail, idPassword}
 
@@ -23,9 +18,9 @@ import form.Mappings.{idEmail, idPassword}
 @Singleton
 class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                  api: IdApiClient,
-                                 conf: IdentityConfiguration,
                                  idRequestParser: IdRequestParser,
-                                 idUrlBuilder: IdentityUrlBuilder)
+                                 idUrlBuilder: IdentityUrlBuilder,
+                                 signInService : PlaySigninService)
   extends Controller with ExecutionContexts with SafeLogging {
 
   val page = new IdentityPage("/signin", "Sign in", "signin")
@@ -58,20 +53,15 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
       { case (email, password, rememberMe) => {
         logger.trace("authing with ID API")
         Async {
-          api.authBrowser(EmailPassword(email, password), idRequest.omnitureData) map(_ match {
+         signInService.getCookies( api.authBrowser(EmailPassword(email, password), idRequest.omnitureData), rememberMe ) map(_ match {
             case Left(errors) => {
               logger.error(errors.toString())
               logger.info("Auth failed for user")
               val formWithErrors = boundForm.withError(FormError("", Messages("error.login")))
               Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
             }
-            case Right(apiCookiesResponse) => {
+            case Right(responseCookies) => {
               logger.trace("Logging user in")
-              val maxAge = if(rememberMe) Some(Seconds.secondsBetween(DateTime.now, apiCookiesResponse.expiresAt).getSeconds) else None
-              val responseCookies = apiCookiesResponse.values.map { cookie =>
-                val secureHttpOnly = cookie.key.startsWith("SC_")
-                new Cookie(cookie.key, cookie.value, maxAge, "/", Some(conf.id.domain), secureHttpOnly, secureHttpOnly)
-              }
               SeeOther(returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl))
                 .withCookies(responseCookies:_*)
             }
