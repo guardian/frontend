@@ -4545,6 +4545,260 @@
       "references":[]
     }],
     "editorsPicks":[{
+      "id":"culture/2013/sep/17/miley-cyrus-liam-hemsworth-split",
+      "sectionId":"culture",
+      "sectionName":"Culture",
+      "webPublicationDate":"2013-09-17T10:57:38Z",
+      "webTitle":"Miley Cyrus and Liam Hemsworth split",
+      "webUrl":"http://www.theguardian.com/culture/2013/sep/17/miley-cyrus-liam-hemsworth-split",
+      "apiUrl":"http://content.guardianapis.com/culture/2013/sep/17/miley-cyrus-liam-hemsworth-split",
+      "fields":{
+        "trailText":"Singer and Hunger Games actor were a couple for fours years and engaged for a year",
+        "headline":"Miley Cyrus and Liam Hemsworth split",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzfd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410558442/Hemsworth-poses-with-Cyru-005.jpg",
+        "wordcount":"261",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"culture/miley-cyrus",
+        "type":"keyword",
+        "webTitle":"Miley Cyrus",
+        "webUrl":"http://www.theguardian.com/culture/miley-cyrus",
+        "apiUrl":"http://content.guardianapis.com/culture/miley-cyrus",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/seanmichaels",
+        "type":"contributor",
+        "webTitle":"Sean Michaels",
+        "webUrl":"http://www.theguardian.com/profile/seanmichaels",
+        "apiUrl":"http://content.guardianapis.com/profile/seanmichaels",
+        "bio":"<p>Sean Michaels is guardian.co.uk Music's north American news correspondent and writer for the Montreal-based music blog Said the Gramophone</p>",
+        "r2ContributorId":"23518",
+        "references":[]
+      },{
+        "id":"lifeandstyle/celebrity",
+        "type":"keyword",
+        "webTitle":"Celebrity",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/celebrity",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/celebrity",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417506364",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410554679/Hemsworth-poses-with-Cyru-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"54",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410555941/Hemsworth-poses-with-Cyru-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"340",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410557196/Hemsworth-poses-with-Cyru-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"130",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410558442/Hemsworth-poses-with-Cyru-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"84",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410559706/Hemsworth-poses-with-Cyru-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"132",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410561097/Hemsworth-poses-with-Cyru-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"168",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410562431/Hemsworth-poses-with-Cyru-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"180",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410563987/Hemsworth-poses-with-Cyru-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"228",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410565195/Hemsworth-poses-with-Cyru-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"276",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410566592/Hemsworth-poses-with-Cyru-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"372",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410565195/Hemsworth-poses-with-Cyru-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"276",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417506365",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410558442/Hemsworth-poses-with-Cyru-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"84",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"music/musicblog/2013/sep/16/mazzy-star-seasons-day-album-stream",
       "sectionId":"music",
       "sectionName":"Music",
@@ -5873,275 +6127,6 @@
             "height":"84",
             "credit":"Felix Broede",
             "caption":"Isabelle Faust: where other violinists dazzle, she is a thinker. Photograph: Felix Broede",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"music/2013/sep/16/justin-bieber-batman-v-superman",
-      "sectionId":"music",
-      "sectionName":"Music",
-      "webPublicationDate":"2013-09-16T10:47:23Z",
-      "webTitle":"Justin Bieber unlikely to star in Batman v Superman",
-      "webUrl":"http://www.theguardian.com/music/2013/sep/16/justin-bieber-batman-v-superman",
-      "apiUrl":"http://content.guardianapis.com/music/2013/sep/16/justin-bieber-batman-v-superman",
-      "fields":{
-        "trailText":"Pop star caused flurry of rumours by posting picture of film script on Instagram – in what may have been comedy stunt",
-        "headline":"Justin Bieber unlikely to star in Batman v Superman",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tnkp",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327128512/Justin-Bieber-Batman-vs-S-005.jpg",
-        "wordcount":"194",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"music/justin-bieber",
-        "type":"keyword",
-        "webTitle":"Justin Bieber",
-        "webUrl":"http://www.theguardian.com/music/justin-bieber",
-        "apiUrl":"http://content.guardianapis.com/music/justin-bieber",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"film/film",
-        "type":"keyword",
-        "webTitle":"Film",
-        "webUrl":"http://www.theguardian.com/film/film",
-        "apiUrl":"http://content.guardianapis.com/film/film",
-        "sectionId":"film",
-        "sectionName":"Film",
-        "references":[]
-      },{
-        "id":"culture/comedy",
-        "type":"keyword",
-        "webTitle":"Comedy",
-        "webUrl":"http://www.theguardian.com/culture/comedy",
-        "apiUrl":"http://content.guardianapis.com/culture/comedy",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"culture/superman",
-        "type":"keyword",
-        "webTitle":"Superman",
-        "webUrl":"http://www.theguardian.com/culture/superman",
-        "apiUrl":"http://content.guardianapis.com/culture/superman",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"music/music",
-        "type":"keyword",
-        "webTitle":"Music",
-        "webUrl":"http://www.theguardian.com/music/music",
-        "apiUrl":"http://content.guardianapis.com/music/music",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.theguardian.com/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/seanmichaels",
-        "type":"contributor",
-        "webTitle":"Sean Michaels",
-        "webUrl":"http://www.theguardian.com/profile/seanmichaels",
-        "apiUrl":"http://content.guardianapis.com/profile/seanmichaels",
-        "bio":"<p>Sean Michaels is guardian.co.uk Music's north American news correspondent and writer for the Montreal-based music blog Said the Gramophone</p>",
-        "r2ContributorId":"23518",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417387480",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327123932/Justin-Bieber-Batman-vs-S-002.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"54",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327125180/Justin-Bieber-Batman-vs-S-003.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"340",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327126401/Justin-Bieber-Batman-vs-S-004.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"130",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327128512/Justin-Bieber-Batman-vs-S-005.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"84",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327129735/Justin-Bieber-Batman-vs-S-006.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"132",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327131018/Justin-Bieber-Batman-vs-S-007.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"168",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327132628/Justin-Bieber-Batman-vs-S-008.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"180",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327133835/Justin-Bieber-Batman-vs-S-009.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"228",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327135314/Justin-Bieber-Batman-vs-S-010.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"276",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327136864/Justin-Bieber-Batman-vs-S-011.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"372",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327135314/Justin-Bieber-Batman-vs-S-010.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"276",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417387481",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379327128512/Justin-Bieber-Batman-vs-S-005.jpg",
-          "typeData":{
-            "source":"Justin Bieber/Instagram",
-            "altText":"Justin Bieber Batman vs Superman instagram",
-            "height":"84",
-            "credit":"Justin Bieber/Instagram",
-            "caption":"Only joking … Justin Bieber's mock-up on Instagram. Batman fans will be relieved to hear the singer is not due to appear in the film. Photograph: Justin Bieber/Instagram",
             "width":"140"
           }
         }]

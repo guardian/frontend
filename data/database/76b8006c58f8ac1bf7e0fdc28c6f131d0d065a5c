@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":131761,
+    "total":131763,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -47,6 +47,244 @@
       }]
     },
     "results":[{
+      "id":"sport/2013/sep/17/pat-mcquaid-uci-president-election",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-17T11:07:55Z",
+      "webTitle":"Pat McQuaid wants another term to finish job he's started in cycling | William Fotheringham",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/17/pat-mcquaid-uci-president-election",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/17/pat-mcquaid-uci-president-election",
+      "fields":{
+        "trailText":"Pat McQuaid faces cycling's electorate on 27 September, when Brian Cookson will challenge him to be the man to lead the sport out of the post-Armstrong era",
+        "headline":"Pat McQuaid wants another term to finish job he's started in cycling",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzg8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379411649911/Pat-McQuaid-l-003.jpg",
+        "wordcount":"1052",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/cycling",
+        "type":"keyword",
+        "webTitle":"Cycling",
+        "webUrl":"http://www.theguardian.com/sport/cycling",
+        "apiUrl":"http://content.guardianapis.com/sport/cycling",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/uci",
+        "type":"keyword",
+        "webTitle":"UCI (Union Cycliste Internationale)",
+        "webUrl":"http://www.theguardian.com/sport/uci",
+        "apiUrl":"http://content.guardianapis.com/sport/uci",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/williamfotheringham",
+        "type":"contributor",
+        "webTitle":"William Fotheringham",
+        "webUrl":"http://www.theguardian.com/profile/williamfotheringham",
+        "apiUrl":"http://content.guardianapis.com/profile/williamfotheringham",
+        "bio":"<p>William Fotheringham is the Guardian's cycling columnist</p>",
+        "rcsId":"GNL069141",
+        "r2ContributorId":"16575",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/william_fotheringham_140x14.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417507690",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379411655254/Pat-McQuaid-l-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Pat McQuaid l",
+            "height":"276",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Pat McQuaid is adamant he can take cycling forward given a third term as the UCI president, although neither his native Ireland nor his place of domicile, Switzerland, have nominated him. Photograph: Suzanne Plunkett/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417507691",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379411649911/Pat-McQuaid-l-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Pat McQuaid l",
+            "height":"84",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Pat McQuaid is adamant he can take cycling forward given a third term as the UCI president, although neither his native Ireland nor his place of domicile, Switzerland, have nominated him. Photograph: Suzanne Plunkett/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/17/head-british-cycling-brian-cookson",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-17T11:07:00Z",
+      "webTitle":"Head of British Cycling: 'UCI needs to be led in a collegiate way' | Donald McRae",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/17/head-british-cycling-brian-cookson",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/17/head-british-cycling-brian-cookson",
+      "fields":{
+        "trailText":"Brian Cookson, who is aiming to unseat Pat McQuaid as president, wants to change the culture of the UCI, he tells Donald McRae",
+        "headline":"Head of British Cycling: 'UCI needs to be led in a collegiate way'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzgj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/17/1379412615038/Brian-Cookson-003.jpg",
+        "wordcount":"1679",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/cycling",
+        "type":"keyword",
+        "webTitle":"Cycling",
+        "webUrl":"http://www.theguardian.com/sport/cycling",
+        "apiUrl":"http://content.guardianapis.com/sport/cycling",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/uci",
+        "type":"keyword",
+        "webTitle":"UCI (Union Cycliste Internationale)",
+        "webUrl":"http://www.theguardian.com/sport/uci",
+        "apiUrl":"http://content.guardianapis.com/sport/uci",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/usada",
+        "type":"keyword",
+        "webTitle":"Usada (United States Anti-Doping Agency)",
+        "webUrl":"http://www.theguardian.com/sport/usada",
+        "apiUrl":"http://content.guardianapis.com/sport/usada",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/donaldmcrae",
+        "type":"contributor",
+        "webTitle":"Donald McRae",
+        "webUrl":"http://www.theguardian.com/profile/donaldmcrae",
+        "apiUrl":"http://content.guardianapis.com/profile/donaldmcrae",
+        "rcsId":"GNL000413",
+        "r2ContributorId":"15253",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/donald_mcrae_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417509575",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/17/1379412620672/Brian-Cookson-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"Brian Cookson",
+            "height":"276",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"Brian Cookson is standing against Pat McQuaid to be president of the UCI. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417509576",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/17/1379412615038/Brian-Cookson-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"Brian Cookson",
+            "height":"84",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"Brian Cookson is standing against Pat McQuaid to be president of the UCI. Photograph: Fabrice Coffrini/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"sport/blog/2013/sep/17/county-cricket-live",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -2305,7 +2543,7 @@
       "webUrl":"http://www.theguardian.com/sport/2013/sep/16/rugby-world-cup-2015-debbie-jevans",
       "apiUrl":"http://content.guardianapis.com/sport/2013/sep/16/rugby-world-cup-2015-debbie-jevans",
       "fields":{
-        "trailText":"Debbie Jevans, the chief executive of the IRB's next showpiece, is drawing on her London 2012 experience and an oversized dog called Ruckley, she tells Owen Gibson",
+        "trailText":"<p>Debbie Jevans, the chief executive of the IRB's next showpiece, is drawing on her London 2012 experience and an oversized dog called Ruckley, she tells Owen Gibson</p>",
         "headline":"Rugby World Cup 2015 can be best ever, says former Olympic executive",
         "hasStoryPackage":"false",
         "shortUrl":"http://gu.com/p/3tzx2",
@@ -2419,7 +2657,7 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417421761",
+        "id":"gu-image-417515789",
         "relation":"main",
         "type":"image",
         "assets":[{
@@ -2536,12 +2774,12 @@
             "altText":"Stuart Lancaster, the England head coach, with Ruckley, the mascot for the 2015 Rugby World Cup",
             "height":"276",
             "credit":"David Rogers/Getty Images",
-            "caption":"Stuart Lancaster, the England head coach, with Ruckley, the mascot for the 2015 Rugby World Cup. Photograph: David Rogers/Getty Images",
+            "caption":"Stuart Lancaster, the England head coach, with Ruckley, England’s Rugby Ambassador for Children. Photograph: David Rogers/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417421762",
+        "id":"gu-image-417515790",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
@@ -3937,256 +4175,6 @@
         }]
       }],
       "references":[]
-    },{
-      "id":"sport/2013/sep/16/paul-bittar-blanket-ban-steroids",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-16T18:10:00Z",
-      "webTitle":"Paul Bittar to investigate blanket ban on steroids in British racing",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/16/paul-bittar-blanket-ban-steroids",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/16/paul-bittar-blanket-ban-steroids",
-      "fields":{
-        "trailText":"The British Horseracing Authority was taken by surprise by Australia's move for a blanket ban on the use of anabolic steroids in horses in and out of competition",
-        "headline":"Paul Bittar to investigate blanket ban on steroids in British racing",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tz6p",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379349090348/Paul-Bittar-003.jpg",
-        "wordcount":"738",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/british-horseracing-authority",
-        "type":"keyword",
-        "webTitle":"British Horseracing Authority",
-        "webUrl":"http://www.theguardian.com/sport/british-horseracing-authority",
-        "apiUrl":"http://content.guardianapis.com/sport/british-horseracing-authority",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/drugs-in-sport",
-        "type":"keyword",
-        "webTitle":"Drugs in sport",
-        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/gregwood",
-        "type":"contributor",
-        "webTitle":"Greg Wood",
-        "webUrl":"http://www.theguardian.com/profile/gregwood",
-        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
-        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
-        "rcsId":"GNL004789",
-        "r2ContributorId":"15683",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417437474",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379349098794/Paul-Bittar-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Paul Bittar",
-            "height":"276",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Paul Bittar, chief executive of the British Horseracing Authority, was taken by surprise by Australian announcement. Photograph: Alan Crowhurst/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417437475",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379349090348/Paul-Bittar-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Paul Bittar",
-            "height":"84",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Paul Bittar, chief executive of the British Horseracing Authority, xxxx Photograph: Alan Crowhurst/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/16/marin-cilic-ban-positive-test",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-16T17:57:31Z",
-      "webTitle":"Marin Cilic receives nine-month ban after positive test for nikethamide",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/16/marin-cilic-ban-positive-test",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/16/marin-cilic-ban-positive-test",
-      "fields":{
-        "trailText":"<p>Marin Cilic of Croatia will miss the Australian Open after being banned by the ITF for 'inadvertent' ingestion of a stimulant</p>",
-        "headline":"Marin Cilic receives nine-month ban after positive test for nikethamide",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tz8a",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379353266475/Marin-Cilic-003.jpg",
-        "wordcount":"306",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/tennis",
-        "type":"keyword",
-        "webTitle":"Tennis",
-        "webUrl":"http://www.theguardian.com/sport/tennis",
-        "apiUrl":"http://content.guardianapis.com/sport/tennis",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/drugs-in-sport",
-        "type":"keyword",
-        "webTitle":"Drugs in sport",
-        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417506960",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379353271746/Marin-Cilic-008.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Alastair Grant",
-            "altText":"Marin Cilic",
-            "height":"276",
-            "credit":"Alastair Grant/AP",
-            "caption":"Marin Cilic will miss the Australian Open after being handed a backdated nine-month ban for a positive drug test. Photograph: Alastair Grant/AP",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417506961",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379353266475/Marin-Cilic-003.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Alastair Grant",
-            "altText":"Marin Cilic",
-            "height":"84",
-            "credit":"Alastair Grant/AP",
-            "caption":"Marin Cilic will miss the Australian Open after being handed a backdated nine-month ban for a positive drug test. Photograph: Alastair Grant/AP",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
     }],
     "editorsPicks":[{
       "id":"football/2013/sep/16/david-moyes-ashley-young-dive-manchester-united",
@@ -4855,91 +4843,37 @@
       }],
       "references":[]
     },{
-      "id":"sport/blog/2013/sep/16/heineken-cup-premiership-rfu",
+      "id":"sport/2013/sep/17/head-british-cycling-brian-cookson",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-16T20:28:36Z",
-      "webTitle":"Heineken Cup awaits its fate as Europe prepares for peasants' revolt | Robert Kitson",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/16/heineken-cup-premiership-rfu",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/16/heineken-cup-premiership-rfu",
+      "webPublicationDate":"2013-09-17T11:07:00Z",
+      "webTitle":"Head of British Cycling: 'UCI needs to be led in a collegiate way' | Donald McRae",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/17/head-british-cycling-brian-cookson",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/17/head-british-cycling-brian-cookson",
       "fields":{
-        "trailText":"<strong>Robert Kitson:</strong> Never mind the Premiership, the club game is set for seismic changes that could have global repercussions",
-        "headline":"Heineken Cup awaits its fate as Europe prepares for peasants' revolt",
+        "trailText":"Brian Cookson, who is aiming to unseat Pat McQuaid as president, wants to change the culture of the UCI, he tells Donald McRae",
+        "headline":"Head of British Cycling: 'UCI needs to be led in a collegiate way'",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tz4t",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346859316/Premiership-003.jpg",
-        "wordcount":"1053",
+        "shortUrl":"http://gu.com/p/3tzgj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/17/1379412615038/Brian-Cookson-003.jpg",
+        "wordcount":"1679",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"sport/heineken-cup",
+        "id":"sport/cycling",
         "type":"keyword",
-        "webTitle":"Heineken Cup",
-        "webUrl":"http://www.theguardian.com/sport/heineken-cup",
-        "apiUrl":"http://content.guardianapis.com/sport/heineken-cup",
+        "webTitle":"Cycling",
+        "webUrl":"http://www.theguardian.com/sport/cycling",
+        "apiUrl":"http://content.guardianapis.com/sport/cycling",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugby-football-union",
+        "id":"sport/uci",
         "type":"keyword",
-        "webTitle":"Rugby Football Union",
-        "webUrl":"http://www.theguardian.com/sport/rugby-football-union",
-        "apiUrl":"http://content.guardianapis.com/sport/rugby-football-union",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/premiership-2013-14",
-        "type":"keyword",
-        "webTitle":"Premiership 2013-14",
-        "webUrl":"http://www.theguardian.com/sport/premiership-2013-14",
-        "apiUrl":"http://content.guardianapis.com/sport/premiership-2013-14",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/premiership",
-        "type":"keyword",
-        "webTitle":"Premiership",
-        "webUrl":"http://www.theguardian.com/sport/premiership",
-        "apiUrl":"http://content.guardianapis.com/sport/premiership",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/celtic-league",
-        "type":"keyword",
-        "webTitle":"Celtic League",
-        "webUrl":"http://www.theguardian.com/sport/celtic-league",
-        "apiUrl":"http://content.guardianapis.com/sport/celtic-league",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sixnations",
-        "type":"keyword",
-        "webTitle":"Six Nations",
-        "webUrl":"http://www.theguardian.com/sport/sixnations",
-        "apiUrl":"http://content.guardianapis.com/sport/sixnations",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugby-union",
-        "type":"keyword",
-        "webTitle":"Rugby union",
-        "webUrl":"http://www.theguardian.com/sport/rugby-union",
-        "apiUrl":"http://content.guardianapis.com/sport/rugby-union",
+        "webTitle":"UCI (Union Cycliste Internationale)",
+        "webUrl":"http://www.theguardian.com/sport/uci",
+        "apiUrl":"http://content.guardianapis.com/sport/uci",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -4953,49 +4887,37 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/sport-politics",
+        "id":"sport/usada",
         "type":"keyword",
-        "webTitle":"Sport politics",
-        "webUrl":"http://www.theguardian.com/sport/sport-politics",
-        "apiUrl":"http://content.guardianapis.com/sport/sport-politics",
+        "webTitle":"Usada (United States Anti-Doping Agency)",
+        "webUrl":"http://www.theguardian.com/sport/usada",
+        "apiUrl":"http://content.guardianapis.com/sport/usada",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"tone/comment",
+        "id":"tone/interview",
         "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
         "references":[]
       },{
-        "id":"profile/robertkitson",
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/donaldmcrae",
         "type":"contributor",
-        "webTitle":"Robert Kitson",
-        "webUrl":"http://www.theguardian.com/profile/robertkitson",
-        "apiUrl":"http://content.guardianapis.com/profile/robertkitson",
-        "bio":"<p>Robert Kitson is the <a href=\"http://www.guardian.co.uk/sport/rugby-union\">rugby union</a> correspondent for the Guardian. He has worked on the paper since 1999</p>",
-        "rcsId":"GNL004745",
-        "r2ContributorId":"16350",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/02/robert_kitson_140x140.jpg",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
+        "webTitle":"Donald McRae",
+        "webUrl":"http://www.theguardian.com/profile/donaldmcrae",
+        "apiUrl":"http://content.guardianapis.com/profile/donaldmcrae",
+        "rcsId":"GNL000413",
+        "r2ContributorId":"15253",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/donald_mcrae_140x140.jpg",
         "references":[]
       },{
         "id":"type/article",
@@ -5004,153 +4926,40 @@
         "webUrl":"http://www.theguardian.com/articles",
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417427305",
+        "id":"gu-image-417509575",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346856188/Premiership-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/17/1379412620672/Brian-Cookson-008.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
-            "height":"54",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved for the first time to mid-winter. Photograph: David Rogers/Getty Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346858049/Premiership-002.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
-            "height":"130",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved for the first time to mid-winter. Photograph: David Rogers/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346859316/Premiership-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
-            "height":"84",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved for the first time to mid-winter. Photograph: David Rogers/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346860728/Premiership-004.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
-            "height":"132",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved for the first time to mid-winter. Photograph: David Rogers/Getty Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346861993/Premiership-005.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
-            "height":"168",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved for the first time to mid-winter. Photograph: David Rogers/Getty Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346863438/Premiership-006.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
-            "height":"180",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved for the first time to mid-winter. Photograph: David Rogers/Getty Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346864777/Premiership-007.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
-            "height":"228",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved for the first time to mid-winter. Photograph: David Rogers/Getty Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346866108/Premiership-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"Brian Cookson",
             "height":"276",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved for the first time to mid-winter. Photograph: David Rogers/Getty Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346866108/Premiership-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
-            "height":"276",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved to mid-winter. Photograph: David Rogers/Getty Images",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"Brian Cookson is standing against Pat McQuaid to be president of the UCI. Photograph: Fabrice Coffrini/AFP/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417427306",
+        "id":"gu-image-417509576",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379346859316/Premiership-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/17/1379412615038/Brian-Cookson-003.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"David Rogers",
-            "altText":"Premiership",
+            "source":"AFP/Getty Images",
+            "photographer":"Fabrice Coffrini",
+            "altText":"Brian Cookson",
             "height":"84",
-            "credit":"David Rogers/Getty Images",
-            "caption":"Manu Tuilagi of Leicester holds the 2013 Premiership trophy aloft; next year could see the final moved for the first time to mid-winter. Photograph: David Rogers/Getty Images",
+            "credit":"Fabrice Coffrini/AFP/Getty Images",
+            "caption":"Brian Cookson is standing against Pat McQuaid to be president of the UCI. Photograph: Fabrice Coffrini/AFP/Getty Images",
             "width":"140"
           }
         }]

@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":28320,
+    "total":28321,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
-    "pages":1416,
+    "pages":1417,
     "orderBy":"newest",
     "edition":{
       "id":"environment",
@@ -29,6 +29,177 @@
       }]
     },
     "results":[{
+      "id":"environment/2013/sep/17/grass-agriculture-emissions-scientists",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-17T11:05:58Z",
+      "webTitle":"'Super grass' could vastly reduce agriculture emissions, say scientists",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/17/grass-agriculture-emissions-scientists",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/17/grass-agriculture-emissions-scientists",
+      "fields":{
+        "trailText":"Brachiaria grasses inhibit the release of nitrous oxide, which has a more powerful warming effect than carbon dioxide or methane",
+        "headline":"'Super grass' could vastly reduce agriculture emissions, say scientists",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzhg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/17/1379415751578/Brachiaria-supergrass-is--004.jpg",
+        "wordcount":"386",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/carbon-emissions",
+        "type":"keyword",
+        "webTitle":"Carbon emissions",
+        "webUrl":"http://www.theguardian.com/environment/carbon-emissions",
+        "apiUrl":"http://content.guardianapis.com/environment/carbon-emissions",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/climate-change",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/environment/climate-change",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/farming",
+        "type":"keyword",
+        "webTitle":"Farming",
+        "webUrl":"http://www.theguardian.com/environment/farming",
+        "apiUrl":"http://content.guardianapis.com/environment/farming",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/food",
+        "type":"keyword",
+        "webTitle":"Food",
+        "webUrl":"http://www.theguardian.com/environment/food",
+        "apiUrl":"http://content.guardianapis.com/environment/food",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"profile/jonathanwatts",
+        "type":"contributor",
+        "webTitle":"Jonathan Watts",
+        "webUrl":"http://www.theguardian.com/profile/jonathanwatts",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathanwatts",
+        "bio":"<p>Jonathan Watts is the Guardian's Latin America correspondent</p>",
+        "rcsId":"GNL270298",
+        "r2ContributorId":"15909",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_watts_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/plants",
+        "type":"keyword",
+        "webTitle":"Plants",
+        "webUrl":"http://www.theguardian.com/science/plants",
+        "apiUrl":"http://content.guardianapis.com/science/plants",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/biology",
+        "type":"keyword",
+        "webTitle":"Biology",
+        "webUrl":"http://www.theguardian.com/science/biology",
+        "apiUrl":"http://content.guardianapis.com/science/biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/agriculture",
+        "type":"keyword",
+        "webTitle":"Agriculture",
+        "webUrl":"http://www.theguardian.com/science/agriculture",
+        "apiUrl":"http://content.guardianapis.com/science/agriculture",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417514042",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/17/1379415757947/Brachiaria-supergrass-is--009.jpg",
+          "typeData":{
+            "source":"International Center for Tropical Agriculture",
+            "photographer":"Neil Palmer",
+            "altText":"Brachiaria supergrass is studied at the CIAT's headquarters in Colombia",
+            "height":"276",
+            "credit":"Neil Palmer/International Center for Tropical Agriculture",
+            "caption":"Brachiaria grass has been shown to inhibit nitrification, helping to reduce the greenhouse gas emissions from agriculture. Photograph: Neil Palmer/International Center for Tropical Agriculture",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417514043",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/17/1379415751578/Brachiaria-supergrass-is--004.jpg",
+          "typeData":{
+            "source":"International Center for Tropical Agriculture",
+            "photographer":"Neil Palmer",
+            "altText":"Brachiaria supergrass is studied at the CIAT's headquarters in Colombia",
+            "height":"84",
+            "credit":"Neil Palmer/International Center for Tropical Agriculture",
+            "caption":"Brachiaria grass is studied at the CIAT's headquarters in Colombia, on 1 July 2010. This improved forage grass has been shown to inhibit nitrification, helping to reduce the greenhouse gas emissions from agriculture. Photograph: Neil Palmer/International Center for Tropical Agriculture",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"environment/2013/sep/17/romanians-mobilise-gold-mine",
       "sectionId":"environment",
       "sectionName":"Environment",
@@ -4019,47 +4190,39 @@
         }]
       }],
       "references":[]
-    },{
-      "id":"environment/2013/sep/15/scottish-windfarms-guaranteed-price-electricity",
+    }],
+    "editorsPicks":[{
+      "id":"environment/2013/sep/17/grass-agriculture-emissions-scientists",
       "sectionId":"environment",
       "sectionName":"Environment",
-      "webPublicationDate":"2013-09-15T14:34:27Z",
-      "webTitle":"Remote Scottish windfarms to receive guaranteed price for their electricity",
-      "webUrl":"http://www.theguardian.com/environment/2013/sep/15/scottish-windfarms-guaranteed-price-electricity",
-      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/15/scottish-windfarms-guaranteed-price-electricity",
+      "webPublicationDate":"2013-09-17T11:05:58Z",
+      "webTitle":"'Super grass' could vastly reduce agriculture emissions, say scientists",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/17/grass-agriculture-emissions-scientists",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/17/grass-agriculture-emissions-scientists",
       "fields":{
-        "trailText":"Guaranteed price will reflect the higher cost of building windfarms and selling power in 'outlying' areas",
-        "headline":"Remote Scottish windfarms to receive guaranteed price for their electricity",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tnbe",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255605230/Windfarm-005.jpg",
-        "wordcount":"682",
+        "trailText":"Brachiaria grasses inhibit the release of nitrous oxide, which has a more powerful warming effect than carbon dioxide or methane",
+        "headline":"'Super grass' could vastly reduce agriculture emissions, say scientists",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzhg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/17/1379415751578/Brachiaria-supergrass-is--004.jpg",
+        "wordcount":"386",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"environment/windpower",
+        "id":"environment/carbon-emissions",
         "type":"keyword",
-        "webTitle":"Wind power",
-        "webUrl":"http://www.theguardian.com/environment/windpower",
-        "apiUrl":"http://content.guardianapis.com/environment/windpower",
+        "webTitle":"Carbon emissions",
+        "webUrl":"http://www.theguardian.com/environment/carbon-emissions",
+        "apiUrl":"http://content.guardianapis.com/environment/carbon-emissions",
         "sectionId":"environment",
         "sectionName":"Environment",
         "references":[]
       },{
-        "id":"environment/energy",
+        "id":"environment/climate-change",
         "type":"keyword",
-        "webTitle":"Energy",
-        "webUrl":"http://www.theguardian.com/environment/energy",
-        "apiUrl":"http://content.guardianapis.com/environment/energy",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"environment/renewableenergy",
-        "type":"keyword",
-        "webTitle":"Renewable energy",
-        "webUrl":"http://www.theguardian.com/environment/renewableenergy",
-        "apiUrl":"http://content.guardianapis.com/environment/renewableenergy",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/environment/climate-change",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
         "sectionId":"environment",
         "sectionName":"Environment",
         "references":[]
@@ -4073,41 +4236,33 @@
         "sectionName":"Environment",
         "references":[]
       },{
-        "id":"environment/energyefficiency",
+        "id":"environment/farming",
         "type":"keyword",
-        "webTitle":"Energy efficiency",
-        "webUrl":"http://www.theguardian.com/environment/energyefficiency",
-        "apiUrl":"http://content.guardianapis.com/environment/energyefficiency",
+        "webTitle":"Farming",
+        "webUrl":"http://www.theguardian.com/environment/farming",
+        "apiUrl":"http://content.guardianapis.com/environment/farming",
         "sectionId":"environment",
         "sectionName":"Environment",
         "references":[]
       },{
-        "id":"business/energy-industry",
+        "id":"environment/food",
         "type":"keyword",
-        "webTitle":"Energy industry",
-        "webUrl":"http://www.theguardian.com/business/energy-industry",
-        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
-        "sectionId":"business",
-        "sectionName":"Business",
+        "webTitle":"Food",
+        "webUrl":"http://www.theguardian.com/environment/food",
+        "apiUrl":"http://content.guardianapis.com/environment/food",
+        "sectionId":"environment",
+        "sectionName":"Environment",
         "references":[]
       },{
-        "id":"business/business",
-        "type":"keyword",
-        "webTitle":"Business",
-        "webUrl":"http://www.theguardian.com/business/business",
-        "apiUrl":"http://content.guardianapis.com/business/business",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"profile/severincarrell",
+        "id":"profile/jonathanwatts",
         "type":"contributor",
-        "webTitle":"Severin Carrell",
-        "webUrl":"http://www.theguardian.com/profile/severincarrell",
-        "apiUrl":"http://content.guardianapis.com/profile/severincarrell",
-        "bio":"<p>Severin Carrell is <a href=\"http://www.guardian.co.uk/politics/scotland\">Scotland</a> correspondent for the <a href=\"http://www.guardian.co.uk/theguardian\">Guardian</a>. He has worked as a home affairs, environment and politics correspondent for the Scotsman and Scotland on Sunday, and as a senior reporter with the Independent and Independent on Sunday</p>",
-        "r2ContributorId":"19388",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/severin_carrell_140x140.jpg",
+        "webTitle":"Jonathan Watts",
+        "webUrl":"http://www.theguardian.com/profile/jonathanwatts",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathanwatts",
+        "bio":"<p>Jonathan Watts is the Guardian's Latin America correspondent</p>",
+        "rcsId":"GNL270298",
+        "r2ContributorId":"15909",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_watts_140x140.jpg",
         "references":[]
       },{
         "id":"tone/news",
@@ -4117,58 +4272,49 @@
         "apiUrl":"http://content.guardianapis.com/tone/news",
         "references":[]
       },{
-        "id":"environment/green-economy",
+        "id":"world/world",
         "type":"keyword",
-        "webTitle":"Green economy",
-        "webUrl":"http://www.theguardian.com/environment/green-economy",
-        "apiUrl":"http://content.guardianapis.com/environment/green-economy",
-        "sectionId":"environment",
-        "sectionName":"Environment",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
         "references":[]
       },{
-        "id":"environment/green-politics",
+        "id":"science/plants",
         "type":"keyword",
-        "webTitle":"Green politics",
-        "webUrl":"http://www.theguardian.com/environment/green-politics",
-        "apiUrl":"http://content.guardianapis.com/environment/green-politics",
-        "sectionId":"environment",
-        "sectionName":"Environment",
+        "webTitle":"Plants",
+        "webUrl":"http://www.theguardian.com/science/plants",
+        "apiUrl":"http://content.guardianapis.com/science/plants",
+        "sectionId":"science",
+        "sectionName":"Science",
         "references":[]
       },{
-        "id":"politics/ed-davey",
+        "id":"science/biology",
         "type":"keyword",
-        "webTitle":"Ed Davey",
-        "webUrl":"http://www.theguardian.com/politics/ed-davey",
-        "apiUrl":"http://content.guardianapis.com/politics/ed-davey",
-        "sectionId":"politics",
-        "sectionName":"Politics",
+        "webTitle":"Biology",
+        "webUrl":"http://www.theguardian.com/science/biology",
+        "apiUrl":"http://content.guardianapis.com/science/biology",
+        "sectionId":"science",
+        "sectionName":"Science",
         "references":[]
       },{
-        "id":"politics/liberal-democrat-conference-2013",
+        "id":"science/science",
         "type":"keyword",
-        "webTitle":"Liberal Democrat conference 2013",
-        "webUrl":"http://www.theguardian.com/politics/liberal-democrat-conference-2013",
-        "apiUrl":"http://content.guardianapis.com/politics/liberal-democrat-conference-2013",
-        "sectionId":"politics",
-        "sectionName":"Politics",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
         "references":[]
       },{
-        "id":"politics/libdemconference",
+        "id":"science/agriculture",
         "type":"keyword",
-        "webTitle":"Liberal Democrat conference",
-        "webUrl":"http://www.theguardian.com/politics/libdemconference",
-        "apiUrl":"http://content.guardianapis.com/politics/libdemconference",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"uk/scotland",
-        "type":"keyword",
-        "webTitle":"Scotland",
-        "webUrl":"http://www.theguardian.com/uk/scotland",
-        "apiUrl":"http://content.guardianapis.com/uk/scotland",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
+        "webTitle":"Agriculture",
+        "webUrl":"http://www.theguardian.com/science/agriculture",
+        "apiUrl":"http://content.guardianapis.com/science/agriculture",
+        "sectionId":"science",
+        "sectionName":"Science",
         "references":[]
       },{
         "id":"type/article",
@@ -4179,175 +4325,44 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417331832",
+        "id":"gu-image-417514042",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255601910/Windfarm-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/17/1379415757947/Brachiaria-supergrass-is--009.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"54",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255602886/Windfarm-003.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"340",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255604029/Windfarm-004.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"130",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255605230/Windfarm-005.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"84",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255606360/Windfarm-006.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"132",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255607421/Windfarm-007.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"168",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255608438/Windfarm-008.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"180",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255609423/Windfarm-009.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"228",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255610469/Windfarm-010.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
+            "source":"International Center for Tropical Agriculture",
+            "photographer":"Neil Palmer",
+            "altText":"Brachiaria supergrass is studied at the CIAT's headquarters in Colombia",
             "height":"276",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255611611/Windfarm-011.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"372",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255610469/Windfarm-010.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
-            "height":"276",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
+            "credit":"Neil Palmer/International Center for Tropical Agriculture",
+            "caption":"Brachiaria grass has been shown to inhibit nitrification, helping to reduce the greenhouse gas emissions from agriculture. Photograph: Neil Palmer/International Center for Tropical Agriculture",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417331833",
+        "id":"gu-image-417514043",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379255605230/Windfarm-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/17/1379415751578/Brachiaria-supergrass-is--004.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"Danny Lawson",
-            "altText":"Windfarm",
+            "source":"International Center for Tropical Agriculture",
+            "photographer":"Neil Palmer",
+            "altText":"Brachiaria supergrass is studied at the CIAT's headquarters in Colombia",
             "height":"84",
-            "credit":"Danny Lawson/PA",
-            "caption":"The guaranteed 'strike price' for some Scottish islands has been introduced in response to the extra costs incurred building windfarms and selling energy to the grid outside southern England. Photograph: Danny Lawson/PA",
+            "credit":"Neil Palmer/International Center for Tropical Agriculture",
+            "caption":"Brachiaria grass is studied at the CIAT's headquarters in Colombia, on 1 July 2010. This improved forage grass has been shown to inhibit nitrification, helping to reduce the greenhouse gas emissions from agriculture. Photograph: Neil Palmer/International Center for Tropical Agriculture",
             "width":"140"
           }
         }]
       }],
       "references":[]
-    }],
-    "editorsPicks":[{
+    },{
       "id":"environment/2013/sep/16/david-king-fracking-shale-gas",
       "sectionId":"environment",
       "sectionName":"Environment",
@@ -5176,194 +5191,6 @@
             "height":"276",
             "credit":"7nuit/Getty Images",
             "caption":"The parliamentarians ‘appeared to have two aims: to torpedo the IPCC’s report next week and strike down the UK’s Climate Change Act.' Photograph: 7nuit/Getty",
-            "width":"460"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"environment/2013/sep/16/badger-cull-shot-animal-picture",
-      "sectionId":"environment",
-      "sectionName":"Environment",
-      "webPublicationDate":"2013-09-16T14:35:19Z",
-      "webTitle":"Badger cull: first photo of shot animal emerges",
-      "webUrl":"http://www.theguardian.com/environment/2013/sep/16/badger-cull-shot-animal-picture",
-      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/16/badger-cull-shot-animal-picture",
-      "fields":{
-        "trailText":"<p>Animal believed to be shot by marksmen 'had time to take flight', putting in doubt claims of humane, instant killing</p>",
-        "headline":"Badger cull: first photo of shot animal emerges",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tzxv",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330430084/Badger-102-killed-during--027.jpg",
-        "wordcount":"437",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"environment/badgers",
-        "type":"keyword",
-        "webTitle":"Badgers",
-        "webUrl":"http://www.theguardian.com/environment/badgers",
-        "apiUrl":"http://content.guardianapis.com/environment/badgers",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"environment/wildlife",
-        "type":"keyword",
-        "webTitle":"Wildlife",
-        "webUrl":"http://www.theguardian.com/environment/wildlife",
-        "apiUrl":"http://content.guardianapis.com/environment/wildlife",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"world/animals",
-        "type":"keyword",
-        "webTitle":"Animals",
-        "webUrl":"http://www.theguardian.com/world/animals",
-        "apiUrl":"http://content.guardianapis.com/world/animals",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"environment/environment",
-        "type":"keyword",
-        "webTitle":"Environment",
-        "webUrl":"http://www.theguardian.com/environment/environment",
-        "apiUrl":"http://content.guardianapis.com/environment/environment",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"world/animal-welfare",
-        "type":"keyword",
-        "webTitle":"Animal welfare",
-        "webUrl":"http://www.theguardian.com/world/animal-welfare",
-        "apiUrl":"http://content.guardianapis.com/world/animal-welfare",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"uk/ruralaffairs",
-        "type":"keyword",
-        "webTitle":"Rural affairs",
-        "webUrl":"http://www.theguardian.com/uk/ruralaffairs",
-        "apiUrl":"http://content.guardianapis.com/uk/ruralaffairs",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"uk/uk",
-        "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.theguardian.com/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"uk/bovine-tuberculosis",
-        "type":"keyword",
-        "webTitle":"Bovine tuberculosis",
-        "webUrl":"http://www.theguardian.com/uk/bovine-tuberculosis",
-        "apiUrl":"http://content.guardianapis.com/uk/bovine-tuberculosis",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"profile/adam-vaughan",
-        "type":"contributor",
-        "webTitle":"Adam Vaughan",
-        "webUrl":"http://www.theguardian.com/profile/adam-vaughan",
-        "apiUrl":"http://content.guardianapis.com/profile/adam-vaughan",
-        "bio":"<p>Adam Vaughan is editor of <a href=\"http://www.guardian.co.uk/environment\">environmentguardian.co.uk</a>. He previously edited sites for CBS and Haymarket </p>",
-        "r2ContributorId":"30252",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2009/6/8/1244479493691/Adam-Vaughan-001.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417417267",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330436240/Badger-102-killed-during--032.jpg",
-          "typeData":{
-            "source":"Secret World Wildlife Rescue",
-            "photographer":"Pauline Kidner",
-            "altText":"Badger 102 killed during badger cull ",
-            "height":"276",
-            "credit":"Pauline Kidner/Secret World Wildlife Rescue",
-            "caption":"The X ray of the dead badger show it was hit by a single high velocity bullet, according to the vet who examined the carcass. Photograph: Pauline Kidner/Secret World Wildlife Rescue",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417417268",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330430084/Badger-102-killed-during--027.jpg",
-          "typeData":{
-            "source":"Secret World Wildlife Rescue",
-            "photographer":"Pauline Kidner",
-            "altText":"Badger 102 killed during badger cull ",
-            "height":"84",
-            "credit":"Pauline Kidner/Secret World Wildlife Rescue",
-            "caption":"Photographs and X ray of badger 102 killed during badger cull, September 2013. Photograph: Pauline Kidner/Secret World Wildlife Rescue",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-image-417417269",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330406626/Badger-102-killed-during--006.jpg",
-          "typeData":{
-            "source":"Secret World Wildlife Rescue",
-            "photographer":"Pauline Kidner",
-            "altText":"Badger 102 killed during badger cull ",
-            "height":"276",
-            "credit":"Pauline Kidner/Secret World Wildlife Rescue",
-            "caption":"The animal's body was brought in by a group on night vigil in the cull zone. Photograph: Pauline Kidner/Secret World Wildlife Rescue",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417417270",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330417675/Badger-102-killed-during--016.jpg",
-          "typeData":{
-            "source":"Secret World Wildlife Rescue",
-            "photographer":"Pauline Kidner",
-            "altText":"Badger 102 killed during badger cull ",
-            "height":"276",
-            "credit":"Pauline Kidner/Secret World Wildlife Rescue",
-            "caption":"Badger 102 was killed during the cull, according to Secret World Wildlife Rescue. Photograph: Pauline Kidner/Secret World Wildlife Rescue",
             "width":"460"
           }
         }]

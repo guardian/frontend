@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":13650,
+    "total":13649,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -2273,114 +2273,6 @@
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/13/horse-racing-tips-saturday-14-september",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-13T15:46:13Z",
-      "webTitle":"Horse racing tips: Saturday 14 September",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/13/horse-racing-tips-saturday-14-september",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/13/horse-racing-tips-saturday-14-september",
-      "fields":{
-        "trailText":"Saturday tips: Foundry in the St Leger at Doncaster is the best bet of the day",
-        "headline":"Horse racing tips: Saturday 14 September",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tmhv",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/21/1363862516297/Doncaster-003.jpg",
-        "wordcount":"91",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/horse-racing-tips",
-        "type":"keyword",
-        "webTitle":"Horse racing tips",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/gregwood",
-        "type":"contributor",
-        "webTitle":"Greg Wood",
-        "webUrl":"http://www.theguardian.com/profile/gregwood",
-        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
-        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
-        "rcsId":"GNL004789",
-        "r2ContributorId":"15683",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417238025",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/21/1363862523599/Doncaster-008.jpg",
-          "typeData":{
-            "source":"PA Archive/Press Association Ima",
-            "photographer":"John Giles",
-            "altText":"Doncaster",
-            "height":"276",
-            "credit":"John Giles/PA Archive/Press Association Ima",
-            "caption":"They race on Saturday at Doncaster where Foundry is fancied to win the St Leger at 3.50. Photograph: John Giles/PA",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417238026",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/3/21/1363862516297/Doncaster-003.jpg",
-          "typeData":{
-            "source":"PA Archive/Press Association Ima",
-            "photographer":"John Giles",
-            "altText":"Doncaster",
-            "height":"84",
-            "credit":"John Giles/PA Archive/Press Association Ima",
-            "caption":"Doncaster must pass an inspection on Friday if the new Flat turf season is to get the go-ahead with officials pessimistic for Saturday's racing. Photograph: John Giles/PA Archive/Press Association Ima",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
       "id":"sport/2013/sep/13/live-horse-racing-september-13",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -3638,6 +3530,149 @@
             "height":"84",
             "credit":"Alan Crowhurst/Getty Images",
             "caption":"Trainer Charlie Appleby will be hoping Life Partner runs well in the 4.45pm at Doncaster on Wednesday.  Photograph: Alan Crowhurst/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/10/banned-products-moorley-farm-newmarket",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-10T19:24:29Z",
+      "webTitle":"Banned veterinary products seized at Moorley Farm in Newmarket",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/10/banned-products-moorley-farm-newmarket",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/10/banned-products-moorley-farm-newmarket",
+      "fields":{
+        "trailText":"Swoop took place at a property connected to Sheikh Mohammed's Darley Stud operation",
+        "headline":"Banned veterinary products seized at Moorley Farm in Newmarket",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tk7y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/31/1370015862566/Sheikh-Mohammed-003.jpg",
+        "wordcount":"502",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "type":"keyword",
+        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
+        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/godolphin",
+        "type":"keyword",
+        "webTitle":"Godolphin",
+        "webUrl":"http://www.theguardian.com/sport/godolphin",
+        "apiUrl":"http://content.guardianapis.com/sport/godolphin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416983103",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/31/1370015870985/Sheikh-Mohammed-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Sheikh Mohammed",
+            "height":"276",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"The news that a farm connected to the Darley Stud has been raided is a fresh embarrassment for Sheikh Mohammed.  Photograph: Alan Crowhurst/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416983104",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/31/1370015862566/Sheikh-Mohammed-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Sheikh Mohammed",
+            "height":"84",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Godolphin founder Sheikh Mohammed will be desperate to see Dawn Approach put his stable's drugs scandal behind in the Derby.  Photograph: Alan Crowhurst/Getty Images",
             "width":"140"
           }
         }]

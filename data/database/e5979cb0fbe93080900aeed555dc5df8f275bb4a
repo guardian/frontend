@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":21587,
+    "total":21588,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -29,6 +29,181 @@
       }]
     },
     "results":[{
+      "id":"stage/2013/sep/17/duck-house-mps-expenses-west-end",
+      "sectionId":"stage",
+      "sectionName":"Stage",
+      "webPublicationDate":"2013-09-17T11:17:36Z",
+      "webTitle":"The Duck House: MPs' expenses satire set for West End splash",
+      "webUrl":"http://www.theguardian.com/stage/2013/sep/17/duck-house-mps-expenses-west-end",
+      "apiUrl":"http://content.guardianapis.com/stage/2013/sep/17/duck-house-mps-expenses-west-end",
+      "fields":{
+        "trailText":"Ben Miller to star in new London comedy set during Gordon Brown's time in office, by Mock the Week's Dan Patterson",
+        "headline":"The Duck House: MPs' expenses satire set for West End splash",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzfq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379412584334/Ben-Miller-to-star-in-Wes-003.jpg",
+        "wordcount":"283",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"stage/westend",
+        "type":"keyword",
+        "webTitle":"West End",
+        "webUrl":"http://www.theguardian.com/stage/westend",
+        "apiUrl":"http://content.guardianapis.com/stage/westend",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/theatre",
+        "type":"keyword",
+        "webTitle":"Theatre",
+        "webUrl":"http://www.theguardian.com/stage/theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/stage/stage",
+        "apiUrl":"http://content.guardianapis.com/stage/stage",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"culture/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/culture/comedy",
+        "apiUrl":"http://content.guardianapis.com/culture/comedy",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tv-and-radio/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/comedy",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/comedy",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.theguardian.com/culture/television",
+        "apiUrl":"http://content.guardianapis.com/culture/television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"politics/mps-expenses",
+        "type":"keyword",
+        "webTitle":"MPs' expenses",
+        "webUrl":"http://www.theguardian.com/politics/mps-expenses",
+        "apiUrl":"http://content.guardianapis.com/politics/mps-expenses",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/matt-trueman",
+        "type":"contributor",
+        "webTitle":"Matt Trueman",
+        "webUrl":"http://www.theguardian.com/profile/matt-trueman",
+        "apiUrl":"http://content.guardianapis.com/profile/matt-trueman",
+        "r2ContributorId":"32274",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417510132",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379412591059/Ben-Miller-to-star-in-Wes-008.jpg",
+          "typeData":{
+            "source":"Karen Robinson and AFP/Getty Images",
+            "altText":"Ben Miller to star in West End satire The Duck House",
+            "height":"276",
+            "credit":"Karen Robinson and AFP/Getty Images",
+            "caption":"Ben Miller: 'Traumatic as the expense scandal was, hopefully we can all now have a good laugh about it.' Photograph: Karen Robinson and AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417510133",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379412584334/Ben-Miller-to-star-in-Wes-003.jpg",
+          "typeData":{
+            "source":"Karen Robinson and AFP/Getty Images",
+            "altText":"Ben Miller to star in West End satire The Duck House",
+            "height":"84",
+            "credit":"Karen Robinson and AFP/Getty Images",
+            "caption":"Ben Miller to star in MP expenses scandal satire The Duck House in the West End, written by Mock the Week's Dan Patterson. Photograph: Karen Robinson and AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"stage/2013/sep/17/adam-buxton-union-chapel-review",
       "sectionId":"stage",
       "sectionName":"Stage",
@@ -4460,7 +4635,7 @@
       "id":"stage/2013/sep/14/this-weeks-new-theatre",
       "sectionId":"stage",
       "sectionName":"Stage",
-      "webPublicationDate":"2013-09-13T14:58:53Z",
+      "webPublicationDate":"2013-09-13T15:19:26Z",
       "webTitle":"The Lyons, Hopelessly Devoted, Storm In A Flower Vase: what to see at the theatre this week",
       "webUrl":"http://www.theguardian.com/stage/2013/sep/14/this-weeks-new-theatre",
       "apiUrl":"http://content.guardianapis.com/stage/2013/sep/14/this-weeks-new-theatre",
@@ -5037,289 +5212,6 @@
             "credit":"Manoocher Deghati/AFP",
             "caption":"Otto Sander, second from left, as Claudius in Peter Zadek's production of Hamlet in 2000. Photograph: Manoocher Deghati/AFP",
             "width":"460"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"stage/2013/sep/13/hysteria-review",
-      "sectionId":"stage",
-      "sectionName":"Stage",
-      "webPublicationDate":"2013-09-13T13:16:00Z",
-      "webTitle":"Hysteria – review",
-      "webUrl":"http://www.theguardian.com/stage/2013/sep/13/hysteria-review",
-      "apiUrl":"http://content.guardianapis.com/stage/2013/sep/13/hysteria-review",
-      "fields":{
-        "trailText":"<p>Terry Johnson's farce about Dalí's meeting with Freud is not just clever and funny, it's unexpectedly moving, too, writes <strong>Lyn Gardner</strong></p>",
-        "headline":"Hysteria – review",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tmem",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074538398/Hysteria-005.jpg",
-        "wordcount":"410",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"stage/theatre",
-        "type":"keyword",
-        "webTitle":"Theatre",
-        "webUrl":"http://www.theguardian.com/stage/theatre",
-        "apiUrl":"http://content.guardianapis.com/stage/theatre",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"stage/stage",
-        "type":"keyword",
-        "webTitle":"Stage",
-        "webUrl":"http://www.theguardian.com/stage/stage",
-        "apiUrl":"http://content.guardianapis.com/stage/stage",
-        "sectionId":"stage",
-        "sectionName":"Stage",
-        "references":[]
-      },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"tone/reviews",
-        "type":"tone",
-        "webTitle":"Reviews",
-        "webUrl":"http://www.theguardian.com/tone/reviews",
-        "apiUrl":"http://content.guardianapis.com/tone/reviews",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/reviews",
-        "type":"newspaper-book-section",
-        "webTitle":"Reviews",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/reviews",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/reviews",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"profile/lyngardner",
-        "type":"contributor",
-        "webTitle":"Lyn Gardner",
-        "webUrl":"http://www.theguardian.com/profile/lyngardner",
-        "apiUrl":"http://content.guardianapis.com/profile/lyngardner",
-        "bio":"<p>Lyn Gardner has been going to the theatre regularly since early infancy. She studied Drama and English at Kent University. She was a founder member of the City Limits cooperative where she edited the theatre section, before joining the Guardian.</p>",
-        "rcsId":"GNL099713",
-        "r2ContributorId":"16025",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/photobylines/2012/9/7/1347039131363/Lyn-Gardner.jpg",
-        "references":[]
-      },{
-        "id":"artanddesign/dali",
-        "type":"keyword",
-        "webTitle":"Salvador Dalí",
-        "webUrl":"http://www.theguardian.com/artanddesign/dali",
-        "apiUrl":"http://content.guardianapis.com/artanddesign/dali",
-        "sectionId":"artanddesign",
-        "sectionName":"Art and design",
-        "references":[]
-      },{
-        "id":"books/sigmundfreud",
-        "type":"keyword",
-        "webTitle":"Sigmund Freud",
-        "webUrl":"http://www.theguardian.com/books/sigmundfreud",
-        "apiUrl":"http://content.guardianapis.com/books/sigmundfreud",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417232499",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074534395/Hysteria-002.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"54",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074535702/Hysteria-003.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"340",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074537101/Hysteria-004.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"130",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074538398/Hysteria-005.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"84",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074539909/Hysteria-006.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"132",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074541170/Hysteria-007.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"168",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074542442/Hysteria-008.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"180",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074543900/Hysteria-009.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"228",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074545204/Hysteria-010.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"276",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074546471/Hysteria-011.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"372",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074545204/Hysteria-010.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"276",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Comic pathos … Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre. Photograph: Tristram Kenton for the Guardian",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417232500",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/13/1379074538398/Hysteria-005.jpg",
-          "typeData":{
-            "source":" Tristram Kenton",
-            "photographer":" Tristram Kenton",
-            "altText":"Hysteria",
-            "height":"84",
-            "credit":" Tristram Kenton/ Tristram Kenton",
-            "caption":"Antony Sher (left) and Adrian Schiller in Hysteria at Hampstead theatre.  Photograph:  Tristram Kenton",
-            "width":"140"
           }
         }]
       }],

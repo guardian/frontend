@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":108821,
+    "total":108822,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -50,7 +50,7 @@
       "id":"business/2013/sep/17/european-car-sales-slump-to-record-low-live",
       "sectionId":"business",
       "sectionName":"Business",
-      "webPublicationDate":"2013-09-17T10:49:47Z",
+      "webPublicationDate":"2013-09-17T11:19:52Z",
       "webTitle":"UK inflation falls to 2.7%, but English house prices hit record high - live",
       "webUrl":"http://www.theguardian.com/business/2013/sep/17/european-car-sales-slump-to-record-low-live",
       "apiUrl":"http://content.guardianapis.com/business/2013/sep/17/european-car-sales-slump-to-record-low-live",
@@ -1079,6 +1079,68 @@
         "type":"witness-assignment",
         "id":"witness-assignment/5237ef4be4b0bdcddbf1fcf2"
       }]
+    },{
+      "id":"business/marketforceslive/2013/sep/17/imagination-technologies-update",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-09-17T11:18:54Z",
+      "webTitle":"Imagination Technologies hit by profit taking after update",
+      "webUrl":"http://www.theguardian.com/business/marketforceslive/2013/sep/17/imagination-technologies-update",
+      "apiUrl":"http://content.guardianapis.com/business/marketforceslive/2013/sep/17/imagination-technologies-update",
+      "fields":{
+        "trailText":"Chip designer positive on outlook after strong growth in royalty revenues",
+        "headline":"Imagination Technologies hit by profit taking after update",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tztf",
+        "wordcount":"209",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/marketforceslive",
+        "type":"blog",
+        "webTitle":"Market Forces blog",
+        "webUrl":"http://www.theguardian.com/business/marketforceslive",
+        "apiUrl":"http://content.guardianapis.com/business/marketforceslive",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/nickfletcher",
+        "type":"contributor",
+        "webTitle":"Nick Fletcher",
+        "webUrl":"http://www.theguardian.com/profile/nickfletcher",
+        "apiUrl":"http://content.guardianapis.com/profile/nickfletcher",
+        "bio":"<p>Nick Fletcher is a Guardian columnist and writer of the Market Forces column</p>",
+        "rcsId":"GNL023406",
+        "r2ContributorId":"16178",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/nick_fletcher_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
     },{
       "id":"business/2013/sep/17/uk-inflation-dips-cost-of-fuel-clothing",
       "sectionId":"business",
@@ -4856,269 +4918,6 @@
             "height":"84",
             "credit":"Tony Kershaw/Rex Features",
             "caption":"The Co-operative Bank needs to raise £1.5bn.  Photograph: Tony Kershaw/Rex Features",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"business/2013/sep/16/us-super-rich-recover-losses-financial-crisis-forbes",
-      "sectionId":"business",
-      "sectionName":"Business",
-      "webPublicationDate":"2013-09-16T18:02:26Z",
-      "webTitle":"US super-rich hit new wealth record five years after financial crisis",
-      "webUrl":"http://www.theguardian.com/business/2013/sep/16/us-super-rich-recover-losses-financial-crisis-forbes",
-      "apiUrl":"http://content.guardianapis.com/business/2013/sep/16/us-super-rich-recover-losses-financial-crisis-forbes",
-      "fields":{
-        "trailText":"<p>Forbes magazine says the 400 wealthiest Americans are worth a record $2.02tn, up from $1.7tn in 2012</p>",
-        "headline":"US super-rich hit new wealth record five years after financial crisis",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tz8t",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354053571/Bill-Gates---Ameircas-ric-003.jpg",
-        "wordcount":"569",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"business/rich-lists",
-        "type":"keyword",
-        "webTitle":"Rich lists",
-        "webUrl":"http://www.theguardian.com/business/rich-lists",
-        "apiUrl":"http://content.guardianapis.com/business/rich-lists",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"media/forbes-magazine",
-        "type":"keyword",
-        "webTitle":"Forbes magazine",
-        "webUrl":"http://www.theguardian.com/media/forbes-magazine",
-        "apiUrl":"http://content.guardianapis.com/media/forbes-magazine",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"business/financial-crisis",
-        "type":"keyword",
-        "webTitle":"Financial crisis",
-        "webUrl":"http://www.theguardian.com/business/financial-crisis",
-        "apiUrl":"http://content.guardianapis.com/business/financial-crisis",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/business",
-        "type":"keyword",
-        "webTitle":"Business",
-        "webUrl":"http://www.theguardian.com/business/business",
-        "apiUrl":"http://content.guardianapis.com/business/business",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"media/media",
-        "type":"keyword",
-        "webTitle":"Media",
-        "webUrl":"http://www.theguardian.com/media/media",
-        "apiUrl":"http://content.guardianapis.com/media/media",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"technology/billgates",
-        "type":"keyword",
-        "webTitle":"Bill Gates",
-        "webUrl":"http://www.theguardian.com/technology/billgates",
-        "apiUrl":"http://content.guardianapis.com/technology/billgates",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.theguardian.com/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"profile/jennifer-rankin",
-        "type":"contributor",
-        "webTitle":"Jennifer Rankin",
-        "webUrl":"http://www.theguardian.com/profile/jennifer-rankin",
-        "apiUrl":"http://content.guardianapis.com/profile/jennifer-rankin",
-        "r2ContributorId":"55690",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/14/1376462480287/Jennifer-Rankin-003.jpg",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/financial3",
-        "type":"newspaper-book-section",
-        "webTitle":"Financial",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417498873",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354049098/Bill-Gates---Ameircas-ric-001.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"54",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates in 1993, the year he became America's richest man.  Photograph: Austral International/Rex Feat",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354052543/Bill-Gates---Ameircas-ric-002.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"130",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates in 1993, the year he became America's richest man.  Photograph: Austral International/Rex Feat",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354053571/Bill-Gates---Ameircas-ric-003.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"84",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates in 1993, the year he became America's richest man.  Photograph: Austral International/Rex Feat",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354054576/Bill-Gates---Ameircas-ric-004.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"132",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates in 1993, the year he became America's richest man.  Photograph: Austral International/Rex Feat",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354055579/Bill-Gates---Ameircas-ric-005.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"168",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates in 1993, the year he became America's richest man.  Photograph: Austral International/Rex Feat",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354056609/Bill-Gates---Ameircas-ric-006.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"180",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates in 1993, the year he became America's richest man.  Photograph: Austral International/Rex Feat",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354057676/Bill-Gates---Ameircas-ric-007.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"228",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates in 1993, the year he became America's richest man.  Photograph: Austral International/Rex Feat",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354058736/Bill-Gates---Ameircas-ric-008.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"276",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates in 1993, the year he became America's richest man.  Photograph: Austral International/Rex Feat",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354058736/Bill-Gates---Ameircas-ric-008.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"276",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates pictured in 1993 – a year later he was America's richest man.  Photograph: Austral International/Rex Feat",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417498874",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/9/16/1379354053571/Bill-Gates---Ameircas-ric-003.jpg",
-          "typeData":{
-            "source":"Austral International/Rex Feat",
-            "altText":"Bill Gates - Ameirca's richest man",
-            "height":"84",
-            "credit":"Austral International/Rex Feat",
-            "caption":"Bill Gates in 1993, the year he became America's richest man.  Photograph: Austral International/Rex Feat",
             "width":"140"
           }
         }]

@@ -783,7 +783,7 @@
       "webUrl":"http://www.theguardian.com/sport/2013/sep/16/rugby-world-cup-2015-debbie-jevans",
       "apiUrl":"http://content.guardianapis.com/sport/2013/sep/16/rugby-world-cup-2015-debbie-jevans",
       "fields":{
-        "trailText":"Debbie Jevans, the chief executive of the IRB's next showpiece, is drawing on her London 2012 experience and an oversized dog called Ruckley, she tells Owen Gibson",
+        "trailText":"<p>Debbie Jevans, the chief executive of the IRB's next showpiece, is drawing on her London 2012 experience and an oversized dog called Ruckley, she tells Owen Gibson</p>",
         "headline":"Rugby World Cup 2015 can be best ever, says former Olympic executive",
         "hasStoryPackage":"false",
         "shortUrl":"http://gu.com/p/3tzx2",
@@ -897,7 +897,7 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417421761",
+        "id":"gu-image-417515789",
         "relation":"main",
         "type":"image",
         "assets":[{
@@ -1014,12 +1014,12 @@
             "altText":"Stuart Lancaster, the England head coach, with Ruckley, the mascot for the 2015 Rugby World Cup",
             "height":"276",
             "credit":"David Rogers/Getty Images",
-            "caption":"Stuart Lancaster, the England head coach, with Ruckley, the mascot for the 2015 Rugby World Cup. Photograph: David Rogers/Getty Images",
+            "caption":"Stuart Lancaster, the England head coach, with Ruckley, England’s Rugby Ambassador for Children. Photograph: David Rogers/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417421762",
+        "id":"gu-image-417515790",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{

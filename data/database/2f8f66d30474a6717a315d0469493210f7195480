@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":81580,
+    "total":81583,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
-    "pages":4079,
+    "pages":4080,
     "orderBy":"newest",
     "edition":{
       "id":"us/commentisfree",
@@ -47,6 +47,477 @@
       }]
     },
     "results":[{
+      "id":"commentisfree/2013/sep/17/marshall-berman-modernity-marxists",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-17T11:15:00Z",
+      "webTitle":"How Marshall Berman reclaimed modernity for Marxists | Owen Hatherley",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/marshall-berman-modernity-marxists",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/marshall-berman-modernity-marxists",
+      "fields":{
+        "trailText":"<strong>Owen Hatherley: </strong>The Bronx-born writer who died last week saw the danger of leaving decisions about public spaces to the technocrats",
+        "headline":"How Marshall Berman reclaimed modernity for Marxists",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tzh2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414305470/Taxi-Cab-Times-Square-New-003.jpg",
+        "wordcount":"782",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"politics/planning",
+        "type":"keyword",
+        "webTitle":"Planning policy",
+        "webUrl":"http://www.theguardian.com/politics/planning",
+        "apiUrl":"http://content.guardianapis.com/politics/planning",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"world/urbanisation",
+        "type":"keyword",
+        "webTitle":"Urbanisation",
+        "webUrl":"http://www.theguardian.com/world/urbanisation",
+        "apiUrl":"http://content.guardianapis.com/world/urbanisation",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/protest",
+        "type":"keyword",
+        "webTitle":"Protest",
+        "webUrl":"http://www.theguardian.com/world/protest",
+        "apiUrl":"http://content.guardianapis.com/world/protest",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/owen-hatherley",
+        "type":"contributor",
+        "webTitle":"Owen Hatherley",
+        "webUrl":"http://www.theguardian.com/profile/owen-hatherley",
+        "apiUrl":"http://content.guardianapis.com/profile/owen-hatherley",
+        "bio":"<p>Owen Hatherley is the author of Militant Modernism; A Guide to the New Ruins of Great Britain; and Uncommon, about the pop group Pulp</p>",
+        "r2ContributorId":"37175",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/17/1313587070769/Owen-Hatherley.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417512128",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414302679/Taxi-Cab-Times-Square-New-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"54",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414304357/Taxi-Cab-Times-Square-New-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"130",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414305470/Taxi-Cab-Times-Square-New-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"84",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414306623/Taxi-Cab-Times-Square-New-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"132",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414307671/Taxi-Cab-Times-Square-New-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"168",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414309053/Taxi-Cab-Times-Square-New-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"180",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414310513/Taxi-Cab-Times-Square-New-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"228",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414311793/Taxi-Cab-Times-Square-New-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"276",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414311793/Taxi-Cab-Times-Square-New-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"276",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417512129",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414305470/Taxi-Cab-Times-Square-New-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"JG Photography / Alamy",
+            "altText":"Taxi Cab, Times Square, New York City, USA",
+            "height":"84",
+            "credit":"JG Photography / Alamy/Alamy",
+            "caption":"'In his last book, On the Town, Berman described the awe and excitement he felt in Times Square, as a committed socialist bathing in the pulsating neon light of pure, concentrated capitalist advertisement.' Photograph: JG Photography / Alamy/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/sep/17/occupy-wall-street-99-percent",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-17T11:00:00Z",
+      "webTitle":"Occupy Wall Street, two years on: we're still the 99% | Justin Wedes",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/occupy-wall-street-99-percent",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/occupy-wall-street-99-percent",
+      "fields":{
+        "trailText":"<p><strong>Justin Wedes:</strong> The wave of Occupy protests in 2011 was forcibly suppressed. But it changed public debate, inspiring a generation of activists</p>",
+        "headline":"Occupy Wall Street, two years on: we're still the 99%",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tnxn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/14/1318599872261/Members-of-Occupy-Wall-St-003.jpg",
+        "wordcount":"815",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/occupy-wall-street",
+        "type":"keyword",
+        "webTitle":"Occupy Wall Street",
+        "webUrl":"http://www.theguardian.com/world/occupy-wall-street",
+        "apiUrl":"http://content.guardianapis.com/world/occupy-wall-street",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/occupy-movement",
+        "type":"keyword",
+        "webTitle":"Occupy movement",
+        "webUrl":"http://www.theguardian.com/world/occupy-movement",
+        "apiUrl":"http://content.guardianapis.com/world/occupy-movement",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/protest",
+        "type":"keyword",
+        "webTitle":"Protest",
+        "webUrl":"http://www.theguardian.com/world/protest",
+        "apiUrl":"http://content.guardianapis.com/world/protest",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/poverty",
+        "type":"keyword",
+        "webTitle":"Poverty",
+        "webUrl":"http://www.theguardian.com/society/poverty",
+        "apiUrl":"http://content.guardianapis.com/society/poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/equality",
+        "type":"keyword",
+        "webTitle":"Equality",
+        "webUrl":"http://www.theguardian.com/society/equality",
+        "apiUrl":"http://content.guardianapis.com/society/equality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/bill-de-blasio",
+        "type":"keyword",
+        "webTitle":"Bill de Blasio",
+        "webUrl":"http://www.theguardian.com/world/bill-de-blasio",
+        "apiUrl":"http://content.guardianapis.com/world/bill-de-blasio",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/justin-wedes",
+        "type":"contributor",
+        "webTitle":"Justin Wedes",
+        "webUrl":"http://www.theguardian.com/profile/justin-wedes",
+        "apiUrl":"http://content.guardianapis.com/profile/justin-wedes",
+        "bio":"<p><a href=\"http://www.justinwedes.com/\">Justin Wedes</a> was a founding member of Occupy Wall Street, and has appeared on the Colbert Report, DemocracyNow!, NPR and more. He is an educator and activist living in Brooklyn, and is co-principal of the <a href=\"http://paulrobesonfreedomschool.org/\">Paul Robeson Freedom School</a></p>",
+        "r2ContributorId":"58674",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379101093305/justinwedes_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417447116",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/14/1318599876850/Members-of-Occupy-Wall-St-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Emmanuel Dunand",
+            "altText":"Members of Occupy Wall Street celebrate after learning they can stay in Zuccotti Park in New York",
+            "height":"276",
+            "credit":"Emmanuel Dunand/AFP/Getty Images",
+            "caption":"Members of Occupy Wall Street in Zuccotti Park, New York, 2011. Photograph: Emmanuel Dunand/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417447117",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379357603558/occupy_gilesclarke_460x276.jpg",
+          "typeData":{
+            "source":"GIles Clarke",
+            "photographer":"Giles Clarke",
+            "altText":"Occupy, by Giles Clarke",
+            "height":"276",
+            "credit":"Giles Clarke/GIles Clarke",
+            "caption":"A broad coalition. Photograph: <a href=\"http://www.gilesnclarke.com/#1\">Giles N Clarke</a>",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417447118",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/14/1318599872261/Members-of-Occupy-Wall-St-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Emmanuel Dunand",
+            "altText":"Members of Occupy Wall Street celebrate after learning they can stay in Zuccotti Park in New York",
+            "height":"84",
+            "credit":"Emmanuel Dunand/AFP/Getty Images",
+            "caption":"Members of Occupy Wall Street celebrate after learning that they can stay on Zuccotti Park in New York Photograph: Emmanuel Dunand/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"commentisfree/poll/2013/sep/17/central-heating-time",
       "sectionId":"commentisfree",
       "sectionName":"Comment is free",
@@ -57,7 +528,7 @@
       "fields":{
         "trailText":"<p>With weather changing in the UK from a heatwave to single figure temperatures in a matter of weeks, it is tempting to turn on the central heating. Is this acceptable in early autumn?</p>",
         "headline":"Is it time to turn on the central heating?",
-        "hasStoryPackage":"false",
+        "hasStoryPackage":"true",
         "shortUrl":"http://gu.com/p/3tzgh",
         "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/6/1354796281237/Turning-down-central-heat-003.jpg",
         "liveBloggingNow":"false"
@@ -2029,9 +2500,9 @@
       "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/16/gloria-foster-cost-of-caring",
       "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/16/gloria-foster-cost-of-caring",
       "fields":{
-        "trailText":"<strong>Editorial:</strong> Mrs Foster's death lays bare the consequences of an underfunded care service in which the carers are undervalued",
+        "trailText":"<p><strong>Editorial:</strong> Mrs Foster's death lays bare the consequences of an underfunded care service in which the carers are undervalued</p>",
         "headline":"Gloria Foster: the cost of caring",
-        "hasStoryPackage":"false",
+        "hasStoryPackage":"true",
         "shortUrl":"http://gu.com/p/3tzby",
         "wordcount":"471",
         "liveBloggingNow":"false"
@@ -2149,6 +2620,15 @@
         "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
         "sectionId":"news",
         "sectionName":"News",
+        "references":[]
+      },{
+        "id":"uk/gloria-foster",
+        "type":"keyword",
+        "webTitle":"Gloria Foster",
+        "webUrl":"http://www.theguardian.com/uk/gloria-foster",
+        "apiUrl":"http://content.guardianapis.com/uk/gloria-foster",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
         "references":[]
       },{
         "id":"type/article",
@@ -3945,380 +4425,6 @@
             "height":"84",
             "credit":"SWNS.com/SWNS.com",
             "caption":"The Liberal Democrats may now support it but cost and timescales will rule out nuclear. 'The fact that the Hinkley C nuclear plant project has stalled is entirely due to the cost issues.' Photograph: SWNS.com",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/16/us-russia-syria-chemical-weapons-deal-right",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-16T16:29:12Z",
-      "webTitle":"Is the US-Russia deal on Syria's chemical weapons the right move? | Head to head",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/16/us-russia-syria-chemical-weapons-deal-right",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/16/us-russia-syria-chemical-weapons-deal-right",
-      "fields":{
-        "trailText":"<p><strong>Head to head: Tom Rogan and Michael Cohen:</strong> We debate whether the diplomatic agreement on Syria's WMD is a win for the international order or a humiliation for Obama</p>",
-        "headline":"Is the US-Russia deal on Syria's chemical weapons the right move?",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tz2p",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/5/1378402505238/Obama-And-Putin-Break-The-010.jpg",
-        "wordcount":"1521",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/syria",
-        "type":"keyword",
-        "webTitle":"Syria",
-        "webUrl":"http://www.theguardian.com/world/syria",
-        "apiUrl":"http://content.guardianapis.com/world/syria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"commentisfree/series/head-to-head",
-        "type":"series",
-        "webTitle":"Head to head",
-        "webUrl":"http://www.theguardian.com/commentisfree/series/head-to-head",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/series/head-to-head",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/russia",
-        "type":"keyword",
-        "webTitle":"Russia",
-        "webUrl":"http://www.theguardian.com/world/russia",
-        "apiUrl":"http://content.guardianapis.com/world/russia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.theguardian.com/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/usforeignpolicy",
-        "type":"keyword",
-        "webTitle":"US foreign policy",
-        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
-        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/barack-obama",
-        "type":"keyword",
-        "webTitle":"Barack Obama",
-        "webUrl":"http://www.theguardian.com/world/barack-obama",
-        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/tom-rogan",
-        "type":"contributor",
-        "webTitle":"Tom Rogan",
-        "webUrl":"http://www.theguardian.com/profile/tom-rogan",
-        "apiUrl":"http://content.guardianapis.com/profile/tom-rogan",
-        "bio":"<p>Tom Rogan is an American blogger and writer who recently moved to Washington, DC. He holds a BA in War Studies from King's College London and an MSc in Middle East politics from the School of Oriental and African Studies. He recently completed a law course in London and blogs at <a href=\"http://www.tomroganthinks.com\">www.tomroganthinks.com</a>. Follow him on Twitter: <a href=\"https://twitter.com/TomRtweets\">@TomRtweets</a></p>",
-        "r2ContributorId":"34859",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2011/11/22/1321999066774/thomasrogan_140x140.jpg",
-        "references":[]
-      },{
-        "id":"profile/michael-cohen",
-        "type":"contributor",
-        "webTitle":"Michael Cohen",
-        "webUrl":"http://www.theguardian.com/profile/michael-cohen",
-        "apiUrl":"http://content.guardianapis.com/profile/michael-cohen",
-        "bio":"<p>Michael A Cohen is author of Live from the Campaign Trail: The Greatest Presidential Campaign Speeches of the 20th Century and How They Shaped Modern America. A regular columnist for the Guardian and Observer on US politics, he is also a fellow of the Century Foundation. Twitter: <a href=\"https://twitter.com/speechboy71\">@speechboy71</a></p>",
-        "rcsId":"Michael C",
-        "r2ContributorId":"45513",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/6/1312655160523/Michael-Cohen-003.jpg",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"world/chemical-weapons",
-        "type":"keyword",
-        "webTitle":"Chemical weapons",
-        "webUrl":"http://www.theguardian.com/world/chemical-weapons",
-        "apiUrl":"http://content.guardianapis.com/world/chemical-weapons",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/unitednations",
-        "type":"keyword",
-        "webTitle":"United Nations",
-        "webUrl":"http://www.theguardian.com/world/unitednations",
-        "apiUrl":"http://content.guardianapis.com/world/unitednations",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/obama-administration",
-        "type":"keyword",
-        "webTitle":"Obama administration",
-        "webUrl":"http://www.theguardian.com/world/obama-administration",
-        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/vladimir-putin",
-        "type":"keyword",
-        "webTitle":"Vladimir Putin",
-        "webUrl":"http://www.theguardian.com/world/vladimir-putin",
-        "apiUrl":"http://content.guardianapis.com/world/vladimir-putin",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/bashar-al-assad",
-        "type":"keyword",
-        "webTitle":"Bashar al-Assad",
-        "webUrl":"http://www.theguardian.com/world/bashar-al-assad",
-        "apiUrl":"http://content.guardianapis.com/world/bashar-al-assad",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/congress",
-        "type":"keyword",
-        "webTitle":"US Congress",
-        "webUrl":"http://www.theguardian.com/world/congress",
-        "apiUrl":"http://content.guardianapis.com/world/congress",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/us-military",
-        "type":"keyword",
-        "webTitle":"US military",
-        "webUrl":"http://www.theguardian.com/world/us-military",
-        "apiUrl":"http://content.guardianapis.com/world/us-military",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417431539",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/5/1378402505238/Obama-And-Putin-Break-The-010.jpg",
-          "typeData":{
-            "source":"ITAR-TASS / Barcroft Media",
-            "photographer":"ITAR-TASS / Barcroft Media",
-            "altText":"Obama And Putin Break The Ice By Shaking Hands At G20 Summit",
-            "height":"84",
-            "credit":"ITAR-TASS / Barcroft Media/ITAR-TASS / Barcroft Media",
-            "caption":"ST. PETERSBURG, RUSSIA - SEPTEMBER 5: Russia's President Vladimir Putin (L) and US President Barack Obama shake hands at a welcoming ceremony of heads of delegations of G20  Photograph: ITAR-TASS / Barcroft Media",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-image-417431540",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Global/content/icons/2011/11/22/1321999066774/thomasrogan_140x140.jpg",
-          "typeData":{
-            "source":"Public domain",
-            "altText":"Tom Rogan",
-            "height":"140",
-            "credit":"Public domain",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-image-417431541",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/6/1312655160523/Michael-Cohen-003.jpg",
-          "typeData":{
-            "source":"Observer",
-            "altText":"Michael Cohen",
-            "height":"140",
-            "credit":"Observer",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/16/larry-summers-withdrawal-obama-bad-economic-advice",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-16T16:10:58Z",
-      "webTitle":"It's time to end the delusion that this White House has done even a fraction of what it should to help the economy | Heidi Moore",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/16/larry-summers-withdrawal-obama-bad-economic-advice",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/16/larry-summers-withdrawal-obama-bad-economic-advice",
-      "fields":{
-        "trailText":"<p><strong>Heidi Moore:</strong> It's time to end the delusion that this White House has done even a fraction of what it should to help the economy</p>",
-        "headline":"The Larry Summers flop: more proof Obama is getting bad economic advice",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tz5a",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/22/1285134133597/Larry-Summers-flanks-Bara-002.jpg",
-        "wordcount":"1151",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/series/heidi-moore-on-business-and-economics",
-        "type":"series",
-        "webTitle":"Heidi Moore: On business and economics",
-        "webUrl":"http://www.theguardian.com/commentisfree/series/heidi-moore-on-business-and-economics",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/series/heidi-moore-on-business-and-economics",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"business/economics",
-        "type":"keyword",
-        "webTitle":"Economics",
-        "webUrl":"http://www.theguardian.com/business/economics",
-        "apiUrl":"http://content.guardianapis.com/business/economics",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/federal-reserve",
-        "type":"keyword",
-        "webTitle":"Federal Reserve",
-        "webUrl":"http://www.theguardian.com/business/federal-reserve",
-        "apiUrl":"http://content.guardianapis.com/business/federal-reserve",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"world/barack-obama",
-        "type":"keyword",
-        "webTitle":"Barack Obama",
-        "webUrl":"http://www.theguardian.com/world/barack-obama",
-        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"business/larry-summers",
-        "type":"keyword",
-        "webTitle":"Larry Summers",
-        "webUrl":"http://www.theguardian.com/business/larry-summers",
-        "apiUrl":"http://content.guardianapis.com/business/larry-summers",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"profile/heidi-moore",
-        "type":"contributor",
-        "webTitle":"Heidi Moore",
-        "webUrl":"http://www.theguardian.com/profile/heidi-moore",
-        "apiUrl":"http://content.guardianapis.com/profile/heidi-moore",
-        "bio":"<p>Heidi Moore is the Guardian's US finance and economics editor. Formerly, she was New York bureau chief and Wall Street correspondent for Marketplace, from American Public Media</p>",
-        "r2ContributorId":"51002",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/23/1358972490699/heidimoore_140x140.jpg",
-        "references":[]
-      },{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417429331",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/22/1285134137805/Larry-Summers-flanks-Bara-006.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"John Gress",
-            "altText":"Larry Summers flanks Barack Obama",
-            "height":"276",
-            "credit":"John Gress/REUTERS",
-            "caption":"Larry Summers flanks Barack Obama at a press conference announcing the president's staff in November 2008. Photograph: John Gress/REUTERS",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417429332",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/22/1285134133597/Larry-Summers-flanks-Bara-002.jpg",
-          "typeData":{
-            "source":"REUTERS",
-            "photographer":"John Gress",
-            "altText":"Larry Summers flanks Barack Obama",
-            "height":"84",
-            "credit":"John Gress/REUTERS",
-            "caption":"Larry Summers flanks Barack Obama at a press conference announcing the president's staff in November 2008. Photograph: John Gress/REUTERS",
             "width":"140"
           }
         }]

@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":24385,
+    "total":24386,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -47,6 +47,260 @@
       }]
     },
     "results":[{
+      "id":"culture/2013/sep/17/miley-cyrus-liam-hemsworth-split",
+      "sectionId":"culture",
+      "sectionName":"Culture",
+      "webPublicationDate":"2013-09-17T10:57:38Z",
+      "webTitle":"Miley Cyrus and Liam Hemsworth split",
+      "webUrl":"http://www.theguardian.com/culture/2013/sep/17/miley-cyrus-liam-hemsworth-split",
+      "apiUrl":"http://content.guardianapis.com/culture/2013/sep/17/miley-cyrus-liam-hemsworth-split",
+      "fields":{
+        "trailText":"Singer and Hunger Games actor were a couple for fours years and engaged for a year",
+        "headline":"Miley Cyrus and Liam Hemsworth split",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzfd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410558442/Hemsworth-poses-with-Cyru-005.jpg",
+        "wordcount":"261",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"culture/miley-cyrus",
+        "type":"keyword",
+        "webTitle":"Miley Cyrus",
+        "webUrl":"http://www.theguardian.com/culture/miley-cyrus",
+        "apiUrl":"http://content.guardianapis.com/culture/miley-cyrus",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/seanmichaels",
+        "type":"contributor",
+        "webTitle":"Sean Michaels",
+        "webUrl":"http://www.theguardian.com/profile/seanmichaels",
+        "apiUrl":"http://content.guardianapis.com/profile/seanmichaels",
+        "bio":"<p>Sean Michaels is guardian.co.uk Music's north American news correspondent and writer for the Montreal-based music blog Said the Gramophone</p>",
+        "r2ContributorId":"23518",
+        "references":[]
+      },{
+        "id":"lifeandstyle/celebrity",
+        "type":"keyword",
+        "webTitle":"Celebrity",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/celebrity",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/celebrity",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417506364",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410554679/Hemsworth-poses-with-Cyru-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"54",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410555941/Hemsworth-poses-with-Cyru-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"340",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410557196/Hemsworth-poses-with-Cyru-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"130",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410558442/Hemsworth-poses-with-Cyru-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"84",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410559706/Hemsworth-poses-with-Cyru-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"132",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410561097/Hemsworth-poses-with-Cyru-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"168",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410562431/Hemsworth-poses-with-Cyru-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"180",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410563987/Hemsworth-poses-with-Cyru-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"228",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410565195/Hemsworth-poses-with-Cyru-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"276",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410566592/Hemsworth-poses-with-Cyru-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"372",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410565195/Hemsworth-poses-with-Cyru-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"276",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417506365",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379410558442/Hemsworth-poses-with-Cyru-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Mario Anzuoni",
+            "altText":"Hemsworth poses with Cyrus at premiere of \"Paranoia\" in Los Angeles",
+            "height":"84",
+            "credit":"Mario Anzuoni/Reuters",
+            "caption":"Achy, breaky hearts … Liam Hemsworth and Miley Cyrus, at the premiere of his film Paranoia in August, shortly before calling of their engagement. Photograph: Mario Anzuoni/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"culture/2013/sep/17/brisbane-festival-2013-liveblog-tuesday-17-september",
       "sectionId":"culture",
       "sectionName":"Culture",
@@ -5421,121 +5675,6 @@
             "caption":"Neither prider nor courage by Vernon Ah Kee Photograph: Queensland Art Gallery",
             "mediaId":"gu-video-417269156",
             "width":"480"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"culture/australia-culture-blog/2013/sep/15/brisbane-festival-2013-popandrock",
-      "sectionId":"culture",
-      "sectionName":"Culture",
-      "webPublicationDate":"2013-09-15T06:34:17Z",
-      "webTitle":"Dick Diver – review",
-      "webUrl":"http://www.theguardian.com/culture/australia-culture-blog/2013/sep/15/brisbane-festival-2013-popandrock",
-      "apiUrl":"http://content.guardianapis.com/culture/australia-culture-blog/2013/sep/15/brisbane-festival-2013-popandrock",
-      "fields":{
-        "trailText":"<p><strong>Brisbane festival</strong>: The records are good, but the lazy charm of Melbourne's Dick Diver really comes through when they play live</p>",
-        "headline":"Dick Diver – review",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn8q",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/15/1379226621428/Dick-Diver-003.jpg",
-        "wordcount":"398",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"culture/brisbane-festival-2013",
-        "type":"keyword",
-        "webTitle":"Brisbane festival 2013",
-        "webUrl":"http://www.theguardian.com/culture/brisbane-festival-2013",
-        "apiUrl":"http://content.guardianapis.com/culture/brisbane-festival-2013",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"culture/australia-culture-blog",
-        "type":"blog",
-        "webTitle":"Australia culture blog",
-        "webUrl":"http://www.theguardian.com/culture/australia-culture-blog",
-        "apiUrl":"http://content.guardianapis.com/culture/australia-culture-blog",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"music/music",
-        "type":"keyword",
-        "webTitle":"Music",
-        "webUrl":"http://www.theguardian.com/music/music",
-        "apiUrl":"http://content.guardianapis.com/music/music",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"music/popandrock",
-        "type":"keyword",
-        "webTitle":"Pop and rock",
-        "webUrl":"http://www.theguardian.com/music/popandrock",
-        "apiUrl":"http://content.guardianapis.com/music/popandrock",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"music/indie",
-        "type":"keyword",
-        "webTitle":"Indie",
-        "webUrl":"http://www.theguardian.com/music/indie",
-        "apiUrl":"http://content.guardianapis.com/music/indie",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417316718",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/15/1379226635532/Dick-Diver-008.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Dick Diver",
-            "height":"276",
-            "credit":"PR",
-            "caption":"Dick Diver: the thing that made this show so magical was the banter.",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417316719",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/15/1379226621428/Dick-Diver-003.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Dick Diver",
-            "height":"84",
-            "credit":"PR",
-            "caption":"Dick Diver: the thing that made this show so magical was the banter.",
-            "width":"140"
           }
         }]
       }],
