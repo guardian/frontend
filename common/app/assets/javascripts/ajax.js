@@ -35,10 +35,6 @@ define(["reqwest"], function (reqwest) {
         };
     };
 
-    if(key.match(/^gu.css./g)) {
-        localStorage.remove(key);
-        return true;
-    }
 
     return ajax;
 
