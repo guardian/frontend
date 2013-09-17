@@ -103,12 +103,16 @@ define([
     }
 
     function makeOmnitureTag (config) {
-        var participations = getParticipations();
-        return Object.keys(participations).map(function (k) {
+        var participations = getParticipations(),
+            tag = [];
+
+        Object.keys(participations).forEach(function (k) {
             if (testCanBeRun(getTest(k), config)) {
-                return ['AB', k, participations[k].variant].join(' | ');
+                tag.push(['AB', k, participations[k].variant].join(' | '));
             }
-        }).join(',');
+        });
+
+        return tag.join(',');
     }
 
     // Finds variant in specific tests and runs it
