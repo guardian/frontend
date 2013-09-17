@@ -50,7 +50,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-casperjs');
     grunt.loadNpmTasks('grunt-s3');
-     grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-env');
 
     // Create tasks
     grunt.registerTask('snap', ['env:casperjs','clean', 'mkdir:screenshots', 'casperjs:screenshot', 's3:upload']);
