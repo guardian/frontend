@@ -61,7 +61,7 @@
 
                 <span class="savingIndicator" data-bind="visible: state.loadIsPending">SAVING</span>
 
-                <div class="list-header" data-bind="if: !state.editingConfig()">
+                <div class="list-header" data-bind="visible: !state.editingConfig()">
 
                     <div class="list-header__title">
                         <span class="list-header__edition" data-bind="text: edition"></span>
