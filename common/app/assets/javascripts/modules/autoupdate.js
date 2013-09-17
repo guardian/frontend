@@ -199,7 +199,7 @@ define([
 
                 bonzo(this.liveCircleTogglerEl).attr({
                     'data-action': 'off',
-                    'data-link-name' : 'autoupdate off',
+                    'data-link-name': 'autoupdate off',
                     'title': 'Turn auto update off'
                 });
             }
@@ -260,7 +260,6 @@ define([
             if (options.progressToggle) {
                 this.liveCircleTogglerEl = document.querySelector('.live-toggler--circle');
                 this.liveCircleTogglerEl.style.display = 'block';
-                common.$g('.js-auto-update--off, js-auto-update--on').remove();
 
                 this.timerProgress = new CircularProgress({
                     el: this.liveCircleTogglerEl.querySelector('.lt__circle-wrapper')
