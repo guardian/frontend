@@ -6,7 +6,7 @@
          data-section="@config.section">
 
     @collection.displayName.map { title =>
-       <h2 class="collection__title">@title</h2>
+        <h2 class="collection__title">@title</h2>
     }
 
     <ul class="unstyled items item-count-@collection.items.size js-items--show-more">
@@ -24,7 +24,7 @@
                           datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
                           data-timestamp="@trail.webPublicationDate.getMillis">
                         <i class="i"></i>
-                        <span class="timestamp__text"><span class="h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
+                        <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
                     </time>
                 </div>
                 @trail.mainPicture(620).map{ mainPicture =>

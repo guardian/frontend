@@ -43,6 +43,16 @@
             min-height: gs-height(3);
         }
     }
+    .item__standfirst {
+        @include mq($to: tablet) {
+            display: none;
+        }
+        @include mq(tablet) {
+            min-height: gs-height(4);
+            margin: $gs-baseline*2 0 0;
+            @include font-size(16, 20);
+        }
+    }
     .item__image-container {
         @include mq($to: tablet) {
             display: none;

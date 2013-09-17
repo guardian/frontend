@@ -55,7 +55,7 @@
         }
         @include mq(wide) {
             min-height: gs-height(2);
-            margin-top: $gs-baseline;
+            margin: $gs-baseline 0 0;
             @include font-size(20, 24);
         }
     }
