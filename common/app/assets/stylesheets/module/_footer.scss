@@ -1,73 +1,20 @@
 .footer {
     overflow: hidden;
     padding: 0 0 $baseline*4;
-    background-color: $darkMushroom;
-
-    > .nav {
-        padding-left: $gs-gutter/2;
-
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-        }
-    }
-    .nav--stacked {
-        float: left;
-        width: 48%;
-        margin: 0;
-
-        li {
-            @extend %type-10;
-            margin-left: 0;
-            border-top-color: #C0C9CE;
-        }
-
-        li,
-        li a {
-            color: $blue;
-        }
-
-    }
-    p {
-        @include box-sizing(border-box);
-        @extend %type-11;
-        width: 42%;
-        margin: 0;
-        padding: $baseline*2 $gs-gutter/2 0;
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-        float: left;
-        color: $blue;
-
-        a {
-            line-height: 20px;
-            line-height: 2rem;
-            display: block;
-            color: $blue;
-            text-decoration: underline;
-        }
-    }
+    background-color: #FAFAF8;
 
     .hide-in-footer {
         display: none !important;
     }
 }
 
-/* Uses an id as is used as fragment
- * identifier for non-js mobile nav */
-#footer-nav {
-    float: right;
-    width: 100%;
-    background-color: $blue;
-}
-
 .swipe-switches {
     display: none;
-}
 
-.can-swipe .swipe-switches {
-    display: block;
+    .can-swipe & {
+        display: block;
+    }
+
 }
 
 .swipe-switches__button {
@@ -82,6 +29,6 @@
 }
 
 .swipe-switches__button--off,
-.has-swipe .swipe-switches__button--on { 
+.has-swipe .swipe-switches__button--on {
     display: none;
 }
