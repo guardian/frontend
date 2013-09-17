@@ -1,8 +1,5 @@
 .collection--medium-stories {
     margin-top: $gs-baseline*2;
-    .collection__title {
-        display: none;
-    }
     .items {
         @include mq(tablet) {
             font-size: 0;
