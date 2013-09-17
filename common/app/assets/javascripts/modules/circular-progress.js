@@ -16,16 +16,19 @@ define(["bean",
             width    = this.$el.dim().width,
             radius   = (width - arcWidth) / 2,
             centre   = width / 2,
-            template = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">' +
-                       '  <circle cx="'+centre+'" cy="'+centre+'" r="'+radius+'"'+' stroke="'+baseColour+'"' +
-                       '     stroke-width="'+arcWidth+'" fill="transparent"></circle>' +
-                       '  <path fill="transparent" stroke="'+activeColour+'" stroke-width="'+arcWidth+'"></path>' +
-                       '  <circle cx="'+centre+'" cy="'+centre+'" r="'+(radius - arcWidth/2)+'" fill="'+bgColour+'"></circle>' +
-                       '</svg>' +
-                       '<span class="counter"></span>';
-
+            template = '<div class="circular-progress">' +
+                       '  <svg xmlns="http://www.w3.org/2000/svg" version="1.1">' +
+                       '    <circle cx="'+centre+'" cy="'+centre+'" r="'+radius+'"'+' stroke="'+baseColour+'"' +
+                       '       stroke-width="'+arcWidth+'" fill="transparent"></circle>' +
+                       '    <path fill="transparent" stroke="'+activeColour+'" stroke-width="'+arcWidth+'"></path>' +
+                       '    <circle cx="'+centre+'" cy="'+centre+'" r="'+(radius - arcWidth/2)+'" fill="'+bgColour+'"></circle>' +
+                       '  </svg>' +
+                       '  <span class="circular-progress__counter"></span>' +
+                       '  <span class="circular-progress__cta i"></span>' +
+                       '</div>';
 
         this.$el.html(template);
+        this.$el = bonzo(opts.el.querySelector('.circular-progress'));
 
         this.centre = width / 2;
         this.radius = (width - arcWidth) / 2;
@@ -33,8 +36,21 @@ define(["bean",
         this.pathEl = opts.el.querySelector('path');
         this.pathEl.setAttribute('transform', 'translate(' + this.centre + ', ' + this.centre + ')');
 
-        this.labelEl = opts.el.querySelector('.counter');
-    }
+        this.labelEl = opts.el.querySelector('.circular-progress__counter');
+    };
+
+    CircularProgress.prototype.enable = function() {
+        this.$el.addClass('circular-progress--is-on')
+                .removeClass('circular-progress--is-off');
+        return this;
+    };
+
+    CircularProgress.prototype.disable = function() {
+        this.$el.addClass('circular-progress--is-off')
+                .removeClass('circular-progress--is-on');
+        this.render('', 0);
+        return this;
+    };
 
     CircularProgress.prototype.render = function(label, percent) {
         // Based on http://stackoverflow.com/questions/5230148/create-svg-progress-circle
@@ -54,6 +70,7 @@ define(["bean",
         if (!percent) { pathStr = ['M', 0, 0] }; // Ensure there's no artifacts when at 0
         this.pathEl.setAttribute('d', pathStr.join(' '));
         this.labelEl.innerHTML = label;
+        return this;
     };
 
     return CircularProgress;

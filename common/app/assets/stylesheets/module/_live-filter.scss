@@ -81,6 +81,8 @@
 }
 
 
+/* Circle progress bar live toggler
+   ========================================================================== */
 .live-toggler--circle {
     border-left: 1px solid #c2c2b0;
     padding: 8px 18px;
@@ -89,20 +91,7 @@
 }
 
 .lt__circle-wrapper {
-    position: relative;
     width: 30px;
     height: 30px;
     display: block;
-
-    .counter {
-        @extend %type-12;
-        font-weight: bold;
-        color: $darkGrey;
-        line-height: 30px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        text-align: center;
-        width: 100%;
-    }
 }

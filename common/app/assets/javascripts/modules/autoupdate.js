@@ -186,7 +186,9 @@ define([
 
             // If the circle progress bar is on, kick it off
             if (options.progressToggle) {
-                this.timerProgress.render(options.delay/1000, 100);
+                this.timerProgress.enable()
+                                  .render(options.delay/1000, 100);
+
                 this.timerProgressInterval = window.setInterval(function() {
                     var now = new Date().getTime(),
                         msTillReload = that.nextReload - now,
@@ -216,7 +218,7 @@ define([
                     window.clearInterval(this.timerProgressInterval);
                 }
 
-                this.timerProgress.render('<i class="i i-liveblog-paused"></i>', 0);
+                this.timerProgress.disable();
 
                 bonzo(this.liveCircleTogglerEl).attr({
                     'data-action': 'on',
