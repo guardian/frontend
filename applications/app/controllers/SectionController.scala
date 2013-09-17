@@ -42,6 +42,7 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     log.info(s"Fetching front: $path for edition $edition")
 
     ContentApi.item(path, edition)
+      .showMedia(None)
       .pageSize(20)
       .showEditorsPicks(true)
       .response.map {response =>
