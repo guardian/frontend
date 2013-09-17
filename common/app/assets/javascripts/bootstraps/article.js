@@ -6,7 +6,8 @@ define([
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
-    "modules/cricket"
+    "modules/cricket",
+    "modules/experiments/live-blog-show-more"
 ], function (
     common,
     AutoUpdate,
@@ -15,7 +16,8 @@ define([
     MatchNav,
     Reading,
     Discussion,
-    Cricket
+    Cricket,
+    LiveShowMore
 ) {
 
     var modules = {
@@ -55,10 +57,10 @@ define([
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
-                    new LiveFilter(context).init();
+                    var lf = new LiveFilter(context).init();
 
-                    if (config.switches.LiveSummary) {
-                        new LiveSummary(context).init();
+                    if (config.switches.liveSummary) {
+                        var ls = new LiveSummary(context).init();
                     }
                 }
             });

@@ -13,6 +13,7 @@ import play.api.data.FormError
 import idapiclient.EmailPassword
 import utils.SafeLogging
 import form.Mappings.{idEmail, idPassword}
+import client.Error
 
 
 @Singleton
@@ -56,8 +57,13 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
          signInService.getCookies( api.authBrowser(EmailPassword(email, password), idRequest.omnitureData), rememberMe ) map(_ match {
             case Left(errors) => {
               logger.error(errors.toString())
-              logger.info("Auth failed for user")
-              val formWithErrors = boundForm.withError(FormError("", Messages("error.login")))
+              logger.info(s"Auth failed for user, ${errors.toString()}")
+              val formWithErrors = errors.foldLeft(boundForm) { (formFold, error) =>
+                val errorMessage =
+                  if ("Invalid email or password" == error.message) Messages("error.login")
+                  else error.description
+                formFold.withError(error.context.getOrElse(""), errorMessage)
+              }
               Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
             }
             case Right(responseCookies) => {

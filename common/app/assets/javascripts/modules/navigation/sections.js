@@ -95,14 +95,14 @@ define([
             },
 
             showColumns : function(sectionsHeader, sectionsNav) {
-                common.$g('.nav__item', sectionsHeader).removeClass('h');
+                common.$g('.nav__item', sectionsHeader).removeClass('u-h');
                 common.$g('.nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
             },
 
             hideColumns :  function(sectionsHeader, sectionsNav) {
                 var firstTopPos,
                     visibleItems = [],
-                    popupItems = common.$g('.nav__item', sectionsHeader).removeClass('h');
+                    popupItems = common.$g('.nav__item', sectionsHeader).removeClass('u-h');
 
                 common.$g('.nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
 
@@ -114,7 +114,7 @@ define([
                 });
 
                 for(var i=0, l=visibleItems.length; i < l; i++) {
-                    bonzo(popupItems[i]).addClass('h');
+                    bonzo(popupItems[i]).addClass('u-h');
                 }
             },
 

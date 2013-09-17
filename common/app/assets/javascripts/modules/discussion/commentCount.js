@@ -12,7 +12,7 @@ define([
         countUrl = "/discussion/comment-counts.json?shortUrls=",
         tpl = '<span class="trail__count trail__count--commentcount">';
         tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-count-small"></i>[COUNT]';
-        tpl += '<span class="h"> comments</span></a></span>';
+        tpl += '<span class="u-h"> comments</span></a></span>';
 
     function getContentIds(context) {
         var nodes = context.querySelectorAll("[" + attributeName + "]"),

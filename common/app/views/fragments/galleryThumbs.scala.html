@@ -9,7 +9,7 @@
 </ul>
 
 
-@thumbItem(image: Image, info: RowInfo, orientation: String) = {
+@thumbItem(image: ImageAsset, info: RowInfo, orientation: String) = {
     <li class="gallerythumbs__item">
         <a href="@LinkTo{@gallery.url?index=@image.index}" data-link-name="@info.rowNum | gallery thumb">
             <img class="gallerythumbs__img"

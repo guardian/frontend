@@ -25,7 +25,67 @@ function currentStaged {
 
 function tag {
   echo "Tagging $1 build $2 for PROD."
-  local URL="${TEAMCITY_API_URL}/app/rest/builds/buildType:(project:frontend,name:$1),number:$2/tags"
+
+  ##############################################################################
+  #
+  # On update to TeamCity 8 replace the following with:
+  #   local URL="${TEAMCITY_API_URL}/app/rest/builds/project:frontend,buildType:(name:$1),number:$2/tags"
+  #
+  ##START#######################################################################
+  case "$1" in
+    admin)
+      local BUILD_TYPE="bt1127"
+      ;;
+    applications)
+      local BUILD_TYPE="bt1125"
+      ;;
+    article)
+      local BUILD_TYPE="bt1128"
+      ;;
+    core-navigation)
+      local BUILD_TYPE="bt1130"
+      ;;
+    diagnostics)
+      local BUILD_TYPE="bt1131"
+      ;;
+    discussion)
+      local BUILD_TYPE="bt1132"
+      ;;
+    facia)
+      local BUILD_TYPE="bt1140"
+      ;;
+    football)
+      local BUILD_TYPE="bt1134"
+      ;;
+    front)
+      local BUILD_TYPE="bt1135"
+      ;;
+    identity)
+      local BUILD_TYPE="bt1158"
+      ;;
+    image)
+      local BUILD_TYPE="bt1136"
+      ;;
+    interactive)
+      local BUILD_TYPE="bt1144"
+      ;;
+    porter)
+      local BUILD_TYPE="bt1151"
+      ;;
+    router)
+      local BUILD_TYPE="bt1137"
+      ;;
+    sport)
+      local BUILD_TYPE="bt1147"
+      ;;
+    *)
+      local URL="(project:frontend,name:$1)"
+      ;;
+  esac
+
+  local URL="${TEAMCITY_API_URL}/app/rest/builds/buildType:${BUILD_TYPE},number:$2/tags"
+  ##END#########################################################################
+
   curl --header "Content-Type: text/plain" -XPOST -d "PROD" "$URL"
 }
 

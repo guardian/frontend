@@ -12,7 +12,7 @@ import services.S3FrontsApi
 import views.support.Style
 
 
-trait Trail extends Images with Tags {
+trait Trail extends Elements with Tags {
   def webPublicationDate: DateTime
   def linkText: String
   def headline: String
@@ -20,7 +20,6 @@ trait Trail extends Images with Tags {
   def trailText: Option[String]
   def section: String //sectionId
   def sectionName: String
-  def thumbnail: Option[String] = None
   def thumbnailPath: Option[String] = None
   def isLive: Boolean
   def discussionId: Option[String] = None
@@ -49,16 +48,19 @@ class ItemTrailblockDescription(
     val style: Option[Style],
     val showMore: Boolean,
     val edition: Edition,
-    val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults
+    val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults with Logging
   {
     lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query() = EditorsPicsOrLeadContentAndLatest(
-    ContentApi.item(id, edition)
-      .showEditorsPicks(true)
-      .pageSize(20)
-      .response
-  )
+  def query() = {
+    log.info(s"Refreshing trailblock items for: ${edition.id}, $id")
+    EditorsPicsOrLeadContentAndLatest(
+      ContentApi.item(id, edition)
+        .showEditorsPicks(true)
+        .pageSize(20)
+        .response
+    )
+  }
 }
 
 object ItemTrailblockDescription {

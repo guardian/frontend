@@ -304,11 +304,13 @@ private case class StubTrail(url: String) extends Trail {
 
   override def sectionName = ""
 
-  override def thumbnail = None
-
   override def images = Nil
 
-  override def videoImages = Nil
+  override def videos = Nil
 
   override def isLive = false
+
+  override def thumbnail = None
+
+  override def mainPicture = None
 }

@@ -1,0 +1,28 @@
+@(env: String, charts: tools.Chart*)
+
+@admin_main("A/B Tests", env, isAuthed = true) {
+
+    <h1>A/B Tests</h1>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            @charts.map{ chart =>
+                var data = google.visualization.arrayToDataTable(@Html(chart.asDataset));
+                @for(i <- 1 to chart.labels.length - 1) {
+                    new google.visualization.NumberFormat({pattern: '#,###.###'}).format(data, @i);
+                }
+
+                new google.visualization.@{chart.form}(document.getElementById('@chart.id')).draw(data, {
+                    title: '@chart.name' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
+                });
+            }
+        }
+    </script>
+
+
+    @charts.map{ chart => <div id="@chart.id" style="max-width: 1200px"></div> }
+}
