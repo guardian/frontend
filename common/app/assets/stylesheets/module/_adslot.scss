@@ -45,7 +45,11 @@
     overflow: hidden;
 }
 
-.ad-slot-bottom-banner-ad {
+.ad-slot-bottom-sticky-banner-ad {
     position: fixed;
     bottom: 0px;
+
+    @include mq(tablet){
+        display: none;
+    }
 }

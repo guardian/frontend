@@ -45,7 +45,9 @@ define([
     function generateUrl(config, slots) {
         var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config) + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
 
-        var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'mjx';
+        //var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'mjx';
+        var type = 'mjx';
+
         var query = '?';
 
         if (config.keywords) {

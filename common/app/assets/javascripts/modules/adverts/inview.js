@@ -20,12 +20,20 @@ define([
         return container.children[0];
     }
 
-    function loadAdvert(context, size) {
+    function loadAdvert(config, context, size) {
         return function(el) {
+            console.log('inside inview render callback');
             name = el.getAttribute('data-' + size);
             slot = new DocumentWriteSlot(name, insertContainer(el), context);
-            domwrite.capture();
-            slot.render();
+            common.mediator.on('modules:adverts:docwrite:loaded', function() {
+                console.log('inside inview advert loaded');
+                domwrite.capture();
+                slot.render();
+            });
+            documentWrite.load({
+                config: config,
+                slots: [slot]
+            });
         }
     }
 
@@ -40,14 +48,16 @@ define([
 
     function bindListeners(callback) {
         common.mediator.on('modules:inview:visible', function(el) {
+            console.log('inside inview event');
             if(el.getAttribute('data-inview-advert')) {
                 callback();
             }
         });
     }
 
-    function InView(context, size) {
-        bindListeners(loadAdvert(context, size));
+    function InView(config, context, size) {
+        console.log('inside inview');
+        bindListeners(loadAdvert(config, context, size));
         labelParagraphs(context);
 
         var inview = new Inview('[data-inview-name]', context);

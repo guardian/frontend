@@ -84,7 +84,7 @@ function (
             slots: slots
         });
 
-        size
+        //inView(currConfig, currContext, size);
     }
 
     function loadAds() {
