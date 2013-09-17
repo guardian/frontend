@@ -2,17 +2,17 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
 
     var TopStoriesShowMore = function(topStories) {
 
-        var _button = bonzo.create('<button class="collection__show-more">Show more news</button>')[0],
+        var _button = bonzo.create('<button class="items__show-more">Show more news</button>')[0],
             _renderToggle = function(section) {
                 bonzo(section).append(_button);
                 bean.on(_button, 'click', function(e) {
                     // show x more, depending on current breakpoint
                     var rowSize = _getRowSize(),
-                        moreHidden = qwery('.item.h', topStories).some(function(item, index) {
+                        moreHidden = qwery('.item.u-h', topStories).some(function(item, index) {
                             if (index === rowSize) {
                                 return true;
                             }
-                            bonzo(item).removeClass('h');
+                            bonzo(item).removeClass('u-h');
                         });
                     if (!moreHidden) {
                         bonzo(_button).remove();
@@ -21,22 +21,26 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
             },
             _getRowSize = function () {
                 switch (detect.getBreakpoint()) {
-                    case 'mobile':
-                        return 1;
-                    case 'tablet':
+                    case 'wide':
+                        return 4;
                     case 'desktop':
                         return 3;
+                    case 'tablet':
+                        return 2;
                     default:
                         return 4;
                 }
             };
 
+        var $overflowStories = common.$g('.item:nth-child(n + ' + (_getRowSize() + 1) + ')', topStories);
         // hide stories
-        common.$g('.item:nth-child(n + ' + ((_getRowSize() * 2) + 1) + ')', topStories).each(function(item) {
-            bonzo(item).addClass('h');
+        $overflowStories.each(function(item) {
+            bonzo(item).addClass('u-h');
         });
-        // add toggle button
-        _renderToggle(topStories);
+        // add toggle button, if we have hidden stories
+        if ($overflowStories.length) {
+            _renderToggle(topStories);
+        }
 
     };
 

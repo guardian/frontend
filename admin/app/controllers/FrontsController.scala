@@ -55,14 +55,15 @@ object FrontsController extends Controller with Logging with ExecutionContexts {
         Ok
       }
       case blockAction: BlockActionJson => {
+        val identity = Identity(request).get
         blockAction.publish.filter {_ == true}
           .map { _ =>
-            FrontsApi.publishBlock(id)
+            FrontsApi.publishBlock(id, identity)
             Ok
           }
           .orElse {
           blockAction.discard.filter {_ == true}.map { _ =>
-            FrontsApi.discardBlock(id)
+            FrontsApi.discardBlock(id, identity)
             Ok
           }
         } getOrElse NotFound("Invalid JSON")

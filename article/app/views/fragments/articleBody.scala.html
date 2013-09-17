@@ -39,7 +39,7 @@
                     <div class="js-article__container article__container u-cf">
                         <div class="article-body from-content-api"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-                            @BodyCleaner(article)
+                            @BodyCleaner(article, article.body)
                         </div>
                     </div>
 

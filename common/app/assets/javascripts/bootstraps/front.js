@@ -7,10 +7,7 @@ define([
     "modules/trailblocktoggle",
     "modules/trailblock-show-more",
     "modules/footballfixtures",
-    "modules/cricket",
-    "modules/masthead-relative-dates",
-    'modules/top-stories-show-more',
-    'modules/facia-popular'
+    "modules/cricket"
 ], function (
     common,
     bonzo,

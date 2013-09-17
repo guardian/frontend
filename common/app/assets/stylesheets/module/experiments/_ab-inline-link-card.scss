@@ -38,13 +38,12 @@
     &:focus {
         text-decoration: none;
     }
-
-    &.is-hidden { display: none; }
 }
 
 .card__media {
     display: block;
     width: 100%;
+    margin-bottom: 0;
 
     .furniture--left & {
         width: 140px;
@@ -93,10 +92,6 @@
 
 .card--right {
     margin-top: $baseline*4;
-
-    &.is-hidden {
-      display: none;
-    }
 
     .card__title {
         min-height: $unitHeight;

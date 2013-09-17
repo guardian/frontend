@@ -44,14 +44,14 @@ object TagController extends Controller with Logging with JsonTrails with Execut
       val tag = response.tag map { new Tag(_) }
 
       val leadContentCutOff = DateTime.now - leadContentMaxAge
-      val editorsPicks: Seq[Content] = response.editorsPicks.map(new Content(_))
+      val editorsPicks: Seq[Content] = response.editorsPicks.map(Content(_))
 
       val leadContent: Seq[Content] = if (editorsPicks.isEmpty)
-        response.leadContent.take(1).map { new Content(_) }.filter(_.webPublicationDate > leadContentCutOff)
+        response.leadContent.take(1).map {Content(_) }.filter(_.webPublicationDate > leadContentCutOff)
       else
         Nil
 
-      val latest: Seq[Content] = response.results.map(new Content(_)).filterNot(c => leadContent.map(_.id).exists(_ == c.id))
+      val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).exists(_ == c.id))
 
       val allTrails = (editorsPicks ++ latest).distinctBy(_.id).take(20)
 
