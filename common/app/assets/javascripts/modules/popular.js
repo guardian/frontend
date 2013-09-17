@@ -1,8 +1,7 @@
 define(['common', 'modules/lazyload'], function (common, LazyLoad) {
 
-    function popular(config, context, isExpandable, url, targetSelector) {
-        targetSelector = targetSelector || '.js-popular';
-        var container = context.querySelector(targetSelector);
+    function popular(config, context, isExpandable, url) {
+        var container = context.querySelector('.js-popular');
 
         if (container) {
             // some pages, e.g. profiles, are flagged as 'section: global', a non-existent section - this ignores those

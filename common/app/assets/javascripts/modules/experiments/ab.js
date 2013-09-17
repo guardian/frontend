@@ -10,8 +10,7 @@ define([
     'modules/experiments/tests/swipe-ctas',
     'modules/experiments/tests/expandable-mostpopular',
     'modules/experiments/tests/right-hand-card',
-    'modules/experiments/tests/live-blog-show-more',
-    'modules/experiments/tests/most-popular-from-facebook'
+    'modules/experiments/tests/live-blog-show-more'
 ], function (
     common,
     store,
@@ -23,8 +22,7 @@ define([
     SwipeCtas,
     ExperimentExpandableMostPopular,
     RightHandCard,
-    LiveBlogShowMore,
-    MostPopularFromFacebook
+    LiveBlogShowMore
     ) {
 
     var TESTS = [
@@ -35,8 +33,7 @@ define([
             new SwipeCtas(),
             new ExperimentExpandableMostPopular(),
             new RightHandCard(),
-            new LiveBlogShowMore(),
-            new MostPopularFromFacebook()
+            new LiveBlogShowMore()
         ],
         participationsKey = 'gu.ab.participations';
 
