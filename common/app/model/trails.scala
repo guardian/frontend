@@ -56,6 +56,7 @@ class ItemTrailblockDescription(
     log.info(s"Refreshing trailblock items for: ${edition.id}, $id")
     EditorsPicsOrLeadContentAndLatest(
       ContentApi.item(id, edition)
+        .showMedia(None)
         .showEditorsPicks(true)
         .pageSize(20)
         .response
