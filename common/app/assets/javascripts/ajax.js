@@ -35,7 +35,6 @@ define(["reqwest"], function (reqwest) {
         };
     };
 
-
     return ajax;
 
 });
