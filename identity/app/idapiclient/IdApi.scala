@@ -82,7 +82,7 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     val userData = write(user)
     val response = http.POST(apiUrl("user"), Some(userData),
       clientAuth.parameters ++ trackingParameters.parameters,
-      clientAuth.headers ++ clientIp.map(ip => Iterable("X-GU-ID-IP" -> ip)).getOrElse(Iterable.empty)
+      clientAuth.headers ++ clientIp.map(ip => Iterable("X-GU-ID-REMOTE-IP" -> ip)).getOrElse(Iterable.empty)
     )
     response map jsonBodyParser.extract[User](jsonField("user"))
   }

@@ -401,7 +401,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "passes the user's IP details as provided" in {
         api.register(user, trackingParameters, Some("127.0.0.1"))
-        verify(http).POST(Matchers.any[String], Matchers.eq(Some(expectedPostData)), Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable("X-GU-ID-IP" -> "127.0.0.1"))))
+        verify(http).POST(Matchers.any[String], Matchers.eq(Some(expectedPostData)), Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable("X-GU-ID-REMOTE-IP" -> "127.0.0.1"))))
       }
     }
 
