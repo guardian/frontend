@@ -72,6 +72,8 @@ class GuardianConfiguration(
     lazy val host = configuration.getStringProperty("ophan.api.host") getOrElse {
       throw new IllegalStateException("Ophan Api host not configured")
     }
+
+    lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object frontend {
