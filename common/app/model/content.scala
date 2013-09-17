@@ -172,7 +172,7 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
-    "og:image" -> mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback)
+    "og:image" -> mainPicture.map(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
@@ -244,7 +244,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
-    "og:image" -> mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback)
+    "og:image" -> mainPicture.map(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
