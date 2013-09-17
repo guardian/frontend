@@ -96,7 +96,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
         verify(api).authBrowser(Matchers.eq(auth), Matchers.same(omnitureData))
       }
 
-      "should set login cookies on response" in Fake {
+      "should set login cookies on valid auth response" in Fake {
         when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
         val result = registrationController.processForm()(fakeRequest)
         val responseCookies : Cookies = cookies(result)

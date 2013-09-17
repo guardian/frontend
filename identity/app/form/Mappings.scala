@@ -16,8 +16,4 @@ object Mappings {
   val idPassword: Mapping[String] = of[String] verifying(
     Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}
   )
-
-  val idUsername: Mapping[String] = of[String] verifying(
-    Messages("error.usernameLength"), {value => 6 <= value.length && value.length <= 20}
-  )
 }
