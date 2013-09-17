@@ -22,6 +22,7 @@
 
     .has-key-events & {
         display: table-cell;
+        vertical-align: middle;
     }
 }
 .live-toggler {
@@ -80,16 +81,23 @@
 }
 
 
+.live-toggler--circle {
+    border-left: 1px solid #c2c2b0;
+    padding: 8px 18px;
+    width: auto;
+    float: right;
+}
 
-.live-circle-toggler {
+.lt__circle-wrapper {
     position: relative;
     width: 30px;
     height: 30px;
-    margin: 8px;
+    display: block;
 
     .counter {
         @extend %type-12;
         font-weight: bold;
+        color: $darkGrey;
         line-height: 30px;
         position: absolute;
         top: 0;

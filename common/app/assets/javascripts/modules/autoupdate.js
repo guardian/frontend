@@ -56,7 +56,9 @@ define([
             '    <span class="lt__value">Off</span>' +
             '    <span class="u-h">(turn on)</span>' +
             '  </button>' +
-            '  <button class="u-button-reset live-circle-toggler js-auto-update"></button>';
+            '  <button class="u-button-reset live-toggler live-toggler--circle js-auto-update">' +
+                '<span class="lt__circle-wrapper"></span>' +
+            '  </button>';
 
         // View
         this.view = {
@@ -181,39 +183,44 @@ define([
                 that.nextReload = new Date().getTime() + options.delay;
             }, options.delay);
 
-            this.timerProgressInterval = window.setInterval(function() {
-                var now = new Date().getTime(),
-                    msTillReload = that.nextReload - now,
-                    countdown = Math.round(msTillReload/1000),
-                    percent = (msTillReload / options.delay) * 100;
+            if (options.progressToggle) {
+                this.timerProgressInterval = window.setInterval(function() {
+                    var now = new Date().getTime(),
+                        msTillReload = that.nextReload - now,
+                        countdown = Math.round(msTillReload/1000),
+                        percent = (msTillReload / options.delay) * 100;
 
-                if (msTillReload < 0) {
-                    that.nextReload = new Date().getTime() + options.delay;
-                }
+                    if (msTillReload < 0) {
+                        that.nextReload = new Date().getTime() + options.delay;
+                    }
 
-                that.timerProgress.render(countdown, percent);
-            }, 1000);
+                    that.timerProgress.render(countdown, percent);
+                }, 1000);
 
-            bonzo(this.liveCircleTogglerEl).attr({
-                'data-action': 'off',
-                'data-link-name' : 'autoupdate off',
-                'title': 'Turn auto update off'
-            });
+                bonzo(this.liveCircleTogglerEl).attr({
+                    'data-action': 'off',
+                    'data-link-name' : 'autoupdate off',
+                    'title': 'Turn auto update off'
+                });
+            }
         };
 
         this.off = function () {
             var that = this;
             if(this.interval) { window.clearInterval(this.interval); }
-            if(this.timerProgressInterval) {
-                window.clearInterval(this.timerProgressInterval);
-                that.timerProgress.render("", 0);
-            }
 
-            bonzo(this.liveCircleTogglerEl).attr({
-                'data-action': 'on',
-                'data-link-name' : 'autoupdate on',
-                'title': 'Turn auto update on'
-            });
+            if (options.progressToggle) {
+                if(this.timerProgressInterval) {
+                    window.clearInterval(this.timerProgressInterval);
+                    that.timerProgress.render("", 0);
+                }
+
+                bonzo(this.liveCircleTogglerEl).attr({
+                    'data-action': 'on',
+                    'data-link-name' : 'autoupdate on',
+                    'title': 'Turn auto update on'
+                });
+            }
         };
 
         this.getPref = function () {
@@ -251,12 +258,13 @@ define([
 
             // Optionally use circular progress
             if (options.progressToggle) {
-                this.liveCircleTogglerEl = document.querySelector('.live-circle-toggler');
-                this.timerProgress = new CircularProgress({
-                    el: this.liveCircleTogglerEl
-                });
-
+                this.liveCircleTogglerEl = document.querySelector('.live-toggler--circle');
+                this.liveCircleTogglerEl.style.display = 'block';
                 common.$g('.js-auto-update--off, js-auto-update--on').remove();
+
+                this.timerProgress = new CircularProgress({
+                    el: this.liveCircleTogglerEl.querySelector('.lt__circle-wrapper')
+                });
             }
 
 
@@ -266,7 +274,6 @@ define([
             this.btns.each(function (btn) {
                 bean.add(btn, 'click', function (e) {
                     e.preventDefault();
-
                     that.view.toggle.call(that, this);
                 });
             });
