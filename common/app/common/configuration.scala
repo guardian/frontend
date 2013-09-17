@@ -75,8 +75,12 @@ class GuardianConfiguration(
     lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
   }
 
-  object host {
+  object hostMachine {
     lazy val name = InetAddress.getLocalHost.getHostName
+  }
+
+  object site {
+    lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
 
   object proxy {
@@ -202,10 +206,6 @@ class GuardianConfiguration(
   object riffraff {
     lazy val url = configuration.getStringProperty("riffraff.url").getOrElse(throw new RuntimeException("RiffRaff url not set"))
     lazy val apiKey = configuration.getStringProperty("riffraff.apikey").getOrElse(throw new RuntimeException("RiffRaff api key not set"))
-  }
-
-  object site {
-    lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
 
   // log out Play config on start
