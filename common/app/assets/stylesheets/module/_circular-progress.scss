@@ -1,22 +1,6 @@
 .circular-progress {
     position: relative;
 
-    .circular-progress__counter,
-    .circular-progress__cta {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-    }
-
-    .circular-progress__counter {
-        @extend %type-12;
-        font-weight: bold;
-        color: $darkGrey;
-        line-height: 30px;
-        text-align: center;
-    }
-
     &:hover .circular-progress__counter {
         display: none;
     }
@@ -28,4 +12,20 @@
     &.circular-progress--is-off .circular-progress__cta {
         @extend .i-liveblog-play;
     }
+}
+
+.circular-progress__counter,
+.circular-progress__cta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.circular-progress__counter {
+    @extend %type-12;
+    font-weight: bold;
+    color: $darkGrey;
+    line-height: 30px;
+    text-align: center;
 }
