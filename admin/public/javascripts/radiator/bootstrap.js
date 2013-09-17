@@ -21,12 +21,12 @@ window.addEventListener('load', function() {
     // riff raff - requires you to be on the guardian network
 
     $.ajax({
-                url: 'https://riffraff.gutools.co.uk/api/history?stage=PROD&projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=50', 
+                url: 'https://riffraff.gutools.co.uk/api/history?projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=50',
                 dataType: 'jsonp',
                 success: function(deployments) {
 
                     // a hash of the last deployment each project 
-                    var latestDeployments = {};
+                    var latestDeployments = { "CODE": {}, "PROD": {}};
                     deployments.response.results.filter(function (deployment) {
                         
                             return /^frontend::/.test(deployment.projectName)
@@ -34,22 +34,30 @@ window.addEventListener('load', function() {
                         }).forEach(function(deploy) {
                             
                             var project = deploy.projectName;
-                            if (!latestDeployments.hasOwnProperty(project)) {
-                                latestDeployments[project] = deploy;
+                            var stage = deploy.stage;
+                            console.log(stage);
+                            if (!latestDeployments[stage].hasOwnProperty(project)) {
+                                latestDeployments[stage][project] = deploy;
                             }
                         })
 
-                    // render
-                    Object.keys(latestDeployments).forEach(function (deployment)  {
-                        var d  = latestDeployments[deployment];
-                        var li = document.createElement('li');
-                        li.className = d.status;
-                        li.innerHTML = d.projectName;
-                        li.setAttribute('title', d.projectName);
-                        riffraff.appendChild(li);
-                    });
+                    console.log(latestDeployments);
 
-                }})
+
+                    function renderDeploys(stage, target) {
+                        Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
+                            var d  = latestDeployments[stage][deployment];
+                            var li = document.createElement('li');
+                            li.className = d.status;
+                            li.innerHTML = d.projectName;
+                            li.setAttribute('title', d.projectName);
+                            target.appendChild(li);
+                        });
+                    }
+
+                    renderDeploys("CODE", riffraffCODE);
+                    renderDeploys("PROD", riffraffPROD);
+                }});
 
 
     // Page views
