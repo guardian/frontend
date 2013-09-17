@@ -65,8 +65,14 @@ module.exports = function (grunt) {
                         "domwrite"                     : "components/dom-write/dom-write",
                         "swipe"                        : "components/swipe/swipe",
                         "swipeview"                    : "components/swipeview/src/swipeview",
+                        "zxcvbn"                       : "components/zxcvbn/zxcvbn",
                         // add excluded modules here, note empty scheme (note, also need to add to curl options)
                         'modules/shared-wisdom-toolbar': 'empty:'
+                    },
+                    "shim": {
+                        "zxcvbn": {
+                            exports: 'zxcvbn'
+                        },
                     },
                     "wrap" : {
                         "startFile" : "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
@@ -158,6 +164,7 @@ module.exports = function (grunt) {
                                 swipe:        'components/swipe/swipe',
                                 swipeview:    'components/swipeview/src/swipeview',
                                 moment:       'components/moment/moment',
+                                zxcvbn:       'components/zxcvbn/zxcvbn',
                                 omniture:     '../../../app/public/javascripts/vendor/omniture',
                                 fixtures:     '../../../test/assets/javascripts/fixtures',
                                 helpers:      '../../../test/assets/javascripts/helpers'

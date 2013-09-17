@@ -1,0 +1,9 @@
+{
+  "name": "zxcvbn",
+  "version": "0.0.0",
+  "commit": "cae15350c2ea137d9f2a4e9e87618717f9dfe728",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lowe/zxcvbn.git"
+  }
+}
