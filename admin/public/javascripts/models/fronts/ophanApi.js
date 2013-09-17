@@ -13,7 +13,7 @@ function (
     function decorateItems(items) {
         items.slice(0, 50).forEach(function(item, index){
             var id = item.meta.id(),
-                data = cache.get('pageViews', id);
+                data;
 
             if (!id) { return; }
 
@@ -25,7 +25,6 @@ function (
             }
 
             setTimeout(function(){
-                console.log('FETCH');
                 fetchData(id, function(data){
                     cache.put('pageViews', id, data);
                     decorateItem(data, item);
