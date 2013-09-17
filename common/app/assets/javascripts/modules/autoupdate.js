@@ -9,7 +9,8 @@ define([
     'bean',
     'qwery',
     'modules/userPrefs',
-    'modules/detect'
+    'modules/detect',
+    'modules/circular-progress'
 ], function (
     common,
     ajax,
@@ -17,7 +18,8 @@ define([
     bean,
     qwery,
     userPrefs,
-    detect
+    detect,
+    CircularProgress
 ) {
     /*
         @param {Object} options hash of configuration options:
@@ -37,8 +39,7 @@ define([
             'manipulationType' : 'html'
         }, config);
 
-        var unreadBlocks = 0,
-            originalPageTitle;
+        var unreadBlocks = 0;
 
         this.template =
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--on"' +
@@ -54,7 +55,8 @@ define([
             '    <span class="u-h">is</span>' +
             '    <span class="lt__value">Off</span>' +
             '    <span class="u-h">(turn on)</span>' +
-            '  </button>';
+            '  </button>' +
+            '  <button class="u-button-reset live-circle-toggler js-auto-update"></button>';
 
         // View
         this.view = {
@@ -119,7 +121,9 @@ define([
                     this.off();
                 }
 
-                btn.parentNode.getElementsByClassName('js-auto-update--' + action)[0].className += ' ' + options.activeClass;
+                if (!options.progressToggle) {
+                    btn.parentNode.getElementsByClassName('js-auto-update--' + action)[0].className += ' ' + options.activeClass;
+                }
 
                 this.setPref(action);
             },
@@ -169,15 +173,47 @@ define([
 
         this.on = function () {
             this.off();
+            this.nextReload = new Date().getTime() + options.delay;
             var that = this;
 
             this.interval = window.setInterval(function() {
                 that.load.call(that);
+                that.nextReload = new Date().getTime() + options.delay;
             }, options.delay);
+
+            this.timerProgressInterval = window.setInterval(function() {
+                var now = new Date().getTime(),
+                    msTillReload = that.nextReload - now,
+                    countdown = Math.round(msTillReload/1000),
+                    percent = (msTillReload / options.delay) * 100;
+
+                if (msTillReload < 0) {
+                    that.nextReload = new Date().getTime() + options.delay;
+                }
+
+                that.timerProgress.render(countdown, percent);
+            }, 1000);
+
+            bonzo(this.liveCircleTogglerEl).attr({
+                'data-action': 'off',
+                'data-link-name' : 'autoupdate off',
+                'title': 'Turn auto update off'
+            });
         };
 
         this.off = function () {
+            var that = this;
             if(this.interval) { window.clearInterval(this.interval); }
+            if(this.timerProgressInterval) {
+                window.clearInterval(this.timerProgressInterval);
+                that.timerProgress.render("", 0);
+            }
+
+            bonzo(this.liveCircleTogglerEl).attr({
+                'data-action': 'on',
+                'data-link-name' : 'autoupdate on',
+                'title': 'Turn auto update on'
+            });
         };
 
         this.getPref = function () {
@@ -212,6 +248,18 @@ define([
 
             // add the component to the page, and show it
             common.$g('.update').html(this.template).removeClass('hidden');
+
+            // Optionally use circular progress
+            if (options.progressToggle) {
+                this.liveCircleTogglerEl = document.querySelector('.live-circle-toggler');
+                this.timerProgress = new CircularProgress({
+                    el: this.liveCircleTogglerEl
+                });
+
+                common.$g('.js-auto-update--off, js-auto-update--on').remove();
+            }
+
+
 
             this.btns = common.$g(options.btnClass);
 

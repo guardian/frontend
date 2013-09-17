@@ -57,12 +57,14 @@ define([
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
                         manipulationType: 'prepend',
-                        animateInserts: true
+                        animateInserts: true,
+                        progressToggle: true
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
                     var lf = new LiveFilter(context).init(),
                         nc = new NotificationCounter().init();
+
 
                     if (config.switches.liveSummary) {
                         var ls = new LiveSummary(context).init();

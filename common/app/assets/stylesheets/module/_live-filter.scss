@@ -78,3 +78,23 @@
         display: block;
     }
 }
+
+
+
+.live-circle-toggler {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    margin: 8px;
+
+    .counter {
+        @extend %type-12;
+        font-weight: bold;
+        line-height: 30px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-align: center;
+        width: 100%;
+    }
+}
