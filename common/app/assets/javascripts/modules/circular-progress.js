@@ -1,10 +1,12 @@
 define(["bean",
         "common",
-        "bonzo"],
+        "bonzo",
+        "modules/detect"],
     function (
         bean,
         common,
-        bonzo) {
+        bonzo,
+        detect) {
 
     function CircularProgress(opts) {
         this.$el = bonzo(opts.el);
@@ -37,6 +39,11 @@ define(["bean",
         this.pathEl.setAttribute('transform', 'translate(' + this.centre + ', ' + this.centre + ')');
 
         this.labelEl = opts.el.querySelector('.circular-progress__counter');
+
+        // Using this as a hook to disable hover styles on touch (thanks Safari!)
+        if (!detect.hasTouchScreen()) {
+            this.$el.addClass('circular-progress--no-touch');
+        }
     };
 
     CircularProgress.prototype.enable = function() {
