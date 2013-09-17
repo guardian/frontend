@@ -1,6 +1,6 @@
 /* global module: false */
 module.exports = function (grunt) {
-    var env = grunt.option('env') || 'dev',
+    var env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
         timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/');
 
