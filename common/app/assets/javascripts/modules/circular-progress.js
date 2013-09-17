@@ -51,7 +51,7 @@ define(["bean",
                           x, y
                        ];
 
-        if (percent === 0) { pathStr = [] }; // Ensure there's no artifacts when at 0
+        if (!percent) { pathStr = ['M', 0, 0] }; // Ensure there's no artifacts when at 0
         this.pathEl.setAttribute('d', pathStr.join(' '));
         this.labelEl.innerHTML = label;
     };

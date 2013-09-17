@@ -209,14 +209,14 @@ define([
         };
 
         this.off = function () {
-            var that = this;
             if(this.interval) { window.clearInterval(this.interval); }
 
             if (options.progressToggle) {
-                if(this.timerProgressInterval) {
+                if (this.timerProgressInterval) {
                     window.clearInterval(this.timerProgressInterval);
-                    that.timerProgress.render('<i class="i i-liveblog-paused"></i>', 0);
                 }
+
+                this.timerProgress.render('<i class="i i-liveblog-paused"></i>', 0);
 
                 bonzo(this.liveCircleTogglerEl).attr({
                     'data-action': 'on',
