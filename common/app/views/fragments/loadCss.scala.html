@@ -6,7 +6,7 @@
 </noscript>
 <script>
     function injectElement(e) {
-        var sc = d.getElementsByTagName('script')[0];
+        var sc = document.getElementsByTagName('script')[0];
         sc.parentNode.insertBefore(e, sc);
     }
 
@@ -20,13 +20,13 @@
     function storeCss(c) {
         Object.keys(localStorage ).some(function(key) {
             if(key.match(/^gu.css./g)) {
-                localStorage.remove(key);
+                localStorage.removeItem(key);
                 return true;
             }
             return false;
         });
         try {
-            localStorage.setItem('gu.css.' + '@Static("stylesheets/global.min.css").md5Key', c);
+            localStorage.setItem('gu.css.@Static("stylesheets/global.min.css").md5Key', c);
         } catch(e) {
 
         }
@@ -48,9 +48,9 @@
                 if(xhr.status === 200) {
                     inlineCss(xhr.responseText);
                     storeCss(xhr.responseText);
+                } else {
+                    loadCssWithLink();
                 };
-            } else {
-                loadCssWithLink();
             }
         }
         setTimeout( function () {
@@ -64,7 +64,9 @@
 
     if(guardian.isModernBrowser && !guardian.css.loaded) {
         loadCssWithAjax();
-    } else {
+    }
+
+    if(!guardian.isModernBrowser){
         loadCssWithLink();
     }
 </script>

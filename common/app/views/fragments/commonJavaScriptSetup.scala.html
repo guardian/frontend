@@ -36,11 +36,11 @@
     };
 
     function loadCssFromStorage() {
-        var c = localStorage.getItem('gu.css.' + @Static("stylesheets/global.min.css").md5Key), s, sc;
+        var c = localStorage.getItem('gu.css.@Static("stylesheets/global.min.css").md5Key'), s, sc;
         if(c) {
-            s = d.createElement('style');
-            sc = d.getElementsByTagName('script')[0];
-            s.innerHTML = JSON.parse(c).css;
+            s = document.createElement('style');
+            sc = document.getElementsByTagName('script')[0];
+            s.innerHTML = c;
             s.setAttribute('data-loaded-from', 'local');
             sc.parentNode.insertBefore(s, sc);
             guardian.css.loaded = true;
@@ -87,6 +87,7 @@
         @* we want this to happen ASAP to avoid FOUC *@
         document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
 
+        loadCssFromStorage();
         loadFontsFromStorage();
 
         guardian.config = @fragments.javaScriptConfig(item, switches);
