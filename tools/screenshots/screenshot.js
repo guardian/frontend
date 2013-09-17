@@ -1,6 +1,5 @@
 /**
  * TODO
- *     * allow multiple urls/viewport sizes
  *     * target particular elements
  */
 
