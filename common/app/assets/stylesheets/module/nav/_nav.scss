@@ -120,6 +120,10 @@
 
         .nav__item { margin: 0; }
     }
+    @include mq(desktop) {
+        border-top: none;
+        margin-top: -13px !important;
+    }
 }
 
     .control--sections .i-nav-divider {
@@ -155,7 +159,7 @@
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
-    background-color: #F5F5F2;
+    background-color: $mushroom;
     border-bottom: 1px solid $darkMushroom;
 
     @include mq(tablet) { display: block; }

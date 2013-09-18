@@ -18,8 +18,8 @@
     }
 
     &.is-active {
-      background-color: #fff !important;
-      color: $blue;
+        background-color: #fff !important;
+        color: $blue;
     }
 }
 
@@ -62,6 +62,9 @@
 }
 
 .control--sections.is-active {
+    @include mq(desktop) {
+        background-color: transparent !important;
+    }
     @include mq(1152px) {
         border-right: 1px solid $darkMushroom;
         padding-right: $gutter - 1;
@@ -102,7 +105,7 @@ span.control__menu.i-menu {
     }
 }
 .control--sections.is-active .i-nav-divider {
-    @include mq(tablet) {
+    @include mq(tablet, desktop) {
         top: 0;
         height: 41px;
     }
