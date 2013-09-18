@@ -113,10 +113,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
       val fakeRequest = FakeRequest(POST, "/register").withFormUrlEncodedBody("user.primaryEmailAddress" -> "test@example.com", "user.publicFields.username" -> "username", "user.password" -> "password" )
       val badPassword = List(Error("Invalid password:", "Password should be between 6 and 20 characters long:", 500, Some("user.password")))
 
-      when(api.register(user, omnitureData)).thenReturn(Future.successful(Left(badPassword)))
-      "form is reshown with errors" in Fake {
-        registrationController.processForm()(fakeRequest)
-      }
+     when(api.register(user, omnitureData)).thenReturn(Future.successful(Left(badPassword)))
 
      "there is no attempt to sign the user in" in Fake {
         registrationController.processForm()(fakeRequest)
