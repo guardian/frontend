@@ -8,6 +8,7 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
         this.expiry = '2013-09-30';
         this.audience = 0.5;
         this.description = 'Tests whether showing Most Popular for visitors referred from Facebook to visitors referred from Facebook increases clickthrough';
+        this.events = ['most popular']
         this.canRun = function (config) {
             _config = config;
 
@@ -36,7 +37,7 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
                         container.querySelector('#tabs-popular-1').style.display = 'none';
                         container.querySelector('#tabs-popular-2').style.display = 'block';
                     });
-                }
+                },
             },
             {
                 id: 'facebook',

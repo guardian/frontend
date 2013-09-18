@@ -150,30 +150,25 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
         });
 
         describe("Analytics", function () {
-            
-            it('should add "data-link-test" tracking to body', function() {
-                ab.segment(switches.test_one_on);
-                ab.run(switches.test_one_on);
-                expect(document.body.getAttribute('data-link-test')).toMatch(/^AB \| DummyTest test \| (control|hide)$/);
-            });
 
-            it('should concat "data-link-test" tracking when more than one test', function() {
-                Math.seedrandom('gu');
+            it('should tell me if an event is applicable to a test that I belong to', function () {
+                ab.segment(switches.test_one_on);
+                expect(ab.isEventApplicableToAnActiveTest('most popular | The Guardian | trail | 1 | text')).toBeTruthy()
+
+            })
+
+            it('should tell me if an event is applicable to a test with multiple event strings that I belong to', function () {
+                ab.segment(switches.test_one_on);
+                expect(ab.isEventApplicableToAnActiveTest('most popular | Section | trail | 1 | text')).toBeTruthy()
+            })
+
+            it('should return a list of test names that are relevant to the event', function () {
                 ab.addTest(test.two);
                 ab.segment(switches.both_tests_on);
-                ab.run(switches.both_tests_on);
-                expect(document.body.getAttribute('data-link-test')).toBe('AB | DummyTest test | control, AB | DummyTest2 test | control');
-            });
+                expect(ab.getActiveTestsEventIsApplicableTo('most popular | The Guardian | trail | 1 | text')).toEqual(['DummyTest', 'DummyTest2'])
+            })
 
-            it('should not have duplicate "data-link-test" tracking when a test is run more than once', function() {
-                Math.seedrandom('gu');
-                ab.addTest(test.two);
-                ab.segment(switches.test_one_on);
-                ab.run(switches.test_one_on);
-                ab.run(switches.test_one_on);
-                expect(document.body.getAttribute('data-link-test')).toBe('AB | DummyTest test | control');
-            });
-            
+
             it('should generate a string for Omniture to tag the test(s) the user is in', function() {
                 Math.seedrandom('gu');
                 test.two.audience = 1; 
