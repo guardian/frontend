@@ -1,8 +1,5 @@
 .collection--medium-stories {
     margin-top: $gs-baseline*2;
-    .collection__title {
-        display: none;
-    }
     .items {
         @include mq(tablet) {
             font-size: 0;
@@ -46,8 +43,17 @@
             min-height: gs-height(3);
         }
     }
+    .item__standfirst {
+        @include mq($to: tablet) {
+            display: none;
+        }
+        @include mq(tablet) {
+            min-height: gs-height(4);
+            margin: $gs-baseline*2 0 0;
+            @include font-size(16, 20);
+        }
+    }
     .item__image-container {
-        margin-top: $gs-baseline*2;
         @include mq($to: tablet) {
             display: none;
         }

@@ -27,7 +27,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                         show: 4
                     },
                     features: {
-                        initial: 4,
+                        initial: 3,
                         show: 4
                     },
                     'small-stories': {

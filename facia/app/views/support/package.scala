@@ -30,6 +30,26 @@ object FindStyle {
       ("uk/technology/regular-stories", Highlights),
       ("uk/money/regular-stories", Highlights),
       ("uk/travel/regular-stories", Highlights)
+    )),
+    ("us", Map(
+      ("us/sport/regular-stories", Highlights),
+      ("us/commentisfree/regular-stories", Features),
+      ("us/culture/regular-stories", Features),
+      ("us/business/regular-stories", Highlights),
+      ("us/lifeandstyle/regular-stories", Highlights),
+      ("us/technology/regular-stories", Highlights),
+      ("us/money/regular-stories", Highlights),
+      ("us/travel/regular-stories", Highlights)
+    )),
+    ("au", Map(
+      ("au/sport/regular-stories", Highlights),
+      ("au/commentisfree/regular-stories", Features),
+      ("au/culture/regular-stories", Features),
+      ("au/business/regular-stories", Highlights),
+      ("au/lifeandstyle/regular-stories", Highlights),
+      ("au/technology/regular-stories", Highlights),
+      ("au/money/regular-stories", Highlights),
+      ("au/travel/regular-stories", Highlights)
     ))
   )
 
