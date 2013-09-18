@@ -21,7 +21,7 @@ window.addEventListener('load', function() {
     // riff raff - requires you to be on the guardian network
 
     $.ajax({
-                url: 'https://riffraff.gutools.co.uk/api/history?projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=100',
+                url: 'https://riffraff.gutools.co.uk/api/history?projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=200',
                 dataType: 'jsonp',
                 success: function(deployments) {
 
@@ -49,10 +49,10 @@ window.addEventListener('load', function() {
                             li.setAttribute("id", targetId);
                             list.appendChild(li);
                             $.ajax({
-                                    url: 'https://api.github.com/repos/guardian/frontend/commits/' + revision,
-                                    dataType: 'jsonp',
+                                    url: '/radiator/commit/' + revision,
+                                    dataType: 'json',
                                     success: function(rev) {
-                                        li.innerHTML = rev.data.commit.author.name;
+                                        li.innerHTML = rev.commit.author.name;
                                     }
                             });
                         }

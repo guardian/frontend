@@ -98,6 +98,10 @@ class GuardianConfiguration(
     }
   }
 
+  object github {
+    lazy val token = configuration.getStringProperty("github.token")
+  }
+
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin")
