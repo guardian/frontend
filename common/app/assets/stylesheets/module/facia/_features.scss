@@ -1,4 +1,12 @@
 .collection--features {
+    .collection__title {
+        background-color: $pink;
+        border-color: $light-pink;
+    }
+    &.collection--commentisfree-section .collection__title {
+        background-color: $green;
+        border-color: $light-green;
+    }
     .items {
         @include mq(tablet) {
             font-size: 0;
@@ -37,7 +45,7 @@
             padding-left: 0;
             border-left-style: none;
         }
-        .item:nth-child(#{$row-size}n + 2) {
+        .item:nth-child(#{$row-size}n) {
             padding-right: 0;
         }
     }
@@ -47,8 +55,28 @@
     @include mq(tablet, desktop) {
         @include row(2);
     }
-    @include mq(desktop) {
+    @include mq(desktop, wide) {
         @include row(3);
+    }
+    @include mq(wide) {
+        // styling for first row
+        .item:nth-child(-n + 3) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+        // stylings for beggining and end of rows
+        .item:first-child,
+        .item:nth-child(4n + 4) {
+            padding-left: 0;
+            border-left-style: none;
+        }
+        .item:nth-child(3),
+        .item:nth-child(4n + 7) {
+            padding-right: 0;
+        }
     }
     .item__image-container {
         @include mq(tablet) {

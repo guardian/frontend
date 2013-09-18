@@ -5,8 +5,12 @@
          data-collection-type="medium-stories"
          data-section="@config.section">
 
+    @collection.displayName.map { title =>
+        <h2 class="collection__title">@title</h2>
+    }
+
     @defining(collection.items.take(4)) { items =>
-        <ul class="unstyled items item-count-@items.size">
+        <ul class="unstyled items item-count-@items.size js-items--show-more">
             @items.zipWithIndex.map{ case (trail, index) =>
                 <li class="item @trail.trailType.map("item--" + _) @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image}" data-link-name="trail | @{index + 1}"
                     @trail.discussionId.map{ id => data-discussion-id="@id" }>

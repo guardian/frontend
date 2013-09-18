@@ -22,34 +22,34 @@ object FindStyle {
    */
   val specificStyles: Map[String, Map[String, Style]] = Map(
     ("uk", Map(
-      ("uk/sport/regular-stories", Highlights),
+      ("uk/sport/regular-stories", MediumStories),
       ("uk/commentisfree/regular-stories", Features),
       ("uk/culture/regular-stories", Features),
-      ("uk/business/regular-stories", Highlights),
-      ("uk/lifeandstyle/regular-stories", Highlights),
-      ("uk/technology/regular-stories", Highlights),
-      ("uk/money/regular-stories", Highlights),
-      ("uk/travel/regular-stories", Highlights)
+      ("uk/business/regular-stories", MediumStories),
+      ("uk/lifeandstyle/regular-stories", Features),
+      ("uk/technology/regular-stories", Features),
+      ("uk/money/regular-stories", MediumStories),
+      ("uk/travel/regular-stories", Features)
     )),
     ("us", Map(
-      ("us/sport/regular-stories", Highlights),
+      ("us/sport/regular-stories", MediumStories),
       ("us/commentisfree/regular-stories", Features),
       ("us/culture/regular-stories", Features),
-      ("us/business/regular-stories", Highlights),
-      ("us/lifeandstyle/regular-stories", Highlights),
-      ("us/technology/regular-stories", Highlights),
-      ("us/money/regular-stories", Highlights),
-      ("us/travel/regular-stories", Highlights)
+      ("us/business/regular-stories", MediumStories),
+      ("us/lifeandstyle/regular-stories", Features),
+      ("us/technology/regular-stories", Features),
+      ("us/money/regular-stories", MediumStories),
+      ("us/travel/regular-stories", Features)
     )),
     ("au", Map(
-      ("au/sport/regular-stories", Highlights),
+      ("au/sport/regular-stories", MediumStories),
       ("au/commentisfree/regular-stories", Features),
       ("au/culture/regular-stories", Features),
-      ("au/business/regular-stories", Highlights),
-      ("au/lifeandstyle/regular-stories", Highlights),
-      ("au/technology/regular-stories", Highlights),
-      ("au/money/regular-stories", Highlights),
-      ("au/travel/regular-stories", Highlights)
+      ("au/business/regular-stories", MediumStories),
+      ("au/lifeandstyle/regular-stories", Features),
+      ("au/technology/regular-stories", Features),
+      ("au/money/regular-stories", MediumStories),
+      ("au/travel/regular-stories", Features)
     ))
   )
 

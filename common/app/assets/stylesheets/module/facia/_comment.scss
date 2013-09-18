@@ -1,4 +1,8 @@
 .collection--comment {
+    .collection__title {
+        background-color: $green;
+        border-color: $light-green;
+    }
     .items {
         @include mq(tablet) {
             font-size: 0;

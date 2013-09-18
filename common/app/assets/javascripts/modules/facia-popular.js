@@ -15,8 +15,9 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 crossOrigin: true
             }).then(
                 function(resp) {
-                    var $items = bonzo(bonzo.create('<ul class="unstyled items"></ul>'));
-                    bonzo(bonzo.create(resp.html)).each(function(trail) {
+                    var $items = bonzo(bonzo.create('<ul class="unstyled items"></ul>')),
+                        $trails = bonzo(bonzo.create(resp.html));
+                    common.$g('#tabs-popular-1 li a', $trails).each(function(trail) {
                         var $trail = bonzo(trail),
                             $item = bonzo(bonzo.create(itemTmpl));
                         // update template
