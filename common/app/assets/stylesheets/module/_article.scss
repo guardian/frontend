@@ -92,21 +92,27 @@
 }
 
 .article__standfirst {
-    margin-bottom: $baseline*4;
+    margin-bottom: $gs-column-height;
     text-rendering: optimizeLegibility;
+    font-size: 16px;
+    font-size: 1.6rem;
+    line-height: 24px;
+    line-height: 2.4rem;
+    font-weight: bold;
+    color: $neutral1;
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        font-size: 16px;
-        font-size: 1.6rem;
-        line-height: 24px;
-        line-height: 2.4rem;
     }
     @include mq(desktop) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 24px;
-        line-height: 2.4rem;
+        font-size: 22px;
+        font-size: 2.2rem;
+        line-height: 26px;
+        line-height: 2.6rem;
+    }
+    @include mq(leftCol) {
+        padding-top: $baseline*2;
+        border-top: 1px solid $neutral3;
     }
 }
 .article-body {
@@ -334,7 +340,6 @@ video {
     }
     .article__head {
         padding-top: $baseline*2;
-        padding-bottom: $baseline*2;
     }
 }
 
