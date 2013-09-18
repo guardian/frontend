@@ -11,11 +11,11 @@ trait WsHttp extends Http[Future] with ExecutionContexts {
 
   import System.currentTimeMillis
   import ContentApiMetrics._
-  import Configuration.host
+  import Configuration.hostMachine
   import java.net.URLEncoder.encode
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
-    val urlWithHost = url + s"&host-name=${encode(host.name, "UTF-8")}"
+    val urlWithHost = url + s"&host-name=${encode(hostMachine.name, "UTF-8")}"
   
     val contentApiTimeout = Configuration.contentApi.timeout
 

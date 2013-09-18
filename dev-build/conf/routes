@@ -97,9 +97,6 @@ GET        /cricket/match/:matchId                                              
 GET        /sport/cricket/match/:matchId.json                                                             controllers.CricketMatchController.renderMatchId(matchId)
 GET        /sport/cricket/match/:matchId                                                                  controllers.CricketMatchController.renderMatchId(matchId)
 
-#Film
-GET        /film                                                                                          controllers.FaciaController.renderFilm
-
 #Front
 GET        /$path<(us|uk|au)?>                                                                            controllers.FrontController.render(path)
 GET        /$path<(us|uk|au)?>.json                                                                       controllers.FrontController.render(path)

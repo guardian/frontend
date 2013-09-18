@@ -1,6 +1,6 @@
 @(gallery: Gallery)(implicit request: RequestHeader)
 
-<ul class="gallerythumbs js-visible u-cf gallerythumbs--@if(gallery.landscapes.length >= 3) {landscapes} else {portraits}">
+<ul class="gallerythumbs js-visible u-cf gallerythumbs--@if(gallery.landscapes.length >= 3) {landscapes} else {portraits}" data-link-name="Gallery thumbnail sheet">
     @if(gallery.landscapes.length >= 3) {
         @gallery.landscapes.take(3).zipWithRowInfo.map{ case(image, info) => @thumbItem(image, info, "landscapes") }
     } else {
