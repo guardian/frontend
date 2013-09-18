@@ -8,13 +8,16 @@
     }
 }
 
+.footer-primary {
+    background: $blue;
+}
+
 .swipe-switches {
     display: none;
 
     .can-swipe & {
         display: block;
     }
-
 }
 
 .swipe-switches__button {

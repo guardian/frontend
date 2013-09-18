@@ -61,13 +61,13 @@
             }
 
         .nav__link {
-            @extend %type-10;
-            padding: $baseline*2 0;
+            font-weight: 200;
+            font-family: $serifheadline;
+            padding: 3px 0 $baseline*4;
             border-top: 1px solid $mushroom;
             display: block;
             height: auto;
             background-color: transparent;
-
         }
 
         li:nth-child(even) {
@@ -197,8 +197,6 @@
     }
 
     .is-active .nav__link {
-        font-family: $serifheadline !important;
-        line-height: 18px !important;
         font-weight: bold;
     }
 
@@ -207,7 +205,8 @@
 }
 
 /* Local navigation
-========================================================================== */
+   ========================================================================== */
+
 .localnav-container {
     @include box-sizing(border-box);
     display: none;
@@ -313,8 +312,6 @@
     border: 0 !important;
     margin: 0 !important;
 }
-
-
 
 
 /* Toolbar navigation
