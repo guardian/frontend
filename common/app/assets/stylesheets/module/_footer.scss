@@ -1,7 +1,7 @@
 .footer {
     overflow: hidden;
     padding: 0 0 $baseline*4;
-    background-color: #FAFAF8;
+    background-color: $mushroom;
 
     .hide-in-footer {
         display: none !important;
@@ -13,8 +13,7 @@
 }
 
 .footer-secondary {
-    font-family: $sans-serif;
-    @include font-size(14, 20);
+    @include font($sans-serif, normal, 14, 20);
 
     &,
     a {
