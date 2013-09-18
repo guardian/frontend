@@ -40,7 +40,6 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     log.info(s"Fetching tag: $path for edition $edition")
 
     ContentApi.item(path, edition)
-      .showMedia(None)
       .showEditorsPicks(true)
       .pageSize(20)
       .response.map{ response: ItemResponse =>
