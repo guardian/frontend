@@ -12,11 +12,11 @@
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
                 <header class="article__head">
-                    @fragments.dateline(article.webPublicationDate)
 
                     @fragments.headline(article.headline)
 
-                    @fragments.standfirst(article)
+                    @fragments.article.dateline(article.webPublicationDate)
+
                 </header>
 
                 @fragments.witnessCallToAction(article)
@@ -34,7 +34,12 @@
                         }
                     }
 
-                    @fragments.byline(article.byline, article)
+                    <div class="article__meta-container">
+                        @fragments.byline(article.byline, article)
+                        @fragments.article.dateline(article.webPublicationDate)
+                    </div>
+
+                    @fragments.standfirst(article)
 
                     <div class="js-article__container article__container u-cf">
                         <div class="article-body from-content-api"

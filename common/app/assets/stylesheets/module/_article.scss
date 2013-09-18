@@ -33,12 +33,12 @@
 }
 
 .article__head {
-    padding-top: $baseline*3;
+    padding-top: $baseline;
 }
 
 .article__headline {
     @extend %type-3;
-    margin-bottom: $baseline*2;
+    margin-bottom: $gs-column-height;
 
     @include mq(tablet) {
         font-family: $serifheadline;
@@ -47,7 +47,7 @@
         font-size: 3.4rem;
         line-height: 42px;
         line-height: 4.2rem;
-        margin-bottom: $baseline*5;
+        margin-bottom: $baseline*12;
     }
 
     @include mq(($a-rightCol-trigger + gs-span(1))) {
@@ -55,7 +55,7 @@
         font-size: 4rem;
         line-height: 48px;
         line-height: 4.8rem;
-        margin-bottom: $baseline*6;
+        margin-bottom: $baseline*15;
     }
 
     a {
@@ -64,6 +64,29 @@
         &:active,
         &:focus {
             color: #333;
+        }
+    }
+}
+
+.article__dateline {
+    @include box-sizing(border-box);
+    @extend %type-11;
+    display: block;
+    height: $gs-column-height;
+    padding-top: $baseline;
+    margin-bottom: $baseline*3;
+    border-top: 1px dotted $neutral3;
+
+    .article__meta-container & {
+        display: none;
+    }
+
+    @include mq(leftCol) {
+        display: none;
+
+        .article__meta-container & {
+            display: block;
+            margin-bottom: $baseline*3;
         }
     }
 }
@@ -103,7 +126,6 @@
     }
 }
 
-
 .article__container,
 .article__main-column,
 .article-v2__inner,
@@ -118,8 +140,8 @@
 }
 
 .byline {
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
+    border-top: 1px dotted $neutral3;
+    border-bottom: 1px dotted $neutral3;
     margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
 
@@ -130,17 +152,25 @@
         }
         @include mq(rightCol) {
             display: block;
+            padding-bottom: $baseline*15;
+            margin-bottom: 0;
+            border-bottom: none;
         }
     }
 }
+
+.article__meta-container {
+
+}
+
 @include mq(leftCol) {
-    article .byline {
+    .article__meta-container {
         float: left;
         margin-left: ($a-leftCol-width + $gs-gutter)*-1;
         margin-bottom: $baseline*4;
         width: $a-leftCol-width;
     }
-    article .media-primary + .byline {
+    article .media-primary + .article__meta-container {
         margin-left: 0;
         margin-bottom: 0;
         position: absolute;
