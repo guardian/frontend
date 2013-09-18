@@ -15,20 +15,26 @@
             <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
         </header>
 
+        <div class="pingdom-wrapper">
+            <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
+            <ul id="pingdom"></ul>
+        </div>
+
         <div class="pageviews-wrapper">
             <h2>Pageviews <span class="pageviews-per-second"></span></h2>
             <div id="pageviews"></div>
         </div>
 
         <div class="monitoring-wrapper">
-            <div class="pingdom-wrapper">
-                <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
-                <ul id="pingdom"></ul>
-            </div>
-
             <div class="riffraff-wrapper">
-                <h2>Deployments <small>(the last deployment for each RiffRaff project)</small></h2>
-                <ul id="riffraff"></ul>
+                <h2>CODE Deployments</h2>
+                <ul class="riffraff" id="riffraffCODE"></ul>
+                <ul class="deployers" id="deployersCODE"></ul>
+            </div>
+            <div class="riffraff-wrapper">
+                <h2>PROD Deployments</h2>
+                <ul class="riffraff" id="riffraffPROD"></ul>
+                <ul class="deployers" id="deployersPROD"></ul>
             </div>
         </div>
 

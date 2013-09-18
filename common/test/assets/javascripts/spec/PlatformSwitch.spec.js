@@ -7,7 +7,7 @@ define(['modules/navigation/platform-switch', 'modules/cookies', 'common', 'bean
         beforeEach(function() {
             Cookies.cleanUp(['GU_VIEW']);
 
-            common.$g('.main-site-link').each(function(link){
+            common.$g('.js-main-site-link').each(function(link){
                 bean.add(link, 'click', function(e) {
                     e.preventDefault();
                 });
@@ -17,7 +17,7 @@ define(['modules/navigation/platform-switch', 'modules/cookies', 'common', 'bean
         });
 
         it('should set the "view" cookie when switching to desktop view', function() {
-            var platformLink = document.querySelector(".main-site-link");
+            var platformLink = document.querySelector(".js-main-site-link");
 
             expect(document.cookie).not.toMatch(/GU_VIEW=desktop/);
 

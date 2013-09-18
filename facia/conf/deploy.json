@@ -4,7 +4,7 @@
             "type":"asg-elb",
             "apps":[ "frontend::facia" ],
             "data":{
-                "secondsToWait":900,
+                "secondsToWait":1200,
                 "port":18080,
                 "healthcheckGrace":20,
                 "bucket":"aws-frontend-artifacts",
