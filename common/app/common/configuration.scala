@@ -86,8 +86,12 @@ class GuardianConfiguration(
     lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
   }
 
-  object host {
+  object hostMachine {
     lazy val name = InetAddress.getLocalHost.getHostName
+  }
+
+  object site {
+    lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
 
   object proxy {

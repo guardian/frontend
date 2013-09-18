@@ -42,6 +42,10 @@ object Switches extends Collections {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = Off)
 
+  val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
+    "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
+    safeState = Off)
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -260,6 +264,7 @@ object Switches extends Collections {
     ABExpandableMostPopular,
     ABRightHandCard,
     ABLiveBlogShowMore,
+    CssFromStorageSwitch,
     ABMostPopularFromFacebook
   )
 
