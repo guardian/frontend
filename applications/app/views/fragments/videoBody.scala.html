@@ -11,7 +11,7 @@
         <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
                  itemscope itemtype="@video.schemaType" role="main">
             <div class="article__main-column">
-                <header class="article-head">
+                <header class="article__head">
                     @fragments.dateline(video.webPublicationDate, video.isLive)
                     @fragments.headline(video.headline)
                 </header>
