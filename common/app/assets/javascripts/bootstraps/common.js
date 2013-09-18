@@ -385,7 +385,6 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();
-            modules.faciaOptToggle();
             modules.displayReleaseMessage();
             modules.externalLinksCards();
         }
