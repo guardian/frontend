@@ -1,14 +1,27 @@
 @(page: MetaData)(implicit request: RequestHeader)
 
-<footer class="footer gs-container" data-link-name="footer">
-    <div class="footer-primary">
+<footer class="footer" data-link-name="footer">
+    <div class="footer__primary">
         <div id="footer-nav">
-            <a class="top top--footer" data-link-name="back to top" href="#top">Back to top<i class="i i-arrow-small-up"></i></a>
-            @fragments.sections(page, true)
+            <div class="footer__banner u-cf">
+                <div class="gs-container">
+                    <a href="@LinkTo{/}" data-link-name="site logo" class="guardian-logo-wrapper guardian-logo-wrapper--footer hide-on-mobile">
+                        <span class="u-h">The Guardian</span>
+                        <i class="i i-guardian-logo"></i>
+                    </a>
+
+                    <a class="top top--footer" data-link-name="back to top" href="#top">Back to top<i class="i i-arrow-small-up"></i></a>
+                </div>
+            </div>
+            <div class="mobile-only">
+                <div class="gs-container">
+                    @fragments.sections(page, true)
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="footer-secondary" role="contentinfo">
+    <div class="footer__secondary gs-container" role="contentinfo">
         <div class="colophon-wrapper">
             <ul class="colophon nav nav--two-columns">
                 <li class="nav__item">@fragments.mainSiteLink(page)</li>
