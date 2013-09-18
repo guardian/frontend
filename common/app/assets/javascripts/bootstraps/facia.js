@@ -41,7 +41,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-//            modules.showPopular();
+            modules.showPopular();
             modules.relativiseMastheadDates();
             modules.showItemsShowMore();
         }
