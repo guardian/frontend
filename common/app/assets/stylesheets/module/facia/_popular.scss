@@ -1,6 +1,7 @@
 .collection--popular {
     @include mq(tablet) {
         float: right;
+        clear: right;
         width: gs-span(4);
         min-height: gs-height(8);
         padding-left: ($gs-gutter/2) - 1;

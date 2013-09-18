@@ -93,7 +93,9 @@ define([
                 delay: 10000,
                 attachTo: container,
                 switches: switches,
-                responseSelector: responseSelector
+                responseSelector: responseSelector,
+                progressToggle: true,
+                progressColour: '#20a111'
             }).init();
         }
     };

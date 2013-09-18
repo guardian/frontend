@@ -1,4 +1,4 @@
-.collection--features {
+.collection--comment {
     .items {
         @include mq(tablet) {
             font-size: 0;
@@ -47,8 +47,14 @@
     @include mq(tablet, desktop) {
         @include row(2);
     }
-    @include mq(desktop) {
+    @include mq(desktop, wide) {
         @include row(3);
+    }
+    @include mq(wide) {
+        @include row(4);
+    }
+    .item:nth-child(n + 4) {
+
     }
     .item__image-container {
         @include mq(tablet) {
@@ -63,46 +69,6 @@
             .item__image-container {
                 display: none;
             }
-        }
-    }
-    // larger image styling
-    .item:first-child {
-        @include mq(wide) {
-            width: gs-span(8);
-            &.item--with-image {
-                height: gs-height(8);
-                .item__title {
-                    background-color: rgba(#ffffff, 0.8);
-                    padding: $gs-baseline/2 $gs-gutter/2 gs-height(1) + $gs-baseline;
-                    width:  gs-span(5);
-                    min-height: 0;
-                    border-top-style: solid;
-                    position: absolute;
-                    bottom: 0;
-                }
-                .item__meta {
-                    position: absolute;
-                    bottom: $gs-baseline;
-                    left: $gs-gutter/2;
-                }
-                .item__image-container {
-                    height: 100%;
-                    position: absolute;
-                    top: 0;
-                    z-index: -1;
-                    margin-top: 0;
-                }
-            }
-        }
-    }
-    .item__standfirst {
-        @include mq($to: tablet) {
-            display: none;
-        }
-        @include mq(tablet) {
-            min-height: gs-height(4);
-            margin: $gs-baseline*2 0 0;
-            @include font-size(16, 20);
         }
     }
     .item__image {

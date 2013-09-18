@@ -30,8 +30,8 @@ GET           /api/item/*path                  controllers.Api.item(path, callba
 GET           /json/proxy/*absUrl              controllers.Api.json(absUrl)
 
 # Ophan proxying for https
-GET           /ophan/pageviews/*path           controllers.OphanApi.pageViews(path)
-GET           /ophan/pageviews                 controllers.OphanApi.platformPageViews()
+GET           /ophan/pageviews/*path           controllers.OphanApiController.pageViews(path)
+GET           /ophan/pageviews                 controllers.OphanApiController.platformPageViews()
 
 #Development endpoints
 GET           /dev/switchboard                 controllers.SwitchboardController.render()
