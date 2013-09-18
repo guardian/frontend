@@ -11,7 +11,7 @@
         <article id="article" class="article @if(article.isLive){is-live}"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
-                <header class="article-head">
+                <header class="article__head">
                     @fragments.dateline(article.webPublicationDate)
 
                     @fragments.headline(article.headline)
