@@ -116,8 +116,8 @@ define([
                     var options = { url: cricketMatchRefs[0],
                                 loadSummary: true,
                                 loadScorecard: true,
-                                summaryElement: '.article-headline',
-                                scorecardElement: '.article-headline',
+                                summaryElement: '.article__headline',
+                                scorecardElement: '.article__headline',
                                 summaryManipulation: 'after',
                                 scorecardManipulation: 'after' };
                     Cricket.cricketArticle(config, context, options);
