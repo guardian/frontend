@@ -1,22 +1,23 @@
 .collection--medium-stories {
     margin-top: 0;
     .items {
-        @include mq(tablet) {
-            font-size: 0;
-        }
+        font-size: 0;
     }
     .item {
         margin-top: $gs-baseline*2;
+        display: inline-block;
+        vertical-align: top;
+        padding-left: $gs-gutter/2 - 1;
+        padding-right: $gs-gutter/2;
+        border-left: 1px dotted $grey;
+        @include mq($to: tablet) {
+            width: 50%;
+        }
         @include mq(tablet) {
             @include box-sizing(content-box);
-            display: inline-block;
-            vertical-align: top;
-            padding-left: $gs-gutter/2 - 1;
-            padding-right: $gs-gutter/2;
-            border-left: 1px dotted $grey;
             width: gs-span(4);
         }
-        @include mq(tablet, desktop) {
+        @include mq($to: desktop) {
             &:nth-child(2n + 1) {
                 padding-left: 0;
                 border-left-style: none;
@@ -59,6 +60,7 @@
     .item__title {
         @include mq($to: tablet) {
             @include font-size(20, 24);
+            min-height: gs-height(3);
         }
         @include mq(tablet) {
             @include font-size(26, 28);
@@ -75,9 +77,14 @@
             @include font-size(16, 20);
         }
     }
-    .item__image-container {
+    .item__meta {
         @include mq($to: tablet) {
             display: none;
+        }
+    }
+    .item__image-container {
+        @include mq($to: tablet) {
+            margin-top: $gs-baseline;
         }
         @include mq(tablet) {
             height: gs-height(4);

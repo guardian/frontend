@@ -39,16 +39,6 @@
             border-top-style: none;
         }
     }
-    .item:last-child {
-        @include mq($to: tablet) {
-            .item__title {
-                @include font-size(20, 24);
-            }
-            .item__image-container {
-                display: none;
-            }
-        }
-    }
     .item__standfirst {
         @include mq($to: wide) {
             display: none;

@@ -89,7 +89,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                         show: 8
                     },
                     'small-stories': {
-                        initial: 1,
+                        initial: 2,
                         show: 8
                     }
                 }
