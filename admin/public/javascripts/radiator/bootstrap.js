@@ -21,7 +21,7 @@ window.addEventListener('load', function() {
     // riff raff - requires you to be on the guardian network
 
     $.ajax({
-                url: 'https://riffraff.gutools.co.uk/api/history?projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=200',
+                url: 'https://riffraff.gutools.co.uk/api/history?projectName=frontend%3A%3A&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=200',
                 dataType: 'jsonp',
                 success: function(deployments) {
 
@@ -40,7 +40,7 @@ window.addEventListener('load', function() {
                             }
                         });
 
-                    function renderDeployer(stage, revision){
+                    function renderDeployer(stage, revision, deployer){
                         var targetId = stage + "-" + revision;
 
                         if (!document.getElementById(targetId)) {
@@ -52,7 +52,7 @@ window.addEventListener('load', function() {
                                     url: '/radiator/commit/' + revision,
                                     dataType: 'json',
                                     success: function(rev) {
-                                        li.innerHTML = rev.commit.author.name;
+                                        li.innerHTML = rev.commit.author.name + " (deployed by " + deployer + ")";
                                     }
                             });
                         }
@@ -67,7 +67,7 @@ window.addEventListener('load', function() {
                             li.setAttribute('title', d.projectName);
                             target.appendChild(li);
                             if(d.status !== "Completed"){
-                                renderDeployer(stage, d.tags.vcsRevision);
+                                renderDeployer(stage, d.tags.vcsRevision, d.deployer);
                             }
                         });
                     }
