@@ -1,8 +1,5 @@
 .collection--small-stories {
     margin-top: 0;
-    .collection__title {
-        display: none;
-    }
     .items {
         @include mq(tablet) {
             font-size: 0;

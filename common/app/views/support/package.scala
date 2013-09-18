@@ -55,6 +55,8 @@ object Features extends Style { val className = "features" }
 
 object Highlights extends Style { val className = "highlights" }
 
+object Comment extends Style { val className = "comment" }
+
 
 object MetadataJson {
 

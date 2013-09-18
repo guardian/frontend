@@ -109,6 +109,9 @@ a.item__link,
         margin-right: $baseline;
     }
 }
+.item__image-container {
+    margin-top: $gs-baseline*2;
+}
 .item__image {
     display: block;
     margin: 0 auto;
