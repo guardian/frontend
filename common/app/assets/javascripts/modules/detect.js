@@ -8,9 +8,9 @@
 
 define(['modules/userPrefs'], function (userPrefs) {
 
-    var BASE_WIDTH     = 732,
-        MEDIAN_WIDTH   = 972,
-        EXTENDED_WIDTH = 1052,  // Breakpoint where we see the left column in article pages
+    var BASE_WIDTH     = 660,
+        MEDIAN_WIDTH   = 980,
+        EXTENDED_WIDTH = 1060,  // Breakpoint where we see the left column in article pages
         mobileOS,
         supportsPushState;
 
@@ -233,7 +233,9 @@ define(['modules/userPrefs'], function (userPrefs) {
     }
 
     function getBreakpoint() {
-        return window.getComputedStyle(document.body, ':after').getPropertyValue('content');
+        var breakpoint = window.getComputedStyle(document.body, ':after').getPropertyValue('content');
+        // firefox seems to wrap the value in quotes
+        return breakpoint.replace(/^"([^"]*)"$/, "$1");
     }
 
     return {

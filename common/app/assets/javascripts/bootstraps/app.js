@@ -17,6 +17,7 @@ define('bootstraps/app', [
     "bootstraps/video",
     "bootstraps/gallery",
     "bootstraps/interactive",
+    "bootstraps/identity",
     "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag"
@@ -39,6 +40,7 @@ define('bootstraps/app', [
     Video,
     Gallery,
     Interactive,
+    Identity,
     ab,
     pageConfig,
     Tag
@@ -97,7 +99,7 @@ define('bootstraps/app', [
 
         domReady(function() {
             var context = document.getElementById('preload-1'),
-                contextHtml = context.cloneNode().innerHTML;
+                contextHtml = context.cloneNode(false).innerHTML;
 
             modules.initialiseAjax(config);
             modules.initialiseAbTest(config);
@@ -145,6 +147,10 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "Tag") {
                     Tag.init(config, context);
+                }
+
+                if (config.page.section === "identity") {
+                    Identity.init(config, context);
                 }
 
                 //Kick it all off

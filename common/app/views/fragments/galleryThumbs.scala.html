@@ -1,6 +1,6 @@
 @(gallery: Gallery)(implicit request: RequestHeader)
 
-<ul class="gallerythumbs js-visible cf gallerythumbs--@if(gallery.landscapes.length >= 3) {landscapes} else {portraits}">
+<ul class="gallerythumbs js-visible u-cf gallerythumbs--@if(gallery.landscapes.length >= 3) {landscapes} else {portraits}">
     @if(gallery.landscapes.length >= 3) {
         @gallery.landscapes.take(3).zipWithRowInfo.map{ case(image, info) => @thumbItem(image, info, "landscapes") }
     } else {
@@ -9,7 +9,7 @@
 </ul>
 
 
-@thumbItem(image: Image, info: RowInfo, orientation: String) = {
+@thumbItem(image: ImageAsset, info: RowInfo, orientation: String) = {
     <li class="gallerythumbs__item">
         <a href="@LinkTo{@gallery.url?index=@image.index}" data-link-name="@info.rowNum | gallery thumb">
             <img class="gallerythumbs__img"

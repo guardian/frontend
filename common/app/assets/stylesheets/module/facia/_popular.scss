@@ -1,57 +1,38 @@
-.section--popular {
-    margin-top: $baseline * 4;
+.collection--popular {
     @include mq(tablet) {
-        min-height: gs-height(7);
-        padding-left: $gs-gutter / 2;
+        float: right;
+        width: gs-span(4);
+        min-height: gs-height(8);
+        padding-left: ($gs-gutter/2) - 1;
         border-left: 1px solid $grey;
-        margin-left: gs-span(6) + ($gs-gutter / 2) - 1;
     }
-    @include mq(desktop) {
-        margin-left: gs-span(8) + ($gs-gutter / 2) - 1;
-    }
-    @include mq(wide) {
-        margin-left: gs-span(12) + ($gs-gutter / 2) - 1;
-    }
-    .section__title {
-        @include font($serifheadline, 800, 16);
-        color: #ffffff;
-        background-color: $blue;
-        padding: 4px;
-        @include box-sizing(border-box);
-        height: $baseline * 9;
-    }
-    .collection {
-        margin-top: $baseline * 3;
-        list-style-type: decimal;
-        margin: 0;
+    .items {
+        margin-top: $baseline*3;
         counter-reset: most-read;
-        margin-top: $baseline * 3;
         @include mq(tablet) {
-            padding-bottom: ($baseline * 3) - 1;
-            height: gs-height(6);
+            min-height: gs-height(8);
         }
     }
     .item {
-        padding: $baseline $gutter / 3 $baseline ($gutter * (3 / 2));
-        margin: 0;
-        float: none;
+        padding: $gs-baseline/3 $gs-gutter/5 $gs-baseline/3 $gs-gutter*2;
         border-top: 1px dotted $grey;
         color: #000000;
-        height: 56px;
-        @include font($serifheadline, 700, 18);
+        @include font($serifheadline, normal, 18);
+        min-height: gs-height(1) + $gs-baseline;
+        @include mq(tablet) {
+            min-height: gs-height(8)/5;
+        }
     }
     .item:before {
         content: counter(most-read);
         counter-increment: most-read;
         color: $grey;
         position: absolute;
-        top: 4px;
-        left: 4px;
+        top: 0;
+        left: 0;
+        @include font-size(52);
     }
     .item:last-child {
-        @include mq(tablet) {
-            height: 64px;
-            border-bottom: 1px solid $grey;
-        }
+        border-bottom: 1px solid $grey;
     }
 }

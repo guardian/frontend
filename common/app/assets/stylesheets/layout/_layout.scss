@@ -1,10 +1,12 @@
+$headerHeight: 58px;
+
 /* Global wrapper
    ========================================================================== */
 
 #preloads {
     @include gs-container;
     clear: both;
-    margin: 58px auto 0;
+    margin-top: $headerHeight;
 
     @include mq(tablet) {
         margin-top: 104px;
@@ -16,7 +18,7 @@
    ========================================================================== */
 
 #header {
-    min-height: 58px;
+    min-height: $headerHeight;
     position: absolute;
     top: 0;
     left: 0;
@@ -36,12 +38,12 @@
 
         &:before {
             top: 0;
-            height: 58px;
+            height: $headerHeight;
             background-color: $blue;
         }
 
         &:after {
-            top: 58px;
+            top: $headerHeight;
             height: 40px;
             background-color: #F5F5F2;
             border-bottom: 1px solid $darkMushroom;
@@ -55,8 +57,12 @@
 #logo {
     display: block;
     float: left;
-    margin: 20px 0 18px $gutter;
+    margin: 20px 0 18px $gs-gutter/2;
     text-indent: -9999px;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+    }
 }
 
 
@@ -64,16 +70,17 @@
    ========================================================================== */
 
 .monocolumn-wrapper {
-    padding-left: $gutter;
-    padding-right: $gutter;
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter / 2;
 
-    .article-zone {
-        margin-left: 0;
-        margin-right: 0;
-    }
     .page-head {
         padding-left: 0;
         padding-right: 0;
+    }
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }
 
@@ -101,7 +108,12 @@
 }
 
 .box-indent {
-    padding: 0 $gutter $baseline*1;
+    padding: 0 $gs-gutter/2 $baseline*1;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 .inline-image {
@@ -109,9 +121,14 @@
     float: left;
     clear: left;
     margin: 3px 0 0 0;
-    padding-right: 10px;
+    padding-right: $gs-gutter/2;
     padding-bottom: 15px;
     background: white;
+
+    @include mq(mobileLandscape) {
+        padding-right: $gs-gutter;
+        width: gs-span(2);
+    }
 
     figcaption {
         word-wrap: break-word;
@@ -122,6 +139,7 @@
     width: auto;
     max-width: $inArticleInlineImgWidth;
 }
+
 
 /* Preloads (for swipe)
    ========================================================================== */
@@ -151,6 +169,7 @@
     #preload-1 {left:     0;}
     #preload-2 {left:  100%;}
 }
+
 
 /* Ajax loading helpers
    ========================================================================== */

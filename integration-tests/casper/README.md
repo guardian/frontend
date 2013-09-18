@@ -8,6 +8,6 @@ To override default host (`http://localhost:9000/`)
 ``grunt test:integration --host=http://m.gucode.co.uk/``
 
 To run individual specs
-``grunt casper:discussion``
+``grunt casperjs:discussion``
 
-If you add a new test file, add a corresponding grunt task for it under `casper` in `Gruntfile.js`
+If you add a new test file, add a corresponding grunt task for it under `casperjs` in `Gruntfile.js`

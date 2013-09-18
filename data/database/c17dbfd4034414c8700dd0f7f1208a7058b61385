@@ -1,0 +1,872 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"news/gallery/2012/may/02/picture-desk-live-kabul-burma",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2012-05-02T21:20:00Z",
+      "webTitle":"Picture desk live: the day's best news images",
+      "webUrl":"http://www.theguardian.com/news/gallery/2012/may/02/picture-desk-live-kabul-burma",
+      "apiUrl":"http://content.guardianapis.com/news/gallery/2012/may/02/picture-desk-live-kabul-burma",
+      "fields":{
+        "trailText":"<p>Rolling photo coverage of the day's events as the McCanns mark the anniversary of Madeleine's disappearance, bombs rock Kabul and Aung San Suu Kyi makes history</p>",
+        "headline":"Picture desk live: the day's best news images",
+        "showInRelatedContent":"true",
+        "lastModified":"2012-05-03T00:01:03Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980483741/Nicole-Kidman-filming-The-003.jpg",
+        "standfirst":"Rolling photo coverage of the day's events as the McCanns mark the anniversary of Madeleine's disappearance, bombs rock Kabul and Aung San Suu Kyi makes history",
+        "shortUrl":"http://gu.com/p/379zz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980483741/Nicole-Kidman-filming-The-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"389536232",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Fiona Shields",
+        "publication":"theguardian.com",
+        "internalPageCode":"1739337",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2012-05-05T11:27:08Z"
+      },
+      "tags":[{
+        "id":"news/series/picture-desk-live",
+        "type":"series",
+        "webTitle":"Picture desk live",
+        "webUrl":"http://www.theguardian.com/news/series/picture-desk-live",
+        "apiUrl":"http://content.guardianapis.com/news/series/picture-desk-live",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/fiona-shields",
+        "type":"contributor",
+        "webTitle":"Fiona Shields",
+        "webUrl":"http://www.theguardian.com/profile/fiona-shields",
+        "apiUrl":"http://content.guardianapis.com/profile/fiona-shields",
+        "bio":"<p>Fiona Shields is the picture editor of the Guardian. You can follow her on twitter @fshields</p>",
+        "r2ContributorId":"32531",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/2/2/1328192636358/Guardian-Open-Weekend-Fio-001.jpg",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "mediaAssets":[{
+        "type":"picture",
+        "rel":"gallery",
+        "index":1,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998136210/Debate-for-the-2012-Frenc-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998136210/Debate-for-the-2012-Frenc-003.jpg",
+          "source":"EPA",
+          "photographer":"France 2 / Handout",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998136210/Debate-for-the-2012-Frenc-003-thumb-3869.jpg",
+          "altText":"Picture Desk Live Update: Debate for the 2012 French presidential election campaign",
+          "height":"453",
+          "credit":"France 2 / Handout/EPA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998136210/Debate-for-the-2012-Frenc-003-thumb-3869.jpg",
+          "caption":"A TV grab from state-owned French television station France 2 showing the debate between Francois Hollande and Nicolas Sarkozy for the 2012 French presidential election campaign",
+          "width":"760"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":2,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998133008/Francois-Hollande-and-Nic-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998133008/Francois-Hollande-and-Nic-002.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Mehdi Fedouach",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998133008/Francois-Hollande-and-Nic-002-thumb-198.jpg",
+          "altText":"Picture Desk Live Update: Francois Hollande and Nicolas Sarkozy live TV debate",
+          "height":"480",
+          "credit":"Mehdi Fedouach/AFP/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998133008/Francois-Hollande-and-Nic-002-thumb-198.jpg",
+          "caption":"Socialist Party supporters watch live TV debate as their presidential candiate Francois Hollande takes on current president Nicolas Sarkozy ",
+          "width":"722"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":3,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998129785/Fabrice-Muamba-made-an-em-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998129785/Fabrice-Muamba-made-an-em-001.jpg",
+          "source":"PA",
+          "photographer":"Martin Rickett",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998129785/Fabrice-Muamba-made-an-em-001-thumb-7121.jpg",
+          "altText":"Picture Desk Live Update: Fabrice Muamba made an emotional return to Bolton",
+          "height":"458",
+          "credit":"Martin Rickett/PA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998129785/Fabrice-Muamba-made-an-em-001-thumb-7121.jpg",
+          "caption":"Fabrice Muamba leaves the Reebok Stadium after making an emotional return at the kick off in Bolton on Wednesday",
+          "width":"760"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":4,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980297571/Nicole-Kidman-filming-The-015.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980297571/Nicole-Kidman-filming-The-015.jpg",
+          "source":"PA",
+          "photographer":"Andrew Milligan",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980297571/Nicole-Kidman-filming-The-015-thumb-7117.jpg",
+          "altText":"Picture desk live: Nicole Kidman filming The Railway Man in Bo'ness, Scotland",
+          "height":"567",
+          "credit":"Andrew Milligan/PA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980297571/Nicole-Kidman-filming-The-015-thumb-7117.jpg",
+          "caption":"Nicole Kidman finds herself a million miles away from Hollywood in Bo'ness near Falkirk in Scotland. She and co-star Colin Firth are filming The Railway Man, a true story of a British officer captured by the Japanese during the second world war and forced to work on the infamous Burma railway",
+          "width":"400"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":5,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980309838/Kate-and-Gerry-McCann-on--019.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980309838/Kate-and-Gerry-McCann-on--019.jpg",
+          "source":"Getty Images",
+          "photographer":"Dan Kitwood",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980309838/Kate-and-Gerry-McCann-on--019-thumb-6642.jpg",
+          "altText":"Picture desk live: Kate and Gerry McCann on the 5th anniversary of Madeleine's disappearance",
+          "height":"451",
+          "credit":"Dan Kitwood/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980309838/Kate-and-Gerry-McCann-on--019-thumb-6642.jpg",
+          "caption":"Kate and Gerry McCann speak in front of an age-progressed police image of their daughter Madeleine during a news conference to mark the fifth anniversary of her disappearance. The McCanns say there is 'no doubt' authorities will reopen the investigation into their daughter's disappearance. Three-year-old Madeleine went missing while on holiday with her parents in the Algarve region of Portugal in May 2007",
+          "width":"400"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":6,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980303258/An-oak-tree-painted-pink--017.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980303258/An-oak-tree-painted-pink--017.jpg",
+          "source":"PA",
+          "photographer":"Ben Birchall",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980303258/An-oak-tree-painted-pink--017-thumb-3344.jpg",
+          "altText":"Picture desk live: An oak tree painted pink by artist Henry Bruce",
+          "height":"480",
+          "credit":"Ben Birchall/PA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980303258/An-oak-tree-painted-pink--017-thumb-3344.jpg",
+          "caption":"It's been the subject of controversy but artist Henry Bruce's latest project is really quite pretty in pink. As part of the art and sculpture exhibition at Delamore Estate, Bruce has painted a massive skeletal 21-metre high oak tree to celebrate the beauty of nature and the evolving life of trees",
+          "width":"722"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":7,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980306453/Kim-Jong-Un-receives-a-ro-018.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980306453/Kim-Jong-Un-receives-a-ro-018.jpg",
+          "source":"AP",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980306453/Kim-Jong-Un-receives-a-ro-018-thumb-5136.jpg",
+          "altText":"Picture desk live: Kim Jong Un receives a round of applause",
+          "height":"480",
+          "credit":"AP",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980306453/Kim-Jong-Un-receives-a-ro-018-thumb-5136.jpg",
+          "caption":"North Korean leader Kim Jong-un receives a round of  applause from military personnel during his visit to the machine plant managed by Ho Chol Yong in North Korea, to mark May Day. Bravo!",
+          "width":"663"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":8,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980300447/Ed-Miliband-poses-for-a-p-016.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980300447/Ed-Miliband-poses-for-a-p-016.jpg",
+          "source":"PA",
+          "photographer":"Stefan Rousseau",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980300447/Ed-Miliband-poses-for-a-p-016-thumb-4975.jpg",
+          "altText":"Picture desk live: Ed Miliband poses for a photo with shoppers in Harlow",
+          "height":"480",
+          "credit":"Stefan Rousseau/PA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980300447/Ed-Miliband-poses-for-a-p-016-thumb-4975.jpg",
+          "caption":"Labour leader Ed Miliband strikes a pose for the cameras with shoppers and local people in Harlow, Essex, on the last day of campaigning before Thursday's local elections",
+          "width":"669"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":9,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966705807/The-Queen-meets-a-police--012.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966705807/The-Queen-meets-a-police--012.jpg",
+          "source":"PA",
+          "photographer":"Chris Jackson",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966705807/The-Queen-meets-a-police--012-thumb-2213.jpg",
+          "altText":"Picture desk live: The Queen meets a police horse in Yeovil on her jubilee tour",
+          "height":"480",
+          "credit":"Chris Jackson/PA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966705807/The-Queen-meets-a-police--012-thumb-2213.jpg",
+          "caption":"The Queen's delight at meeting a police horse named after first world war veteran Harry Patch is apparent during a visit to Nine Springs Park in Yeovil. The trip was part of her diamond jubilee tour of the UK",
+          "width":"614"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":10,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966708782/School-children-wait-to-m-013.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966708782/School-children-wait-to-m-013.jpg",
+          "source":"PA",
+          "photographer":"Ben Bichall",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966708782/School-children-wait-to-m-013-thumb-7810.jpg",
+          "altText":"Picture desk live: School children wait to meet the Queen in Exeter",
+          "height":"480",
+          "credit":"Ben Bichall/PA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966708782/School-children-wait-to-m-013-thumb-7810.jpg",
+          "caption":"In Exeter schoolchildren waiting to meet the Queen have the ultimate royal accessory: the (inflatable) corgi dog",
+          "width":"722"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":11,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966696849/Ken-Livingstone-greets-pr-009.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966696849/Ken-Livingstone-greets-pr-009.jpg",
+          "source":"Reuters",
+          "photographer":"Andrew Winning",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966696849/Ken-Livingstone-greets-pr-009-thumb-2564.jpg",
+          "altText":"Picture desk live: Ken Livingstone greets prospective voters in Hammersmith",
+          "height":"480",
+          "credit":"Andrew Winning/Reuters",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966696849/Ken-Livingstone-greets-pr-009-thumb-2564.jpg",
+          "caption":"Labour's candidate for Mayor of London, Ken Livingstone chats with a band of enthusiastic supporters and greets prospective voters as he campaigns in Hammersmith on the last day before elections",
+          "width":"689"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":12,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966711689/Violence-has-errupted-in--014.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966711689/Violence-has-errupted-in--014.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Khaled Desouki",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966711689/Violence-has-errupted-in--014-thumb-4159.jpg",
+          "altText":"Picture desk live: Violence has errupted in the Abbassiya district of Cairo",
+          "height":"480",
+          "credit":"Khaled Desouki/AFP/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966711689/Violence-has-errupted-in--014-thumb-4159.jpg",
+          "caption":"Violence erupts in the Abbasiya district of Cairo where an anti-military protest near the defence ministry came under attack. At least 20 people were killed in the clashes and many more injured, according to reports ",
+          "width":"720"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":13,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966699633/Chinese-activist-Chen-Gua-010.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966699633/Chinese-activist-Chen-Gua-010.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Jordan Pouille",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966699633/Chinese-activist-Chen-Gua-010-thumb-3821.jpg",
+          "altText":"Picture desk live: Chinese activist Chen Guangcheng is seen in a Beijing hospital",
+          "height":"480",
+          "credit":"Jordan Pouille/AFP/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966699633/Chinese-activist-Chen-Gua-010-thumb-3821.jpg",
+          "caption":"Blind Chinese activist Chen Guangcheng in a wheelchair at the Chaoyang hospital in Beijing following his remarkable escape from house arrest. He had accepted a deal to stay in China, after authorities promised he would be safe. However, it has emerged that his decision was influenced by threats to beat his wife to death",
+          "width":"737"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":14,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966702710/Police-stop-journalists-a-011.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966702710/Police-stop-journalists-a-011.jpg",
+          "source":"AFP/Getty Images",
+          "photographer":"Mark Ralston",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966702710/Police-stop-journalists-a-011-thumb-1360.jpg",
+          "altText":"Picture desk live: Police stop journalists at the gate of Chaoyang hospital in Beijing",
+          "height":"480",
+          "credit":"Mark Ralston/AFP/Getty Images",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966702710/Police-stop-journalists-a-011-thumb-1360.jpg",
+          "caption":"Chinese police deliver a firm message to foreign journalists at the gate of Chaoyang hospital in Beijing, where Chen Guangcheng is being treated",
+          "width":"733"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":15,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966693857/Aung-San-Suu-Kyi-walks-to-008.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966693857/Aung-San-Suu-Kyi-walks-to-008.jpg",
+          "source":"Reuters",
+          "photographer":"Soe Zeya Tun",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966693857/Aung-San-Suu-Kyi-walks-to-008-thumb-5026.jpg",
+          "altText":"Picture desk live: Aung San Suu Kyi walks to her oath at the lower house of parliament Burma",
+          "height":"480",
+          "credit":"Soe Zeya Tun/Reuters",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966693857/Aung-San-Suu-Kyi-walks-to-008-thumb-5026.jpg",
+          "caption":"Burmese pro-democracy leader Aung San Suu Kyi steps forward to take her place in parliament, under the watchful eye of military representatives ",
+          "width":"636"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":16,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955366416/Pro-democracy-leader-Aung-001.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955366416/Pro-democracy-leader-Aung-001.jpg",
+          "source":"Reuters",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955366416/Pro-democracy-leader-Aung-001-thumb-1629.jpg",
+          "altText":"Picture desk live: Pro-democracy leader Aung San Suu Kyi takes her oath in parliament",
+          "height":"480",
+          "credit":"Reuters",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955366416/Pro-democracy-leader-Aung-001-thumb-1629.jpg",
+          "caption":"In a historic moment, Aung San Suu Kyi  takes her oath along with colleagues in the lower house of parliament in Naypyitaw after nearly a quarter of a century of political struggle against oppressive military rule in the country ",
+          "width":"729"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":17,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955369695/Kabul-is-rocked-by-explos-002.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955369695/Kabul-is-rocked-by-explos-002.jpg",
+          "source":"AP",
+          "photographer":"Musadeq Sadeq",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955369695/Kabul-is-rocked-by-explos-002-thumb-4786.jpg",
+          "altText":"Picture desk live: Kabul is rocked by explosions after Barack Obama's visit",
+          "height":"480",
+          "credit":"Musadeq Sadeq/AP",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955369695/Kabul-is-rocked-by-explos-002-thumb-4786.jpg",
+          "caption":"Smoke billows from a compound under attack as Kabul suffers a series of explosions in protest at the surprise visit of the US president, Barack Obama. A suicide car bomber and Taliban militants disguised in burqas attacked the compound housing hundreds of foreigners in the Afghan capital",
+          "width":"707"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":18,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955372911/The-Nairobi-Chamber-Choru-003.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955372911/The-Nairobi-Chamber-Choru-003.jpg",
+          "source":"PA",
+          "photographer":"Steve Parsons",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955372911/The-Nairobi-Chamber-Choru-003-thumb-9528.jpg",
+          "altText":"Picture desk live: The Nairobi Chamber Chorus arrive in the UK ",
+          "height":"600",
+          "credit":"Steve Parsons/PA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955372911/The-Nairobi-Chamber-Choru-003-thumb-9528.jpg",
+          "caption":"This singing traveller is a member of the Nairobi Chamber Chorus, which has arrived in the UK to perform before the Queen at her diamond jubilee pageant next week. The choir treated passengers to an impromptu performance on landing at Heathrow",
+          "width":"400"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":19,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955379332/Belgiums-Finance-Minister-005.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955379332/Belgiums-Finance-Minister-005.jpg",
+          "source":"AP",
+          "photographer":"Virginia Mayo",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955379332/Belgiums-Finance-Minister-005-thumb-8512.jpg",
+          "altText":"Picture desk live: Belgium's Finance Minister Steven Vanackere entertains his colleageues",
+          "height":"399",
+          "credit":"Virginia Mayo/AP",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955379332/Belgiums-Finance-Minister-005-thumb-8512.jpg",
+          "caption":"Is Belgium's finance minister, Steven Vanackere, dazzling his colleagues with a tap dance? No, he's just side-stepping a photographer as fellow finance ministers – from left, Sweden's Anders Borg, Ireland's Michael Noonan, Spain's Luis de Guindos and Poland's Jacek Rostowski – look on during a meeting in Brussels",
+          "width":"760"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":20,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955382024/Newcastle-at-night-photog-006.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955382024/Newcastle-at-night-photog-006.jpg",
+          "source":"PA",
+          "photographer":"Owen Humphreys",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955382024/Newcastle-at-night-photog-006-thumb-8418.jpg",
+          "altText":"Picture desk live: Newcastle at night photographed with a tilt and shift lens",
+          "height":"480",
+          "credit":"Owen Humphreys/PA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955382024/Newcastle-at-night-photog-006-thumb-8418.jpg",
+          "caption":"The Gateshead Millennium bridge and the Sage music centre in Newcastle look enchanting in this photograph by Owen Humphreys. Taken on Tuesday night and shot with a tilt and shift lens, the view has such a magical quality",
+          "width":"721"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":21,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955376110/Stolen-penguin-Dirk-is-re-004.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955376110/Stolen-penguin-Dirk-is-re-004.jpg",
+          "source":"EPA",
+          "photographer":"Tony Bartlett",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955376110/Stolen-penguin-Dirk-is-re-004-thumb-5692.jpg",
+          "altText":"Picture desk live: Stolen penguin, Dirk, is returned to safety",
+          "height":"428",
+          "credit":"Tony Bartlett/EPA",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955376110/Stolen-penguin-Dirk-is-re-004-thumb-5692.jpg",
+          "caption":"It's a triumph over tragedy as the stolen penguin Dirk returns to the safety of his enclosure at Sea World on the Gold Coast in Australia. A couple of British backpackers have been fined for a late-night prank in which they abducted the male fairy penguin. The couple told the court that the effect of drinking 1.5 litres of vodka was to blame",
+          "width":"760"
+        }
+      },{
+        "type":"picture",
+        "rel":"gallery",
+        "index":22,
+        "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955384645/A-scout-sits-after-a-para-007.jpg",
+        "fields":{
+          "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955384645/A-scout-sits-after-a-para-007.jpg",
+          "source":"Reuters",
+          "photographer":"Akintunde Akinleye",
+          "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955384645/A-scout-sits-after-a-para-007-thumb-4031.jpg",
+          "altText":"Picture desk live: A scout sits after a parade in Lagos, Nigeria",
+          "height":"480",
+          "credit":"Akintunde Akinleye/Reuters",
+          "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955384645/A-scout-sits-after-a-para-007-thumb-4031.jpg",
+          "caption":"This little scout has been taking part in a parade marking International Workers' Day in Nigeria's commercial capital, Lagos",
+          "width":"720"
+        }
+      }],
+      "elements":[{
+        "id":"gu-image-389536032",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955384645/A-scout-sits-after-a-para-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"Picture desk live: A scout sits after a parade in Lagos, Nigeria",
+            "height":"480",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"This little scout has been taking part in a parade marking International Workers' Day in Nigeria's commercial capital, Lagos",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-389536034",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955379332/Belgiums-Finance-Minister-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Virginia Mayo",
+            "altText":"Picture desk live: Belgium's Finance Minister Steven Vanackere entertains his colleageues",
+            "height":"399",
+            "credit":"Virginia Mayo/AP",
+            "caption":"Is Belgium's finance minister, Steven Vanackere, dazzling his colleagues with a tap dance? No, he's just side-stepping a photographer as fellow finance ministers – from left, Sweden's Anders Borg, Ireland's Michael Noonan, Spain's Luis de Guindos and Poland's Jacek Rostowski – look on during a meeting in Brussels",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-389536051",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955369695/Kabul-is-rocked-by-explos-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Musadeq Sadeq",
+            "altText":"Picture desk live: Kabul is rocked by explosions after Barack Obama's visit",
+            "height":"480",
+            "credit":"Musadeq Sadeq/AP",
+            "caption":"Smoke billows from a compound under attack as Kabul suffers a series of explosions in protest at the surprise visit of the US president, Barack Obama. A suicide car bomber and Taliban militants disguised in burqas attacked the compound housing hundreds of foreigners in the Afghan capital",
+            "width":"707"
+          }
+        }]
+      },{
+        "id":"gu-image-389536055",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955382024/Newcastle-at-night-photog-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Owen Humphreys",
+            "altText":"Picture desk live: Newcastle at night photographed with a tilt and shift lens",
+            "height":"480",
+            "credit":"Owen Humphreys/PA",
+            "caption":"The Gateshead Millennium bridge and the Sage music centre in Newcastle look enchanting in this photograph by Owen Humphreys. Taken on Tuesday night and shot with a tilt and shift lens, the view has such a magical quality",
+            "width":"721"
+          }
+        }]
+      },{
+        "id":"gu-image-389536057",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955366416/Pro-democracy-leader-Aung-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "altText":"Picture desk live: Pro-democracy leader Aung San Suu Kyi takes her oath in parliament",
+            "height":"480",
+            "credit":"Reuters",
+            "caption":"In a historic moment, Aung San Suu Kyi  takes her oath along with colleagues in the lower house of parliament in Naypyitaw after nearly a quarter of a century of political struggle against oppressive military rule in the country ",
+            "width":"729"
+          }
+        }]
+      },{
+        "id":"gu-image-389536144",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955376110/Stolen-penguin-Dirk-is-re-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Tony Bartlett",
+            "altText":"Picture desk live: Stolen penguin, Dirk, is returned to safety",
+            "height":"428",
+            "credit":"Tony Bartlett/EPA",
+            "caption":"It's a triumph over tragedy as the stolen penguin Dirk returns to the safety of his enclosure at Sea World on the Gold Coast in Australia. A couple of British backpackers have been fined for a late-night prank in which they abducted the male fairy penguin. The couple told the court that the effect of drinking 1.5 litres of vodka was to blame",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-389536146",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335955372911/The-Nairobi-Chamber-Choru-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Steve Parsons",
+            "altText":"Picture desk live: The Nairobi Chamber Chorus arrive in the UK ",
+            "height":"600",
+            "credit":"Steve Parsons/PA",
+            "caption":"This singing traveller is a member of the Nairobi Chamber Chorus, which has arrived in the UK to perform before the Queen at her diamond jubilee pageant next week. The choir treated passengers to an impromptu performance on landing at Heathrow",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-389550447",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966693857/Aung-San-Suu-Kyi-walks-to-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Soe Zeya Tun",
+            "altText":"Picture desk live: Aung San Suu Kyi walks to her oath at the lower house of parliament Burma",
+            "height":"480",
+            "credit":"Soe Zeya Tun/Reuters",
+            "caption":"Burmese pro-democracy leader Aung San Suu Kyi steps forward to take her place in parliament, under the watchful eye of military representatives ",
+            "width":"636"
+          }
+        }]
+      },{
+        "id":"gu-image-389550451",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966699633/Chinese-activist-Chen-Gua-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Jordan Pouille",
+            "altText":"Picture desk live: Chinese activist Chen Guangcheng is seen in a Beijing hospital",
+            "height":"480",
+            "credit":"Jordan Pouille/AFP/Getty Images",
+            "caption":"Blind Chinese activist Chen Guangcheng in a wheelchair at the Chaoyang hospital in Beijing following his remarkable escape from house arrest. He had accepted a deal to stay in China, after authorities promised he would be safe. However, it has emerged that his decision was influenced by threats to beat his wife to death",
+            "width":"737"
+          }
+        }]
+      },{
+        "id":"gu-image-389550473",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966696849/Ken-Livingstone-greets-pr-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andrew Winning",
+            "altText":"Picture desk live: Ken Livingstone greets prospective voters in Hammersmith",
+            "height":"480",
+            "credit":"Andrew Winning/Reuters",
+            "caption":"Labour's candidate for Mayor of London, Ken Livingstone chats with a band of enthusiastic supporters and greets prospective voters as he campaigns in Hammersmith on the last day before elections",
+            "width":"689"
+          }
+        }]
+      },{
+        "id":"gu-image-389550481",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966702710/Police-stop-journalists-a-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Mark Ralston",
+            "altText":"Picture desk live: Police stop journalists at the gate of Chaoyang hospital in Beijing",
+            "height":"480",
+            "credit":"Mark Ralston/AFP/Getty Images",
+            "caption":"Chinese police deliver a firm message to foreign journalists at the gate of Chaoyang hospital in Beijing, where Chen Guangcheng is being treated",
+            "width":"733"
+          }
+        }]
+      },{
+        "id":"gu-image-389550514",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966708782/School-children-wait-to-m-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Bichall",
+            "altText":"Picture desk live: School children wait to meet the Queen in Exeter",
+            "height":"480",
+            "credit":"Ben Bichall/PA",
+            "caption":"In Exeter schoolchildren waiting to meet the Queen have the ultimate royal accessory: the (inflatable) corgi dog",
+            "width":"722"
+          }
+        }]
+      },{
+        "id":"gu-image-389550521",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966705807/The-Queen-meets-a-police--012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Chris Jackson",
+            "altText":"Picture desk live: The Queen meets a police horse in Yeovil on her jubilee tour",
+            "height":"480",
+            "credit":"Chris Jackson/PA",
+            "caption":"The Queen's delight at meeting a police horse named after first world war veteran Harry Patch is apparent during a visit to Nine Springs Park in Yeovil. The trip was part of her diamond jubilee tour of the UK",
+            "width":"614"
+          }
+        }]
+      },{
+        "id":"gu-image-389550529",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335966711689/Violence-has-errupted-in--014.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Khaled Desouki",
+            "altText":"Picture desk live: Violence has errupted in the Abbassiya district of Cairo",
+            "height":"480",
+            "credit":"Khaled Desouki/AFP/Getty Images",
+            "caption":"Violence erupts in the Abbasiya district of Cairo where an anti-military protest near the defence ministry came under attack. At least 20 people were killed in the clashes and many more injured, according to reports ",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-389567355",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980300447/Ed-Miliband-poses-for-a-p-016.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Stefan Rousseau",
+            "altText":"Picture desk live: Ed Miliband poses for a photo with shoppers in Harlow",
+            "height":"480",
+            "credit":"Stefan Rousseau/PA",
+            "caption":"Labour leader Ed Miliband strikes a pose for the cameras with shoppers and local people in Harlow, Essex, on the last day of campaigning before Thursday's local elections",
+            "width":"669"
+          }
+        }]
+      },{
+        "id":"gu-image-389567357",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980309838/Kate-and-Gerry-McCann-on--019.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Dan Kitwood",
+            "altText":"Picture desk live: Kate and Gerry McCann on the 5th anniversary of Madeleine's disappearance",
+            "height":"451",
+            "credit":"Dan Kitwood/Getty Images",
+            "caption":"Kate and Gerry McCann speak in front of an age-progressed police image of their daughter Madeleine during a news conference to mark the fifth anniversary of her disappearance. The McCanns say there is 'no doubt' authorities will reopen the investigation into their daughter's disappearance. Three-year-old Madeleine went missing while on holiday with her parents in the Algarve region of Portugal in May 2007",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-389567362",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980306453/Kim-Jong-Un-receives-a-ro-018.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Picture desk live: Kim Jong Un receives a round of applause",
+            "height":"480",
+            "credit":"AP",
+            "caption":"North Korean leader Kim Jong-un receives a round of  applause from military personnel during his visit to the machine plant managed by Ho Chol Yong in North Korea, to mark May Day. Bravo!",
+            "width":"663"
+          }
+        }]
+      },{
+        "id":"gu-image-389567379",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980297571/Nicole-Kidman-filming-The-015.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"Picture desk live: Nicole Kidman filming The Railway Man in Bo'ness, Scotland",
+            "height":"567",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Nicole Kidman finds herself a million miles away from Hollywood in Bo'ness near Falkirk in Scotland. She and co-star Colin Firth are filming The Railway Man, a true story of a British officer captured by the Japanese during the second world war and forced to work on the infamous Burma railway",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-389567428",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980303258/An-oak-tree-painted-pink--017.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"Picture desk live: An oak tree painted pink by artist Henry Bruce",
+            "height":"480",
+            "credit":"Ben Birchall/PA",
+            "caption":"It's been the subject of controversy but artist Henry Bruce's latest project is really quite pretty in pink. As part of the art and sculpture exhibition at Delamore Estate, Bruce has painted a massive skeletal 21-metre high oak tree to celebrate the beauty of nature and the evolving life of trees",
+            "width":"722"
+          }
+        }]
+      },{
+        "id":"gu-image-389576819",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998129785/Fabrice-Muamba-made-an-em-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Picture Desk Live Update: Fabrice Muamba made an emotional return to Bolton",
+            "height":"458",
+            "credit":"Martin Rickett/PA",
+            "caption":"Fabrice Muamba leaves the Reebok Stadium after making an emotional return at the kick off in Bolton on Wednesday",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-389576821",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998136210/Debate-for-the-2012-Frenc-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"France 2 / Handout",
+            "altText":"Picture Desk Live Update: Debate for the 2012 French presidential election campaign",
+            "height":"453",
+            "credit":"France 2 / Handout/EPA",
+            "caption":"A TV grab from state-owned French television station France 2 showing the debate between Francois Hollande and Nicolas Sarkozy for the 2012 French presidential election campaign",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-389576823",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335998133008/Francois-Hollande-and-Nic-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Mehdi Fedouach",
+            "altText":"Picture Desk Live Update: Francois Hollande and Nicolas Sarkozy live TV debate",
+            "height":"480",
+            "credit":"Mehdi Fedouach/AFP/Getty Images",
+            "caption":"Socialist Party supporters watch live TV debate as their presidential candiate Francois Hollande takes on current president Nicolas Sarkozy ",
+            "width":"722"
+          }
+        }]
+      },{
+        "id":"gu-image-389578267",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/2/1335980483741/Nicole-Kidman-filming-The-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Andrew Milligan",
+            "altText":"Nicole Kidman filming The Railway Man in Scotland",
+            "height":"84",
+            "credit":"Andrew Milligan/PA",
+            "caption":"Nicole Kidman on the set of the film The Railway Man, at B'oness railway station in Falkirk, Scotland  Photograph: Andrew Milligan/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[]
+  }
+}

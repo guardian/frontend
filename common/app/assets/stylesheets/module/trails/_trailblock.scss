@@ -4,9 +4,15 @@
 
 .trailblock {
     max-height: none;
-    padding-left: $gutter;
-    padding-right: $gutter;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
 
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    .article-v2__inner &,
     .article__main-column & {
         padding-left: 0;
         padding-right: 0;
@@ -67,7 +73,10 @@
     top: 0;
     right: 0;
     color: #fff;
-    padding: 15px $gutter $baseline*2 $gutter/2;
+    padding: 15px $gs-gutter/2 $baseline*2 $gutter/2;
+    @include mq(mobileLandscape) {
+        padding-right: $gs-gutter;
+    }
     cursor: pointer;
     background-color: transparent;
     font-weight: normal;
@@ -76,6 +85,7 @@
     @include box-shadow(none);
 
     &:hover,
+    &:focus,
     &:active {
         background-color: transparent;
         @include box-shadow(none);

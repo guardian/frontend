@@ -27,20 +27,23 @@
 
 @include mq(320px) {
     .social-wrapper {
-        margin-right: $gutter/4 * -1;
-        margin-left: $gutter/4 * -1;
-        max-width: 80px * 4 + 8px * 3;
+        width: gs-span(4);
     }
     .social {
         display: table;
         width: 100%;
     }
+    ul.social {
+        margin-bottom: $baseline*4;
+    }
     .social__item {
-        display: table-cell;
+        float: left;
+        width: gs-span(4) / 4;
         @include box-sizing(border-box);
-        width: 25%;
-        border-right: $gutter/4 solid #ffffff;
-        border-left: $gutter/4 solid #ffffff;
+
+        + .social__item {
+            border-left: $gutter/2 solid #ffffff;
+        }
     }
     .social__action {
         margin-bottom: 0;

@@ -1,87 +1,145 @@
-.section--highlights {
-    margin-top: $baseline * 4;
-    padding-bottom: ($baseline * 3) - 1;
-    @include mq(tablet) {
-        border-bottom: solid 1px $grey;
-        float: left;
-        width: gs-span(6);
-        margin-bottom: $baseline * 4;
+.collection--highlights {
+    .collection__title {
+        @include mq(tablet) {
+            width: gs-span(4);
+        }
+        @include mq(desktop) {
+            width: gs-span(8);
+
+        }
+        @include mq(wide) {
+            width: gs-span(12);
+        }
     }
-    @include mq(desktop) {
-        width: gs-span(8);
-    }
-    @include mq(wide) {
-        width: gs-span(12);
-    }
-    .section__title {
-        @include font($serifheadline, 800, 16, 16);
-        @include box-sizing(border-box);
-        height: $baseline * 12;
-        color: $blue;
-        border-top: 2px solid $blue;
-    }
-    .collection {
+    .items {
         @include mq(tablet) {
             font-size: 0;
-            white-space: nowrap;
-            overflow: auto;
-            height: gs-height(6);
         }
     }
     .item {
-        float: none;
-        margin: ($baseline * 2) - 1 0 0;
-        padding: $baseline * 2 0 gs-height(1);
-        border-top: 1px solid $grey;
-        &:first-child {
-            margin-top: 0;
-            padding-top: 0;
-            border-top-style: none;
+        margin-top: $gs-baseline*2;
+        @include mq($to: tablet) {
+            &:nth-child(n + 2) {
+                .item__title {
+                    @include font-size(20, 24);
+                }
+                .item__image-container {
+                    display: none;
+                }
+            }
         }
         @include mq(tablet) {
             @include box-sizing(content-box);
-            white-space: normal;
             display: inline-block;
             vertical-align: top;
-            height: 100%;
-            border-top-style: none;
-            border-right: 1px dotted $grey;
-            margin-top: 0;
-            padding: 0 $gs-gutter / 2 0 ($gs-gutter / 2) - 1;
-            width: gs-span(3);
+            padding-left: $gs-gutter/2 - 1;
+            padding-right: $gs-gutter/2;
+            border-left: 1px dotted $grey;
+            width: gs-span(4);
             &:first-child {
                 padding-left: 0;
+                border-left-style: none;
             }
-            &:last-child {
+        }
+        @include mq(tablet, desktop) {
+            &:first-child {
+                padding-right: 11px;
+            }
+            &:nth-child(2n + 2) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(2n + 3) {
                 padding-right: 0;
-                border-right-style: none;
+            }
+        }
+        @include mq(desktop, wide) {
+            &:nth-child(2) {
+                padding-right: 11px;
+            }
+            &:nth-child(3n + 3) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(3n + 5) {
+                padding-right: 0;
+            }
+        }
+        @include mq(wide) {
+            &:nth-child(3) {
+                padding-right: 11px;
+            }
+            &:nth-child(4n + 4) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(4n + 7) {
+                padding-right: 0;
             }
         }
     }
-    .item__image {
-        margin-bottom: $baseline * 2;
-        display: none;
-        @include mq(tablet) {
-            display: block;
+    &.collection--with-popular {
+        @include mq(tablet, desktop) {
+            .item:first-child {
+                padding-right: 0;
+            }
+        }
+        @include mq(desktop, wide) {
+            .item:nth-child(2) {
+                padding-right: 0;
+            }
+        }
+        @include mq(wide) {
+            .item:nth-child(3) {
+                padding-right: 0;
+            }
         }
     }
     .item__title {
-        @include font-size(22, 24);
-    }
-    .item__standfirst {
-        margin-top: $baseline;
-        @include font-size(16, 20);
-        color: #666666;
-    }
-    .item:first-child .item__standfirst {
-        display: block;
+        @include font-size(26, 28);
         @include mq(tablet) {
-            display: none;
+            min-height: gs-height(3);
         }
     }
-    @include mq(tablet) {
-        .item--without-image .item__standfirst {
-            display: block;
+    @include mq($to: desktop) {
+        .item:first-child {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    @include mq(desktop, wide) {
+        .item:nth-child(-n + 2) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    @include mq(wide) {
+        .item:nth-child(-n + 3) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    .item__image-container {
+        margin-top: $gs-baseline*2;
+        @include mq(tablet) {
+            height: gs-height(4);
+        }
+    }
+    .item__image {
+        @include mq($to: tablet) {
+            width: 100%;
+        }
+        @include mq(tablet) {
+            height: 100%;
         }
     }
 }

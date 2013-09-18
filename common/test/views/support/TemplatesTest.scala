@@ -55,9 +55,11 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
 
   "PictureCleaner" should "correctly format inline pictures" in {
 
-    val images = new Images {
-      override val images = Nil
-      def videoImages = Nil
+    val images = new Elements {
+      override def images = Nil
+      override def videos = Nil
+      override def thumbnail = None
+      override def mainPicture = None
     }
 
     val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(images)).body.trim)
@@ -195,7 +197,7 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
                                    """
 
   val bodyTextWithLinks = """
-    <p>bar <a href="http://www.guardiannews.com/section/2011/jan/01/words-for-url">the link</a></p>
+    <p>bar <a href="http://www.theguardian.com/section/2011/jan/01/words-for-url">the link</a></p>
   """
 
   val bodyWithBLocks = """<body>

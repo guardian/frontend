@@ -9,8 +9,12 @@ import org.jsoup.nodes.Document
 import collection.JavaConversions._
 import views.BodyCleaner
 
-
-case class ArticlePage(article: Article, storyPackage: List[Trail])
+trait ArticleWithStoryPackage {
+  def article: Article
+  def storyPackage: List[Trail]
+}
+case class ArticlePage(article: Article, storyPackage: List[Trail]) extends ArticleWithStoryPackage
+case class LiveBlogPage(article: LiveBlog, storyPackage: List[Trail]) extends ArticleWithStoryPackage
 
 object ArticleController extends Controller with Logging with ExecutionContexts {
 
@@ -32,7 +36,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
         promiseOfArticle.map {
           case Left(model) if model.article.isExpired => renderExpired(model)
           case Left(model) =>
-            val html = withJsoup(BodyCleaner(model.article)){
+            val html = withJsoup(BodyCleaner(model.article, model.article.body)){
               new HtmlCleaner {
                 def clean(d: Document): Document = {
                   val blocksToKeep = d.getElementsByTag("div").takeWhile(_.attr("id") != blockId)
@@ -57,15 +61,20 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
       .showFields("all")
       .response.map{ response =>
 
-      val articleOption = response.content.filter {c => c.isArticle || c.isSudoku} map { new Article(_) }
+      val articleOption = response.content.filter {c => c.isArticle || c.isLiveBlog || c.isSudoku} map { Content(_) }
       val storyPackage = SupportedContentFilter(response.storyPackage map { Content(_) }).toList
 
-      val model = articleOption.map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id)) }
+      val model = articleOption.map { model =>
+        model match {
+          case liveBlog: LiveBlog => LiveBlogPage(liveBlog, storyPackage.filterNot(_.id == model.id))
+          case article: Article => ArticlePage(article, storyPackage.filterNot(_.id == model.id))
+        }
+      }
       ModelOrResult(model, response)
     }.recover{ suppressApiNotFound }
   }
 
-  private def renderExpired(model: ArticlePage)(implicit request: RequestHeader): Result = Cached(model.article) {
+  private def renderExpired(model: ArticleWithStoryPackage)(implicit request: RequestHeader): Result = Cached(model.article) {
     if (request.isJson) {
       JsonComponent(model.article, Switches.all, views.html.fragments.expiredBody(model.article))
     } else {
@@ -73,10 +82,17 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     }
   }
 
-  private def renderArticle(model: ArticlePage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = () => views.html.article(model.article, model.storyPackage)
-    val jsonResponse = () => views.html.fragments.articleBody(model.article, model.storyPackage)
-    renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+  private def renderArticle(model: ArticleWithStoryPackage)(implicit request: RequestHeader): Result = {
+    model match {
+      case blog: LiveBlogPage =>
+        val htmlResponse = () => views.html.liveBlog(blog)
+        val jsonResponse = () => views.html.fragments.liveBlogBody(blog)
+        renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+      case article: ArticlePage =>
+        val htmlResponse = () => views.html.article(article)
+        val jsonResponse = () => views.html.fragments.articleBody(article)
+        renderFormat(htmlResponse, jsonResponse, model.article, Switches.all)
+    }
   }
 
 }

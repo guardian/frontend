@@ -7,10 +7,9 @@
 
 .control {
     &,
-    &:link,
     &:active,
-    &:hover,
-    &:visited {
+    &:focus,
+    &:hover {
         font-family: $serif !important;
         font-size: 13px;
         background-color: transparent;
@@ -18,7 +17,6 @@
         text-decoration: none !important;
     }
 
-    &.is-active,
     &.is-active {
       background-color: #fff;
       color: $blue;
@@ -44,11 +42,10 @@
    ========================================================================== */
 
 .control--sections,
-.control--sections:link,
 .control--sections:active,
-.control--sections:hover,
-.control--sections:visited {
-    float:right;
+.control--sections:focus,
+.control--sections:hover {
+    float: right;
     width: auto;
     height: 28px;
     padding: 15px $gutter 15px 0;
@@ -101,10 +98,9 @@ span.control__menu.i-menu {
    ========================================================================== */
 
 .control--topstories {
-    &:link,
+    &,
     &:active,
     &:hover,
-    &:visited,
     &:focus {
         float: right;
         height: 28px;
@@ -195,10 +191,9 @@ span.control__menu.i-menu {
     padding: 17px 0 13px $gutter/2;
     width: auto;
 
-    &:link,
+    &,
     &:active,
     &:hover,
-    &:visited,
     &:focus     { color: #fff; }
     &.is-active { color: $blue; }
 

@@ -42,9 +42,9 @@ object Switches extends Collections {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = Off)
 
-  val BetaServerSwitch = Switch("Beta", "beta",
-    "If this is switced on users with a #beta in the URL will be messaged",
-    safeState = Off)
+  val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
+    "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
+    safeState = On)
 
   // Advertising Switches
 
@@ -103,6 +103,11 @@ object Switches extends Collections {
 
 
   // Feature Switches
+  
+  val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
+    "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
+    safeState = Off)
+
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
@@ -144,6 +149,10 @@ object Switches extends Collections {
     "If this switch is on, external links are turned into cards in body content on wide viewports.",
     safeState = Off)
 
+  val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
+    "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -182,6 +191,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of having content cards in right hand column",
     safeState = Off)
 
+  val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
+    "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
+    safeState = Off)
+
 
   // Sport Switch
 
@@ -195,13 +208,13 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  //Fronts film switch
-  val FilmFrontFacia = Switch("Facia", "facia-film",
-    "Switch to redirect traffic to the facia film front instead of front film front",
-    safeState = Off)
-
   val FaciaSwitch = Switch("Facia", "facia",
     "Switch to redirect to facia if request has X-Gu-Facia=true",
+    safeState = Off
+  )
+
+  val FaciaLoadTestSwitch = Switch("Facia", "facia-load-test",
+    "Switch to make an xhr request from all fronts to Facia, just to load-test it",
     safeState = Off
   )
 
@@ -224,7 +237,7 @@ object Switches extends Collections {
     SocialSwitch,
     SearchSwitch,
     ImageServerSwitch,
-    BetaServerSwitch,
+    ReleaseMessageSwitch,
     AustraliaFrontSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
@@ -236,15 +249,18 @@ object Switches extends Collections {
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     ExternalLinksCardsSwitch,
+    LiveSummarySwitch,
     LiveCricketSwitch,
-    FilmFrontFacia,
     FaciaSwitch,
+    FaciaLoadTestSwitch,
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
     ABGalleryCta,
     ABSwipeCtas,
     ABExpandableMostPopular,
-    ABRightHandCard
+    ABRightHandCard,
+    ABLiveBlogShowMore,
+    CssFromStorageSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

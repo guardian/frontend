@@ -4,6 +4,7 @@ import common.{ExecutionContexts, Logging}
 import play.api.mvc.{ Controller, Action, _ }
 import play.api.libs.ws.WS
 import scala.language.reflectiveCalls
+import views.support._
 
 import org.im4java.core.{ IMOperation }
 import model._
@@ -14,17 +15,10 @@ object ImageController extends Controller with Logging with Implicits with Execu
   val Path = """([/\w\.-]*)""".r
 
   def render(target: String, mode: String, profile: String) = Action { implicit request =>
-    profile match {
-      case "c" => renderImage(target, mode, model.image.Contributor)
-      case "g" => renderImage(target, mode, model.image.Gallery)
-      case "glt" => renderImage(target, mode, model.image.GalleryLargeTrail)
-      case "gst" => renderImage(target, mode, model.image.GallerySmallTrail)
-      case "n" => renderImage(target, mode, model.image.Naked)
-      case _ => NotFound
-    }
+    Profile.all.find(_.prefix == profile).map(renderImage(target, mode, _)).getOrElse(NotFound)
   }
 
-  private def renderImage(target: String, mode: String, profile: image.Profile)(implicit request: RequestHeader): Result = {
+  private def renderImage(target: String, mode: String, profile: Profile)(implicit request: RequestHeader): Result = {
 
     val Path(sanitised) = target
     val path = "http://static.guim.co.uk/" + sanitised
@@ -57,9 +51,13 @@ object ImageController extends Controller with Logging with Implicits with Execu
                     // configuration
                     val operation = new IMOperation()
                     operation.addImage
-                    if (!(profile.width.isEmpty && profile.height.isEmpty)) {
-                      operation.resize(profile.width.get, profile.height.get)
+
+                    (profile.width, profile.height) match {
+                      case (Some(width), Some(height)) => operation.resize(width, height)
+                      case (Some(width), None) => operation.resize(width)
+                      case _ => Unit
                     }
+
                     operation.quality(profile.compression.toDouble)
                     operation.addImage(format + ":-") // TODO assumes im and content-type will always map to each other
 

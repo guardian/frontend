@@ -9,10 +9,10 @@ GET        /assets/*file                                                        
 #Note the order of these is important
 
 # Discussion
-GET        /discussion/comment-counts                                                                     controllers.CommentCountController.render(shortUrls: String)
-GET        /discussion/comment-counts.json                                                                controllers.CommentCountController.render(shortUrls: String)
-GET        /discussion/*shortUrl.json                                                                     controllers.CommentPageController.render(shortUrl)
-GET        /discussion/*shortUrl                                                                          controllers.CommentPageController.render(shortUrl)
+GET        /discussion/comment-counts                                                                     controllers.DiscussionApp.commentCount(shortUrls: String)
+GET        /discussion/comment-counts.json                                                                controllers.DiscussionApp.commentCount(shortUrls: String)
+GET        /discussion/*shortUrl.json                                                                     controllers.DiscussionApp.commentPage(shortUrl)
+GET        /discussion/*shortUrl                                                                          controllers.DiscussionApp.commentPage(shortUrl)
 
 #Core nav
 GET        /most-read                                                                                     controllers.MostPopularController.render(path = "")
@@ -96,9 +96,6 @@ GET        /football/match/:matchId                                             
 GET        /cricket/match/:matchId                                                                        controllers.CricketMatchController.renderMatchId(matchId)
 GET        /sport/cricket/match/:matchId.json                                                             controllers.CricketMatchController.renderMatchId(matchId)
 GET        /sport/cricket/match/:matchId                                                                  controllers.CricketMatchController.renderMatchId(matchId)
-
-#Film
-GET        /film                                                                                          controllers.FaciaController.renderFilm
 
 #Front
 GET        /$path<(us|uk|au)?>                                                                            controllers.FrontController.render(path)

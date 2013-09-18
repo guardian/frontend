@@ -1,0 +1,116 @@
+.collection--features {
+    .items {
+        @include mq(tablet) {
+            font-size: 0;
+        }
+    }
+    .item {
+        margin-top: $gs-baseline*2;
+        @include mq($to: tablet) {
+            &:nth-child(n + 2) {
+                .item__title {
+                    @include font-size(20, 24);
+                }
+                .item__image-container {
+                    display: none;
+                }
+            }
+        }
+        @include mq(tablet) {
+            @include box-sizing(content-box);
+            display: inline-block;
+            vertical-align: top;
+            padding-left: $gs-gutter/2 - 1;
+            padding-right: $gs-gutter/2;
+            border-left: 1px dotted $grey;
+            width: gs-span(4);
+            &:first-child {
+                border-left-style: none;
+            }
+        }
+        @include mq(tablet, desktop) {
+            &:nth-child(2n + 1) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(2n + 2) {
+                padding-right: 0;
+            }
+        }
+        @include mq(desktop, wide) {
+            &:nth-child(3n + 1) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(3n + 3) {
+                padding-right: 0;
+            }
+
+        }
+        @include mq(wide) {
+            &:nth-child(4n + 1) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(4n + 4) {
+                padding-right: 0;
+            }
+        }
+    }
+    .item__title {
+        @include font-size(26, 28);
+        @include mq(tablet) {
+            min-height: gs-height(3);
+        }
+    }
+    @include mq($to: tablet) {
+        .item:first-child {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    @include mq(tablet, desktop) {
+        .item:nth-child(-n + 2) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    @include mq(desktop, wide) {
+        .item:nth-child(-n + 3) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    @include mq(wide) {
+        .item:nth-child(-n + 4) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+    }
+    .item__image-container {
+        margin-top: $gs-baseline*2;
+        @include mq(tablet) {
+            height: gs-height(4);
+        }
+    }
+    .item__image {
+        @include mq($to: tablet) {
+            width: 100%;
+        }
+        @include mq(tablet) {
+            height: 100%;
+        }
+    }
+}
