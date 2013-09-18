@@ -22,8 +22,8 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
             },
             _collectionOptions = {
                 wide: {
-                    highlights: {
-                        initial: 3,
+                    news: {
+                        initial: 4,
                         show: 8
                     },
                     features: {
@@ -36,8 +36,8 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     }
                 },
                 desktop: {
-                    highlights: {
-                        initial: 2,
+                    news: {
+                        initial: 3,
                         show: 6
                     },
                     features: {
@@ -50,8 +50,8 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     }
                 },
                 tablet: {
-                    highlights: {
-                        initial: 1,
+                    news: {
+                        initial: 2,
                         show: 4
                     },
                     features: {
@@ -64,7 +64,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     }
                 },
                 mobile: {
-                    highlights: {
+                    news: {
                         initial: 3,
                         show: 8
                     },

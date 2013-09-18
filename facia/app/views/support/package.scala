@@ -22,33 +22,33 @@ object FindStyle {
    */
   val specificStyles: Map[String, Map[String, Style]] = Map(
     ("uk", Map(
-      ("uk/sport/regular-stories", MediumStories),
+      ("uk/sport/regular-stories", News),
       ("uk/commentisfree/regular-stories", Features),
       ("uk/culture/regular-stories", Features),
-      ("uk/business/regular-stories", MediumStories),
+      ("uk/business/regular-stories", News),
       ("uk/lifeandstyle/regular-stories", Features),
       ("uk/technology/regular-stories", Features),
-      ("uk/money/regular-stories", MediumStories),
+      ("uk/money/regular-stories", News),
       ("uk/travel/regular-stories", Features)
     )),
     ("us", Map(
-      ("us/sport/regular-stories", MediumStories),
+      ("us/sport/regular-stories", News),
       ("us/commentisfree/regular-stories", Features),
       ("us/culture/regular-stories", Features),
-      ("us/business/regular-stories", MediumStories),
+      ("us/business/regular-stories", News),
       ("us/lifeandstyle/regular-stories", Features),
       ("us/technology/regular-stories", Features),
-      ("us/money/regular-stories", MediumStories),
+      ("us/money/regular-stories", News),
       ("us/travel/regular-stories", Features)
     )),
     ("au", Map(
-      ("au/sport/regular-stories", MediumStories),
+      ("au/sport/regular-stories", News),
       ("au/commentisfree/regular-stories", Features),
       ("au/culture/regular-stories", Features),
-      ("au/business/regular-stories", MediumStories),
+      ("au/business/regular-stories", News),
       ("au/lifeandstyle/regular-stories", Features),
       ("au/technology/regular-stories", Features),
-      ("au/money/regular-stories", MediumStories),
+      ("au/money/regular-stories", News),
       ("au/travel/regular-stories", Features)
     ))
   )

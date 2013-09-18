@@ -1,39 +1,53 @@
-.collection--medium-stories {
-    margin-top: $gs-baseline*2;
+.collection--news {
     .items {
         @include mq(tablet) {
             font-size: 0;
         }
-        @include mq(tablet, wide) {
-            white-space: nowrap;
-            overflow-x: scroll;
-            overflow-y: hidden;
-        }
     }
     .item {
-        @include mq($to: tablet) {
-            &:nth-child(n + 2) {
-                margin-top: $gs-baseline*2;
-            }
-        }
+        margin-top: $gs-baseline*2;
         @include mq(tablet) {
             @include box-sizing(content-box);
-            white-space: normal;
             display: inline-block;
             vertical-align: top;
             padding-left: $gs-gutter/2 - 1;
             padding-right: $gs-gutter/2;
             border-left: 1px dotted $grey;
             width: gs-span(4);
-            &:first-child {
-                padding-left: 0;
-                border-left-style: none;
-            }
-            &:last-child {
-                padding-right: 0;
-            }
         }
     }
+
+    @mixin row($row-size) {
+        // styling for first row
+        .item:nth-child(-n + #{$row-size}) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+        // stylings for beggining and end of rows
+        .item:nth-child(#{$row-size}n + 1) {
+            padding-left: 0;
+            border-left-style: none;
+        }
+        .item:nth-child(#{$row-size}n) {
+            padding-right: 0;
+        }
+    }
+    @include mq($to: tablet) {
+        @include row(1);
+    }
+    @include mq(tablet, desktop) {
+        @include row(2);
+    }
+    @include mq(desktop, wide) {
+        @include row(3);
+    }
+    @include mq(wide) {
+        @include row(4);
+    }
+
     .item__title {
         @include mq($to: tablet) {
             @include font-size(20, 24);

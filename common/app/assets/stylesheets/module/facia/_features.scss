@@ -24,13 +24,6 @@
             width: gs-span(4);
         }
     }
-    .item__title {
-        @include font-size(26, 28);
-        @include mq(tablet) {
-            min-height: gs-height(3);
-        }
-    }
-
     @mixin row($row-size) {
         // styling for first row
         .item:nth-child(-n + #{$row-size}) {
@@ -76,6 +69,12 @@
         .item:nth-child(3),
         .item:nth-child(4n + 7) {
             padding-right: 0;
+        }
+    }
+    .item__title {
+        @include font-size(26, 28);
+        @include mq(tablet) {
+            min-height: gs-height(3);
         }
     }
     .item__image-container {
