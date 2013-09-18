@@ -67,7 +67,8 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
               case Right(user) => {
                 val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
                 Async {
-                  signinService.getCookies(api.authBrowser(EmailPassword(email, password), omnitureData), false ) map ( _ match {
+                  val authResponse = api.authBrowser(EmailPassword(email, password), omnitureData)
+                  signinService.getCookies(authResponse, false ) map ( _ match {
                     case Left(errors) => {
                       Ok(views.html.registration_confirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl))
                     }
