@@ -321,7 +321,7 @@ define([
                 });
             }
         },
-                               }
+        
         initSwipe: function(config, contextHtml) {
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
                 var swipe = swipeNav(config, contextHtml);
