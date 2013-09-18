@@ -19,11 +19,6 @@
 
 .nav-popup .nav--section-divider {
     padding-bottom: $baseline*4;
-
-    @include mq(tablet) {
-        margin: 0;
-        border-top: none;
-    }
 }
 
 /* Small
@@ -75,6 +70,7 @@
 
 /* Small
    ========================================================================== */
+
 .nav-popup-sections {
     .nav__link {
         color: #444;

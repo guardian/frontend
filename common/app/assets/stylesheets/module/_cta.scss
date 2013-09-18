@@ -58,7 +58,7 @@ button.cta {
         background-color: darken($blue, 2%);
         border: none; //To normailse <button> styles
         border-top: 1px solid #cfcfcd;
-        padding: $baseline*2 $gs-gutter/2;
+        padding: $baseline*3 $gs-gutter/2;
 
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;

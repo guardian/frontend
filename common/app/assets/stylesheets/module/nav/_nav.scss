@@ -14,6 +14,11 @@
     list-style: none;
     margin: 0;
     padding: $baseline*2 0 $baseline;
+
+    .nav__item--full {
+        width: 100%;
+        margin: 0;
+    }
 }
 
     .nav > li,
@@ -35,58 +40,62 @@
 
     .nav--stacked > li {
         display: list-item;
+
+        a {
+            display: block;
+        }
     }
 
 
 /* Columns
    ========================================================================== */
 
-    .nav--columns {
-        padding: $baseline*2 $gs-gutter/2 $baseline;
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
+// First, define a reusable structural rule
+.nav--two-columns {
+    padding: $baseline*2 $gs-gutter/2 $baseline;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+    > .nav__item {
+        width: 46%;
+        margin-right: 3%;
+        display: inline-block; // doing this instead of float to prevent mixed item height float collision
+        vertical-align: top;
 
-        > .nav__item {
-            width: 46%;
-            margin-right: 3%;
-            display: inline-block; // doing this instead of float to prevent mixed item height float collision
-            vertical-align: top;
-
-            &:nth-child(even) {
-                float: right; // this aligns right edge correctly
-                margin-right: 0%;
-                margin-left: 3%;
-            }
-        }
-
-        .nav__item--full {
-            width: 100%;
-            margin: 0;
-        }
-
-        .nav__link {
-            font-weight: 200;
-            font-family: $serifheadline;
-            padding: 3px 0 $baseline*4;
-            border-top: 1px solid $mushroom;
-            display: block;
-            height: auto;
-            background-color: transparent;
+        &:nth-child(even) {
+            float: right; // this aligns right edge correctly
+            margin-right: 0%;
+            margin-left: 3%;
         }
     }
+}
 
-    .nav--columns-football {
-        padding: $baseline*2 0 $baseline;
+// Then, skin
+.nav--columns {
+    @extend .nav--two-columns;
+
+    .nav__link {
+        font-weight: 200;
+        font-family: $serifheadline;
+        padding: 3px 0 $baseline*4;
+        border-top: 1px solid $mushroom;
+        display: block;
+        height: auto;
+        background-color: transparent;
     }
+}
+
+.nav--columns-football {
+    padding: $baseline*2 0 $baseline;
+}
 
 
-    .nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
-    .nav--stacked.nav--top-border-off > li:nth-child(1) a {
-        border-top: none;
-        padding-top: 0;
-    }
+.nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
+.nav--stacked.nav--top-border-off > li:nth-child(1) a {
+    border-top: none;
+    padding-top: 0;
+}
 
 
 /* Section divider
@@ -97,17 +106,19 @@
     background-color: $mushroom;
     padding: $baseline*2 $gs-gutter/2;
 
+    > .nav__item {
+        border-bottom: 0;
+    }
+
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
     @include mq(tablet) {
         margin-top: -5px !important;
+        border-top: $baseline*3 solid #ffffff;
 
         .nav__item { margin: 0; }
-    }
-    @include mq(1248px) {
-        margin-top: -13px !important;
     }
 }
 
