@@ -127,13 +127,17 @@ trait Prototypes {
   def base(name: String) = play.Project(name, version, path = file(name))
     .settings(VersionInfo.settings:_*)
     .settings(frontendCompilationSettings:_*)
-    .settings(frontendDependencyManagementSettings:_*)
     .settings(frontendTestSettings:_*)
 
   def application(name: String) = base(name)
     .settings(playAssetHashDistSettings: _*)
     .settings(frontendClientSideSettings:_*)
+    .settings(frontendDependencyManagementSettings:_*)
     .settings(frontendAssemblySettings:_*)
+    .settings(libraryDependencies ++= Seq(
+      "com.gu" %% "management-play" % "5.27",
+      "commons-io" % "commons-io" % "2.4"
+    ))
 
   def grunt(name: String) = application(name)
     .settings(frontendGruntSettings:_*)
