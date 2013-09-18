@@ -49,28 +49,19 @@
     }
 
     .item__title {
-        @include mq($to: tablet) {
-            @include font-size(20, 24);
-        }
+        @include font-size(26, 28);
         @include mq(tablet) {
-            @include font-size(26, 28);
             min-height: gs-height(3);
         }
     }
     .item__standfirst {
-        @include mq($to: tablet) {
-            display: none;
-        }
+        margin: $gs-baseline*2 0 0;
+        @include font-size(16, 20);
         @include mq(tablet) {
             min-height: gs-height(4);
-            margin: $gs-baseline*2 0 0;
-            @include font-size(16, 20);
         }
     }
     .item__image-container {
-        @include mq($to: tablet) {
-            display: none;
-        }
         @include mq(tablet) {
             height: gs-height(4);
         }
@@ -81,6 +72,17 @@
         }
         @include mq(tablet) {
             height: 100%;
+        }
+    }
+    .item:nth-child(n + 2) {
+        @include mq($to: tablet) {
+            .item__title {
+                @include font-size(20, 24);
+            }
+            .item__standfirst,
+            .item__image-container {
+                display: none;
+            }
         }
     }
 }

@@ -30,6 +30,10 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                         initial: 3,
                         show: 8
                     },
+                    comments: {
+                        initial: 4,
+                        show: 8
+                    },
                     'small-stories': {
                         initial: 4,
                         show: 8
@@ -41,6 +45,10 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                         show: 6
                     },
                     features: {
+                        initial: 3,
+                        show: 6
+                    },
+                    comments: {
                         initial: 3,
                         show: 6
                     },
@@ -58,6 +66,10 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                         initial: 2,
                         show: 4
                     },
+                    comments: {
+                        initial: 2,
+                        show: 4
+                    },
                     'small-stories': {
                         initial: 2,
                         show: 4
@@ -69,6 +81,10 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                         show: 8
                     },
                     features: {
+                        initial: 3,
+                        show: 8
+                    },
+                    comments: {
                         initial: 3,
                         show: 8
                     },
