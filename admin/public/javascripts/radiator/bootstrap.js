@@ -52,7 +52,7 @@ window.addEventListener('load', function() {
                                     url: '/radiator/commit/' + revision,
                                     dataType: 'json',
                                     success: function(rev) {
-                                        li.innerHTML = rev.commit.author.name + " (deployed by " + deployer + ")";
+                                        li.innerHTML = rev.commit.author.name + " <small>(deployed by " + deployer + ")</small>";
                                     }
                             });
                         }
