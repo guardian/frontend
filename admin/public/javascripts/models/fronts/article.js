@@ -50,10 +50,6 @@ function (
     Article.prototype.populate = function(opts) {
         common.util.populateObservables(this.meta, opts)
         common.util.populateObservables(this.fields, opts.fields)
-
-        if (opts.index < 3) {
-            //this.fetchPageViews();
-        }
     }
 
     Article.prototype.toggleEditingConfig = function() {

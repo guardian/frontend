@@ -13,21 +13,23 @@ function (
     function decorateItems(items) {
         items.slice(0, 50).forEach(function(item, index){
             var id = item.meta.id(),
-                data = cache.get('pageViews', id);
+                data;
 
-            if (!id) {
-                return
-            } else if (data && !data.failed) {
+            if (!id) { return; }
+
+            data = cache.get('pageViews', id);
+
+            if (data && _.isUndefined(item.state.pageViews())) {
                 decorateItem(data, item);
-            } else if (data) {
-                // noop. Cache'd a fail.
-            } else {
-                setTimeout(function(){
-                    fetchData(id, function(data){
-                        decorateItem(data, item);
-                    });                    
-                }, index * 1000/(common.config.ophanCallsPerSecond || 4)); // stagger requests
+                return; 
             }
+
+            setTimeout(function(){
+                fetchData(id, function(data){
+                    cache.put('pageViews', id, data);
+                    decorateItem(data, item);
+                });                    
+            }, index * 1000/(common.config.ophanCallsPerSecond || 4)); // stagger requests
         });
     };
 
@@ -40,7 +42,7 @@ function (
                 {name: 'Guardian', data: [], color: '4572A7', max: 0}
             ];
 
-        item.state.pageViews(data.totalHits);
+        item.state.pageViews(data.totalHits || 0);
 
         if(data.seriesData && data.seriesData.length) {
             _.each(data.seriesData, function(s){
@@ -75,7 +77,6 @@ function (
         }).then(
             function (resp) {
                 callback(resp);
-                cache.put('pageViews', id, resp);
             }
         );
     }
