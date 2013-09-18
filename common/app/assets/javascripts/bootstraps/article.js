@@ -7,7 +7,9 @@ define([
     "modules/analytics/reading",
     "modules/discussion/discussion",
     "modules/cricket",
-    "modules/experiments/live-blog-show-more"
+    "modules/experiments/live-blog-show-more",
+    "modules/notification-counter",
+    "modules/detect"
 ], function (
     common,
     AutoUpdate,
@@ -17,7 +19,9 @@ define([
     Reading,
     Discussion,
     Cricket,
-    LiveShowMore
+    LiveShowMore,
+    NotificationCounter,
+    detect
 ) {
 
     var modules = {
@@ -44,20 +48,28 @@ define([
         initLiveBlogging: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
-                    var a = new AutoUpdate({
+
+                    var timerDelay = /desktop|extended/.test(detect.getLayoutMode()) ? 30000 : 60000,
+                        a = new AutoUpdate({
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
                                 path = window.location.pathname;
+
                            return path + '.json' + '?lastUpdate=' + id;
                         },
-                        delay: 60000,
+                        delay: timerDelay,
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
-                        manipulationType: 'prepend'
+                        manipulationType: 'prepend',
+                        animateInserts: true,
+                        progressToggle: true,
+                        progressColour: '#ec1c1c'
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
-                    var lf = new LiveFilter(context).init();
+                    var lf = new LiveFilter(context).init(),
+                        nc = new NotificationCounter().init();
+
 
                     if (config.switches.liveSummary) {
                         var ls = new LiveSummary(context).init();
