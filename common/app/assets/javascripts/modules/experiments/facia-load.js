@@ -6,7 +6,7 @@ define([
 
     return function() {
         ajax({
-            url: '/facia' + window.location.pathname,
+            url: 'http://' + window.location.host + '/facia' + window.location.pathname + window.location.search,
             type: 'text' // don't parse
         }).always(function(resp) {
             resp = null; // help the garbage collector?

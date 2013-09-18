@@ -130,6 +130,24 @@
     }
 
 
+
+
+.autoupdate--has-animation {
+
+    .autoupdate--highlight {
+        @include animation(new-block-animation 5s ease-out);
+    }
+
+}
+
+
+@include keyframes(new-block-animation) {
+    0%   { opacity: 0; background: #f4f4ee; }
+    20%  { opacity: 1; }
+    70%  { background: #f4f4ee; }
+    100% { background: transparent; }
+}
+
 /* Blocks container
    ========================================================================== */
 

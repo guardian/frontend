@@ -89,6 +89,8 @@ trait Prototypes {
     test in assembly := {},
     executableName <<= (name) { "frontend-%s" format _ },
     jarName in assembly <<= (executableName) map { "%s.jar" format _ },
+    aggregate in assembly := false,
+    aggregate in dist := false,
 
     mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
       {

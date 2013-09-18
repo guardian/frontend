@@ -198,10 +198,9 @@
     }
 
     .nav__link,
-    .nav__link:link,
     .nav__link:active,
-    .nav__link:hover,
-    .nav__link:visited {
+    .nav__link:focus,
+    .nav__link:hover {
         display: block;
         margin: 10px 0 $baseline*3;
         padding: 2px 9px 0 9px;
@@ -262,10 +261,8 @@
     }
 
     .nav__link,
-    .nav__link:link,
     .nav__link:active,
-    .nav__link:hover,
-    .nav__link:visited {
+    .nav__link:hover {
         display: block;
         margin: 16px 0 $baseline*3 0;
         padding: 2px 9px 0 9px;
@@ -355,10 +352,9 @@
     }
 
     .nav__link,
-    .nav__link:link,
     .nav__link:active,
-    .nav__link:hover,
-    .nav__link:visited {
+    .nav__link:focus,
+    .nav__link:hover {
         color: #fff;
         text-decoration: none;
     }

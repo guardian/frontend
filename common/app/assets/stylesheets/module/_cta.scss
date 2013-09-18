@@ -10,16 +10,14 @@
     background-color: $mushroom;
     text-shadow: none;
 
-    &:hover {
+    &:hover,
+    &:focus {
         background-color: $darkMushroom;
     }
 
-    &:link,
-    &:visited {
-        color: #545454;
-    }
     &,
     &:hover,
+    &:focus,
     &:active {
         @include box-shadow(none);
     }
@@ -51,8 +49,6 @@ button.cta {
 
 .top {
     &,
-    &:link,
-    &:visited,
     &:active {
         @extend %type-8;
         display: block;
