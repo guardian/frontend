@@ -1,4 +1,5 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+@import conf.Switches._
 
 <div class="article-wrapper monocolumn-wrapper">
     <div class="article__main-column">
@@ -22,10 +23,12 @@
 
 
             <!-- Lightbox JS Gallery -->
-            @fragments.galleryThumbs(gallery)
+            @if(LightboxGalleriesSwitch.isSwitchedOn) {
+                @fragments.galleryThumbs(gallery)
+            }
 
-            <!-- Non-JS Gallery -->
-            <div class="js-hidden">
+            <!-- Non-JS Gallery / LightboxSwitch off mode -->
+            <div class="@if(LightboxGalleriesSwitch.isSwitchedOn) { js-hidden }">
                 <p class="gallery-nav type-11">
 
                     @if(index > 1) {
