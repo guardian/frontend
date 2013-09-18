@@ -17,7 +17,6 @@ define([
     'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/navigation/australia',
     'modules/navigation/edition-switch',
     'modules/navigation/platform-switch',
     'modules/tabs',
@@ -56,7 +55,7 @@ define([
     Profile,
     Sections,
     Search,
-    Australia,
+
     EditionSwitch,
     PlatformSwitch,
     Tabs,
@@ -102,7 +101,6 @@ define([
                 topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
-                aus = new Australia(config),
                 editions = new EditionSwitch(),
                 platforms = new PlatformSwitch(),
                 header = document.body,
@@ -119,7 +117,6 @@ define([
             toggles.init(header);
             topStories.load(config, header);
             search.init(header);
-            aus.init(header);
 
             common.mediator.on('page:common:ready', function(){
                 toggles.reset();
