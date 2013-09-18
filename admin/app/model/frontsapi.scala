@@ -119,6 +119,9 @@ trait UpdateActions {
       if (newBlock != block) {
         FrontsApi.putBlock(id, newBlock, identity)
       }
+    } getOrElse {
+      val newBlock = Block(id, None, Nil, None, DateTime.now.toString, identity.fullName, identity.email, updateTrailblock.config.displayName)
+      FrontsApi.putBlock(id, newBlock, identity)
     }
   }
 }
