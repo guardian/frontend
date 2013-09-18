@@ -12,6 +12,26 @@
     background: $blue;
 }
 
+.footer-secondary {
+    font-family: $sans-serif;
+    @include font-size(14, 20);
+
+    &,
+    a {
+        color: $darkGrey;
+    }
+}
+
+.colophon {
+    margin: 0 $gs-gutter / 2;
+    list-style: none;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
+}
+
 .swipe-switches {
     display: none;
 
