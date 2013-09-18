@@ -31,21 +31,21 @@ object Frontend extends Build with Prototypes {
   )
   val commonWithTests = common % "test->test;compile->compile"
 
-  val front = application("front").dependsOn(commonWithTests)
-  val facia = application("facia").dependsOn(commonWithTests)
-  val article = application("article").dependsOn(commonWithTests)
-  val interactive = application("interactive").dependsOn(commonWithTests)
-  val applications = application("applications").dependsOn(commonWithTests)
-  val football = application("football").dependsOn(commonWithTests).settings(
+  val front = application("front").dependsOn(commonWithTests).aggregate(common)
+  val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
+  val article = application("article").dependsOn(commonWithTests).aggregate(common)
+  val interactive = application("interactive").dependsOn(commonWithTests).aggregate(common)
+  val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
+  val football = application("football").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
     templatesImport ++= Seq(
       "pa._",
       "feed._"
     )
   )
-  val sport = application("sport").dependsOn(commonWithTests)
-  val coreNavigation = application("core-navigation").dependsOn(commonWithTests)
-  val image = application("image").dependsOn(commonWithTests).settings(
+  val sport = application("sport").dependsOn(commonWithTests).aggregate(common)
+  val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)
+  val image = application("image").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "org.imgscalr" % "imgscalr-lib" % "4.2",
       "org.im4java" % "im4java" % "1.4.0",
@@ -53,27 +53,27 @@ object Frontend extends Build with Prototypes {
       "commons-lang" % "commons-lang" % "2.5"
     )
   )
-  val discussion = application("discussion").dependsOn(commonWithTests).settings(
+  val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
     templatesImport ++= Seq("discussion._")
   )
 
-  val router = application("router").dependsOn(commonWithTests)
-  val diagnostics = application("diagnostics").dependsOn(commonWithTests).settings(
+  val router = application("router").dependsOn(commonWithTests).aggregate(common)
+  val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "net.sf.uadetector" % "uadetector-resources" % "2013.04",
       "net.sf.opencsv" % "opencsv" % "2.3"
     )
   )
 
-  val styleGuide = application("style-guide").dependsOn(commonWithTests)
+  val styleGuide = application("style-guide").dependsOn(commonWithTests).aggregate(common)
 
-  val admin = application("admin").dependsOn(commonWithTests).settings(
+  val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
     ),
     (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:admin"))
   )
-  val porter = application("porter").dependsOn(commonWithTests).settings(
+  val porter = application("porter").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
       "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
@@ -81,7 +81,7 @@ object Frontend extends Build with Prototypes {
   )
 
   val identityLibVersion = "3.21"
-  val identity = application("identity").dependsOn(commonWithTests).settings(
+  val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.gu.identity" %% "identity-model" % identityLibVersion,
       "com.gu.identity" %% "identity-request" % identityLibVersion,
@@ -125,30 +125,30 @@ object Frontend extends Build with Prototypes {
     unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "src" / "test" / "resources")
   )
 
-  val dev = base("dev-build")
-    .dependsOn(front)
-    .dependsOn(facia)
-    .dependsOn(article)
-    .dependsOn(applications)
-    .dependsOn(interactive)
-    .dependsOn(football)
-    .dependsOn(sport)
-    .dependsOn(coreNavigation)
-    .dependsOn(image)
-    .dependsOn(discussion)
-    .dependsOn(router)
-    .dependsOn(diagnostics)
-    .dependsOn(styleGuide)
-    .dependsOn(identity)
+  val dev = base("dev-build").dependsOn(
+    front,
+    facia,
+    article,
+    applications,
+    interactive,
+    football,
+    sport,
+    coreNavigation,
+    image,
+    discussion,
+    router,
+    diagnostics,
+    styleGuide,
+    identity)
 
-  val faciaDev = application("facia-dev-build")
-    .dependsOn(facia)
-    .dependsOn(article)
-    .dependsOn(applications)
-    .dependsOn(football)
-    .dependsOn(coreNavigation)
-    .dependsOn(image)
-    .dependsOn(discussion)
+  val faciaDev = application("facia-dev-build").dependsOn(
+    facia,
+    article,
+    applications,
+    football,
+    coreNavigation,
+    image,
+    discussion)
 
   val main = root().aggregate(
     common,

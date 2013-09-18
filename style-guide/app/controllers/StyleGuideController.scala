@@ -73,7 +73,7 @@ object StyleGuideController extends Controller with Logging with ExecutionContex
       .showFields("all")
       .response.map{response =>
         val articleOption = response.content.filter { _.isArticle } map { new Article(_) }
-        val storyPackage = response.storyPackage map { new Content(_) }
+        val storyPackage = response.storyPackage map { Content(_) }
         articleOption map { article => ArticlePage(article, storyPackage.filterNot(_.id == article.id)) }
     }
   }

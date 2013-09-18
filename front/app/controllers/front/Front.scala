@@ -3,7 +3,6 @@ package controllers.front
 import common._
 import model.Trailblock
 
-
 class Front extends Logging {
 
   private def allFronts = fronts.values

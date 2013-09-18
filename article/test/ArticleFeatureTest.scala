@@ -228,7 +228,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see a link to the corresponding desktop article")
-        findFirst(".main-site-link").getAttribute("href") should be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
       }
     }
 
@@ -239,7 +239,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see a link to the corresponding desktop article")
-        findFirst(".main-site-link").getAttribute("href") should
+        findFirst(".js-main-site-link").getAttribute("href") should
           be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
       }
     }
@@ -402,7 +402,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
-        findFirst("footer").getAttribute("role") should be("contentinfo")
+        findFirst(".footer-secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
         findFirst("#article").getAttribute("role") should be("main")
@@ -435,7 +435,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
     scenario("Story package with a link to a Poll") {
       Given("I'm on an article that has a story package linking to a Poll page")
 
-      HtmlUnit("/world/2013/aug/06/french-woman-breastfeed-service-gay-couples") { browser =>
+      HtmlUnit("/science/2013/aug/15/breastfeeding-six-months-breast-cancer") { browser =>
         import browser._
 
         Then("the poll should not appear in the list")

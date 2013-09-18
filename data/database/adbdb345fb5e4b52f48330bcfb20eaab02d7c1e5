@@ -1,0 +1,3333 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":497,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":50,
+    "orderBy":"newest",
+    "tag":{
+      "id":"type/video",
+      "type":"type",
+      "webTitle":"Video",
+      "webUrl":"http://www.theguardian.com/video",
+      "apiUrl":"http://content.guardianapis.com/video",
+      "references":[]
+    },
+    "results":[{
+      "id":"tv-and-radio/video/2013/sep/16/battle-labor-leader-roast-video",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2013-09-16T21:00:00Z",
+      "webTitle":"The battle to become Labor leader: The Roast - video",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/video/2013/sep/16/battle-labor-leader-roast-video",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/video/2013/sep/16/battle-labor-leader-roast-video",
+      "fields":{
+        "trailText":"<p>The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, the Coalition may win that too</p>",
+        "headline":"The battle to become Labor leader: The Roast - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tz36",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340778434/The-battle-for-Labor-lead-026.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"tv-and-radio/series/the-roast",
+        "type":"series",
+        "webTitle":"The Roast",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/series/the-roast",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/series/the-roast",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417419719",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340724056/The-battle-for-Labor-lead-001.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340749988/The-battle-for-Labor-lead-012.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"372",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340752027/The-battle-for-Labor-lead-013.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"90",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340754049/The-battle-for-Labor-lead-014.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"225",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340756043/The-battle-for-Labor-lead-015.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340758143/The-battle-for-Labor-lead-016.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"340",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340760183/The-battle-for-Labor-lead-017.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"54",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340762133/The-battle-for-Labor-lead-018.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"130",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340766175/The-battle-for-Labor-lead-020.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"132",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340768116/The-battle-for-Labor-lead-021.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"168",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340770492/The-battle-for-Labor-lead-022.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"180",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340772494/The-battle-for-Labor-lead-023.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"228",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340774476/The-battle-for-Labor-lead-024.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"276",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340776495/The-battle-for-Labor-lead-025.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"230",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340778434/The-battle-for-Labor-lead-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/16/130916RoastEp114-16x9.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RoastEp114_8080088.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RoastEp114_8080088.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/16/130916RoastEp114/130916RoastEp114.m3u8",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RoastEp114_8080088.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RoastEp114_8080088.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/16/130916RoastEp114_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RoastEp114_8080088.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RoastEp114_8080088.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/16/130916RoastEp114_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RoastEp114_8080088.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RoastEp114_8080088.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/16/130916RoastEp114_vpx.webm",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RoastEp114_8080088.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RoastEp114_8080088.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/16/130916RoastEp114-720.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RoastEp114_8080088.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RoastEp114_8080088.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        }]
+      },{
+        "id":"gu-image-417472712",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379340778434/The-battle-for-Labor-lead-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The battle for Labor leader: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at allegations of match-fixing, and the Labor leadership battle: given Labor's recent track record, The Coalition may win that too\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"football/video/2013/sep/16/australian-football-matchfixing-uk-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-09-16T11:51:42Z",
+      "webTitle":"Australian football matchfixing ring involves UK players - video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/sep/16/australian-football-matchfixing-uk-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/sep/16/australian-football-matchfixing-uk-video",
+      "fields":{
+        "trailText":"<p>Widespread matchfixing in Australia's second tier Victorian Premier Soccer League has been uncovered by Victoria police</p>",
+        "headline":"Australian football matchfixing ring involves UK players - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tnmg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329122188/UK-players-involved-in-Au-010.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/match-fixing",
+        "type":"keyword",
+        "webTitle":"Match-fixing",
+        "webUrl":"http://www.theguardian.com/football/match-fixing",
+        "apiUrl":"http://content.guardianapis.com/football/match-fixing",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/melbourne",
+        "type":"keyword",
+        "webTitle":"Melbourne",
+        "webUrl":"http://www.theguardian.com/world/melbourne",
+        "apiUrl":"http://content.guardianapis.com/world/melbourne",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417390707",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329109344/UK-players-involved-in-Au-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"230",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329110927/UK-players-involved-in-Au-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"90",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329112223/UK-players-involved-in-Au-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"225",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329113679/UK-players-involved-in-Au-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329115889/UK-players-involved-in-Au-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329118430/UK-players-involved-in-Au-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"54",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329119690/UK-players-involved-in-Au-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"340",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329120949/UK-players-involved-in-Au-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"130",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329122188/UK-players-involved-in-Au-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329123765/UK-players-involved-in-Au-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"132",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329125019/UK-players-involved-in-Au-012.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"168",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329126361/UK-players-involved-in-Au-013.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"180",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329127617/UK-players-involved-in-Au-014.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"228",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329128903/UK-players-involved-in-Au-015.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"276",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329130294/UK-players-involved-in-Au-016.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"372",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/16/130916matchfixing-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916matchfixing_8079077.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916matchfixing_8079077.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/16/130916matchfixing_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916matchfixing_8079077.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916matchfixing_8079077.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/16/130916matchfixing-720.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916matchfixing_8079077.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916matchfixing_8079077.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/16/130916matchfixing/130916matchfixing.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916matchfixing_8079077.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916matchfixing_8079077.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/16/130916matchfixing_vpx.webm",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916matchfixing_8079077.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916matchfixing_8079077.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        }]
+      },{
+        "id":"gu-image-417394096",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379329122188/UK-players-involved-in-Au-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"UK players involved in Australian football matchfixing ring - video",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"UK players involved in Australian football matchfixing ring - video Photograph: Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"tv-and-radio/video/2013/sep/12/coalition-clean-energy-finance-corporation-roast-video",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2013-09-12T21:00:00Z",
+      "webTitle":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/video/2013/sep/12/coalition-clean-energy-finance-corporation-roast-video",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/video/2013/sep/12/coalition-clean-energy-finance-corporation-roast-video",
+      "fields":{
+        "trailText":"<p>The Coalition is still in the midst of dismantling Labor's Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles</p>",
+        "headline":"The coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tyn2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996910356/The-Coalition-pulls-the-p-026.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"tv-and-radio/series/the-roast",
+        "type":"series",
+        "webTitle":"The Roast",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/series/the-roast",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/series/the-roast",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417136520",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996857676/The-Coalition-pulls-the-p-001.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996881632/The-Coalition-pulls-the-p-012.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"372",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996883672/The-Coalition-pulls-the-p-013.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"90",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996885760/The-Coalition-pulls-the-p-014.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"225",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996887970/The-Coalition-pulls-the-p-015.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996890248/The-Coalition-pulls-the-p-016.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"340",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996892311/The-Coalition-pulls-the-p-017.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"54",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996894463/The-Coalition-pulls-the-p-018.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"130",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996898659/The-Coalition-pulls-the-p-020.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"132",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996900636/The-Coalition-pulls-the-p-021.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"168",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996902531/The-Coalition-pulls-the-p-022.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"180",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996904516/The-Coalition-pulls-the-p-023.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"228",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996906444/The-Coalition-pulls-the-p-024.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"276",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996908439/The-Coalition-pulls-the-p-025.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"230",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996910356/The-Coalition-pulls-the-p-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor’s Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/12/130912RoastEp113-16x9.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130912RoastEp113_8066216.jpg",
+            "height":"360",
+            "durationMinutes":"10",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130912RoastEp113_8066216.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/12/130912RoastEp113-720.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130912RoastEp113_8066216.jpg",
+            "height":"360",
+            "durationMinutes":"10",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130912RoastEp113_8066216.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/12/130912RoastEp113_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130912RoastEp113_8066216.jpg",
+            "height":"360",
+            "durationMinutes":"10",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130912RoastEp113_8066216.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/12/130912RoastEp113/130912RoastEp113.m3u8",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130912RoastEp113_8066216.jpg",
+            "height":"360",
+            "durationMinutes":"10",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130912RoastEp113_8066216.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/12/130912RoastEp113_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130912RoastEp113_8066216.jpg",
+            "height":"360",
+            "durationMinutes":"10",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130912RoastEp113_8066216.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/12/130912RoastEp113_vpx.webm",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/12/130912RoastEp113_8066216.jpg",
+            "height":"360",
+            "durationMinutes":"10",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/12/130912RoastEp113_8066216.jpg",
+            "width":"480",
+            "durationSeconds":"8"
+          }
+        }]
+      },{
+        "id":"gu-image-417137368",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/12/1378996910356/The-Coalition-pulls-the-p-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"The Coalition pulls the plug on the Clean Energy Finance Corporation: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Coalition is still in the midst of dismantling Labor's Clean Energy Finance Corporation and Labor is still in the midst of dismantling itself with infighting and leadership struggles\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"tv-and-radio/video/2013/sep/11/clive-palmer-loophole-election-advertising-blackout-roast-video",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2013-09-11T21:00:00Z",
+      "webTitle":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/video/2013/sep/11/clive-palmer-loophole-election-advertising-blackout-roast-video",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/video/2013/sep/11/clive-palmer-loophole-election-advertising-blackout-roast-video",
+      "fields":{
+        "trailText":"<p>The Roast examines the proposals to reform a divided Senate, Clive Palmer's controversial election campaign and everything else important that's happened in the news</p>",
+        "headline":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tkz2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910397954/Clive-Palmer-finds-loopho-026.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"tv-and-radio/series/the-roast",
+        "type":"series",
+        "webTitle":"The Roast",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/series/the-roast",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/series/the-roast",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/clive-palmer",
+        "type":"keyword",
+        "webTitle":"Clive Palmer",
+        "webUrl":"http://www.theguardian.com/world/clive-palmer",
+        "apiUrl":"http://content.guardianapis.com/world/clive-palmer",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417054248",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910352070/Clive-Palmer-finds-loopho-001.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910377907/Clive-Palmer-finds-loopho-012.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"372",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910379267/Clive-Palmer-finds-loopho-013.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"90",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910380621/Clive-Palmer-finds-loopho-014.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"225",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910382314/Clive-Palmer-finds-loopho-015.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910383705/Clive-Palmer-finds-loopho-016.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"340",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910385030/Clive-Palmer-finds-loopho-017.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"54",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910386626/Clive-Palmer-finds-loopho-018.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"130",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910389512/Clive-Palmer-finds-loopho-020.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"132",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910390826/Clive-Palmer-finds-loopho-021.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"168",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910392169/Clive-Palmer-finds-loopho-022.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"180",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910393496/Clive-Palmer-finds-loopho-023.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"228",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910394853/Clive-Palmer-finds-loopho-024.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"276",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910396629/Clive-Palmer-finds-loopho-025.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"230",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910397954/Clive-Palmer-finds-loopho-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer’s controversial election campaign and everything else important that’s happened in the news\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/11/20130911RoastEp112-16x9.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/11/20130911RoastEp112-720.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/11/20130911RoastEp112_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/11/20130911RoastEp112_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/11/20130911RoastEp112/20130911RoastEp112.m3u8",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/11/20130911RoastEp112_vpx.webm",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/11/20130911RoastEp112_8060711.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        }]
+      },{
+        "id":"gu-image-417054728",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/11/1378910397954/Clive-Palmer-finds-loopho-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Clive Palmer finds loophole during election advertising blackout: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast examines the proposals to reform a divided Senate, Clive Palmer's controversial election campaign and everything else important that's happened in the news\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/sep/11/png-attack-trekkers-support-australia",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-11T07:31:22Z",
+      "webTitle":"PNG attack: Australian high commission helping to send trekkers home - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/sep/11/png-attack-trekkers-support-australia",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/sep/11/png-attack-trekkers-support-australia",
+      "fields":{
+        "trailText":"<p>A spokesman for the Australian high commission says assistance is being provided to the trekking group injured following an attack in Papua New Guinea in which two porters were hacked to death</p>",
+        "headline":"PNG attack: Australian high commission helping to send trekkers home - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tkb6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882298141/Australian-high-commissio-006.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/papua-new-guinea",
+        "type":"keyword",
+        "webTitle":"Papua New Guinea",
+        "webUrl":"http://www.theguardian.com/world/papua-new-guinea",
+        "apiUrl":"http://content.guardianapis.com/world/papua-new-guinea",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/newzealand",
+        "type":"keyword",
+        "webTitle":"New Zealand",
+        "webUrl":"http://www.theguardian.com/world/newzealand",
+        "apiUrl":"http://content.guardianapis.com/world/newzealand",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"travel/papuanewguinea",
+        "type":"keyword",
+        "webTitle":"Papua New Guinea",
+        "webUrl":"http://www.theguardian.com/travel/papuanewguinea",
+        "apiUrl":"http://content.guardianapis.com/travel/papuanewguinea",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417013716",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882298141/Australian-high-commissio-006.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Australian high commission is providing support to PNG trekkers",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"Australian high commission is providing support to PNG trekkers Photograph: AAP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882288437/Australian-high-commissio-001.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Australian high commission is providing support to PNG trekkers",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"Australian high commission is providing support to PNG trekkers Photograph: AAP",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882313922/Australian-high-commissio-013.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Australian high commission is providing support to PNG trekkers",
+            "height":"90",
+            "credit":"AAP",
+            "caption":"Australian high commission is providing support to PNG trekkers Photograph: AAP",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882316005/Australian-high-commissio-014.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Australian high commission is providing support to PNG trekkers",
+            "height":"225",
+            "credit":"AAP",
+            "caption":"Australian high commission is providing support to PNG trekkers Photograph: AAP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882318722/Australian-high-commissio-015.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Australian high commission is providing support to PNG trekkers",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"Australian high commission is providing support to PNG trekkers Photograph: AAP",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/11/130811PNGtrekkers_FromGAus-16x9.mp4",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882313922/Australian-high-commissio-013.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882318722/Australian-high-commissio-015.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/11/130811PNGtrekkers_FromGAus_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882313922/Australian-high-commissio-013.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882318722/Australian-high-commissio-015.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/11/130811PNGtrekkers_FromGAus_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882313922/Australian-high-commissio-013.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882318722/Australian-high-commissio-015.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/11/130811PNGtrekkers_FromGAus/130811PNGtrekkers_FromGAus.m3u8",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882313922/Australian-high-commissio-013.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882318722/Australian-high-commissio-015.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/11/130811PNGtrekkers_FromGAus_vpx.webm",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882313922/Australian-high-commissio-013.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882318722/Australian-high-commissio-015.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        }]
+      },{
+        "id":"gu-image-417014787",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378882298141/Australian-high-commissio-006.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Australian high commission is providing support to PNG trekkers",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"Australian high commission is providing support to PNG trekkers Photograph: AAP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/australia-culture-blog/video/2013/sep/11/archie-roach-deadly-awards-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-11T05:58:20Z",
+      "webTitle":"Archie Roach: 'The Deadly Awards mean so much to me' - video",
+      "webUrl":"http://www.theguardian.com/world/australia-culture-blog/video/2013/sep/11/archie-roach-deadly-awards-video",
+      "apiUrl":"http://content.guardianapis.com/world/australia-culture-blog/video/2013/sep/11/archie-roach-deadly-awards-video",
+      "fields":{
+        "trailText":"<p>The recipient of the lifetime contribution award talks about the importance of celebrating the achievements and heroes of the Aboriginal community</p>",
+        "headline":"Archie Roach: 'The Deadly Awards mean so much to me' - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tkac",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870112211/archie-roach-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/indigenous-australians",
+        "type":"keyword",
+        "webTitle":"Indigenous Australians",
+        "webUrl":"http://www.theguardian.com/world/indigenous-australians",
+        "apiUrl":"http://content.guardianapis.com/world/indigenous-australians",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/australia-culture-blog",
+        "type":"blog",
+        "webTitle":"Australia culture blog",
+        "webUrl":"http://www.theguardian.com/culture/australia-culture-blog",
+        "apiUrl":"http://content.guardianapis.com/culture/australia-culture-blog",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417004903",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870112211/archie-roach-009.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"archie roach",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"archie roach",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870129665/archie-roach-016.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"archie roach",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"archie roach",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870097484/archie-roach-002.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"archie roach",
+            "height":"90",
+            "credit":"AAP",
+            "caption":"archie roach",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870099694/archie-roach-003.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"archie roach",
+            "height":"225",
+            "credit":"AAP",
+            "caption":"archie roach",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870102512/archie-roach-004.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"archie roach",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"archie roach",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/11/130811DeadlyAwards_FromGAus_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870097484/archie-roach-002.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870102512/archie-roach-004.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/11/130811DeadlyAwards_FromGAus-16x9.mp4",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870097484/archie-roach-002.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870102512/archie-roach-004.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/11/130811DeadlyAwards_FromGAus_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870097484/archie-roach-002.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870102512/archie-roach-004.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/11/130811DeadlyAwards_FromGAus/130811DeadlyAwards_FromGAus.m3u8",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870097484/archie-roach-002.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870102512/archie-roach-004.jpg",
+            "width":"480",
+            "durationSeconds":"22"
+          }
+        }]
+      },{
+        "id":"gu-image-417005766",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/11/1378870112211/archie-roach-009.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"archie roach",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"archie roach",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"tv-and-radio/video/2013/sep/10/kevin-rudd-stand-down-labor-roast-video",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2013-09-10T21:00:00Z",
+      "webTitle":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/video/2013/sep/10/kevin-rudd-stand-down-labor-roast-video",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/video/2013/sep/10/kevin-rudd-stand-down-labor-roast-video",
+      "fields":{
+        "trailText":"<p>A look at the election aftermath and the journalists who landed on Christmas Island</p>",
+        "headline":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tjzk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822331723/Calls-for-Kevin-Rudd-to-s-026.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"tv-and-radio/series/the-roast",
+        "type":"series",
+        "webTitle":"The Roast",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/series/the-roast",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/series/the-roast",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-election-2013",
+        "type":"keyword",
+        "webTitle":"Australian election 2013",
+        "webUrl":"http://www.theguardian.com/world/australian-election-2013",
+        "apiUrl":"http://content.guardianapis.com/world/australian-election-2013",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/kevin-rudd",
+        "type":"keyword",
+        "webTitle":"Kevin Rudd",
+        "webUrl":"http://www.theguardian.com/world/kevin-rudd",
+        "apiUrl":"http://content.guardianapis.com/world/kevin-rudd",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-416957861",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822289067/Calls-for-Kevin-Rudd-to-s-001.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822308711/Calls-for-Kevin-Rudd-to-s-012.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"372",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822310310/Calls-for-Kevin-Rudd-to-s-013.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"90",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822311902/Calls-for-Kevin-Rudd-to-s-014.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"225",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822313450/Calls-for-Kevin-Rudd-to-s-015.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822315149/Calls-for-Kevin-Rudd-to-s-016.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"340",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822317129/Calls-for-Kevin-Rudd-to-s-017.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"54",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822318685/Calls-for-Kevin-Rudd-to-s-018.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"130",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822322003/Calls-for-Kevin-Rudd-to-s-020.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"132",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822323581/Calls-for-Kevin-Rudd-to-s-021.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"168",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822325254/Calls-for-Kevin-Rudd-to-s-022.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"180",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822326777/Calls-for-Kevin-Rudd-to-s-023.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"228",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822328552/Calls-for-Kevin-Rudd-to-s-024.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"276",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822330125/Calls-for-Kevin-Rudd-to-s-025.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"230",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822331723/Calls-for-Kevin-Rudd-to-s-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party’s sake\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/10/130910TheRoastEP111-16x9.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/10/130910TheRoastEP111_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/10/130910TheRoastEP111_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/10/130910TheRoastEP111-720.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/10/130910TheRoastEP111/130910TheRoastEP111.m3u8",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/10/130910TheRoastEP111_vpx.webm",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910TheRoastEP111_8055615.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        }]
+      },{
+        "id":"gu-image-416962634",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378822331723/Calls-for-Kevin-Rudd-to-s-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Calls for Kevin Rudd to stand down as Labor leader: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The Roast looks at the election aftermath, the journalists who landed on Christmas Island and the growing calls for Kevin Rudd to retire for his party's sake\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/sep/10/wildfires-threaten-homes-western-sydney-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-10T08:24:00Z",
+      "webTitle":"Bushfires threaten homes in western Sydney - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/sep/10/wildfires-threaten-homes-western-sydney-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/sep/10/wildfires-threaten-homes-western-sydney-video",
+      "fields":{
+        "trailText":"<p>Aerial footage shot above Castlereagh reveals how close fires are burning to nearby properties</p>",
+        "headline":"Bushfires threaten homes in western Sydney - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tjfh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799190006/Castlereagh-western-Sydne-005.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/sydney",
+        "type":"keyword",
+        "webTitle":"Sydney",
+        "webUrl":"http://www.theguardian.com/world/sydney",
+        "apiUrl":"http://content.guardianapis.com/world/sydney",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/wildfires",
+        "type":"keyword",
+        "webTitle":"Wildfires",
+        "webUrl":"http://www.theguardian.com/world/wildfires",
+        "apiUrl":"http://content.guardianapis.com/world/wildfires",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-416919173",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799186800/Castlereagh-western-Sydne-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"54",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799187870/Castlereagh-western-Sydne-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"340",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799188919/Castlereagh-western-Sydne-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"130",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799190006/Castlereagh-western-Sydne-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799191175/Castlereagh-western-Sydne-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"132",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799192223/Castlereagh-western-Sydne-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"168",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799193304/Castlereagh-western-Sydne-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"180",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799194552/Castlereagh-western-Sydne-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"228",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799195704/Castlereagh-western-Sydne-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"276",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799196791/Castlereagh-western-Sydne-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"372",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799197920/Castlereagh-western-Sydne-012.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799199068/Castlereagh-western-Sydne-013.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"90",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799200285/Castlereagh-western-Sydne-014.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"225",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799201331/Castlereagh-western-Sydne-015.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"360",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799202620/Castlereagh-western-Sydne-016.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"230",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/10/130910AustraliaWildfires-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/10/130910AustraliaWildfires_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/10/130910AustraliaWildfires_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/10/130910AustraliaWildfires-720.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/10/130910AustraliaWildfires/130910AustraliaWildfires.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/10/130910AustraliaWildfires_vpx.webm",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/10/130910AustraliaWildfires_8053819.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        }]
+      },{
+        "id":"gu-image-416965237",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/10/1378799190006/Castlereagh-western-Sydne-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Reuters",
+            "altText":"Castlereagh, western Sydney ",
+            "height":"84",
+            "credit":"Reuters/Reuters",
+            "caption":"Properties under threat in Castlereagh, western Sydney  Photograph: Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"tv-and-radio/video/2013/sep/09/prime-minister-kevin-rudd-tony-abbot-roast-video",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2013-09-09T21:00:00Z",
+      "webTitle":"Goodbye Kevin Rudd, hello Tony Abbott: The Roast - video",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/video/2013/sep/09/prime-minister-kevin-rudd-tony-abbot-roast-video",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/video/2013/sep/09/prime-minister-kevin-rudd-tony-abbot-roast-video",
+      "fields":{
+        "trailText":"<p>Join the Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First &amp; the Motoring Enthusiast parties in the Senate</p>",
+        "headline":"Goodbye Kevin Rudd, hello Tony Abbott: The Roast - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tj35",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734513326/Goodbye-Prime-Minister-Ke-026.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"tv-and-radio/series/the-roast",
+        "type":"series",
+        "webTitle":"The Roast",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/series/the-roast",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/series/the-roast",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-election-2013",
+        "type":"keyword",
+        "webTitle":"Australian election 2013",
+        "webUrl":"http://www.theguardian.com/world/australian-election-2013",
+        "apiUrl":"http://content.guardianapis.com/world/australian-election-2013",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-416863795",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734455249/Goodbye-Prime-Minister-Ke-001.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734478679/Goodbye-Prime-Minister-Ke-012.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"372",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734480629/Goodbye-Prime-Minister-Ke-013.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"90",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734483791/Goodbye-Prime-Minister-Ke-014.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"225",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734486024/Goodbye-Prime-Minister-Ke-015.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734488982/Goodbye-Prime-Minister-Ke-016.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"340",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734491247/Goodbye-Prime-Minister-Ke-017.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"54",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734493110/Goodbye-Prime-Minister-Ke-018.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"130",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734497175/Goodbye-Prime-Minister-Ke-020.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"132",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734499178/Goodbye-Prime-Minister-Ke-021.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"168",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734501014/Goodbye-Prime-Minister-Ke-022.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"180",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734503519/Goodbye-Prime-Minister-Ke-023.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"228",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734505449/Goodbye-Prime-Minister-Ke-024.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"276",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734511023/Goodbye-Prime-Minister-Ke-025.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"230",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734513326/Goodbye-Prime-Minister-Ke-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First & The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/9/130909RoastEp110-16x9.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/9/130909RoastEp110_8051235.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/9/130909RoastEp110_8051235.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/9/130909RoastEp110-720.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/9/130909RoastEp110_8051235.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/9/130909RoastEp110_8051235.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/9/130909RoastEp110_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/9/130909RoastEp110_8051235.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/9/130909RoastEp110_8051235.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/9/130909RoastEp110_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/9/130909RoastEp110_8051235.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/9/130909RoastEp110_8051235.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/9/130909RoastEp110_vpx.webm",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/9/130909RoastEp110_8051235.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/9/130909RoastEp110_8051235.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/9/130909RoastEp110/130909RoastEp110.m3u8",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/9/130909RoastEp110_8051235.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/9/130909RoastEp110_8051235.jpg",
+            "width":"480",
+            "durationSeconds":"42"
+          }
+        }]
+      },{
+        "id":"gu-image-416894874",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/9/1378734513326/Goodbye-Prime-Minister-Ke-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Goodbye Prime Minister Kevin Rudd, hello Tony Abbot: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"Join The Roast for an election wrap-up as we say goodbye to the Rudd-Gillard era, and hello to Family First &amp; The Motoring Enthusiast parties in the senate\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/video/2013/sep/09/christine-milne-greens-election-video",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-09T03:16:13Z",
+      "webTitle":"Christine Milne discusses election result - video",
+      "webUrl":"http://www.theguardian.com/world/video/2013/sep/09/christine-milne-greens-election-video",
+      "apiUrl":"http://content.guardianapis.com/world/video/2013/sep/09/christine-milne-greens-election-video",
+      "fields":{
+        "trailText":"<p>Greens leader Christine Milne says she is pleased that all Greens senators retained their seats and they picked up another senator in Tasmania</p>",
+        "headline":"Christine Milne discusses election result - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3ttjq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694658819/Christine-Milne-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/christine-milne",
+        "type":"keyword",
+        "webTitle":"Christine Milne",
+        "webUrl":"http://www.theguardian.com/world/christine-milne",
+        "apiUrl":"http://content.guardianapis.com/world/christine-milne",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-election-2013",
+        "type":"keyword",
+        "webTitle":"Australian election 2013",
+        "webUrl":"http://www.theguardian.com/world/australian-election-2013",
+        "apiUrl":"http://content.guardianapis.com/world/australian-election-2013",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-416821782",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694658819/Christine-Milne-009.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Christine Milne",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"Christine Milne gives her reaction to the election results in Canberra Photograph: AAP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694680240/Christine-Milne-016.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Christine Milne",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"Christine Milne gives her reaction to the election results in Canberra Photograph: AAP",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694640267/Christine-Milne-002.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Christine Milne",
+            "height":"90",
+            "credit":"AAP",
+            "caption":"Christine Milne gives her reaction to the election results in Canberra Photograph: AAP",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694642780/Christine-Milne-003.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Christine Milne",
+            "height":"225",
+            "credit":"AAP",
+            "caption":"Christine Milne gives her reaction to the election results in Canberra Photograph: AAP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694647181/Christine-Milne-004.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Christine Milne",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"Christine Milne gives her reaction to the election results in Canberra Photograph: AAP",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/9/130909milne_FromGAus-16x9.mp4",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694640267/Christine-Milne-002.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694647181/Christine-Milne-004.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/9/130909milne_FromGAus_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694640267/Christine-Milne-002.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694647181/Christine-Milne-004.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/9/130909milne_FromGAus_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694640267/Christine-Milne-002.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694647181/Christine-Milne-004.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/9/130909milne_FromGAus/130909milne_FromGAus.m3u8",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694640267/Christine-Milne-002.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694647181/Christine-Milne-004.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/9/130909milne_FromGAus_vpx.webm",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694640267/Christine-Milne-002.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694647181/Christine-Milne-004.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        }]
+      },{
+        "id":"gu-image-416822277",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/9/1378694658819/Christine-Milne-009.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"Christine Milne",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"Christine Milne gives her reaction to the election results in Canberra Photograph: AAP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[]
+  }
+}

@@ -2,17 +2,25 @@ define([
     //Common libraries
     "common",
     //Modules
+    "modules/facia-popular",
     "modules/masthead-relative-dates",
-    'modules/top-stories-show-more',
-    'modules/facia-popular'
+    'modules/facia-items-show-more',
+    'modules/facia-collection-popular'
 ], function (
     common,
+    popular,
     mastheadRelativeDates,
-    TopStoriesShowMore,
-    faciaPopular
+    ItemsShowMore,
+    CollectionPopular
 ) {
 
     var modules = {
+
+        showPopular: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                popular.render(context);
+            });
+        },
 
         relativiseMastheadDates: function () {
             common.mediator.on('page:front:ready', function(config, context) {
@@ -20,17 +28,28 @@ define([
             });
         },
 
-        showTopStoriesShowMore: function () {
+        showItemsShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.collection--small-stories', context).each(function(topStories) {
-                    var t = new TopStoriesShowMore(topStories);
+                common.$g('.js-items--show-more', context).each(function(items) {
+                    var t = new ItemsShowMore(items);
                 });
             });
         },
 
-        showFaciaPopular: function () {
+        showCollectionPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                faciaPopular.init(config, context);
+                var sections = [
+                    '.collection--highlights.collection--sport-section',
+                    '.collection--highlights.collection--business-section',
+                    '.collection--highlights.collection--lifeandstyle-section',
+                    '.collection--highlights.collection--technology-section',
+                    '.collection--highlights.collection--money-section',
+                    '.collection--highlights.collection--travel-section'
+                ];
+                common.toArray(context.querySelectorAll(sections.join(','))).forEach(function (collection) {
+                    var f = new CollectionPopular(collection);
+                    f.render();
+                });
             });
         }
 
@@ -39,9 +58,10 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.showPopular();
             modules.relativiseMastheadDates();
-            modules.showTopStoriesShowMore();
-            modules.showFaciaPopular();
+            modules.showItemsShowMore();
+            modules.showCollectionPopular();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

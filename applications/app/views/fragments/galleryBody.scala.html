@@ -10,7 +10,7 @@
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
         <div class="article__main-column">
-            <header class="article-head">
+            <header class="article__head">
                 @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
                 @fragments.headline(gallery.headline)
             </header>
@@ -48,7 +48,7 @@
 
                 <div class="js-gallery-holder gallery-container">
                     <ul class="unstyled">
-                    @gallery.images.zipWithRowInfo.map{ case(image, row) =>
+                    @gallery.crops.zipWithRowInfo.map{ case(image, row) =>
                         @if(row.rowNum == index) {
                             <li class="js-gallery-item-@row.rowNum js-current-gallery-slide" data-image="true"
                             data-index="@row.rowNum" data-total="@gallery.size">

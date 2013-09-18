@@ -85,6 +85,7 @@
     @include box-shadow(none);
 
     &:hover,
+    &:focus,
     &:active {
         background-color: transparent;
         @include box-shadow(none);

@@ -52,9 +52,10 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
     ContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
+      .showMedia("picture") // TODO remove after content api team have properly ordered elements
       .response.map{response =>
         val gallery = response.content.filter { _.isGallery } map { new Gallery(_) }
-        val storyPackage = response.storyPackage map { new Content(_) }
+        val storyPackage = response.storyPackage map { Content(_) }
 
         val model = gallery map { g => GalleryPage(g, storyPackage.filterNot(_.id == g.id), index, isTrail) }
         ModelOrResult(model, response)

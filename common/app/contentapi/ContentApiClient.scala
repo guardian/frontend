@@ -1,7 +1,6 @@
 package contentapi
 
 import com.gu.openplatform.contentapi.{FutureAsyncApi, Api}
-import com.gu.openplatform.contentapi.connection.{Proxy => ContentApiProxy}
 import conf.Configuration
 import scala.concurrent.Future
 import common.{ExecutionContexts, Edition, Logging, GuardianConfiguration}
@@ -20,7 +19,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
   val inlineElements = "picture,witness,video,embed"
 
-  val leadContentMaxAge = 2.days
+  val leadContentMaxAge = 1.day
 
   object EditorsPicsOrLeadContentAndLatest {
 
@@ -29,11 +28,11 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
         val leadContentCutOff = DateTime.now.toDateMidnight - leadContentMaxAge
 
-        var results = r.results.map(new Content(_))
-        var editorsPicks = r.editorsPicks.map(new Content(_))
+        var results = r.results.map(Content(_))
+        var editorsPicks = r.editorsPicks.map(Content(_))
 
         val leadContent = if (editorsPicks.isEmpty)
-            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff).map(new Content(_)).take(1)
+            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff).map(Content(_)).take(1)
           else
             Nil
 
@@ -42,7 +41,9 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   }
 }
 
-trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Logging { self: Api[Future] =>
+
+trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Logging {
+  self: Api[Future] =>
 
   def item (id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
@@ -53,7 +54,7 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
                 .showTags("all")
                 .showFields(trailFields)
                 .showInlineElements(inlineElements)
-                .showMedia("all")
+                .showElements("all")
                 .showReferences(references)
                 .showStoryPackage(true)
                 .tag(supportedTypes)
@@ -69,7 +70,7 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
                 .showInlineElements(inlineElements)
                 .showReferences(references)
                 .showFields(trailFields)
-                .showMedia("all")
+                .showElements("all")
                 .tag(supportedTypes)
     query.response.onFailure{case t: Throwable => log.warn("%s".format(t.toString))}
     query
@@ -89,13 +90,11 @@ class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsync
   }
 
   private def checkQueryIsEditionalized(url: String, parameters: Map[String, Any]) {
-    //you cannot editionalize tag queries                                                                                                                                  super.G
+    //you cannot editionalize tag queries
     if (!isTagQuery(url) && !parameters.isDefinedAt("edition")) throw new IllegalArgumentException(
       s"You should never, Never, NEVER create a query that does not include the edition. EVER: $url"
     )
   }
 
   private def isTagQuery(url: String) = url.endsWith("/tags")
-
-
 }

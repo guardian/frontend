@@ -1,10 +1,12 @@
+$headerHeight: 58px;
+
 /* Global wrapper
    ========================================================================== */
 
 #preloads {
     @include gs-container;
     clear: both;
-    margin: 58px auto 0;
+    margin-top: $headerHeight;
 
     @include mq(tablet) {
         margin-top: 104px;
@@ -16,7 +18,7 @@
    ========================================================================== */
 
 #header {
-    min-height: 58px;
+    min-height: $headerHeight;
     position: absolute;
     top: 0;
     left: 0;
@@ -36,14 +38,14 @@
 
         &:before {
             top: 0;
-            height: 58px;
+            height: $headerHeight;
             background-color: $blue;
         }
 
         &:after {
-            top: 58px;
+            top: $headerHeight;
             height: 40px;
-            background-color: #F5F5F2;
+            background-color: $mushroom;
             border-bottom: 1px solid $darkMushroom;
         }
     }
@@ -138,6 +140,7 @@
     max-width: $inArticleInlineImgWidth;
 }
 
+
 /* Preloads (for swipe)
    ========================================================================== */
 
@@ -166,6 +169,7 @@
     #preload-1 {left:     0;}
     #preload-2 {left:  100%;}
 }
+
 
 /* Ajax loading helpers
    ========================================================================== */
