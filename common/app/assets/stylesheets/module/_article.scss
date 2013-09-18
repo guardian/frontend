@@ -32,7 +32,7 @@
     @extend %type-6;
 }
 
-.article-head {
+.article__head {
     padding-top: $baseline*3;
 }
 
@@ -183,7 +183,7 @@ video {
    ========================================================================== */
 
 @include mq(tablet) {
-    .article-head,
+    .article__head,
     .main-caption {
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -293,7 +293,7 @@ video {
     .article-v2__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;
     }
-    .article-head {
+    .article__head {
         padding-top: $baseline*2;
         padding-bottom: $baseline*2;
     }
