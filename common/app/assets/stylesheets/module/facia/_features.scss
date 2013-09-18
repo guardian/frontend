@@ -132,7 +132,7 @@
             .item__title {
                 @include font-size(20, 24);
             }
-            .item__standfirst
+            .item__standfirst,
             .item__image-container {
                 display: none;
             }
