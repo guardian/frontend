@@ -10,24 +10,26 @@
 
     <div class="footer-secondary" role="contentinfo">
         <div class="colophon-wrapper">
-            <ul class="colophon">
-                <li class="colophon__item">@fragments.mainSiteLink(page)</li>
-                <li class="colophon__item"><a data-link-name="about" href="@LinkTo("/help/insideguardian/2012/nov/26/guardian-launches-new-mobile-site")">About this site</a></li>
-                <li class="colophon__item"><a data-link-name="help" href="@LinkTo("/help/2012/nov/26/guardian-mobile-site")">Help</a></li>
-                <li class="colophon__item"><a data-link-name="contact" href="@LinkTo("/help/contact-us")">Contact us</a></li>
-                <li class="colophon__item"><a data-link-name="feedback" target="_blank" href="http://survey.omniture.com/d1/hosted/815f9cfba1">Feedback</a></li>
-                <li class="colophon__item">
-                    <span class="swipe-switches">
-                        Swipe:
-                        <button class="swipe-switches__button swipe-switches__button--on"  data-link-name="switch-swipe-on">Turn ON</button>
-                        <button class="swipe-switches__button swipe-switches__button--off" data-link-name="switch-swipe-off">Turn OFF</button>
-                    </span>
-                </li>
-                <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">Terms &amp; conditions</a></li>
-                <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">Privacy policy</a></li>
-                <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">Cookie policy</a></li>
+            <ul class="colophon nav nav--two-columns">
+                <li class="nav__item">@fragments.mainSiteLink(page)</li>
+                <li class="nav__item"><a data-link-name="about" href="@LinkTo("/help/insideguardian/2012/nov/26/guardian-launches-new-mobile-site")">About this site</a></li>
+                <li class="nav__item"><a data-link-name="help" href="@LinkTo("/help/2012/nov/26/guardian-mobile-site")">Help</a></li>
+                <li class="nav__item"><a data-link-name="contact" href="@LinkTo("/help/contact-us")">Contact us</a></li>
+                <li class="nav__item"><a data-link-name="feedback" target="_blank" href="http://survey.omniture.com/d1/hosted/815f9cfba1">Feedback</a></li>
+                <li class="nav__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">Terms &amp; conditions</a></li>
+                <li class="nav__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">Privacy policy</a></li>
+                <li class="nav__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">Cookie policy</a></li>
             </ul>
         </div>
-        <div class="really-serious-copyright">© Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
+        <div class="box-indent">
+            <div class="really-serious-copyright">© Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
+            <div>
+                <span class="swipe-switches">
+                    Swipe:
+                    <button class="swipe-switches__button swipe-switches__button--on"  data-link-name="switch-swipe-on">Turn ON</button>
+                    <button class="swipe-switches__button swipe-switches__button--off" data-link-name="switch-swipe-off">Turn OFF</button>
+                </span>
+            </div>
+        </div>
     </div>
 </footer>

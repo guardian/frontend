@@ -20,20 +20,19 @@
             }
         <li class="nav__item @if(!isFooter){ mobile-only}"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
     </ul>
-    <ul class="nav nav--columns">
+    <ul class="nav nav--columns nav--section-divider u-cf">
         <li class="nav__item">
-            <ul class="nav nav--section-divider @if(isFooter){nav--footer nav--alternate-link-colors} u-cf">
-                <li class="nav__item @if(isFooter){nav__item--full}"><a class="nav__link" href="https://soulmates.theguardian.com/" target="_blank" data-link-name="Soulmates">Soulmates</a></li>
-                <li class="nav__item @if(isFooter){nav__item--full}"><a class="nav__link" href="http://jobs.theguardian.com/" target="_blank" data-link-name="Jobs">Jobs</a></li>
+            <ul class="nav @if(isFooter){nav--footer nav--alternate-link-colors}">
+                <li class="nav__item nav__item--full"><a class="nav__link" href="https://soulmates.theguardian.com/" target="_blank" data-link-name="Soulmates">Soulmates</a></li>
+                <li class="nav__item nav__item--full"><a class="nav__link" href="http://jobs.theguardian.com/" target="_blank" data-link-name="Jobs">Jobs</a></li>
             </ul>
-            
         </li>
         <li class="nav__item">
-            <ul class="nav nav--section-divider @if(isFooter){nav--footer nav--alternate-link-colors} u-cf">
+            <ul class="nav @if(isFooter){nav--footer nav--alternate-link-colors}">
                 @Edition.others(request).map{ edition =>
-                    <li class="nav__item @if(isFooter){nav__item--full}"><a class="nav__link edition @if(isFooter){nav__link--faded}" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="@LinkTo("/", edition)">@edition.displayName</a></li>
+                    <li class="nav__item nav__item--full"><a class="nav__link edition @if(isFooter){nav__link--faded}" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="@LinkTo("/", edition)">@edition.displayName</a></li>
                 }
-                <li class="nav__item @if(isFooter){hide-in-footer} tablet-only"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
+                <li class="nav__item @if(isFooter){hide-in-footer} nav__item--full tablet-only"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
             </ul>
         </li>
     </ul>
