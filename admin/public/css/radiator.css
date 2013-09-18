@@ -92,6 +92,12 @@ a {
 }
 
 
+.deployers {
+    list-style: none;
+    font-family: Georgia, serif;
+    color: #999;
+    font-weight: normal;
+}
 
 @media screen and (min-width: 600px) {
     .charts {
@@ -104,5 +110,5 @@ a {
         float: left;
         width: 50%;
     }
-},
+}
 

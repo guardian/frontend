@@ -21,7 +21,7 @@ window.addEventListener('load', function() {
     // riff raff - requires you to be on the guardian network
 
     $.ajax({
-                url: 'https://riffraff.gutools.co.uk/api/history?projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=50',
+                url: 'https://riffraff.gutools.co.uk/api/history?projectName=frontend&key=oFsACDUt5L2HfLgfdSW2Xf1nbOKHLN5A&pageSize=100',
                 dataType: 'jsonp',
                 success: function(deployments) {
 
@@ -40,6 +40,24 @@ window.addEventListener('load', function() {
                             }
                         });
 
+                    function renderDeployer(stage, revision){
+                        var targetId = stage + "-" + revision;
+
+                        if (!document.getElementById(targetId)) {
+                            var list = document.getElementById("deployers" + stage);
+                            var li = document.createElement('li');
+                            li.setAttribute("id", targetId);
+                            list.appendChild(li);
+                            $.ajax({
+                                    url: 'https://api.github.com/repos/guardian/frontend/commits/' + revision,
+                                    dataType: 'jsonp',
+                                    success: function(rev) {
+                                        li.innerHTML = rev.data.commit.author.name;
+                                    }
+                            });
+                        }
+                    }
+
                     function renderDeploys(stage, target) {
                         Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
                             var d  = latestDeployments[stage][deployment];
@@ -48,6 +66,9 @@ window.addEventListener('load', function() {
                             li.innerHTML = d.projectName;
                             li.setAttribute('title', d.projectName);
                             target.appendChild(li);
+                            if(d.status !== "Completed"){
+                                renderDeployer(stage, d.tags.vcsRevision);
+                            }
                         });
                     }
 
