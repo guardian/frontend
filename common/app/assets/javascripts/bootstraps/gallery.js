@@ -1,18 +1,18 @@
 define([
     "common",
 
-    "modules/gallery",
+    "modules/lightbox-gallery",
     "modules/analytics/gallery"
 ], function(
     common,
-    Gallery,
+    LightboxGallery,
     Tracking
 ) {
 
     var modules = {
         augmentGallery: function () {
             common.mediator.on('page:gallery:ready', function(config, context) {
-                var g = new Gallery(context).init();
+                var galleries = new LightboxGallery(config, context).init();
             });
         },
         initOphanTracking:  function(config) {
