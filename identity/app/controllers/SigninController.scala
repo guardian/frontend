@@ -54,7 +54,8 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
       { case (email, password, rememberMe) => {
         logger.trace("authing with ID API")
         Async {
-         signInService.getCookies( api.authBrowser(EmailPassword(email, password), idRequest.omnitureData), rememberMe ) map(_ match {
+          val authResponse = api.authBrowser(EmailPassword(email, password), idRequest.omnitureData)
+          signInService.getCookies(  authResponse, rememberMe ) map(_ match {
             case Left(errors) => {
               logger.error(errors.toString())
               logger.info(s"Auth failed for user, ${errors.toString()}")
