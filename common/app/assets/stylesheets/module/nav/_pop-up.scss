@@ -46,7 +46,7 @@
 
     .nav__item {
         @include mq(tablet) {
-            margin: 0 $gutter;
+            margin: 0 $gs-gutter;
             border-bottom: 1px solid $darkMushroom;
             text-align: right;
 
@@ -55,24 +55,12 @@
             }
         }
     }
-
-    .nav__link,
-    .nav--columns .nav__link {
-        @extend %type-7;
+    .nav__link {
+        color: #333333;
 
         @include mq(tablet) {
-            padding: $baseline*3 0;
-            @include font($serifheadline, 200, 14, 14);
+            @include font-size(14, 19);
+            padding: $baseline*2.5 0;
         }
-    }
-}
-
-
-/* Small
-   ========================================================================== */
-
-.nav-popup-sections {
-    .nav__link {
-        color: #444;
     }
 }
