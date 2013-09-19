@@ -268,7 +268,8 @@ define([
 
                 this.timerProgress = new CircularProgress({
                     el: this.liveCircleTogglerEl.querySelector('.lt__circle-wrapper'),
-                    activeColour: options.progressColour
+                    activeColour: options.progressColour,
+                    size: 30
                 });
             }
 

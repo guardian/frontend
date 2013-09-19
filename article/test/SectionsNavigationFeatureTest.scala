@@ -83,11 +83,11 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with S
 
         Then("I should see a link to the terms & Conditions in the page footer")
 
-        val terms = find(".footer p a", withText().contains("Terms"))
+        val terms = find(".footer li a", withText().contains("Terms"))
         terms.length should be > 0
 
         And("a link to the privacy policy page")
-        val privacy = find(".footer p a", withText().contains("Privacy"))
+        val privacy = find(".footer li a", withText().contains("Privacy"))
 
         privacy.length should be > 0
 

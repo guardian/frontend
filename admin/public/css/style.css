@@ -449,7 +449,6 @@ a.cta, .cta a {
 .fronts .list-header {
     color: #999999;
     overflow: hidden;
-    height: 40px;
 }
 
 .fronts .list-header a {
@@ -705,6 +704,7 @@ a.cta, .cta a {
 }
 
 .fronts input[type="text"] {
+    margin: 2px 0;
     background: #ffffff;
 }
 

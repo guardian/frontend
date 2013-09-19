@@ -433,129 +433,25 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417458893",
-        "relation":"main",
+        "id":"gu-image-417507682",
+        "relation":"body",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363426953/Swansea-Citys-Jonjo-Shelv-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379360333767/Swansea-Citys-Jonjo-Shelv-008.jpg",
           "typeData":{
             "source":"PA",
             "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
-            "height":"54",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363429196/Swansea-Citys-Jonjo-Shelv-002.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
-            "height":"130",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363430901/Swansea-Citys-Jonjo-Shelv-003.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
-            "height":"84",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363431972/Swansea-Citys-Jonjo-Shelv-004.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
-            "height":"132",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363433034/Swansea-Citys-Jonjo-Shelv-005.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
-            "height":"168",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363434273/Swansea-Citys-Jonjo-Shelv-006.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
-            "height":"180",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363435311/Swansea-Citys-Jonjo-Shelv-007.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
-            "height":"228",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363436552/Swansea-Citys-Jonjo-Shelv-008.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
+            "altText":"Swansea City's Jonjo Shelvey",
             "height":"276",
             "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363436552/Swansea-Citys-Jonjo-Shelv-008.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
-            "height":"276",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
+            "caption":"Swansea City's Jonjo Shelvey had a very mixed evening. Photograph: Nick Potts/PA",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417458894",
+        "id":"gu-image-417507683",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
