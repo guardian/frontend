@@ -34,7 +34,9 @@
                         }
                     }
 
-                    @fragments.byline(article.byline, article)
+                    <div class="article__meta-container">
+                        @fragments.byline(article.byline, article)
+                    </div>
 
                     <div class="js-article__container article__container u-cf">
                         <div class="article-body from-content-api"
@@ -43,9 +45,6 @@
                         </div>
                     </div>
 
-                    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                        <div class="article__discussion" id="comments"></div>
-                    }
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
@@ -76,6 +75,9 @@
 
         <div class="article-v2__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+                <h3 id="comments" class="type-2 article-zone">Comments</h3>
+                <div class="article__discussion"></div>
+
                 <div class="d-show-cta-wrapper">
                     <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion@article.shortUrlId}"
                        data-is-ajax data-link-name="View all comments">
