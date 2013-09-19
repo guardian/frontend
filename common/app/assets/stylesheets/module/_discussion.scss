@@ -306,7 +306,12 @@ $keylineSize: 1px;
     background: #F6644F;
     text-align: center;
     color: white;
-    text-decoration: none;
+
+    &,
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
 
     &:after {
         content: "";
