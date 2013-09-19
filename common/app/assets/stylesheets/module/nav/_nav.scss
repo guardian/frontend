@@ -80,8 +80,8 @@
         border-top: 1px solid $mushroom;
         height: auto;
         background-color: transparent;
-        font-weight: 200;
         -webkit-font-smoothing: antialiased;
+        @include font-size(14, 20);
     }
 }
 

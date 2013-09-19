@@ -1,7 +1,8 @@
 /* Footer navigation
    ========================================================================== */
 
-// Needs to be loaded alongside .footer or links will be white text on white bg
+// Needs to be loaded alongside .footer or links will be white text on
+// white background if global CSS fails to load
 .nav--footer .nav__link {
     color: #fff;
     border-top: 1px solid #4490ce;
@@ -25,7 +26,7 @@
 }
 .footer__banner {
     border-top: 1px solid lighten($blue, 55%);
-    background-color: darken($blue, 2%);
+    background-color: darken($blue, 3%);
     border-bottom: 1px solid lighten($blue, 7%);
     margin-bottom: $baseline;
 }
@@ -35,7 +36,7 @@
     }
 }
 .footer__secondary {
-    @include font($sans-serif, normal, 14, 20);
+    @include font($sans-serif, normal, 13, 19);
     padding-top: $baseline*3;
     color: lighten($darkGrey, 10%);
 
@@ -65,8 +66,7 @@
     }
 }
 .colophon__item {
-    display: inline-block; // doing this instead of float to prevent mixed item height float collision
-    vertical-align: top;
+    float: left;
 
     @include mq($to: desktop) {
         width: 46%;
@@ -79,7 +79,6 @@
         }
     }
     @include mq(desktop) {
-        float: left;
         margin-right: $gs-gutter;
         width: gs-span(2);
     }
@@ -97,8 +96,10 @@
 
 .footer__misc {
     padding-top: $baseline*2;
+    clear: both;
 
     @include mq(tablet) {
+        clear: none;
         padding-top: 0;
     }
 }
