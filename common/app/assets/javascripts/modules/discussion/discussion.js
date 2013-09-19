@@ -33,7 +33,7 @@ define([
                 '<div class="d-actions">' +
                 '<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
                     'Want to comment? Visit the desktop site</a>' +
-                '<button class="top js-top js-show-article" data-link-name="Discussion: Return to article">Return to article</button></div>',
+                '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
             clickstream           = new ClickStream({ addListener: false }),
             self;
 
@@ -194,11 +194,6 @@ define([
                 return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
             },
 
-            jumpToTop: function() {
-                var topPos   = bonzo(context.querySelector('.article-head')).offset().top;
-                window.scrollTo(0, topPos);
-            },
-
             bindEvents: function() {
                 // Setup events
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
@@ -211,14 +206,6 @@ define([
                         self.loadDiscussion();
                     }
 
-                    if (e.currentTarget.className.indexOf('js-top') !== -1) {
-                        if(document.body.className.indexOf('has-swipe') !== -1) {
-                            common.mediator.emit('modules:discussion:show', self.jumpToTop);
-                        } else {
-                            self.jumpToTop();
-                        }
-                    }
-
                     common.mediator.emit('modules:discussion:show');
                     location.hash = 'comments';
                 });
@@ -227,14 +214,6 @@ define([
 
                     bonzo(context.querySelector('.d-show-cta')).removeClass('u-h');
                     bonzo(self.mediaPrimaryNode).removeClass('media-primary--comments-on');
-
-                    if (e.currentTarget.className.indexOf('js-top') !== -1) {
-                        if(document.body.className.indexOf('has-swipe') !== -1) {
-                            common.mediator.emit('modules:discussion:show', self.jumpToTop);
-                        } else {
-                            self.jumpToTop();
-                        }
-                    }
 
                     location.hash = 'article';
                 });
