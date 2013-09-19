@@ -46,11 +46,11 @@
             margin: 0 $gs-gutter;
             text-align: right;
         }
-        > .nav__item {
-            .nav__link {
+        .nav--stacked > .nav__item {
+            > .nav__link {
                 border-bottom: 1px solid $darkMushroom;
             }
-            &:last-child .nav__link {
+            &:last-child > .nav__link {
                 border-bottom: none;
             }
         }

@@ -27,7 +27,7 @@
  */
 .nav--footer .nav__link {
     color: #ffffff;
-    border-top: 1px solid lighten($blue, 7%);
+    border-top-color: lighten($blue, 7%);
 }
 
 
@@ -35,7 +35,6 @@
    ========================================================================== */
 
 .footer {
-   overflow: hidden;
    padding: 0 0 $baseline*4;
    background-color: $mushroom;
 
@@ -70,7 +69,6 @@
 }
 .colophon {
     list-style: none;
-    overflow: hidden;
     margin: 0 0 $baseline*4;
 
     @include mq(tablet) {

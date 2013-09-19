@@ -49,9 +49,7 @@
 /* Columns
    ========================================================================== */
 
-// First, define a reusable structural rule
-.nav--two-columns {
-    overflow: hidden;
+.nav--columns {
     padding: $baseline $gs-gutter/2;
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -74,11 +72,6 @@
             }
         }
     }
-}
-
-// Then, skin
-.nav--columns {
-    @extend .nav--two-columns;
 
     .nav__link {
         display: block;
@@ -96,8 +89,7 @@
 }
 
 
-.nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
-.nav--stacked.nav--top-border-off > li:nth-child(1) a {
+.nav--top-border-off > .nav__item:nth-child(-n+2) .nav__link {
     border-top: none;
     padding-top: 0;
 }
