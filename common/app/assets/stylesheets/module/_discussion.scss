@@ -306,7 +306,12 @@ $keylineSize: 1px;
     background: #F6644F;
     text-align: center;
     color: white;
-    text-decoration: none;
+
+    &,
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
 
     &:after {
         content: "";
@@ -329,6 +334,7 @@ $keylineSize: 1px;
     border: 1px solid #bbb;
     position: relative;
     padding-left: $gutter*2;
+    width: auto;
 }
 
 .d-actions .top:before {

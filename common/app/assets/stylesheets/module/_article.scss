@@ -71,7 +71,7 @@
     @include box-sizing(border-box);
     @extend %type-11;
     display: block;
-    height: $gs-column-height;
+    min-height: $gs-column-height;
     padding-top: $baseline;
     margin-bottom: $baseline*3;
     border-top: 1px dotted $neutral3;
@@ -216,6 +216,26 @@ video {
     @include user-select;
 }
 
+.commentcount {
+    @extend %type-11;
+    display: none;
+    color: #F6644F;
+
+    i {
+        vertical-align: middle;
+    }
+
+    .article__head & {
+        display: block;
+        float: right;
+    }
+}
+
+.commentcount__label {
+    .article__head & {
+        @extend .u-h;
+    }
+}
 
 /* Layout changes across devices
    ========================================================================== */
@@ -241,6 +261,10 @@ video {
         .media-primary {
             margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
         }
+    }
+
+    .article__head .commentcount {
+        display: block;
     }
 }
 
@@ -342,6 +366,19 @@ video {
 
     .article__head {
         padding-top: $baseline*2;
+    }
+
+    .commentcount {
+        .article__head & {
+            display: none;
+        }
+
+        .article__meta-container & {
+            display: block;
+            padding-top: $baseline;
+            margin-bottom: $baseline*3;
+            border-top: 1px dotted $neutral3;
+        }
     }
 }
 

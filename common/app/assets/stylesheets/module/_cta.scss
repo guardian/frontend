@@ -53,18 +53,22 @@ button.cta {
         @extend %type-8;
         display: block;
         width: 100%;
-        color: #A1B7CF;
+        color: #ffffff;
         text-align: left;
-        background-color: $darkBlue;
+        background-color: darken($blue, 2%);
         border: none; //To normailse <button> styles
-        border-top: 1px solid #2B528B;
-        padding: $baseline*2 $gs-gutter/2;
+        border-top: 1px solid lighten($blue, 55%);
+        padding: $baseline*3 $gs-gutter/2;
 
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
         }
     }
+}
+.top--footer {
+    border-bottom: 1px solid lighten($blue, 7%);
+    margin-bottom: $baseline;
 }
 
 .cta-small {

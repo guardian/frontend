@@ -64,7 +64,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst(".main-site-link").href should endWith("/uk?view=desktop")
+          findFirst(".js-main-site-link").href should endWith("/uk?view=desktop")
       }
     }
 
@@ -75,7 +75,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst(".main-site-link").href should endWith("/us?view=desktop")
+          findFirst(".js-main-site-link").href should endWith("/us?view=desktop")
       }
     }
 
@@ -86,7 +86,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the copyright")
-          findFirst(".footer p").getText should startWith("© Guardian News and Media Limited")
+          findFirst(".footer .really-serious-copyright").getText should startWith("© Guardian News and Media Limited")
 
       }
     }

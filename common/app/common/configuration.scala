@@ -109,6 +109,10 @@ class GuardianConfiguration(
     }
   }
 
+  object github {
+    lazy val token = configuration.getStringProperty("github.token")
+  }
+
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin")
@@ -119,6 +123,8 @@ class GuardianConfiguration(
     lazy val apiRoot = configuration.getStringProperty("id.apiRoot").getOrElse("")
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
+    lazy val apiJsClientToken = configuration.getStringProperty("id.apiJsClientToken").getOrElse("")
+    lazy val webappUrl = configuration.getStringProperty("id.webapp.url").getOrElse("")
   }
 
   object static {
@@ -190,9 +196,6 @@ class GuardianConfiguration(
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
-  object nginx {
-    lazy val log: String = configuration.getStringProperty("nginx.log").getOrElse("/var/log/nginx/access.log")
-  }
 
   object aws {
     lazy val accessKey = configuration.getStringProperty("aws.access.key").getOrElse(throw new RuntimeException("AWS access key not set"))

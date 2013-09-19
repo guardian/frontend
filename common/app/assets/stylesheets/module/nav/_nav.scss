@@ -14,6 +14,11 @@
     list-style: none;
     margin: 0;
     padding: $baseline*2 0 $baseline;
+
+    .nav__item--full {
+        width: 100%;
+        margin: 0;
+    }
 }
 
     .nav > li,
@@ -35,113 +40,109 @@
 
     .nav--stacked > li {
         display: list-item;
+
+        a {
+            display: block;
+        }
     }
 
 
 /* Columns
    ========================================================================== */
 
-    .nav--columns {
-        padding: $baseline*2 $gs-gutter/2 $baseline;
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
+// First, define a reusable structural rule
+.nav--two-columns {
+    padding: $baseline*2 $gs-gutter/2 $baseline;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+    > .nav__item {
+        width: 46%;
+        margin-right: 3%;
+        display: inline-block; // doing this instead of float to prevent mixed item height float collision
+        vertical-align: top;
 
-        .nav__item {
-            width: 46%;
-            margin-right: 3%;
-            display: inline-block; // doing this instead of float to prevent mixed item height float collision
-            vertical-align: top;
-        }
-
-            .nav__item--full {
-                width: 100%;
-                margin: 0;
-            }
-
-        .nav__link {
-            @extend %type-10;
-            padding: $baseline*2 0;
-            border-top: 1px solid $mushroom;
-            display: block;
-            height: auto;
-            background-color: transparent;
-
-        }
-
-        li:nth-child(even) {
+        &:nth-child(even) {
             float: right; // this aligns right edge correctly
             margin-right: 0%;
             margin-left: 3%;
         }
     }
+}
 
-    .nav--columns-football {
-        padding: $baseline*2 0 $baseline;
+// Then, skin
+.nav--columns {
+    @extend .nav--two-columns;
+
+    .nav__link {
+        font-weight: 200;
+        font-family: $serifheadline;
+        padding: 3px 0 $baseline*4;
+        border-top: 1px solid $mushroom;
+        display: block;
+        height: auto;
+        background-color: transparent;
     }
+}
+
+.nav--columns-football {
+    padding: $baseline*2 0 $baseline;
+}
 
 
-
-    .nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
-    .nav--stacked.nav--top-border-off > li:nth-child(1) a {
-        border-top: none;
-        padding-top: 0;
-    }
+.nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
+.nav--stacked.nav--top-border-off > li:nth-child(1) a {
+    border-top: none;
+    padding-top: 0;
+}
 
 
 /* Section divider
    ========================================================================== */
 
-    .nav.nav--section-divider {
-        padding: $baseline*2 $gs-gutter/2;
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-        margin: 0;
-        background-color: $mushroom;
+.nav-popup--small .nav--section-divider {
+    margin: 0;
+    background-color: $mushroom;
+    padding: $baseline*2 $gs-gutter/2;
+
+    > .nav__item {
+        border-bottom: 0;
     }
 
-        .nav-popup--small .nav--section-divider {
-            @include mq(tablet) {
-                margin-top: -5px !important;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+    @include mq(tablet) {
+        margin-top: -5px !important;
+        border-top: $baseline*3 solid #ffffff;
 
-                .nav__item { margin: 0; }
-            }
+        .nav__item { margin: 0; }
+    }
+    @include mq(desktop) {
+        border-top: none;
+        margin-top: -13px !important;
+    }
+}
 
-            @include mq(1248px) {
-                margin-top: -13px !important;
-            }
+    .control--sections .i-nav-divider {
+        @include mq(tablet) {
+            border-left: 0;
         }
-
-        .control--sections .i-nav-divider {
-            @include mq(tablet) {
-                border-left: 0;
-            }
-        }
+    }
 
 
 /* Footer navigation
    ========================================================================== */
 
-.nav--footer,
-.nav--footer.nav--section-divider {
-    background-color: $blue;
+.nav--footer {
+    
 }
 
     .nav--footer .nav__link {
         color: #fff;
-        border-top: 1px solid #2B528B;
-    }
-
-    .nav--footer.nav--section-divider .nav__link {
-        border-bottom: 1px solid #2B528B;
-    }
-
-    .nav--footer.nav--section-divider {
-        color: #fff !important;
-        border-top: 2px solid #2B528B;
+        border-top: 1px solid #4490ce;
     }
 
 
@@ -158,7 +159,7 @@
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
-    background-color: #F5F5F2;
+    background-color: $mushroom;
     border-bottom: 1px solid $darkMushroom;
 
     @include mq(tablet) { display: block; }
@@ -211,8 +212,6 @@
     }
 
     .is-active .nav__link {
-        font-family: $serifheadline !important;
-        line-height: 18px !important;
         font-weight: bold;
     }
 
@@ -221,7 +220,8 @@
 }
 
 /* Local navigation
-========================================================================== */
+   ========================================================================== */
+
 .localnav-container {
     @include box-sizing(border-box);
     display: none;
@@ -329,21 +329,19 @@
 }
 
 
-
-
 /* Toolbar navigation
    ========================================================================== */
 
 .nav--toolbar {
     @extend %type-10;
     display: none;
-    margin: 0 $gutter/2 0 $gutter;
+    margin: 0 $gs-gutter/2 0 $gs-gutter;
     padding: $baseline*3 0 0;
     @include mq(tablet) { display: block; }
 
     .nav__item {
         margin: $baseline 0 0 0;
-        padding: $baseline $gutter/2;
+        padding: $baseline $gs-gutter/2;
         color: #fff;
         border-right: 1px solid #94B1CA;
 
@@ -358,4 +356,12 @@
         color: #fff;
         text-decoration: none;
     }
+}
+
+
+/* Faded link colors
+   ========================================================================== */
+
+.nav .nav__link--faded {
+    color: #9DBBD4;
 }

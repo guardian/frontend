@@ -29,9 +29,9 @@
                         </video>
                     </div>
 
-                    <div class="article__meta-container">
+                    <div class="article__meta-container js-comment-count">
                         @fragments.byline(video.byline, video)
-                        @fragments.article.dateline(video.webPublicationDate)
+                        @fragments.article.dateline(video.webPublicationDate, secondary=true)
                     </div>
 
                     <div class="video-standfirst">
