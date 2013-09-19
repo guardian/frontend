@@ -11,8 +11,9 @@
          itemscope itemtype="@gallery.schemaType" role="main">
         <div class="article__main-column">
             <header class="article__head">
-                @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
                 @fragments.headline(gallery.headline)
+
+                @fragments.article.dateline(gallery.webPublicationDate, gallery.isLive)
             </header>
         </div>
         <div class="article__main-column">
@@ -75,7 +76,11 @@
             <div class="ab-gallerytest--newstyle" data-link-name="Gallery thumbnail sheet">
                 @fragments.galleryThumbs(gallery)
             </div>
-            @fragments.byline(gallery.byline, gallery)
+
+            <div class="article__meta-container">
+                @fragments.byline(gallery.byline, gallery)
+                @fragments.article.dateline(gallery.webPublicationDate)
+            </div>
 
             @fragments.standfirst(gallery)
 

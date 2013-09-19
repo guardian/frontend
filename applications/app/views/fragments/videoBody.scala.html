@@ -12,8 +12,9 @@
                  itemscope itemtype="@video.schemaType" role="main">
             <div class="article__main-column">
                 <header class="article__head">
-                    @fragments.dateline(video.webPublicationDate, video.isLive)
                     @fragments.headline(video.headline)
+
+                    @fragments.article.dateline(video.webPublicationDate, video.isLive)
                 </header>
             </div>
             <div class="article__main-column">
@@ -29,9 +30,11 @@
                     </video>
                 </div>
 
-                <div class="gallery-byline">
+                <div class="article__meta-container">
                     @fragments.byline(video.byline, video)
+                    @fragments.article.dateline(video.webPublicationDate)
                 </div>
+                
                 <div class="video-standfirst">
                     @fragments.standfirst(video)
                 </div>
