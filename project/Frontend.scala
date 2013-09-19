@@ -7,7 +7,6 @@ object Frontend extends Build with Prototypes {
 
   val common = grunt("common").settings(
     libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % "5.26",
       "com.gu" %% "configuration" % "3.9",
       "com.gu.openplatform" %% "content-api-client" % "2.6",
 
@@ -25,7 +24,6 @@ object Frontend extends Build with Prototypes {
       "org.quartz-scheduler" % "quartz" % "2.2.0",
 
       "org.jboss.dna" % "dna-common" % "0.6",
-      "commons-io" % "commons-io" % "2.4",
       "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
     )
   )
@@ -57,8 +55,9 @@ object Frontend extends Build with Prototypes {
     templatesImport ++= Seq("discussion._")
   )
 
-  val router = application("router").dependsOn(commonWithTests).aggregate(common)
-  val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
+  val router = application("router")
+
+  val diagnostics = application("diagnostics").settings(
     libraryDependencies ++= Seq(
       "net.sf.uadetector" % "uadetector-resources" % "2013.04",
       "net.sf.opencsv" % "opencsv" % "2.3"
