@@ -83,6 +83,9 @@
             min-height: gs-height(4);
         }
     }
+    .item--with-image .item__standfirst {
+        display: none;
+    }
     .item__image-container {
         @include mq(tablet) {
             height: gs-height(4);
@@ -99,9 +102,15 @@
     // larger image styling
     @include mq(wide) {
         .item:first-child {
-            width: gs-span(4);
+            width: gs-span(12);
             height: gs-height(8);
-            padding-left: gs-span(8) + $gs-gutter;
+            &.item--with-image {
+                width: gs-span(4);
+                padding-left: gs-span(8) + $gs-gutter;
+            }
+            .item__standfirst {
+                 display: block;
+             }
             .item__image-container {
                 height: 100%;
                 width: gs-span(8);
