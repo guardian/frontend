@@ -134,13 +134,13 @@
     }
 }
 @include mq(leftCol) {
-    article .byline {
+    article .article__meta-container {
         float: left;
         margin-left: ($a-leftCol-width + $gs-gutter)*-1;
         margin-bottom: $baseline*4;
         width: $a-leftCol-width;
     }
-    article .media-primary + .byline {
+    article .media-primary + .article__meta-container {
         margin-left: 0;
         margin-bottom: 0;
         position: absolute;
@@ -178,6 +178,26 @@ video {
     @include user-select;
 }
 
+.commentcount {
+    @extend %type-11;
+    display: none;
+    color: #F6644F;
+
+    i {
+        vertical-align: middle;
+    }
+
+    .article-head & {
+        display: block;
+        float: right;
+    }
+}
+
+.commentcount__label {
+    .article-head & {
+        @extend .u-h;
+    }
+}
 
 /* Layout changes across devices
    ========================================================================== */
@@ -203,6 +223,10 @@ video {
         .media-primary {
             margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
         }
+    }
+
+    .article-head .commentcount {
+        display: block;
     }
 }
 
@@ -296,6 +320,16 @@ video {
     .article-head {
         padding-top: $baseline*2;
         padding-bottom: $baseline*2;
+    }
+
+    .commentcount {
+        .article-head & {
+            display: none;
+        }
+
+        .article__meta-container & {
+            display: block;
+        }
     }
 }
 
