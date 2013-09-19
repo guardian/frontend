@@ -319,23 +319,29 @@ define([
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
 
-            var alreadyOptedIn = !!userPrefs.get('releaseMessage');
+            var alreadyOptedIn = !!userPrefs.get('releaseMessage'),
+                releaseMessage = {
+                    show: function () {
+                        common.$g('#header').addClass('js-release-message');
+                        common.$g('.release-message').removeClass('u-h');
+                    },
+                    hide: function () {
+                        userPrefs.set('releaseMessage', true);
+                        common.$g('#header').removeClass('js-release-message');
+                        common.$g('.release-message').addClass('u-h');
+                    }
+                };
 
             if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
-               
-                // un-hide the release message
-                common.$g('#header').addClass('js-release-message');
-                common.$g('.release-message').removeClass('u-h');
 
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add("GU_VIEW", "mobile", 365);
                
-                bean.on(document, 'click', '.release-message-ack', function(e) {
-                    userPrefs.set('releaseMessage', true);
-                    common.$g('#header').removeClass('js-release-message');
-                    common.$g('.release-message').addClass('u-h');
-                });
+                releaseMessage.show();
                 
+                bean.on(document, 'click', '.release-message-ack', function(e) {
+                    releaseMessage.hide();
+                });
             }
         },
         
