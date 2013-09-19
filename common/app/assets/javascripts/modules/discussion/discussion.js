@@ -57,7 +57,10 @@ define([
 
                         self.getCommentCount(function(commentCount) {
                             if (commentCount > 0) {
-                                self.upgradeByline(commentCount);
+                                // Remove non-JS links
+                                common.$g('.js-show-discussion, .js-show-discussion a').attr('href', '#comments');
+
+                                self.insertCommentCounts(commentCount);
                                 self.bindEvents();
                             }
                         });
@@ -65,32 +68,14 @@ define([
 
             },
 
-            upgradeByline: function(commentCount) {
-                var bylineNode = bonzo(context.querySelector('article .byline')),
-                    isLive = (config.page.isLive) ? ' d-tabs--is-live' : '',
-                    tabsHtml = '<div class="d-tabs' + isLive + '">' +
-                                 '<ol class="d-tabs__container unstyled">' +
-                                 '  <li class="d-tabs__item d-tabs__item--byline d-tabs__item--is-active js-show-article" data-link-name="Article Tab" data-is-ajax>' +
-                                      bylineNode.html() +
-                                 '  </li>' +
-                                 '  <li class="d-tabs__item d-tabs__item--commentcount js-show-discussion" data-link-name="Discussion Tab">' +
-                                 '    <a href="/discussion/'+ discussionId + '" class="d-commentcount speech-bubble" data-is-ajax>' +
-                                 '       <span class="u-h">View all </span>' +
-                                 '       <span class="js-commentcount__number">' + commentCount + '</span>' +
-                                 '       <span class="u-h"> comments</span>' +
-                                 '    </a>' +
-                                 '  </li>' +
-                                 '</ol>' +
-                               '</div>';
+            insertCommentCounts: function(commentCount) {
+                var html = '<a href="#comments" class="js-show-discussion commentcount" data-link-name="Comment count">' +
+                           '  <i class="i i-comment-count-small"></i> ' + commentCount +
+                           '  <span class="commentcount__label">comments</span>' +
+                           '</a>';
 
-                if(bylineNode.length) {
-                    bylineNode.addClass('byline--cloned').after(tabsHtml);
-                } else {
-                    bonzo(context.querySelector('.js-article__container')).before(tabsHtml);
-                }
-                Array.prototype.forEach.call(context.querySelectorAll(".js-commentcount__number"), function(el) {
-                    el.innerHTML = commentCount;
-                });
+                context.querySelector(".js-commentcount__number").innerHTML = commentCount;
+                bonzo(context.querySelectorAll('.article__meta-container, .dateline')).append(html);
             },
 
             getCommentCount: function(callback) {
@@ -210,33 +195,16 @@ define([
             },
 
             jumpToTop: function() {
-                var tabsNode = context.querySelector('.d-tabs__container'),
-                    topPos   = bonzo(tabsNode).offset().top - tabsNode.offsetHeight;
-
+                var topPos   = bonzo(context.querySelector('.article-head')).offset().top;
                 window.scrollTo(0, topPos);
             },
 
             bindEvents: function() {
                 // Setup events
-                var tabsNode = context.querySelector('.d-tabs__container');
-
                 bean.on(context, 'click', '.js-show-discussion', function(e) {
-                    e.preventDefault();
-
-                    //Toggles view for accidental clicks
-                    if(self.discussionContainerNode.style.display === 'block' && commentsHaveLoaded) {
-                        bean.fire(context.querySelector('.js-show-article'), 'click');
-                        return;
-                    }
-
-                    bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
-                    bonzo(tabsNode.querySelector('.d-tabs__item--commentcount')).addClass('d-tabs__item--is-active');
 
                     bonzo(context.querySelector('.d-show-cta')).addClass('u-h');
                     bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');
-
-                    self.discussionContainerNode.style.display = 'block';
-                    self.articleContainerNode.style.display = 'none';
 
                     if (!commentsHaveLoaded) {
                         // Don't request again if we've already done it
@@ -256,16 +224,9 @@ define([
                 });
 
                 bean.on(context, 'click', '.js-show-article', function(e) {
-                    // No preventDefault here, as there may be links in the byline
-
-                    bonzo(tabsNode.querySelectorAll('.d-tabs__item')).removeClass('d-tabs__item--is-active');
-                    bonzo(tabsNode.querySelector('.d-tabs__item--byline')).addClass('d-tabs__item--is-active');
 
                     bonzo(context.querySelector('.d-show-cta')).removeClass('u-h');
                     bonzo(self.mediaPrimaryNode).removeClass('media-primary--comments-on');
-
-                    self.discussionContainerNode.style.display = 'none';
-                    self.articleContainerNode.style.display = 'block';
 
                     if (e.currentTarget.className.indexOf('js-top') !== -1) {
                         if(document.body.className.indexOf('has-swipe') !== -1) {
@@ -275,13 +236,7 @@ define([
                         }
                     }
 
-                    // We force analytics on the Article/Byline tab, because
-                    // the byline can be a complex mix of multiple <a>'s
-                    if (e.target.className.match('.d-tabs__item--byline')) {
-                        common.mediator.emit('module:clickstream:click', clickstream.getClickSpec({el: e.target}, true));
-                    }
-
-                    location.hash = 'story';
+                    location.hash = 'article';
                 });
 
                 bean.on(context, 'click', '.js-show-more-comments', function(e) {
