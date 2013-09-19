@@ -146,6 +146,16 @@ define(['common',
             })
         });
 
+        it("should go to first image if the URL specifies ?index=0", function() {
+            document.querySelector('.trail--gallery .link-to-image').setAttribute('href', '/link/to/gallery?index=0');
+
+            bean.fire(document.querySelector('.trail--gallery .link-to-image'), 'click');
+            waits(100);
+            runs(function() {
+                expect(document.querySelector('.js-image-index').innerHTML).toBe('1');
+            })
+        });
+
         it("should present error page if the server doesn't respond properly", function() {
             common.$g('.overlay').remove();
 
