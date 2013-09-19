@@ -187,14 +187,14 @@ video {
         vertical-align: middle;
     }
 
-    .article-head & {
+    .article__head & {
         display: block;
         float: right;
     }
 }
 
 .commentcount__label {
-    .article-head & {
+    .article__head & {
         @extend .u-h;
     }
 }
@@ -225,7 +225,7 @@ video {
         }
     }
 
-    .article-head .commentcount {
+    .article__head .commentcount {
         display: block;
     }
 }
@@ -323,7 +323,7 @@ video {
     }
 
     .commentcount {
-        .article-head & {
+        .article__head & {
             display: none;
         }
 
