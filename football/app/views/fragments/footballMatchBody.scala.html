@@ -7,8 +7,8 @@
         <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
     </h2>
 
-    <article class="article football-article" role="main">
-        <header class="article-head">
+    <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">
+        <header class="article__head">
             <p class="dateline type-11">
                 @fragments.status(page.theMatch)
                 <time data-timestamp="@page.theMatch.date.getMillis">
@@ -28,7 +28,9 @@
         </div>
         <div class="article__main-column">
             @if(page.theMatch.isLive) {
-                <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
+                <div class="live-toolbar">
+                    <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
+                </div>
             }
             <div class="match-stats">
                 @fragments.matchStats(page)

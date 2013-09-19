@@ -96,7 +96,7 @@ define([
 
             showColumns : function(sectionsHeader, sectionsNav) {
                 common.$g('.nav__item', sectionsHeader).removeClass('u-h');
-                common.$g('.nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
+                common.$g('nav > .nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
             },
 
             hideColumns :  function(sectionsHeader, sectionsNav) {
@@ -104,7 +104,7 @@ define([
                     visibleItems = [],
                     popupItems = common.$g('.nav__item', sectionsHeader).removeClass('u-h');
 
-                common.$g('.nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
+                common.$g('nav > .nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
 
                 common.$g('.nav__item', sectionsNav).each(function(e) {
                     firstTopPos = firstTopPos || bonzo(e).offset().top;

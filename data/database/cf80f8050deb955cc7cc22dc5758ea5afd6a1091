@@ -22,16 +22,15 @@
       "id":"world/2013/sep/17/syria-crisis-france-lobbies-russia-tough-un-resolution-live",
       "sectionId":"world",
       "sectionName":"World news",
-      "webPublicationDate":"2013-09-17T09:04:40Z",
+      "webPublicationDate":"2013-09-17T10:37:27Z",
       "webTitle":"Syria crisis: France lobbies Russia for tough UN resolution - live updates",
       "webUrl":"http://www.theguardian.com/world/2013/sep/17/syria-crisis-france-lobbies-russia-tough-un-resolution-live",
       "apiUrl":"http://content.guardianapis.com/world/2013/sep/17/syria-crisis-france-lobbies-russia-tough-un-resolution-live",
       "fields":{
         "trailText":"Follow live updates as France and Russia hold Syria talks in Moscow and UN inspectors confirmed a chemical weapons attack took place in Syria last month",
-        "headline":"Syria crisis: France lobbies Russia for tough UN resolution - live updates",
+        "headline":"Syria crisis: France and Russia clash over threat of force - live updates",
         "hasStoryPackage":"true",
         "shortUrl":"http://gu.com/p/3tze5",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403085482/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-140x84.jpeg",
         "wordcount":"1",
         "liveBloggingNow":"true"
       },
@@ -193,147 +192,320 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
+        "id":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403084203/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-220x132.jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412310543/04496f68-ec56-40bb-b2b6-2dad33c7c5db-1020x698.jpeg",
           "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403084203/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-220x132.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
-            "height":"132",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403084506/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-380x228.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403084506/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-380x228.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
-            "height":"228",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403084762/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-460x276.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403084762/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-460x276.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
-            "height":"276",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403085073/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-620x372.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403085073/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-620x372.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
-            "height":"372",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403085482/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-140x84.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403085482/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-140x84.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
-            "height":"84",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403085815/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-1020x612.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403085815/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-1020x612.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
-            "height":"612",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412310543/04496f68-ec56-40bb-b2b6-2dad33c7c5db-1020x698.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"698",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
             "width":"1020"
           }
         },{
           "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403086508/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-2060x1236.jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412310735/04496f68-ec56-40bb-b2b6-2dad33c7c5db-380x260.jpeg",
           "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403086508/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-2060x1236.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
-            "height":"1236",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
-            "width":"2060"
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412310735/04496f68-ec56-40bb-b2b6-2dad33c7c5db-380x260.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"260",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
+            "width":"380"
           }
         },{
           "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403087249/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-540x324.jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412311000/04496f68-ec56-40bb-b2b6-2dad33c7c5db-540x369.jpeg",
           "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403087249/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-540x324.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
-            "height":"324",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412311000/04496f68-ec56-40bb-b2b6-2dad33c7c5db-540x369.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"369",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
             "width":"540"
           }
         },{
           "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403087500/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-1024x768.jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412311752/04496f68-ec56-40bb-b2b6-2dad33c7c5db-220x150.jpeg",
           "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403087500/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-1024x768.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412311752/04496f68-ec56-40bb-b2b6-2dad33c7c5db-220x150.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"150",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412312001/04496f68-ec56-40bb-b2b6-2dad33c7c5db-620x424.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412312001/04496f68-ec56-40bb-b2b6-2dad33c7c5db-620x424.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"424",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412312153/04496f68-ec56-40bb-b2b6-2dad33c7c5db-460x315.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412312153/04496f68-ec56-40bb-b2b6-2dad33c7c5db-460x315.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"315",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412312467/04496f68-ec56-40bb-b2b6-2dad33c7c5db-140x96.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412312467/04496f68-ec56-40bb-b2b6-2dad33c7c5db-140x96.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"96",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412312588/04496f68-ec56-40bb-b2b6-2dad33c7c5db-300x205.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412312588/04496f68-ec56-40bb-b2b6-2dad33c7c5db-300x205.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"205",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412313377/04496f68-ec56-40bb-b2b6-2dad33c7c5db-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412313377/04496f68-ec56-40bb-b2b6-2dad33c7c5db-2048x1536.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"1536",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412314690/04496f68-ec56-40bb-b2b6-2dad33c7c5db-2060x1409.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412314690/04496f68-ec56-40bb-b2b6-2dad33c7c5db-2060x1409.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
+            "height":"1409",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412315792/04496f68-ec56-40bb-b2b6-2dad33c7c5db-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379412315792/04496f68-ec56-40bb-b2b6-2dad33c7c5db-1024x768.jpeg",
+            "source":"  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "photographer":"Metzel Mikhail",
+            "altText":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow.",
             "height":"768",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
+            "credit":"Metzel Mikhail/  Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "caption":"Russian Foreign Minister Sergei Lavrov talks with French Foreign Affairs Minister Laurent Fabius in Moscow. Photograph: Metzel Mikhail/ITAR-TASS Photo/Corbis",
+            "mediaId":"gu-fc-09d201aa-39f4-4b16-8913-09adff427fb0",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411032581/894831a5-17a8-4018-b28c-06763a6fca92-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411032581/894831a5-17a8-4018-b28c-06763a6fca92-380x228.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"228",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411034004/894831a5-17a8-4018-b28c-06763a6fca92-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411034004/894831a5-17a8-4018-b28c-06763a6fca92-140x84.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"84",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411034218/894831a5-17a8-4018-b28c-06763a6fca92-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411034218/894831a5-17a8-4018-b28c-06763a6fca92-1020x612.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"612",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411034922/894831a5-17a8-4018-b28c-06763a6fca92-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411034922/894831a5-17a8-4018-b28c-06763a6fca92-2060x1236.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"1236",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411035631/894831a5-17a8-4018-b28c-06763a6fca92-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411035631/894831a5-17a8-4018-b28c-06763a6fca92-620x372.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"372",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411035816/894831a5-17a8-4018-b28c-06763a6fca92-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411035816/894831a5-17a8-4018-b28c-06763a6fca92-460x276.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"276",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411036399/894831a5-17a8-4018-b28c-06763a6fca92-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411036399/894831a5-17a8-4018-b28c-06763a6fca92-2048x1536.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"1536",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411037201/894831a5-17a8-4018-b28c-06763a6fca92-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411037201/894831a5-17a8-4018-b28c-06763a6fca92-220x132.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"132",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411037525/894831a5-17a8-4018-b28c-06763a6fca92-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411037525/894831a5-17a8-4018-b28c-06763a6fca92-1024x768.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"768",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
             "width":"1024"
           }
         },{
           "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403088225/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-300x180.jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411038022/894831a5-17a8-4018-b28c-06763a6fca92-540x324.jpeg",
           "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379403088225/7c25cd9a-a9c0-449c-a36c-d765ad44dec8-300x180.jpeg",
-            "source":"Xinhua /Landov / Barcroft Media",
-            "photographer":"Xinhua /Landov / Barcroft Media",
-            "altText":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris, France.   France, Britain and the United States on Monday called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms.",
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411038022/894831a5-17a8-4018-b28c-06763a6fca92-540x324.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
+            "height":"324",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411038354/894831a5-17a8-4018-b28c-06763a6fca92-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411038354/894831a5-17a8-4018-b28c-06763a6fca92-300x180.jpeg",
+            "source":"EPA",
+            "photographer":"MAXIM SHIPENKOV",
+            "altText":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow",
             "height":"180",
-            "credit":"Xinhua /Landov / Barcroft Media/Xinhua /Landov / Barcroft Media",
-            "caption":"French Foreign Minister Laurent Fabius and US Secretary of State Kerry at a joint press conference in Paris. France, Britain and the US called for a \"strong and robust\" UN resolution which includes an accurate schedule and \"binding\" conditions on Syrian handover of chemical arms. Photograph: Xinhua/Landov/Barcroft Media",
-            "mediaId":"gu-fc-31f3205c-0c36-4cae-9150-92badc16acf8",
+            "credit":"MAXIM SHIPENKOV/EPA",
+            "caption":"Russian foreign minister, Sergei Lavrov (right), talks to French foreign affairs minister, Laurent Fabius, in Moscow. Photograph: Maxim Shipenkov/EPA",
+            "mediaId":"gu-fc-221de53f-0c1d-4728-94e5-64640eb4dc2b",
             "width":"300"
           }
         }]

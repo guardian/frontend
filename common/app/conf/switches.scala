@@ -44,7 +44,7 @@ object Switches extends Collections {
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
-    safeState = On)
+    safeState = Off)
 
   // Advertising Switches
 
@@ -195,6 +195,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
     safeState = Off)
 
+  val ABMostPopularFromFacebook = Switch("A/B Tests", "ab-most-popular-from-facebook",
+    "If this is switched on an AB test runs to trial presenting visitors from Facebook with Most Popular from Facebook",
+    safeState = Off)
+
 
   // Sport Switch
 
@@ -260,7 +264,8 @@ object Switches extends Collections {
     ABExpandableMostPopular,
     ABRightHandCard,
     ABLiveBlogShowMore,
-    CssFromStorageSwitch
+    CssFromStorageSwitch,
+    ABMostPopularFromFacebook
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

@@ -61,15 +61,14 @@
 
                 <span class="savingIndicator" data-bind="visible: state.loadIsPending">SAVING</span>
 
-                <div class="list-header" data-bind="if: !state.editingConfig()">
+                <div class="list-header">
 
                     <div class="list-header__title">
                         <span class="list-header__edition" data-bind="text: edition"></span>
                         <span class="list-header__section" data-bind="text: section"></span>
                         <span class="list-header__role"    data-bind="text: configMeta.roleName"></span>
-                        <span>:</span>
-                        <span>
-                            <a class="list-header__display" data-bind="
+                        <span data-bind="visible: !state.editingConfig()">
+                            : <a class="list-header__display" data-bind="
                                 css: { 'list-header__display--is-set': !!collectionMeta.displayName() },
                                 text: collectionMeta.displayName() || 'Add Title',
                                 click: toggleEditingConfig"></a></span>
@@ -77,6 +76,14 @@
                         <span class="list-header__role__description">
                             : <span data-bind="text: configMeta.roleDescription"></span>
                         </span>
+                    </div>
+
+                    <div class="list-config" data-bind="visible: state.editingConfig">
+                        <div>
+                            <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Add Title"/>
+                        </div>
+                        <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
+                        <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
                     </div>
 
                     <div class="list-header__status">
@@ -110,15 +117,6 @@
                             Empty
                         <!-- /ko -->
                     </div>
-                </div>
-
-                <div class="list-config" data-bind="visible: state.editingConfig">
-                    <div class="list-header__display">Title:</div>
-                    <div>
-                        <input type="text" data-bind="value: collectionMeta.displayName"/>
-                    </div>
-                    <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
-                    <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
                 </div>
 
                 <div class="needs-more" data-bind="if: needsMore">

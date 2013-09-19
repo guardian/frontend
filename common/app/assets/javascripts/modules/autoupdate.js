@@ -8,14 +8,18 @@ define([
     'bonzo',
     'bean',
     'qwery',
-    'modules/userPrefs'
+    'modules/userPrefs',
+    'modules/detect',
+    'modules/circular-progress'
 ], function (
     common,
     ajax,
     bonzo,
     bean,
     qwery,
-    userPrefs
+    userPrefs,
+    detect,
+    CircularProgress
 ) {
     /*
         @param {Object} options hash of configuration options:
@@ -35,6 +39,8 @@ define([
             'manipulationType' : 'html'
         }, config);
 
+        var unreadBlocks = 0;
+
         this.template =
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--on"' +
             '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
@@ -49,6 +55,9 @@ define([
             '    <span class="u-h">is</span>' +
             '    <span class="lt__value">Off</span>' +
             '    <span class="u-h">(turn on)</span>' +
+            '  </button>' +
+            '  <button class="u-button-reset live-toggler live-toggler--circle js-auto-update">' +
+                '<span class="lt__circle-wrapper"></span>' +
             '  </button>';
 
         // View
@@ -65,7 +74,12 @@ define([
                     if (options.responseSelector) {
                         $attachTo[manipulation](common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
                     } else {
-                        $attachTo[manipulation](res.html);
+                        var elementsToAdd = bonzo.create('<div>' + res.html + '</div>')[0];
+                        if (manipulation === 'prepend') {
+                            bonzo(elementsToAdd.children).addClass('autoupdate--new');
+                        }
+
+                        $attachTo[manipulation](elementsToAdd.innerHTML);
                     }
                     // add a timestamp to the attacher
                     $attachTo.attr('data-last-updated', date);
@@ -80,6 +94,21 @@ define([
                         }
                     }
                 }
+
+                if (manipulation === 'prepend') {
+                    var newElements = attachTo.querySelectorAll('.autoupdate--new');
+
+                    unreadBlocks = newElements.length;
+
+                    if (detect.pageVisible()) {
+                        unreadBlocks = 0;
+                        this.revealNewElements();
+                    }
+
+                    common.mediator.emit('modules:autoupdate:unread', unreadBlocks);
+                }
+
+
                 common.mediator.emit('modules:autoupdate:render');
             },
 
@@ -94,7 +123,9 @@ define([
                     this.off();
                 }
 
-                btn.parentNode.getElementsByClassName('js-auto-update--' + action)[0].className += ' ' + options.activeClass;
+                if (!options.progressToggle) {
+                    btn.parentNode.getElementsByClassName('js-auto-update--' + action)[0].className += ' ' + options.activeClass;
+                }
 
                 this.setPref(action);
             },
@@ -102,8 +133,20 @@ define([
             destroy: function () {
                 bonzo('.update').remove();
                 common.mediator.emit('modules:autoupdate:destroyed');
+            },
+
+            revealNewElements: function() {
+                var newElements = options.attachTo.querySelectorAll('.autoupdate--new');
+                bonzo(newElements).addClass('autoupdate--highlight');
+
+                setTimeout(function() {
+                    bonzo(newElements).removeClass('autoupdate--new')
+                                      .removeClass('autoupdate--highlight');
+                }, 5000);
             }
         };
+
+
 
         // Model
         this.load = function (url) {
@@ -132,15 +175,57 @@ define([
 
         this.on = function () {
             this.off();
+            this.nextReload = new Date().getTime() + options.delay;
             var that = this;
 
             this.interval = window.setInterval(function() {
                 that.load.call(that);
+                that.nextReload = new Date().getTime() + options.delay;
             }, options.delay);
+
+
+            // If the circle progress bar is on, kick it off
+            if (options.progressToggle) {
+                this.timerProgress.enable()
+                                  .render(options.delay/1000, 100);
+
+                this.timerProgressInterval = window.setInterval(function() {
+                    var now = new Date().getTime(),
+                        msTillReload = that.nextReload - now,
+                        countdown = Math.round(msTillReload/1000),
+                        percent = (msTillReload / options.delay) * 100;
+
+                    if (msTillReload < 0) {
+                        that.nextReload = new Date().getTime() + options.delay;
+                    }
+
+                    that.timerProgress.render(countdown, percent);
+                }, 1000);
+
+                bonzo(this.liveCircleTogglerEl).attr({
+                    'data-action': 'off',
+                    'data-link-name': 'autoupdate off',
+                    'title': 'Turn auto update off'
+                });
+            }
         };
 
         this.off = function () {
             if(this.interval) { window.clearInterval(this.interval); }
+
+            if (options.progressToggle) {
+                if (this.timerProgressInterval) {
+                    window.clearInterval(this.timerProgressInterval);
+                }
+
+                this.timerProgress.disable();
+
+                bonzo(this.liveCircleTogglerEl).attr({
+                    'data-action': 'on',
+                    'data-link-name' : 'autoupdate on',
+                    'title': 'Turn auto update on'
+                });
+            }
         };
 
         this.getPref = function () {
@@ -161,15 +246,40 @@ define([
                 loadOnInitialise = options.loadOnInitialise || false,
                 pref = this.getPref();
 
+
+            if (options.animateInserts) {
+                bonzo(options.attachTo).addClass('autoupdate--has-animation');
+            }
+
+            detect.initPageVisibility();
+
+            common.mediator.on('modules:detect:pagevisibility:visible', function() {
+                common.mediator.emit('modules:autoupdate:unread', 0);
+                that.view.revealNewElements();
+            });
+
             // add the component to the page, and show it
             common.$g('.update').html(this.template).removeClass('hidden');
+
+            // Optionally use circular progress
+            if (options.progressToggle) {
+                this.liveCircleTogglerEl = document.querySelector('.live-toggler--circle');
+                this.liveCircleTogglerEl.style.display = 'block';
+
+                this.timerProgress = new CircularProgress({
+                    el: this.liveCircleTogglerEl.querySelector('.lt__circle-wrapper'),
+                    activeColour: options.progressColour,
+                    size: 30
+                });
+            }
+
+
 
             this.btns = common.$g(options.btnClass);
 
             this.btns.each(function (btn) {
                 bean.add(btn, 'click', function (e) {
                     e.preventDefault();
-
                     that.view.toggle.call(that, this);
                 });
             });

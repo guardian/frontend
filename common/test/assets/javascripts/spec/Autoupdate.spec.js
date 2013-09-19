@@ -47,7 +47,7 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
             server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
             common.mediator.on('modules:autoupdate:loaded', callback);
 
-            attachTo.html('<span>bar</span>');
+            attachTo.html('<span class="autoupdate--new autoupdate--highlight">bar</span>');
 
             var a = new Autoupdate({
                     path: path,
@@ -62,7 +62,7 @@ define(['common', 'ajax', 'bean', 'bonzo', 'modules/autoupdate', 'modules/storag
 
             runs(function(){
                 expect(callback).toHaveBeenCalled();
-                expect(attachTo.html()).toBe('<span>foo</span><span>bar</span>');
+                expect(attachTo.html()).toBe('<span class="autoupdate--new autoupdate--highlight">foo</span><span class="autoupdate--new autoupdate--highlight">bar</span>');
                 a.off();
             });
         });

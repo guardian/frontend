@@ -1,0 +1,2528 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":52444,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":5245,
+    "orderBy":"newest",
+    "edition":{
+      "id":"books",
+      "webTitle":"Books",
+      "webUrl":"http://www.theguardian.com/books",
+      "apiUrl":"http://content.guardianapis.com/books",
+      "code":"default"
+    },
+    "section":{
+      "id":"books",
+      "webTitle":"Books",
+      "webUrl":"http://www.theguardian.com/books",
+      "apiUrl":"http://content.guardianapis.com/books",
+      "editions":[{
+        "id":"books",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books",
+        "apiUrl":"http://content.guardianapis.com/books",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"books/2013/sep/17/laurence-olivier-national-theatre-blakemore",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-17T10:54:50Z",
+      "webTitle":"The day Laurence Olivier got stage fright",
+      "webUrl":"http://www.theguardian.com/books/2013/sep/17/laurence-olivier-national-theatre-blakemore",
+      "apiUrl":"http://content.guardianapis.com/books/2013/sep/17/laurence-olivier-national-theatre-blakemore",
+      "fields":{
+        "trailText":"As the National theatre celebrates its 50th anniversary, director Michael Blakemore recalls a momentous production when the fate of the company and the reputation of its founder and greatest star were at stake",
+        "headline":"The day Laurence Olivier got stage fright",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzhh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414813991/Laurence-Olivier-in-Long--005.jpg",
+        "wordcount":"2114",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/books/stage",
+        "apiUrl":"http://content.guardianapis.com/books/stage",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"stage/olivier",
+        "type":"keyword",
+        "webTitle":"Laurence Olivier",
+        "webUrl":"http://www.theguardian.com/stage/olivier",
+        "apiUrl":"http://content.guardianapis.com/stage/olivier",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/national-theatre",
+        "type":"keyword",
+        "webTitle":"National Theatre",
+        "webUrl":"http://www.theguardian.com/stage/national-theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/national-theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"books/history",
+        "type":"keyword",
+        "webTitle":"History",
+        "webUrl":"http://www.theguardian.com/books/history",
+        "apiUrl":"http://content.guardianapis.com/books/history",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/autobiography-and-memoir",
+        "type":"keyword",
+        "webTitle":"Autobiography and memoir",
+        "webUrl":"http://www.theguardian.com/books/autobiography-and-memoir",
+        "apiUrl":"http://content.guardianapis.com/books/autobiography-and-memoir",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/biography",
+        "type":"keyword",
+        "webTitle":"Biography",
+        "webUrl":"http://www.theguardian.com/books/biography",
+        "apiUrl":"http://content.guardianapis.com/books/biography",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"stage/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/stage/stage",
+        "apiUrl":"http://content.guardianapis.com/stage/stage",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417512739",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414809020/Laurence-Olivier-in-Long--002.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"54",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414810302/Laurence-Olivier-in-Long--003.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"340",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414812776/Laurence-Olivier-in-Long--004.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"130",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414813991/Laurence-Olivier-in-Long--005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"84",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414815271/Laurence-Olivier-in-Long--006.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"132",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414816510/Laurence-Olivier-in-Long--007.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"168",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414817791/Laurence-Olivier-in-Long--008.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"180",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414819248/Laurence-Olivier-in-Long--009.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"228",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414820333/Laurence-Olivier-in-Long--010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"276",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414821629/Laurence-Olivier-in-Long--011.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"372",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414820333/Laurence-Olivier-in-Long--010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"276",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417512740",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/17/1379414813991/Laurence-Olivier-in-Long--005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Zoe Dominic",
+            "altText":"Laurence Olivier in Long Day's Journey into Night.",
+            "height":"84",
+            "credit":"Zoe Dominic/PR",
+            "caption":"In command again ... Olivier in the National's Long Day's Journey into Night in 1971. Photograph: Zoe Dominic",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/sep/17/james-patterson-one-million-dollars-bookshops",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-17T10:15:38Z",
+      "webTitle":"James Patterson donates $1m to independent US bookshops",
+      "webUrl":"http://www.theguardian.com/books/2013/sep/17/james-patterson-one-million-dollars-bookshops",
+      "apiUrl":"http://content.guardianapis.com/books/2013/sep/17/james-patterson-one-million-dollars-bookshops",
+      "fields":{
+        "trailText":"<p><strong>Liz Bury:</strong> The hugely successful author of the Alex Cross series, among others, will give the money to shops with a children's section</p>",
+        "headline":"James Patterson donates $1m to independent US bookshops",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzfc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410804450/James-Patterson-005.jpg",
+        "wordcount":"283",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/booksellers",
+        "type":"keyword",
+        "webTitle":"Booksellers",
+        "webUrl":"http://www.theguardian.com/books/booksellers",
+        "apiUrl":"http://content.guardianapis.com/books/booksellers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/crime",
+        "type":"keyword",
+        "webTitle":"Crime fiction",
+        "webUrl":"http://www.theguardian.com/books/crime",
+        "apiUrl":"http://content.guardianapis.com/books/crime",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/thrillers",
+        "type":"keyword",
+        "webTitle":"Thrillers",
+        "webUrl":"http://www.theguardian.com/books/thrillers",
+        "apiUrl":"http://content.guardianapis.com/books/thrillers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/liz-bury",
+        "type":"contributor",
+        "webTitle":"Liz Bury",
+        "webUrl":"http://www.theguardian.com/profile/liz-bury",
+        "apiUrl":"http://content.guardianapis.com/profile/liz-bury",
+        "r2ContributorId":"57417",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"books/booksforchildrenandteenagers",
+        "type":"keyword",
+        "webTitle":"Children and teenagers",
+        "webUrl":"http://www.theguardian.com/books/booksforchildrenandteenagers",
+        "apiUrl":"http://content.guardianapis.com/books/booksforchildrenandteenagers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417509886",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410799612/James-Patterson-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"54",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410801220/James-Patterson-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"340",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410802838/James-Patterson-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"130",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410804450/James-Patterson-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"84",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410805957/James-Patterson-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"132",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410807529/James-Patterson-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"168",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410809274/James-Patterson-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"180",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410810816/James-Patterson-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"228",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410812566/James-Patterson-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"276",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410814390/James-Patterson-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"372",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410812566/James-Patterson-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"276",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417509887",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379410804450/James-Patterson-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Levenson",
+            "altText":"James Patterson",
+            "height":"84",
+            "credit":"David Levenson/Getty Images",
+            "caption":"'Bookstores are disappearing' … James Patterson. Photograph: David Levenson/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/booksblog/2013/sep/16/thomas-pynchon-bleeding-edge",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-16T18:24:00Z",
+      "webTitle":"Fact-checking Thomas Pynchon's Bleeding Edge: whom can you trust? | Alan Yuhas",
+      "webUrl":"http://www.theguardian.com/books/booksblog/2013/sep/16/thomas-pynchon-bleeding-edge",
+      "apiUrl":"http://content.guardianapis.com/books/booksblog/2013/sep/16/thomas-pynchon-bleeding-edge",
+      "fields":{
+        "trailText":"<p><strong>Alan Yuhas:</strong> How do you verify facts when the only thing known about an author is that nothing is ever quite what it seems?</p>",
+        "headline":"Fact-checking Thomas Pynchon's Bleeding Edge: whom can you trust?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tz84",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379354984736/pynchon-young-ica-005.jpg",
+        "wordcount":"1459",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/thomaspynchon",
+        "type":"keyword",
+        "webTitle":"Thomas Pynchon",
+        "webUrl":"http://www.theguardian.com/books/thomaspynchon",
+        "apiUrl":"http://content.guardianapis.com/books/thomaspynchon",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/alan-yuhas",
+        "type":"contributor",
+        "webTitle":"Alan Yuhas",
+        "webUrl":"http://www.theguardian.com/profile/alan-yuhas",
+        "apiUrl":"http://content.guardianapis.com/profile/alan-yuhas",
+        "bio":"<p>Alan Yuhas is a copy editor for the Guardian US and a translator for Harper's Magazine. You can follow him on Twitter <a href=\"https://twitter.com/AlanYuhas\">@alanyuhas</a></p>",
+        "r2ContributorId":"55133",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/22/1363981990089/alanyuhas_140x140web.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417447376",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379354995945/pynchon-young-ica-010.jpg",
+          "typeData":{
+            "source":"ica",
+            "altText":"pynchon young ica",
+            "height":"276",
+            "credit":"ica",
+            "caption":"Fact-checking is a search for someone to trust, and for some acceptable balance of smaller, true details that amount to one bigger fact. Photograph: ICA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417447377",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379354984736/pynchon-young-ica-005.jpg",
+          "typeData":{
+            "source":"ica",
+            "altText":"pynchon young ica",
+            "height":"84",
+            "credit":"ica",
+            "caption":"pynch1.jpeg\rThomas Pynchon Pix from the ica\rseated\rportrait\rfiction\rwriter Photograph: ica",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-417447378",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379352235344/pynchon-001.jpg",
+          "typeData":{
+            "source":"ica",
+            "altText":"pynchon",
+            "height":"326",
+            "credit":"ica",
+            "caption":"Pynchon as a young sailor. Photo: ICA",
+            "width":"220"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/booksblog/2013/sep/16/tips-links-suggestions-16-september",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-16T16:59:39Z",
+      "webTitle":"Tips, links and suggestions: What are you reading?",
+      "webUrl":"http://www.theguardian.com/books/booksblog/2013/sep/16/tips-links-suggestions-16-september",
+      "apiUrl":"http://content.guardianapis.com/books/booksblog/2013/sep/16/tips-links-suggestions-16-september",
+      "fields":{
+        "trailText":"<p>The space to talk about the books you are reading at the moment</p>",
+        "headline":"Tips, links and suggestions: What are you reading?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tz4e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379350318206/What-are-you-reading-toda-005.jpg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/series/tips-links-and-suggestions-books",
+        "type":"series",
+        "webTitle":"Tips, links and suggestions",
+        "webUrl":"http://www.theguardian.com/books/series/tips-links-and-suggestions-books",
+        "apiUrl":"http://content.guardianapis.com/books/series/tips-links-and-suggestions-books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/hannah-freeman",
+        "type":"contributor",
+        "webTitle":"Hannah Freeman",
+        "webUrl":"http://www.theguardian.com/profile/hannah-freeman",
+        "apiUrl":"http://content.guardianapis.com/profile/hannah-freeman",
+        "bio":"<p>Hannah Freeman is the Guardian's community co-ordinator for culture</p>",
+        "rcsId":"Hannah Fr",
+        "r2ContributorId":"40646",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2011/5/11/1305133790477/Hannah-Freeman-003.jpg",
+        "references":[]
+      },{
+        "id":"profile/guardian-readers",
+        "type":"contributor",
+        "webTitle":"Guardian readers",
+        "webUrl":"http://www.theguardian.com/profile/guardian-readers",
+        "apiUrl":"http://content.guardianapis.com/profile/guardian-readers",
+        "bio":"<p>The Guardian readers contributor tag is applied to any content that is solely or partly created by you, our readers. It includes projects, galleries and stories involving data, photography, perspectives and more. Thank you for your ongoing inspiration and participation</p>",
+        "r2ContributorId":"35710",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-5aed2472-0332-4edb-8b9f-59b98c5e9dd5",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379350327044/What-are-you-reading-toda-010.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379350327044/What-are-you-reading-toda-010.jpg",
+            "source":"guardian.co.uk",
+            "photographer":"ejmd",
+            "altText":"What are you reading today?",
+            "height":"276",
+            "credit":"ejmd/guardian.co.uk",
+            "caption":"What are you reading today? Dotter of her Father's Eyes by Mary Talbot and Bryan Talbot. Photograph: ejmd",
+            "mediaId":"gu-fc-5aed2472-0332-4edb-8b9f-59b98c5e9dd5",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"witness-assignment",
+        "id":"witness-assignment/523726cee4b087760a08a751"
+      }]
+    },{
+      "id":"books/shortcuts/2013/sep/16/us-authors-sweep-man-booker-prize",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-16T14:38:34Z",
+      "webTitle":"Would US authors sweep the board if the Man Booker was opened up?",
+      "webUrl":"http://www.theguardian.com/books/shortcuts/2013/sep/16/us-authors-sweep-man-booker-prize",
+      "apiUrl":"http://content.guardianapis.com/books/shortcuts/2013/sep/16/us-authors-sweep-man-booker-prize",
+      "fields":{
+        "trailText":"<p>There are fears that British, Irish and Commonwealth writers would lose out to American authors – but that underestimates the strength of the existing competition</p>",
+        "headline":"Would US authors sweep the board if the Man Booker was opened up?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tzvp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340629865/Peter-Carey-005.jpg",
+        "wordcount":"420",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/booker-prize",
+        "type":"keyword",
+        "webTitle":"Booker prize",
+        "webUrl":"http://www.theguardian.com/books/booker-prize",
+        "apiUrl":"http://content.guardianapis.com/books/booker-prize",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/awards-and-prizes",
+        "type":"keyword",
+        "webTitle":"Awards and prizes",
+        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
+        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"profile/johncrace",
+        "type":"contributor",
+        "webTitle":"John Crace",
+        "webUrl":"http://www.theguardian.com/profile/johncrace",
+        "apiUrl":"http://content.guardianapis.com/profile/johncrace",
+        "bio":"<p>John Crace is a feature writer for the Guardian. He writes the <a href=\"http://www.guardian.co.uk/books/series/digestedread\">Digested Read</a> for <a href=\"http://www.guardian.co.uk/theguardian/g2\">G2</a></p>",
+        "rcsId":"GNL028308",
+        "r2ContributorId":"15851",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/06/02/john_crace_140x140.jpg",
+        "references":[]
+      },{
+        "id":"books/man-booker-prize-2013",
+        "type":"keyword",
+        "webTitle":"Man Booker prize 2013",
+        "webUrl":"http://www.theguardian.com/books/man-booker-prize-2013",
+        "apiUrl":"http://content.guardianapis.com/books/man-booker-prize-2013",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417418924",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340626410/Peter-Carey-002.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"54",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340627549/Peter-Carey-003.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"340",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340628734/Peter-Carey-004.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"130",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340629865/Peter-Carey-005.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"84",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340631276/Peter-Carey-006.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"132",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340632503/Peter-Carey-007.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"168",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340633641/Peter-Carey-008.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"180",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340634770/Peter-Carey-009.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"228",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340635919/Peter-Carey-010.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"276",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340637071/Peter-Carey-011.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"372",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340635919/Peter-Carey-010.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"276",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417418925",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379340629865/Peter-Carey-005.jpg",
+          "typeData":{
+            "source":"Flora Hanitijo for the Guardian",
+            "altText":"Peter Carey",
+            "height":"84",
+            "credit":"Flora Hanitijo for the Guardian",
+            "caption":"Nothing to worry about: Peter Carey was born in the Commonwealth and is a US citizen, so can enter pretty well all English-language awards. Photograph: Flora Hanitijo for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/booksblog/2013/sep/16/open-thread-worst-book-you-have-read",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-16T14:36:00Z",
+      "webTitle":"Open thread: What's the worst book on your bookshelves?",
+      "webUrl":"http://www.theguardian.com/books/booksblog/2013/sep/16/open-thread-worst-book-you-have-read",
+      "apiUrl":"http://content.guardianapis.com/books/booksblog/2013/sep/16/open-thread-worst-book-you-have-read",
+      "fields":{
+        "trailText":"<p>A lesser-known Agatha Christie, Stieg Larsson's creations and even an award-winning Denis Johnson vied for the title of worst book on a recent Tips, Links and Suggestions thread. What would be your choice?</p>",
+        "headline":"Open thread: What's the worst book on your bookshelves?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tmch",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/3/1359888271842/Agatha-Christie-005.jpg",
+        "wordcount":"390",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/agathachristie",
+        "type":"keyword",
+        "webTitle":"Agatha Christie",
+        "webUrl":"http://www.theguardian.com/books/agathachristie",
+        "apiUrl":"http://content.guardianapis.com/books/agathachristie",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"books/stieg-larsson",
+        "type":"keyword",
+        "webTitle":"Stieg Larsson",
+        "webUrl":"http://www.theguardian.com/books/stieg-larsson",
+        "apiUrl":"http://content.guardianapis.com/books/stieg-larsson",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417434277",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/3/1359888277917/Agatha-Christie-010.jpg",
+          "typeData":{
+            "source":"Popperfoto/Getty Images",
+            "photographer":"Popperfoto",
+            "altText":"Agatha Christie",
+            "height":"276",
+            "credit":"Popperfoto/Popperfoto/Getty Images",
+            "caption":"'Ludicrous pomposity'?... Agatha Christie. Photograph: Popperfoto/Popperfoto/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417434278",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/3/1359888271842/Agatha-Christie-005.jpg",
+          "typeData":{
+            "source":"Popperfoto/Getty Images",
+            "photographer":"Popperfoto",
+            "altText":"Agatha Christie",
+            "height":"84",
+            "credit":"Popperfoto/Popperfoto/Getty Images",
+            "caption":"Agatha Christie. Photograph: Popperfoto/Popperfoto/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/shortcuts/2013/sep/16/sheila-hancock-right-burn-diaries",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-16T12:37:40Z",
+      "webTitle":"Rae Earl: why I want my diaries burned",
+      "webUrl":"http://www.theguardian.com/books/shortcuts/2013/sep/16/sheila-hancock-right-burn-diaries",
+      "apiUrl":"http://content.guardianapis.com/books/shortcuts/2013/sep/16/sheila-hancock-right-burn-diaries",
+      "fields":{
+        "trailText":"<p>Rae Earl, author of My Mad, Fat Teenage Diary, understands why the actor Sheila Hancock would want to destroy her private journals</p>",
+        "headline":"Rae Earl: why I want my diaries burned",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tnp5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333697804/My-Mad-Fat-Diary-006.jpg",
+        "wordcount":"538",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/autobiography-and-memoir",
+        "type":"keyword",
+        "webTitle":"Autobiography and memoir",
+        "webUrl":"http://www.theguardian.com/books/autobiography-and-memoir",
+        "apiUrl":"http://content.guardianapis.com/books/autobiography-and-memoir",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/rae-earl",
+        "type":"contributor",
+        "webTitle":"Rae Earl",
+        "webUrl":"http://www.theguardian.com/profile/rae-earl",
+        "apiUrl":"http://content.guardianapis.com/profile/rae-earl",
+        "bio":"<p>Rae Earl is a writer and broadcaster, best known for the book My Mad Fat Teenage Diary</p>",
+        "r2ContributorId":"55216",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/18/1361207567682/raeearl140.jpg",
+        "references":[]
+      },{
+        "id":"culture/sheila-hancock",
+        "type":"keyword",
+        "webTitle":"Sheila Hancock",
+        "webUrl":"http://www.theguardian.com/culture/sheila-hancock",
+        "apiUrl":"http://content.guardianapis.com/culture/sheila-hancock",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/biography",
+        "type":"keyword",
+        "webTitle":"Biography",
+        "webUrl":"http://www.theguardian.com/books/biography",
+        "apiUrl":"http://content.guardianapis.com/books/biography",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417504046",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333690558/My-Mad-Fat-Diary-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"420",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333693920/My-Mad-Fat-Diary-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"54",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333695292/My-Mad-Fat-Diary-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"340",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333696563/My-Mad-Fat-Diary-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"130",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333697804/My-Mad-Fat-Diary-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"84",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333699124/My-Mad-Fat-Diary-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"132",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333700369/My-Mad-Fat-Diary-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"168",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333701606/My-Mad-Fat-Diary-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"180",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333702956/My-Mad-Fat-Diary-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"228",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333704330/My-Mad-Fat-Diary-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"276",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333705703/My-Mad-Fat-Diary-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"372",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333690558/My-Mad-Fat-Diary-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"420",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417504047",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333697804/My-Mad-Fat-Diary-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Channel 4",
+            "altText":"My Mad Fat Diary",
+            "height":"84",
+            "credit":"Channel 4/PA",
+            "caption":"Sharon Rooney as Rae Earl in E4's dramatisation of the writer's diary. Photograph: Channel 4/PA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-417504048",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333893996/Sheila-Hancock-010.jpg",
+          "typeData":{
+            "source":"Sophia Evans for the Guardian",
+            "altText":"Sheila Hancock",
+            "height":"276",
+            "credit":"Sophia Evans for the Guardian",
+            "caption":"Sheila Hancock: the actor has revealed that she has burned her diaries to protect the feelings of others. Photograph: Sophia Evans for the Guardian",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/booksblog/2013/sep/16/reading-improves-childrens-brains",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-16T11:55:21Z",
+      "webTitle":"Reading for fun improves children's brains, study confirms",
+      "webUrl":"http://www.theguardian.com/books/booksblog/2013/sep/16/reading-improves-childrens-brains",
+      "apiUrl":"http://content.guardianapis.com/books/booksblog/2013/sep/16/reading-improves-childrens-brains",
+      "fields":{
+        "trailText":"<p>A study of 17,000 people from birth indicates that reading for pleasure improves not just literacy, but maths ability too, writes <strong>Alice Sullivan</strong></p>",
+        "headline":"Reading for fun improves children's brains, study confirms",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tnyf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328498380/Girl-lying-on-bed-reading-005.jpg",
+        "wordcount":"463",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/booksforchildrenandteenagers",
+        "type":"keyword",
+        "webTitle":"Children and teenagers",
+        "webUrl":"http://www.theguardian.com/books/booksforchildrenandteenagers",
+        "apiUrl":"http://content.guardianapis.com/books/booksforchildrenandteenagers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"society/children",
+        "type":"keyword",
+        "webTitle":"Children",
+        "webUrl":"http://www.theguardian.com/society/children",
+        "apiUrl":"http://content.guardianapis.com/society/children",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417396331",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328493560/Girl-lying-on-bed-reading-002.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"130",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328495163/Girl-lying-on-bed-reading-003.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"54",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328496773/Girl-lying-on-bed-reading-004.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"340",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328498380/Girl-lying-on-bed-reading-005.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"84",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328500009/Girl-lying-on-bed-reading-006.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"132",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328501954/Girl-lying-on-bed-reading-007.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"168",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328503650/Girl-lying-on-bed-reading-008.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"180",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328505388/Girl-lying-on-bed-reading-009.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"228",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328507176/Girl-lying-on-bed-reading-010.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"276",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328508785/Girl-lying-on-bed-reading-011.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"372",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328507176/Girl-lying-on-bed-reading-010.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"276",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps with maths as well as spelling and vocabulary. Photograph:   RelaXimages/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417396332",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/16/1379328498380/Girl-lying-on-bed-reading-005.jpg",
+          "typeData":{
+            "source":"  RelaXimages/Corbis",
+            "altText":"Girl lying on bed, reading book",
+            "height":"84",
+            "credit":"  RelaXimages/Corbis",
+            "caption":"Good reads … picking up a book for pleasure helps our minds grow. Photograph:   RelaXimages/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/video/2013/sep/16/percy-jackson-rick-riordan-house-of-hades-video",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-16T11:53:27Z",
+      "webTitle":"Percy Jackson author Rick Riordan on The House of Hades - video",
+      "webUrl":"http://www.theguardian.com/books/video/2013/sep/16/percy-jackson-rick-riordan-house-of-hades-video",
+      "apiUrl":"http://content.guardianapis.com/books/video/2013/sep/16/percy-jackson-rick-riordan-house-of-hades-video",
+      "fields":{
+        "trailText":"<p>Rick Riordan talks about the fourth book in his Heroes of Olympus series, Percy Jackson's deadliest adventure yet</p>",
+        "headline":"Percy Jackson author Rick Riordan on The House of Hades - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tnnf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330124208/Rick-Riordan-on-The-House-027.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/teen-books",
+        "type":"keyword",
+        "webTitle":"Teen books",
+        "webUrl":"http://www.theguardian.com/books/teen-books",
+        "apiUrl":"http://content.guardianapis.com/books/teen-books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/booksforchildrenandteenagers",
+        "type":"keyword",
+        "webTitle":"Children and teenagers",
+        "webUrl":"http://www.theguardian.com/books/booksforchildrenandteenagers",
+        "apiUrl":"http://content.guardianapis.com/books/booksforchildrenandteenagers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/childrens-books-8-12-years",
+        "type":"keyword",
+        "webTitle":"Children's books: 8-12 years",
+        "webUrl":"http://www.theguardian.com/books/childrens-books-8-12-years",
+        "apiUrl":"http://content.guardianapis.com/books/childrens-books-8-12-years",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"childrens-books-site/childrens-books-site",
+        "type":"blog",
+        "webTitle":"Children's books",
+        "webUrl":"http://www.theguardian.com/childrens-books-site/childrens-books-site",
+        "apiUrl":"http://content.guardianapis.com/childrens-books-site/childrens-books-site",
+        "sectionId":"childrens-books-site",
+        "sectionName":"Children's books",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417393301",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330087854/Rick-Riordan-on-The-House-001.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"360",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330103521/Rick-Riordan-on-The-House-012.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"372",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330105260/Rick-Riordan-on-The-House-013.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"90",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330106540/Rick-Riordan-on-The-House-014.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"225",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330107802/Rick-Riordan-on-The-House-015.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"360",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330111365/Rick-Riordan-on-The-House-017.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"340",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330112810/Rick-Riordan-on-The-House-018.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"54",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330114033/Rick-Riordan-on-The-House-019.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"130",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330116598/Rick-Riordan-on-The-House-021.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"132",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330117817/Rick-Riordan-on-The-House-022.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"168",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330119071/Rick-Riordan-on-The-House-023.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"180",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330120293/Rick-Riordan-on-The-House-024.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"228",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330121724/Rick-Riordan-on-The-House-025.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"276",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330122942/Rick-Riordan-on-The-House-026.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"230",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330124208/Rick-Riordan-on-The-House-027.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"84",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"140"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/16/130916RickRiordan-16x9.mp4",
+          "typeData":{
+            "source":"Puffin Books",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RickRiordan_8079198.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RickRiordan_8079198.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/16/130916RickRiordan_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Puffin Books",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RickRiordan_8079198.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RickRiordan_8079198.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/16/130916RickRiordan_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Puffin Books",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RickRiordan_8079198.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RickRiordan_8079198.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/16/130916RickRiordan/130916RickRiordan.m3u8",
+          "typeData":{
+            "source":"Puffin Books",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RickRiordan_8079198.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RickRiordan_8079198.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/16/130916RickRiordan-720.mp4",
+          "typeData":{
+            "source":"Puffin Books",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RickRiordan_8079198.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RickRiordan_8079198.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/16/130916RickRiordan_vpx.webm",
+          "typeData":{
+            "source":"Puffin Books",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916RickRiordan_8079198.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916RickRiordan_8079198.jpg",
+            "width":"480",
+            "durationSeconds":"52"
+          }
+        }]
+      },{
+        "id":"gu-image-417396140",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379330124208/Rick-Riordan-on-The-House-027.jpg",
+          "typeData":{
+            "source":"Puffin Books",
+            "photographer":"Puffin Books",
+            "altText":"Rick Riordan on The House of Hades - video",
+            "height":"84",
+            "credit":"Puffin Books/Puffin Books",
+            "caption":"Rick Riordan talks about the fourth book in the Heroes of Olympus series, as Peter Jackson's deadliest adventure yet takes him deep into the underground temples of the god of the underworld\r Photograph: Puffin Books",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/booksblog/2013/sep/16/not-booker-prize-little-white-lies-suzie-tullett",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-09-16T11:49:47Z",
+      "webTitle":"Not the Booker prize: Little White Lies and Butterflies by Suzie Tullett",
+      "webUrl":"http://www.theguardian.com/books/booksblog/2013/sep/16/not-booker-prize-little-white-lies-suzie-tullett",
+      "apiUrl":"http://content.guardianapis.com/books/booksblog/2013/sep/16/not-booker-prize-little-white-lies-suzie-tullett",
+      "fields":{
+        "trailText":"<p>With its dull premise and heroine in training to be a doormat, there's not a lot to like about this novel. At least it's weird</p>",
+        "headline":"Not the Booker prize: Little White Lies and Butterflies by Suzie Tullett",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tnyy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328271463/Making-a-meal-of-it---how-005.jpg",
+        "wordcount":"1010",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"books/series/not-the-booker-prize",
+        "type":"series",
+        "webTitle":"Not the Booker prize",
+        "webUrl":"http://www.theguardian.com/books/series/not-the-booker-prize",
+        "apiUrl":"http://content.guardianapis.com/books/series/not-the-booker-prize",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/romance",
+        "type":"keyword",
+        "webTitle":"Romance",
+        "webUrl":"http://www.theguardian.com/books/romance",
+        "apiUrl":"http://content.guardianapis.com/books/romance",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/awards-and-prizes",
+        "type":"keyword",
+        "webTitle":"Awards and prizes",
+        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
+        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/samjordison",
+        "type":"contributor",
+        "webTitle":"Sam Jordison",
+        "webUrl":"http://www.theguardian.com/profile/samjordison",
+        "apiUrl":"http://content.guardianapis.com/profile/samjordison",
+        "bio":"<p>Sam Jordison is the author of Sod That: 103 Things Not to Do Before You Die and co-editor of Crap Towns. He still hasn't written a novel.</p>",
+        "rcsId":"GNL033531",
+        "r2ContributorId":"16395",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/7/1336387144696/Sam-Jordison.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417395999",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328267530/Making-a-meal-of-it---how-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"54",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328268866/Making-a-meal-of-it---how-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"340",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328270198/Making-a-meal-of-it---how-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"130",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328271463/Making-a-meal-of-it---how-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"84",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328272702/Making-a-meal-of-it---how-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"132",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328273932/Making-a-meal-of-it---how-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"168",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328275457/Making-a-meal-of-it---how-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"180",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328276767/Making-a-meal-of-it---how-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"228",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328278034/Making-a-meal-of-it---how-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"276",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328279306/Making-a-meal-of-it---how-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"372",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328278034/Making-a-meal-of-it---how-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"276",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417396000",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/16/1379328271463/Making-a-meal-of-it---how-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel?",
+            "height":"84",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"Making a meal of it … how did a roast beef dinner come to be the main plank of a novel? Photograph: Suzanne Plunkett/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}
