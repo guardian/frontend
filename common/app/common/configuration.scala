@@ -194,9 +194,6 @@ class GuardianConfiguration(
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
-  object nginx {
-    lazy val log: String = configuration.getStringProperty("nginx.log").getOrElse("/var/log/nginx/access.log")
-  }
 
   object aws {
     lazy val accessKey = configuration.getStringProperty("aws.access.key").getOrElse(throw new RuntimeException("AWS access key not set"))
