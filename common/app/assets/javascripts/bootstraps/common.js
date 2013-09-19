@@ -317,7 +317,7 @@ define([
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
             var alreadyOptedIn = (Cookies.get('GU_VIEW') === 'mobile');
-            if (config.switches.releaseMessage && window.screen.width >= 600 &! alreadyOptedIn) {
+            if (config.switches.releaseMessage && !alreadyOptedIn && (window.screen.width >= 600)) {
                 
                 // un-hide the release message
                 common.$g('#header').addClass('js-release-message');
@@ -325,7 +325,7 @@ define([
                     el.className = el.className.replace('u-h', '');
                 });
 
-                // force the visitor in to the alpha release 
+                // force the visitor in to the alpha release
                 Cookies.add("GU_VIEW", "mobile", 365);
             }
         },
