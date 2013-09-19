@@ -4,7 +4,7 @@
 @import play.api.templates.PlayMagic.toHtmlArgs
 
 @inputType = @{ args.toMap.get('type).map(_.toString).getOrElse("username") }
-@cls = @{ "text-input " + args.toMap.get('class).map(_.toString).getOrElse("") }
+@cls = @{ s"text-input ${args.toMap.get('class).map(_.toString).getOrElse("")}" }
 @autocomplete = @{ args.toMap.get('autocomplete).map(_.toString).getOrElse("off") }
 @autocapitalize = @{ args.toMap.get('autocapitalize).map(_.toString).getOrElse("off") }
 @autocorrect = @{ args.toMap.get('autocorrect).map(_.toString).getOrElse("off") }

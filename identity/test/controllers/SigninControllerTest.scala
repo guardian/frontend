@@ -16,7 +16,6 @@ import conf.IdentityConfiguration
 import play.api.mvc.Cookies
 import org.joda.time.DateTime
 import idapiclient.ClientAuth
-import scala.Some
 import idapiclient.responses.CookieResponse
 import idapiclient.EmailPassword
 import idapiclient.OmnitureTracking
