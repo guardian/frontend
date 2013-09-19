@@ -190,9 +190,19 @@ define([
                 })
             },
 
-        getActiveTestsEventIsApplicableTo: function(event) {
-            var participations = getParticipations();
-            // ToDo: Make this return the list back as required by Ab.spec.js
+        getActiveTestsEventIsApplicableTo: function (event) {
+
+            function startsWith(string, prefix) {
+                return string.indexOf(prefix) === 0;
+            }
+
+            return getActiveTests().filter(function (test) {
+                return test.events.some(function (testEvent) {
+                    return startsWith(event, testEvent);
+                })
+            }).map(function (test) {
+                    return test.id;
+                });
         },
 
         getParticipations: getParticipations,

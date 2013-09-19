@@ -93,7 +93,6 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
                 clickSpec = getClickSpec(clickSpec);
 
                 // prefix ab tests to the click spec
-                // ToDo: Get this to work.
                 var applicableTests = ab.getActiveTestsEventIsApplicableTo(clickSpec);
                 if (applicableTests) {
                     clickSpec = applicableTests.map(function(i) { return i + clickSpec}).join(',');
