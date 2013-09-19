@@ -15,6 +15,8 @@
 
                     @fragments.headline(article.headline)
 
+                    @fragments.standfirst(article)
+
                     @fragments.article.dateline(article.webPublicationDate)
 
                 </header>
@@ -38,8 +40,6 @@
                         @fragments.byline(article.byline, article)
                         @fragments.article.dateline(article.webPublicationDate)
                     </div>
-
-                    @fragments.standfirst(article)
 
                     <div class="js-article__container article__container u-cf">
                         <div class="article-body from-content-api"

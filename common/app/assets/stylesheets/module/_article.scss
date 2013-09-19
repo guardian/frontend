@@ -38,7 +38,7 @@
 
 .article__headline {
     @extend %type-3;
-    margin-bottom: $gs-column-height;
+    margin-bottom: $baseline*6;
 
     @include mq(tablet) {
         font-family: $serifheadline;
@@ -47,7 +47,7 @@
         font-size: 3.4rem;
         line-height: 42px;
         line-height: 4.2rem;
-        margin-bottom: $baseline*12;
+        margin-bottom: $gs-column-height;
     }
 
     @include mq(($a-rightCol-trigger + gs-span(1))) {
@@ -55,7 +55,6 @@
         font-size: 4rem;
         line-height: 48px;
         line-height: 4.8rem;
-        margin-bottom: $baseline*15;
     }
 
     a {
@@ -92,27 +91,21 @@
 }
 
 .article__standfirst {
-    margin-bottom: $gs-column-height;
+    margin-bottom: $baseline*3;
     text-rendering: optimizeLegibility;
-    font-size: 16px;
-    font-size: 1.6rem;
-    line-height: 24px;
-    line-height: 2.4rem;
-    font-weight: bold;
-    color: $neutral1;
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
+        font-size: 16px;
+        font-size: 1.6rem;
+        line-height: 24px;
+        line-height: 2.4rem;
     }
     @include mq(desktop) {
-        font-size: 22px;
-        font-size: 2.2rem;
-        line-height: 26px;
-        line-height: 2.6rem;
-    }
-    @include mq(leftCol) {
-        padding-top: $baseline*2;
-        border-top: 1px solid $neutral3;
+        font-size: 18px;
+        font-size: 1.8rem;
+        line-height: 24px;
+        line-height: 2.4rem;
     }
 }
 .article-body {
@@ -338,6 +331,15 @@ video {
     .article-v2__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;
     }
+
+    .article-v2__inner {
+        padding-right: $a-rightCol-width + $gs-gutter;
+    }
+
+    .article-v2__main-column {
+        padding-right: $gs-gutter;
+    }
+
     .article__head {
         padding-top: $baseline*2;
     }
@@ -347,5 +349,11 @@ video {
     .article-v2__inner,
     .article-v2__main-column {
         padding-left: gs-span(3) + $gs-gutter;
+    }
+    .article-v2__main-column {
+        padding-right: gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__inner {
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 }
