@@ -27,19 +27,6 @@ object Seg {
   }
 }
 
-trait Deduping {
-  def dedupePageFront(faciaPage: FaciaPage): FaciaPage = {
-    faciaPage.copy(collections = faciaPage.collections.foldLeft(List[(Config, Collection)]()) {
-      case (l, item) =>
-        val newItems = item._2.items.map(_.url).distinct.flatMap(id => item._2.items.find(_.url==id)).filterNot(has(l, _))
-        (item._1, item._2.copy(items = newItems)) +: l
-    }.reverse)
-  }
-
-  private def has(items: List[(Config, Collection)], trail: Trail): Boolean =
-    items.flatMap{c => c._2.items.map(_.url)}.contains(trail.url)
-}
-
 trait ParseConfig extends ExecutionContexts {
   def getConfigMap(id: String): Future[Seq[JsValue]] = {
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/config/$id/config.json"
@@ -194,13 +181,13 @@ object Query {
   def apply(id: String, edition: Edition): Query = new Query(id, edition)
 }
 
-class PageFront(val id: String, edition: Edition) extends Deduping {
+class PageFront(val id: String, edition: Edition) {
   val query = Query(id, edition)
 
   def refresh() = query.refresh()
   def close() = query.close()
 
-  def apply(): Option[FaciaPage] = query.items.map(FaciaPage(id, _)).map(dedupePageFront)
+  def apply(): Option[FaciaPage] = query.items.map(FaciaPage(id, _))
 }
 
 trait ConfigAgent extends ExecutionContexts {
