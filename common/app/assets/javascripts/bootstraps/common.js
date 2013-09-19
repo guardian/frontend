@@ -6,6 +6,7 @@ define([
     //Vendor libraries
     'domReady',
     'bonzo',
+    'bean',
     //Modules
     'modules/storage',
     'modules/detect',
@@ -44,6 +45,7 @@ define([
 
     domReady,
     bonzo,
+    bean,
 
     storage,
     detect,
@@ -316,17 +318,24 @@ define([
 
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
-            var alreadyOptedIn = (Cookies.get('GU_VIEW') === 'mobile');
+
+            var alreadyOptedIn = !!userPrefs.get('releaseMessage');
+
             if (config.switches.releaseMessage && !alreadyOptedIn && (window.screen.width >= 600)) {
-                
+               
                 // un-hide the release message
                 common.$g('#header').addClass('js-release-message');
-                Array.prototype.forEach.call(document.querySelectorAll('.release-message'), function (el) {
-                    el.className = el.className.replace('u-h', '');
-                });
+                common.$g('.release-message').removeClass('u-h');
 
-                // force the visitor in to the alpha release
+                // force the visitor in to the alpha release for subsequent visits
                 Cookies.add("GU_VIEW", "mobile", 365);
+               
+                bean.on(document, 'click', '.release-message-ack', function(e) {
+                    userPrefs.set('releaseMessage', true);
+                    common.$g('#header').removeClass('js-release-message');
+                    common.$g('.release-message').addClass('u-h');
+                });
+                
             }
         },
         
