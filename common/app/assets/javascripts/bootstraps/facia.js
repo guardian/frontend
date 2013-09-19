@@ -34,23 +34,6 @@ define([
                     var t = new ItemsShowMore(items);
                 });
             });
-        },
-
-        showCollectionPopular: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                var sections = [
-                    '.collection--highlights.collection--sport-section',
-                    '.collection--highlights.collection--business-section',
-                    '.collection--highlights.collection--lifeandstyle-section',
-                    '.collection--highlights.collection--technology-section',
-                    '.collection--highlights.collection--money-section',
-                    '.collection--highlights.collection--travel-section'
-                ];
-                common.toArray(context.querySelectorAll(sections.join(','))).forEach(function (collection) {
-                    var f = new CollectionPopular(collection);
-                    f.render();
-                });
-            });
         }
 
     };
@@ -58,10 +41,9 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.showPopular();
+//            modules.showPopular();
             modules.relativiseMastheadDates();
             modules.showItemsShowMore();
-            modules.showCollectionPopular();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

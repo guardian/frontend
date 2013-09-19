@@ -51,11 +51,13 @@ object MediumStories extends Style { val className = "medium-stories" }
 
 object SmallStories extends Style { val className = "small-stories" }
 
+object News extends Style { val className = "news" }
+
 object Features extends Style { val className = "features" }
 
 object Highlights extends Style { val className = "highlights" }
 
-object Comment extends Style { val className = "comment" }
+object Comments extends Style { val className = "comments" }
 
 
 object MetadataJson {

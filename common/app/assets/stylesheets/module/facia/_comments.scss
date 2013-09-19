@@ -1,9 +1,5 @@
-.collection--features {
+.collection--comments {
     .collection__title {
-        background-color: $pink;
-        border-color: $light-pink;
-    }
-    &.collection--commentisfree-section .collection__title {
         background-color: $green;
         border-color: $light-green;
     }
@@ -24,6 +20,13 @@
             width: gs-span(4);
         }
     }
+    .item__title {
+        @include font-size(26, 28);
+        @include mq(tablet) {
+            min-height: gs-height(3);
+        }
+    }
+
     @mixin row($row-size) {
         // styling for first row
         .item:nth-child(-n + #{$row-size}) {
@@ -38,7 +41,7 @@
             padding-left: 0;
             border-left-style: none;
         }
-        .item:nth-child(#{$row-size}n) {
+        .item:nth-child(#{$row-size}n + #{$row-size}) {
             padding-right: 0;
         }
     }
@@ -52,30 +55,7 @@
         @include row(3);
     }
     @include mq(wide) {
-        // styling for first row
-        .item:nth-child(-n + 3) {
-            margin-top: 0;
-            .item__title {
-                padding-top: 0;
-                border-top-style: none;
-            }
-        }
-        // stylings for beggining and end of rows
-        .item:first-child,
-        .item:nth-child(4n + 4) {
-            padding-left: 0;
-            border-left-style: none;
-        }
-        .item:nth-child(3),
-        .item:nth-child(4n + 7) {
-            padding-right: 0;
-        }
-    }
-    .item__title {
-        @include font-size(26, 28);
-        @include mq(tablet) {
-            min-height: gs-height(3);
-        }
+        @include row(4);
     }
     .item__standfirst {
         margin: $gs-baseline*2 0 0;
@@ -95,36 +75,6 @@
         }
         @include mq(tablet) {
             height: 100%;
-        }
-    }
-    // larger image styling
-    .item:first-child {
-        @include mq(wide) {
-            width: gs-span(8);
-            &.item--with-image {
-                height: gs-height(8);
-                .item__title {
-                    background-color: rgba(#ffffff, 0.8);
-                    padding: $gs-baseline/2 $gs-gutter/2 gs-height(1) + $gs-baseline;
-                    width:  gs-span(5);
-                    min-height: 0;
-                    border-top-style: solid;
-                    position: absolute;
-                    bottom: 0;
-                }
-                .item__meta {
-                    position: absolute;
-                    bottom: $gs-baseline;
-                    left: $gs-gutter/2;
-                }
-                .item__image-container {
-                    height: 100%;
-                    position: absolute;
-                    top: 0;
-                    z-index: -1;
-                    margin-top: 0;
-                }
-            }
         }
     }
     .item:nth-child(n + 2) {
