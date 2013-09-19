@@ -2,6 +2,9 @@
 module.exports = function (grunt) {
     var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1',
         jasmineSpec = grunt.option('spec') || '*';
+     var env = grunt.option('env') || 'code',
+        screenshotsDir = './screenshots',
+        timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/');
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
@@ -101,6 +104,9 @@ module.exports = function (grunt) {
                 xunit: 'integration-tests/target/casper/',
                 loglevel: 'debug',
                 direct: true
+            },
+            screenshot: {
+                src: ['tools/screenshots/screenshot.js']
             },
             all: {
                 src: ['integration-tests/casper/tests/**/*.spec.js']
@@ -206,6 +212,25 @@ module.exports = function (grunt) {
                 'common/app/assets/javascripts/modules/**/*.js'
             ]
         },
+
+        mkdir: {
+            screenshots: {
+                create: [screenshotsDir]
+            }
+        },
+        s3: {
+            options: {
+                bucket: 'aws-frontend-store',
+                access:'public-read'
+            },
+            upload: {
+                upload: [{
+                    src: screenshotsDir + '/*.png',
+                    dest: env.toUpperCase() + '/screenshots/' + timestampDir
+                }]
+            }
+        },
+
 
         // Create JSON web font files from fonts.
         // Docs here: https://github.com/ahume/grunt-webfontjson
@@ -327,7 +352,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-casperjs');
     grunt.loadNpmTasks('grunt-env');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-mkdir');
+    grunt.loadNpmTasks('grunt-s3');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');http://t.co/Pq9aDvm5XM
 
     // Standard tasks
     grunt.registerTask('test:unit', ['jasmine']);
@@ -354,4 +381,5 @@ module.exports = function (grunt) {
 
     // Clean the .git/hooks/pre-commit file then copy in the latest version
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
+    grunt.registerTask('snap', ['env:casperjs','clean', 'mkdir:screenshots', 'casperjs:screenshot', 's3:upload']);
 };
