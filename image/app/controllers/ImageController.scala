@@ -11,8 +11,8 @@ import model._
 
 object ImageController extends Controller with Logging with Implicits with ExecutionContexts {
 
-  // URL validation: We're only going to accept proxy paths that match [/\w\.-]*
-  val Path = """([/\w\.-]*)""".r
+  // URL validation: We're only going to accept proxy paths that match...
+  val Path = """([/\w\.@~-]*)""".r
 
   def render(target: String, mode: String, profile: String) = Action { implicit request =>
     Profile.all.find(_.prefix == profile).map(renderImage(target, mode, _)).getOrElse(NotFound)
