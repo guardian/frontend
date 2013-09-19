@@ -2,12 +2,15 @@
 #
 # Pre-commit hooks
 
-# Lint stuff before commiting
+
+# Lint stuff before committing
 SRC_PATTERN=".js"
 git diff --cached --name-only | if grep "$SRC_PATTERN"
 then
     grunt jshint:common
 fi
+jsLintResult=$?
+
 
 #Analyse css if changed
 SRC_PATTERN=".scss"
@@ -15,3 +18,9 @@ git diff --cached --name-only | if grep "$SRC_PATTERN"
 then
     grunt analyse:common:css
 fi
+cssAnalysisResult=$?
+
+
+# Exit code 1 means don't commit and 0 means do commit
+[ $jsLintResult -ne 0 ] || [ $cssAnalysisResult -ne 0 ] && exit 1
+exit 0
