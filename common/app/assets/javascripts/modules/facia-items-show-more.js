@@ -30,6 +30,10 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                             features: {
                                 initial: 3,
                                 show: 8
+                            },
+                            'popular-full-width': {
+                                initial: 3,
+                                show: 8
                             }
                         },
                         desktop: {

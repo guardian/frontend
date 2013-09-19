@@ -7,7 +7,7 @@ define([
 ], function (common, ajax, bonzo, RelativiseTimestamp, ItemsShowMore) {
 
     var collectionTmpl =
-        '<section class="collection collection--popular-full-width">' +
+        '<section class="collection collection--popular-full-width" data-collection-type="popular-full-width">' +
             '<h2 class="collection__title">Popular</h2>' +
         '</section>',
         itemTmpl  =
