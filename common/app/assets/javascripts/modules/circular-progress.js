@@ -15,7 +15,7 @@ define(["bean",
             activeColour = opts.activeColour || '#ec1c1c',
             bgColour = opts.bgColour || '#f4f4ee',
             arcWidth = opts.arcWidth || 3,
-            width    = this.$el.dim().width,
+            width    = opts.size || this.$el.dim().width,
             radius   = (width - arcWidth) / 2,
             centre   = width / 2,
             template = '<div class="circular-progress">' +

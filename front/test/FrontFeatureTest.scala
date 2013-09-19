@@ -86,7 +86,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the copyright")
-          findFirst(".footer p").getText should startWith("© Guardian News and Media Limited")
+          findFirst(".footer .really-serious-copyright").getText should startWith("© Guardian News and Media Limited")
 
       }
     }
