@@ -7,7 +7,7 @@ define(['modules/navigation/platform-switch', 'modules/cookies', 'common', 'bean
         beforeEach(function() {
             fixtures.render({
                 id: 'platform-switch-fixtures',
-                fixtures: ['<a class="main-site-link" href="#foo"></a>']
+                fixtures: ['<a class="js-main-site-link" href="#foo"></a>']
             });
 
             Cookies.cleanUp(['GU_VIEW']);
