@@ -58,7 +58,7 @@ define([
                     // add the popular collection after
                     bonzo(bonzo.create(collectionTmpl))
                         .append($items)
-                        .insertAfter('.collection--small-stories');
+                        .insertBefore('.collection--news.collection--sport-section');
                     // add show more button
                     new ItemsShowMore($items[0])
                         .addShowMore();
