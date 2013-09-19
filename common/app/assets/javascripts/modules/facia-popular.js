@@ -1,4 +1,10 @@
-define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
+define([
+    'common',
+    'ajax',
+    'bonzo',
+    'modules/facia-relativise-timestamp',
+    'modules/facia-items-show-more'
+], function (common, ajax, bonzo, RelativiseTimestamp, ItemsShowMore) {
 
     var collectionTmpl =
         '<section class="collection collection--popular-full-width">' +
@@ -9,7 +15,7 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                 '<h2 class="item__title"><a href="" class="item__link"></a></h2>' +
                 '<div class="item__meta item__meta--grey">' +
                     '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="" data-timestamp="">' +
-                        '<i class="i"></i><span class="timestamp__text"><span class="u-h">Published: </span></span>' +
+                        '<i class="i"></i><span class="timestamp__text"></span>' +
                     '</time>' +
                 '</div>' +
             '</li>',
@@ -31,12 +37,12 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                         common.$g('.item__link', $item)
                             .attr('href', trail.url)
                             .text(trail.headline);
-                        common.$g('.time', $item)
+                        var timestamp = common.$g('.item__timestamp', $item)
                             .attr('data-timestamp', trail.published.unix)
                             .attr('datetime', trail.published.datetime);
-                        common.$g('.timestamp__text span', $item)
-                            .after(trail.published.datetimeShort);
-
+                        // relativise timestamp
+                        new RelativiseTimestamp(timestamp).relativise();
+                        // is there an image
                         if (trail.mainPicture) {
                             var $image = bonzo(bonzo.create(imageTmpl));
                             // update template
@@ -53,6 +59,9 @@ define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
                     bonzo(bonzo.create(collectionTmpl))
                         .append($items)
                         .insertAfter('.collection--small-stories');
+                    // add show more button
+                    new ItemsShowMore($items[0])
+                        .addShowMore();
                 },
                 function(req) {
                     common.mediator.emit(
