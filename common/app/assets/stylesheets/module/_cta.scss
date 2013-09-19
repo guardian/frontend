@@ -48,21 +48,22 @@ button.cta {
 }
 
 .top {
+    @extend %type-8;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none; //To normailse <button> styles
+
     &,
     &:active {
-        @extend %type-8;
-        display: block;
-        width: 100%;
         color: #ffffff;
-        text-align: left;
-        border: none; //To normailse <button> styles
+    }
 
-        padding: $baseline*3 $gs-gutter/2;
+    padding: $baseline*3 $gs-gutter/2;
 
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }
 .top--footer {

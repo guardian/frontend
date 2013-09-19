@@ -1,43 +1,101 @@
-.footer {
-    overflow: hidden;
-    padding: 0 0 $baseline*4;
-    background-color: $mushroom;
+/* Footer navigation
+   ========================================================================== */
 
-    .hide-in-footer {
-        display: none !important;
-    }
+// Needs to be loaded alongside .footer or links will be white text on white bg
+.nav--footer .nav__link {
+    color: #fff;
+    border-top: 1px solid #4490ce;
 }
 
+
+/* Footer parts
+   ========================================================================== */
+
+.footer {
+   overflow: hidden;
+   padding: 0 0 $baseline*4;
+   background-color: $mushroom;
+
+   .hide-in-footer {
+       display: none !important;
+   }
+}
 .footer__primary {
     background: $blue;
 }
-
-.footer__secondary {
-    @include font($sans-serif, normal, 14, 20);
-
-    &,
-    a {
-        color: $darkGrey;
-    }
-}
-
-.colophon {
-    list-style: none;
-    margin: 0;
-    padding-top: $baseline*2;
-    padding-bottom: $baseline*4;
-
-    li a {
-        padding: .4em 0;
-        display: block;
-    }
-}
-
 .footer__banner {
     border-top: 1px solid lighten($blue, 55%);
     background-color: darken($blue, 2%);
     border-bottom: 1px solid lighten($blue, 7%);
     margin-bottom: $baseline;
+}
+.footer__secondary {
+    @include font($sans-serif, normal, 14, 20);
+    padding-top: $baseline*3;
+    color: lighten($darkGrey, 10%);
+
+    a {
+        color: $darkGrey;
+    }
+}
+.colophon {
+    list-style: none;
+    margin: 0;
+
+    @include mq(tablet) {
+        float: right;
+        width: gs-span(4);
+        margin-left: gs-span(1);
+    }
+    @include mq(desktop) {
+        width: gs-span(6);
+    }
+    @include mq(wide) {
+        width: gs-span(8);
+    }
+
+    a {
+        margin-bottom: .6em;
+        display: block;
+    }
+}
+.colophon__item {
+    display: inline-block; // doing this instead of float to prevent mixed item height float collision
+    vertical-align: top;
+
+    @include mq($to: desktop) {
+        width: 46%;
+        margin-right: 3%;
+
+        &:nth-child(even) {
+            float: right; // this aligns right edge correctly
+            margin-right: 0;
+            margin-left: 3%;
+        }
+    }
+    @include mq(desktop) {
+        float: left;
+        margin-right: $gs-gutter;
+        width: gs-span(2);
+    }
+    @include mq(desktop, wide) {
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
+    }
+    @include mq(wide) {
+        &:nth-child(4n) {
+            margin-right: 0;
+        }
+    }
+}
+
+.footer__misc {
+    padding-top: $baseline*2;
+
+    @include mq(tablet) {
+        padding-top: 0;
+    }
 }
 
 .swipe-switches {
