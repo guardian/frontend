@@ -12,8 +12,11 @@ import conf.Configuration
 class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
+  protected def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
+    .getOrElse(throw new RuntimeException(s"Property $property not configured"))
+
   object environment {
-    private val installVars = (new File("/etc/gu/install_vars")) match {
+    private val installVars = new File("/etc/gu/install_vars") match {
       case f if f.exists => IOUtils.toString(new FileInputStream(f))
       case _ => ""
     }
@@ -26,9 +29,7 @@ class BaseGuardianConfiguration(val application: String, val webappConfDirectory
   }
 
   object switches {
-    lazy val configurationUrl = configuration.getStringProperty("switchboard.config.url").getOrElse(
-      throw new IllegalStateException("Switchboard configuration url not configured")
-    )
+    lazy val configurationUrl = getMandatoryStringProperty("switchboard.config.url")
   }
 
   object healthcheck {
@@ -54,36 +55,24 @@ class GuardianConfiguration(
     extends BaseGuardianConfiguration(application, webappConfDirectory) {
 
   object contentApi {
-    lazy val host = configuration.getStringProperty("content.api.host") getOrElse {
-      throw new IllegalStateException("Content Api Host not configured")
-    }
-
-    lazy val key = configuration.getStringProperty("content.api.key") getOrElse {
-      throw new IllegalStateException("Content Api Key not configured")
-    }
-
+    lazy val host = getMandatoryStringProperty("content.api.host")
+    lazy val elasticSearchHost = getMandatoryStringProperty("content.api.elastic.host")
+    lazy val key = getMandatoryStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object ophanApi {
-    lazy val key = configuration.getStringProperty("ophan.api.key") getOrElse {
-      throw new IllegalStateException("Ophan Api key not configured")
-    }
-    lazy val host = configuration.getStringProperty("ophan.api.host") getOrElse {
-      throw new IllegalStateException("Ophan Api host not configured")
-    }
-
+    lazy val key = getMandatoryStringProperty("ophan.api.key")
+    lazy val host = getMandatoryStringProperty("ophan.api.host")
     lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object frontend {
-    lazy val store = configuration.getStringProperty("frontend.store") getOrElse {
-      throw new IllegalStateException("Fronts Api not configured")
-    }
+    lazy val store = getMandatoryStringProperty("frontend.store")
   }
 
   object mongo {
-    lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
+    lazy val connection = getMandatoryStringProperty("mongo.connection.readonly.password")
   }
 
   object hostMachine {
@@ -128,21 +117,15 @@ class GuardianConfiguration(
   }
 
   object static {
-    lazy val path = configuration.getStringProperty("static.path").getOrElse {
-      throw new IllegalStateException("Static path not configured")
-    }
+    lazy val path = getMandatoryStringProperty("static.path")
   }
 
   object images {
-    lazy val path = configuration.getStringProperty("images.path").getOrElse {
-      throw new IllegalStateException("Image path not configured")
-    }
+    lazy val path = getMandatoryStringProperty("images.path")
   }
 
   object assets {
-    lazy val path = configuration.getStringProperty("assets.path").getOrElse {
-      throw new IllegalStateException("Image path not configured")
-    }
+    lazy val path = getMandatoryStringProperty("assets.path")
   }
 
   object oas {
@@ -150,9 +133,7 @@ class GuardianConfiguration(
   }
 
   object facebook {
-    lazy val appId = configuration.getStringProperty("guardian.page.fbAppId").getOrElse {
-      throw new IllegalStateException("Facebook app ID not configured")
-    }
+    lazy val appId = getMandatoryStringProperty("guardian.page.fbAppId")
     lazy val imageFallback = "http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png"
   }
 
@@ -173,16 +154,13 @@ class GuardianConfiguration(
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
       keys.foldLeft(Map.empty[String, String]) {
-        case (map, key) => map + (key -> configuration.getStringProperty(key).getOrElse {
-          throw new IllegalStateException(s"no value for key $key")
-        })
+        case (map, key) => map + (key -> getMandatoryStringProperty(key))
       }
     }
   }
 
   object front {
-    lazy val config = configuration.getStringProperty("front.config")
-      .getOrElse(throw new RuntimeException("Front config url not set"))
+    lazy val config = getMandatoryStringProperty("front.config")
   }
 
   object facia {
@@ -190,37 +168,36 @@ class GuardianConfiguration(
   }
 
   object pa {
-    lazy val apiKey = configuration.getStringProperty("pa.api.key")
-      .getOrElse(throw new RuntimeException("unable to load pa api key"))
+    lazy val apiKey = getMandatoryStringProperty("pa.api.key")
 
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
 
   object aws {
-    lazy val accessKey = configuration.getStringProperty("aws.access.key").getOrElse(throw new RuntimeException("AWS access key not set"))
-    lazy val secretKey = configuration.getStringProperty("aws.access.secret.key").getOrElse(throw new RuntimeException("AWS secret key not set"))
-    lazy val region = configuration.getStringProperty("aws.region").getOrElse(throw new RuntimeException("AWS region is not setup"))
+    lazy val accessKey = getMandatoryStringProperty("aws.access.key")
+    lazy val secretKey = getMandatoryStringProperty("aws.access.secret.key")
+    lazy val region = getMandatoryStringProperty("aws.region")
 
-    lazy val bucket = configuration.getStringProperty("aws.bucket").getOrElse(throw new RuntimeException("AWS bucket is not setup"))
-    lazy val sns: String = configuration.getStringProperty("sns.notification.topic.arn").getOrElse {
-      throw new IllegalStateException("Cannot send SNS notifications without topic ARN property (sns.notification.topic.arn).")
-    }
+    lazy val bucket = getMandatoryStringProperty("aws.bucket")
+    lazy val sns: String = getMandatoryStringProperty("sns.notification.topic.arn")
 
     lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
   }
 
   object pingdom {
-    lazy val url = configuration.getStringProperty("pingdom.url").getOrElse(throw new RuntimeException("Pingdom url not set"))
-    lazy val user = configuration.getStringProperty("pingdom.user").getOrElse(throw new RuntimeException("Pingdom user not set"))
-    lazy val password  = configuration.getStringProperty("pingdom.password").getOrElse(throw new RuntimeException("Pingdom password not set"))
-    lazy val apiKey = configuration.getStringProperty("pingdom.apikey").getOrElse(throw new RuntimeException("Pingdom api key not set"))
+    lazy val url = getMandatoryStringProperty("pingdom.url")
+    lazy val user = getMandatoryStringProperty("pingdom.user")
+    lazy val password  = getMandatoryStringProperty("pingdom.password")
+    lazy val apiKey = getMandatoryStringProperty("pingdom.apikey")
   }
 
   object riffraff {
-    lazy val url = configuration.getStringProperty("riffraff.url").getOrElse(throw new RuntimeException("RiffRaff url not set"))
-    lazy val apiKey = configuration.getStringProperty("riffraff.apikey").getOrElse(throw new RuntimeException("RiffRaff api key not set"))
+    lazy val url = getMandatoryStringProperty("riffraff.url")
+    lazy val apiKey = getMandatoryStringProperty("riffraff.apikey")
   }
+
+
 
   // log out Play config on start
   log.info("Play config ----------------------------------------------------------------------------")
