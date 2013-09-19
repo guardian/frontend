@@ -31,7 +31,7 @@ define(['common', 'bonzo'], function (common, bonzo) {
                 .text(relativeTime);
             // flag
             _$timestamp.attr(dataAttr, true);
-        }
+        };
     };
 
 });
