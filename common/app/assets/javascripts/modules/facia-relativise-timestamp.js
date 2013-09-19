@@ -25,7 +25,7 @@ define(['common', 'bonzo'], function (common, bonzo) {
             if (_$timestamp.attr(dataAttr)) {
                 return;
             }
-            var relativeTime = _relativiseDatetime(_$timestamp.attr('datetime'));
+            var relativeTime = _relativiseDatetime(parseInt(_$timestamp.attr('data-timestamp'), 10));
             // update text
             common.$g('.timestamp__text', _$timestamp[0])
                 .text(relativeTime);
