@@ -321,7 +321,7 @@ define([
 
             var alreadyOptedIn = !!userPrefs.get('releaseMessage');
 
-            if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() != 'mobile')) {
+            if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
                
                 // un-hide the release message
                 common.$g('#header').addClass('js-release-message');
