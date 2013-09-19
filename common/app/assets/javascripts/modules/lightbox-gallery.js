@@ -169,6 +169,10 @@ define(["bean",
                     imagesNode   = galleryNode.querySelector('.gallery__images');
                     imagesNode._originalHtml = imagesNode.innerHTML;
 
+                    // If currentimage is out of bounds, start from the beginning
+                    // Protects against ?index=0
+                    if (!currentImage || currentImage > totalImages) { currentImage = 1; }
+
                     self.layout();
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
