@@ -177,7 +177,8 @@
 }
 
 @include mq(leftCol) {
-    .media-primary + .article__meta-container {
+    .media-primary + .article__meta-container,
+    .ab-gallerytest--control + .article__meta-container {
         margin-left: 0;
         margin-bottom: 0;
         position: absolute;
