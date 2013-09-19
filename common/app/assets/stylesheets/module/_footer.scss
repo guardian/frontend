@@ -29,6 +29,11 @@
     border-bottom: 1px solid lighten($blue, 7%);
     margin-bottom: $baseline;
 }
+@include mq(tablet) {
+    .js-on .footer__navigation-wrapper {
+        display: none;
+    }
+}
 .footer__secondary {
     @include font($sans-serif, normal, 14, 20);
     padding-top: $baseline*3;
