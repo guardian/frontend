@@ -354,7 +354,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-s3');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');http://t.co/Pq9aDvm5XM
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
 
     // Standard tasks
     grunt.registerTask('test:unit', ['jasmine']);
