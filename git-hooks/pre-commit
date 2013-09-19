@@ -2,16 +2,27 @@
 #
 # Pre-commit hooks
 
-# Lint stuff before commiting
+LINT_EXIT_CODE=0
+CSS_EXIT_CODE=0
+
+# Lint stuff before committing
 SRC_PATTERN=".js"
+
 git diff --cached --name-only | if grep "$SRC_PATTERN"
 then
     grunt jshint:common
+    LINT_EXIT_CODE=$?
 fi
 
-#Analyse css if changed
+# Analyse css if changed
 SRC_PATTERN=".scss"
 git diff --cached --name-only | if grep "$SRC_PATTERN"
 then
     grunt analyse:common:css
+    CSS_EXIT_CODE=$?
+fi
+
+if [ $LINT_EXIT_CODE -ne 0 -o $CSS_EXIT_CODE -ne 0 ]
+then
+    exit 1
 fi
