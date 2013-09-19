@@ -5,18 +5,22 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.Matchers._
-import services.{IdentityUrlBuilder, IdentityRequest, IdRequestParser, ReturnUrlVerifier}
-import idapiclient.{OmnitureTracking, EmailPassword, IdApiClient}
+import services._
+import idapiclient.IdApiClient
 import play.api.test.Helpers._
 import play.api.test._
 import test.{TestRequest, Fake}
 import scala.concurrent.Future
-import idapiclient.responses.{CookiesResponse, CookieResponse}
 import client.Auth
-import idapiclient.ClientAuth
 import conf.IdentityConfiguration
 import play.api.mvc.Cookies
 import org.joda.time.DateTime
+import idapiclient.ClientAuth
+import idapiclient.responses.CookieResponse
+import idapiclient.EmailPassword
+import idapiclient.OmnitureTracking
+import services.IdentityRequest
+import idapiclient.responses.CookiesResponse
 
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -27,8 +31,9 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
   val conf = new IdentityConfiguration
   val omnitureData = mock[OmnitureTracking]
   val identityRequest = IdentityRequest(omnitureData, Some("http://example.com/return"))
+  val signInService = new PlaySigninService(conf)
 
-  val signinController = new SigninController(returnUrlVerifier, api, conf, requestParser, idUrlBuilder)
+  val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
 
 
