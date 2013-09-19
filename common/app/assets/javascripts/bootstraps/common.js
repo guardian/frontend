@@ -314,11 +314,19 @@ define([
             }
         },
 
-        displayReleaseMessage: function () {
-            if (window.screen.width >= 600) {
+        // display a flash message to devices over 600px who don't have the mobile cookie
+        displayReleaseMessage: function (config) {
+            var alreadyOptedIn = (Cookies.get('GU_VIEW') === 'mobile');
+            if (config.switches.releaseMessage && window.screen.width >= 600 &! alreadyOptedIn) {
+                
+                // un-hide the release message
+                common.$g('#header').addClass('js-release-message');
                 Array.prototype.forEach.call(document.querySelectorAll('.release-message'), function (el) {
                     el.className = el.className.replace('u-h', '');
                 });
+
+                // force the visitor in to the alpha release 
+                Cookies.add("GU_VIEW", "mobile", 365);
             }
         },
         
@@ -385,7 +393,7 @@ define([
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();
-            modules.displayReleaseMessage();
+            modules.displayReleaseMessage(config);
             modules.externalLinksCards();
         }
         common.mediator.emit("page:common:ready", config, context);

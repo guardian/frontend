@@ -17,6 +17,10 @@ $headerHeight: 58px;
 /* Global header and navigation
    ========================================================================== */
 
+#header.js-release-message {
+    top: auto
+}
+
 #header {
     min-height: $headerHeight;
     position: absolute;
