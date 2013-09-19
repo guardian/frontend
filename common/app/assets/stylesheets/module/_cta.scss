@@ -51,29 +51,22 @@ button.cta {
     @extend %type-8;
     display: block;
     width: 100%;
+    @include box-sizing(border-box);
     text-align: left;
-    border: none; //To normailse <button> styles
+    border: none; //To normalise <button> styles
 
     &,
     &:active {
         color: #ffffff;
     }
 
-    padding: $baseline*3 $gs-gutter/2;
+    padding: $baseline*2.5 $gs-gutter/2;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
 }
-.top--footer {
-    @include mq(tablet) {
-        float: right;
-        width: auto;
-        padding-top: $baseline*4.5;
-    }
-}
-
 
 .cta-small {
     display: block;

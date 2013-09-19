@@ -66,10 +66,6 @@ $headerHeight: 58px;
         margin-left: $gs-gutter;
     }
 }
-.svg .guardian-logo-wrapper--footer i {
-    @include transform(scale(1.5));
-    @include transform-origin(0 50%);
-}
 
 
 /* Columning

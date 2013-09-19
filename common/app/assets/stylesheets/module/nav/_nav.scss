@@ -51,21 +51,27 @@
 
 // First, define a reusable structural rule
 .nav--two-columns {
-    padding: $baseline*2 $gs-gutter/2 $baseline;
+    overflow: hidden;
+    padding: $baseline $gs-gutter/2;
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
     > .nav__item {
-        width: 46%;
-        margin-right: 3%;
-        display: inline-block; // doing this instead of float to prevent mixed item height float collision
-        vertical-align: top;
+        float: left;
+        width: 50%;
+        @include box-sizing(border-box);
+        padding-right: $gs-gutter/4;
+        @include mq(mobileLandscape) {
+            padding-right: $gs-gutter/2;
+        }
 
         &:nth-child(even) {
-            float: right; // this aligns right edge correctly
-            margin-right: 0%;
-            margin-left: 3%;
+            padding-right: 0;
+            padding-left: $gs-gutter/4;
+            @include mq(mobileLandscape) {
+                padding-left: $gs-gutter/2;
+            }
         }
     }
 }
@@ -103,10 +109,13 @@
 .nav-popup--small .nav--section-divider {
     margin: 0;
     background-color: $mushroom;
-    padding: $baseline*2 $gs-gutter/2;
+    padding: 0 $gs-gutter/2 $baseline*2;
 
-    > .nav__item {
-        border-bottom: 0;
+    .nav .nav__item + .nav__item {
+        .nav__link {
+            border-bottom: 0;
+            border-top: 1px solid $darkMushroom;
+        }
     }
 
     @include mq(mobileLandscape) {

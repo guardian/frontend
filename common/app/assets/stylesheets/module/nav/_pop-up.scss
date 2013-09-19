@@ -17,9 +17,6 @@
                                        // of .preload elements in Chrome Android
 }
 
-.nav-popup .nav--section-divider {
-    padding-bottom: $baseline*4;
-}
 
 /* Small
    ========================================================================== */
@@ -44,13 +41,16 @@
         border-right: 1px solid $darkMushroom;
     }
 
-    .nav__item {
-        @include mq(tablet) {
+    @include mq(tablet) {
+        .nav__item {
             margin: 0 $gs-gutter;
-            border-bottom: 1px solid $darkMushroom;
             text-align: right;
-
-            &:last-child {
+        }
+        > .nav__item {
+            .nav__link {
+                border-bottom: 1px solid $darkMushroom;
+            }
+            &:last-child .nav__link {
                 border-bottom: none;
             }
         }
