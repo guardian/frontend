@@ -44,7 +44,7 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
                     var $jsPopularEl = bonzo(context.querySelector('.js-popular'));
 
                     $jsPopularEl.hide();
-                    $jsPopularEl.after('<div class="js-popular-facebook"></div>');
+                    $jsPopularEl.after('<div class="js-popular-facebook article__popular"></div>');
 
                     popular(_config, context, false, '/most-read-facebook', '.js-popular-facebook');
                 }

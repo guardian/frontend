@@ -25,7 +25,8 @@ object Frontend extends Build with Prototypes {
 
       "org.jboss.dna" % "dna-common" % "0.6",
       "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6"
-    )
+    ),
+    (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:common"))
   )
   val commonWithTests = common % "test->test;compile->compile"
 
