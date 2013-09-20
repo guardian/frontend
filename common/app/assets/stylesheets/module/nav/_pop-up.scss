@@ -60,7 +60,7 @@
 
         @include mq(tablet) {
             @include font-size(14, 19);
-            padding: $baseline*2.5 0;
+            padding: 10px 0;
         }
     }
 }

@@ -60,7 +60,7 @@ button.cta {
         color: #ffffff;
     }
 
-    padding: $baseline*2.5 $gs-gutter/2;
+    padding: 10px $gs-gutter/2;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
