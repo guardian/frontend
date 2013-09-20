@@ -24,7 +24,7 @@
     }
 }
 
-.tablet-only {
+.hide-on-mobile {
     display: none !important;
 
     @include mq(tablet) {
