@@ -20,7 +20,7 @@ CommentBox.prototype.addComment = function(e) {
             body: formEl.elements.body.value
         };
 
-    ajax()
+    // ajax()
 };
 
 return CommentBox;
