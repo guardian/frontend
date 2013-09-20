@@ -10,17 +10,32 @@ define([
             '<section class="collection collection--popular-full-width" data-collection-type="popular-full-width">' +
                 '<h2 class="collection__title">Popular</h2>' +
             '</section>',
-        itemTmpl  =
-            '<li class="item">' +
-                '<h2 class="item__title"><a href="" class="item__link"></a></h2>' +
-                '<p class="item__standfirst"></p>' +
-                '<div class="item__meta item__meta--grey">' +
-                    '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="" data-timestamp="">' +
-                        '<i class="i"></i><span class="timestamp__text"></span>' +
-                    '</time>' +
-                '</div>' +
-            '</li>',
-        imageTmpl = '<div class="item__image-container"><a href="" class="item__link"><img class="item__image" alt="" src="" /></a></div>';
+        itemTmpl  = function(trail) {
+            var tmpl =
+                '<li class="item">' +
+                    '<h2 class="item__title"><a href="@trail.url" class="item__link">@trail.headline</a></h2>' +
+                    '<p class="item__standfirst">@trail.trailText</p>' +
+                    '<div class="item__meta item__meta--grey">' +
+                        '<time class="item__timestamp js-item__timestamp" itemprop="datePublished" datetime="@trail.published.datetime" data-timestamp="@trail.published.unix">' +
+                            '<i class="i"></i><span class="timestamp__text"></span>' +
+                        '</time>' +
+                    '</div>' +
+                '</li>'
+            return tmpl.replace(/@(trail\.[A-Za-z.]*)/g, function(match, prop) {
+                return eval(prop);
+            });
+        },
+        imageTmpl = function(trail) {
+            var tmpl =
+                '<div class="item__image-container">' +
+                    '<a href="@trail.url" class="item__link">' +
+                        '<img class="item__image" alt="" src="@trail.mainPicture.path" />' +
+                    '</a>' +
+                '</div>';
+            return tmpl.replace(/@(trail\.[A-Za-z.]*)/g, function(match, prop) {
+                return eval(prop);
+            });
+        };
 
     var popular =  {
 
@@ -33,36 +48,21 @@ define([
                 function(resp) {
                     var $items = bonzo(bonzo.create('<ul class="unstyled items"></ul>'));
                     resp.fullTrails.forEach(function(trail) {
-                        var $item = bonzo(bonzo.create(itemTmpl));
-
-                        // update template
-                        common.$g('.item__link', $item)
-                            .attr('href', trail.url)
-                            .text(trail.headline);
-                        common.$g('.item__standfirst', $item)
-                            .html(trail.trailText);
-
-                        // timestamp
-                        var $timestamp = common.$g('.item__timestamp', $item)
-                            .attr('data-timestamp', trail.published.unix)
-                            .attr('datetime', trail.published.datetime);
+                        var $item = bonzo(bonzo.create(
+                            itemTmpl(trail)
+                        ));
                         // relativise timestamp
-                        new RelativiseTimestamp($timestamp).relativise();
+                        new RelativiseTimestamp(common.$g('.item__timestamp', $item))
+                            .relativise();
 
                         // is there an image
                         if (trail.mainPicture) {
-                            $item.addClass('item--with-image');
-                            var $image = bonzo(bonzo.create(imageTmpl));
-                            // update template
-                            common.$g('.item__link', $image)
-                                .attr('href', trail.url);
-                            common.$g('.item__image', $image)
-                                .attr('src', trail.mainPicture.path);
-                            $item.append($image);
+                            $item.addClass('item--with-image')
+                                .append(imageTmpl(trail));
                         }
 
-                        // add it to the collection
-                        $item.appendTo($items);
+                        // add item to the items
+                        $items.append($item);
                     });
                     // add the popular collection before the sports zone
                     bonzo(bonzo.create(collectionTmpl))
