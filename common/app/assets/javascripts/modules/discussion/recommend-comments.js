@@ -1,8 +1,9 @@
 define([
     'common',
     'bean',
-    'ajax'
-], function(common, bean, ajax) {
+    'ajax',
+    'qwery'
+], function(common, bean, ajax, qwery) {
 
 /**
  * @type {Object}
@@ -39,7 +40,7 @@ RecommendComments.options = {
  * @param {Element} context
  */
 RecommendComments.init = function(context, options) {
-    var buttons = context.querySelectorAll('.'+ RecommendComments.CONFIG.classes.button);
+    var buttons = qwery('.'+ RecommendComments.CONFIG.classes.button, context);
 
     for (var prop in options) {
         RecommendComments.options[prop] = options[prop];
@@ -72,7 +73,7 @@ RecommendComments.handleClick = function(e) {
     var elem = e.currentTarget,
         id = elem.getAttribute('data-comment-id'),
         result = RecommendComments.recommendComment(id);
-    
+
     // Remove button class to remove event handler
     // as it is delegated
     elem.className = elem.className.replace(RecommendComments.CONFIG.classes.button, '');
@@ -134,7 +135,7 @@ RecommendComments.fail = function(xhr) {
  * @param {Boolean=} unrecommend
  */
 RecommendComments.renderRecommendation = function(elem, unrecommend) {
-    var recommendCountElem = elem.querySelector('.'+ RecommendComments.CONFIG.classes.count),
+    var recommendCountElem = qwery('.'+ RecommendComments.CONFIG.classes.count, elem),
         currentCount = parseInt(elem.getAttribute('data-recommend-count'), 10),
         newCount = !unrecommend ? currentCount+1 : currentCount-1;
 
