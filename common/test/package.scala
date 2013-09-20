@@ -12,6 +12,7 @@ import com.gu.management.play.InternalManagementPlugin
 import play.api.GlobalSettings
 import concurrent.Future
 import org.apache.commons.codec.digest.DigestUtils
+import com.gargoylesoftware.htmlunit.BrowserVersion
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
@@ -61,6 +62,9 @@ trait TestSettings {
  * Executes a block of code in a running server, with a test HtmlUnit browser.
  */
 class EditionalisedHtmlUnit extends TestSettings {
+
+  // the default is I.E 7 which we do not support
+  BrowserVersion.setDefault(BrowserVersion.FIREFOX_3_6)
 
   val host = "http://localhost:9000"
 

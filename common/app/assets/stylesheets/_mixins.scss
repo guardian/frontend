@@ -33,6 +33,13 @@
     transform: $args;
 }
 
+@mixin transform-origin($args) {
+    -webkit-transform-origin: $args;
+    -moz-transform-origin: $args;
+    -ms-transform-origin: $args;
+    transform-origin: $args;
+}
+
 @mixin animation($args) {
     -webkit-animation: $args;
     -moz-animation: $args;
