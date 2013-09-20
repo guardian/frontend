@@ -85,4 +85,20 @@
             }
         }
     }
+    .item--sport-stats {
+        .competition-table {
+            padding-top: 0;
+            .match-desc__team {
+                width: 87px;
+            }
+            .match-desc__result {
+                width: 30px;
+            }
+        }
+        .cta-small.cta-small-border {
+            border-bottom-style: none;
+            padding-top: 11px;
+            padding-bottom: 0;
+        }
+    }
 }
