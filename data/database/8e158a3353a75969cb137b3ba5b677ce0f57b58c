@@ -1,0 +1,1955 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":10,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":1,
+    "orderBy":"newest",
+    "results":[{
+      "id":"commentisfree/2013/sep/20/golliwog-shetland",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-20T10:44:59Z",
+      "webTitle":"What price a golliwog in Shetland? | Lemn Sissay",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/20/golliwog-shetland",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/20/golliwog-shetland",
+      "fields":{
+        "trailText":"<p><strong>Lemn Sissay: </strong>After I saw a golliwog in a Shetland Islands shop window I blogged about it, upsetting the owner. Should I have done it?</p>",
+        "headline":"What price a golliwog in Shetland?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tqpb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/20/1379676487306/Lemn-Sissay-with-golliwog-003.jpg",
+        "wordcount":"807",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"media/blogging",
+        "type":"keyword",
+        "webTitle":"Blogging",
+        "webUrl":"http://www.theguardian.com/media/blogging",
+        "apiUrl":"http://content.guardianapis.com/media/blogging",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"uk/scotland",
+        "type":"keyword",
+        "webTitle":"Scotland",
+        "webUrl":"http://www.theguardian.com/uk/scotland",
+        "apiUrl":"http://content.guardianapis.com/uk/scotland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/race",
+        "type":"keyword",
+        "webTitle":"Race issues",
+        "webUrl":"http://www.theguardian.com/world/race",
+        "apiUrl":"http://content.guardianapis.com/world/race",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/lemnsissay",
+        "type":"contributor",
+        "webTitle":"Lemn Sissay",
+        "webUrl":"http://www.theguardian.com/profile/lemnsissay",
+        "apiUrl":"http://content.guardianapis.com/profile/lemnsissay",
+        "bio":"<p>Lemn Sissay is a poet and playwright. He is an associate artist at the Southbank Centre.</p>",
+        "r2ContributorId":"25824",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/07/29/lemn_sissay.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417842258",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/20/1379676487306/Lemn-Sissay-with-golliwog-003.jpg",
+          "typeData":{
+            "source":"Lemn Sissay",
+            "altText":"Lemn Sissay with golliwogs",
+            "height":"84",
+            "credit":"Lemn Sissay",
+            "caption":"Lemn Sissay with golliwogs Photograph: Lemn Sissay",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-417842259",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/20/1379676614855/Lemn-Sissay-with-golliwog-001.jpg",
+          "typeData":{
+            "source":"Lemn Sissay",
+            "altText":"Lemn Sissay with golliwogs",
+            "height":"368",
+            "credit":"Lemn Sissay",
+            "caption":"'Each day the shop owner puts th dolls in the window is she making a conscious decision to disregard their racist history?' ",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"education/mortarboard/2013/sep/20/feminist-guide-to-freshers-week",
+      "sectionId":"education",
+      "sectionName":"Education",
+      "webPublicationDate":"2013-09-20T10:31:00Z",
+      "webTitle":"A feminist guide to freshers' week",
+      "webUrl":"http://www.theguardian.com/education/mortarboard/2013/sep/20/feminist-guide-to-freshers-week",
+      "apiUrl":"http://content.guardianapis.com/education/mortarboard/2013/sep/20/feminist-guide-to-freshers-week",
+      "fields":{
+        "trailText":"<p>Sleaze, sweat and skimpy outfits: is #freshersweeksexism still an issue on campus? And what can be done about it?</p>",
+        "headline":"A feminist guide to freshers' week",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tcap",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Education/Pix/pictures/2013/8/29/1377784463805/I-need-feminism-because-l-003.jpg",
+        "wordcount":"622",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"education/freshers",
+        "type":"keyword",
+        "webTitle":"Freshers",
+        "webUrl":"http://www.theguardian.com/education/freshers",
+        "apiUrl":"http://content.guardianapis.com/education/freshers",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/series/guardian-students",
+        "type":"series",
+        "webTitle":"Guardian Students",
+        "webUrl":"http://www.theguardian.com/education/series/guardian-students",
+        "apiUrl":"http://content.guardianapis.com/education/series/guardian-students",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"education/higher-education",
+        "type":"keyword",
+        "webTitle":"Higher education",
+        "webUrl":"http://www.theguardian.com/education/higher-education",
+        "apiUrl":"http://content.guardianapis.com/education/higher-education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/students",
+        "type":"keyword",
+        "webTitle":"Students",
+        "webUrl":"http://www.theguardian.com/education/students",
+        "apiUrl":"http://content.guardianapis.com/education/students",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/series/blogging-students",
+        "type":"series",
+        "webTitle":"Blogging students",
+        "webUrl":"http://www.theguardian.com/education/series/blogging-students",
+        "apiUrl":"http://content.guardianapis.com/education/series/blogging-students",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/mortarboard",
+        "type":"blog",
+        "webTitle":"Mortarboard blog",
+        "webUrl":"http://www.theguardian.com/education/mortarboard",
+        "apiUrl":"http://content.guardianapis.com/education/mortarboard",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"world/feminism",
+        "type":"keyword",
+        "webTitle":"Feminism",
+        "webUrl":"http://www.theguardian.com/world/feminism",
+        "apiUrl":"http://content.guardianapis.com/world/feminism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"education/advice-for-students",
+        "type":"keyword",
+        "webTitle":"Advice for students",
+        "webUrl":"http://www.theguardian.com/education/advice-for-students",
+        "apiUrl":"http://content.guardianapis.com/education/advice-for-students",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"profile/mirren-gidda",
+        "type":"contributor",
+        "webTitle":"Mirren Gidda",
+        "webUrl":"http://www.theguardian.com/profile/mirren-gidda",
+        "apiUrl":"http://content.guardianapis.com/profile/mirren-gidda",
+        "bio":"<p>Mirren Gidda is the editor in chief of <a href=\"http://www.pimedia.org.uk\">Pi</a>, she blogs at <a href=\"http://mirrengidda.wordpress.com\">mirrengidda.wordpress.com</a> and is an English Literature student at UCL. Follow her on twitter <a href=\"https://twitter.com/MirrenGidda\">@MirrenGidda</a></p>",
+        "r2ContributorId":"55795",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Education/Pix/pictures/2013/4/2/1364911327186/Mirren-Gidda-student-blog-003.jpg",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417836578",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Education/Pix/pictures/2013/8/29/1377784470402/I-need-feminism-because-l-008.jpg",
+          "typeData":{
+            "source":"GuardianWitness",
+            "photographer":"Freya Potter",
+            "altText":"I need feminism because leeds",
+            "height":"276",
+            "credit":"Freya Potter/GuardianWitness",
+            "caption":"Has last year's \"I need feminism because\" campaign had an impact on campus? Photograph: Freya Potter/GuardianWitness",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417836579",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Education/Pix/pictures/2013/8/29/1377784463805/I-need-feminism-because-l-003.jpg",
+          "typeData":{
+            "source":"GuardianWitness",
+            "photographer":"Freya Potter",
+            "altText":"I need feminism because leeds",
+            "height":"84",
+            "credit":"Freya Potter/GuardianWitness",
+            "caption":"I need feminism because leeds Photograph: Freya Potter/GuardianWitness",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/brain-flapping/2013/sep/20/video-games-cause-violence-claims-cause-violence",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-09-20T06:00:00Z",
+      "webTitle":"Claims that 'video games lead to violence' lead to violence | Dean Burnett",
+      "webUrl":"http://www.theguardian.com/science/brain-flapping/2013/sep/20/video-games-cause-violence-claims-cause-violence",
+      "apiUrl":"http://content.guardianapis.com/science/brain-flapping/2013/sep/20/video-games-cause-violence-claims-cause-violence",
+      "fields":{
+        "trailText":"<p><strong>Dean Burnett:</strong> The persistent claims that video games cause violence are likely to result in violence</p>",
+        "headline":"Claims that 'video games lead to violence' lead to violence",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jv2a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/12/22/1324570538373/Call-of-Duty-Modern-Warfa-002.jpg",
+        "wordcount":"857",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"science/psychology",
+        "type":"keyword",
+        "webTitle":"Psychology",
+        "webUrl":"http://www.theguardian.com/science/psychology",
+        "apiUrl":"http://content.guardianapis.com/science/psychology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/brain-flapping",
+        "type":"blog",
+        "webTitle":"Brain flapping",
+        "webUrl":"http://www.theguardian.com/science/brain-flapping",
+        "apiUrl":"http://content.guardianapis.com/science/brain-flapping",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"profile/dean-burnett",
+        "type":"contributor",
+        "webTitle":"Dean Burnett",
+        "webUrl":"http://www.theguardian.com/profile/dean-burnett",
+        "apiUrl":"http://content.guardianapis.com/profile/dean-burnett",
+        "bio":"<p>Dean Burnett is a doctor of neuroscience, but moonlights as a comedy writer and stand-up comedian. He <a href=\"http://www.mscpsychiatry.co.uk/\">tutors and lectures at Cardiff University</a></p>",
+        "r2ContributorId":"48703",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417837122",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/5/18/1242608388785/Grand-Theft-Auto-IV-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Grand Theft Auto IV",
+            "height":"276",
+            "credit":"AP",
+            "caption":"More tea, Vicar?  Photograph: AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417837123",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/12/22/1324570538373/Call-of-Duty-Modern-Warfa-002.jpg",
+          "typeData":{
+            "source":"Activision/AP",
+            "altText":"Call of Duty: Modern Warfare 3 was a retail blockbuster video game of 2011. ",
+            "height":"84",
+            "credit":"Activision/AP",
+            "caption":"Call of Duty: Modern Warfare 3 was a retail blockbuster video game of 2011.   Photograph: Activision/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/sep/19/gchq-we-monster-we-cant-control",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-19T18:47:03Z",
+      "webTitle":"Edward Snowden has started a global debate. So why the silence in Britain? | Simon Jenkins",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/19/gchq-we-monster-we-cant-control",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/19/gchq-we-monster-we-cant-control",
+      "fields":{
+        "trailText":"<strong>Simon Jenkins:</strong> We're subject to huge unwarranted surveillance – but Westminster's useful idiots are more likely to sanction than criticise it",
+        "headline":"Edward Snowden has started a global debate. So why the silence in Britain?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jvvb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379616093785/Sean-Connery-in-Goldfinge-003.jpg",
+        "wordcount":"1079",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"uk/gchq",
+        "type":"keyword",
+        "webTitle":"GCHQ",
+        "webUrl":"http://www.theguardian.com/uk/gchq",
+        "apiUrl":"http://content.guardianapis.com/uk/gchq",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-national-security",
+        "type":"keyword",
+        "webTitle":"US national security",
+        "webUrl":"http://www.theguardian.com/world/us-national-security",
+        "apiUrl":"http://content.guardianapis.com/world/us-national-security",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/simonjenkins",
+        "type":"contributor",
+        "webTitle":"Simon Jenkins",
+        "webUrl":"http://www.theguardian.com/profile/simonjenkins",
+        "apiUrl":"http://content.guardianapis.com/profile/simonjenkins",
+        "bio":"<p>Simon Jenkins is a journalist and author. He writes for the Guardian as well as broadcasting for the BBC. He has edited the Times and the London Evening Standard and is chairman of the National Trust</p>",
+        "r2ContributorId":"19166",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/simon_jenkins_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/commentanddebate",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & debate",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"world/edward-snowden",
+        "type":"keyword",
+        "webTitle":"Edward Snowden",
+        "webUrl":"http://www.theguardian.com/world/edward-snowden",
+        "apiUrl":"http://content.guardianapis.com/world/edward-snowden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417789605",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379616098892/Sean-Connery-in-Goldfinge-008.jpg",
+          "typeData":{
+            "source":"Sportsphoto/ Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"Sean Connery in Goldfinger",
+            "height":"276",
+            "credit":"Cine Text / Allstar/Sportsphoto/ Allstar",
+            "caption":"Perhaps this trust in the authority of the state ‘is embedded in the class system, aided by the vague glamour of James Bond'. Photograph: Cine Text/Allstar/Sportsphoto",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417789606",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379616093785/Sean-Connery-in-Goldfinge-003.jpg",
+          "typeData":{
+            "source":"Sportsphoto/ Allstar",
+            "photographer":"Cine Text / Allstar",
+            "altText":"Sean Connery in Goldfinger",
+            "height":"84",
+            "credit":"Cine Text / Allstar/Sportsphoto/ Allstar",
+            "caption":"Perhaps this trust in the authority of the state 'is embedded in the class system, aided by the vague glamour of James Bond and George Smiley'.  Photograph: Cine Text / Allstar/Sportsphoto/ Allstar",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/19/pope-francis-vision-new-catholic-church",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-19T18:19:00Z",
+      "webTitle":"Pope Francis sets out vision for more gay people and women in 'new' church",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/19/pope-francis-vision-new-catholic-church",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/19/pope-francis-vision-new-catholic-church",
+      "fields":{
+        "trailText":"<p>Pope Francis gives wide-ranging interview to Italian journal and urges Catholics to show 'audacity and courage' in drive for reform</p>",
+        "headline":"Pope Francis sets out vision for more gay people and women in 'new' church",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tqp8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379610374137/Pope-Francis-005.jpg",
+        "wordcount":"882",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/pope-francis",
+        "type":"keyword",
+        "webTitle":"Pope Francis",
+        "webUrl":"http://www.theguardian.com/world/pope-francis",
+        "apiUrl":"http://content.guardianapis.com/world/pope-francis",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/catholicism",
+        "type":"keyword",
+        "webTitle":"Catholicism",
+        "webUrl":"http://www.theguardian.com/world/catholicism",
+        "apiUrl":"http://content.guardianapis.com/world/catholicism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.theguardian.com/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/christianity",
+        "type":"keyword",
+        "webTitle":"Christianity",
+        "webUrl":"http://www.theguardian.com/world/christianity",
+        "apiUrl":"http://content.guardianapis.com/world/christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/gay-rights",
+        "type":"keyword",
+        "webTitle":"Gay rights",
+        "webUrl":"http://www.theguardian.com/world/gay-rights",
+        "apiUrl":"http://content.guardianapis.com/world/gay-rights",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/edpilkington",
+        "type":"contributor",
+        "webTitle":"Ed Pilkington",
+        "webUrl":"http://www.theguardian.com/profile/edpilkington",
+        "apiUrl":"http://content.guardianapis.com/profile/edpilkington",
+        "bio":"<p>Ed Pilkington is the chief reporter for Guardian US. He is a former national and foreign editor of the paper, and author of Beyond the Mother Country</p>",
+        "rcsId":"GNL038863",
+        "r2ContributorId":"15609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2012/3/27/1332862968426/edpilkington_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417801085",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379610383465/Pope-Francis-010.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"AGF",
+            "altText":"Pope Francis",
+            "height":"276",
+            "credit":"AGF/Rex Features",
+            "caption":"Pope Francis said unless a new balance is found, 'the moral edifice of the church is likely to fall like a house of cards'. Photograph: AGF/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417801086",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379610374137/Pope-Francis-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"AGF",
+            "altText":"Pope Francis",
+            "height":"84",
+            "credit":"AGF/Rex Features",
+            "caption":"Pope Francis. Photograph: AGF/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/blog/2013/sep/19/masturbation-laws-world-penal-code",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-19T15:53:00Z",
+      "webTitle":"Masturbation laws around the world: the penal code",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/blog/2013/sep/19/masturbation-laws-world-penal-code",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/blog/2013/sep/19/masturbation-laws-world-penal-code",
+      "fields":{
+        "trailText":"<p>A Swedish man caught masturbating in public has been acquitted – but if he'd been caught elsewhere what kind of punishment might he have faced?</p>",
+        "headline":"Masturbation laws around the world: the penal code",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tqjy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/20/1369049954399/Pairs-of-socks--004.jpg",
+        "wordcount":"465",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/sex",
+        "type":"keyword",
+        "webTitle":"Sex",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/sex",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/sex",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/sweden",
+        "type":"keyword",
+        "webTitle":"Sweden",
+        "webUrl":"http://www.theguardian.com/world/sweden",
+        "apiUrl":"http://content.guardianapis.com/world/sweden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417774642",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/20/1369049961368/Pairs-of-socks--009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Levene",
+            "altText":"Pairs of socks ",
+            "height":"276",
+            "credit":"David Levene/Guardian",
+            "caption":"Sock and awe. Masturbation in public is punished differently the world over. Photograph: David Levene for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417774643",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/20/1369049954399/Pairs-of-socks--004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Levene",
+            "altText":"Pairs of socks ",
+            "height":"84",
+            "credit":"David Levene/Guardian",
+            "caption":"Pakistan's civil servants have been told that moccasins or sandals must be worn without socks. Photograph: David Levene for the Guardian",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-417774644",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/9/5/1346843747126/Vibrator-006.jpg",
+          "typeData":{
+            "source":"PR shot",
+            "altText":"Vibrator",
+            "height":"276",
+            "credit":"PR shot",
+            "caption":"Photograph: PR shot",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/19/freshers-week-sexism-women",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-19T14:49:39Z",
+      "webTitle":"Freshers' week sexism, and the damage it does",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/19/freshers-week-sexism-women",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/19/freshers-week-sexism-women",
+      "fields":{
+        "trailText":"<p><strong>Laura Bates:</strong> The first term of college is many young women's first experience of leaving home and adult life, which makes the #freshersweeksexism of laddish university culture so hard to stand</p>",
+        "headline":"Freshers' week sexism, and the damage it does",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tqjn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601219888/Students-at-freshers-week-005.jpg",
+        "wordcount":"906",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/laura-bates",
+        "type":"contributor",
+        "webTitle":"Laura Bates",
+        "webUrl":"http://www.theguardian.com/profile/laura-bates",
+        "apiUrl":"http://content.guardianapis.com/profile/laura-bates",
+        "bio":"<p>Laura Bates is the founder of the <a href=\"http://www.everydaysexism.com/\">Everyday Sexism Project</a>, a collection of over 10,000 women's daily experiences of gender inequality</p>",
+        "r2ContributorId":"54862",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/7/1362678319287/Laura-Bates.jpg",
+        "references":[]
+      },{
+        "id":"lifeandstyle/the-womens-blog-with-jane-martinson",
+        "type":"blog",
+        "webTitle":"The women's blog with Jane Martinson",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"education/students",
+        "type":"keyword",
+        "webTitle":"Students",
+        "webUrl":"http://www.theguardian.com/education/students",
+        "apiUrl":"http://content.guardianapis.com/education/students",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/freshers",
+        "type":"keyword",
+        "webTitle":"Freshers",
+        "webUrl":"http://www.theguardian.com/education/freshers",
+        "apiUrl":"http://content.guardianapis.com/education/freshers",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/higher-education",
+        "type":"keyword",
+        "webTitle":"Higher education",
+        "webUrl":"http://www.theguardian.com/education/higher-education",
+        "apiUrl":"http://content.guardianapis.com/education/higher-education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417768162",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601215020/Students-at-freshers-week-002.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"54",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601216584/Students-at-freshers-week-003.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"340",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601218158/Students-at-freshers-week-004.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"130",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601219888/Students-at-freshers-week-005.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"84",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601221976/Students-at-freshers-week-006.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"132",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601224266/Students-at-freshers-week-007.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"168",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601225871/Students-at-freshers-week-008.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"180",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601227419/Students-at-freshers-week-009.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"228",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601229117/Students-at-freshers-week-010.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"276",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601230739/Students-at-freshers-week-011.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"372",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601229117/Students-at-freshers-week-010.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"276",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417768163",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601219888/Students-at-freshers-week-005.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"84",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/sep/19/sex-selective-abortion-womans-right",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-19T11:40:36Z",
+      "webTitle":"Why women have a right to sex-selective abortion | Sarah Ditum",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/19/sex-selective-abortion-womans-right",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/19/sex-selective-abortion-womans-right",
+      "fields":{
+        "trailText":"<p><strong>Sarah Ditum: </strong>As far as I'm concerned, it doesn't matter why any woman wants to end her pregnancy. If it's to select for sex, that's her choice</p>",
+        "headline":"Why women have a right to sex-selective abortion",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tqc6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379587874329/Ann-Furedi-003.jpg",
+        "wordcount":"638",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/abortion",
+        "type":"keyword",
+        "webTitle":"Abortion",
+        "webUrl":"http://www.theguardian.com/world/abortion",
+        "apiUrl":"http://content.guardianapis.com/world/abortion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/sarah-ditum",
+        "type":"contributor",
+        "webTitle":"Sarah Ditum",
+        "webUrl":"http://www.theguardian.com/profile/sarah-ditum",
+        "apiUrl":"http://content.guardianapis.com/profile/sarah-ditum",
+        "bio":"<p>Sarah Ditum is a freelance writer on politics, culture and lifestyle. She lives in Bath and blogs at <a href=\"http://sarahditum.com/\">Paperhouse</a></p>",
+        "r2ContributorId":"31955",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/2/29/1330519293276/Sarah_Ditum.jpg",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/the-womens-blog-with-jane-martinson",
+        "type":"blog",
+        "webTitle":"The women's blog with Jane Martinson",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417816745",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379587920812/Ann-Furedi-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bwp Media",
+            "altText":"Ann Furedi",
+            "height":"276",
+            "credit":"Bwp Media/Getty Images",
+            "caption":"'Ann Furedi of BPAS ... has won outraged headlines simply by saying that abortion on the grounds of sex selection may be within the terms of the 1967 Abortion Act Photograph: Bwp Media/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417816746",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379587874329/Ann-Furedi-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bwp Media",
+            "altText":"Ann Furedi",
+            "height":"84",
+            "credit":"Bwp Media/Getty Images",
+            "caption":"'Ann Furedi of BPAS ... has won outraged headlines simply by saying that abortion on the grounds of sex selection may be within the terms of the 1967 Abortion Act Photograph: Bwp Media/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"football/video/2013/sep/18/seven-man-kick-off-red-bull-leipzig-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-09-18T08:35:59Z",
+      "webTitle":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under 10 seconds - video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/sep/18/seven-man-kick-off-red-bull-leipzig-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/sep/18/seven-man-kick-off-red-bull-leipzig-video",
+      "fields":{
+        "trailText":"<p>Red Bull Leipzig line up with seven men on the halfway line to start a German second division game against Stuttgart II</p>",
+        "headline":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under 10 seconds - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tpvq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433015693/Seven-man-attacking-kick--005.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/europeanfootball",
+        "type":"keyword",
+        "webTitle":"European club football",
+        "webUrl":"http://www.theguardian.com/football/europeanfootball",
+        "apiUrl":"http://content.guardianapis.com/football/europeanfootball",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/series/amazing-world-of-sport",
+        "type":"series",
+        "webTitle":"The amazing world of sport",
+        "webUrl":"http://www.theguardian.com/sport/series/amazing-world-of-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/series/amazing-world-of-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417545114",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433010311/Seven-man-attacking-kick--002.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"54",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433011801/Seven-man-attacking-kick--003.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"340",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433013393/Seven-man-attacking-kick--004.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"130",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433015693/Seven-man-attacking-kick--005.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"84",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433017683/Seven-man-attacking-kick--006.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"132",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433019133/Seven-man-attacking-kick--007.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"168",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433020713/Seven-man-attacking-kick--008.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"180",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433022220/Seven-man-attacking-kick--009.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"228",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433023691/Seven-man-attacking-kick--010.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"276",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433025381/Seven-man-attacking-kick--011.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"372",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433026865/Seven-man-attacking-kick--012.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"360",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433028440/Seven-man-attacking-kick--013.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"90",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433029970/Seven-man-attacking-kick--014.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"225",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433031711/Seven-man-attacking-kick--015.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"360",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433033834/Seven-man-attacking-kick--016.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"230",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/17/130917flyingkick-16x9.mp4",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/17/130917flyingkick_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/17/130917flyingkick_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/17/130917flyingkick/130917flyingkick.m3u8",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/17/130917flyingkick-720.mp4",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/17/130917flyingkick_vpx.webm",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        }]
+      },{
+        "id":"gu-image-417597086",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433015693/Seven-man-attacking-kick--005.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"84",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"culture/australia-culture-blog/video/2013/sep/18/wagners-ring-cycle-2-mins-video",
+      "sectionId":"culture",
+      "sectionName":"Culture",
+      "webPublicationDate":"2013-09-18T01:45:34Z",
+      "webTitle":"Wagner's 15-hour Ring Cycle … in two and a half minutes - video",
+      "webUrl":"http://www.theguardian.com/culture/australia-culture-blog/video/2013/sep/18/wagners-ring-cycle-2-mins-video",
+      "apiUrl":"http://content.guardianapis.com/culture/australia-culture-blog/video/2013/sep/18/wagners-ring-cycle-2-mins-video",
+      "fields":{
+        "trailText":"<p>A short animation, with appropriately rousing musical accompaniment, which manages to condense Wagner's magnificent 15-hour epic, Ring Cycle – complete with gods, heroes, dragons, a castle in the sky, love triangles, magic swords and Valkyries – into a succinct, coffee-break friendly two and a half minutes. Get it? Got it? Good!</p>",
+        "headline":"Wagner's 15-hour Ring Cycle … in two and a half minutes – video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzd2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392161811/Ring-Cycle-in-2-mins-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"culture/australia-culture-blog",
+        "type":"blog",
+        "webTitle":"Australia culture blog",
+        "webUrl":"http://www.theguardian.com/culture/australia-culture-blog",
+        "apiUrl":"http://content.guardianapis.com/culture/australia-culture-blog",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/richard-wagner",
+        "type":"keyword",
+        "webTitle":"Richard Wagner",
+        "webUrl":"http://www.theguardian.com/music/richard-wagner",
+        "apiUrl":"http://content.guardianapis.com/music/richard-wagner",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"travel/sydneyoperahouse",
+        "type":"keyword",
+        "webTitle":"Sydney Opera House, Sydney, Australia",
+        "webUrl":"http://www.theguardian.com/travel/sydneyoperahouse",
+        "apiUrl":"http://content.guardianapis.com/travel/sydneyoperahouse",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417472828",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392161811/Ring-Cycle-in-2-mins-009.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"84",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392178015/Ring-Cycle-in-2-mins-016.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"360",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392145327/Ring-Cycle-in-2-mins-002.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"90",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392149118/Ring-Cycle-in-2-mins-003.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"225",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392151764/Ring-Cycle-in-2-mins-004.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"360",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/17/130917ring_FromGAus-16x9.mp4",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/17/130917ring_FromGAus_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/17/130917ring_FromGAus_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/17/130917ring_FromGAus/130917ring_FromGAus.m3u8",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/17/130917ring_FromGAus_vpx.webm",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        }]
+      },{
+        "id":"gu-image-417475543",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392161811/Ring-Cycle-in-2-mins-009.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"84",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

@@ -33,12 +33,12 @@
 }
 
 .article__head {
-    padding-top: $baseline*3;
+    padding-top: $baseline;
 }
 
 .article__headline {
     @extend %type-3;
-    margin-bottom: $baseline*2;
+    margin-bottom: $baseline*6;
 
     @include mq(tablet) {
         font-family: $serifheadline;
@@ -47,7 +47,7 @@
         font-size: 3.4rem;
         line-height: 42px;
         line-height: 4.2rem;
-        margin-bottom: $baseline*5;
+        margin-bottom: $gs-column-height;
     }
 
     @include mq(($a-rightCol-trigger + gs-span(1))) {
@@ -55,7 +55,6 @@
         font-size: 4rem;
         line-height: 48px;
         line-height: 4.8rem;
-        margin-bottom: $baseline*6;
     }
 
     a {
@@ -68,8 +67,30 @@
     }
 }
 
+.article__dateline {
+    @include box-sizing(border-box);
+    @extend %type-11;
+    min-height: $gs-column-height;
+    padding-top: $baseline;
+    margin-bottom: $baseline*3;
+    border-top: 1px dotted $neutral3;
+
+    .article__meta-container & {
+        display: none;
+    }
+
+    @include mq(leftCol) {
+        display: none;
+
+        .article__meta-container & {
+            display: block;
+            margin-bottom: $baseline*3;
+        }
+    }
+}
+
 .article__standfirst {
-    margin-bottom: $baseline*4;
+    margin-bottom: $baseline*3;
     text-rendering: optimizeLegibility;
 
     @include mq(tablet) {
@@ -103,7 +124,6 @@
     }
 }
 
-
 .article__container,
 .article__main-column,
 .article-v2__inner,
@@ -118,8 +138,8 @@
 }
 
 .byline {
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
+    border-top: 1px dotted $neutral3;
+    border-bottom: 1px dotted $neutral3;
     margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
 
@@ -131,16 +151,32 @@
         @include mq(rightCol) {
             display: block;
         }
+        @include mq(leftCol) {
+            padding-bottom: $baseline*12;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        @include mq(wide) {
+            padding-bottom: $baseline*15;
+        }
     }
 }
-@include mq(leftCol) {
-    article .byline {
+
+.article__meta-container {
+    @include mq(leftCol) {
         float: left;
         margin-left: ($a-leftCol-width + $gs-gutter)*-1;
         margin-bottom: $baseline*4;
         width: $a-leftCol-width;
     }
-    article .media-primary + .byline {
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
+}
+
+@include mq(leftCol) {
+    .media-content + .article__meta-container {
         margin-left: 0;
         margin-bottom: 0;
         position: absolute;
@@ -148,6 +184,7 @@
         left: 0;
     }
 }
+
 @include mq(tablet) {
     .d-tabs__item--byline {
         font-size: 16px !important;
@@ -178,6 +215,26 @@ video {
     @include user-select;
 }
 
+.commentcount {
+    @extend %type-11;
+    display: none;
+    color: #F6644F;
+
+    i {
+        vertical-align: middle;
+    }
+
+    .article__head & {
+        display: block;
+        float: right;
+    }
+}
+
+.commentcount__label {
+    .article__head & {
+        @extend .u-h;
+    }
+}
 
 /* Layout changes across devices
    ========================================================================== */
@@ -203,6 +260,10 @@ video {
         .media-primary {
             margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
         }
+    }
+
+    .article__head .commentcount {
+        display: block;
     }
 }
 
@@ -293,14 +354,42 @@ video {
     .article-v2__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;
     }
+
+    .article-v2__inner {
+        padding-right: $a-rightCol-width + $gs-gutter;
+    }
+
+    .article-v2__main-column {
+        padding-right: $gs-gutter;
+    }
+
     .article__head {
         padding-top: $baseline*2;
-        padding-bottom: $baseline*2;
+    }
+
+    .commentcount {
+        .article__head & {
+            display: none;
+        }
+
+        .article__meta-container & {
+            display: block;
+            padding-top: $baseline;
+            margin-bottom: $baseline*3;
+            border-top: 1px dotted $neutral3;
+        }
     }
 }
 
 @include mq(wide) {
-    .article-wrapper {
-        margin-left: $gs-column-width;
+    .article-v2__inner,
+    .article-v2__main-column {
+        padding-left: gs-span(3) + $gs-gutter;
+    }
+    .article-v2__main-column {
+        padding-right: gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__inner {
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 }
