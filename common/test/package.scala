@@ -1,6 +1,6 @@
 package test
 
-import conf.{ElasticContentApi, Configuration, ContentApi}
+import conf.{ElasticSearchContentApi, Configuration, ContentApi}
 import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
@@ -69,7 +69,7 @@ trait TestSettings {
   }
 
   ContentApi.http = toRecorderHttp(ContentApi.http)
-  ElasticContentApi.http = toRecorderHttp(ElasticContentApi.http)
+  ElasticSearchContentApi.http = toRecorderHttp(ElasticSearchContentApi.http)
 }
 
 /**

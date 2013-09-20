@@ -103,7 +103,7 @@ class SolrContentApiClient extends ContentApiClient {
   override val targetUrl = contentApi.host
 }
 
-class ElasticContentApiClient extends ContentApiClient {
+class ElasticSearchContentApiClient extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.elasticSearchHost
