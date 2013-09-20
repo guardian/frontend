@@ -51,7 +51,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/userPrefs', 'he
             server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
             common.mediator.on('modules:autoupdate:loaded', callback);
 
-            attachTo.innerHTML('<span class="autoupdate--new autoupdate--highlight">bar</span>');
+            attachTo.innerHTML = '<span class="autoupdate--new autoupdate--highlight">bar</span>';
 
             var a = new Autoupdate({
                 path: path,
@@ -66,16 +66,15 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/userPrefs', 'he
 
             runs(function(){
                 expect(callback).toHaveBeenCalled();
-                expect(attachTo.innerHTML()).toBe('<span class="autoupdate--new autoupdate--highlight">foo</span><span class="autoupdate--new autoupdate--highlight">bar</span>');
+                expect(attachTo.innerHTML).toBe('<span class="autoupdate--new autoupdate--highlight">foo</span><span class="autoupdate--new autoupdate--highlight">bar</span>');
                 a.off();
             });
         });
 
         it("should optionally load the load the first update immediately after the module has initialised", function(){
 
-            var callback1 = sinon.stub();
             server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
-            common.mediator.on('modules:autoupdate:loaded', callback1);
+            common.mediator.on('modules:autoupdate:loaded', callback);
 
             var a = new Autoupdate({
                 path: path,
@@ -89,7 +88,7 @@ define(['common', 'ajax', 'bean', 'modules/autoupdate', 'modules/userPrefs', 'he
             waits(200); // should be shorter than the 'delay' param
 
             runs(function(){
-                expect(callback1).toHaveBeenCalled();
+                expect(callback).toHaveBeenCalled();
                 expect(attachTo.innerHTML).toBe('<span>foo</span>');
                 a.off();
             });
