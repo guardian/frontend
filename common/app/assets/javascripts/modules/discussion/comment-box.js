@@ -1,12 +1,10 @@
-define(['modules/component'], function(Component) {
+define(['modules/component', 'ajax'], function(Component, ajax) {
 
 /**
  * @constructor
  * @extends Component
  */
-function CommentBox(opts) {
-    this.init(opts);
-}
+function CommentBox(opts) {}
 Component.create(CommentBox);
 
 /** @override */
@@ -21,10 +19,10 @@ CommentBox.prototype.addComment = function(e) {
         comment = {
             body: formEl.elements.body.value
         };
+
+    ajax()
 };
 
 return CommentBox;
 
-
-
-});
+}); // define

@@ -13,17 +13,6 @@ var Component = function() {};
 Component.prototype.template = null;
 
 /**
- * @type {Object.<string, *>}
- */
-Component.prototype.attr = {};
-
-/**
- * This need to be called from the child component
- * @param {Object=} opts (optional)
- */
-Component.prototype.init = function(opts) {};
-
-/**
  * @param {Element} elem
  * @private
  */

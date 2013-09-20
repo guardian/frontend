@@ -5,6 +5,7 @@ define([
     'bean',
     'ajax',
     'modules/discussion/recommend-comments',
+    'modules/discussion/comment-box',
     'modules/userPrefs',
     'modules/analytics/clickstream'
 ], function (
@@ -14,6 +15,7 @@ define([
     bean,
     ajax,
     RecommendComments,
+    CommentBox,
     userPrefs,
     ClickStream
     ) {
