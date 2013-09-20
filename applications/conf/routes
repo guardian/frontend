@@ -9,6 +9,12 @@ GET     /assets/*file                               controllers.Assets.at(path="
 GET     /sections                                   controllers.SectionsController.render()
 GET     /sections.json                              controllers.SectionsController.renderJson()
 
+# Tag pages facia style
+GET     /facia/$path<[\w\d-]*/(?!trails)[\w\d-]*>           controllers.TagController.renderFaciaStyle(path)
+GET     /facia/$path<[\w\d-]*/[\w\d-]*/[\w\d-]*>            controllers.TagController.renderFaciaStyle(path)
+
+#Sections Facia style
+GET        /facia/$path<[\w\d-]*(/\w\w-edition)?>            controllers.SectionController.renderFaciaStyle(path)
 
 # Note: culture|sport|australia are routed to front.
 # i.e. don't need negative lookahead to exclude them.

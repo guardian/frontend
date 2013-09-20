@@ -4,23 +4,28 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
-import play.api.mvc.{Result, RequestHeader, Controller, Action}
+import play.api.mvc._
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import play.api.libs.json._
 
 import contentapi.QueryDefaults
 import play.api.templates.Html
+import com.gu.openplatform.contentapi.model.ItemResponse
+import model.Tag
+import model.Content
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections with QueryDefaults {
 
-  def render(path: String) = Action { implicit request =>
+  def renderFaciaStyle(path: String) = Action { implicit request => render(path, renderTagFaciaStyle) }
+  def render(path: String): Action[AnyContent] = Action { implicit request => render(path, renderTag) }
+  def render(path: String, template: (TagAndTrails) => Result)(implicit request: RequestHeader): AsyncResult = {
     val promiseOfTag = lookup(path)
     Async {
       promiseOfTag.map {
-        case Left(model) => renderTag(model)
+        case Left(model) => template(model)
         case Right(notFound) => notFound
       }
     }
