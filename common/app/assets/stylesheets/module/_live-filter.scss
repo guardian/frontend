@@ -22,6 +22,7 @@
 
     .has-key-events & {
         display: table-cell;
+        vertical-align: middle;
     }
 }
 .live-toggler {
@@ -77,4 +78,20 @@
     .live-toggler--key-events {
         display: block;
     }
+}
+
+
+/* Circle progress bar live toggler
+   ========================================================================== */
+.live-toggler--circle {
+    border-left: 1px solid #c2c2b0;
+    padding: 8px 18px;
+    width: auto;
+    float: right;
+}
+
+.lt__circle-wrapper {
+    width: 30px;
+    height: 30px;
+    display: block;
 }

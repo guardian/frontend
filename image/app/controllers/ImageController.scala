@@ -4,28 +4,21 @@ import common.{ExecutionContexts, Logging}
 import play.api.mvc.{ Controller, Action, _ }
 import play.api.libs.ws.WS
 import scala.language.reflectiveCalls
+import views.support._
 
 import org.im4java.core.{ IMOperation }
 import model._
 
 object ImageController extends Controller with Logging with Implicits with ExecutionContexts {
 
-  // URL validation: We're only going to accept proxy paths that match [/\w\.-]*
-  val Path = """([/\w\.-]*)""".r
+  // URL validation: We're only going to accept proxy paths that match...
+  val Path = """([/\w\.@~-]*)""".r
 
   def render(target: String, mode: String, profile: String) = Action { implicit request =>
-    profile match {
-      case "c" => renderImage(target, mode, model.image.Contributor)
-      case "g" => renderImage(target, mode, model.image.Gallery)
-      case "glt" => renderImage(target, mode, model.image.GalleryLargeTrail)
-      case "gst" => renderImage(target, mode, model.image.GallerySmallTrail)
-      case "n" => renderImage(target, mode, model.image.Naked)
-      case "f" => renderImage(target, mode, model.image.FeaturedTrail)
-      case _ => NotFound
-    }
+    Profile.all.find(_.prefix == profile).map(renderImage(target, mode, _)).getOrElse(NotFound)
   }
 
-  private def renderImage(target: String, mode: String, profile: image.Profile)(implicit request: RequestHeader): Result = {
+  private def renderImage(target: String, mode: String, profile: Profile)(implicit request: RequestHeader): Result = {
 
     val Path(sanitised) = target
     val path = "http://static.guim.co.uk/" + sanitised

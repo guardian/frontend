@@ -1,0 +1,3085 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":193,
+    "startIndex":1,
+    "pageSize":20,
+    "currentPage":1,
+    "pages":10,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/afl",
+      "type":"keyword",
+      "webTitle":"AFL",
+      "webUrl":"http://www.theguardian.com/sport/afl",
+      "apiUrl":"http://content.guardianapis.com/sport/afl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/2013/sep/17/dustin-martin-richmond-melbourne-afl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-17T00:11:11Z",
+      "webTitle":"Demons in the running for Richmond's Dustin Martin",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/17/dustin-martin-richmond-melbourne-afl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/17/dustin-martin-richmond-melbourne-afl",
+      "fields":{
+        "trailText":"<p>Melbourne are making the early running for Richmond's Dustin Martin, who has told the Tigers he wants to pursue rivals' offers</p>",
+        "headline":"Demons in the running for Richmond's Dustin Martin",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tzc9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/17/1379376627214/Dustin-Martin-001.jpg",
+        "wordcount":"483",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/richmond",
+        "type":"keyword",
+        "webTitle":"Richmond",
+        "webUrl":"http://www.theguardian.com/sport/richmond",
+        "apiUrl":"http://content.guardianapis.com/sport/richmond",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/melbourne-demons",
+        "type":"keyword",
+        "webTitle":"Melbourne Demons",
+        "webUrl":"http://www.theguardian.com/sport/melbourne-demons",
+        "apiUrl":"http://content.guardianapis.com/sport/melbourne-demons",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417466516",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/17/1379376633114/Dustin-Martin-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Dustin Martin",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Dustin Martin has been linked with a move away from Richmond.  Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417466517",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/17/1379376627214/Dustin-Martin-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Dustin Martin",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Dustin Martin has been linked with a move away from Richmond.  Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/17/afl-all-australian-team",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-16T23:51:14Z",
+      "webTitle":"Gary Ablett makes All-Australian history",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/17/afl-all-australian-team",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/17/afl-all-australian-team",
+      "fields":{
+        "trailText":"<p>Hawthorn's Luke Hodge, is a surprise omission from the All-Australian team, while Gary Ablett is picked for the seventh consecutive time</p>",
+        "headline":"Gary Ablett makes All-Australian history",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tzc5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/11/1378855670787/Gary-Ablett-of-Gold-Coast-001.jpg",
+        "wordcount":"416",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417465947",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/11/1378855682125/Gary-Ablett-of-Gold-Coast-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Theron Kirkman",
+            "altText":"Gary Ablett of Gold Coast ",
+            "height":"276",
+            "credit":"Theron Kirkman/AAP Image",
+            "caption":"Gary Ablett of Gold Coast made the all-Australian team for the seventh consecutive time.  Photograph: Theron Kirkman/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417465948",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/11/1378855670787/Gary-Ablett-of-Gold-Coast-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Theron Kirkman",
+            "altText":"Gary Ablett of Gold Coast ",
+            "height":"84",
+            "credit":"Theron Kirkman/AAP Image",
+            "caption":"Gary Ablett of Gold Coast  Photograph: Theron Kirkman/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/video/2013/sep/16/afl-semi-finals-geelong-swans",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-16T02:55:00Z",
+      "webTitle":"AFL semi-finals: Geelong hold off Port Adelaide as Sydney Swans sink Carlton",
+      "webUrl":"http://www.theguardian.com/sport/video/2013/sep/16/afl-semi-finals-geelong-swans",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/sep/16/afl-semi-finals-geelong-swans",
+      "fields":{
+        "trailText":"<p>Geelong Cats booked their spot in the preliminary finals against arch rivals Hawthorn after holding on to beat Port Adelaide in a close semi-final tie</p>",
+        "headline":"AFL semi-finals: Geelong hold off Port Adelaide as Sydney Swans sink Carlton",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tnh5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299960847/AFL-roundup-Geelong-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417357006",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299960847/AFL-roundup-Geelong-009.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"AFL roundup Geelong",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"AFL roundup Geelong Photograph: AAP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299975777/AFL-roundup-Geelong-016.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"AFL roundup Geelong",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"AFL roundup Geelong Photograph: AAP",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"AFL roundup Geelong",
+            "height":"90",
+            "credit":"AAP",
+            "caption":"AFL roundup Geelong Photograph: AAP",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299950108/AFL-roundup-Geelong-003.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"AFL roundup Geelong",
+            "height":"225",
+            "credit":"AAP",
+            "caption":"AFL roundup Geelong Photograph: AAP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"AFL roundup Geelong",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"AFL roundup Geelong Photograph: AAP",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/16/130916AFLhighlights_FromGAus-16x9.mp4",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/16/130916AFLhighlights_FromGAus_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/16/130916AFLhighlights_FromGAus_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/16/130916AFLhighlights_FromGAus/130916AFLhighlights_FromGAus.m3u8",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/16/130916AFLhighlights_FromGAus_vpx.webm",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        }]
+      },{
+        "id":"gu-image-417358115",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299960847/AFL-roundup-Geelong-009.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"AFL roundup Geelong",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"AFL roundup Geelong Photograph: AAP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/15/afl-five-things-we-learned-this-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-15T21:32:00Z",
+      "webTitle":"AFL: what we learned this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/15/afl-five-things-we-learned-this-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/15/afl-five-things-we-learned-this-weekend",
+      "fields":{
+        "trailText":"<p><strong>Russell Jackson: </strong>The field isn't the problem; Freo need to make their mark soon; Sydney's spirit; other talking points</p>",
+        "headline":"AFL: what we learned this weekend",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tna6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379246206515/Joel-Selwood-of-Geelong-003.jpg",
+        "wordcount":"1174",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/afl-what-we-learned-this-weekend",
+        "type":"series",
+        "webTitle":"AFL: what we learned this weekend",
+        "webUrl":"http://www.theguardian.com/sport/series/afl-what-we-learned-this-weekend",
+        "apiUrl":"http://content.guardianapis.com/sport/series/afl-what-we-learned-this-weekend",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-swans",
+        "type":"keyword",
+        "webTitle":"Sydney Swans",
+        "webUrl":"http://www.theguardian.com/sport/sydney-swans",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-swans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/geelong",
+        "type":"keyword",
+        "webTitle":"Geelong",
+        "webUrl":"http://www.theguardian.com/sport/geelong",
+        "apiUrl":"http://content.guardianapis.com/sport/geelong",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/port-adelaide",
+        "type":"keyword",
+        "webTitle":"Port Adelaide",
+        "webUrl":"http://www.theguardian.com/sport/port-adelaide",
+        "apiUrl":"http://content.guardianapis.com/sport/port-adelaide",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/fremantle-dockers",
+        "type":"keyword",
+        "webTitle":"Fremantle Dockers",
+        "webUrl":"http://www.theguardian.com/sport/fremantle-dockers",
+        "apiUrl":"http://content.guardianapis.com/sport/fremantle-dockers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/carlton",
+        "type":"keyword",
+        "webTitle":"Carlton",
+        "webUrl":"http://www.theguardian.com/sport/carlton",
+        "apiUrl":"http://content.guardianapis.com/sport/carlton",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/russell-jackson",
+        "type":"contributor",
+        "webTitle":"Russell Jackson",
+        "webUrl":"http://www.theguardian.com/profile/russell-jackson",
+        "apiUrl":"http://content.guardianapis.com/profile/russell-jackson",
+        "bio":"<p>Russell Jackson is a Melbourne-based writer who blogs at <a href=\"http://www.thewastedafternoons.blogspot.com\">thewastedafternoons</a> and tweets at @rustyjacko</p>",
+        "r2ContributorId":"56447",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/20/1369028913052/Russell-Jackson-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417358734",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379246217812/Joel-Selwood-of-Geelong-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Joel Selwood of Geelong",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Joel Selwood of Geelong celebrates during his side's victory but can they develop consistency?  Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417358735",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379246206515/Joel-Selwood-of-Geelong-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Joel Selwood of Geelong",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Joel Selwood of Geelong celebrates during his side's victory but can they develop consistency?  Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-417357006",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/16/130916AFLhighlights_FromGAus-16x9.mp4",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/16/130916AFLhighlights_FromGAus_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/16/130916AFLhighlights_FromGAus_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/16/130916AFLhighlights_FromGAus/130916AFLhighlights_FromGAus.m3u8",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/16/130916AFLhighlights_FromGAus_vpx.webm",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299948224/AFL-roundup-Geelong-002.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379299952296/AFL-roundup-Geelong-004.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/15/simon-goodwin-essendon-brisbane-coaching",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-15T07:18:34Z",
+      "webTitle":"Simon Goodwin indicates preference for Brisbane over Essendon",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/15/simon-goodwin-essendon-brisbane-coaching",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/15/simon-goodwin-essendon-brisbane-coaching",
+      "fields":{
+        "trailText":"<p>Simon Goodwin has suggested he'd prefer the security of coaching rival AFL club Brisbane to the Bombers' interim position</p>",
+        "headline":"Simon Goodwin indicates preference for Brisbane over Essendon",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tn93",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379229333876/Simon-Goodwin-001.jpg",
+        "wordcount":"240",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/essendon",
+        "type":"keyword",
+        "webTitle":"Essendon",
+        "webUrl":"http://www.theguardian.com/sport/essendon",
+        "apiUrl":"http://content.guardianapis.com/sport/essendon",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/brisbane-broncos",
+        "type":"keyword",
+        "webTitle":"Brisbane Broncos",
+        "webUrl":"http://www.theguardian.com/sport/brisbane-broncos",
+        "apiUrl":"http://content.guardianapis.com/sport/brisbane-broncos",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417317763",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379229351120/Simon-Goodwin-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Simon Goodwin",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Simon Goodwin has been interviewed by the Brisbane Lions.  Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417317764",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379229333876/Simon-Goodwin-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Simon Goodwin",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Simon Goodwin has been interviewed by the Brisbane Lions.  Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/14/sydney-swans-carlton-afl-match-report",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-14T12:52:00Z",
+      "webTitle":"Sydney Swans ease past Carlton in AFL semi-final",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/14/sydney-swans-carlton-afl-match-report",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/14/sydney-swans-carlton-afl-match-report",
+      "fields":{
+        "trailText":"<p>Sydney marched into an AFL preliminary final showdown with Fremantle in stoic style when they downed Carlton by 24 points</p>",
+        "headline":"Sydney Swans ease past Carlton in AFL semi-final",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tn4c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379157921688/The-Swans-Ryan-OKeefe-009.jpg",
+        "wordcount":"431",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-swans",
+        "type":"keyword",
+        "webTitle":"Sydney Swans",
+        "webUrl":"http://www.theguardian.com/sport/sydney-swans",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-swans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/carlton",
+        "type":"keyword",
+        "webTitle":"Carlton",
+        "webUrl":"http://www.theguardian.com/sport/carlton",
+        "apiUrl":"http://content.guardianapis.com/sport/carlton",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417282615",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379157918696/The-Swans-Ryan-OKeefe-008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"The Swans' Ryan O'Keefe",
+            "height":"276",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Ryan O'Keefe celebrates his goal during the AFL semi-final match between the Sydney Swans and Carlton.  Photograph: Dean Lewins/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417282616",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379157921688/The-Swans-Ryan-OKeefe-009.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"The Swans' Ryan O'Keefe",
+            "height":"84",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"The Swans' Ryan O'Keefe celebrates his goal during the AFL semi final match between the Sydney Swans and Carlton.  Photograph: Dean Lewins/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/13/geelong-port-adelaide-afl-match-report",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-13T12:48:00Z",
+      "webTitle":"Geelong's late surge ends Port Adelaide's finals run",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/13/geelong-port-adelaide-afl-match-report",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/13/geelong-port-adelaide-afl-match-report",
+      "fields":{
+        "trailText":"<p>Geelong needed a late escape act to set up a meeting with Hawthorn for a place in the grand final</p>",
+        "headline":"Geelong's late surge ends Port Adelaide's finals run",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tmet",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/13/1379074089391/Tom-Hawkins-of-Geelong-001.jpg",
+        "wordcount":"352",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/geelong",
+        "type":"keyword",
+        "webTitle":"Geelong",
+        "webUrl":"http://www.theguardian.com/sport/geelong",
+        "apiUrl":"http://content.guardianapis.com/sport/geelong",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/port-adelaide",
+        "type":"keyword",
+        "webTitle":"Port Adelaide",
+        "webUrl":"http://www.theguardian.com/sport/port-adelaide",
+        "apiUrl":"http://content.guardianapis.com/sport/port-adelaide",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417219479",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/13/1379074095788/Tom-Hawkins-of-Geelong-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Tom Hawkins of Geelong",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Tom Hawkins of Geelong celebrates a goal as his side make their way to victory over Port Adelaide.  Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417219480",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/13/1379074089391/Tom-Hawkins-of-Geelong-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Tom Hawkins of Geelong",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Tom Hawkins of Geelong celebrates a goal as his side make their way to victory over Port Adelaide.  Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/12/adam-goodes-injured-sydney-swans",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-12T22:45:15Z",
+      "webTitle":"Adam Goodes's AFL season 'is done', confirm Sydney Swans",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/12/adam-goodes-injured-sydney-swans",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/12/adam-goodes-injured-sydney-swans",
+      "fields":{
+        "trailText":"<p>Sydney's stuttering AFL premiership defence has taken a hit, with Adam Goodes ruled out for the rest of this finals series</p>",
+        "headline":"Adam Goodes's AFL season 'is done', confirm Sydney Swans",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tm63",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1372991098406/80bea50e-2bac-42f3-9c58-69a662ac0342-140x84.jpeg",
+        "wordcount":"393",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sydney-swans",
+        "type":"keyword",
+        "webTitle":"Sydney Swans",
+        "webUrl":"http://www.theguardian.com/sport/sydney-swans",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-swans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/carlton",
+        "type":"keyword",
+        "webTitle":"Carlton",
+        "webUrl":"http://www.theguardian.com/sport/carlton",
+        "apiUrl":"http://content.guardianapis.com/sport/carlton",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417171881",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1372991100170/f48cc002-1394-46d4-8e3a-5d244a35e22b-460x276.jpeg",
+          "typeData":{
+            "source":"AAP",
+            "photographer":"Paul Miller",
+            "altText":"Adam Goodes",
+            "height":"276",
+            "credit":"Paul Miller/AAP",
+            "caption":"Adam Goodes has not played since round 13. Photograph: Paul Miller/AAP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417171882",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1372991098406/80bea50e-2bac-42f3-9c58-69a662ac0342-140x84.jpeg",
+          "typeData":{
+            "source":"AAP",
+            "photographer":"Paul Miller",
+            "altText":"Adam Goodes",
+            "height":"84",
+            "credit":"Paul Miller/AAP",
+            "caption":"Adam Goodes Photograph: Paul Miller/AAP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/12/afl-finals-what-to-look-out-for",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-12T21:53:00Z",
+      "webTitle":"AFL: what to look out for this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/12/afl-finals-what-to-look-out-for",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/12/afl-finals-what-to-look-out-for",
+      "fields":{
+        "trailText":"<p><strong>Alex McClintock: </strong>The weak become heroes; Swans injury worries; Port Adelaide to channel Fremantle</p>",
+        "headline":"AFL: what to look out for this weekend",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3ty97",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/12/1378969912618/Nick-Duigan-of-Carlton-003.jpg",
+        "wordcount":"993",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-swans",
+        "type":"keyword",
+        "webTitle":"Sydney Swans",
+        "webUrl":"http://www.theguardian.com/sport/sydney-swans",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-swans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/port-adelaide",
+        "type":"keyword",
+        "webTitle":"Port Adelaide",
+        "webUrl":"http://www.theguardian.com/sport/port-adelaide",
+        "apiUrl":"http://content.guardianapis.com/sport/port-adelaide",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/carlton",
+        "type":"keyword",
+        "webTitle":"Carlton",
+        "webUrl":"http://www.theguardian.com/sport/carlton",
+        "apiUrl":"http://content.guardianapis.com/sport/carlton",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/geelong",
+        "type":"keyword",
+        "webTitle":"Geelong",
+        "webUrl":"http://www.theguardian.com/sport/geelong",
+        "apiUrl":"http://content.guardianapis.com/sport/geelong",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/alex-mcclintock",
+        "type":"contributor",
+        "webTitle":"Alex McClintock",
+        "webUrl":"http://www.theguardian.com/profile/alex-mcclintock",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-mcclintock",
+        "bio":"<p>Alex McClintock is a freelance writer from Sydney and the deputy editor of boxing blog <a href=\"http://queensberry-rules.com/\">queensberry-rules.com</a>. Follow him on twitter at <a href=\"https://twitter.com/axmcc\">@axmcc</a></p>",
+        "r2ContributorId":"52159",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/4/1378271565576/alexmcclintock.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417170998",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/12/1378969917950/Nick-Duigan-of-Carlton-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Nick Duigan of Carlton",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Nick Duigan of Carlton celebrates the prospect of a snack after the game.  Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417170999",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/12/1378969912618/Nick-Duigan-of-Carlton-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Nick Duigan of Carlton",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Nick Duigan of Carlton celebrates the prospect of a snack after the game.  Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/11/gary-ablett-afl-mvp-award",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-10T23:13:00Z",
+      "webTitle":"Gary Ablett wins AFL players' MVP award",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/11/gary-ablett-afl-mvp-award",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/11/gary-ablett-afl-mvp-award",
+      "fields":{
+        "trailText":"<p>Gold Coast's Gary Ablett has been acknowledged by his peers as the AFL's most valuable player for a record fifth time</p>",
+        "headline":"Gary Ablett wins AFL players' MVP award",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tk9y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/11/1378855670787/Gary-Ablett-of-Gold-Coast-001.jpg",
+        "wordcount":"371",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/gold-coast-suns",
+        "type":"keyword",
+        "webTitle":"Gold Coast Suns",
+        "webUrl":"http://www.theguardian.com/sport/gold-coast-suns",
+        "apiUrl":"http://content.guardianapis.com/sport/gold-coast-suns",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416997898",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/11/1378855682125/Gary-Ablett-of-Gold-Coast-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Theron Kirkman",
+            "altText":"Gary Ablett of Gold Coast ",
+            "height":"276",
+            "credit":"Theron Kirkman/AAP Image",
+            "caption":"Gary Ablett is favorite to take the Brownlow Medal later this month.  Photograph: Theron Kirkman/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416997899",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/11/1378855670787/Gary-Ablett-of-Gold-Coast-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Theron Kirkman",
+            "altText":"Gary Ablett of Gold Coast ",
+            "height":"84",
+            "credit":"Theron Kirkman/AAP Image",
+            "caption":"Gary Ablett of Gold Coast  Photograph: Theron Kirkman/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/10/mark-thompson-essendon-james-hird",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-09T23:53:36Z",
+      "webTitle":"Mark Thompson will not stand in for James Hird at Essendon",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/10/mark-thompson-essendon-james-hird",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/10/mark-thompson-essendon-james-hird",
+      "fields":{
+        "trailText":"<p>Mark Thompson has turned down coaching Essendon as James Hird serves his 12-month AFL suspension</p>",
+        "headline":"Mark Thompson will not stand in for James Hird at Essendon",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tjdm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/22/1377153154938/James-Hird-005.jpg",
+        "wordcount":"230",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/essendon",
+        "type":"keyword",
+        "webTitle":"Essendon",
+        "webUrl":"http://www.theguardian.com/sport/essendon",
+        "apiUrl":"http://content.guardianapis.com/sport/essendon",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/asada",
+        "type":"keyword",
+        "webTitle":"Asada",
+        "webUrl":"http://www.theguardian.com/sport/asada",
+        "apiUrl":"http://content.guardianapis.com/sport/asada",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416901016",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376353065952/222dd2f4-2d4d-4af7-af10-870efd02935c-460x276.jpeg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"James Hird",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"James Hird is currently serving a 12-moth suspension. Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416901017",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/22/1377153154938/James-Hird-005.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JULIAN SMITH",
+            "altText":"James Hird",
+            "height":"84",
+            "credit":"JULIAN SMITH/AAPIMAGE",
+            "caption":"Essendon coach James Hird speaks at a media conference at the Olsen Hotel in Melbourne  Photograph: JULIAN SMITH/AAPIMAGE",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/08/afl-five-things-we-learned-this-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-08T13:25:54Z",
+      "webTitle":"AFL: what we learned this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/08/afl-five-things-we-learned-this-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/08/afl-five-things-we-learned-this-weekend",
+      "fields":{
+        "trailText":"<p><strong>Russell Jackson: </strong>All-Australian selection is flawed; the Dockers got inside Geelong heads; Collingwood are stagnant</p>",
+        "headline":"AFL: what we learned this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3ttdk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378641026057/Port-Adelaides-Chad-Winga-003.jpg",
+        "wordcount":"1257",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/afl-what-we-learned-this-weekend",
+        "type":"series",
+        "webTitle":"AFL: what we learned this weekend",
+        "webUrl":"http://www.theguardian.com/sport/series/afl-what-we-learned-this-weekend",
+        "apiUrl":"http://content.guardianapis.com/sport/series/afl-what-we-learned-this-weekend",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-swans",
+        "type":"keyword",
+        "webTitle":"Sydney Swans",
+        "webUrl":"http://www.theguardian.com/sport/sydney-swans",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-swans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/geelong",
+        "type":"keyword",
+        "webTitle":"Geelong",
+        "webUrl":"http://www.theguardian.com/sport/geelong",
+        "apiUrl":"http://content.guardianapis.com/sport/geelong",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hawthorn",
+        "type":"keyword",
+        "webTitle":"Hawthorn",
+        "webUrl":"http://www.theguardian.com/sport/hawthorn",
+        "apiUrl":"http://content.guardianapis.com/sport/hawthorn",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/fremantle-dockers",
+        "type":"keyword",
+        "webTitle":"Fremantle Dockers",
+        "webUrl":"http://www.theguardian.com/sport/fremantle-dockers",
+        "apiUrl":"http://content.guardianapis.com/sport/fremantle-dockers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/port-adelaide",
+        "type":"keyword",
+        "webTitle":"Port Adelaide",
+        "webUrl":"http://www.theguardian.com/sport/port-adelaide",
+        "apiUrl":"http://content.guardianapis.com/sport/port-adelaide",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/collingwood",
+        "type":"keyword",
+        "webTitle":"Collingwood",
+        "webUrl":"http://www.theguardian.com/sport/collingwood",
+        "apiUrl":"http://content.guardianapis.com/sport/collingwood",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/richmond",
+        "type":"keyword",
+        "webTitle":"Richmond",
+        "webUrl":"http://www.theguardian.com/sport/richmond",
+        "apiUrl":"http://content.guardianapis.com/sport/richmond",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/carlton",
+        "type":"keyword",
+        "webTitle":"Carlton",
+        "webUrl":"http://www.theguardian.com/sport/carlton",
+        "apiUrl":"http://content.guardianapis.com/sport/carlton",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/russell-jackson",
+        "type":"contributor",
+        "webTitle":"Russell Jackson",
+        "webUrl":"http://www.theguardian.com/profile/russell-jackson",
+        "apiUrl":"http://content.guardianapis.com/profile/russell-jackson",
+        "bio":"<p>Russell Jackson is a Melbourne-based writer who blogs at <a href=\"http://www.thewastedafternoons.blogspot.com\">thewastedafternoons</a> and tweets at @rustyjacko</p>",
+        "r2ContributorId":"56447",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/20/1369028913052/Russell-Jackson-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416787271",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378641032502/Port-Adelaides-Chad-Winga-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"David Crosling",
+            "altText":"Port Adelaide's Chad Wingard ",
+            "height":"276",
+            "credit":"David Crosling/AAP Image",
+            "caption":"Chad Wingard is congratulated by Jasper Pittard after kicking a Port Adelaide goal during their victory over Collingwood Photograph: David Crosling/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416787272",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378641026057/Port-Adelaides-Chad-Winga-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"David Crosling",
+            "altText":"Port Adelaide's Chad Wingard ",
+            "height":"84",
+            "credit":"David Crosling/AAP Image",
+            "caption":"Chad Wingard is congratulated by Jasper Pittard after kicking a Port Adelaide goal during their victory over Collingwood Photograph: David Crosling/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/08/carlton-beat-richmond-afl-elimination-final",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-08T08:20:04Z",
+      "webTitle":"Carlton's late surge sees off stunned Richmond",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/08/carlton-beat-richmond-afl-elimination-final",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/08/carlton-beat-richmond-afl-elimination-final",
+      "fields":{
+        "trailText":"<p>Carlton's season looked dead for the third straight week before a Chris Judd-inspired comeback led to victory</p>",
+        "headline":"Carlton's late surge sees off stunned Richmond",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3ttcg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378628099682/Eddie-Betts-of-Carlton-ce-001.jpg",
+        "wordcount":"385",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/carlton",
+        "type":"keyword",
+        "webTitle":"Carlton",
+        "webUrl":"http://www.theguardian.com/sport/carlton",
+        "apiUrl":"http://content.guardianapis.com/sport/carlton",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/richmond",
+        "type":"keyword",
+        "webTitle":"Richmond",
+        "webUrl":"http://www.theguardian.com/sport/richmond",
+        "apiUrl":"http://content.guardianapis.com/sport/richmond",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416781810",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378628105699/Eddie-Betts-of-Carlton-ce-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Eddie Betts of Carlton celebrates",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Eddie Betts of Carlton celebrates after kicking a goal during his team's victory over Richmond.  Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416781811",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378628099682/Eddie-Betts-of-Carlton-ce-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Eddie Betts of Carlton celebrates",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Eddie Betts of Carlton celebrates after kicking a goal during his team's victory over Richmond.  Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/07/port-adelaide-collingwood-afl-match-report",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-07T12:59:50Z",
+      "webTitle":"Port Adelaide set up Geelong date after downing Collingwood",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/07/port-adelaide-collingwood-afl-match-report",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/07/port-adelaide-collingwood-afl-match-report",
+      "fields":{
+        "trailText":"<p>Port Adelaide's stunning resurgence has reached new heights with a gutsy 24-point elimination final win over Collingwood</p>",
+        "headline":"Port Adelaide set up Geelong date after downing Collingwood",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tt7x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/7/1378558702125/Jay-Schulz-celebrates-Por-001.jpg",
+        "wordcount":"421",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/collingwood",
+        "type":"keyword",
+        "webTitle":"Collingwood",
+        "webUrl":"http://www.theguardian.com/sport/collingwood",
+        "apiUrl":"http://content.guardianapis.com/sport/collingwood",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/port-adelaide",
+        "type":"keyword",
+        "webTitle":"Port Adelaide",
+        "webUrl":"http://www.theguardian.com/sport/port-adelaide",
+        "apiUrl":"http://content.guardianapis.com/sport/port-adelaide",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416747905",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/7/1378558709812/Jay-Schulz-celebrates-Por-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"David Crosling",
+            "altText":"Jay Schulz celebrates Port Adelaide's victory ",
+            "height":"276",
+            "credit":"David Crosling/AAP Image",
+            "caption":"Jay Schulz celebrates Port Adelaide's victory over Collingwood.  Photograph: David Crosling/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416747906",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/7/1378558702125/Jay-Schulz-celebrates-Por-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"David Crosling",
+            "altText":"Jay Schulz celebrates Port Adelaide's victory ",
+            "height":"84",
+            "credit":"David Crosling/AAP Image",
+            "caption":"Jay Schulz celebrates Port Adelaide's victory over Collingwood.  Photograph: David Crosling/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/07/fremantle-dockers-geelong-afl-qualifying-final",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-07T07:32:06Z",
+      "webTitle":"Fremantle Dockers upset Geelong in AFL qualifying final",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/07/fremantle-dockers-geelong-afl-qualifying-final",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/07/fremantle-dockers-geelong-afl-qualifying-final",
+      "fields":{
+        "trailText":"<p>Freo claimed the greatest win in their history, upsetting favourites Geelong in a thrilling qualifying final</p>",
+        "headline":"Fremantle Dockers upset Geelong in AFL qualifying final",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tt5b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/7/1378539055487/Fremantle-Dockers-v-Geelo-001.jpg",
+        "wordcount":"445",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/fremantle-dockers",
+        "type":"keyword",
+        "webTitle":"Fremantle Dockers",
+        "webUrl":"http://www.theguardian.com/sport/fremantle-dockers",
+        "apiUrl":"http://content.guardianapis.com/sport/fremantle-dockers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/geelong",
+        "type":"keyword",
+        "webTitle":"Geelong",
+        "webUrl":"http://www.theguardian.com/sport/geelong",
+        "apiUrl":"http://content.guardianapis.com/sport/geelong",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416731551",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/7/1378539061833/Fremantle-Dockers-v-Geelo-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Fremantle Dockers v Geelong",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Matthew Pavlich of Fremantle takes a mark as he's tackled by Tom Lonergan of Geelong Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416731552",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/7/1378539055487/Fremantle-Dockers-v-Geelo-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Fremantle Dockers v Geelong",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Matthew Pavlich of Fremantle takes a mark as he's tackled by Tom Lonergan of Geelong Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/06/hawthorn-sydney-swans-afl-match-report",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-06T12:39:14Z",
+      "webTitle":"Hawthorn send out finals message with victory over Swans",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/06/hawthorn-sydney-swans-afl-match-report",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/06/hawthorn-sydney-swans-afl-match-report",
+      "fields":{
+        "trailText":"<p>Hawthorn took a big step towards going one better than last year's runner-up finish by crushing Sydney in Friday night's qualifying final </p>",
+        "headline":"Hawthorn send out finals message with victory over Swans",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3thhp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/6/1378469176250/Hawthorn-v-Sydney-001.jpg",
+        "wordcount":"357",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hawthorn",
+        "type":"keyword",
+        "webTitle":"Hawthorn",
+        "webUrl":"http://www.theguardian.com/sport/hawthorn",
+        "apiUrl":"http://content.guardianapis.com/sport/hawthorn",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-swans",
+        "type":"keyword",
+        "webTitle":"Sydney Swans",
+        "webUrl":"http://www.theguardian.com/sport/sydney-swans",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-swans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416675019",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/6/1378469187164/Hawthorn-v-Sydney-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Hawthorn v Sydney",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Luke Hodge of Hawthorn is tackled by Mike Pyke and Shane Mumford of Sydney.  Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416675020",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/6/1378469176250/Hawthorn-v-Sydney-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Hawthorn v Sydney",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Luke Hodge of Hawthorn is tackled by Mike Pyke and Shane Mumford of Sydney.  Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/06/sport-afl-brisbane-lions-inquiry",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-06T05:10:52Z",
+      "webTitle":"Brisbane Lions player allegedly assaulted man in wheelchair",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/06/sport-afl-brisbane-lions-inquiry",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/06/sport-afl-brisbane-lions-inquiry",
+      "fields":{
+        "trailText":"<p>Brisbane club launches internal investigation after police receive complaint of incident at taxi rank on eve of Mad Monday</p>",
+        "headline":"Brisbane Lions player allegedly assaulted man in wheelchair",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3th9j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/6/1378438544774/Brisbane-Lions-new-logo-003.jpg",
+        "wordcount":"324",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416639084",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/6/1378438558213/Brisbane-Lions-new-logo-008.jpg",
+          "typeData":{
+            "source":"PR IMAGE",
+            "photographer":"BRISBANE LIONS AFC",
+            "altText":"Brisbane Lions new logo",
+            "height":"276",
+            "credit":"BRISBANE LIONS AFC/PR IMAGE",
+            "caption":"The Brisbane Lions club says it is aware of serious allegations against one of its players. Photograph: BRISBANE LIONS AFC/PR IMAGE",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416639085",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/6/1378438544774/Brisbane-Lions-new-logo-003.jpg",
+          "typeData":{
+            "source":"PR IMAGE",
+            "photographer":"BRISBANE LIONS AFC",
+            "altText":"Brisbane Lions new logo",
+            "height":"84",
+            "credit":"BRISBANE LIONS AFC/PR IMAGE",
+            "caption":"A supplied image released Thursday, Oct. 29, 2009 of the Brisbane Lions new logo branding for Season 2010 and beyond. (AAP Image/Brisbane Lions AFC) NO ARCHIVING, EDITORIAL USE ONLY..              Photograph: BRISBANE LIONS AFC/PR IMAGE",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/06/paul-roos-accepts-coach-melbourne-demons",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-06T03:18:18Z",
+      "webTitle":"Paul Roos accepts mighty task of revitalising the Melbourne Demons",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/06/paul-roos-accepts-coach-melbourne-demons",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/06/paul-roos-accepts-coach-melbourne-demons",
+      "fields":{
+        "trailText":"<p>Former Sydney coach agrees to take the reins at Melbourne after another woeful season for the Demons</p>",
+        "headline":"Paul Roos accepts mighty task of revitalising the Melbourne Demons",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3th9t",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/6/1378437406020/Paul-Roos-after-the-media-003.jpg",
+        "wordcount":"462",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/melbourne-demons",
+        "type":"keyword",
+        "webTitle":"Melbourne Demons",
+        "webUrl":"http://www.theguardian.com/sport/melbourne-demons",
+        "apiUrl":"http://content.guardianapis.com/sport/melbourne-demons",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-swans",
+        "type":"keyword",
+        "webTitle":"Sydney Swans",
+        "webUrl":"http://www.theguardian.com/sport/sydney-swans",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-swans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416636997",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/6/1378437418511/Paul-Roos-after-the-media-008.jpg",
+          "typeData":{
+            "source":"AAP",
+            "photographer":"Julian Smith",
+            "altText":"Paul Roos after the media conference announcing his appointment as Melbourne coach.",
+            "height":"276",
+            "credit":"Julian Smith/AAP",
+            "caption":"Paul Roos after the media conference announcing his appointment as Melbourne coach. Photograph: Julian Smith/AAP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416636998",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/6/1378437406020/Paul-Roos-after-the-media-003.jpg",
+          "typeData":{
+            "source":"AAP",
+            "photographer":"Julian Smith",
+            "altText":"Paul Roos after the media conference announcing his appointment as Melbourne coach.",
+            "height":"84",
+            "credit":"Julian Smith/AAP",
+            "caption":"Paul Roos after the media conference announcing his appointment as Melbourne coach. Photograph: Julian Smith/AAP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/05/afl-five-things-to-look-out-for",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-05T21:48:00Z",
+      "webTitle":"AFL: what to look out for this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/05/afl-five-things-to-look-out-for",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/05/afl-five-things-to-look-out-for",
+      "fields":{
+        "trailText":"<p><strong>Alex McClintock:</strong> The importance of lists; Cattery power; a tough task for Port; and our very own tipping competition</p>",
+        "headline":"AFL: what to look out for this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tge7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/30/1372553042736/Geelong-celebrate-001.jpg",
+        "wordcount":"941",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/carlton",
+        "type":"keyword",
+        "webTitle":"Carlton",
+        "webUrl":"http://www.theguardian.com/sport/carlton",
+        "apiUrl":"http://content.guardianapis.com/sport/carlton",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-swans",
+        "type":"keyword",
+        "webTitle":"Sydney Swans",
+        "webUrl":"http://www.theguardian.com/sport/sydney-swans",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-swans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/fremantle-dockers",
+        "type":"keyword",
+        "webTitle":"Fremantle Dockers",
+        "webUrl":"http://www.theguardian.com/sport/fremantle-dockers",
+        "apiUrl":"http://content.guardianapis.com/sport/fremantle-dockers",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/geelong",
+        "type":"keyword",
+        "webTitle":"Geelong",
+        "webUrl":"http://www.theguardian.com/sport/geelong",
+        "apiUrl":"http://content.guardianapis.com/sport/geelong",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/richmond",
+        "type":"keyword",
+        "webTitle":"Richmond",
+        "webUrl":"http://www.theguardian.com/sport/richmond",
+        "apiUrl":"http://content.guardianapis.com/sport/richmond",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hawthorn",
+        "type":"keyword",
+        "webTitle":"Hawthorn",
+        "webUrl":"http://www.theguardian.com/sport/hawthorn",
+        "apiUrl":"http://content.guardianapis.com/sport/hawthorn",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/port-adelaide",
+        "type":"keyword",
+        "webTitle":"Port Adelaide",
+        "webUrl":"http://www.theguardian.com/sport/port-adelaide",
+        "apiUrl":"http://content.guardianapis.com/sport/port-adelaide",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/collingwood",
+        "type":"keyword",
+        "webTitle":"Collingwood",
+        "webUrl":"http://www.theguardian.com/sport/collingwood",
+        "apiUrl":"http://content.guardianapis.com/sport/collingwood",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/alex-mcclintock",
+        "type":"contributor",
+        "webTitle":"Alex McClintock",
+        "webUrl":"http://www.theguardian.com/profile/alex-mcclintock",
+        "apiUrl":"http://content.guardianapis.com/profile/alex-mcclintock",
+        "bio":"<p>Alex McClintock is a freelance writer from Sydney and the deputy editor of boxing blog <a href=\"http://queensberry-rules.com/\">queensberry-rules.com</a>. Follow him on twitter at <a href=\"https://twitter.com/axmcc\">@axmcc</a></p>",
+        "r2ContributorId":"52159",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/4/1378271565576/alexmcclintock.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416629773",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/30/1372552986396/Geelong-celebrate-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Geelong celebrate",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Geelong players celebrate a vital goal during victory over the Dockers earlier this season.  Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416629774",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/6/30/1372553042736/Geelong-celebrate-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Geelong celebrate",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Geelong players celebrate a vital goal during victory over the Dockers.  Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/05/john-worsfold-to-step-down-west-coast",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-05T07:36:00Z",
+      "webTitle":"John Worsfold stands down as West Coast coach",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/05/john-worsfold-to-step-down-west-coast",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/05/john-worsfold-to-step-down-west-coast",
+      "fields":{
+        "trailText":"<p>The West Coast coach, John Worsfold, is standing down, the Eagles confirmed at a press conference on Thursday</p>",
+        "headline":"John Worsfold stands down as West Coast coach",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tgea",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/5/1378366511005/A-John-Worsfold-Head-Coac-001.jpg",
+        "wordcount":"278",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/west-coast-eagles",
+        "type":"keyword",
+        "webTitle":"West Coast Eagles",
+        "webUrl":"http://www.theguardian.com/sport/west-coast-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/west-coast-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416562830",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/5/1378366522251/A-John-Worsfold-Head-Coac-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Theron Kirkman",
+            "altText":"A John Worsfold Head Coach of West Coast",
+            "height":"276",
+            "credit":"Theron Kirkman/AAP Image",
+            "caption":"John Worsfold led the Eagles to victory in the grand final in 2006.  Photograph: Theron Kirkman/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416562831",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/5/1378366511005/A-John-Worsfold-Head-Coac-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Theron Kirkman",
+            "altText":"A John Worsfold Head Coach of West Coast",
+            "height":"84",
+            "credit":"Theron Kirkman/AAP Image",
+            "caption":"John Worsfold led the Eagles to victory in the grand final in 2006.  Photograph: Theron Kirkman/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"sport/2013/aug/28/james-hird-essendon-responsibility-penalties",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-08-28T01:14:00Z",
+      "webTitle":"James Hird accepts some responsibility for Essendon penalties",
+      "webUrl":"http://www.theguardian.com/sport/2013/aug/28/james-hird-essendon-responsibility-penalties",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/aug/28/james-hird-essendon-responsibility-penalties",
+      "fields":{
+        "trailText":"<p>Suspended Essendon coach says he should have known more about what was going on with supplements program</p>",
+        "headline":"James Hird accepts some responsibility for Essendon penalties",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tb2a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377652507581/james-hird-001.jpg",
+        "wordcount":"501",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/james-hird",
+        "type":"keyword",
+        "webTitle":"James Hird",
+        "webUrl":"http://www.theguardian.com/sport/james-hird",
+        "apiUrl":"http://content.guardianapis.com/sport/james-hird",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/essendon",
+        "type":"keyword",
+        "webTitle":"Essendon",
+        "webUrl":"http://www.theguardian.com/sport/essendon",
+        "apiUrl":"http://content.guardianapis.com/sport/essendon",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-415963824",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377652511138/james-hird-002.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JOE CASTRO",
+            "altText":"james hird",
+            "height":"276",
+            "credit":"JOE CASTRO/AAPIMAGE",
+            "caption":"Essendon coach James Hird makes a statement outside his house in Melbourne on Wednesday morning. Photograph: AAP/Joe Castro",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-415963825",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377652507581/james-hird-001.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JOE CASTRO",
+            "altText":"james hird",
+            "height":"84",
+            "credit":"JOE CASTRO/AAPIMAGE",
+            "caption":"Essendon coach James Hird makes a statement outside him home in Melbourne, Wednesday, Aug. 28, 2013. Hird was suspended for 12 months by the AFL in the ongoing supplements scandal. (AAP Image/Joe Castro) NO ARCHIVING Photograph: JOE CASTRO/AAPIMAGE",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/aug/28/essendon-chairman-asks-players-forgiveness",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-08-27T23:54:19Z",
+      "webTitle":"Essendon chairman asks players for forgiveness over supplements scandal",
+      "webUrl":"http://www.theguardian.com/sport/2013/aug/28/essendon-chairman-asks-players-forgiveness",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/aug/28/essendon-chairman-asks-players-forgiveness",
+      "fields":{
+        "trailText":"<p>Paul Little says players had felt the strain over the last six weeks and 'probably do feel let down'</p>",
+        "headline":"Essendon chairman asks players for forgiveness over supplements scandal",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tb22",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377646679041/paul-little-002.jpg",
+        "wordcount":"234",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/essendon",
+        "type":"keyword",
+        "webTitle":"Essendon",
+        "webUrl":"http://www.theguardian.com/sport/essendon",
+        "apiUrl":"http://content.guardianapis.com/sport/essendon",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/james-hird",
+        "type":"keyword",
+        "webTitle":"James Hird",
+        "webUrl":"http://www.theguardian.com/sport/james-hird",
+        "apiUrl":"http://content.guardianapis.com/sport/james-hird",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-415961027",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377646675808/paul-little-001.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JULIAN SMITH",
+            "altText":"paul little",
+            "height":"276",
+            "credit":"JULIAN SMITH/AAPIMAGE",
+            "caption":"The Essendon chairman, Paul Little, speaks at AFL House in Melbourne on Tuesday night. Photograph: AAP/Julian Smith",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-415961028",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377646679041/paul-little-002.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JULIAN SMITH",
+            "altText":"paul little",
+            "height":"84",
+            "credit":"JULIAN SMITH/AAPIMAGE",
+            "caption":"Essendon chairman Paul Little speaks at AFL House in Melbourne on Tuesday night. Photograph: AAP/Julian Smith Photograph: JULIAN SMITH/AAPIMAGE",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

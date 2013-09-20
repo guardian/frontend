@@ -65,6 +65,17 @@ class GuardianConfiguration(
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
+  object ophanApi {
+    lazy val key = configuration.getStringProperty("ophan.api.key") getOrElse {
+      throw new IllegalStateException("Ophan Api key not configured")
+    }
+    lazy val host = configuration.getStringProperty("ophan.api.host") getOrElse {
+      throw new IllegalStateException("Ophan Api host not configured")
+    }
+
+    lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
+  }
+
   object frontend {
     lazy val store = configuration.getStringProperty("frontend.store") getOrElse {
       throw new IllegalStateException("Fronts Api not configured")
@@ -75,8 +86,12 @@ class GuardianConfiguration(
     lazy val connection = configuration.getStringProperty("mongo.connection.readonly.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
   }
 
-  object host {
+  object hostMachine {
     lazy val name = InetAddress.getLocalHost.getHostName
+  }
+
+  object site {
+    lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
 
   object proxy {
@@ -94,6 +109,10 @@ class GuardianConfiguration(
     }
   }
 
+  object github {
+    lazy val token = configuration.getStringProperty("github.token")
+  }
+
   object ajax {
     lazy val url = configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin")
@@ -104,6 +123,8 @@ class GuardianConfiguration(
     lazy val apiRoot = configuration.getStringProperty("id.apiRoot").getOrElse("")
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
+    lazy val apiJsClientToken = configuration.getStringProperty("id.apiJsClientToken").getOrElse("")
+    lazy val webappUrl = configuration.getStringProperty("id.webapp.url").getOrElse("")
   }
 
   object static {
@@ -180,9 +201,6 @@ class GuardianConfiguration(
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
-  object nginx {
-    lazy val log: String = configuration.getStringProperty("nginx.log").getOrElse("/var/log/nginx/access.log")
-  }
 
   object aws {
     lazy val accessKey = configuration.getStringProperty("aws.access.key").getOrElse(throw new RuntimeException("AWS access key not set"))

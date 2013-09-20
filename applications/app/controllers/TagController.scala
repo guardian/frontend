@@ -39,7 +39,10 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     val edition = Edition(request)
     log.info(s"Fetching tag: $path for edition $edition")
 
-    ContentApi.item(path, edition).showEditorsPicks(true).pageSize(20).response.map{ response: ItemResponse =>
+    ContentApi.item(path, edition)
+      .showEditorsPicks(true)
+      .pageSize(20)
+      .response.map{ response: ItemResponse =>
 
       val tag = response.tag map { new Tag(_) }
 

@@ -58,13 +58,11 @@ object Editionalise {
   import common.editions.EditionalisedSections._
 
   def apply(id: String, edition: Edition, request: Option[RequestHeader] = None): String = {
-    if (!isEditionalised(id)) {
-     id
-    } else {
-      id match {
+    if (isEditionalised(id)) id match {
         case "" => s"${edition.id.toLowerCase}"
         case _ => s"${edition.id.toLowerCase}/$id"
-      }
+    } else {
+      id
     }
   }
 
