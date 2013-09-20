@@ -9,11 +9,17 @@ import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
 import conf.Configuration
 
-class BaseGuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
+class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
+
+class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
+
   protected val configuration = ConfigurationFactory.getConfiguration(application, webappConfDirectory)
 
-  protected def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
-    .getOrElse(throw new RuntimeException(s"Property $property not configured"))
+  private implicit class OptionalString2MandatoryString(conf: com.gu.conf.Configuration) {
+    def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
+      .getOrElse(throw new BadConfigurationException(property))
+  }
+
 
   object environment {
     private val installVars = new File("/etc/gu/install_vars") match {
@@ -29,7 +35,7 @@ class BaseGuardianConfiguration(val application: String, val webappConfDirectory
   }
 
   object switches {
-    lazy val configurationUrl = getMandatoryStringProperty("switchboard.config.url")
+    lazy val configurationUrl = configuration.getMandatoryStringProperty("switchboard.config.url")
   }
 
   object healthcheck {
@@ -47,32 +53,27 @@ class BaseGuardianConfiguration(val application: String, val webappConfDirectory
   }
 
   override def toString(): String = configuration.toString
-}
 
-class GuardianConfiguration(
-  override val application: String,
-  override val webappConfDirectory: String = "env")
-    extends BaseGuardianConfiguration(application, webappConfDirectory) {
 
   object contentApi {
-    lazy val host = getMandatoryStringProperty("content.api.host")
-    lazy val elasticSearchHost = getMandatoryStringProperty("content.api.elastic.host")
-    lazy val key = getMandatoryStringProperty("content.api.key")
+    lazy val host = configuration.getMandatoryStringProperty("content.api.host")
+    lazy val elasticSearchHost = configuration.getMandatoryStringProperty("content.api.elastic.host")
+    lazy val key = configuration.getMandatoryStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object ophanApi {
-    lazy val key = getMandatoryStringProperty("ophan.api.key")
-    lazy val host = getMandatoryStringProperty("ophan.api.host")
+    lazy val key = configuration.getMandatoryStringProperty("ophan.api.key")
+    lazy val host = configuration.getMandatoryStringProperty("ophan.api.host")
     lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
   object frontend {
-    lazy val store = getMandatoryStringProperty("frontend.store")
+    lazy val store = configuration.getMandatoryStringProperty("frontend.store")
   }
 
   object mongo {
-    lazy val connection = getMandatoryStringProperty("mongo.connection.readonly.password")
+    lazy val connection = configuration.getMandatoryStringProperty("mongo.connection.readonly.password")
   }
 
   object hostMachine {
@@ -117,15 +118,15 @@ class GuardianConfiguration(
   }
 
   object static {
-    lazy val path = getMandatoryStringProperty("static.path")
+    lazy val path = configuration.getMandatoryStringProperty("static.path")
   }
 
   object images {
-    lazy val path = getMandatoryStringProperty("images.path")
+    lazy val path = configuration.getMandatoryStringProperty("images.path")
   }
 
   object assets {
-    lazy val path = getMandatoryStringProperty("assets.path")
+    lazy val path = configuration.getMandatoryStringProperty("assets.path")
   }
 
   object oas {
@@ -133,7 +134,7 @@ class GuardianConfiguration(
   }
 
   object facebook {
-    lazy val appId = getMandatoryStringProperty("guardian.page.fbAppId")
+    lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
     lazy val imageFallback = "http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png"
   }
 
@@ -154,13 +155,13 @@ class GuardianConfiguration(
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
       keys.foldLeft(Map.empty[String, String]) {
-        case (map, key) => map + (key -> getMandatoryStringProperty(key))
+        case (map, key) => map + (key -> configuration.getMandatoryStringProperty(key))
       }
     }
   }
 
   object front {
-    lazy val config = getMandatoryStringProperty("front.config")
+    lazy val config = configuration.getMandatoryStringProperty("front.config")
   }
 
   object facia {
@@ -168,33 +169,33 @@ class GuardianConfiguration(
   }
 
   object pa {
-    lazy val apiKey = getMandatoryStringProperty("pa.api.key")
+    lazy val apiKey = configuration.getMandatoryStringProperty("pa.api.key")
 
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
 
   object aws {
-    lazy val accessKey = getMandatoryStringProperty("aws.access.key")
-    lazy val secretKey = getMandatoryStringProperty("aws.access.secret.key")
-    lazy val region = getMandatoryStringProperty("aws.region")
+    lazy val accessKey = configuration.getMandatoryStringProperty("aws.access.key")
+    lazy val secretKey = configuration.getMandatoryStringProperty("aws.access.secret.key")
+    lazy val region = configuration.getMandatoryStringProperty("aws.region")
 
-    lazy val bucket = getMandatoryStringProperty("aws.bucket")
-    lazy val sns: String = getMandatoryStringProperty("sns.notification.topic.arn")
+    lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
+    lazy val sns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
 
     lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
   }
 
   object pingdom {
-    lazy val url = getMandatoryStringProperty("pingdom.url")
-    lazy val user = getMandatoryStringProperty("pingdom.user")
-    lazy val password  = getMandatoryStringProperty("pingdom.password")
-    lazy val apiKey = getMandatoryStringProperty("pingdom.apikey")
+    lazy val url = configuration.getMandatoryStringProperty("pingdom.url")
+    lazy val user = configuration.getMandatoryStringProperty("pingdom.user")
+    lazy val password  = configuration.getMandatoryStringProperty("pingdom.password")
+    lazy val apiKey = configuration.getMandatoryStringProperty("pingdom.apikey")
   }
 
   object riffraff {
-    lazy val url = getMandatoryStringProperty("riffraff.url")
-    lazy val apiKey = getMandatoryStringProperty("riffraff.apikey")
+    lazy val url = configuration.getMandatoryStringProperty("riffraff.url")
+    lazy val apiKey = configuration.getMandatoryStringProperty("riffraff.apikey")
   }
 
 
