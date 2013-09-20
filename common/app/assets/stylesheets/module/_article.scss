@@ -18,7 +18,7 @@
         border-top: none;
     }
 
-    .js-popular & {
+    .article__popular & {
         border-bottom: none;
     }
     .article-zone-no-indent &,
@@ -312,6 +312,7 @@ video {
         padding-right: gs-span(1) + $gs-gutter*2;
     }
     .article-v2__columning-wrapper {
+        width: 100%;
         display: table;
         table-layout: fixed;
         padding-right: 0;
