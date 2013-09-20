@@ -54,7 +54,7 @@ define(['bean', 'bonzo', 'ajax'], function (bean, bonzo, ajax) {
         var form = context.querySelector('.js-register-form');
         if (form) {
             var username = form.querySelector('.js-register-username'),
-                availableTmpl = '<div class="form-field__note form-field__note--right h">Enter username</div>',
+                availableTmpl = '<div class="form-field__note form-field__note--right registration-username-check h">Enter username</div>',
                 $available = bonzo(bonzo.create(availableTmpl)).insertBefore(username);
 
             $available.previous().addClass('form-field__note--left');
@@ -75,9 +75,9 @@ define(['bean', 'bonzo', 'ajax'], function (bean, bonzo, ajax) {
                         crossOrigin: true,
                         success: function(response) {
                             if (response.status === "ok") {
-                                $available.html('<span class="js-username-available">Username available</span>');
+                                $available.html('<span class="available">Username available</span>');
                             } else {
-                                $available.html('<span class="js-username-unavailable">Username unavailable</span>');
+                                $available.html('<span class="unavailable">Username unavailable</span>');
                             }
                         }
                     });

@@ -104,7 +104,7 @@
     }
 }
 
-.js-password-strength-indicator {
+.password-strength-indicator {
     background-color: #ebebeb;
     height: 8px;
     margin-top: 4px;
@@ -125,18 +125,19 @@
     &.score-2:after { width: 60%; background-color: #ff8b00; }
     &.score-3:after { width: 80%; background-color: #00e643; }
     &.score-4:after { width: 100%; background-color: #00b334; }
+
+    .password-strength {
+        display: inline-block;
+        height: 40px;
+        margin-top: 14px;
+    }
 }
 
-.js-password-strength-label {
-    display: inline-block;
-    height: 40px;
-    margin-top: 14px;
-}
-
-.js-username-available {
-    color: #00b334;
-}
-
-.js-username-unavailable {
-    color: $newsRed;
+.registration-username-check {
+    .available {
+        color: #00b334;
+    }
+    .unavailable {
+        color: $newsRed;
+    }
 }

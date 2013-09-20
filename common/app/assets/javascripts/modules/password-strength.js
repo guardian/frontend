@@ -28,8 +28,8 @@ define(["common", "bonzo", "bean", "zxcvbn"], function (common, bonzo, bean, zxc
             dom = {
                 element: el
             },
-            template = '<div class="' + config.classes.indicator + ' score-null">' +
-                           '<div class="form-field__note form-field__note--below form-field__note--right ' + config.classes.label + ' h">' + config.text.label + '</div>' +
+            template = '<div class="password-strength-indicator ' + config.classes.indicator + ' score-null">' +
+                           '<div class="form-field__note form-field__note--below form-field__note--right password-strength ' + config.classes.label + ' h">' + config.text.label + '</div>' +
                        '</div>';
 
         this.init = function() {
