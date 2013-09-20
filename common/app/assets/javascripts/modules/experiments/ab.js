@@ -180,26 +180,26 @@ define([
             });
         },
 
-        isEventApplicableToAnActiveTest: function(event) {
-            var participations = Object.keys(getParticipations())
-            return participations.some(function(id) {
-                    var listOfEventStrings = getTest(id).events
-                    return listOfEventStrings.some(function(ev){
-                        return event.indexOf(ev) === 0;
-                    })
-                })
-            },
+        startsWith: function (string, prefix) {
+            return string.indexOf(prefix) === 0;
+        },
+
+        isEventApplicableToAnActiveTest: function (event) {
+            var participations = Object.keys(getParticipations());
+            return participations.some(function (id) {
+                var listOfEventStrings = getTest(id).events;
+                return listOfEventStrings.some(function (ev) {
+                    return this.startsWith(event,ev);
+                });
+            });
+        },
 
         getActiveTestsEventIsApplicableTo: function (event) {
 
-            function startsWith(string, prefix) {
-                return string.indexOf(prefix) === 0;
-            }
-
             return getActiveTests().filter(function (test) {
                 return test.events.some(function (testEvent) {
-                    return startsWith(event, testEvent);
-                })
+                    return this.startsWith(event, testEvent);
+                });
             }).map(function (test) {
                     return test.id;
                 });

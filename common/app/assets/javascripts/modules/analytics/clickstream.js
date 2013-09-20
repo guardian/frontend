@@ -1,4 +1,4 @@
-define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
+define(['common', 'modules/detect', 'bean', 'modules/experiments/ab'], function (common, detect, bean, ab) {
 
     var Clickstream = function (opts) {
 
@@ -95,7 +95,7 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
                 // prefix ab tests to the click spec
                 var applicableTests = ab.getActiveTestsEventIsApplicableTo(clickSpec);
                 if (applicableTests) {
-                    clickSpec = applicableTests.map(function(i) { return i + clickSpec}).join(',');
+                    clickSpec = applicableTests.map(function(i) { return i + clickSpec;}).join(',');
 
                 }
 

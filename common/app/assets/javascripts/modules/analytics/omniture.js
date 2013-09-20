@@ -66,9 +66,6 @@ define([
                 that.populateEventProperties(spec.tag);
                 // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
                 delay = spec.samePage ? true : spec.target;
-
-                ab.isEventApplicableToAnActiveTest(spec.tag);
-
                 s.tl(delay, 'o', spec.tag);
             }
         };
