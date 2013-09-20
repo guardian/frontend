@@ -59,17 +59,11 @@
         float: left;
         width: 50%;
         @include box-sizing(border-box);
-        padding-right: $gs-gutter/4;
-        @include mq(mobileLandscape) {
-            padding-right: $gs-gutter/2;
-        }
+        padding-right: $gs-gutter/2;
 
         &:nth-child(even) {
             padding-right: 0;
-            padding-left: $gs-gutter/4;
-            @include mq(mobileLandscape) {
-                padding-left: $gs-gutter/2;
-            }
+            padding-left: $gs-gutter/2;
         }
     }
 
