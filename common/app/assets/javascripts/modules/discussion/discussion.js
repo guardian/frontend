@@ -5,7 +5,9 @@ define([
     'bean',
     'ajax',
     'modules/userPrefs',
-    'modules/analytics/clickstream'
+    'modules/analytics/clickstream',
+    'modules/inview',
+    'modules/detect'
 ], function (
     common,
     bonzo,
@@ -13,7 +15,9 @@ define([
     bean,
     ajax,
     userPrefs,
-    ClickStream
+    ClickStream,
+    Inview,
+    Detect
     ) {
 
     var Discussion = function(options) {
@@ -231,6 +235,16 @@ define([
                 // Go straight to comments if the link has #comments
                 if (location.hash === '#comments') {
                     bean.fire(context.querySelector('.js-show-discussion'), 'click');
+                }
+
+                // Auto load comments on desktop sizes
+                if (/desktop|extended/.test(Detect.getLayoutMode())) {
+                    var inview = new Inview('#comments', context);
+                    bean.on(context, 'inview', function(e) {
+                        self.loadDiscussion();
+                        bonzo(context.querySelector('.d-show-cta')).addClass('u-h');
+                        bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');
+                    });
                 }
             }
         };
