@@ -18,7 +18,7 @@ Component.prototype.template = null;
 Component.prototype.attr = {};
 
 /**
- * This need to be called from the child component 
+ * This need to be called from the child component
  * @param {Object=} opts (optional)
  */
 Component.prototype.init = function(opts) {};
@@ -89,8 +89,8 @@ Component.prototype.dispose = function() {
  * @param {string} eventName
  */
 Component.prototype.on = function() {
-    arguments = Array.prototype.slice.call(arguments);
-    var selector, eventName, handler;
+    var selector, eventName, handler,
+        params = Array.prototype.slice.call(arguments);;
 
     if (arguments.length === 3) {
         selector = arguments[0];
@@ -105,9 +105,9 @@ Component.prototype.on = function() {
 
 
 Component.create = function(child) {
-    function tmp() {}
+    function Tmp() {}
     tmp.prototype = Component.prototype;
-    child.prototype = new tmp();
+    child.prototype = new Tmp();
     child.prototype.constructor = child;
 };
 

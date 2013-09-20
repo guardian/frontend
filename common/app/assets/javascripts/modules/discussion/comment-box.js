@@ -6,7 +6,7 @@ define(['modules/component'], function(Component) {
  */
 function CommentBox(opts) {
     this.init(opts);
-};
+}
 Component.create(CommentBox);
 
 /** @override */
