@@ -90,7 +90,7 @@ Component.prototype.dispose = function() {
  */
 Component.prototype.on = function() {
     var selector, eventName, handler,
-        params = Array.prototype.slice.call(arguments);;
+        params = Array.prototype.slice.call(arguments);
 
     if (arguments.length === 3) {
         selector = arguments[0];
@@ -106,7 +106,7 @@ Component.prototype.on = function() {
 
 Component.create = function(child) {
     function Tmp() {}
-    tmp.prototype = Component.prototype;
+    Tmp.prototype = Component.prototype;
     child.prototype = new Tmp();
     child.prototype.constructor = child;
 };
