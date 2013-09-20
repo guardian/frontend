@@ -70,7 +70,6 @@
 .article__dateline {
     @include box-sizing(border-box);
     @extend %type-11;
-    display: block;
     min-height: $gs-column-height;
     padding-top: $baseline;
     margin-bottom: $baseline*3;
