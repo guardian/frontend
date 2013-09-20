@@ -8,7 +8,6 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
-import scala.Some
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   val supportedTypes = "type/gallery|type/article|type/video|type/sudoku"
