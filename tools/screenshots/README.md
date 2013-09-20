@@ -10,7 +10,14 @@ Running
 
 Running against a particular env
 
-    $ grunt snap --env=prod
+    $ grunt snap --dev 
+
+or
+
+    $ export ENVIRONMENT=prod
+
+to run on prod
+
 
 To upload to S3 export:
 	
