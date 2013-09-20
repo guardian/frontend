@@ -46,7 +46,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                         $button.remove();
                     }
                 });
-            }
+            };
 
         this.addShowMore = function() {
             var collectionType = _$items.parent().attr('data-collection-type'),
