@@ -54,7 +54,13 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     }.recover{suppressApiNotFound}
   }
 
-  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = {
+  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader): Result =
+    renderSectionFront(model, views.html.section.apply)
+
+  private def renderSectionFrontFaciaStyle(mode: SectionFrontPage)(implicit request: RequestHeader): Result =
+    renderSectionFront(mode, views.html.sectionFacia.apply)
+
+  private def renderSectionFront(model: SectionFrontPage, template: (Section, Seq[Trail]) => Html)(implicit request: RequestHeader) = {
     val numTrails = math.max(model.editorsPicks.length, 15)
     val trails = (model.editorsPicks ++ model.latestContent).take(numTrails)
     Cached(model.section){
@@ -65,7 +71,7 @@ object SectionController extends Controller with Logging with Paging with JsonTr
           "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.section, Switches.all).body)
         )
       else
-        Ok(views.html.section(model.section, trails))
+        Ok(template(model.section, trails))
     }
   }
   

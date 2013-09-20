@@ -4,12 +4,13 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.mvc.{Result, RequestHeader, Controller, Action}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import play.api.libs.json._
 
 import contentapi.QueryDefaults
+import play.api.templates.Html
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
@@ -64,7 +65,13 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     }.recover{suppressApiNotFound}
   }
 
-  private def renderTag(model: TagAndTrails)(implicit request: RequestHeader) = {
+  private def renderTag(model: TagAndTrails)(implicit request: RequestHeader): Result =
+    renderTag(model, views.html.tag.apply)
+
+  private def renderTagFaciaStyle(mode: TagAndTrails)(implicit request: RequestHeader): Result =
+    renderTag(mode, views.html.tagFacia.apply)
+
+  private def renderTag(model: TagAndTrails, template: (Tag, Seq[Trail], Seq[Trail]) => Html)(implicit request: RequestHeader) = {
     Cached(model.tag){
       if (request.isJson)
         JsonComponent(
@@ -72,8 +79,9 @@ object TagController extends Controller with Logging with JsonTrails with Execut
           "trails" -> (model.leadContent ++ model.trails).map(_.url),
           "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.tag, Switches.all).body)
         )
-      else
-        Ok(views.html.tag(model.tag, model.trails, model.leadContent))
+      else {
+        Ok(template(model.tag, model.trails, model.leadContent))
+      }
     }
   }
   
