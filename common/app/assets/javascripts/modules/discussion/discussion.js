@@ -75,7 +75,7 @@ define([
                            '</a>';
 
                 context.querySelector(".js-commentcount__number").innerHTML = commentCount;
-                bonzo(context.querySelectorAll('.js-comment-count')).append(html);
+                bonzo(context.querySelectorAll('.js-comment-count')).html(html);
             },
 
             getCommentCount: function(callback) {

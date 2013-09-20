@@ -36,11 +36,11 @@
                         }
                     }
 
-                    <div class="article__meta-container js-comment-count">
+                    <div class="article__meta-container">
                         @fragments.byline(article.byline, article)
 
                         @fragments.article.dateline(article.webPublicationDate, secondary=true)
-
+                        <div class="js-comment-count"></div>
                     </div>
 
                     <div class="js-article__container article__container u-cf">
