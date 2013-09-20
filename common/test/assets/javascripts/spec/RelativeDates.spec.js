@@ -9,17 +9,22 @@ define(['modules/relativedates',
                         '<time id="time-valid" class="js-timestamp" datetime="2012-08-12T18:43:00.000Z">12th August</time>',
                         '<time id="time-invalid" class="js-timestamp" datetime="201-08-12agd18:43:00.000Z">Last Tuesday</time>'
                        ]
-                }
+                },
+        // make the date static so tests are stable
+        fakeNow = Date.parse('2012-08-13T12:00:00+01:00'),
+        date;
 
     describe("Relative dates", function() {
        
         beforeEach(function() {
             fixtures.render(conf);
-        })
+            date = sinon.useFakeTimers(fakeNow, "Date");
+        });
 
-        // make the date static so tests are stable
-    	var fakeNow = Date.parse('2012-08-13T12:00:00+01:00');
-        sinon.useFakeTimers(fakeNow, "Date");
+        afterEach(function() {
+            fixtures.clean(conf.id);
+            date.restore();
+        });
 
         var epochBug = '2038-01-19T03:14:07';
 
