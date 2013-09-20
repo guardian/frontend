@@ -6,12 +6,19 @@ define([
     'modules/facia-items-show-more'
 ], function (common, ajax, bonzo, RelativiseTimestamp, ItemsShowMore) {
 
-    var collectionTmpl =
+    var updateTmpl = function(tmpl, trail) {
+            return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {
+                return props.split('.').reduce(function(obj, prop) {
+                    return obj[prop];
+                }, trail);
+            });
+        },
+        collectionTmpl =
             '<section class="collection collection--popular-full-width" data-collection-type="popular-full-width">' +
                 '<h2 class="collection__title">Popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
-            var tmpl =
+            return updateTmpl(
                 '<li class="item">' +
                     '<h2 class="item__title"><a href="@trail.url" class="item__link">@trail.headline</a></h2>' +
                     '<p class="item__standfirst">@trail.trailText</p>' +
@@ -20,21 +27,19 @@ define([
                             '<i class="i"></i><span class="timestamp__text"></span>' +
                         '</time>' +
                     '</div>' +
-                '</li>'
-            return tmpl.replace(/@(trail\.[A-Za-z.]*)/g, function(match, prop) {
-                return eval(prop);
-            });
+                '</li>',
+                trail
+            );
         },
         imageTmpl = function(trail) {
-            var tmpl =
+            return updateTmpl(
                 '<div class="item__image-container">' +
                     '<a href="@trail.url" class="item__link">' +
                         '<img class="item__image" alt="" src="@trail.mainPicture.path" />' +
                     '</a>' +
-                '</div>';
-            return tmpl.replace(/@(trail\.[A-Za-z.]*)/g, function(match, prop) {
-                return eval(prop);
-            });
+                '</div>',
+                trail
+            );
         };
 
     var popular =  {
