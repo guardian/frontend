@@ -171,6 +171,7 @@
     }
 
     @include mq(wide) {
+        margin-left: (gs-span(3) + $gs-gutter)*-1;
         width: gs-span(3);
     }
 }
