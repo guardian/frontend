@@ -1,6 +1,6 @@
 package test
 
-import conf.{Configuration, ContentApi}
+import conf.{ElasticSearchContentApi, Configuration, ContentApi}
 import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
@@ -26,29 +26,40 @@ trait TestSettings {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 
-  val originalHttp = ContentApi.http
-
-  ContentApi.http = new Http[Future] {
-
-    if (DigestUtils.sha256Hex(Configuration.contentApi.host) != "b9648d72721756bad977220f11d5c239e17cb5ca34bb346de506f9b145ac39d1") {
+  private def verify(property: String, hash: String, message: String) {
+    if (DigestUtils.sha256Hex(property) != hash) {
 
       // the println makes it easier to spot what is wrong in tests
       println()
-      println("----------- YOU ARE NOT USING THE CORRECT CONTENT API HOST -----------")
+      println(s"----------- $message -----------")
       println()
 
-      throw new RuntimeException("You are not using the correct content api host...")
+      throw new RuntimeException(message)
     }
 
-    if (DigestUtils.sha256Hex(Configuration.contentApi.key) != "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96") {
+  }
 
-      // the println makes it easier to spot what is wrong in tests
-      println()
-      println("----------- YOU ARE NOT USING THE CORRECT CONTENT API KEY -----------")
-      println()
+  private def toRecorderHttp(http: Http[Future]) = new Http[Future] {
 
-      throw new RuntimeException("You are not using the correct content api key...")
-    }
+    val originalHttp = http
+
+    verify(
+      Configuration.contentApi.host,
+      "b9648d72721756bad977220f11d5c239e17cb5ca34bb346de506f9b145ac39d1",
+      "YOU ARE NOT USING THE CORRECT CONTENT API HOST"
+    )
+
+    verify(
+      Configuration.contentApi.elasticSearchHost,
+      "973dff7baa408e6f2334e3cf4ca36a960f1743b6d09911ff68723db9cbe62163",
+      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH CONTENT API HOST"
+    )
+
+    verify(
+      Configuration.contentApi.key,
+      "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96",
+      "YOU ARE NOT USING THE CORRECT CONTENT API KEY"
+    )
 
     override def GET(url: String, headers: scala.Iterable[scala.Tuple2[java.lang.String, java.lang.String]]) = {
       recorder.load(url, headers.toMap) {
@@ -56,6 +67,9 @@ trait TestSettings {
       }
     }
   }
+
+  ContentApi.http = toRecorderHttp(ContentApi.http)
+  ElasticSearchContentApi.http = toRecorderHttp(ElasticSearchContentApi.http)
 }
 
 /**
