@@ -84,7 +84,7 @@ figcaption,
 }
 
 .main-caption {
-    padding: $baseline*2 $gs-gutter/2 $baseline*4;
+    padding: $baseline*2 $gs-gutter/2 $gs-column-height;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
