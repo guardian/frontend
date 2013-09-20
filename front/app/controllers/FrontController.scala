@@ -6,7 +6,6 @@ import model._
 import conf._
 import play.api.mvc._
 import model.Trailblock
-import scala.Some
 import play.api.libs.json._
 import concurrent.Future
 
