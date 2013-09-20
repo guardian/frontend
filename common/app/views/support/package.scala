@@ -336,6 +336,7 @@ object OmnitureAnalyticsData {
       ("c14", data("build-number")),
       ("c19", platform),
       ("v19", platform),
+      ("v67", "nextgen-served"),
       ("c30", (if (isContent) "content" else "non-content")),
       ("c56", jsSupport)
     )

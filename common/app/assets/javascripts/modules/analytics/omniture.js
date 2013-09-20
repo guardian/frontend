@@ -141,6 +141,8 @@ define([
 
             s.prop65    = config.page.headline || '';
 
+            s.prop67    = "nextgen-served";
+
             s.prop68    = detect.getConnectionSpeed(w.performance, null, true);
 
             if (config.page.webPublicationDate) {
