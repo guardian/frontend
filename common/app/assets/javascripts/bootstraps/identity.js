@@ -31,6 +31,11 @@ define([
             common.mediator.on('page:identity:ready', function(config, context) {
                 Identity.passwordToggle(config, context);
             });
+        },
+        usernameAvailable: function () {
+            common.mediator.on('page:identity:ready', function(config, context) {
+                Identity.usernameAvailable(config, context);
+            });
         }
     };
 
@@ -41,6 +46,7 @@ define([
             modules.forgottenPassword();
             modules.passwordStrength();
             modules.passwordToggle();
+            modules.usernameAvailable();
         }
         common.mediator.emit("page:identity:ready", config, context);
     };

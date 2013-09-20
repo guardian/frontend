@@ -132,3 +132,11 @@
     height: 40px;
     margin-top: 14px;
 }
+
+.js-username-available {
+    color: #00b334;
+}
+
+.js-username-unavailable {
+    color: $newsRed;
+}

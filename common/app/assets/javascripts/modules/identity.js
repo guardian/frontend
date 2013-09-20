@@ -1,4 +1,4 @@
-define(['bean', 'bonzo'], function (bean, bonzo) {
+define(['bean', 'bonzo', 'ajax'], function (bean, bonzo, ajax) {
 
     function forgottenEmail(config, context) {
         var form = context.querySelector('.js-reset-form');
@@ -50,9 +50,46 @@ define(['bean', 'bonzo'], function (bean, bonzo) {
         }
     }
 
+    function usernameAvailable(config, context) {
+        var form = context.querySelector('.js-register-form');
+        if (form) {
+            var username = form.querySelector('.js-register-username'),
+                availableTmpl = '<div class="form-field__note form-field__note--right h">Enter username</div>',
+                $available = bonzo(bonzo.create(availableTmpl)).insertBefore(username);
+
+            $available.previous().addClass('form-field__note--left');
+            bean.on(username, 'blur', function(e) {
+                if (username.value.length < 6) {
+                    $available.text("Username too short");
+                } else if (username.value.length > 20) {
+                    $available.text("Username too long");
+                } else {
+                    $available.removeClass('h').text("Checking username");
+                    ajax({
+                        url: config.page.idApiUrl + '/user/is-username-valid-or-taken',
+                        type: 'jsonp',
+                        data: {
+                            accessToken: config.page.idApiJsClientToken,
+                            username: username.value
+                        },
+                        crossOrigin: true,
+                        success: function(response) {
+                            if (response.status === "ok") {
+                                $available.html('<span class="js-username-available">Username available</span>');
+                            } else {
+                                $available.html('<span class="js-username-unavailable">Username unavailable</span>');
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     return {
         forgottenEmail: forgottenEmail,
         forgottenPassword: forgottenPassword,
-        passwordToggle: passwordToggle
+        passwordToggle: passwordToggle,
+        usernameAvailable: usernameAvailable
     };
 });
