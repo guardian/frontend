@@ -2,76 +2,60 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
 
     return function(items) {
 
-        var _collectionType = bonzo(bonzo(items).parent()).attr('data-collection-type'),
-            _renderToggle = function(items) {
-                var button = bonzo.create('<button class="items__show-more">Show more news</button>')[0];
-                bonzo(items).after(button);
-                bean.on(button, 'click', function(e) {
+        var _$items = bonzo(items),
+            _getShownSize = function (collectionType) {
+                var breakpointOptions = {
+                    wide: {
+                        default: 4,
+                        features: 3,
+                        'popular-full-width': 3
+                    },
+                    desktop: {
+                        default: 3
+                    },
+                    tablet: {
+                        default: 2
+                    },
+                    mobile: {
+                        default: 3,
+                        'small-stories': 2
+                    }
+                }[detect.getBreakpoint()];
+                return breakpointOptions[collectionType] || breakpointOptions['default'];
+            },
+            _rowSize = {
+                wide: 8,
+                desktop: 6,
+                tablet: 4,
+                mobile: 5
+            }[detect.getBreakpoint()],
+            _renderToggle = function($items) {
+                var $button = bonzo(bonzo.create('<button class="items__show-more">Show more news</button>'))
+                    .insertAfter($items);
+                bean.on($button[0], 'click', function(e) {
                     // show x more, depending on current breakpoint
-                    var rowSize = _getOptions(_collectionType).show,
-                        moreHidden = qwery('.item.u-h', items).some(function(item, index) {
-                            if (index === rowSize) {
+                    var moreHidden = qwery('.item.u-h', $items[0]).some(function(item, index) {
+                            if (index === _rowSize) {
                                 return true;
                             }
-                            bonzo(item).removeClass('u-h');
+                            bonzo(item)
+                                .removeClass('u-h')
+                                .addClass('item--headline');
                         });
                     if (!moreHidden) {
-                        bonzo(button).remove();
+                        $button.remove();
                     }
                 });
-            },
-            _getOptions = function (collectionType) {
-                var collectionOptions = {
-                        wide: {
-                            default: {
-                                initial: 4,
-                                show: 8
-                            },
-                            features: {
-                                initial: 3,
-                                show: 8
-                            },
-                            'popular-full-width': {
-                                initial: 3,
-                                show: 8
-                            }
-                        },
-                        desktop: {
-                            default: {
-                                initial: 3,
-                                show: 6
-                            }
-                        },
-                        tablet: {
-                            default: {
-                                initial: 2,
-                                show: 4
-                            }
-                        },
-                        mobile: {
-                            default: {
-                                initial: 3,
-                                show: 8
-                            },
-                            'small-stories': {
-                                initial: 2,
-                                show: 8
-                            }
-                        }
-                    },
-                    breakpointOptions = collectionOptions[detect.getBreakpoint()];
-                return breakpointOptions[collectionType] || breakpointOptions['default'];
-            };
+            }
 
         this.addShowMore = function() {
-            var $overflowStories = common.$g('.item:nth-child(n + ' + (_getOptions(_collectionType).initial + 1) + ')', items);
+            var collectionType = _$items.parent().attr('data-collection-type'),
+                $overflowStories = common.$g('.item:nth-child(n + ' + (_getShownSize(collectionType) + 1) + ')', _$items[0]);
             // hide stories
-            $overflowStories.each(function(item) {
-                bonzo(item).addClass('u-h item--headline');
-            });
+            $overflowStories.addClass('u-h');
             // add toggle button, if we have hidden stories
             if ($overflowStories.length) {
-                _renderToggle(items);
+                _renderToggle(_$items);
             }
         };
 
