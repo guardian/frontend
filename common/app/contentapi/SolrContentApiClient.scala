@@ -1,13 +1,13 @@
 package contentapi
 
 import com.gu.openplatform.contentapi.{FutureAsyncApi, Api}
-import conf.Configuration
 import scala.concurrent.Future
-import common.{ExecutionContexts, Edition, Logging, GuardianConfiguration}
-import com.gu.openplatform.contentapi.model.ItemResponse
+import common._
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
+import conf.Configuration.contentApi
+import com.gu.openplatform.contentapi.model.ItemResponse
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   val supportedTypes = "type/gallery|type/article|type/video|type/sudoku"
@@ -77,11 +77,9 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
   }
 }
 
-class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
-    with Logging {
+trait ContentApiClient extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
+with Logging {
 
-  import Configuration.contentApi
-  override val targetUrl = contentApi.host
   apiKey = Some(contentApi.key)
 
   override def fetch(url: String, parameters: Map[String, String]) = {
@@ -97,4 +95,16 @@ class ContentApiClient(configuration: GuardianConfiguration) extends FutureAsync
   }
 
   private def isTagQuery(url: String) = url.endsWith("/tags")
+}
+
+class SolrContentApiClient extends ContentApiClient {
+  lazy val httpTimingMetric = ContentApiMetrics.HttpTimingMetric
+  lazy val httpTimeoutMetric= ContentApiMetrics.HttpTimeoutCountMetric
+  override val targetUrl = contentApi.host
+}
+
+class ElasticSearchContentApiClient extends ContentApiClient {
+  lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
+  lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
+  override val targetUrl = contentApi.elasticSearchHost
 }
