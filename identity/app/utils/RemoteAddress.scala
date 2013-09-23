@@ -1,4 +1,4 @@
-package services
+package utils
 
 import play.api.mvc.RequestHeader
 import common.Logging

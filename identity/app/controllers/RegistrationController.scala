@@ -5,7 +5,7 @@ import services._
 import idapiclient.IdApiClient
 import play.api.mvc._
 import common.ExecutionContexts
-import utils.SafeLogging
+import utils.{RemoteAddress, SafeLogging}
 import javax.inject.Singleton
 import model.IdentityPage
 import play.api.data._
@@ -20,7 +20,6 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      idUrlBuilder : IdentityUrlBuilder,
                                      signinService : PlaySigninService  )
   extends Controller with ExecutionContexts with SafeLogging with RemoteAddress {
-
 
   val page = new IdentityPage("/register", "Register", "register")
 
