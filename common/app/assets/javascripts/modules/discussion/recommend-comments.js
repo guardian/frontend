@@ -135,7 +135,7 @@ RecommendComments.fail = function(xhr) {
  * @param {Boolean=} unrecommend
  */
 RecommendComments.renderRecommendation = function(elem, unrecommend) {
-    var recommendCountElem = qwery('.'+ RecommendComments.CONFIG.classes.count, elem),
+    var recommendCountElem = qwery('.'+ RecommendComments.CONFIG.classes.count, elem)[0],
         currentCount = parseInt(elem.getAttribute('data-recommend-count'), 10),
         newCount = !unrecommend ? currentCount+1 : currentCount-1;
 
