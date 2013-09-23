@@ -5,7 +5,6 @@ import front._
 import model._
 import conf._
 import play.api.mvc._
-import views.support.TemplateDeduping
 
 // TODO, this needs a rethink, does not seem elegant
 
