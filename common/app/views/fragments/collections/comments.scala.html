@@ -15,6 +15,9 @@
                 @trail.discussionId.map{ id => data-discussion-id="@id" }>
                 <h2 class="item__title">
                     <a href="@LinkTo{@trail.url}" class="item__link">
+                        @if(trail.trailType == Option("comment")) {
+                            <span class="i i-quotes-green"></span>
+                        }
                         @RemoveOuterParaHtml(trail.headline)
                     </a>
                 </h2>

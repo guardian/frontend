@@ -35,6 +35,14 @@
                 padding-top: 0;
                 border-top-style: none;
             }
+            &.item--comment {
+                .item__title {
+                    padding-top: 40px;
+                }
+                .item__link .i {
+                    top: 8px;
+                }
+            }
         }
         // stylings for beggining and end of rows
         .item:nth-child(#{$row-size}n + 1) {
@@ -86,6 +94,17 @@
             .item__image-container {
                 display: none;
             }
+        }
+    }
+    .item--comment {
+        .item__title {
+            position: relative;
+            padding-top: 40px;
+        }
+        .item__link .i {
+            position: absolute;
+            left: 0;
+            top: 8px;
         }
     }
 }
