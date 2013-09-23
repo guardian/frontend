@@ -9,9 +9,11 @@
         @collection.items.zipWithIndex.map{ case (trail, index) =>
             <li class="item @trail.trailType.map("item--" + _)" data-link-name="trail | @{index + 1}"
                 @trail.discussionId.map{ id => data-discussion-id="@id" }>
-                <a href="@LinkTo{@trail.url}" class="item__link">
-                    <h2 class="item__title">@RemoveOuterParaHtml(trail.headline)</h2>
-                </a>
+                <h2 class="item__title">
+                    <a href="@LinkTo{@trail.url}" class="item__link">
+                        @RemoveOuterParaHtml(trail.headline)
+                    </a>
+                </h2>
                 <div class="item__meta item__meta--grey">
                     <time class="item__timestamp js-item__timestamp"
                           itemprop="datePublished"
