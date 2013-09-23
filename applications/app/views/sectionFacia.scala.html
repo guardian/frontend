@@ -4,9 +4,9 @@
 
     <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
 
-        @fragments.collections.masthead(Config(section.id, None), Collection(trails.take(3), None))
+        @fragments.collections.masthead(Config(section.id, None, Some(section.webTitle)), Collection(trails.take(3), None))
 
-        @fragments.collections.news(Config(section.id, None), Collection(trails.drop(3), None))
+        @fragments.collections.news(Config(section.id, None, None), Collection(trails.drop(3), None))
 
     </div>
 }
