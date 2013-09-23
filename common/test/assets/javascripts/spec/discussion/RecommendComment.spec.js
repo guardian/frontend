@@ -31,18 +31,18 @@ define([
         }});
         server = sinon.fakeServer.create();
         server.autoRespond = true;
-        
-        // rerender the button each time    
+
+        // rerender the button each time
         beforeEach(function() {
-            if(document.getElementById(fixturesId)) {
-                document.getElementById(fixturesId).parentNode.removeChild(document.getElementById(fixturesId));
-            }
             fixtures.render(recommendCommentFixture);
             context = document.getElementById(fixturesId);
             button = context.querySelectorAll('.d-comment__recommend')[0];
             RecommendComments.init(context);
         });
 
+        afterEach(function() {
+            fixtures.clean();
+        });
 
         describe('init', function() {
             it('Should make recommend counts active', function() {
@@ -99,7 +99,7 @@ define([
                 server.respondWith([400, {}, '{"status": "error", "message": "wrong", "statusCode": 400}']);
                 currentCount = parseInt(button.getAttribute('data-recommend-count'), 10);
             });
-            
+
             it('should reset the comment count', function() {
                 runs(function() {
                     bean.fire(button, 'click');
