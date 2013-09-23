@@ -41,7 +41,8 @@ trait ParseConfig extends ExecutionContexts {
   def parseConfig(json: JsValue): Config =
     Config(
       (json \ "id").as[String],
-      (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty)
+      (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
+      (json \ "displayName").asOpt[String]
     )
 
 }
