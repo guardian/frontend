@@ -33,6 +33,7 @@ define([
             articleContainer      = options.articleContainer || '.js-article__container',
             mediaPrimary          = options.mediaPrimary || 'article .media-primary',
             commentsHaveLoaded    = false,
+            loadingInProgress     = false,
             loadingCommentsHtml   = '<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>',
             currentPage           = 0,
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
@@ -75,9 +76,10 @@ define([
             },
 
             insertCommentCounts: function(commentCount) {
-                var html = '<a href="#comments" class="js-show-discussion commentcount" data-link-name="Comment count">' +
-                           '  <i class="i i-comment-count-small"></i> ' + commentCount +
-                           '  <span class="commentcount__label">comments</span>' +
+                var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
+                    html = '<a href="#comments" class="js-show-discussion commentcount" data-link-name="Comment count">' +
+                           '  <i class="i i-comment-count-small"></i>' + commentCount +
+                           '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                            '</a>';
 
                 context.querySelector(".js-commentcount__number").innerHTML = commentCount;
@@ -99,6 +101,9 @@ define([
             },
 
             loadDiscussion: function(page) {
+                if (loadingInProgress) { return; }
+                loadingInProgress = true;
+
                 page = page || 1;
 
                 if (currentPage === 0) {
@@ -132,11 +137,13 @@ define([
                         RecommendComments.init(context, { apiRoot: config.page.discussionApiRoot });
 
                         common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
+                        loadingInProgress = false;
                     },
                     error: function() {
                         self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments' +
                                                                  '  <button class="cta js-show-discussion" data-link-name="Try loading comments again" data-is-ajax>Try again</button>' +
                                                                  '</div>';
+                        loadingInProgress = false;
                     }
                 });
             },
@@ -244,7 +251,7 @@ define([
                 // Auto load comments on desktop sizes
                 if (/desktop|extended/.test(Detect.getLayoutMode())) {
                     var inview = new Inview('#comments', context);
-                    bean.on(context, 'inview', function(e) {
+                    bean.on(context, 'inview', '#comments', function(e) {
                         self.loadDiscussion();
                         bonzo(context.querySelector('.d-show-cta')).addClass('u-h');
                         bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');

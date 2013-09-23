@@ -9,7 +9,7 @@
             </h2>
         </div>
         <article id="article" class="article @if(article.isLive){is-live}"
-            itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+                 itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
                 <header class="article__head">
 
@@ -73,10 +73,7 @@
                     </div>
                 </div>
             </div>
-
-
         </article>
-
 
         <div class="article-v2__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
@@ -98,7 +95,7 @@
                 <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
             }
 
-            <div class="js-popular" role="complementary"></div>
+            <div class="js-popular article__popular" role="complementary"></div>
         </div>
     </div>
 }
