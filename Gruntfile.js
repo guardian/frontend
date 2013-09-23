@@ -388,7 +388,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test:integration:article',  ['env:casperjs', 'casperjs:article']);
     grunt.registerTask('test:integration:front',  ['env:casperjs', 'casperjs:front']);
     grunt.registerTask('test:integration:corenavigation',  ['env:casperjs', 'casperjs:corenavigation']);
-     grunt.registerTask('test:integration:allexceptadmin',  ['env:casperjs', 'casperjs:allexceptadmin']);
+    grunt.registerTask('test:integration:allexceptadmin',  ['env:casperjs', 'casperjs:allexceptadmin']);
 
 
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
