@@ -8,12 +8,12 @@
                     case Masthead      => { @collections.masthead(block._1, dedupe(4, block._2)) }
                     case TopStories    => { @collections.topStories(block._1, dedupe(2, block._2)) }
                     case MediumStories => { @collections.mediumStories(block._1,  dedupe(4, block._2)) }
-                    case SmallStories  => { @collections.smallStories(block._1, block._2) }
-                    case News          => { @collections.news(block._1, block._2) }
-                    case Features      => { @collections.features(block._1, block._2) }
-                    case Highlights    => { @collections.highlights(block._1, block._2) }
-                    case Comments      => { @collections.comments(block._1, block._2) }
-                    case _             => { @collections.features(block._1, block._2) }
+                    case SmallStories  => { @collections.smallStories(block._1,  dedupe(block._2)) }
+                    case News          => { @collections.news(block._1,  dedupe(block._2)) }
+                    case Features      => { @collections.features(block._1,  dedupe(block._2)) }
+                    case Highlights    => { @collections.highlights(block._1,  dedupe(block._2)) }
+                    case Comments      => { @collections.comments(block._1,  dedupe(block._2)) }
+                    case _             => { @collections.features(block._1, dedupe(block._2)) }
                 }
             }
         }

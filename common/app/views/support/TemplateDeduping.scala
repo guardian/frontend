@@ -5,6 +5,7 @@ import model.{Collection, Trail}
 
 class TemplateDeduping extends implicits.Collections {
   private var alreadyUsed: HashSet[String] = new HashSet[String]()
+  private val defaultTake: Int = 20
 
   def take(numberWanted: Int, items: Seq[Trail]): Seq[Trail] =
     items
@@ -20,4 +21,5 @@ class TemplateDeduping extends implicits.Collections {
     collection.copy(items = take(numberWanted, collection.items))
 
   def apply(numberWanted: Int, collection: Collection): Collection = take(numberWanted, collection)
+  def apply(collection: Collection): Collection = take(defaultTake, collection)
 }
