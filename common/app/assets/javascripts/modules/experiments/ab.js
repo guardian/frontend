@@ -15,7 +15,7 @@ define([
 ], function (
     common,
     store,
-    
+
     ExperimentInlineLinkCard,
     Aa,
     GalleryStyle,
@@ -180,29 +180,35 @@ define([
             });
         },
 
-        startsWith: function (string, prefix) {
-            return string.indexOf(prefix) === 0;
-        },
-
         isEventApplicableToAnActiveTest: function (event) {
             var participations = Object.keys(getParticipations());
             return participations.some(function (id) {
                 var listOfEventStrings = getTest(id).events;
                 return listOfEventStrings.some(function (ev) {
-                    return this.startsWith(event,ev);
+                    return event.indexOf(ev) === 0;
                 });
             });
         },
 
         getActiveTestsEventIsApplicableTo: function (event) {
 
-            return getActiveTests().filter(function (test) {
-                return test.events.some(function (testEvent) {
-                    return this.startsWith(event, testEvent);
+            function startsWith(string, prefix) {
+                return string.indexOf(prefix) === 0;
+            }
+
+            var eventTag = event.tag;
+            return eventTag && getActiveTests().filter(function (test) {
+                var testEvents = test.events;
+                return testEvents && testEvents.some(function (testEvent) {
+                    return startsWith(eventTag, testEvent);
                 });
             }).map(function (test) {
-                    return test.id;
-                });
+                return test.id;
+            });
+        },
+
+        getTestVariant: function(testId) {
+            return getParticipations()[testId].variant;
         },
 
         getParticipations: getParticipations,
