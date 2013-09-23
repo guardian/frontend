@@ -14,10 +14,7 @@
     color: #333;
 
     @include mq(tablet) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 26px;
-        line-height: 2.6rem;
+        @include font-size(18, 28);
     }
 
     > p,
