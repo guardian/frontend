@@ -1,17 +1,15 @@
 define([
     //Common libraries
-    "common",
+    'common',
     //Modules
-    "modules/facia-popular",
-    "modules/masthead-relative-dates",
-    'modules/facia-items-show-more',
-    'modules/facia-collection-popular'
+    'modules/facia-popular',
+    'modules/facia-relativise-timestamp',
+    'modules/facia-items-show-more'
 ], function (
     common,
     popular,
-    mastheadRelativeDates,
-    ItemsShowMore,
-    CollectionPopular
+    RelativiseTimestamp,
+    ItemsShowMore
 ) {
 
     var modules = {
@@ -22,16 +20,20 @@ define([
             });
         },
 
-        relativiseMastheadDates: function () {
+        relativiseTimestamps: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                mastheadRelativeDates.init(context);
+                common.toArray(context.querySelectorAll('.js-item__timestamp')).forEach(function(timestamp) {
+                    new RelativiseTimestamp(timestamp)
+                        .relativise();
+                });
             });
         },
 
         showItemsShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
                 common.$g('.js-items--show-more', context).each(function(items) {
-                    var t = new ItemsShowMore(items);
+                    new ItemsShowMore(items)
+                        .addShowMore();
                 });
             });
         }
@@ -41,8 +43,8 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-//            modules.showPopular();
-            modules.relativiseMastheadDates();
+            modules.showPopular();
+            modules.relativiseTimestamps();
             modules.showItemsShowMore();
         }
         common.mediator.emit("page:front:ready", config, context);
