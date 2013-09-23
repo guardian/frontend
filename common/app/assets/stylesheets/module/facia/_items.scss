@@ -83,6 +83,9 @@ a.item__link,
         }
     }
 }
+.item__image-container {
+    overflow: hidden;
+}
 .item__duration {
     position: absolute;
     top: 0;
