@@ -14,7 +14,22 @@
 
     <p>To log a support call with PA email <a href="mailto:customer.services@@pressassociation.com">customer.services@@pressassociation.com</a> or call <i>01430 455337</i></p>
 
+    <p><strong>If in doubt raise a support ticket.</strong> (it&apos;s what we pay them for)</p>
+
     <p>The PA API explorer is <a href="http://pads.pa-sport.com/api/football/">here</a>.</p>
+
+    <h2>Matchday Feed</h2>
+
+    <p><strong>This is the feed you are most likely to be interested in.</strong> This feed shows detailed information on today&apos;s
+        matches and is the feed we use while the match is live</p>
+
+    <p>A single call to this api loads match data for today for <i>all</i> competitions and the date format is <i>YYYYMMDD</i></p>
+
+    <p>This api call also includes today&apos;s fixtures and results.</p>
+
+    <p>Here is the API call for today&apos;s live matches</p>
+
+    <a href="@pa.host/api/football/competitions/matchDay/@pa.apiKey/@today">@pa.host/api/football/competitions/matchDay/@pa.apiKey/<strong>@today</strong></a>
 
     <h2>Competitions feed</h2>
 
@@ -32,19 +47,6 @@
 
     <a href="@pa.host/api/football/competition/fixtures/@pa.apiKey/100">@pa.host/api/football/competition/fixtures/@pa.apiKey/<strong>100</strong></a>
 
-    <h2>Matchday Feed</h2>
-
-    <p>This is the feed you are most likely to be interested in. This feed shows detailed information on today&apos;s
-        matches and is the feed we use while the match is live</p>
-
-    <p>A single call to this api loads match data for today for <i>all</i> competitions and the date format is <i>YYYYMMDD</i></p>
-
-    <p>This api call also includes today&apos;s fixtures and results.</p>
-
-    <p>Here is the API call for today&apos;s live matches</p>
-
-    <a href="@pa.host/api/football/competitions/matchDay/@pa.apiKey/@today">@pa.host/api/football/competitions/matchDay/@pa.apiKey/<strong>@today</strong></a>
-
     <h2>Results feed</h2>
 
     <p>Shows the results for completed matches. We query each competition separately for results.</p>
@@ -60,6 +62,7 @@
 
     <a href="@pa.host/api/football/match/stats/@pa.apiKey/3630511">@pa.host/api/football/match/stats/@pa.apiKey/<strong>3630511</strong></a>
 
+    <link href="@routes.Assets.at("css/football.css")" rel="stylesheet">
 }
 
 }

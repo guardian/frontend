@@ -10,7 +10,6 @@ import play.api.libs.json.JsValue
 import model.FaciaPage
 import play.api.libs.ws.Response
 import model.Config
-import scala.Some
 import play.api.libs.json.JsObject
 import services.S3FrontsApi
 import views.support._
@@ -42,7 +41,8 @@ trait ParseConfig extends ExecutionContexts {
   def parseConfig(json: JsValue): Config =
     Config(
       (json \ "id").as[String],
-      (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty)
+      (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
+      (json \ "displayName").asOpt[String]
     )
 
 }

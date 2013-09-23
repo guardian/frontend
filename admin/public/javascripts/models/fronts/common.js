@@ -12,11 +12,11 @@ define([
             ophanCallsPerSecond:   4,     // n.b. times number of blocks
             collectionsPollMs:     10000, // 10 seconds
             latestArticlesPollMs:  10000, // 10 seconds
-            cacheExpiryMs:         60000, // 1 min 
+            cacheExpiryMs:         60000, // 1 min
             defaultToLiveMode:     true,
             sectionSearches: {
                 "default": "news|uk|uk-news|world",
-                "culture": "cluture|film|music|books|artanddesign|tv-and-radio|stage"
+                "culture": "culture|film|music|books|artanddesign|tv-and-radio|stage"
             },
 
             apiBase:               '/fronts',

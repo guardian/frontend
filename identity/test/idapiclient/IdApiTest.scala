@@ -380,23 +380,28 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
 
       "accesses the user endpoint" in {
-        api.register(user, trackingParameters)
+        api.register(user, trackingParameters, None)
         verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "adds the client access token parameter to the request" in {
-        api.register(user, trackingParameters)
+        api.register(user, trackingParameters, None)
         verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("accessToken", "clientAccessToken")))), Matchers.any[Parameters])
       }
 
       "adds the the omniture tracking data to the request" in {
-        api.register(user, trackingParameters)
+        api.register(user, trackingParameters, None)
         verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable("tracking" -> "param"))), Matchers.any[Parameters])
       }
 
       "posts the user data to the endpoint" in {
-        api.register(user, trackingParameters)
+        api.register(user, trackingParameters, None)
         verify(http).POST(Matchers.any[String], Matchers.eq(Some(expectedPostData)), Matchers.any[Parameters], Matchers.any[Parameters])
+      }
+
+      "passes the user's IP details as provided" in {
+        api.register(user, trackingParameters, Some("127.0.0.1"))
+        verify(http).POST(Matchers.any[String], Matchers.eq(Some(expectedPostData)), Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable("X-GU-ID-REMOTE-IP" -> "127.0.0.1"))))
       }
     }
 
@@ -404,7 +409,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters]))
         .thenReturn(toFuture(Left(errors)))
        "returns the errors" - {
-         api.register(user, trackingParameters).map(_ match {
+         api.register(user, trackingParameters, None).map(_ match {
            case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
            case Left(responseErrors) => {
              responseErrors should equal(errors)
