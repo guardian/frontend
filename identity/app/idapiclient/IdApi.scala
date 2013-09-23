@@ -78,9 +78,12 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     response map jsonBodyParser.extract[Unit]({_ => JNothing})
   }
 
- def register(user: User, trackingParameters : OmnitureTracking): Future[Response[User]] = {
+ def register(user: User, trackingParameters : OmnitureTracking, clientIp: Option[String]): Future[Response[User]] = {
     val userData = write(user)
-    val response = http.POST(apiUrl("user"), Some(userData), clientAuth.parameters ++ trackingParameters.parameters)
+    val response = http.POST(apiUrl("user"), Some(userData),
+      clientAuth.parameters ++ trackingParameters.parameters,
+      clientAuth.headers ++ clientIp.map(ip => Iterable("X-GU-ID-REMOTE-IP" -> ip)).getOrElse(Iterable.empty)
+    )
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
