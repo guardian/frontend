@@ -1,6 +1,6 @@
-@(front: FrontPage, page: FaciaPage)(implicit request: RequestHeader)
+@(front: FrontPage, page: FaciaPage, deduping: TemplateDeduping)(implicit request: RequestHeader)
 
 @main(front, Switches.all){
 }{
-    @fragments.frontBody(front, page)
+    @fragments.frontBody(front, page, deduping)
 }

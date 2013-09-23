@@ -5,6 +5,7 @@ import front._
 import model._
 import conf._
 import play.api.mvc._
+import views.support.TemplateDeduping
 
 // TODO, this needs a rethink, does not seem elegant
 
@@ -145,8 +146,9 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
           if (path != editionalisedPath) {
             Redirect(editionalisedPath)
           } else {
-            val htmlResponse = () => views.html.front(frontPage, faciaPage)
-            val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
+            val templateDeduping = new TemplateDeduping
+            val htmlResponse = () => views.html.front(frontPage, faciaPage, templateDeduping)
+            val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage, templateDeduping)
             renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
           }
         }
