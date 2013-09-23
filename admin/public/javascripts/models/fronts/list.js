@@ -21,8 +21,6 @@ define([
 
         opts = opts || {};
 
-        console.log(opts);
-
         if (!opts.id) { return; }
 
         this.id      = opts.id;
