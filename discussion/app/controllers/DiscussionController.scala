@@ -32,7 +32,8 @@ trait DiscussionController
           JsonComponent(
             "html" -> views.html.fragments.commentsBody(commentPage).toString,
             "hasMore" -> commentPage.hasMore,
-            "currentPage" -> commentPage.currentPage
+            "currentPage" -> commentPage.currentPage,
+            "commentBoxHtml" -> views.html.fragments.commentBox
           )
         else
           Ok(views.html.comments(commentPage))

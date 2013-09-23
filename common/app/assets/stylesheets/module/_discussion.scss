@@ -19,7 +19,7 @@ $keylineSize: 1px;
 .d-tabs {
     margin: 0 $gs-gutter/-2;
     padding-bottom: $baseline*3;
-    
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter * -1;
         margin-right: $gs-gutter * -1;
@@ -408,4 +408,26 @@ $keylineSize: 1px;
 .d-show-cta:hover,
 .d-show-cta:focus {
     background-color: $darkMushroom;
+}
+
+/* Comment Box
+   ========================================================================== */
+.d-comment-box {}
+
+.d-comment-box__body {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border: 1px solid $grey;
+    margin: $baseline*2 0;
+    height: 50px;
+    padding: ($baseline*2) ($gutter/2);
+    resize: vertical;
+    width: 100%;
+
+    &:focus {
+        height: 150px;
+    }
+}
+
+.comment-box__submit {
 }

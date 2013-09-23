@@ -313,11 +313,23 @@ module.exports = function (grunt) {
             // Copy the project's pre-commit hook into .git/hooks
             command: 'cp git-hooks/pre-commit .git/hooks/'
           }
+        },
+
+        watch: {
+            sass: {
+                files: 'common/app/assets/stylesheets/**/*.scss',
+                tasks: 'sass:common'
+            },
+            js: {
+                files: 'common/app/assets/javascripts/**/*.js',
+                tasks: 'requirejs:common'
+            }
         }
 
     });
 
     // Load the plugins
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-css-metrics');
     grunt.loadNpmTasks('grunt-contrib-jshint');
