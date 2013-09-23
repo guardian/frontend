@@ -43,23 +43,23 @@ object SectionFront extends Style { val className = "section-front" }
 /**
  * New 'collection' templates
  */
-case class Masthead() extends Style { val className = "masthead" }
+object Masthead extends Style { val className = "masthead" }
 
-case class TopStories() extends Style { val className = "top-stories" }
+object TopStories extends Style { val className = "top-stories" }
 
-case class MediumStories() extends Style { val className = "medium-stories" }
+object MediumStories extends Style { val className = "medium-stories" }
 
-case class SmallStories(val showMore: Boolean = true) extends Style {
+case class SmallStories(val showMore: Boolean) extends Style {
   val className = "small-stories"
 }
 
-case class News() extends Style { val className = "news" }
+object News extends Style { val className = "news" }
 
-case class Features() extends Style { val className = "features" }
+object Features extends Style { val className = "features" }
 
-case class Highlights() extends Style { val className = "highlights" }
+object Highlights extends Style { val className = "highlights" }
 
-case class Comments() extends Style { val className = "comments" }
+object Comments extends Style { val className = "comments" }
 
 
 object MetadataJson {
