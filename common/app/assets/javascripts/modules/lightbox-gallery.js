@@ -110,7 +110,7 @@ define(["bean",
 
                 // Go back to the URL that we started on
                 if (pushUrlChanges) {
-                    url.pushUrl({}, document.title, pageUrl);
+                    url.pushUrl({}, document.title, pageUrl, true);
                 }
             });
 
@@ -122,7 +122,7 @@ define(["bean",
                         dontUpdateUrl: true
                     });
 
-                } else if (event.state && !event.state.lightbox) {
+                } else if (!event.state || !event.state.lightbox) {
                     // This happens when we reach back to the state before the lightbox was opened
                     // Needs a slight timeout as browsers reset the scroll position on popstate
                     setTimeout(function() {
@@ -178,6 +178,10 @@ define(["bean",
                     self.layout();
                     self.setupOverlayHeader();
                     self.goTo(currentImage);
+
+                    // Save only the first url change
+                    // ie. the back button will exit lightbox mode
+                    self.pushUrlState({ replace: false });
 
                     // Setup keyboard nav handler
                     bean.on(document.body, 'keydown', self.handleKeyEvents);
@@ -282,7 +286,7 @@ define(["bean",
 
 
             if (!opts.dontUpdateUrl) {
-                self.pushUrlState();
+                self.pushUrlState({ replace: true });
             }
         };
 
@@ -354,7 +358,7 @@ define(["bean",
                 contentHeight = window.innerHeight - overlay.headerNode.offsetHeight;
 
             // Make overlay large enough to allow the browser chrome to be hidden on mobile
-            if (detect.getLayoutMode() == 'mobile') {
+            if (detect.getLayoutMode() === 'mobile') {
                 overlay.node.style.minHeight = window.innerHeight + overlay.headerNode.offsetHeight + 'px';
             }
 
@@ -420,14 +424,15 @@ define(["bean",
         };
 
 
-        this.pushUrlState = function() {
+        this.pushUrlState = function(opts) {
+            opts = opts || opts;
             if (pushUrlChanges) {
                 var state = {
                     lightbox: true,
                     currentImage: currentImage
                 };
 
-                url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage);
+                url.pushUrl(state, document.title, self.galleryUrl + '?index=' + currentImage, opts.replace);
             }
         };
 
