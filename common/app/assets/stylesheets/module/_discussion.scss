@@ -108,7 +108,7 @@ $keylineSize: 1px;
     }
 }
 .d-comment {
-    color: #333;
+    color: $neutral1;
     font-family: sans-serif;
     border-top: 1px solid $medianMushroom;
 }
@@ -242,7 +242,7 @@ $keylineSize: 1px;
 }
 
 .d-meta-item {
-    color: #767676;
+    color: $neutral2;
     font-size: .85714285714em;
     font-family: $sans-serif; // Force font when used outside of comment context
 }
@@ -253,7 +253,7 @@ $keylineSize: 1px;
 }
 
 .d-comment__action {
-    color: #767676;
+    color: $neutral2;
     font-size: .85714285714em;
 }
 

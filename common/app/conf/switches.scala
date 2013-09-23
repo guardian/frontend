@@ -94,6 +94,10 @@ object Switches extends Collections {
     "If this switch is on, only 10 top level comments are requested from discussion api.",
     safeState = Off)
 
+  val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
+    "If this switch is on, users can recommend comments",
+    safeState = Off)
+
 
   // Swipe Switches
 
