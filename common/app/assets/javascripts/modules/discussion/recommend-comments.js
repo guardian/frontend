@@ -33,7 +33,7 @@ RecommendComments.CONFIG = {
  * @type {Object.<string.*>}
  */
 RecommendComments.options = {
-    apiRoot: 'http://discussion.release.dev-guardianapis.com/discussion-api'
+    apiRoot: null
 };
 
 /**
@@ -155,7 +155,7 @@ RecommendComments.renderRecommendation = function(elem, unrecommend) {
 
 /**
  * @param {string} eventName
- * @return null
+ * @return string|null
  */
 RecommendComments.getEvent = function(eventName) {
     return (RecommendComments.CONFIG.events.prefix + RecommendComments.CONFIG.events[eventName]) || null;
