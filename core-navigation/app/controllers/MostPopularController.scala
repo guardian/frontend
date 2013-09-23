@@ -5,9 +5,12 @@ import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import feed.{MostPopularExpandableAgent, MostPopularAgent}
+import play.api.libs.json._
+import play.api.libs.json.Json
 
 import concurrent.Future
 import scala.util.Random
+import views.support.cleanTrailText
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
 
@@ -32,7 +35,26 @@ object MostPopularController extends Controller with Logging with ExecutionConte
                 if (request.isJson)
                   JsonComponent(
                     "html" -> views.html.fragments.mostPopular(popular, 5),
-                    "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
+                    "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url),
+                    "fullTrails" -> JsArray(popular.headOption.map(_.trails).getOrElse(Nil).map{ trail =>
+                      Json.obj(
+                        "url" -> trail.url,
+                        "headline" -> trail.headline,
+                        "trailText" -> trail.trailText.map{ text =>
+                          cleanTrailText(text)(Edition(request)).toString()
+                        },
+                        "mainPicture" -> trail.mainPicture(620).map{ mainPicture =>
+                          Json.obj(
+                            "path" -> mainPicture.path
+                          )
+                        },
+                        "published" ->Json.obj(
+                          "unix" -> trail.webPublicationDate.getMillis,
+                          "datetime" -> trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ"),
+                          ("datetimeShort", trail.webPublicationDate.toString("d MMM y"))
+                        )
+                      )
+                    })
                   )
                 else
                   Ok(views.html.mostPopular(page, popular))

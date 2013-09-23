@@ -1,4 +1,12 @@
 .collection--features {
+    .collection__title {
+        background-color: $pink;
+        border-color: $light-pink;
+    }
+    &.collection--commentisfree-section .collection__title {
+        background-color: $green;
+        border-color: $light-green;
+    }
     .items {
         @include mq(tablet) {
             font-size: 0;
@@ -16,13 +24,6 @@
             width: gs-span(4);
         }
     }
-    .item__title {
-        @include font-size(26, 28);
-        @include mq(tablet) {
-            min-height: gs-height(3);
-        }
-    }
-
     @mixin row($row-size) {
         // styling for first row
         .item:nth-child(-n + #{$row-size}) {
@@ -37,7 +38,7 @@
             padding-left: 0;
             border-left-style: none;
         }
-        .item:nth-child(#{$row-size}n + 2) {
+        .item:nth-child(#{$row-size}n) {
             padding-right: 0;
         }
     }
@@ -47,22 +48,53 @@
     @include mq(tablet, desktop) {
         @include row(2);
     }
-    @include mq(desktop) {
+    @include mq(desktop, wide) {
         @include row(3);
+    }
+    @include mq(wide) {
+        // styling for first row
+        .item:nth-child(-n + 3) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
+            }
+        }
+        // stylings for beggining and end of rows
+        .item:first-child,
+        .item:nth-child(4n + 4) {
+            padding-left: 0;
+            border-left-style: none;
+        }
+        .item:nth-child(3),
+        .item:nth-child(4n + 7) {
+            padding-right: 0;
+        }
+    }
+    .item__title {
+        @include font-size(26, 28);
+        @include mq(tablet) {
+            min-height: gs-height(3);
+        }
+    }
+    .item__standfirst {
+        margin: $gs-baseline*2 0 0;
+        @include font-size(16, 20);
+        @include mq(tablet) {
+            min-height: gs-height(4);
+        }
     }
     .item__image-container {
         @include mq(tablet) {
             height: gs-height(4);
         }
     }
-    .item:nth-child(n + 2) {
+    .item__image {
         @include mq($to: tablet) {
-            .item__title {
-                @include font-size(20, 24);
-            }
-            .item__image-container {
-                display: none;
-            }
+            width: 100%;
+        }
+        @include mq(tablet) {
+            height: 100%;
         }
     }
     // larger image styling
@@ -95,22 +127,15 @@
             }
         }
     }
-    .item__standfirst {
+    .item:nth-child(n + 2) {
         @include mq($to: tablet) {
-            display: none;
-        }
-        @include mq(tablet) {
-            min-height: gs-height(4);
-            margin: $gs-baseline*2 0 0;
-            @include font-size(16, 20);
-        }
-    }
-    .item__image {
-        @include mq($to: tablet) {
-            width: 100%;
-        }
-        @include mq(tablet) {
-            height: 100%;
+            .item__title {
+                @include font-size(20, 24);
+            }
+            .item__standfirst,
+            .item__image-container {
+                display: none;
+            }
         }
     }
 }

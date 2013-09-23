@@ -1,17 +1,19 @@
 define([
     //Common libraries
-    "common",
+    'common',
+    'bonzo',
     //Modules
-    "modules/facia-popular",
-    "modules/masthead-relative-dates",
+    'modules/facia-popular',
+    'modules/facia-relativise-timestamp',
     'modules/facia-items-show-more',
-    'modules/facia-collection-popular'
+    'modules/footballfixtures'
 ], function (
     common,
+    bonzo,
     popular,
-    mastheadRelativeDates,
+    RelativiseTimestamp,
     ItemsShowMore,
-    CollectionPopular
+    FootballFixtures
 ) {
 
     var modules = {
@@ -22,34 +24,50 @@ define([
             });
         },
 
-        relativiseMastheadDates: function () {
+        relativiseTimestamps: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                mastheadRelativeDates.init(context);
+                common.toArray(context.querySelectorAll('.js-item__timestamp')).forEach(function(timestamp) {
+                    new RelativiseTimestamp(timestamp)
+                        .relativise();
+                });
             });
         },
 
         showItemsShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
                 common.$g('.js-items--show-more', context).each(function(items) {
-                    var t = new ItemsShowMore(items);
+                    new ItemsShowMore(items)
+                        .addShowMore();
                 });
             });
         },
 
-        showCollectionPopular: function () {
+        showFootballFixtures: function(path) {
             common.mediator.on('page:front:ready', function(config, context) {
-                var sections = [
-                    '.collection--highlights.collection--sport-section',
-                    '.collection--highlights.collection--business-section',
-                    '.collection--highlights.collection--lifeandstyle-section',
-                    '.collection--highlights.collection--technology-section',
-                    '.collection--highlights.collection--money-section',
-                    '.collection--highlights.collection--travel-section'
-                ];
-                common.toArray(context.querySelectorAll(sections.join(','))).forEach(function (collection) {
-                    var f = new CollectionPopular(collection);
-                    f.render();
-                });
+                if (config.page.edition === 'UK' && config.page.pageId === "") {
+                    // wrap the return sports stats component in an 'item'
+                    var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
+                    common.mediator.on('modules:footballfixtures:render', function() {
+                        // only show 7 rows
+                        common.$g('.match:nth-child(n + 8)', $statsItem)
+                            .addClass('u-h');
+                        // add it adter the first item
+                        common.$g('.collection--news.collection--sport-section .item:first-child', context)
+                            .after($statsItem);
+                        // now hide one of the shown ones
+                        common.$g('.collection--news.collection--sport-section .item.u-h', context)
+                            .first()
+                            .previous()
+                            .addClass('u-h');
+                    });
+                    new FootballFixtures({
+                        prependTo: $statsItem,
+                        attachMethod: 'append',
+                        competitions: ['500', '510', '100', '400'],
+                        contextual: false,
+                        expandable: false
+                    }).init();
+                }
             });
         }
 
@@ -59,9 +77,9 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.showPopular();
-            modules.relativiseMastheadDates();
+            modules.relativiseTimestamps();
             modules.showItemsShowMore();
-            modules.showCollectionPopular();
+            modules.showFootballFixtures();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

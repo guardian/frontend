@@ -5,7 +5,7 @@
          data-collection-type="masthead"
          data-section="@config.section">
 
-    @collection.displayName.map { title =>
+    @Seq(config.displayName, collection.displayName).find(_.nonEmpty).map { title =>
         <h2 class="collection__title">@title</h2>
     }
 

@@ -1,11 +1,11 @@
 @(config: Config, collection: Collection)(implicit request: RequestHeader)
 
-<section class="collection collection--comment collection--@{config.section}-section"
+<section class="collection collection--comments collection--@{config.section}-section"
          data-link-name="block | @collection.displayName.getOrElse(config.id)"
-         data-collection-type="comment"
+         data-collection-type="comments"
          data-section="@config.section">
 
-    @collection.displayName.map { title =>
+    @Seq(config.displayName, collection.displayName).find(_.nonEmpty).map { title =>
         <h2 class="collection__title">@title</h2>
     }
 
@@ -18,6 +18,11 @@
                         @RemoveOuterParaHtml(trail.headline)
                     </a>
                 </h2>
+                @if(trail.mainPicture(620).isEmpty) {
+                    @trail.trailText.map { text =>
+                        <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>
+                    }
+                }
                 <div class="item__meta item__meta--grey">
                     <time class="item__timestamp js-item__timestamp"
                           itemprop="datePublished"

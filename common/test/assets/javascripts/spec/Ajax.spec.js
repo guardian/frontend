@@ -10,8 +10,12 @@ define(['common', 'ajax'], function (common, ajax) {
     describe("AJAX Wrapper", function () {
 
         beforeEach(function () {
-            ajax.reqwest = sinon.stub();
+            sinon.stub(ajax, 'reqwest');
             ajax.init(config);
+        });
+
+        afterEach(function () {
+            ajax.reqwest.restore();
         });
 
         it("should add the edition as an additional query parameter to the url", function () {

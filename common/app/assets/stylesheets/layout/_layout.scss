@@ -54,11 +54,13 @@ $headerHeight: 58px;
         background-color: $blue;
     }
 
-#logo {
-    display: block;
+.guardian-logo-wrapper {
     float: left;
     margin: 20px 0 18px $gs-gutter/2;
-    text-indent: -9999px;
+
+    i {
+        display: block;
+    }
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;

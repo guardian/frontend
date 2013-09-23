@@ -46,6 +46,10 @@ object Switches extends Collections {
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
     safeState = Off)
 
+  val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
+    "If this switch is on then (parts of) the application will use the Elastic Search content api",
+    safeState = Off)
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -265,7 +269,8 @@ object Switches extends Collections {
     ABRightHandCard,
     ABLiveBlogShowMore,
     CssFromStorageSwitch,
-    ABMostPopularFromFacebook
+    ABMostPopularFromFacebook,
+    ElasticSearchSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
@@ -299,6 +304,8 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
     Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
       refresh()
     }
+
+    refresh()
   }
 
   override def onStop() {

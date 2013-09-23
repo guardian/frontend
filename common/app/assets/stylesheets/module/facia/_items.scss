@@ -24,19 +24,6 @@ $dark-green: #19646c;
     background-color: $blue;
     border-color: $light-blue;
 }
-.collection--features,
-.collection--lifeandstyle-section,
-.collection--technology-section,
-.collection--travel-section {
-    .collection__title {
-        background-color: $pink;
-        border-color: $light-pink;
-    }
-}
-.collection--commentisfree-section .collection__title {
-    background-color: $green;
-    border-color: $light-green;
-}
 .item {
     position: relative;
     color: #000000;
@@ -95,6 +82,9 @@ a.item__link,
             left: $gs-gutter/2 - 1;
         }
     }
+}
+.item__image-container {
+    overflow: hidden;
 }
 .item__duration {
     position: absolute;

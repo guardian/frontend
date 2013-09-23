@@ -14,9 +14,9 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
 
             var isArticle = config.page && config.page.contentType === "Article",
                 isFromFacebook = document.referrer.indexOf('facebook.com') !== -1,
-                isDev = config.page.isDev;
+                isTest = /#dev-fbpopular/.test(window.location.hash);
 
-            return isArticle && (isFromFacebook || isDev);
+            return isArticle && (isFromFacebook || isTest);
         };
         this.variants = [
             {
@@ -45,7 +45,7 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
                     var $jsPopularEl = bonzo(context.querySelector('.js-popular'));
 
                     $jsPopularEl.hide();
-                    $jsPopularEl.after('<div class="js-popular-facebook"></div>');
+                    $jsPopularEl.after('<div class="js-popular-facebook article__popular"></div>');
 
                     popular(_config, context, false, '/most-read-facebook', '.js-popular-facebook');
                 }

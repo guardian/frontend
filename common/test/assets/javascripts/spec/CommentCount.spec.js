@@ -31,13 +31,11 @@ define([
             sinon.spy(commentCount, 'getCommentCounts');
 
             server = sinon.fakeServer.create();
-            server.respondWith("GET",
-                [
-                    200,
-                    { "Content-Type": "application/json" },
-                    testData
-                ]
-            );
+            server.respondWith([
+                200,
+                { "Content-Type": "application/json" },
+                testData
+            ]);
 
             commentCount.init(document);
 

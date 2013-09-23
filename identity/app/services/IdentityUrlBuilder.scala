@@ -21,7 +21,9 @@ class IdentityUrlBuilder @Inject()(conf: IdentityConfiguration) {
     }
   }
 
-  def buildUrl(path: String, idRequest: IdentityRequest): String = {
-    appendQueryParams(conf.id.url + path, queryParams(idRequest))
-  }
+  private def build(base: String, path: String, idRequest: IdentityRequest) =
+    appendQueryParams(base + path, queryParams(idRequest))
+
+  def buildUrl(path: String, idRequest: IdentityRequest) = build(conf.id.url, path, idRequest)
+  def buildWebappUrl(path: String, idRequest: IdentityRequest) = build(conf.id.webappUrl, path, idRequest)
 }

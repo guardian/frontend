@@ -7,7 +7,7 @@ import org.mockito.Mockito._
 import org.mockito.Matchers.argThat
 import org.mockito.Matchers
 import client.connection.{HttpResponse, Http}
-import client.parser.JsonBodyParser
+import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import scala.concurrent.{Promise, ExecutionContext}
 import client.{Error, Anonymous, Auth, Parameters, Response}
 import org.hamcrest.Description
@@ -17,10 +17,15 @@ import client.connection.util.ExecutionContexts
 
 import org.hamcrest.core.IsNull
 import org.joda.time.format.ISODateTimeFormat
+import com.gu.identity.model.{LiftJsonConfig, StatusFields, PublicFields, User}
+import net.liftweb.json.Serialization.write
+
 
 
 class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
+  implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
+
 
   val apiRoot = "http://example.com/"
   val http = mock[Http]
@@ -197,7 +202,6 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     }
   }
 
-
   "the userForToken method " - {
     val token = "atoken"
     "when recieving a valid response" - {
@@ -354,6 +358,66 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         })
       }
     }
+  }
+
+  "the register method" - {
+      val user = User(
+        primaryEmailAddress = "test@example.com",
+        password = Some("password"),
+        publicFields = PublicFields( username = Some("username")),
+        statusFields = StatusFields(
+          receiveGnmMarketing = Option(false),
+          receive3rdPartyMarketing = Option(false)
+        )
+      )
+
+    "when receiving a valid response" - {
+
+      val expectedPostData = write(user)
+      val userJSON = """{"id": "1234", "primaryEmailAddress": "test@example.com", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}"""
+      val validUserResponse = HttpResponse(userJSON, 200, "OK")
+      when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validUserResponse)))
+
+
+      "accesses the user endpoint" in {
+        api.register(user, trackingParameters, None)
+        verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
+      }
+
+      "adds the client access token parameter to the request" in {
+        api.register(user, trackingParameters, None)
+        verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("accessToken", "clientAccessToken")))), Matchers.any[Parameters])
+      }
+
+      "adds the the omniture tracking data to the request" in {
+        api.register(user, trackingParameters, None)
+        verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable("tracking" -> "param"))), Matchers.any[Parameters])
+      }
+
+      "posts the user data to the endpoint" in {
+        api.register(user, trackingParameters, None)
+        verify(http).POST(Matchers.any[String], Matchers.eq(Some(expectedPostData)), Matchers.any[Parameters], Matchers.any[Parameters])
+      }
+
+      "passes the user's IP details as provided" in {
+        api.register(user, trackingParameters, Some("127.0.0.1"))
+        verify(http).POST(Matchers.any[String], Matchers.eq(Some(expectedPostData)), Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable("X-GU-ID-REMOTE-IP" -> "127.0.0.1"))))
+      }
+    }
+
+    "when recieving an error response" - {
+      when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters]))
+        .thenReturn(toFuture(Left(errors)))
+       "returns the errors" - {
+         api.register(user, trackingParameters, None).map(_ match {
+           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
+           case Left(responseErrors) => {
+             responseErrors should equal(errors)
+           }
+         })
+      }
+    }
+
   }
 
   "synchronous version" - {

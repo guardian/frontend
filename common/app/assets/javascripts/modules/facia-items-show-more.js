@@ -1,99 +1,65 @@
 define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common, bonzo, bean, qwery, detect) {
 
-    var ItemsShowMore = function(items) {
+    return function(items) {
 
-        var _collectionType = bonzo(bonzo(items).parent()).attr('data-collection-type'),
-            _button = bonzo.create('<button class="items__show-more">Show more news</button>')[0],
-            _renderToggle = function(items) {
-                bonzo(items).after(_button);
-                bean.on(_button, 'click', function(e) {
+        var _$items = bonzo(items),
+            _getShownSize = function (collectionType) {
+                var breakpointOptions = {
+                    wide: {
+                        default: 4,
+                        features: 3,
+                        'popular-full-width': 3
+                    },
+                    desktop: {
+                        default: 3
+                    },
+                    tablet: {
+                        default: 2
+                    },
+                    mobile: {
+                        default: 3,
+                        'small-stories': 2
+                    }
+                }[detect.getBreakpoint()];
+                return breakpointOptions[collectionType] || breakpointOptions['default'];
+            },
+            _rowSize = {
+                wide: 8,
+                desktop: 6,
+                tablet: 4,
+                mobile: 5
+            }[detect.getBreakpoint()],
+            _renderToggle = function($items) {
+                var $button = bonzo(bonzo.create('<button class="items__show-more">Show more news</button>'))
+                    .insertAfter($items);
+                bean.on($button[0], 'click', function(e) {
                     // show x more, depending on current breakpoint
-                    var rowSize = _getOptions(_collectionType).show,
-                        moreHidden = qwery('.item.u-h', items).some(function(item, index) {
-                            if (index === rowSize) {
+                    var moreHidden = qwery('.item.u-h', $items[0]).some(function(item, index) {
+                            if (index === _rowSize) {
                                 return true;
                             }
-                            bonzo(item).removeClass('u-h');
+                            bonzo(item)
+                                .removeClass('u-h')
+                                .addClass('item--headline');
                         });
                     if (!moreHidden) {
-                        bonzo(_button).remove();
+                        $button.remove();
                     }
                 });
-            },
-            _collectionOptions = {
-                wide: {
-                    highlights: {
-                        initial: 3,
-                        show: 4
-                    },
-                    features: {
-                        initial: 3,
-                        show: 4
-                    },
-                    'small-stories': {
-                        initial: 4,
-                        show: 4
-                    }
-                },
-                desktop: {
-                    highlights: {
-                        initial: 2,
-                        show: 3
-                    },
-                    features: {
-                        initial: 3,
-                        show: 3
-                    },
-                    'small-stories': {
-                        initial: 3,
-                        show: 3
-                    }
-                },
-                tablet: {
-                    highlights: {
-                        initial: 1,
-                        show: 2
-                    },
-                    features: {
-                        initial: 2,
-                        show: 2
-                    },
-                    'small-stories': {
-                        initial: 2,
-                        show: 2
-                    }
-                },
-                mobile: {
-                    highlights: {
-                        initial: 3,
-                        show: 4
-                    },
-                    features: {
-                        initial: 3,
-                        show: 4
-                    },
-                    'small-stories': {
-                        initial: 1,
-                        show: 4
-                    }
-                }
-            },
-            _getOptions = function (collectionType) {
-                return _collectionOptions[detect.getBreakpoint()][collectionType];
             };
 
-        var $overflowStories = common.$g('.item:nth-child(n + ' + (_getOptions(_collectionType).initial + 1) + ')', items);
-        // hide stories
-        $overflowStories.each(function(item) {
-            bonzo(item).addClass('u-h item--headline');
-        });
-        // add toggle button, if we have hidden stories
-        if ($overflowStories.length) {
-            _renderToggle(items);
-        }
+        this.addShowMore = function() {
+            var collectionType = _$items.parent().attr('data-collection-type'),
+                $overflowStories = common.$g('.item:nth-child(n + ' + (_getShownSize(collectionType) + 1) + ')', _$items[0]);
+            // hide stories
+            $overflowStories.addClass('u-h');
+            // add toggle button, if we have hidden stories
+            if ($overflowStories.length) {
+                _renderToggle(_$items);
+            }
+        };
+
 
     };
-
-    return ItemsShowMore;
 
 });
