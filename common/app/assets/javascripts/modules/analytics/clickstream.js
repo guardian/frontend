@@ -97,10 +97,9 @@ define(['common', 'modules/detect', 'bean', 'modules/experiments/ab'], function 
                 if (applicableTests !== undefined && applicableTests.length > 0) {
                     clickSpec.tag = applicableTests.map(function (test) {
                         var variant = ab.getTestVariant(test);
-                        return "\"" + test + "\",\"" + variant + "\",\"" + clickSpec.tag + "\"";
+                        return "AB," + test + "," + variant + "," + clickSpec.tag;
                     }).join(',');
                 }
-
 
                 if (clickSpec) {
                     common.mediator.emit('module:clickstream:click', clickSpec);
