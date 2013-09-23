@@ -20,6 +20,7 @@ define([
             path        : {String}      Used to overide endpoint path
             contextual  : {Boolean}     Whether or not component links should be contextual
             numVisible  : {Number}  Number of items to show when contracted
+            attachMethod: {String} Optional method to use to attach the response (defaults to after)
     */
     function FootballFixtures(options) {
 
@@ -33,7 +34,7 @@ define([
         // View
         this.view = {
             render: function (html) {
-                bonzo(options.prependTo).after(html);
+                bonzo(options.prependTo)[options.attachMethod || 'after'](html);
                 common.mediator.emit('modules:footballfixtures:render');
                 if(options.expandable) {
                     var expandable = new Expandable({
@@ -45,7 +46,7 @@ define([
                 }
             }
         };
-        
+
         // Model
         this.load = function (query) {
             var path = query,
@@ -95,7 +96,7 @@ define([
         };
 
     }
-    
+
     return FootballFixtures;
 
 });
