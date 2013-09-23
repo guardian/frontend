@@ -59,10 +59,7 @@
 .article blockquote,
 .article blockquote p {
     @include mq(tablet) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 26px;
-        line-height: 2.6rem;
+        @include font-size(18, 26);
     }
 }
 
@@ -74,7 +71,11 @@
 figcaption,
 .main-caption {
     @extend %type-12;
-    color: #666;
+    color: #666666;
+
+    @include mq(tablet) {
+        @include font-size(12, 18);
+    }
 }
 
 .main-caption {
