@@ -308,6 +308,8 @@ object OmnitureAnalyticsData {
     val section = data.get("section").getOrElse("")
     val platform = "frontend"
     val publication = data.get("publication").getOrElse("")
+    val registrationEvent = data.get("registrationEvent").getOrElse("")
+    val registrationType = data.get("registrationType").getOrElse("")
 
     val isContent = page match {
       case c: Content => true
@@ -337,8 +339,11 @@ object OmnitureAnalyticsData {
       ("c19", platform),
       ("v19", platform),
       ("c30", (if (isContent) "content" else "non-content")),
-      ("c56", jsSupport)
+      ("c56", jsSupport),
+      ("event", registrationEvent),
+      ("v23", registrationType)
     )
+
 
     Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString ("&"))
   }
