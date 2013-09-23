@@ -18,7 +18,8 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      api: IdApiClient,
                                      idRequestParser : IdRequestParser,
                                      idUrlBuilder : IdentityUrlBuilder,
-                                     signinService : PlaySigninService  ) extends Controller with ExecutionContexts with SafeLogging  {
+                                     signinService : PlaySigninService  )
+  extends Controller with ExecutionContexts with SafeLogging with RemoteAddress {
 
 
   val page = new IdentityPage("/register", "Register", "register")
@@ -53,7 +54,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
         case(email, username, password, gnmMarketing, thirdPartyMarketing) => {
           val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing)
           Async {
-            api.register(user, omnitureData, Some(request.remoteAddress)) map ( _ match {
+            api.register(user, omnitureData, clientIp(request)) map ( _ match {
               case Left(errors) => {
                 val formWithError = errors.foldLeft(boundForm) {  (form, error) =>
                   error match {
