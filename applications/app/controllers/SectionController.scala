@@ -1,13 +1,11 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
 import play.api.mvc._
 import play.api.libs.json._
 
-import concurrent.Future
 import play.api.templates.Html
 
 
