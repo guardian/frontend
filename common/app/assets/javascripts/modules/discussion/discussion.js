@@ -247,7 +247,7 @@ define([
                 // Auto load comments on desktop sizes
                 if (/desktop|extended/.test(Detect.getLayoutMode())) {
                     var inview = new Inview('#comments', context);
-                    bean.on(context, 'inview', function(e) {
+                    bean.on(context, 'inview', '#comments', function(e) {
                         self.loadDiscussion();
                         bonzo(context.querySelector('.d-show-cta')).addClass('u-h');
                         bonzo(self.mediaPrimaryNode).addClass('media-primary--comments-on');
