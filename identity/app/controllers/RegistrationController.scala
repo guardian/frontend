@@ -35,6 +35,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
   def renderForm = Action { implicit request =>
     logger.trace("Rendering registration form")
+
     val idRequest = idRequestParser(request)
     val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
     val startPage = new IdentityRegistrationStartPage("/register", "Register", "register", verifiedReturnUrl)
@@ -58,7 +59,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
         case(email, username, password, gnmMarketing, thirdPartyMarketing) => {
           val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing)
           Async {
-            api.register(user, omnitureData) map ( _ match {
+            api.register(user, omnitureData, Some(request.remoteAddress)) map ( _ match {
               case Left(errors) => {
                 val errorPage = new IdentityRegistrationErrorPage("/register", "Register", "register", verifiedReturnUrl)
                 val formWithError = errors.foldLeft(boundForm) {  (form, error) =>

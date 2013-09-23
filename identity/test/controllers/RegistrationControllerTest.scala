@@ -52,14 +52,10 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
 
   "the process Registration method " - {
     "should not handle incomplete data" - {
-<<<<<<< HEAD
-      val badFakeRequest = FakeRequest(POST, "/register").withFormUrlEncodedBody("user.primaryEmailAddress" -> "test@example.com")
-      when(returnUrlVerifier.getVerifiedReturnUrl(badFakeRequest)).thenReturn(Some("http://example.com/return"))
-=======
       val badFakeRequest = FakeRequest(POST, "/register")
         .withFormUrlEncodedBody("user.primaryEmailAddress" -> "test@example.com")
         .withHeaders("X-Forwarded-For" -> testIp)
->>>>>>> origin/master
+      when(returnUrlVerifier.getVerifiedReturnUrl(badFakeRequest)).thenReturn(Some("http://example.com/return"))
       "so the api is not called" in Fake {
         registrationController.processForm()(badFakeRequest)
         verify(api, never).register(Matchers.any[User], Matchers.same(omnitureData), Matchers.any[Option[String]])
