@@ -38,12 +38,12 @@
 
 .article__headline {
     @extend %type-3;
-    margin-bottom: $gs-column-height;
+    margin-bottom: $baseline*6;
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
         @include font-size(42, 46);
-        margin-bottom: $gs-column-height + $baseline*3;
+        margin-bottom: $gs-column-height;
     }
 
     a {
@@ -85,6 +85,7 @@
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
         @include font-size(18, 22);
+        margin-bottom: $baseline*4;
     }
 }
 .article-body {
