@@ -23,18 +23,10 @@
         }
 
 
-        @if(leadContent.nonEmpty) {
-            @leadContent.zipWithRowInfo.map{ case (trail, info) =>
-            <div class="box-indent lead-content @if(info.rowNum == 1 && trail.mainPicture) {has-image}"
-            data-link-name="lead content"
-                @CricketMatch(trail).map{ id => data-cricket-match="@id" }>
-            <ul class="unstyled">
-            @fragments.trails.featured(trail, info.rowNum)
-            </ul>
-                </div>
-            }
-        }
+        @fragments.collections.topStories(Config(tag.id, None, None), Collection(leadContent, None))
 
-        @fragments.collections.news(Config(tag.id, None, None), Collection(trails, None))
+        @fragments.collections.topStories(Config(tag.id, None, None), Collection(trails.take(2), None))
+
+        @fragments.collections.mediumStories(Config(tag.id, None, None), Collection(trails.drop(2), None))
     </div>
 }
