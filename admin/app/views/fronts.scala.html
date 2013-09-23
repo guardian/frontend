@@ -57,36 +57,34 @@
         </script>
 
         <div id="collections" data-bind="foreach: collections">
-            <div class="collection">
-
-                <span class="savingIndicator" data-bind="visible: state.loadIsPending">SAVING</span>
+            <div class="collection" data-bind="
+                css: { 'collection--isMajor': configMeta.displayName() || collectionMeta.displayName() }">
 
                 <div class="list-header">
 
-                    <div class="list-header__title">
-                        <span class="list-header__edition" data-bind="text: edition"></span>
-                        <span class="list-header__section" data-bind="text: section"></span>
+                    <div class="list-header__title" data-bind="visible: !state.editingConfig()">
+                        <span class="list-header__saving" data-bind="visible: state.loadIsPending">SAVING</span>
+
+                        <a class="list-header__display" data-bind="
+                            visible: typeof configMeta.displayName() === 'undefined',
+                            css: { 'list-header__display--is-set': !!collectionMeta.displayName() },
+                            text: collectionMeta.displayName() || 'Set Title',
+                            click: toggleEditingConfig"></a>
+
+                        <span class="list-header__display list-header__display--is-set" data-bind="
+                            visible: typeof configMeta.displayName() !== 'undefined',
+                            text: configMeta.displayName"></span>
+
                         <span class="list-header__role"    data-bind="text: configMeta.roleName"></span>
-                        <span data-bind="visible: !state.editingConfig()"> :
-                            <a class="list-header__display" data-bind="
-                                visible: typeof configMeta.displayName() === 'undefined',
-                                css: { 'list-header__display--is-set': !!collectionMeta.displayName() },
-                                text: collectionMeta.displayName() || 'Set Title',
-                                click: toggleEditingConfig"></a>
 
-                            <span class="list-header__display list-header__display--is-set" data-bind="
-                                visible: typeof configMeta.displayName() !== 'undefined',
-                                text: configMeta.displayName"></a>
-                        </span>
+                        <span class="list-header__id" data-bind="text: id"></span>
 
-                        <span class="list-header__role__description"> :
-                            <span data-bind="text: configMeta.roleDescription"></span>
-                        </span>
+                        <span class="list-header__role__description" data-bind="text: ': ' + configMeta.roleDescription()"></span>
                     </div>
 
                     <div class="list-config" data-bind="visible: state.editingConfig">
                         <div>
-                            <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Add Title"/>
+                            <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Title"/>
                         </div>
                         <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
                         <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
@@ -114,10 +112,10 @@
                             </span>
                         </div>
                     </div>
-                    <div class="list-header__meta">
+                    <div class="list-header__timings">
                         <!-- ko if: state.timeAgo -->
-                            Updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span>
-                            by <span class="list-header__meta__user" data-bind="text: collectionMeta.updatedBy"></span>
+                            Updated <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                            by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
                         <!-- /ko -->
                         <!-- ko ifnot: state.timeAgo -->
                             Empty

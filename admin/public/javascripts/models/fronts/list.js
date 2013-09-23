@@ -26,6 +26,7 @@ define([
         this.id      = opts.id;
         this.edition = opts.id.split('/')[0];
         this.section = opts.id.split('/')[1];
+        this.type    = opts.id.split('/')[2];
 
         this.live   = ko.observableArray();
         this.draft  = ko.observableArray();

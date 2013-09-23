@@ -29,7 +29,7 @@ input.invalid {
     background-color: #F2DEDE;
 }
 
-fieldset, 
+fieldset,
 input[type=text] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -39,19 +39,19 @@ input[type=text] {
     height: inherit;
 }
 
-fieldset#controls { 
+fieldset#controls {
     margin-top: 30px;
     position: relative;
 }
 
-#clear-frontend { 
-    position: absolute; 
+#clear-frontend {
+    position: absolute;
     right: 0;
 }
 
 #environment {
     line-height: 40px;
-    position: absolute; 
+    position: absolute;
 }
 
 input[type=checkbox].status {
@@ -63,7 +63,7 @@ input[type=checkbox].status {
 
 #switchboard label {
     display: inline;
-    font-size: 20px; 
+    font-size: 20px;
 }
 
 #switchboard label:hover {
@@ -185,7 +185,7 @@ img.agent-picture {
     padding: 0 0 0px 18px;
     margin: 2px 0 0 -3px;
     position: absolute;
-    display: none; 
+    display: none;
     background-color: #ffffff;
 }
 
@@ -224,7 +224,7 @@ img.agent-picture {
 .colour-picker .colour {
     color: #5bb75b;
     display: none;
-    cursor: pointer; 
+    cursor: pointer;
     margin: 0 0 0 2px;
 }
 
@@ -238,9 +238,9 @@ img.agent-picture {
 
 .hoverable:hover { color: #5BB75B; cursor: pointer; }
 
-.alerts { 
-    right: 0; 
-    position: fixed;  
+.alerts {
+    right: 0;
+    position: fixed;
     margin-right: 42px;
 }
 
@@ -261,23 +261,23 @@ img.agent-picture {
     display: block;
 }
 
-.color-light, .color-dark { 
+.color-light, .color-dark {
     display: inline-block;
-    width: 9px; 
+    width: 9px;
     height: 9px;
     font-size: 15px;
     vertical-align: middle;
 }
 
-.color-light:hover, .color-dark:hover { 
+.color-light:hover, .color-dark:hover {
     cursor: pointer;
 }
 
-.color-light:hover, .color-light { 
-    color: #FFDB4D;    
+.color-light:hover, .color-light {
+    color: #FFDB4D;
 }
 
-.cta { 
+.cta {
     font-size: 11px;
     color: #cccccc;
 }
@@ -286,11 +286,11 @@ a.cta, .cta a {
     color: #5bb75b;
 }
 
-.cta:hover { 
+.cta:hover {
     cursor: pointer;
 }
 
-.synopsis, .story-title, input.story-title, .story-hero, input.story-hero, .event-agents, .event-places { 
+.synopsis, .story-title, input.story-title, .story-hero, input.story-hero, .event-agents, .event-places {
     margin-left: 22px;
 }
 
@@ -306,7 +306,7 @@ a.cta, .cta a {
     max-width: 150px;
 }
 
-.storify textarea { 
+.storify textarea {
     width: 90%;
     min-height: 120px;
     clear: both;
@@ -333,12 +333,12 @@ a.cta, .cta a {
     background: #CEE8C3;
 }
 
-.notableAssocition span { 
+.notableAssocition span {
     cursor: pointer;
     font-size: 12px;
 }
 
-.hasAssociation, .notableAssocition .muted:hover { 
+.hasAssociation, .notableAssocition .muted:hover {
     color: #E0AF1B;
 }
 
@@ -432,15 +432,6 @@ a.cta, .cta a {
     min-height: 50px;
 }
 
-.fronts .savingIndicator {
-    position: absolute;
-    right: 5px;
-    top: 3px;
-    color: #d61d00;
-    font-weight: bold;
-    font-size: 10px;
-}
-
 .fronts .pending {
     opacity: 0.5;
     pointer-events: none;
@@ -456,7 +447,7 @@ a.cta, .cta a {
 }
 
 .fronts .list-header__title {
-    padding: 0 0 0 7px;
+    padding: 1px 6px;
     height: 20px;
     overflow: hidden;
 }
@@ -465,42 +456,54 @@ a.cta, .cta a {
     background: #CCCCCC;
 }
 
-.fronts .list-header__edition,
-.fronts .list-header__section,
+.fronts .list-header__saving,
+.fronts .list-header__part,
 .fronts .list-header__role,
 .fronts .list-header__display,
 .fronts .list-header__role__description {
     font-size: 14px;
-    color: #999999;
 }
 
-.fronts .list-header__edition { color: #999999; font-weight: bold; text-transform: uppercase; }
-.fronts .list-header__section { color: #666666; font-weight: bold; text-transform: uppercase; }
-.fronts .list-header__role    { color: #333333; font-weight: bold; text-transform: uppercase; }
-.fronts .list-header__display { color: #333333; }
+.fronts .list-header__display {
+    font-size: 16px;
+}
+.fronts .list-header__display--is-set {
+    font-weight: bold;
+    color: #000000;
+}
 
-.fronts .list-header__role__description { color: #ffffff; }
-.fronts .list-header__display--is-set { font-weight: bold; }
+.fronts .list-header__saving  { color: #d61d00; font-weight: bold; }
+.fronts .list-header__id      { display: none;}
 
-.fronts .list-header__meta {
-    font-size: 10px;
+.fronts .list-header__role,
+.fronts .list-header__role__description {
+    font-style: italic;
+    text-transform: lowercase;
     color: #666666;
-    padding: 0 0 0 10px;
 }
-
 .fronts .list-header__role__description {
     display: none;
 }
-
 .fronts .collection:hover .list-header__role__description {
     display: inline-block;
 }
 
-.fronts .list-header__meta {
+.fronts .collection:hover .list-header__id {
+    display: block;
+    float: right;
+    color: #999999;
+    font-size: 12px;
+}
+
+
+.fronts .list-header__timings {
+    font-size: 10px;
+    color: #666666;
+    padding: 0 0 0 10px;
     float: left;
 }
 
-.fronts .list-header__meta__last-updated {
+.fronts .list-header__timings__last-updated {
     font-weight: bold;
 }
 
@@ -531,7 +534,7 @@ a.cta, .cta a {
 .fronts .list-header__status__draft.active {
     height: 20px;
     color: #d61d00;
-    background-color: #ededed;    
+    background-color: #ededed;
 }
 
 .fronts a.list-header__status__control {
@@ -570,8 +573,12 @@ a.cta, .cta a {
     width: 100%;
     float: left;
     padding: 0 0 20px 0;
-    border-top: 3px solid #999999;
+    border-top: 1px solid #CCCCCC;
     position: relative;
+}
+
+.fronts .collection--isMajor {
+    border-top: 3px solid #f89406;
 }
 
 .fronts .collection:first-child {
@@ -585,7 +592,7 @@ a.cta, .cta a {
     cursor: move;
     background-color: #ededed;
     padding: 2px 5px 7px 6px;
-    border-bottom: 1px dashed #CCCCCC;
+    border-bottom: 1px solid #FFFFFF;
     position: relative;
 }
 
@@ -621,7 +628,7 @@ a.cta, .cta a {
 
 .fronts .collection .trail img,
 .fronts .trail:hover img {
-    display: block;    
+    display: block;
 }
 
 .fronts .trail p {
@@ -741,7 +748,7 @@ a.cta, .cta a {
 .fronts #clipboard__overlay {
     position: absolute;
     z-index: -1;
-    border: 2px dashed #cccccc;
+    border: 1px dashed #cccccc;
     width: 100%;
     padding: 5px;
     color: #999999;
@@ -756,7 +763,7 @@ a.cta, .cta a {
     color: #ffffff;
     padding: 0px 10px;
     font-size: 12px;
-    text-transform: uppercase;    
+    text-transform: uppercase;
 }
 
 .fronts .needs-more__num {
@@ -820,7 +827,7 @@ a.cta, .cta a {
 }
 
 #usage h1, #usage h2, #usage h3 {
-    font-weight: normal; 
+    font-weight: normal;
 }
 
 .browser-table {
@@ -852,7 +859,7 @@ a.cta, .cta a {
 }
 
 table.browser-table, table.browser-table th, table.browser-table td {
-    border-width: 0px !important; 
+    border-width: 0px !important;
 }
 
 .table-striped tbody td, .table-striped tbody th {
