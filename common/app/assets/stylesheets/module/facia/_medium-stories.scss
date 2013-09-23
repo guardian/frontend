@@ -2,6 +2,9 @@
     margin-top: 0;
     .items {
         font-size: 0;
+        @include mq(desktop, wide) {
+            overflow: hidden;
+        }
     }
     .item {
         margin-top: $gs-baseline*2;
