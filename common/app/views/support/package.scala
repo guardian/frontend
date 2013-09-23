@@ -49,7 +49,11 @@ object TopStories extends Style { val className = "top-stories" }
 
 object MediumStories extends Style { val className = "medium-stories" }
 
-object SmallStories extends Style { val className = "small-stories" }
+case class SmallStories(className: String, val showMore: Boolean) extends Style
+
+object SmallStories {
+  def apply(showMore: Boolean = true) = new SmallStories("small-stories", showMore)
+}
 
 object News extends Style { val className = "news" }
 
