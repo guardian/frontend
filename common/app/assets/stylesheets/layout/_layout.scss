@@ -45,7 +45,7 @@ $headerHeight: 58px;
         &:after {
             top: $headerHeight;
             height: 40px;
-            background-color: #F5F5F2;
+            background-color: $mushroom;
             border-bottom: 1px solid $darkMushroom;
         }
     }
@@ -54,11 +54,13 @@ $headerHeight: 58px;
         background-color: $blue;
     }
 
-#logo {
-    display: block;
+.guardian-logo-wrapper {
     float: left;
     margin: 20px 0 18px $gs-gutter/2;
-    text-indent: -9999px;
+
+    i {
+        display: block;
+    }
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;

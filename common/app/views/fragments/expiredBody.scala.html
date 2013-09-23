@@ -7,7 +7,7 @@
 
     <article id="article" class="article" itemprop="mainContentOfPage" itemscope itemtype="@content.schemaType" role="main">
 
-        <header class="article-head">
+        <header class="article__head">
             @fragments.dateline(content.webPublicationDate, false)
             @fragments.headline(content.headline)
         </header>
@@ -29,4 +29,4 @@
 
 <div id="js-related"></div>
 
-<div class="js-popular"></div>
+<div class="js-popular article__popular"></div>

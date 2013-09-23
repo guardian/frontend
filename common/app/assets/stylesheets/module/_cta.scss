@@ -48,22 +48,23 @@ button.cta {
 }
 
 .top {
+    @extend %type-8;
+    display: block;
+    width: 100%;
+    @include box-sizing(border-box);
+    text-align: left;
+    border: none; //To normalise <button> styles
+
     &,
     &:active {
-        @extend %type-8;
-        display: block;
-        width: 100%;
-        color: #A1B7CF;
-        text-align: left;
-        background-color: $darkBlue;
-        border: none; //To normailse <button> styles
-        border-top: 1px solid #2B528B;
-        padding: $baseline*2 $gs-gutter/2;
+        color: #ffffff;
+    }
 
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
+    padding: 10px $gs-gutter/2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }
 

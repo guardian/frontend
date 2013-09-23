@@ -22,14 +22,34 @@ object FindStyle {
    */
   val specificStyles: Map[String, Map[String, Style]] = Map(
     ("uk", Map(
-      ("uk/sport/regular-stories", Highlights),
-      ("uk/commentisfree/regular-stories", Features),
+      ("uk/sport/regular-stories", News),
+      ("uk/commentisfree/regular-stories", Comments),
       ("uk/culture/regular-stories", Features),
-      ("uk/business/regular-stories", Highlights),
-      ("uk/lifeandstyle/regular-stories", Highlights),
-      ("uk/technology/regular-stories", Highlights),
-      ("uk/money/regular-stories", Highlights),
-      ("uk/travel/regular-stories", Highlights)
+      ("uk/business/regular-stories", News),
+      ("uk/lifeandstyle/regular-stories", Features),
+      ("uk/technology/regular-stories", Features),
+      ("uk/money/regular-stories", News),
+      ("uk/travel/regular-stories", Features)
+    )),
+    ("us", Map(
+      ("us/sport/regular-stories", News),
+      ("us/commentisfree/regular-stories", Comments),
+      ("us/culture/regular-stories", Features),
+      ("us/business/regular-stories", News),
+      ("us/lifeandstyle/regular-stories", Features),
+      ("us/technology/regular-stories", Features),
+      ("us/money/regular-stories", News),
+      ("us/travel/regular-stories", Features)
+    )),
+    ("au", Map(
+      ("au/sport/regular-stories", News),
+      ("au/commentisfree/regular-stories", Comments),
+      ("au/culture/regular-stories", Features),
+      ("au/business/regular-stories", News),
+      ("au/lifeandstyle/regular-stories", Features),
+      ("au/technology/regular-stories", Features),
+      ("au/money/regular-stories", News),
+      ("au/travel/regular-stories", Features)
     ))
   )
 

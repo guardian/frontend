@@ -1,33 +1,46 @@
 @(page: MetaData)(implicit request: RequestHeader)
 
-<footer class="footer gs-container" data-link-name="footer" role="contentinfo">
+<footer class="footer u-cf" data-link-name="footer">
+    <div class="footer__primary">
+        <div id="footer-nav">
+            <div class="footer__banner u-cf">
+                <div class="gs-container">
+                    <a href="@LinkTo{/}" data-link-name="site logo" class="guardian-logo-wrapper guardian-logo-wrapper--footer hide-on-mobile">
+                        <span class="u-h">The Guardian</span>
+                        <i class="i i-guardian-logo"></i>
+                    </a>
 
-    <div id="footer-nav">
-        <a class="top" data-link-name="back to top" href="#top">Back to top<i class="i i-arrow-small-up"></i></a>
-        @fragments.sections(page, true)
+                    <a class="top top--footer" data-link-name="back to top" href="#top">Back to top<i class="i i-arrow-small-up"></i></a>
+                </div>
+            </div>
+            <div class="gs-container footer__navigation-wrapper">
+                @fragments.sections(page, true)
+            </div>
+        </div>
     </div>
 
-    <ul class="nav nav--stacked nav--top-border-off u-cf">
-        <li>@fragments.mainSiteLink(page)</li>
-        <li><a data-link-name="about" href="/help/insideguardian/2012/nov/26/guardian-launches-new-mobile-site">About this site</a></li>
-        <li><a data-link-name="help" href="/help/2012/nov/26/guardian-mobile-site">Help</a></li>
-        <li><a data-link-name="contact" href="/help/contact-us">Contact us</a></li>
-        <li><a data-link-name="feedback" target="_blank" href="http://survey.omniture.com/d1/hosted/815f9cfba1">Feedback</a></li>
-        <li>
-            <span class="swipe-switches">
-                Swipe:
-                <button class="swipe-switches__button swipe-switches__button--on"  data-link-name="switch-swipe-on">Turn ON</button>
-                <button class="swipe-switches__button swipe-switches__button--off" data-link-name="switch-swipe-off">Turn OFF</button>
-            </span>
-        </li>
-    </ul>
-
-    <p>© Guardian News and Media Limited or its affiliated companies. All rights reserved.</p>
-
-    <p>
-        <a data-link-name="terms" href="/help/terms-of-service">Terms &amp; conditions</a>
-        <a data-link-name="privacy" href="/help/privacy-policy">Privacy policy</a>
-        <a data-link-name="cookie" href="/info/cookies">Cookie policy</a>
-    </p>
-
+    <div class="footer__secondary gs-container" role="contentinfo">
+        <div class="box-indent">
+            <ul class="colophon u-cf">
+                <li class="colophon__item">@fragments.mainSiteLink(page)</li>
+                <li class="colophon__item"><a data-link-name="about" href="@LinkTo("/help/insideguardian/2012/nov/26/guardian-launches-new-mobile-site")">About this site</a></li>
+                <li class="colophon__item"><a data-link-name="help" href="@LinkTo("/help/2012/nov/26/guardian-mobile-site")">Help</a></li>
+                <li class="colophon__item"><a data-link-name="contact" href="@LinkTo("/help/contact-us")">Contact us</a></li>
+                <li class="colophon__item"><a data-link-name="feedback" target="_blank" href="http://survey.omniture.com/d1/hosted/815f9cfba1">Feedback</a></li>
+                <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">Terms &amp; conditions</a></li>
+                <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">Privacy policy</a></li>
+                <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">Cookie policy</a></li>
+            </ul>
+            <div class="footer__misc">
+                <div class="really-serious-copyright">© Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
+                <div class="footer__user-actions">
+                    <span class="swipe-switches">
+                        Swipe:
+                        <button class="swipe-switches__button swipe-switches__button--on"  data-link-name="switch-swipe-on">Turn ON</button>
+                        <button class="swipe-switches__button swipe-switches__button--off" data-link-name="switch-swipe-off">Turn OFF</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>

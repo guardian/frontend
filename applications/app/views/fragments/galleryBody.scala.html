@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 <div class="article-wrapper monocolumn-wrapper">
-    <div class="article__main-column">
+    <div class="article-v2__inner">
         <h2 class="article-zone type-1">
             <a class="zone-color" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName)</a>
         </h2>
@@ -10,65 +10,72 @@
 
     <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
          itemscope itemtype="@gallery.schemaType" role="main">
-        <div class="article__main-column">
-            <header class="article-head">
-                @fragments.dateline(gallery.webPublicationDate, gallery.isLive)
+        <div class="article-v2__inner">
+            <header class="article__head">
                 @fragments.headline(gallery.headline)
+                @fragments.standfirst(gallery)
+                @fragments.article.dateline(gallery.webPublicationDate, gallery.isLive)
             </header>
         </div>
-        <div class="article__main-column">
-            <div class="article__secondary-column" aria-hidden="true">
-                @fragments.social(gallery, "next to content")
-            </div>
+        <div class="article-v2__columning-wrapper">
+            <div class="article-v2__main-column">
+
+                <div class="article__meta-container">
+                    @fragments.byline(gallery.byline, gallery)
+                    @fragments.article.dateline(gallery.webPublicationDate, secondary=true)
+                    <div class="js-comment-count"></div>
+                </div>
 
 
-            <!-- Lightbox JS Gallery -->
-            @if(LightboxGalleriesSwitch.isSwitchedOn) {
-                @fragments.galleryThumbs(gallery)
-            }
+                <!-- Lightbox JS Gallery -->
+                @if(LightboxGalleriesSwitch.isSwitchedOn) {
+                    @fragments.galleryThumbs(gallery)
+                }
 
-            <!-- Non-JS Gallery / LightboxSwitch off mode -->
-            <div class="@if(LightboxGalleriesSwitch.isSwitchedOn) { js-hidden }">
-                <p class="gallery-nav type-11">
+                <!-- Non-JS Gallery / LightboxSwitch off mode -->
+                <div class="@if(LightboxGalleriesSwitch.isSwitchedOn) { js-hidden }">
+                    <p class="gallery-nav type-11">
 
-                    @if(index > 1) {
-                        <a class="gallery-prev control" href="?index=@(index - 1)">Previous</a>
-                    }
-
-                    Image @index of @gallery.size
-
-                    @if(index < gallery.size) {
-                        <a class="gallery-next control" href="?index=@(index + 1)">Next</a>
-                    } else {
-                        <a class="gallery-next control" href="?index=1">Next</a>
-                    }
-                </p>
-
-                <div class="gallery-container">
-                    @gallery.crops.zipWithRowInfo.map{ case(image, row) =>
-                        @if(row.rowNum == index) {
-                            <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
-                            src="@image.path" />
-
-                            <div class="gallery-caption">
-                                <p class="caption type-12">@Html(image.caption.getOrElse(""))</p>
-                                <p class="caption-credit type-12">@image.credit</p>
-                            </div>
+                        @if(index > 1) {
+                            <a class="gallery-prev control" href="?index=@(index - 1)">Previous</a>
                         }
-                    }
+
+                        Image @index of @gallery.size
+
+                        @if(index < gallery.size) {
+                            <a class="gallery-next control" href="?index=@(index + 1)">Next</a>
+                        } else {
+                            <a class="gallery-next control" href="?index=1">Next</a>
+                        }
+                    </p>
+
+                    <div class="gallery-container">
+                        @gallery.crops.zipWithRowInfo.map{ case(image, row) =>
+                            @if(row.rowNum == index) {
+                                <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
+                                src="@image.path" />
+
+                                <div class="gallery-caption">
+                                    <p class="caption type-12">@Html(image.caption.getOrElse(""))</p>
+                                    <p class="caption-credit type-12">@image.credit</p>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="social-wrapper">
+                    @fragments.social(gallery)
                 </div>
             </div>
-
-            @fragments.byline(gallery.byline, gallery)
-
-            @fragments.standfirst(gallery)
-
-            <div class="social-wrapper">
-                @fragments.social(gallery)
+            <div class="article-v2__secondary-column" aria-hidden="true">
+                <div class="article-v2__secondary-column__inner">
+                @fragments.social(gallery, "next to content")
+                </div>
             </div>
         </div>
     </article>
-    <div class="article__main-column">
+    <div class="article-v2__inner">
         @if(storyPackage.nonEmpty) {
             <aside role="complementary">
                 @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)

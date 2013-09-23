@@ -11,7 +11,7 @@
         <article id="article" class="article @if(article.isLive){is-live}"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
-                <header class="article-head">
+                <header class="article__head">
                     @fragments.dateline(article.webPublicationDate, article.isLive)
 
                     @fragments.headline(article.headline)
@@ -144,7 +144,7 @@
                 <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
             }
 
-            <div class="js-popular" role="complementary"></div>
+            <div class="js-popular article__popular" role="complementary"></div>
         </div>
     </div>
     }

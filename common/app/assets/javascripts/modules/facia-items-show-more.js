@@ -22,59 +22,75 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
             },
             _collectionOptions = {
                 wide: {
-                    highlights: {
-                        initial: 3,
-                        show: 4
+                    news: {
+                        initial: 4,
+                        show: 8
                     },
                     features: {
+                        initial: 3,
+                        show: 8
+                    },
+                    comments: {
                         initial: 4,
-                        show: 4
+                        show: 8
                     },
                     'small-stories': {
                         initial: 4,
-                        show: 4
+                        show: 8
                     }
                 },
                 desktop: {
-                    highlights: {
-                        initial: 2,
-                        show: 3
+                    news: {
+                        initial: 3,
+                        show: 6
                     },
                     features: {
                         initial: 3,
-                        show: 3
+                        show: 6
+                    },
+                    comments: {
+                        initial: 3,
+                        show: 6
                     },
                     'small-stories': {
                         initial: 3,
-                        show: 3
+                        show: 6
                     }
                 },
                 tablet: {
-                    highlights: {
-                        initial: 1,
-                        show: 2
+                    news: {
+                        initial: 2,
+                        show: 4
                     },
                     features: {
                         initial: 2,
-                        show: 2
+                        show: 4
+                    },
+                    comments: {
+                        initial: 2,
+                        show: 4
                     },
                     'small-stories': {
                         initial: 2,
-                        show: 2
+                        show: 4
                     }
                 },
                 mobile: {
-                    highlights: {
+                    news: {
                         initial: 3,
-                        show: 4
+                        show: 8
                     },
                     features: {
                         initial: 3,
-                        show: 4
+                        show: 8
+                    },
+                    comments: {
+                        initial: 3,
+                        show: 8
                     },
                     'small-stories': {
-                        initial: 1,
-                        show: 4
+                        initial: 2,
+                        show: 8
                     }
                 }
             },

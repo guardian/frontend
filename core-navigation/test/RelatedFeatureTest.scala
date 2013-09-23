@@ -1,7 +1,6 @@
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
-import test.`package`._
-import conf.Switches._
+import test.HtmlUnit
 
 class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 

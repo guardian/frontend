@@ -51,7 +51,9 @@ trait ABTestResultGraph extends Chart with implicits.Dates {
       }
     }
 
-    groupedData.toList map {
+    groupedData.toList.sortBy {
+      case (day, _) => day
+    } map {
       case (dayOfEpoch, durations) => DataPoint(Epoch.day(dayOfEpoch).toString("dd/MM"), durations)
     }
   }

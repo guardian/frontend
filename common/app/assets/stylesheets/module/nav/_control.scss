@@ -18,8 +18,8 @@
     }
 
     &.is-active {
-      background-color: #fff;
-      color: $blue;
+        background-color: #fff !important;
+        color: $blue;
     }
 }
 
@@ -54,11 +54,20 @@
         position: absolute;
         right: 0;
         top: 58px;
-        padding: 0 $gutter 10px;
-        margin: $baseline*2 0;
+        padding: 0 $gutter 13px 0;
         background-color: transparent;
         color: #444;
         font-size: 14px;
+    }
+}
+
+.control--sections.is-active {
+    @include mq(desktop) {
+        background-color: transparent !important;
+    }
+    @include mq(1152px) {
+        border-right: 1px solid $darkMushroom;
+        padding-right: $gutter - 1;
     }
 }
 
@@ -81,16 +90,24 @@ span.control__menu.i-menu {
     display: none;
 
     @include mq(tablet) {
-        margin-top: $baseline*2;
+        margin-top: 14px;
         display: inline-block;
     }
 }
 
 .control--sections .i-nav-divider {
     @include mq(tablet) {
-        margin-right: $gutter/4*3;
+        top: 6px;
+        position: relative;
+        margin-right: $gutter - 3;
         border-color: #BBBBBB;
         background-color: $darkMushroom;
+    }
+}
+.control--sections.is-active .i-nav-divider {
+    @include mq(tablet, desktop) {
+        top: 0;
+        height: 41px;
     }
 }
 
