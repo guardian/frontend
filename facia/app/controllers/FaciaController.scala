@@ -146,9 +146,8 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
           if (path != editionalisedPath) {
             Redirect(editionalisedPath)
           } else {
-            val templateDeduping = new TemplateDeduping
-            val htmlResponse = () => views.html.front(frontPage, faciaPage, templateDeduping)
-            val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage, templateDeduping)
+            val htmlResponse = () => views.html.front(frontPage, faciaPage)
+            val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
             renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
           }
         }

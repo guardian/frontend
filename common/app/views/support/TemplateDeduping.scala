@@ -23,3 +23,7 @@ class TemplateDeduping extends implicits.Collections {
   def apply(numberWanted: Int, collection: Collection): Collection = take(numberWanted, collection)
   def apply(collection: Collection): Collection = take(defaultTake, collection)
 }
+
+object TemplateDeduping {
+  def apply(): TemplateDeduping = new TemplateDeduping
+}
