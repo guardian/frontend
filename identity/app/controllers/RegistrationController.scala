@@ -53,7 +53,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
         case(email, username, password, gnmMarketing, thirdPartyMarketing) => {
           val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing)
           Async {
-            api.register(user, omnitureData) map ( _ match {
+            api.register(user, omnitureData, Some(request.remoteAddress)) map ( _ match {
               case Left(errors) => {
                 val formWithError = errors.foldLeft(boundForm) {  (form, error) =>
                   error match {
