@@ -60,7 +60,7 @@
     @include box-sizing(border-box);
     @extend %type-11;
     min-height: $gs-column-height;
-    padding-top: $baseline - 1;
+    padding-top: $baseline;
     margin-bottom: $baseline*3;
     border-top: 1px dotted $neutral3;
 
