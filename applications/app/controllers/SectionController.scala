@@ -15,14 +15,18 @@ case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestCo
 
 object SectionController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
-  def renderJson(path: String) = Action { implicit request => render(path, renderSectionFront) }
-  def renderFaciaStyle(path: String) = Action { implicit request => render(path, renderSectionFrontFaciaStyle) }
-  def render(path: String): Action[AnyContent] = Action { implicit request => render(path, renderSectionFront) }
-  def render(path: String, template: (SectionFrontPage) => Result)(implicit request: RequestHeader): AsyncResult = {
+  def renderJson(path: String) = render(path)
+
+  def getTemplate(implicit request: RequestHeader): (SectionFrontPage) => Result = IsFacia(request) match {
+    case Some(v) if Switches.FaciaSwitch.isSwitchedOn => renderSectionFrontFaciaStyle
+    case _  => renderSectionFront
+  }
+
+  def render(path: String) = Action { implicit request =>
     val promiseOfSection = lookup(path)
     Async {
       promiseOfSection.map {
-        case Left(model) => template(model)
+        case Left(model) => getTemplate(request)(model)
         case Right(notFound) => notFound
       }
     }

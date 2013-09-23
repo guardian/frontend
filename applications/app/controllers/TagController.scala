@@ -19,13 +19,16 @@ case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections with QueryDefaults {
 
-  def renderFaciaStyle(path: String) = Action { implicit request => render(path, renderTagFaciaStyle) }
-  def render(path: String): Action[AnyContent] = Action { implicit request => render(path, renderTag) }
-  def render(path: String, template: (TagAndTrails) => Result)(implicit request: RequestHeader): AsyncResult = {
+  def getTemplate(implicit request: RequestHeader): (TagAndTrails) => Result = IsFacia(request) match {
+    case Some(v) if Switches.FaciaSwitch.isSwitchedOn => renderTagFaciaStyle
+    case _ => renderTag
+  }
+
+  def render(path: String) = Action { implicit request =>
     val promiseOfTag = lookup(path)
     Async {
       promiseOfTag.map {
-        case Left(model) => template(model)
+        case Left(model) => getTemplate(request)(model)
         case Right(notFound) => notFound
       }
     }
