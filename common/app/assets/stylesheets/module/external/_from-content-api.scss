@@ -27,14 +27,11 @@
     }
     h2 {
         @extend %type-4;
-        color: #333;
+        color: #333333;
         margin-bottom: $baseline;
 
         @include mq(tablet) {
-            font-size: 22px;
-            font-size: 2.2rem;
-            line-height: 28px;
-            line-height: 2.8rem;
+            @include font-size(22, 28);
         }
     }
     h3 {

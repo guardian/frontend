@@ -38,12 +38,12 @@
 
 .article__headline {
     @extend %type-3;
-    margin-bottom: $baseline*6;
+    margin-bottom: $gs-column-height;
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
         @include font-size(42, 46);
-        margin-bottom: $gs-column-height;
+        margin-bottom: $gs-column-height + $baseline*3;
     }
 
     a {
@@ -51,7 +51,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: #333;
+            color: #333333;
         }
     }
 }
@@ -84,16 +84,7 @@
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        font-size: 16px;
-        font-size: 1.6rem;
-        line-height: 24px;
-        line-height: 2.4rem;
-    }
-    @include mq(desktop) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 24px;
-        line-height: 2.4rem;
+        @include font-size(18, 22);
     }
 }
 .article-body {
