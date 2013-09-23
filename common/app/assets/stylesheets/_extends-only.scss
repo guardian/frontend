@@ -3,12 +3,12 @@
 
 
 //SerifHeadline
-%type-0 { @include font($serifheadline, 700, 22, 32); }
-%type-1 { @include font($serifheadline, 700, 20, 28); }
-%type-2 { @include font($serifheadline, 700, 18, 28); }
+%type-0 { @include font($serifheadline, normal, 22, 32); }
+%type-1 { @include font($serifheadline, normal, 20, 28); }
+%type-2 { @include font($serifheadline, normal, 18, 28); }
 
 //SerifText
-%type-3 { @include font($serif, 700, 20, 28); }
+%type-3 { @include font($serifheadline, normal, 20, 28); }
 %type-4 { @include font($serif, 700, 18, 24); }
 %type-5 { @include font($serif, 700, 16, 22); }
 %type-6 { @include font($serif, normal, 16, 24); }

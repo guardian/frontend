@@ -41,7 +41,6 @@
     margin-bottom: $baseline*6;
 
     @include mq(tablet) {
-        font-family: $serifheadline;
         -webkit-font-smoothing: antialiased;
         font-size: 34px;
         font-size: 3.4rem;
