@@ -43,9 +43,8 @@ define(["bean",
                 bonzo(context.querySelectorAll(self.selector + ' a')).attr('data-is-ajax', '1');
 
                 bean.on(context, 'click', self.selector + ' a', function(e) {
+                    e.preventDefault();
                     var galleryUrl = e.currentTarget.getAttribute('href');
-
-                    self.galleryEndpoint = galleryUrl.split('?')[0] + '/lightbox.json';
 
                     // Go to a specific image if it's in the query string. eg: index=3
                     if (galleryUrl.indexOf('index=') !== -1) {
@@ -55,15 +54,24 @@ define(["bean",
                         currentImage = parseInt(urlParams.index, 10);
                     }
 
-                    e.preventDefault();
-                    overlay = new Overlay();
-                    self.bindEvents();
-                    self.loadGallery();
+
+                    self.loadGallery({
+                        url: galleryUrl
+                    });
                 });
 
                 // Disable URL changes when the app-wide swipe is on
                 if(document.body.className.indexOf('has-swipe') !== -1) {
                     pushUrlChanges = false;
+                }
+
+                // Load gallery straight away if url contains a direct image link
+                var urlParams = url.getUrlVars();
+                if (urlParams.index) {
+                    this.loadGallery({
+                        url: '/' + config.page.pageId,
+                        startingImage: parseInt(urlParams.index, 10)
+                    });
                 }
             }
         };
@@ -147,9 +155,17 @@ define(["bean",
             }
         };
 
-        this.loadGallery = function() {
+        this.loadGallery = function(opts) {
             swipeActive = false;
+            overlay = new Overlay();
             overlay.showLoading();
+
+            this.galleryEndpoint = opts.url.split('?')[0] + '/lightbox.json';
+            this.bindEvents();
+
+            if (opts.startingImage) {
+                currentImage = opts.startingImage;
+            }
 
             ajax({
                 url: self.galleryEndpoint,
