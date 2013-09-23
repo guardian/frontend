@@ -45,16 +45,17 @@ define([
         showFootballFixtures: function(path) {
             common.mediator.on('page:front:ready', function(config, context) {
                 if (config.page.edition === 'UK' && config.page.pageId === "") {
+                    // wrap the return sports stats component in an 'item'
                     var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
-                    // slightly hacky way to add item class to newly added stats module
                     common.mediator.on('modules:footballfixtures:render', function() {
                         // only show 7 rows
                         common.$g('.match:nth-child(n + 8)', $statsItem)
                             .addClass('u-h');
-                        common.$g('.collection--news.collection--sport-section .item:first-child')
+                        // add it adter the first item
+                        common.$g('.collection--news.collection--sport-section .item:first-child', context)
                             .after($statsItem);
                         // now hide one of the shown ones
-                        common.$g('.collection--news.collection--sport-section .item.u-h')
+                        common.$g('.collection--news.collection--sport-section .item.u-h', context)
                             .first()
                             .previous()
                             .addClass('u-h');
