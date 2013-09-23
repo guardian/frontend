@@ -2,22 +2,22 @@
 
 @if(faciaTrailblock.collections.nonEmpty) {
     <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
-    @defining {TemplateDeduping()} { dedupe: TemplateDeduping =>
-        @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
-            @if(block._2.items.nonEmpty){
-                @FindStyle(faciaTrailblock.id, block._1) match {
-                    case style: Masthead      => { @collections.masthead(block._1, dedupe(4, block._2), style) }
-                    case style: TopStories    => { @collections.topStories(block._1, dedupe(2, block._2), style) }
-                    case style: MediumStories => { @collections.mediumStories(block._1,  dedupe(4, block._2), style) }
-                    case style: SmallStories  => { @collections.smallStories(block._1,  dedupe(block._2), style) }
-                    case style: News          => { @collections.news(block._1,  dedupe(block._2, style)) }
-                    case style: Features      => { @collections.features(block._1,  dedupe(block._2), style) }
-                    case style: Highlights    => { @collections.highlights(block._1,  dedupe(block._2), style) }
-                    case style: Comments      => { @collections.comments(block._1,  dedupe(block._2), style) }
-                    case style                => { @collections.features(block._1, dedupe(block._2), style) }
+        @defining {TemplateDeduping()} { dedupe: TemplateDeduping =>
+            @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
+                @if(block._2.items.nonEmpty){
+                    @FindStyle(faciaTrailblock.id, block._1) match {
+                        case style: Masthead      => { @collections.masthead(block._1, dedupe(4, block._2), style) }
+                        case style: TopStories    => { @collections.topStories(block._1, dedupe(2, block._2), style) }
+                        case style: MediumStories => { @collections.mediumStories(block._1,  dedupe(4, block._2), style) }
+                        case style: SmallStories  => { @collections.smallStories(block._1,  dedupe(block._2), style) }
+                        case style: News          => { @collections.news(block._1,  dedupe(block._2), style) }
+                        case style: Features      => { @collections.features(block._1,  dedupe(block._2), style) }
+                        case style: Highlights    => { @collections.highlights(block._1,  dedupe(block._2), style) }
+                        case style: Comments      => { @collections.comments(block._1,  dedupe(block._2), style) }
+                        case style                => { @collections.news(block._1, dedupe(block._2), style) }
+                    }
                 }
             }
         }
-    }
     </div>
 }
