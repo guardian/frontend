@@ -7,7 +7,7 @@ import play.api.mvc._
 import common.ExecutionContexts
 import utils.SafeLogging
 import javax.inject.Singleton
-import model.{IdentityRegistrationErrorPage, IdentityRegistrationStartPage, IdentityPage}
+import model.IdentityPage
 import play.api.data._
 import idapiclient.EmailPassword
 import client.Error
@@ -21,7 +21,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      signinService : PlaySigninService  ) extends Controller with ExecutionContexts with SafeLogging  {
 
 
-  val page = new IdentityPage("/register", "Register", "register")
+  val page = IdentityPage("/register", "Register", "register")
 
   val registrationForm = Form(
     Forms.tuple(
@@ -37,10 +37,8 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     logger.trace("Rendering registration form")
 
     val idRequest = idRequestParser(request)
-    val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
-    val startPage = new IdentityRegistrationStartPage("/register", "Register", "register", verifiedReturnUrl)
     val filledForm = registrationForm.fill("","","",true,false)
-    Ok(views.html.registration(startPage, idRequest, idUrlBuilder, filledForm ))
+    Ok(views.html.registration(page.registrationStart(idRequest), idRequest, idUrlBuilder, filledForm ))
   }
 
   def processForm = Action { implicit request =>
@@ -52,8 +50,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     boundForm.fold(
       formWithErrors => {
         logger.info("Invalid registration request")
-        val errorPage = new IdentityRegistrationErrorPage("/register", "Register", "register", verifiedReturnUrl)
-        Ok(views.html.registration(errorPage, idRequest, idUrlBuilder, formWithErrors ))
+        Ok(views.html.registration(page.registrationError(idRequest), idRequest, idUrlBuilder, formWithErrors ))
       },
       {
         case(email, username, password, gnmMarketing, thirdPartyMarketing) => {
@@ -61,7 +58,6 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
           Async {
             api.register(user, omnitureData, Some(request.remoteAddress)) map ( _ match {
               case Left(errors) => {
-                val errorPage = new IdentityRegistrationErrorPage("/register", "Register", "register", verifiedReturnUrl)
                 val formWithError = errors.foldLeft(boundForm) {  (form, error) =>
                   error match {
                     case Error(_, description, _, context) =>
@@ -69,7 +65,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                   }
                 }
                 formWithError.fill(email,username,"",thirdPartyMarketing,gnmMarketing)
-                Ok(views.html.registration(errorPage, idRequest, idUrlBuilder, formWithError))
+                Ok(views.html.registration(page.registrationError(idRequest), idRequest, idUrlBuilder, formWithError))
               }
               case Right(user) => {
                 Async {
