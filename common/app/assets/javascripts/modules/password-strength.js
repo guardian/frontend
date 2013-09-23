@@ -1,4 +1,4 @@
-define(["common", "bonzo", "bean", "zxcvbn"], function (common, bonzo, bean, zxcvbn) {
+define(["common", "bonzo", "bean"], function (common, bonzo, bean) {
 
     function PasswordStrength(el, context, config) {
 
@@ -30,21 +30,25 @@ define(["common", "bonzo", "bean", "zxcvbn"], function (common, bonzo, bean, zxc
             },
             template = '<div class="password-strength-indicator ' + config.classes.indicator + ' score-null">' +
                            '<div class="form-field__note form-field__note--below form-field__note--right password-strength ' + config.classes.label + ' h">' + config.text.label + '</div>' +
-                       '</div>';
+                       '</div>',
+            zxcvbn;
 
         this.init = function() {
-            var $element = bonzo(dom.element);
-            if (!$element.hasClass(config.classes.ready)) {
-                dom.indicator = bonzo(bonzo.create(template)).insertAfter(dom.element)[0];
-                dom.label = dom.indicator.querySelector('.' + config.classes.label);
+            if (!bonzo(dom.element).hasClass(config.classes.ready)) {
+                var self = this;
+                require(['js!zxcvbn'], function() {
+                    zxcvbn = this.zxcvbn;
+                    dom.indicator = bonzo(bonzo.create(template)).insertAfter(dom.element)[0];
+                    dom.label = dom.indicator.querySelector('.' + config.classes.label);
 
-                // Let's try keyup for now
-                bean.on(dom.element, 'keyup.count', this.checkCount);
-                bean.on(dom.element, 'keyup.key', this.checkStrength);
-                this.checkCount();
-                this.checkStrength();
+                    // Let's try keyup for now
+                    bean.on(dom.element, 'keyup.count', self.checkCount);
+                    bean.on(dom.element, 'keyup.key', self.checkStrength);
 
-                $element.addClass(config.classes.ready);
+                    self.checkCount();
+                    self.checkStrength();
+                    bonzo(dom.element).addClass(config.classes.ready);
+                });
             }
         };
 
