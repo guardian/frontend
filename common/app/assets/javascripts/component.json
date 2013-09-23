@@ -11,7 +11,6 @@
     "qwery": "3.4",
     "reqwest": "git@github.com:ironsidevsquincy/reqwest.git",
     "swipe": "git://github.com/guardian/Swipe.git",
-    "swipeview": "git@github.com:guardian/SwipeView.git",
-    "zxcvbn": "git@github.com:lowe/zxcvbn.git"
+    "swipeview": "git@github.com:guardian/SwipeView.git"
   }
 }
