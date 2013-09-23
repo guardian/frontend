@@ -42,18 +42,8 @@
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        font-size: 34px;
-        font-size: 3.4rem;
-        line-height: 42px;
-        line-height: 4.2rem;
+        @include font-size(42, 46);
         margin-bottom: $gs-column-height;
-    }
-
-    @include mq(($a-rightCol-trigger + gs-span(1))) {
-        font-size: 40px;
-        font-size: 4rem;
-        line-height: 48px;
-        line-height: 4.8rem;
     }
 
     a {
