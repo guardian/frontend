@@ -166,13 +166,6 @@
     }
 }
 
-@include mq(tablet) {
-    .d-tabs__item--byline {
-        font-size: 16px !important;
-        font-size: 1.6rem !important;
-    }
-}
-
 .media-primary {
     margin-left: $gs-gutter / -2;
     margin-right: $gs-gutter / -2;
@@ -226,14 +219,10 @@ video {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
-    .d-tabs,
     .player,
     .media-primary {
         margin-left: 0 !important;
         margin-right: 0 !important;
-    }
-    .d-tabs__item--byline {
-        padding-left: $gutter/4 !important;
     }
     .article-v2__columning-wrapper {
         padding-right: gs-span(1) + $gs-gutter;
@@ -249,21 +238,20 @@ video {
 }
 
 @mixin hide-discussion-tabs {
-    .d-actions .top,
-    .d-tabs {
-        display: none;
-    }
+
 }
 @mixin comments-below-article {
     .article__container,
     .article__discussion {
         display: block !important;
     }
+    .d-actions .top {
+        display: none;
+    }
 }
 
 @include mq(rightCol) {
 
-    @include hide-discussion-tabs;
     @include comments-below-article;
 
     .article-wrapper {
