@@ -19,8 +19,7 @@
 }
 
 .trail__headline {
-    @include mq(400px) { @extend %type-4; }
-    @include mq(1024px) { @extend %type-5; }
+    
 }
 
     .trail__headline a,
