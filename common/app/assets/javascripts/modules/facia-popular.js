@@ -72,7 +72,7 @@ define([
                     // add the popular collection before the sports zone
                     bonzo(bonzo.create(collectionTmpl))
                         .append($items)
-                        .insertBefore('.collection--news.collection--sport-section');
+                        .insertAfter('.collection:last-child');
                     // add show more button
                     new ItemsShowMore($items[0])
                         .addShowMore();
