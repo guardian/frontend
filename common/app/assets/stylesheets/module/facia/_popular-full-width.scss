@@ -71,7 +71,6 @@
     }
 
     .item__title {
-        @include font-size(26, 28);
         @include mq(tablet) {
             min-height: gs-height(3);
         }
@@ -137,11 +136,11 @@
             padding-top: $gs-baseline;
         }
     }
-    .item:nth-child(n + 2) {
-        @include mq($to: tablet) {
-            .item__title {
-                @include font-size(20, 24);
-            }
+    @include mq($to: tablet) {
+        .item:first-child .item__title {
+            @include font-size(26, 28);
+        }
+        .item:nth-child(n + 2) {
             .item__standfirst,
             .item__image-container {
                 display: none;

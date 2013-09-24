@@ -40,7 +40,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                             }
                             bonzo(item)
                                 .removeClass('u-h')
-                                .addClass('item--headline');
+                                .addClass('item--shown');
                         });
                     if (!moreHidden) {
                         $button.remove();

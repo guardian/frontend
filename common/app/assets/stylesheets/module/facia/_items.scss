@@ -41,6 +41,12 @@ a.item__link,
     @include box-sizing(border-box);
     border-top: 2px solid $light-blue;
     padding-top: $gs-baseline*(2/3);
+    @include mq($to: tablet) {
+        @include font-size(20, 24);
+    }
+    @include mq(tablet) {
+        @include font-size(26, 28);
+    }
 }
 .item__standfirst {
     margin: $gs-baseline 0 0;
@@ -129,7 +135,7 @@ a.item__link,
         border-top-color: $green;
     }
 }
-.item--headline {
+.item--shown {
     @include mq($to: tablet) {
         .item__title {
             @include font-size(18, 24);
@@ -137,6 +143,12 @@ a.item__link,
             border-top-width: 1px;
         }
         .item__meta {
+            display: none;
+        }
+    }
+    @include mq(tablet) {
+        .item__standfirst,
+        .item__image-container {
             display: none;
         }
     }

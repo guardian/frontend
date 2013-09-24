@@ -49,7 +49,6 @@
     }
 
     .item__title {
-        @include font-size(26, 28);
         @include mq(tablet) {
             min-height: gs-height(3);
         }
@@ -74,11 +73,11 @@
             height: 100%;
         }
     }
-    .item:nth-child(n + 2) {
-        @include mq($to: tablet) {
-            .item__title {
-                @include font-size(20, 24);
-            }
+    @include mq($to: tablet) {
+        .item:first-child .item__title {
+            @include font-size(26, 28);
+        }
+        .item:nth-child(n + 2) {
             .item__standfirst,
             .item__image-container {
                 display: none;
@@ -90,7 +89,10 @@
             padding-top: 0;
             h3 {
                 color: #000000;
-                @include font($serifheadline, lighter, 26, 28);
+                @include font($serifheadline, lighter, 20, 24);
+                @include mq(tablet) {
+                    @include font-size(26, 28);
+                }
             }
             .match-desc__team {
                 width: 87px;
