@@ -2,7 +2,7 @@
 
 @admin_main("Fronts editor", env, isAuthed = true) {
 
-    <div class="splash" data-bind="visible: false">Loading Editor...</div> 
+    <div class="splash" data-bind="visible: false">Loading Editor...</div>
 
     <div class="fronts" data-bind="visible: true, makeDropabble: true" style="display: none">
         <header>
@@ -61,22 +61,35 @@
 
                 <span class="savingIndicator" data-bind="visible: state.loadIsPending">SAVING</span>
 
-                <div class="list-header" data-bind="if: !state.editingConfig()">
+                <div class="list-header">
 
                     <div class="list-header__title">
                         <span class="list-header__edition" data-bind="text: edition"></span>
                         <span class="list-header__section" data-bind="text: section"></span>
                         <span class="list-header__role"    data-bind="text: configMeta.roleName"></span>
-                        <span>:</span>
-                        <span>
+                        <span data-bind="visible: !state.editingConfig()"> :
                             <a class="list-header__display" data-bind="
+                                visible: typeof configMeta.displayName() === 'undefined',
                                 css: { 'list-header__display--is-set': !!collectionMeta.displayName() },
-                                text: collectionMeta.displayName() || 'Add Title',
-                                click: toggleEditingConfig"></a></span>
+                                text: collectionMeta.displayName() || 'Set Title',
+                                click: toggleEditingConfig"></a>
 
-                        <span class="list-header__role__description">
-                            : <span data-bind="text: configMeta.roleDescription"></span>
+                            <span class="list-header__display list-header__display--is-set" data-bind="
+                                visible: typeof configMeta.displayName() !== 'undefined',
+                                text: configMeta.displayName"></a>
                         </span>
+
+                        <span class="list-header__role__description"> :
+                            <span data-bind="text: configMeta.roleDescription"></span>
+                        </span>
+                    </div>
+
+                    <div class="list-config" data-bind="visible: state.editingConfig">
+                        <div>
+                            <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Add Title"/>
+                        </div>
+                        <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
+                        <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
                     </div>
 
                     <div class="list-header__status">
@@ -85,7 +98,7 @@
                                 active: state.liveMode()
                             }">
                             <span class="list-header__status__live__title" data-bind="click: setLiveMode">LIVE</span>
-                        </div>                    
+                        </div>
                         <div class="list-header__status__draft" data-bind="
                             css: {
                                 'active':   !state.liveMode(),
@@ -112,17 +125,8 @@
                     </div>
                 </div>
 
-                <div class="list-config" data-bind="visible: state.editingConfig">
-                    <div class="list-header__display">Title:</div>
-                    <div>
-                        <input type="text" data-bind="value: collectionMeta.displayName"/>
-                    </div>
-                    <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
-                    <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
-                </div>
-
                 <div class="needs-more" data-bind="if: needsMore">
-                    Needs at least <span class="needs-more__num" data-bind="text: configMeta.min"></span> 
+                    Needs at least <span class="needs-more__num" data-bind="text: configMeta.min"></span>
                     article<span data-bind="text: configMeta.min() > 1 ? 's' : ''"></span>
                 </div>
                 <div class="connectedList persisted" data-bind="
@@ -131,7 +135,7 @@
                     },
                     css: {
                         'pending': state.loadIsPending,
-                        'is-live': state.liveMode() 
+                        'is-live': state.liveMode()
                     },
                     template: {name: 'template_article', foreach: state.liveMode() ? live : draft}"></div>
             </div>
@@ -174,11 +178,11 @@
             <!-- /ko -->
 
             <a class="webTitle" target="_blank" data-bind="
-                html: meta.webTitle, 
+                html: meta.webTitle,
                 attr: {href: 'http://www.theguardian.com/' + meta.id()}"></a>
 
         </div>
     </script>
-    
+
     <script src="@routes.Assets.at("javascripts/fronts.js")"></script>
 }

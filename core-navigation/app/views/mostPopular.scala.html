@@ -5,9 +5,8 @@
     @popular.zipWithRowInfo.map{ case (section, info) =>
         <section class="front-section zone-@section.section">
             <h2 class="section-head zone-color">Most read: @Html(section.heading)</h2>
-            <div class="headline-list"
+            <div class="headline-list box-indent"
                  data-link-name="@section.heading">
-
                 <ul class="unstyled">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                     <li><span class="count">@info.rowNum</span> @fragments.linkText(trail, info)</li>

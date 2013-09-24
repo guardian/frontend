@@ -1,0 +1,2398 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"uk/2012/jun/27/queen-martin-mcguinness-shake-hands",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-06-27T10:41:00Z",
+      "webTitle":"Queen and Martin McGuinness shake hands and make history",
+      "webUrl":"http://www.theguardian.com/uk/2012/jun/27/queen-martin-mcguinness-shake-hands",
+      "apiUrl":"http://content.guardianapis.com/uk/2012/jun/27/queen-martin-mcguinness-shake-hands",
+      "fields":{
+        "trailText":"<p>The Queen and the Sinn F&eacute;in politician join in gesture that would once have been unthinkable</p>",
+        "headline":"The Queen and Martin McGuinness shake hands and make history",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38tzn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/27/1340795965699/Queen-Elizabeth-shakes-ha-001.jpg",
+        "wordcount":"313",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/martin-mcguinness",
+        "type":"keyword",
+        "webTitle":"Martin McGuinness",
+        "webUrl":"http://www.theguardian.com/politics/martin-mcguinness",
+        "apiUrl":"http://content.guardianapis.com/politics/martin-mcguinness",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/sinn-fein",
+        "type":"keyword",
+        "webTitle":"Sinn Féin",
+        "webUrl":"http://www.theguardian.com/politics/sinn-fein",
+        "apiUrl":"http://content.guardianapis.com/politics/sinn-fein",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392263621",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/27/1340795965699/Queen-Elizabeth-shakes-ha-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "altText":"Queen Elizabeth shakes hands with Martin McGuinness ",
+            "height":"84",
+            "credit":"Getty Images",
+            "caption":"Queen Elizabeth shakes hands with Martin McGuinness  Photograph: Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-392260867",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"mp4",
+          "file":"http://cdn.theguardian.tv/brightcove/2012/6/27/120627QueenHandshake-16x9.mp4",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/120627QueenHandshake/120627QueenHandshake.m3u8",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2012/6/27/120627QueenHandshake_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/6/27/120627QueenHandshake-720.mp4",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"uk/gallery/2012/jun/27/queens-handshakes-martin-mcguinness-pictures",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-06-27T07:45:00Z",
+      "webTitle":"The Queen's handshakes - in pictures",
+      "webUrl":"http://www.theguardian.com/uk/gallery/2012/jun/27/queens-handshakes-martin-mcguinness-pictures",
+      "apiUrl":"http://content.guardianapis.com/uk/gallery/2012/jun/27/queens-handshakes-martin-mcguinness-pictures",
+      "fields":{
+        "trailText":"<p>The Queen will meet and shake hands with former IRA commander Martin McGuinness tomorrow. The Queen has shaken hands with thousands of people during her reign including controversial figures, world leaders and artists</p>",
+        "headline":"The Queen's handshakes - in pictures",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38ten",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340726244062/The-Queen-shaking-hands-w-003.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/queen",
+        "type":"keyword",
+        "webTitle":"The Queen",
+        "webUrl":"http://www.theguardian.com/uk/queen",
+        "apiUrl":"http://content.guardianapis.com/uk/queen",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392214549",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725918539/A-Reagan-Welcome-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ronald Reagan Library",
+            "altText":"Queen shaking hands: A Reagan Welcome",
+            "height":"480",
+            "credit":"Ronald Reagan Library/Getty Images",
+            "caption":"US president Ronald Reagan and first lady Nancy Reagan welcome the Queen to their ranch at Rancho del Cielo, California",
+            "width":"718"
+          }
+        }]
+      },{
+        "id":"gu-image-392214551",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725938314/Bush-Bids-Farewell-to-Que-010.jpg",
+          "typeData":{
+            "source":"other",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Queen shaking hands: Bush Bids Farewell to Queen",
+            "height":"480",
+            "credit":"Kirsty Wigglesworth/PA",
+            "caption":"US president George Bush shakes hands with the Queen as he and his wife leave Buckingham Palace",
+            "width":"603"
+          }
+        }]
+      },{
+        "id":"gu-image-392214553",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725951381/Queen-Elizabeth-II-And-Pr-014.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "altText":"Queen shaking hands: Queen Elizabeth II And Prince Philip Visit Abu Dhabi - Day 5",
+            "height":"480",
+            "credit":"Getty Images",
+            "caption":"The Queen shakes hands with the Sultan of Oman, His Majesty Sultan Qaboos bin Said, after a five-day state visit to the Gulf region",
+            "width":"654"
+          }
+        }]
+      },{
+        "id":"gu-image-392214555",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725925191/Queen-Elizabeth-II-Welcom-006.jpg",
+          "typeData":{
+            "source":"Tim Graham/Getty Images",
+            "altText":"Queen shaking hands: Queen Elizabeth II Welcomes President of Afghanistan",
+            "height":"480",
+            "credit":"Tim Graham/Getty Images",
+            "caption":"The Queen receives the president of Afghanistan, Hamid Karzai, in the private audience room at Buckingham Palace",
+            "width":"611"
+          }
+        }]
+      },{
+        "id":"gu-image-392214558",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725931942/Queen-Elizabeth-meets-pre-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "altText":"Queen shaking hands: Queen Elizabeth meets president of Sri Lanka",
+            "height":"480",
+            "credit":"Getty Images",
+            "caption":"The Queen meets the Sri Lankan president, Mahinda Rajapaksa, as his wife, Shiranthi Rajapaksa, looks on prior to a lunch with Commonwealth nations heads of government",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-392214561",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725909008/Queen-Pope-Handshake-001.jpg",
+          "typeData":{
+            "source":"Tim Graham/Getty Images",
+            "altText":"Queen shaking hands: Queen Pope Handshake",
+            "height":"480",
+            "credit":"Tim Graham/Getty Images",
+            "caption":"A greeting for Pope John Paul II at the Vatican",
+            "width":"698"
+          }
+        }]
+      },{
+        "id":"gu-image-392214565",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725947141/Queen-meets-Archbishop-of-013.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"Queen shaking hands: Queen meets Archbishop of York",
+            "height":"480",
+            "credit":"Rex Features",
+            "caption":"Dr John Sentamu, the archbishop of York, gets to touch the royal glove during the inauguration of the ninth General Synod of the Church of England, in Westminster Abbey",
+            "width":"654"
+          }
+        }]
+      },{
+        "id":"gu-image-392214568",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725954750/Queen-meets-David-Cameron-015.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Indigo",
+            "altText":"Queen shaking hands: Queen meets David Cameron",
+            "height":"455",
+            "credit":"Indigo/Getty Images",
+            "caption":"David Cameron bows as the Queen arrives for a lunch to celebrate the Duke of Edinburgh's 90th birthday",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-392214571",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725944270/Queen-meets-Joan-Collins-012.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"Queen shaking hands: Queen meets Joan Collins",
+            "height":"563",
+            "credit":"Rex Features",
+            "caption":"Joan Collins curtsies as she meets the Queen during a celebration of the arts at the Royal Academy of Arts in London",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-392214580",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725928441/Queen-meets-Lady-Gaga-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "altText":"Queen shaking hands: Queen meets Lady Gaga",
+            "height":"480",
+            "credit":"PA",
+            "caption":"The Queen meets American singer Lady Gaga following the royal variety performance in Blackpool",
+            "width":"603"
+          }
+        }]
+      },{
+        "id":"gu-image-392214582",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725935163/Queen-meets-Mandela-009.jpg",
+          "typeData":{
+            "source":"other",
+            "altText":"Queen shaking hands: Queen meets Mandela",
+            "height":"551",
+            "credit":"Dominic Lipinski/PA Archive",
+            "caption":"The former South African president Nelson Mandela at Buckingham Palace",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-392214586",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725941408/Queen-meets-President-Nic-011.jpg",
+          "typeData":{
+            "source":"other",
+            "altText":"Queen shaking hands: Queen meets President Nicolae Ceausescu of Romania",
+            "height":"480",
+            "credit":"PA",
+            "caption":"The queen with President Nicolae Ceausescu, of the Socialist Republic of Romania, at the start of his state visit, the first to be made by a Communist head of state",
+            "width":"739"
+          }
+        }]
+      },{
+        "id":"gu-image-392214596",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725915544/Queen-presents-Chatham-Ho-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "altText":"Queen shaking hands: Queen presents Chatham House Prize",
+            "height":"453",
+            "credit":"Toby Melville/PA",
+            "caption":"A royal greeting for Hayrunnisa Gul, the wife of the president of Turkey, Abdullah Gul (centre). The former British prime minister John Major looks on during a ceremony and reception in Whitehall",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-392214600",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725921729/Robert-Mugabe-Meeting-The-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"Queen shaking hands: Robert Mugabe Meeting The Queen",
+            "height":"597",
+            "credit":"Rex Features",
+            "caption":"Robert Mugabe on a state visit to Britain ",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-392214603",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340725912439/US-President-Barack-Obama-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "altText":"Queen shaking hands: US President Barack Obama Visits The UK",
+            "height":"480",
+            "credit":"Getty Images",
+            "caption":"Barack and Michelle Obama at Buckingham Palace",
+            "width":"640"
+          }
+        }]
+      },{
+        "id":"gu-image-392250001",
+        "relation":"gallery",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/27/1340795868708/Queen-Elizabeth-shakes-ha-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "altText":"Queen : Queen Elizabeth shakes hands with Martin McGuinness ",
+            "height":"480",
+            "credit":"Getty Images",
+            "caption":"Queen Elizabeth shakes hands with Deputy First Minister of Northern Ireland Martin McGuinness ",
+            "width":"628"
+          }
+        }]
+      },{
+        "id":"gu-image-392264074",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340726244062/The-Queen-shaking-hands-w-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Rex Features",
+            "altText":"The Queen shaking hands with Robert Mugabe",
+            "height":"84",
+            "credit":"Rex Features/Rex Features",
+            "caption":"The Queen shaking hands with Robert Mugabe On A State Visit To Britain  Photograph: Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk/video/2012/jun/27/queen-martin-mcguinness-video",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-06-27T14:25:08Z",
+      "webTitle":"Queen shakes hands with Martin McGuinness – video",
+      "webUrl":"http://www.theguardian.com/uk/video/2012/jun/27/queen-martin-mcguinness-video",
+      "apiUrl":"http://content.guardianapis.com/uk/video/2012/jun/27/queen-martin-mcguinness-video",
+      "fields":{
+        "trailText":"<p>In a historic moment for the Northern Ireland peace process, the Queen meets the Sinn Féin deputy first minister Martin McGuinness, a former IRA commander</p>",
+        "headline":"Queen shakes hands with Martin McGuinness – video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38j47",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/6/27/1340804413059/The-Queen-shakes-hands-wi-006.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/queen",
+        "type":"keyword",
+        "webTitle":"The Queen",
+        "webUrl":"http://www.theguardian.com/uk/queen",
+        "apiUrl":"http://content.guardianapis.com/uk/queen",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/martin-mcguinness",
+        "type":"keyword",
+        "webTitle":"Martin McGuinness",
+        "webUrl":"http://www.theguardian.com/politics/martin-mcguinness",
+        "apiUrl":"http://content.guardianapis.com/politics/martin-mcguinness",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/ira",
+        "type":"keyword",
+        "webTitle":"IRA",
+        "webUrl":"http://www.theguardian.com/uk/ira",
+        "apiUrl":"http://content.guardianapis.com/uk/ira",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-392260867",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"mp4",
+          "file":"http://cdn.theguardian.tv/brightcove/2012/6/27/120627QueenHandshake-16x9.mp4",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/120627QueenHandshake/120627QueenHandshake.m3u8",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2012/6/27/120627QueenHandshake_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/6/27/120627QueenHandshake-720.mp4",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        }]
+      },{
+        "id":"gu-image-392263357",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2012/6/27/1340804413059/The-Queen-shakes-hands-wi-006.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Pool",
+            "altText":"The Queen shakes hands with Northern Ireland deputy first minister Martin McGuinness",
+            "height":"84",
+            "credit":"Pool/REUTERS",
+            "caption":"The Queen shakes hands with Northern Ireland deputy first minister Martin McGuinness Photograph: Pool/REUTERS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2012/jun/26/shaking-queen-hand-martin-mcguinness",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2012-06-26T15:20:01Z",
+      "webTitle":"By shaking the Queen's hand, Martin McGuinness accepts her sovereignty | Anthony McIntyre",
+      "webUrl":"http://www.theguardian.com/commentisfree/2012/jun/26/shaking-queen-hand-martin-mcguinness",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2012/jun/26/shaking-queen-hand-martin-mcguinness",
+      "fields":{
+        "trailText":"<strong>Anthony McIntyre:</strong> He is not just compromising core principles of republicanism, the former Provisional IRA chief of staff is abandoning them",
+        "headline":"By shaking the Queen's hand, Martin McGuinness accepts her sovereignty",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38t9e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722929901/An-anti-queen-poster-003.jpg",
+        "wordcount":"717",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/martin-mcguinness",
+        "type":"keyword",
+        "webTitle":"Martin McGuinness",
+        "webUrl":"http://www.theguardian.com/politics/martin-mcguinness",
+        "apiUrl":"http://content.guardianapis.com/politics/martin-mcguinness",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/queen",
+        "type":"keyword",
+        "webTitle":"The Queen",
+        "webUrl":"http://www.theguardian.com/uk/queen",
+        "apiUrl":"http://content.guardianapis.com/uk/queen",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/ira",
+        "type":"keyword",
+        "webTitle":"IRA",
+        "webUrl":"http://www.theguardian.com/uk/ira",
+        "apiUrl":"http://content.guardianapis.com/uk/ira",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uksecurity",
+        "type":"keyword",
+        "webTitle":"UK security and counter-terrorism",
+        "webUrl":"http://www.theguardian.com/uk/uksecurity",
+        "apiUrl":"http://content.guardianapis.com/uk/uksecurity",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/ireland",
+        "type":"keyword",
+        "webTitle":"Ireland",
+        "webUrl":"http://www.theguardian.com/world/ireland",
+        "apiUrl":"http://content.guardianapis.com/world/ireland",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/anthony-mcintyre",
+        "type":"contributor",
+        "webTitle":"Anthony McIntyre",
+        "webUrl":"http://www.theguardian.com/profile/anthony-mcintyre",
+        "apiUrl":"http://content.guardianapis.com/profile/anthony-mcintyre",
+        "bio":"<p>Dr Anthony McIntyre, a former IRA prisoner, writes on Irish history and current affairs. His research for Boston College is now being sought through the US Courts by the British Government</p>",
+        "r2ContributorId":"51576",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392210510",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722927410/An-anti-queen-poster-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"54",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722928712/An-anti-queen-poster-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"130",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722929901/An-anti-queen-poster-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"84",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722931033/An-anti-queen-poster-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"132",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722932211/An-anti-queen-poster-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"168",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722933342/An-anti-queen-poster-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"180",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722934543/An-anti-queen-poster-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"228",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722935791/An-anti-queen-poster-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"276",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722935791/An-anti-queen-poster-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"276",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-392210511",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340722929901/An-anti-queen-poster-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"An anti-queen poster",
+            "height":"84",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"A poster in west Belfast, Northern Ireland, where Martin McGuinness is due to meet the Queen. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk/2012/jun/27/queen-martin-mcguinness-handshake-body-language",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-06-27T13:49:45Z",
+      "webTitle":"The Queen-McGuinness handshake: what the body language revealed",
+      "webUrl":"http://www.theguardian.com/uk/2012/jun/27/queen-martin-mcguinness-handshake-body-language",
+      "apiUrl":"http://content.guardianapis.com/uk/2012/jun/27/queen-martin-mcguinness-handshake-body-language",
+      "fields":{
+        "trailText":"<strong>Peter Collett</strong>: The actions of the Queen and Martin McGuinness suggest one of them was more invested in the handshake than the other",
+        "headline":"The Queen-McGuinness handshake: what the body language revealed",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38j43",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340804666162/Queen-Elizabeth-II-shakes-003.jpg",
+        "wordcount":"172",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Irish politics",
+        "webUrl":"http://www.theguardian.com/politics/northernireland",
+        "apiUrl":"http://content.guardianapis.com/politics/northernireland",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/queen",
+        "type":"keyword",
+        "webTitle":"The Queen",
+        "webUrl":"http://www.theguardian.com/uk/queen",
+        "apiUrl":"http://content.guardianapis.com/uk/queen",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/martin-mcguinness",
+        "type":"keyword",
+        "webTitle":"Martin McGuinness",
+        "webUrl":"http://www.theguardian.com/politics/martin-mcguinness",
+        "apiUrl":"http://content.guardianapis.com/politics/martin-mcguinness",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/sinn-fein",
+        "type":"keyword",
+        "webTitle":"Sinn Féin",
+        "webUrl":"http://www.theguardian.com/politics/sinn-fein",
+        "apiUrl":"http://content.guardianapis.com/politics/sinn-fein",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/peter-collett",
+        "type":"contributor",
+        "webTitle":"Peter Collett",
+        "webUrl":"http://www.theguardian.com/profile/peter-collett",
+        "apiUrl":"http://content.guardianapis.com/profile/peter-collett",
+        "r2ContributorId":"50772",
+        "references":[]
+      },{
+        "id":"tone/analysis",
+        "type":"tone",
+        "webTitle":"Analysis",
+        "webUrl":"http://www.theguardian.com/tone/analysis",
+        "apiUrl":"http://content.guardianapis.com/tone/analysis",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392263655",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340804666162/Queen-Elizabeth-II-shakes-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Paul Faith",
+            "altText":"Queen Elizabeth II shakes hands with Sinn Fein's Martin Guinness",
+            "height":"84",
+            "credit":"Paul Faith/AFP/Getty Images",
+            "caption":"Queen Elizabeth II shakes hands with Sinn Fein's Martin Guinness Photograph: Paul Faith/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-392260867",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"mp4",
+          "file":"http://cdn.theguardian.tv/brightcove/2012/6/27/120627QueenHandshake-16x9.mp4",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/120627QueenHandshake/120627QueenHandshake.m3u8",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2012/6/27/120627QueenHandshake_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/6/27/120627QueenHandshake-720.mp4",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2012/jun/26/royal-handshake-northern-ireland",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2012-06-26T20:10:01Z",
+      "webTitle":"Despite the Queen's handshake with Martin McGuinness there is little reconciliation | Simon Jenkins",
+      "webUrl":"http://www.theguardian.com/commentisfree/2012/jun/26/royal-handshake-northern-ireland",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2012/jun/26/royal-handshake-northern-ireland",
+      "fields":{
+        "trailText":"<strong>Simon Jenkins:</strong> It is good that the Queen's visit has crossed a divide. But power sharing in Northern Ireland remains inherently unstable",
+        "headline":"Despite the Queen's handshake with Martin McGuinness there is little reconciliation",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38tgy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340741165670/Belle-Mellor-2706-003.jpg",
+        "wordcount":"930",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/queen",
+        "type":"keyword",
+        "webTitle":"The Queen",
+        "webUrl":"http://www.theguardian.com/uk/queen",
+        "apiUrl":"http://content.guardianapis.com/uk/queen",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/martin-mcguinness",
+        "type":"keyword",
+        "webTitle":"Martin McGuinness",
+        "webUrl":"http://www.theguardian.com/politics/martin-mcguinness",
+        "apiUrl":"http://content.guardianapis.com/politics/martin-mcguinness",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/simonjenkins",
+        "type":"contributor",
+        "webTitle":"Simon Jenkins",
+        "webUrl":"http://www.theguardian.com/profile/simonjenkins",
+        "apiUrl":"http://content.guardianapis.com/profile/simonjenkins",
+        "bio":"<p>Simon Jenkins is a journalist and author. He writes for the Guardian as well as broadcasting for the BBC. He has edited the Times and the London Evening Standard and is chairman of the National Trust</p>",
+        "r2ContributorId":"19166",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/simon_jenkins_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/commentanddebate",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & debate",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/commentanddebate",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/commentanddebate",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392227653",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340741172359/Belle-Mellor-2706-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Belle Mellor 2706",
+            "height":"276",
+            "credit":"Guardian",
+            "caption":"‘London's bid to bring peace has demonstrated the maxim that no corner of the empire is ruled so ineptly as one that is closest to hand.' Illustration: Belle Mellor",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-392227654",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340741165670/Belle-Mellor-2706-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Belle Mellor 2706",
+            "height":"84",
+            "credit":"Guardian",
+            "caption":"'London's bid to bring peace has demonstrated the maxim that no corner of the empire is ruled so ineptly as one that is closest to hand.' Illustration: Belle Mellor. Photograph: Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk/2012/jun/26/republicans-banner-queen-northern-ireland-visit",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-06-26T22:08:08Z",
+      "webTitle":"Republicans refuse to end Belfast mountain protest against Queen's visit",
+      "webUrl":"http://www.theguardian.com/uk/2012/jun/26/republicans-banner-queen-northern-ireland-visit",
+      "apiUrl":"http://content.guardianapis.com/uk/2012/jun/26/republicans-banner-queen-northern-ireland-visit",
+      "fields":{
+        "trailText":"Hundreds of republicans gather on Belfast's Black Mountain after outbreaks of violence",
+        "headline":"Republicans refuse to end Belfast mountain protest against Queen's visit",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38tkf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748337743/Belfasts-Black-Mountain-003.jpg",
+        "wordcount":"207",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/republicanism",
+        "type":"keyword",
+        "webTitle":"Republicanism",
+        "webUrl":"http://www.theguardian.com/uk/republicanism",
+        "apiUrl":"http://content.guardianapis.com/uk/republicanism",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/queen",
+        "type":"keyword",
+        "webTitle":"The Queen",
+        "webUrl":"http://www.theguardian.com/uk/queen",
+        "apiUrl":"http://content.guardianapis.com/uk/queen",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/henrymcdonald",
+        "type":"contributor",
+        "webTitle":"Henry McDonald",
+        "webUrl":"http://www.theguardian.com/profile/henrymcdonald",
+        "apiUrl":"http://content.guardianapis.com/profile/henrymcdonald",
+        "bio":"<p>Henry McDonald is the Observer's Belfast correspondent</p>",
+        "rcsId":"GNL004658",
+        "r2ContributorId":"15264",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/23/1316792668937/henry-mcdonald.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392230826",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748335183/Belfasts-Black-Mountain-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"54",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748336438/Belfasts-Black-Mountain-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"130",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748337743/Belfasts-Black-Mountain-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"84",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748338947/Belfasts-Black-Mountain-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"132",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748340180/Belfasts-Black-Mountain-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"168",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748341335/Belfasts-Black-Mountain-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"180",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748342542/Belfasts-Black-Mountain-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"228",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748343726/Belfasts-Black-Mountain-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"276",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748344934/Belfasts-Black-Mountain-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"372",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748343726/Belfasts-Black-Mountain-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"276",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-392230827",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340748337743/Belfasts-Black-Mountain-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Morrison",
+            "altText":"Belfast's Black Mountain",
+            "height":"84",
+            "credit":"Peter Morrison/AP",
+            "caption":"The protest by republicans on Belfast's Black Mountain. Photograph: Peter Morrison/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk/2012/jun/26/queen-begins-tour-northern-ireland",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-06-26T14:11:40Z",
+      "webTitle":"Queen begins two-day tour of Northern Ireland",
+      "webUrl":"http://www.theguardian.com/uk/2012/jun/26/queen-begins-tour-northern-ireland",
+      "apiUrl":"http://content.guardianapis.com/uk/2012/jun/26/queen-begins-tour-northern-ireland",
+      "fields":{
+        "trailText":"<p>Monarch's tour starts in Enniskillen, where she meets survivors of the 1987 IRA bomb that killed 11 people and wounded 63 others</p>",
+        "headline":"Queen begins two-day tour of Northern Ireland",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38tb8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Politics/Pix/pictures/2012/6/26/1340719659848/The-Queen-in-Enniskillen-003.jpg",
+        "wordcount":"331",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/queen",
+        "type":"keyword",
+        "webTitle":"The Queen",
+        "webUrl":"http://www.theguardian.com/uk/queen",
+        "apiUrl":"http://content.guardianapis.com/uk/queen",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/queen-diamond-jubilee",
+        "type":"keyword",
+        "webTitle":"Queen's diamond jubilee",
+        "webUrl":"http://www.theguardian.com/uk/queen-diamond-jubilee",
+        "apiUrl":"http://content.guardianapis.com/uk/queen-diamond-jubilee",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392211590",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Politics/Pix/pictures/2012/6/26/1340719659848/The-Queen-in-Enniskillen-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"The Queen in Enniskillen",
+            "height":"84",
+            "credit":"Niall Carson/PA",
+            "caption":"The Queen in Enniskillen, County Fermanagh, during a two-day visit to Northern Ireland as part of the diamond jubilee tour.  Photograph: Niall Carson/PA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-392202787",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"mp4",
+          "file":"http://cdn.theguardian.tv/brightcove/2012/6/26/120626QueenNIreland-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "width":"640",
+            "durationSeconds":"53"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/120626QueenNIreland/120626QueenNIreland.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "width":"640",
+            "durationSeconds":"53"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/6/26/120626QueenNIreland-720.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "width":"640",
+            "durationSeconds":"53"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2012/6/26/120626QueenNIreland_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "width":"640",
+            "durationSeconds":"53"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk/2012/jun/26/queen-visit-catholic-northern-ireland",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-06-26T17:25:26Z",
+      "webTitle":"Queen makes first visit to Catholic church in Northern Ireland",
+      "webUrl":"http://www.theguardian.com/uk/2012/jun/26/queen-visit-catholic-northern-ireland",
+      "apiUrl":"http://content.guardianapis.com/uk/2012/jun/26/queen-visit-catholic-northern-ireland",
+      "fields":{
+        "trailText":"<p>Meeting with IRA bombing victims in Enniskillen church comes ahead of historic handshake with Martin McGuinness</p>",
+        "headline":"Queen makes first visit to Catholic church in Northern Ireland",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38tgp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340731253292/The-Queen-leaves-St-Micha-003.jpg",
+        "wordcount":"649",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/queen",
+        "type":"keyword",
+        "webTitle":"The Queen",
+        "webUrl":"http://www.theguardian.com/uk/queen",
+        "apiUrl":"http://content.guardianapis.com/uk/queen",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/martin-mcguinness",
+        "type":"keyword",
+        "webTitle":"Martin McGuinness",
+        "webUrl":"http://www.theguardian.com/politics/martin-mcguinness",
+        "apiUrl":"http://content.guardianapis.com/politics/martin-mcguinness",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/carolinedavies",
+        "type":"contributor",
+        "webTitle":"Caroline Davies",
+        "webUrl":"http://www.theguardian.com/profile/carolinedavies",
+        "apiUrl":"http://content.guardianapis.com/profile/carolinedavies",
+        "bio":"<p>Caroline Davies is a writer for the Guardian</p>",
+        "r2ContributorId":"20582",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392230871",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/26/1340731253292/The-Queen-leaves-St-Micha-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Peter Muhly",
+            "altText":"The Queen leaves St Michaels Roman Catholic church in Enniskillen on her Northern Ireland tour",
+            "height":"84",
+            "credit":"Peter Muhly/AFP/Getty Images",
+            "caption":"The Queen leaves St Michaels Roman Catholic church in Enniskillen on the first day of her tour of Northern Ireland. Photograph: Peter Muhly/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-392202787",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"mp4",
+          "file":"http://cdn.theguardian.tv/brightcove/2012/6/26/120626QueenNIreland-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "width":"640",
+            "durationSeconds":"53"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/120626QueenNIreland/120626QueenNIreland.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "width":"640",
+            "durationSeconds":"53"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/6/26/120626QueenNIreland-720.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "width":"640",
+            "durationSeconds":"53"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2012/6/26/120626QueenNIreland_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/26/120626QueenNIreland_6347475.jpg",
+            "width":"640",
+            "durationSeconds":"53"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk/2012/jun/27/queen-martin-mcguinness-shake-hands",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-06-27T10:41:00Z",
+      "webTitle":"Queen and Martin McGuinness shake hands and make history",
+      "webUrl":"http://www.theguardian.com/uk/2012/jun/27/queen-martin-mcguinness-shake-hands",
+      "apiUrl":"http://content.guardianapis.com/uk/2012/jun/27/queen-martin-mcguinness-shake-hands",
+      "fields":{
+        "trailText":"<p>The Queen and the Sinn F&eacute;in politician join in gesture that would once have been unthinkable</p>",
+        "headline":"The Queen and Martin McGuinness shake hands and make history",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38tzn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/27/1340795965699/Queen-Elizabeth-shakes-ha-001.jpg",
+        "wordcount":"313",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/martin-mcguinness",
+        "type":"keyword",
+        "webTitle":"Martin McGuinness",
+        "webUrl":"http://www.theguardian.com/politics/martin-mcguinness",
+        "apiUrl":"http://content.guardianapis.com/politics/martin-mcguinness",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/sinn-fein",
+        "type":"keyword",
+        "webTitle":"Sinn Féin",
+        "webUrl":"http://www.theguardian.com/politics/sinn-fein",
+        "apiUrl":"http://content.guardianapis.com/politics/sinn-fein",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392263621",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/6/27/1340795965699/Queen-Elizabeth-shakes-ha-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "altText":"Queen Elizabeth shakes hands with Martin McGuinness ",
+            "height":"84",
+            "credit":"Getty Images",
+            "caption":"Queen Elizabeth shakes hands with Martin McGuinness  Photograph: Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-392260867",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"mp4",
+          "file":"http://cdn.theguardian.tv/brightcove/2012/6/27/120627QueenHandshake-16x9.mp4",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/120627QueenHandshake/120627QueenHandshake.m3u8",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2012/6/27/120627QueenHandshake_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2012/6/27/120627QueenHandshake-720.mp4",
+          "typeData":{
+            "source":"Press Association",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/brightcove/thumb/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/brightcove/poster/2012/6/27/120627QueenHandshake_6352623.jpg",
+            "width":"640",
+            "durationSeconds":"19"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk/2012/jun/27/queen-martin-mcguinness-handshake-troubles",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2012-06-27T17:34:03Z",
+      "webTitle":"The Belfast handshake: after years of fiery rhetoric came rapprochement",
+      "webUrl":"http://www.theguardian.com/uk/2012/jun/27/queen-martin-mcguinness-handshake-troubles",
+      "apiUrl":"http://content.guardianapis.com/uk/2012/jun/27/queen-martin-mcguinness-handshake-troubles",
+      "fields":{
+        "trailText":"The Queen and Martin McGuinness's handshake didn't last long, but it underlined how far we have come since the Troubles",
+        "headline":"The Belfast handshake: after years of fiery rhetoric came rapprochement",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/38jcb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340818060355/Peter-Robinson-and-deputy-003.jpg",
+        "wordcount":"1089",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/queen",
+        "type":"keyword",
+        "webTitle":"The Queen",
+        "webUrl":"http://www.theguardian.com/uk/queen",
+        "apiUrl":"http://content.guardianapis.com/uk/queen",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Irish politics",
+        "webUrl":"http://www.theguardian.com/politics/northernireland",
+        "apiUrl":"http://content.guardianapis.com/politics/northernireland",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/republicanism",
+        "type":"keyword",
+        "webTitle":"Republicanism",
+        "webUrl":"http://www.theguardian.com/uk/republicanism",
+        "apiUrl":"http://content.guardianapis.com/uk/republicanism",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/monarchy",
+        "type":"keyword",
+        "webTitle":"Monarchy",
+        "webUrl":"http://www.theguardian.com/uk/monarchy",
+        "apiUrl":"http://content.guardianapis.com/uk/monarchy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/martin-mcguinness",
+        "type":"keyword",
+        "webTitle":"Martin McGuinness",
+        "webUrl":"http://www.theguardian.com/politics/martin-mcguinness",
+        "apiUrl":"http://content.guardianapis.com/politics/martin-mcguinness",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/sinn-fein",
+        "type":"keyword",
+        "webTitle":"Sinn Féin",
+        "webUrl":"http://www.theguardian.com/politics/sinn-fein",
+        "apiUrl":"http://content.guardianapis.com/politics/sinn-fein",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/carolinedavies",
+        "type":"contributor",
+        "webTitle":"Caroline Davies",
+        "webUrl":"http://www.theguardian.com/profile/carolinedavies",
+        "apiUrl":"http://content.guardianapis.com/profile/carolinedavies",
+        "bio":"<p>Caroline Davies is a writer for the Guardian</p>",
+        "r2ContributorId":"20582",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-392276208",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340817951148/Peter-Robinson-and-deputy-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"54",
+            "credit":"Pool/Reuters",
+            "caption":"Northern Ireland first minister Peter Robinson (C) and deputy first minister Martin McGuinness (L) wait to meet Britain's Queen Elizabeth at the Lyric Theatre in Belfast Photograph: Pool/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340817952603/Peter-Robinson-and-deputy-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"130",
+            "credit":"Pool/Reuters",
+            "caption":"Northern Ireland first minister Peter Robinson (C) and deputy first minister Martin McGuinness (L) wait to meet Britain's Queen Elizabeth at the Lyric Theatre in Belfast Photograph: Pool/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340817953829/Peter-Robinson-and-deputy-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"84",
+            "credit":"Pool/Reuters",
+            "caption":"Northern Ireland first minister Peter Robinson (C) and deputy first minister Martin McGuinness (L) wait to meet Britain's Queen Elizabeth at the Lyric Theatre in Belfast Photograph: Pool/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340817955001/Peter-Robinson-and-deputy-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"132",
+            "credit":"Pool/Reuters",
+            "caption":"Northern Ireland first minister Peter Robinson (C) and deputy first minister Martin McGuinness (L) wait to meet Britain's Queen Elizabeth at the Lyric Theatre in Belfast Photograph: Pool/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340817956159/Peter-Robinson-and-deputy-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"168",
+            "credit":"Pool/Reuters",
+            "caption":"Northern Ireland first minister Peter Robinson (C) and deputy first minister Martin McGuinness (L) wait to meet Britain's Queen Elizabeth at the Lyric Theatre in Belfast Photograph: Pool/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340817957425/Peter-Robinson-and-deputy-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"180",
+            "credit":"Pool/Reuters",
+            "caption":"Northern Ireland first minister Peter Robinson (C) and deputy first minister Martin McGuinness (L) wait to meet Britain's Queen Elizabeth at the Lyric Theatre in Belfast Photograph: Pool/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340817958799/Peter-Robinson-and-deputy-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"228",
+            "credit":"Pool/Reuters",
+            "caption":"Northern Ireland first minister Peter Robinson (C) and deputy first minister Martin McGuinness (L) wait to meet Britain's Queen Elizabeth at the Lyric Theatre in Belfast Photograph: Pool/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340817960037/Peter-Robinson-and-deputy-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"276",
+            "credit":"Pool/Reuters",
+            "caption":"Northern Ireland first minister Peter Robinson (C) and deputy first minister Martin McGuinness (L) wait to meet Britain's Queen Elizabeth at the Lyric Theatre in Belfast Photograph: Pool/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340818066275/Peter-Robinson-and-deputy-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"276",
+            "credit":"Pool/Reuters",
+            "caption":"Queen Elizabeth approaches Northern Ireland first minister Peter Robinson (centre) and his deputy, Martin McGuinness. Photograph: Pool/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-392276209",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2012/6/27/1340818060355/Peter-Robinson-and-deputy-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Pool",
+            "altText":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast",
+            "height":"84",
+            "credit":"Pool/Reuters",
+            "caption":"Peter Robinson and deputy first minister Martin McGuinness wait to meet Queen Elizabeth in Belfast Photograph: Pool/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

@@ -1,7 +1,7 @@
 @(section: String)(implicit request: RequestHeader)
 
 @defining(Some(section).filter{ section => section.nonEmpty && !section.equals("global")}.map{ section => s"/most-read/$section" }.getOrElse("/most-read")){ url =>
-    <div class="js-popular">
+    <div class="js-popular article__popular">
         <h2 class="type-2 article-zone">
             <a class="most-viewed-no-js" href="@LinkTo{@url}" data-link-name="Most viewed @section">Most read <i class="i i-filter-arrow-right"></i></a>
         </h2>

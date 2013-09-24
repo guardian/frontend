@@ -88,7 +88,26 @@ object ContentApiMetrics {
     "Content api calls that timeout"
   )
 
-  val all: Seq[Metric] = Seq(HttpTimingMetric, HttpTimeoutCountMetric)
+  object ElasticHttpTimingMetric extends TimingMetric(
+    "performance",
+    "elastic-content-api-calls",
+    "Elastic Content API calls",
+    "Elastic outgoing requests to content api"
+  ) with TimingMetricLogging
+
+  object ElasticHttpTimeoutCountMetric extends CountMetric(
+    "timeout",
+    "elastic-content-api-timeouts",
+    "Elastic Content API timeouts",
+    "Elastic Content api calls that timeout"
+  )
+
+  val all: Seq[Metric] = Seq(
+    HttpTimingMetric,
+    HttpTimeoutCountMetric,
+    ElasticHttpTimeoutCountMetric,
+    ElasticHttpTimingMetric
+  )
 }
 
 object PaMetrics {

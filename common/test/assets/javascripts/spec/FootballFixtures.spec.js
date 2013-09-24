@@ -1,4 +1,15 @@
-define(['common', 'ajax', 'qwery', 'modules/footballfixtures'], function(common, ajax, qwery, FootballFixtures) {
+define(['common', 'ajax', 'qwery', 'modules/footballfixtures', 'helpers/fixtures'], function(common, ajax, qwery, FootballFixtures, fixtures) {
+
+    var fixuresConf = {
+        id: 'football-fixtures-fixtures',
+        fixtures: [
+            '<div id="football-fixtures">' +
+                '<ul>' +
+                    '<li></li>' +
+                '</ul>' +
+            '</div>'
+        ]
+    };
 
     describe("Football fixtures component", function() {
 
@@ -7,6 +18,7 @@ define(['common', 'ajax', 'qwery', 'modules/footballfixtures'], function(common,
                 ajaxUrl: "",
                 edition: "UK"
             }});
+            fixtures.render(fixuresConf);
             prependTo = qwery('ul > li', '#football-fixtures')[0];
             competitions = [500, 510, 100];
             
@@ -20,6 +32,10 @@ define(['common', 'ajax', 'qwery', 'modules/footballfixtures'], function(common,
             server = sinon.fakeServer.create();
             server.autoRespond = true;
         });
+
+        afterEach(function() {
+            fixtures.clean(fixuresConf.id);
+        })
 
         // json test needs to be run asynchronously
         it("should request the given competitions from the fixtures api", function(){

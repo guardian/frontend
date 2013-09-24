@@ -3,61 +3,139 @@
         background-color: $pink;
         border-color: $light-pink;
     }
+    &.collection--commentisfree-section .collection__title {
+        background-color: $green;
+        border-color: $light-green;
+    }
     .items {
         @include mq(tablet) {
             font-size: 0;
-            white-space: nowrap;
-        }
-        @include mq(tablet, wide) {
-            overflow-x: scroll;
-            overflow-y: hidden;
         }
     }
     .item {
+        margin-top: $gs-baseline*2;
         @include mq(tablet) {
             @include box-sizing(content-box);
-            white-space: normal;
             display: inline-block;
             vertical-align: top;
-            border-right: 1px dotted $grey;
-            padding: 0 $gs-gutter/2 gs-height(4) $gs-gutter/2 - 1;
+            padding-left: $gs-gutter/2 - 1;
+            padding-right: $gs-gutter/2;
+            border-left: 1px dotted $grey;
             width: gs-span(4);
-            background-color: #ffffff;
-            &:first-child {
-                padding-left: 0;
-            }
-            &:last-child {
-                padding-right: 0;
-                border-right-style: none;
-            }
+        }
+    }
+    @mixin row($row-size) {
+        // styling for first row
+        .item:nth-child(-n + #{$row-size}) {
+            margin-top: 0;
             .item__title {
-                min-height: gs-height(4) + $gs-baseline;
-                padding-bottom: gs-height(1);
+                padding-top: 0;
+                border-top-style: none;
             }
-            &.item--feature .item__title {
-                background-color: #ededed;
+        }
+        // stylings for beggining and end of rows
+        .item:nth-child(#{$row-size}n + 1) {
+            padding-left: 0;
+            border-left-style: none;
+        }
+        .item:nth-child(#{$row-size}n) {
+            padding-right: 0;
+        }
+    }
+    @include mq($to: tablet) {
+        @include row(1);
+    }
+    @include mq(tablet, desktop) {
+        @include row(2);
+    }
+    @include mq(desktop, wide) {
+        @include row(3);
+    }
+    @include mq(wide) {
+        // styling for first row
+        .item:nth-child(-n + 3) {
+            margin-top: 0;
+            .item__title {
+                padding-top: 0;
+                border-top-style: none;
             }
+        }
+        // stylings for beggining and end of rows
+        .item:first-child,
+        .item:nth-child(4n + 4) {
+            padding-left: 0;
+            border-left-style: none;
+        }
+        .item:nth-child(3),
+        .item:nth-child(4n + 7) {
+            padding-right: 0;
         }
     }
     .item__title {
         @include font-size(26, 28);
-    }
-    .item__image-container {
-        position: absolute;
-        bottom: 0;
-        height: gs-height(4);
-        width: gs-span(4);
-    }
-    .item__image {
-        height: 100%;
-        @include mq($to: tablet) {
-            display: none;
+        @include mq(tablet) {
+            min-height: gs-height(3);
         }
     }
-    .item__meta {
+    .item__standfirst {
+        margin: $gs-baseline*2 0 0;
+        @include font-size(16, 20);
         @include mq(tablet) {
-            position: absolute;
-            bottom: gs-height(4) + $gs-baseline;
+            min-height: gs-height(4);
+        }
+    }
+    .item__image-container {
+        @include mq(tablet) {
+            height: gs-height(4);
+        }
+    }
+    .item__image {
+        @include mq($to: tablet) {
+            width: 100%;
+        }
+        @include mq(tablet) {
+            height: 100%;
+        }
+    }
+    // larger image styling
+    .item:first-child {
+        @include mq(wide) {
+            width: gs-span(8);
+            &.item--with-image {
+                height: gs-height(8);
+                .item__title {
+                    background-color: rgba(#ffffff, 0.8);
+                    padding: $gs-baseline/2 $gs-gutter/2 gs-height(1) + $gs-baseline;
+                    width:  gs-span(5);
+                    min-height: 0;
+                    border-top-style: solid;
+                    position: absolute;
+                    bottom: 0;
+                }
+                .item__meta {
+                    position: absolute;
+                    bottom: $gs-baseline;
+                    left: $gs-gutter/2;
+                }
+                .item__image-container {
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    z-index: -1;
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+    .item:nth-child(n + 2) {
+        @include mq($to: tablet) {
+            .item__title {
+                @include font-size(20, 24);
+            }
+            .item__standfirst,
+            .item__image-container {
+                display: none;
+            }
         }
     }
 }

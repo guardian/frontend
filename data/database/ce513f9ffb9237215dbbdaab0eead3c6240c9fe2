@@ -1,0 +1,2491 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":9,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":1,
+    "orderBy":"newest",
+    "results":[{
+      "id":"world/2013/sep/19/baby-baggage-conveyor-belt-alicante",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-20T08:39:00Z",
+      "webTitle":"Baby dies after getting trapped in baggage carousel in Spanish airport",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/19/baby-baggage-conveyor-belt-alicante",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/19/baby-baggage-conveyor-belt-alicante",
+      "fields":{
+        "trailText":"<p>Spanish officials say mother placed baby carrier on belt, which was activated by weight, after family flew in from Gatwick</p>",
+        "headline":"Baby dies after getting trapped in baggage carousel in Spanish airport",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tqnn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608114370/easyJet-plane-004.jpg",
+        "wordcount":"292",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/air-transport",
+        "type":"keyword",
+        "webTitle":"Air transport",
+        "webUrl":"http://www.theguardian.com/world/air-transport",
+        "apiUrl":"http://content.guardianapis.com/world/air-transport",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/spain",
+        "type":"keyword",
+        "webTitle":"Spain",
+        "webUrl":"http://www.theguardian.com/world/spain",
+        "apiUrl":"http://content.guardianapis.com/world/spain",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"profile/davidbatty",
+        "type":"contributor",
+        "webTitle":"David Batty",
+        "webUrl":"http://www.theguardian.com/profile/davidbatty",
+        "apiUrl":"http://content.guardianapis.com/profile/davidbatty",
+        "bio":"<p>David Batty is a news editor and reporter. His specialist areas are visual art, higher education, the Middle East and social affairs. He has worked at the Guardian since 2001 and was previously a health correspondent. Follow David on Twitter <a href=\"https://twitter.com/#!/David_Batty\">@David_Batty</a></p>",
+        "rcsId":"GNL004817",
+        "r2ContributorId":"15538",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/01/david_batty_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417822390",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608110247/easyJet-plane-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"130",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608111990/easyJet-plane-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"54",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608113200/easyJet-plane-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"340",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608114370/easyJet-plane-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"84",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608115407/easyJet-plane-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"132",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608116441/easyJet-plane-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"168",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608117522/easyJet-plane-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"180",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608119716/easyJet-plane-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"228",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608120778/easyJet-plane-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"276",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608121941/easyJet-plane-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"372",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608120778/easyJet-plane-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"276",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417822391",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379608114370/easyJet-plane-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Steven May",
+            "altText":"easyJet plane",
+            "height":"84",
+            "credit":"Steven May/Alamy",
+            "caption":"The baby's American mother had arrived at Alicante-Elche airport on an easyJet flight from London Gatwick. Photograph: Steven May/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/brain-flapping/2013/sep/20/video-games-cause-violence-claims-cause-violence",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-09-20T06:00:00Z",
+      "webTitle":"'Video games lead to violence' claims lead to violence | Dean Burnett",
+      "webUrl":"http://www.theguardian.com/science/brain-flapping/2013/sep/20/video-games-cause-violence-claims-cause-violence",
+      "apiUrl":"http://content.guardianapis.com/science/brain-flapping/2013/sep/20/video-games-cause-violence-claims-cause-violence",
+      "fields":{
+        "trailText":"<p><strong>Dean Burnett:</strong> The persistent claims that video games cause violence are likely to result in violence</p>",
+        "headline":"'Video games lead to violence' claims lead to violence",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jv2a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/12/22/1324570538373/Call-of-Duty-Modern-Warfa-002.jpg",
+        "wordcount":"857",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"science/psychology",
+        "type":"keyword",
+        "webTitle":"Psychology",
+        "webUrl":"http://www.theguardian.com/science/psychology",
+        "apiUrl":"http://content.guardianapis.com/science/psychology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/brain-flapping",
+        "type":"blog",
+        "webTitle":"Brain flapping",
+        "webUrl":"http://www.theguardian.com/science/brain-flapping",
+        "apiUrl":"http://content.guardianapis.com/science/brain-flapping",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"profile/dean-burnett",
+        "type":"contributor",
+        "webTitle":"Dean Burnett",
+        "webUrl":"http://www.theguardian.com/profile/dean-burnett",
+        "apiUrl":"http://content.guardianapis.com/profile/dean-burnett",
+        "bio":"<p>Dean Burnett is a doctor of neuroscience, but moonlights as a comedy writer and stand-up comedian. He <a href=\"http://www.mscpsychiatry.co.uk/\">tutors and lectures at Cardiff University</a></p>",
+        "r2ContributorId":"48703",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417820470",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/5/18/1242608388785/Grand-Theft-Auto-IV-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Grand Theft Auto IV",
+            "height":"276",
+            "credit":"AP",
+            "caption":"More tea, Vicar?  Photograph: AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417820471",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/12/22/1324570538373/Call-of-Duty-Modern-Warfa-002.jpg",
+          "typeData":{
+            "source":"Activision/AP",
+            "altText":"Call of Duty: Modern Warfare 3 was a retail blockbuster video game of 2011. ",
+            "height":"84",
+            "credit":"Activision/AP",
+            "caption":"Call of Duty: Modern Warfare 3 was a retail blockbuster video game of 2011.   Photograph: Activision/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/19/pope-francis-vision-new-catholic-church",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-19T18:19:00Z",
+      "webTitle":"Pope Francis sets out vision for more gay people and women in 'new' church",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/19/pope-francis-vision-new-catholic-church",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/19/pope-francis-vision-new-catholic-church",
+      "fields":{
+        "trailText":"<p>Pope Francis gives wide-ranging interview to Italian journal and urges Catholics to show 'audacity and courage' in drive for reform</p>",
+        "headline":"Pope Francis sets out vision for more gay people and women in 'new' church",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tqp8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379610374137/Pope-Francis-005.jpg",
+        "wordcount":"882",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/pope-francis",
+        "type":"keyword",
+        "webTitle":"Pope Francis",
+        "webUrl":"http://www.theguardian.com/world/pope-francis",
+        "apiUrl":"http://content.guardianapis.com/world/pope-francis",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/catholicism",
+        "type":"keyword",
+        "webTitle":"Catholicism",
+        "webUrl":"http://www.theguardian.com/world/catholicism",
+        "apiUrl":"http://content.guardianapis.com/world/catholicism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.theguardian.com/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/christianity",
+        "type":"keyword",
+        "webTitle":"Christianity",
+        "webUrl":"http://www.theguardian.com/world/christianity",
+        "apiUrl":"http://content.guardianapis.com/world/christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/gay-rights",
+        "type":"keyword",
+        "webTitle":"Gay rights",
+        "webUrl":"http://www.theguardian.com/world/gay-rights",
+        "apiUrl":"http://content.guardianapis.com/world/gay-rights",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/edpilkington",
+        "type":"contributor",
+        "webTitle":"Ed Pilkington",
+        "webUrl":"http://www.theguardian.com/profile/edpilkington",
+        "apiUrl":"http://content.guardianapis.com/profile/edpilkington",
+        "bio":"<p>Ed Pilkington is the chief reporter for Guardian US. He is a former national and foreign editor of the paper, and author of Beyond the Mother Country</p>",
+        "rcsId":"GNL038863",
+        "r2ContributorId":"15609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2012/3/27/1332862968426/edpilkington_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417801085",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379610383465/Pope-Francis-010.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"AGF",
+            "altText":"Pope Francis",
+            "height":"276",
+            "credit":"AGF/Rex Features",
+            "caption":"Pope Francis said unless a new balance is found, 'the moral edifice of the church is likely to fall like a house of cards'. Photograph: AGF/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417801086",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379610374137/Pope-Francis-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"AGF",
+            "altText":"Pope Francis",
+            "height":"84",
+            "credit":"AGF/Rex Features",
+            "caption":"Pope Francis. Photograph: AGF/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/19/freshers-week-sexism-women",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-19T14:49:39Z",
+      "webTitle":"Freshers' week sexism, and the damage it does",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/19/freshers-week-sexism-women",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/19/freshers-week-sexism-women",
+      "fields":{
+        "trailText":"<p><strong>Laura Bates:</strong> The first term of college is many young women's first experience of leaving home and adult life, which makes the #freshersweeksexism of laddish university culture so hard to stand</p>",
+        "headline":"Freshers' week sexism, and the damage it does",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tqjn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601219888/Students-at-freshers-week-005.jpg",
+        "wordcount":"906",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/laura-bates",
+        "type":"contributor",
+        "webTitle":"Laura Bates",
+        "webUrl":"http://www.theguardian.com/profile/laura-bates",
+        "apiUrl":"http://content.guardianapis.com/profile/laura-bates",
+        "bio":"<p>Laura Bates is the founder of the <a href=\"http://www.everydaysexism.com/\">Everyday Sexism Project</a>, a collection of over 10,000 women's daily experiences of gender inequality</p>",
+        "r2ContributorId":"54862",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/7/1362678319287/Laura-Bates.jpg",
+        "references":[]
+      },{
+        "id":"lifeandstyle/the-womens-blog-with-jane-martinson",
+        "type":"blog",
+        "webTitle":"The women's blog with Jane Martinson",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"education/students",
+        "type":"keyword",
+        "webTitle":"Students",
+        "webUrl":"http://www.theguardian.com/education/students",
+        "apiUrl":"http://content.guardianapis.com/education/students",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/freshers",
+        "type":"keyword",
+        "webTitle":"Freshers",
+        "webUrl":"http://www.theguardian.com/education/freshers",
+        "apiUrl":"http://content.guardianapis.com/education/freshers",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/higher-education",
+        "type":"keyword",
+        "webTitle":"Higher education",
+        "webUrl":"http://www.theguardian.com/education/higher-education",
+        "apiUrl":"http://content.guardianapis.com/education/higher-education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417768162",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601215020/Students-at-freshers-week-002.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"54",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601216584/Students-at-freshers-week-003.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"340",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601218158/Students-at-freshers-week-004.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"130",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601219888/Students-at-freshers-week-005.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"84",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601221976/Students-at-freshers-week-006.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"132",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601224266/Students-at-freshers-week-007.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"168",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601225871/Students-at-freshers-week-008.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"180",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601227419/Students-at-freshers-week-009.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"228",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601229117/Students-at-freshers-week-010.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"276",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601230739/Students-at-freshers-week-011.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"372",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601229117/Students-at-freshers-week-010.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"276",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417768163",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379601219888/Students-at-freshers-week-005.jpg",
+          "typeData":{
+            "source":"Martin Godwin for the Guardian",
+            "altText":"Students at freshers' week",
+            "height":"84",
+            "credit":"Martin Godwin for the Guardian",
+            "caption":"Students at the freshers' week fair at the University of Sussex in Brighton. Photograph: Martin Godwin for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/sep/19/russian-literature-sex-education-schools-childrens-ombudsman",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-09-19T12:12:34Z",
+      "webTitle":"Russian literature is best sex education for young people, says ombudsman",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/19/russian-literature-sex-education-schools-childrens-ombudsman",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/19/russian-literature-sex-education-schools-childrens-ombudsman",
+      "fields":{
+        "trailText":"Pavel Astakhov opposes introduction of sex education in schools and suggests reading the classics as an alternative",
+        "headline":"Russian literature is best sex education for young people, says ombudsman",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tqfg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592657638/1997-ANNA-KARENINA-003.jpg",
+        "wordcount":"777",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/russia",
+        "type":"keyword",
+        "webTitle":"Russia",
+        "webUrl":"http://www.theguardian.com/world/russia",
+        "apiUrl":"http://content.guardianapis.com/world/russia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"education/sexeducation",
+        "type":"keyword",
+        "webTitle":"Sex education",
+        "webUrl":"http://www.theguardian.com/education/sexeducation",
+        "apiUrl":"http://content.guardianapis.com/education/sexeducation",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/children",
+        "type":"keyword",
+        "webTitle":"Children",
+        "webUrl":"http://www.theguardian.com/society/children",
+        "apiUrl":"http://content.guardianapis.com/society/children",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"education/education",
+        "type":"keyword",
+        "webTitle":"Education",
+        "webUrl":"http://www.theguardian.com/education/education",
+        "apiUrl":"http://content.guardianapis.com/education/education",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"profile/shaun-walker",
+        "type":"contributor",
+        "webTitle":"Shaun Walker",
+        "webUrl":"http://www.theguardian.com/profile/shaun-walker",
+        "apiUrl":"http://content.guardianapis.com/profile/shaun-walker",
+        "bio":"<p>Shaun Walker is Moscow Correspondent of the Guardian.  He has lived in Russia for several years and was previously Moscow Correspondent for The Independent.</p>",
+        "r2ContributorId":"58704",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379428204305/Shaun-Walker.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417748281",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592654876/1997-ANNA-KARENINA-001.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"54",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/WARNER BROS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592656343/1997-ANNA-KARENINA-002.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"130",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/WARNER BROS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592657638/1997-ANNA-KARENINA-003.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"84",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/WARNER BROS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592659844/1997-ANNA-KARENINA-004.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"132",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/WARNER BROS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592663532/1997-ANNA-KARENINA-005.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"168",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/WARNER BROS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592665742/1997-ANNA-KARENINA-006.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"180",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/WARNER BROS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592667218/1997-ANNA-KARENINA-007.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"228",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/WARNER BROS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592668257/1997-ANNA-KARENINA-008.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"276",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/WARNER BROS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592668257/1997-ANNA-KARENINA-008.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"276",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/Warner Bros.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417748282",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379592657638/1997-ANNA-KARENINA-003.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext/WARNER BROS",
+            "altText":"1997, ANNA KARENINA",
+            "height":"84",
+            "credit":"Allstar/Cinetext/WARNER BROS",
+            "caption":"Leo Tolstoy's Anna Karenina tells the story of a woman trapped in a loveless marriage who begins a passionate affair.  Photograph: Allstar/Cinetext/WARNER BROS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/video/2013/sep/19/sunshine-on-leith-clip-video",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-09-19T11:28:05Z",
+      "webTitle":"Sunshine on Leith: watch a clip from Dexter Fletcher's Proclaimers musical - video",
+      "webUrl":"http://www.theguardian.com/film/video/2013/sep/19/sunshine-on-leith-clip-video",
+      "apiUrl":"http://content.guardianapis.com/film/video/2013/sep/19/sunshine-on-leith-clip-video",
+      "fields":{
+        "trailText":"<p>Dexter Fletcher's second film takes the songs of the Scottish rock duo and tells a love story with them. Watch an exclusive clip from the Toronto hit</p>",
+        "headline":"Sunshine on Leith: watch a clip from Dexter Fletcher's Proclaimers musical - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tpp8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519015925/Film-still-from-Sunshine--010.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/musical",
+        "type":"keyword",
+        "webTitle":"Musical",
+        "webUrl":"http://www.theguardian.com/film/musical",
+        "apiUrl":"http://content.guardianapis.com/film/musical",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/torontofilmfestival",
+        "type":"keyword",
+        "webTitle":"Toronto film festival",
+        "webUrl":"http://www.theguardian.com/film/torontofilmfestival",
+        "apiUrl":"http://content.guardianapis.com/film/torontofilmfestival",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/toronto-film-festival-2013",
+        "type":"keyword",
+        "webTitle":"Toronto film festival 2013",
+        "webUrl":"http://www.theguardian.com/film/toronto-film-festival-2013",
+        "apiUrl":"http://content.guardianapis.com/film/toronto-film-festival-2013",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/peter-mullan",
+        "type":"keyword",
+        "webTitle":"Peter Mullan",
+        "webUrl":"http://www.theguardian.com/film/peter-mullan",
+        "apiUrl":"http://content.guardianapis.com/film/peter-mullan",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417658775",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519002657/Film-still-from-Sunshine--001.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"230",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519006471/Film-still-from-Sunshine--002.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"90",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519007581/Film-still-from-Sunshine--003.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"225",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519008718/Film-still-from-Sunshine--004.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"360",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519010309/Film-still-from-Sunshine--005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"360",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519012590/Film-still-from-Sunshine--007.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"54",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519013747/Film-still-from-Sunshine--008.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"340",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519014853/Film-still-from-Sunshine--009.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"130",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519015925/Film-still-from-Sunshine--010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"84",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519017144/Film-still-from-Sunshine--011.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"132",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519018327/Film-still-from-Sunshine--012.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"168",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519019391/Film-still-from-Sunshine--013.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"180",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519020510/Film-still-from-Sunshine--014.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"228",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519021622/Film-still-from-Sunshine--015.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"276",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519022792/Film-still-from-Sunshine--016.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"372",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/18/130919SunshineOnLeith-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "width":"480",
+            "durationSeconds":"3"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/18/130919SunshineOnLeith_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "width":"480",
+            "durationSeconds":"3"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/18/130919SunshineOnLeith_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "width":"480",
+            "durationSeconds":"3"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/18/130919SunshineOnLeith/130919SunshineOnLeith.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "width":"480",
+            "durationSeconds":"3"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/18/130919SunshineOnLeith-720.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "width":"480",
+            "durationSeconds":"3"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/18/130919SunshineOnLeith_vpx.webm",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/18/130919SunshineOnLeith_8090020.jpg",
+            "width":"480",
+            "durationSeconds":"3"
+          }
+        }]
+      },{
+        "id":"gu-image-417739566",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/18/1379519015925/Film-still-from-Sunshine--010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"guardian.co.uk",
+            "altText":"Film still from Sunshine on Leith",
+            "height":"84",
+            "credit":"guardian.co.uk/PR",
+            "caption":"Film still from Sunshine on Leith",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"news/video/2013/sep/19/stephen-hawking-history-time-simple-video",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-09-19T10:04:00Z",
+      "webTitle":"Stephen Hawking's big ideas ... made simple - video animation",
+      "webUrl":"http://www.theguardian.com/news/video/2013/sep/19/stephen-hawking-history-time-simple-video",
+      "apiUrl":"http://content.guardianapis.com/news/video/2013/sep/19/stephen-hawking-history-time-simple-video",
+      "fields":{
+        "trailText":"<p>Learn about black holes, Hawking radiation, the big bang and creation of the universe in just two and a half minutes</p>",
+        "headline":"Stephen Hawking's big ideas ... made simple - video animation",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tq9n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583038269/Stephen-Hawkings-black-ho-026.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"science/hawking",
+        "type":"keyword",
+        "webTitle":"Stephen Hawking",
+        "webUrl":"http://www.theguardian.com/science/hawking",
+        "apiUrl":"http://content.guardianapis.com/science/hawking",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"news/series/made-simple",
+        "type":"series",
+        "webTitle":"Made simple",
+        "webUrl":"http://www.theguardian.com/news/series/made-simple",
+        "apiUrl":"http://content.guardianapis.com/news/series/made-simple",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"science/black-holes",
+        "type":"keyword",
+        "webTitle":"Black holes",
+        "webUrl":"http://www.theguardian.com/science/black-holes",
+        "apiUrl":"http://content.guardianapis.com/science/black-holes",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/space",
+        "type":"keyword",
+        "webTitle":"Space",
+        "webUrl":"http://www.theguardian.com/science/space",
+        "apiUrl":"http://content.guardianapis.com/science/space",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/astronomy",
+        "type":"keyword",
+        "webTitle":"Astronomy",
+        "webUrl":"http://www.theguardian.com/science/astronomy",
+        "apiUrl":"http://content.guardianapis.com/science/astronomy",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/physics",
+        "type":"keyword",
+        "webTitle":"Physics",
+        "webUrl":"http://www.theguardian.com/science/physics",
+        "apiUrl":"http://content.guardianapis.com/science/physics",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"profile/alokjha",
+        "type":"contributor",
+        "webTitle":"Alok Jha",
+        "webUrl":"http://www.theguardian.com/profile/alokjha",
+        "apiUrl":"http://content.guardianapis.com/profile/alokjha",
+        "bio":"<p>Alok Jha is a science correspondent at the Guardian. In addition to writing news and comment, he presents the <a href=\"http://www.theguardian.com/science/series/science\">Science Weekly podcast</a>. A physics graduate from Imperial College London, he has been at the Guardian since the launch of the science supplement, Life, in 2003. He is the author of <a href=\"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780857386120\">The Doomsday Handbook: 50 Ways to the End of the World </a> and <a href=\"http://www.amazon.co.uk/How-Live-Forever-Interesting-Science/dp/1849164827\">How To Live Forever And 34 Other Really Interesting Uses for Science</a>, both published by Quercus. You can find him on Twitter at  <a href=\"https://twitter.com/alokjha\">@alokjha</a> and his personal website is at <a href=\"http://www.alokjha.com\">alokjha.com </a></p>",
+        "rcsId":"GNL006494",
+        "r2ContributorId":"15338",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/alok_jha_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/matt-hill",
+        "type":"contributor",
+        "webTitle":"Matt Hill",
+        "webUrl":"http://www.theguardian.com/profile/matt-hill",
+        "apiUrl":"http://content.guardianapis.com/profile/matt-hill",
+        "r2ContributorId":"51656",
+        "references":[]
+      },{
+        "id":"profile/paul-boyd",
+        "type":"contributor",
+        "webTitle":"Paul Boyd",
+        "webUrl":"http://www.theguardian.com/profile/paul-boyd",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-boyd",
+        "bio":"<p>Paul Boyd is the multimedia editor for specialist subjects and professional networks at the Guardian</p>",
+        "r2ContributorId":"56133",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417725296",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583003871/Stephen-Hawkings-black-ho-001.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"360",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583020789/Stephen-Hawkings-black-ho-012.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"372",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583022007/Stephen-Hawkings-black-ho-013.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"90",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583023259/Stephen-Hawkings-black-ho-014.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"225",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583024463/Stephen-Hawkings-black-ho-015.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"360",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583025825/Stephen-Hawkings-black-ho-016.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"340",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583027063/Stephen-Hawkings-black-ho-017.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"54",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583028291/Stephen-Hawkings-black-ho-018.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"130",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583030832/Stephen-Hawkings-black-ho-020.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"132",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583032028/Stephen-Hawkings-black-ho-021.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"168",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583033306/Stephen-Hawkings-black-ho-022.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"180",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583034541/Stephen-Hawkings-black-ho-023.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"228",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583035767/Stephen-Hawkings-black-ho-024.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"276",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583036981/Stephen-Hawkings-black-ho-025.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"230",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583038269/Stephen-Hawkings-black-ho-026.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"84",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"140"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/19/130919StevenHawking_vpx.webm",
+          "typeData":{
+            "source":"Scriberia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/19/130919StevenHawking_8092453.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/19/130919StevenHawking_8092453.jpg",
+            "width":"480",
+            "durationSeconds":"44"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/19/130919StevenHawking-720.mp4",
+          "typeData":{
+            "source":"Scriberia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/19/130919StevenHawking_8092453.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/19/130919StevenHawking_8092453.jpg",
+            "width":"480",
+            "durationSeconds":"44"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/19/130919StevenHawking-16x9.mp4",
+          "typeData":{
+            "source":"Scriberia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/19/130919StevenHawking_8092453.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/19/130919StevenHawking_8092453.jpg",
+            "width":"480",
+            "durationSeconds":"44"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/19/130919StevenHawking_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Scriberia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/19/130919StevenHawking_8092453.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/19/130919StevenHawking_8092453.jpg",
+            "width":"480",
+            "durationSeconds":"44"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/19/130919StevenHawking_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Scriberia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/19/130919StevenHawking_8092453.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/19/130919StevenHawking_8092453.jpg",
+            "width":"480",
+            "durationSeconds":"44"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/19/130919StevenHawking/130919StevenHawking.m3u8",
+          "typeData":{
+            "source":"Scriberia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/19/130919StevenHawking_8092453.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/19/130919StevenHawking_8092453.jpg",
+            "width":"480",
+            "durationSeconds":"44"
+          }
+        }]
+      },{
+        "id":"gu-image-417774239",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/19/1379583038269/Stephen-Hawkings-black-ho-026.jpg",
+          "typeData":{
+            "source":"Scriberia",
+            "altText":"Stephen Hawking's black hole theory",
+            "height":"84",
+            "credit":"Scriberia",
+            "caption":"Stephen Hawking's black hole theory Photograph: Scriberia",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"football/video/2013/sep/18/seven-man-kick-off-red-bull-leipzig-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-09-18T08:35:59Z",
+      "webTitle":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under 10 seconds - video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/sep/18/seven-man-kick-off-red-bull-leipzig-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/sep/18/seven-man-kick-off-red-bull-leipzig-video",
+      "fields":{
+        "trailText":"<p>Red Bull Leipzig line up with seven men on the halfway line to start a German second division game against Stuttgart II</p>",
+        "headline":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under 10 seconds - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tpvq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433015693/Seven-man-attacking-kick--005.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/europeanfootball",
+        "type":"keyword",
+        "webTitle":"European club football",
+        "webUrl":"http://www.theguardian.com/football/europeanfootball",
+        "apiUrl":"http://content.guardianapis.com/football/europeanfootball",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/series/amazing-world-of-sport",
+        "type":"series",
+        "webTitle":"The amazing world of sport",
+        "webUrl":"http://www.theguardian.com/sport/series/amazing-world-of-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/series/amazing-world-of-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417545114",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433010311/Seven-man-attacking-kick--002.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"54",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433011801/Seven-man-attacking-kick--003.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"340",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433013393/Seven-man-attacking-kick--004.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"130",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433015693/Seven-man-attacking-kick--005.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"84",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433017683/Seven-man-attacking-kick--006.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"132",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433019133/Seven-man-attacking-kick--007.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"168",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433020713/Seven-man-attacking-kick--008.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"180",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433022220/Seven-man-attacking-kick--009.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"228",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433023691/Seven-man-attacking-kick--010.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"276",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433025381/Seven-man-attacking-kick--011.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"372",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433026865/Seven-man-attacking-kick--012.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"360",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433028440/Seven-man-attacking-kick--013.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"90",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433029970/Seven-man-attacking-kick--014.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"225",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433031711/Seven-man-attacking-kick--015.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"360",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433033834/Seven-man-attacking-kick--016.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"230",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/17/130917flyingkick-16x9.mp4",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/17/130917flyingkick_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/17/130917flyingkick_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/17/130917flyingkick/130917flyingkick.m3u8",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/17/130917flyingkick-720.mp4",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/17/130917flyingkick_vpx.webm",
+          "typeData":{
+            "source":"YouTube",
+            "embeddable":"true",
+            "blockAds":"true",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/17/130917flyingkick_8085498.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/17/130917flyingkick_8085498.jpg",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        }]
+      },{
+        "id":"gu-image-417597086",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/17/1379433015693/Seven-man-attacking-kick--005.jpg",
+          "typeData":{
+            "source":"YouTube",
+            "photographer":"YouTube",
+            "altText":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video",
+            "height":"84",
+            "credit":"YouTube/YouTube",
+            "caption":"Seven-man attacking kick-off results in goal for Red Bull Leipzig in under ten seconds - video Photograph: YouTube",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"culture/australia-culture-blog/video/2013/sep/18/wagners-ring-cycle-2-mins-video",
+      "sectionId":"culture",
+      "sectionName":"Culture",
+      "webPublicationDate":"2013-09-18T01:45:34Z",
+      "webTitle":"Wagner's 15-hour Ring Cycle … in two and a half minutes - video",
+      "webUrl":"http://www.theguardian.com/culture/australia-culture-blog/video/2013/sep/18/wagners-ring-cycle-2-mins-video",
+      "apiUrl":"http://content.guardianapis.com/culture/australia-culture-blog/video/2013/sep/18/wagners-ring-cycle-2-mins-video",
+      "fields":{
+        "trailText":"<p>A short animation, with appropriately rousing musical accompaniment, which manages to condense Wagner's magnificent 15-hour epic, Ring Cycle – complete with gods, heroes, dragons, a castle in the sky, love triangles, magic swords and Valkyries – into a succinct, coffee-break friendly two and a half minutes. Get it? Got it? Good!</p>",
+        "headline":"Wagner's 15-hour Ring Cycle … in two and a half minutes – video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzd2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392161811/Ring-Cycle-in-2-mins-009.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"culture/australia-culture-blog",
+        "type":"blog",
+        "webTitle":"Australia culture blog",
+        "webUrl":"http://www.theguardian.com/culture/australia-culture-blog",
+        "apiUrl":"http://content.guardianapis.com/culture/australia-culture-blog",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/richard-wagner",
+        "type":"keyword",
+        "webTitle":"Richard Wagner",
+        "webUrl":"http://www.theguardian.com/music/richard-wagner",
+        "apiUrl":"http://content.guardianapis.com/music/richard-wagner",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"travel/sydneyoperahouse",
+        "type":"keyword",
+        "webTitle":"Sydney Opera House, Sydney, Australia",
+        "webUrl":"http://www.theguardian.com/travel/sydneyoperahouse",
+        "apiUrl":"http://content.guardianapis.com/travel/sydneyoperahouse",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417472828",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392161811/Ring-Cycle-in-2-mins-009.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"84",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392178015/Ring-Cycle-in-2-mins-016.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"360",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392145327/Ring-Cycle-in-2-mins-002.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"90",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392149118/Ring-Cycle-in-2-mins-003.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"225",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392151764/Ring-Cycle-in-2-mins-004.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"360",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/17/130917ring_FromGAus-16x9.mp4",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/17/130917ring_FromGAus_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/17/130917ring_FromGAus_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/17/130917ring_FromGAus/130917ring_FromGAus.m3u8",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/17/130917ring_FromGAus_vpx.webm",
+          "typeData":{
+            "source":"Sydney Symphony Orchestra",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"3",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"1"
+          }
+        }]
+      },{
+        "id":"gu-image-417475543",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379392161811/Ring-Cycle-in-2-mins-009.jpg",
+          "typeData":{
+            "source":"Sydney Symphony",
+            "altText":"Ring Cycle in 2 mins",
+            "height":"84",
+            "credit":"Sydney Symphony",
+            "caption":"Ring Cycle in 2 mins Photograph: Sydney Symphony",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

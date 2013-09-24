@@ -9,14 +9,16 @@
             </h2>
         </div>
         <article id="article" class="article @if(article.isLive){is-live}"
-            itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+                 itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
-                <header class="article-head">
-                    @fragments.dateline(article.webPublicationDate)
+                <header class="article__head">
 
                     @fragments.headline(article.headline)
 
                     @fragments.standfirst(article)
+
+                    @fragments.article.dateline(article.webPublicationDate)
+
                 </header>
 
                 @fragments.witnessCallToAction(article)
@@ -34,7 +36,12 @@
                         }
                     }
 
-                    @fragments.byline(article.byline, article)
+                    <div class="article__meta-container">
+                        @fragments.byline(article.byline, article)
+
+                        @fragments.article.dateline(article.webPublicationDate, secondary=true)
+                        <div class="js-comment-count"></div>
+                    </div>
 
                     <div class="js-article__container article__container u-cf">
                         <div class="article-body from-content-api"
@@ -43,9 +50,6 @@
                         </div>
                     </div>
 
-                    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-                        <div class="article__discussion" id="comments"></div>
-                    }
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
@@ -69,15 +73,15 @@
                     </div>
                 </div>
             </div>
-
-
         </article>
-
 
         <div class="article-v2__inner">
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+                <h3 id="comments" class="type-2 article-zone">Comments</h3>
+                <div class="article__discussion"></div>
+
                 <div class="d-show-cta-wrapper">
-                    <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion@article.shortUrlId}"
+                    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@article.shortUrlId}"
                        data-is-ajax data-link-name="View all comments">
                         View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
                     </a>
@@ -91,7 +95,7 @@
                 <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
             }
 
-            <div class="js-popular" role="complementary"></div>
+            <div class="js-popular article__popular" role="complementary"></div>
         </div>
     </div>
 }

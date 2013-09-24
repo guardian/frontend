@@ -94,8 +94,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see the publication date of the article")
-        findFirst(".dateline").getText should be("Monday 6 August 2012 20.30 BST")
-        findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00Z")
+        findFirst(".article__dateline").getText should be("Monday 6 August 2012 20.30 BST")
+        findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
 
@@ -106,7 +106,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        findFirst(".dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
+        findFirst(".article__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
       }
 
       Given("I am on an article published on '2012-11-10'")
@@ -114,7 +114,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit.US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        findFirst(".dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
+        findFirst(".article__dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -122,7 +122,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        findFirst(".dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
+        findFirst(".article__dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -130,7 +130,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
       HtmlUnit.US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        findFirst(".dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
+        findFirst(".article__dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
       }
 
     }
@@ -228,7 +228,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see a link to the corresponding desktop article")
-        findFirst(".main-site-link").getAttribute("href") should be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
       }
     }
 
@@ -239,7 +239,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("I should see a link to the corresponding desktop article")
-        findFirst(".main-site-link").getAttribute("href") should
+        findFirst(".js-main-site-link").getAttribute("href") should
           be("http://localhost:9000/environment/2012/feb/22/capitalise-low-carbon-future?view=desktop")
       }
     }
@@ -402,7 +402,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst(".js-popular").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
-        findFirst("footer").getAttribute("role") should be("contentinfo")
+        findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
         findFirst("#article").getAttribute("role") should be("main")

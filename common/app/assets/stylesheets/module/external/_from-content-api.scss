@@ -84,7 +84,7 @@ figcaption,
 }
 
 .main-caption {
-    padding: $baseline*2 $gs-gutter/2 $baseline*4;
+    padding: $baseline*2 $gs-gutter/2 $gs-column-height;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -145,6 +145,8 @@ figure {
             color: #666;
 
             &:hover,
+            &:focus,
+            &:visited:focus,
             &:visited:hover {
                 color: #4d4d4d;
                 border-bottom: 1px dotted #4d4d4d;

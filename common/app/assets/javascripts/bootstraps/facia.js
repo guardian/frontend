@@ -1,36 +1,73 @@
 define([
     //Common libraries
-    "common",
+    'common',
+    'bonzo',
     //Modules
-    "modules/masthead-relative-dates",
-    'modules/top-stories-show-more',
-    'modules/facia-popular'
+    'modules/facia-popular',
+    'modules/facia-relativise-timestamp',
+    'modules/facia-items-show-more',
+    'modules/footballfixtures'
 ], function (
     common,
-    mastheadRelativeDates,
-    TopStoriesShowMore,
-    faciaPopular
+    bonzo,
+    popular,
+    RelativiseTimestamp,
+    ItemsShowMore,
+    FootballFixtures
 ) {
 
     var modules = {
 
-        relativiseMastheadDates: function () {
+        showPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                mastheadRelativeDates.init(context);
+                popular.render(context);
             });
         },
 
-        showTopStoriesShowMore: function () {
+        relativiseTimestamps: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.collection--small-stories', context).each(function(topStories) {
-                    var t = new TopStoriesShowMore(topStories);
+                common.toArray(context.querySelectorAll('.js-item__timestamp')).forEach(function(timestamp) {
+                    new RelativiseTimestamp(timestamp)
+                        .relativise();
                 });
             });
         },
 
-        showFaciaPopular: function () {
+        showItemsShowMore: function () {
             common.mediator.on('page:front:ready', function(config, context) {
-                faciaPopular.init(config, context);
+                common.$g('.js-items--show-more', context).each(function(items) {
+                    new ItemsShowMore(items)
+                        .addShowMore();
+                });
+            });
+        },
+
+        showFootballFixtures: function(path) {
+            common.mediator.on('page:front:ready', function(config, context) {
+                if (config.page.edition === 'UK' && config.page.pageId === "") {
+                    // wrap the return sports stats component in an 'item'
+                    var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
+                    common.mediator.on('modules:footballfixtures:render', function() {
+                        // only show 7 rows
+                        common.$g('.match:nth-child(n + 8)', $statsItem)
+                            .addClass('u-h');
+                        // add it adter the first item
+                        common.$g('.collection--news.collection--sport-section .item:first-child', context)
+                            .after($statsItem);
+                        // now hide one of the shown ones
+                        common.$g('.collection--news.collection--sport-section .item.u-h', context)
+                            .first()
+                            .previous()
+                            .addClass('u-h');
+                    });
+                    new FootballFixtures({
+                        prependTo: $statsItem,
+                        attachMethod: 'append',
+                        competitions: ['500', '510', '100', '400'],
+                        contextual: false,
+                        expandable: false
+                    }).init();
+                }
             });
         }
 
@@ -39,9 +76,10 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.relativiseMastheadDates();
-            modules.showTopStoriesShowMore();
-            modules.showFaciaPopular();
+            modules.showPopular();
+            modules.relativiseTimestamps();
+            modules.showItemsShowMore();
+            modules.showFootballFixtures();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

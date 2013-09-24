@@ -87,6 +87,7 @@ define(['common', 'modules/overlay', 'bean'], function(common, Overlay, bean) {
             bean.fire(document.querySelector('.js-overlay-close'), 'click');
             expect(common.mediator.emit).toHaveBeenCalledWith('modules:overlay:close');
 
+            common.mediator.emit.restore();
         });
 
         it("should delete itself from the DOM on remove()", function() {

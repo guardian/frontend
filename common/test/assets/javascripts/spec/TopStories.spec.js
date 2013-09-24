@@ -52,7 +52,7 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'helpers/fixtures']
                     button    = document.querySelector('#topstories-context .control');
 
                 expect(callback).toHaveBeenCalledOnce();
-                expect(container.innerHTML).toBe('<h3 class="headline-list__title type-5">Top stories</h3><div class="headline-list headline-list--top box-indent" data-link-name="top-stories"><b>top stories</b></div>');
+                expect(container.innerHTML).toBe('<h3 class="headline-list__title">Top stories</h3><div class="headline-list headline-list--top box-indent" data-link-name="top-stories"><b>top stories</b></div>');
                 expect(button.className).not.toContain('is-off');
             })
         });

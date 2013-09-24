@@ -8,18 +8,15 @@
         margin-bottom: $baseline*5;
     }
 
-    .element-witness a,
-    .element-witness a:hover,
-    .element-witness a:link {
-        color: #333;
-    }
-
     .element-witness {
-        a,
-        a:link,
-        a:visited {
+        a {
             color: #005689;
             text-decoration: none;
+
+            &:focus,
+            &:hover {
+                color: #333;
+            }
         }
     }
 

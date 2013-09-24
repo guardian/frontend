@@ -49,11 +49,17 @@ object TopStories extends Style { val className = "top-stories" }
 
 object MediumStories extends Style { val className = "medium-stories" }
 
-object SmallStories extends Style { val className = "small-stories" }
+case class SmallStories(val showMore: Boolean) extends Style {
+  val className = "small-stories"
+}
+
+object News extends Style { val className = "news" }
 
 object Features extends Style { val className = "features" }
 
 object Highlights extends Style { val className = "highlights" }
+
+object Comments extends Style { val className = "comments" }
 
 
 object MetadataJson {
@@ -332,6 +338,7 @@ object OmnitureAnalyticsData {
       ("c14", data("build-number")),
       ("c19", platform),
       ("v19", platform),
+      ("v67", "nextgen-served"),
       ("c30", (if (isContent) "content" else "non-content")),
       ("c56", jsSupport)
     )

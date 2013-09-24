@@ -1,14 +1,13 @@
 package idapiclient
 
-import com.gu.identity.model.User
+import com.gu.identity.model.{LiftJsonConfig, User}
 import client.{Anonymous, Auth, Response}
 import client.connection.Http
 import scala.concurrent.{Future, ExecutionContext}
-import client.parser.JsonBodyParser
+import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
 import client.connection.util.ExecutionContexts
-import net.liftweb.json.JsonAST.{JNothing, JValue}
-import net.liftweb.json.DefaultFormats
+import net.liftweb.json.JsonAST.{JValue, JNothing}
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
 import idapiclient.requests.TokenPassword
@@ -16,7 +15,7 @@ import idapiclient.requests.TokenPassword
 
 abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth) extends SafeLogging {
   implicit def executionContext: ExecutionContext
-  implicit val formats = DefaultFormats
+  implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
 
   protected def apiUrl(path: String) = urlJoin(apiRootUrl, path)
@@ -79,10 +78,14 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     response map jsonBodyParser.extract[Unit]({_ => JNothing})
   }
 
-//  def register(userData: String): Future[Response[User]] = {
-//    val response = http.POST(apiUrl("user"), userData)
-//    response map jsonBodyParser.extract[User](jsonField("user"))
-//  }
+ def register(user: User, trackingParameters : OmnitureTracking, clientIp: Option[String]): Future[Response[User]] = {
+    val userData = write(user)
+    val response = http.POST(apiUrl("user"), Some(userData),
+      clientAuth.parameters ++ trackingParameters.parameters,
+      clientAuth.headers ++ clientIp.map(ip => Iterable("X-GU-ID-REMOTE-IP" -> ip)).getOrElse(Iterable.empty)
+    )
+    response map jsonBodyParser.extract[User](jsonField("user"))
+  }
 
   // EMAILS
 

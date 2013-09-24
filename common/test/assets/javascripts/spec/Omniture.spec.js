@@ -83,6 +83,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop56).toBe("Javascript");
             expect(s.prop30).toBe("content");
             expect(s.prop19).toBe("frontend");
+            expect(s.prop67).toBe("nextgen-served");
             expect(s.eVar19).toBe("frontend");
             expect(s.cookieDomainPeriods).toBe("2")
             expect(s.trackingServer).toBe("hits.theguardian.com");

@@ -108,7 +108,7 @@ $keylineSize: 1px;
     }
 }
 .d-comment {
-    color: #333;
+    color: $neutral1;
     font-family: sans-serif;
     border-top: 1px solid $medianMushroom;
 }
@@ -242,7 +242,7 @@ $keylineSize: 1px;
 }
 
 .d-meta-item {
-    color: #767676;
+    color: $neutral2;
     font-size: .85714285714em;
     font-family: $sans-serif; // Force font when used outside of comment context
 }
@@ -253,13 +253,8 @@ $keylineSize: 1px;
 }
 
 .d-comment__action {
-    color: #767676;
+    color: $neutral2;
     font-size: .85714285714em;
-    
-    &:link,
-    &:visited {
-        color: #767676;
-    }
 }
 
 .d-comment__recommend {
@@ -313,9 +308,7 @@ $keylineSize: 1px;
     width: 1px;
 }
 
-.speech-bubble,
-.speech-bubble:link,
-.speech-bubble:visited {
+.speech-bubble {
     @include font($sans-serif, normal, 14, 14);
     position: relative;
     display: inline-block;
@@ -327,17 +320,22 @@ $keylineSize: 1px;
     background: #F6644F;
     text-align: center;
     color: white;
-    text-decoration: none;
-}
 
-.speech-bubble:after {
-    content: "";
-    position: absolute;
-    bottom: -7px;
-    left: 6px;
-    border-width: 0 0 8px 8px;
-    border-style: solid;
-    border-color: transparent #F6644F;
+    &,
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        bottom: -7px;
+        left: 6px;
+        border-width: 0 0 8px 8px;
+        border-style: solid;
+        border-color: transparent #F6644F;
+    }
 }
 
 
@@ -350,6 +348,7 @@ $keylineSize: 1px;
     border: 1px solid #bbb;
     position: relative;
     padding-left: $gutter*2;
+    width: auto;
 }
 
 .d-actions .top:before {
@@ -363,8 +362,6 @@ $keylineSize: 1px;
 }
 
 .d-actions__link,
-.d-actions__link:link,
-.d-actions__link:visited,
 .d-actions__link:hover,
 .d-actions__link:focus {
     @extend %type-11;
@@ -384,8 +381,6 @@ $keylineSize: 1px;
     padding: $baseline*2 0 $baseline*4;
 }
 .d-show-cta,
-.d-show-cta:link,
-.d-show-cta:visited,
 .d-show-cta:hover,
 .d-show-cta:focus {
     @extend %type-6;

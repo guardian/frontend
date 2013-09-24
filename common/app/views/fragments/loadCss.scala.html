@@ -1,0 +1,80 @@
+@()(implicit request: RequestHeader)
+@import conf.Switches._
+
+@if(CssFromStorageSwitch.isSwitchedOn) {
+
+    <noscript>
+        <!--[if (gt IE 8) | (IEMobile)]><!-->
+            <link rel="stylesheet" id="global-css" type="text/css" href="@Static("stylesheets/global.min.css")" />
+        <!--<![endif]-->
+    </noscript>
+    <script>
+        (function() {
+            function injectElement(e) {
+                var sc = document.getElementsByTagName('script')[0];
+                sc.parentNode.insertBefore(e, sc);
+            }
+
+            function inlineCss(c) {
+                var s = document.createElement('style');
+                s.innerHTML = c;
+                s.setAttribute('data-loaded-from', 'ajax');
+                injectElement(s);
+            }
+
+            function storeCss(c) {
+                Object.keys(localStorage ).forEach(function(key) {
+                    if(key.match(/^gu.css./g)) { localStorage.removeItem(key); }
+                });
+                try {
+                    localStorage.setItem('gu.css.@Static("stylesheets/global.min.css").md5Key', c);
+                } catch(e) {
+
+                }
+            }
+
+            function loadCssWithLink() {
+                var l = document.createElement('link');
+
+                l.rel = "stylesheet"; l.type = 'text/css';
+                l.href = '@Static("stylesheets/global.min.css")';
+                injectElement(l);
+            }
+
+            function loadCssWithAjax() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '@Static("stylesheets/global.min.css")');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if(xhr.status === 200) {
+                            inlineCss(xhr.responseText);
+                            storeCss(xhr.responseText);
+                        } else {
+                            loadCssWithLink();
+                        };
+                    }
+                }
+                setTimeout( function () {
+                    if(xhr.readyState < 4) {
+                        xhr.abort();
+                        loadCssWithLink();
+                    }
+                }, 5000);
+                xhr.send();
+            }
+
+            if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest()) {
+                loadCssWithAjax();
+            } else if(!guardian.isModernBrowser || !('withCredentials' in new XMLHttpRequest())){
+                loadCssWithLink();
+            }
+        })();
+    </script>
+
+} else {
+
+    <!--[if (gt IE 8) | (IEMobile)]><!-->
+        <link rel="stylesheet" id="global-css" type="text/css" href="@Static("stylesheets/global.min.css")" />
+    <!--<![endif]-->
+
+}

@@ -32,6 +32,7 @@ define([
 
         // properties from the config, about this collection
         this.configMeta   = common.util.asObservableProps([
+            'displayName',
             'min',
             'max',
             'roleName',
@@ -39,7 +40,7 @@ define([
         common.util.populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
-        this.collectionMeta = common.util.asObservableProps([ 
+        this.collectionMeta = common.util.asObservableProps([
             'displayName',
             'lastUpdated',
             'updatedBy',
@@ -166,8 +167,8 @@ define([
 
                 self.state.hasDraft(_.isArray(resp.draft));
 
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) { 
-                    // noop    
+                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) {
+                    // noop
                 } else {
                     self.populateLists(resp);
                 }
@@ -177,7 +178,9 @@ define([
                     self.state.timeAgo(self.getTimeAgo(resp.lastUpdated));
                 }
 
-                if (_.isFunction(opts.callback)) { opts.callback(); } 
+                self.decorate();
+
+                if (_.isFunction(opts.callback)) { opts.callback(); }
             }
         );
     };
@@ -196,8 +199,6 @@ define([
 
         this.importList(opts, 'live', 'live');
         this.importList(opts, this.state.hasDraft() ? 'draft' : 'live', 'draft');
-
-        this.decorate();
     };
 
     List.prototype.importList = function(opts, from, to) {
@@ -242,7 +243,7 @@ define([
             method: 'post',
             type: 'json',
             contentType: 'application/json',
-            data: JSON.stringify({ 
+            data: JSON.stringify({
                 config: {
                     displayName: this.collectionMeta.displayName()
                 }

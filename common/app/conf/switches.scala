@@ -42,6 +42,14 @@ object Switches extends Collections {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = Off)
 
+  val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
+    "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
+    safeState = Off)
+
+  val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
+    "If this switch is on then (parts of) the application will use the Elastic Search content api",
+    safeState = Off)
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -84,6 +92,10 @@ object Switches extends Collections {
 
   val ShortDiscussionSwitch = Switch("Discussion", "short-discussion",
     "If this switch is on, only 10 top level comments are requested from discussion api.",
+    safeState = Off)
+
+  val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
+    "If this switch is on, users can recommend comments",
     safeState = Off)
 
 
@@ -191,6 +203,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
     safeState = Off)
 
+  val ABMostPopularFromFacebook = Switch("A/B Tests", "ab-most-popular-from-facebook",
+    "If this is switched on an AB test runs to trial presenting visitors from Facebook with Most Popular from Facebook",
+    safeState = Off)
+
 
   // Sport Switch
 
@@ -204,13 +220,13 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  //Fronts film switch
-  val FilmFrontFacia = Switch("Facia", "facia-film",
-    "Switch to redirect traffic to the facia film front instead of front film front",
-    safeState = Off)
-
   val FaciaSwitch = Switch("Facia", "facia",
     "Switch to redirect to facia if request has X-Gu-Facia=true",
+    safeState = Off
+  )
+
+  val FaciaLoadTestSwitch = Switch("Facia", "facia-load-test",
+    "Switch to make an xhr request from all fronts to Facia, just to load-test it",
     safeState = Off
   )
 
@@ -247,15 +263,18 @@ object Switches extends Collections {
     ExternalLinksCardsSwitch,
     LiveSummarySwitch,
     LiveCricketSwitch,
-    FilmFrontFacia,
     FaciaSwitch,
+    FaciaLoadTestSwitch,
     AdSlotImpressionStatsSwitch,
     ABGalleryStyle,
     ABGalleryCta,
     ABSwipeCtas,
     ABExpandableMostPopular,
     ABRightHandCard,
-    ABLiveBlogShowMore
+    ABLiveBlogShowMore,
+    CssFromStorageSwitch,
+    ABMostPopularFromFacebook,
+    ElasticSearchSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
@@ -289,6 +308,8 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
     Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
       refresh()
     }
+
+    refresh()
   }
 
   override def onStop() {
