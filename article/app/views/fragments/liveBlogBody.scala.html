@@ -17,7 +17,7 @@
                     @if(LiveCricketSwitch.isSwitchedOn) {
                         @article.cricketMatch.map { id =>
                             <div class="after-headline">
-                                <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
+                                <a class="cta-small zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
                                     itemprop="significantLink" id="schema-WebPage">View full scorecard
                                     <i class="i i-sport-arrow-small"></i>
                                 </a>
