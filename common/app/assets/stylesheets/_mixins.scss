@@ -14,9 +14,13 @@
     @include font-size($size, $line-height);
 }
 
-@mixin headline($level) {
+@mixin headline($level, $size-only: false) {
     $headline: nth($headlines, $level);
-    @include font($serifheadline, normal, nth($headline, 1), nth($headline, 2));
+    @if $size-only {
+        @include font-size(nth($headline, 1), nth($headline, 2));
+    } @else {
+        @include font($serifheadline, normal, nth($headline, 1), nth($headline, 2));
+    }
 }
 
 @mixin box-sizing($box) {
