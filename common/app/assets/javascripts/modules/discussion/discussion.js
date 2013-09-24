@@ -4,6 +4,7 @@ define([
     'qwery',
     'bean',
     'ajax',
+    'modules/discussion/recommend-comments',
     'modules/userPrefs',
     'modules/analytics/clickstream',
     'modules/inview',
@@ -14,6 +15,7 @@ define([
     qwery,
     bean,
     ajax,
+    RecommendComments,
     userPrefs,
     ClickStream,
     Inview,
@@ -131,6 +133,8 @@ define([
 
                         commentsHaveLoaded = true;
                         currentPage = response.currentPage;
+
+                        RecommendComments.init(context, { apiRoot: config.page.discussionApiRoot });
 
                         common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                         loadingInProgress = false;
