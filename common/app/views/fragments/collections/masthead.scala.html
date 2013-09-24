@@ -18,10 +18,8 @@
                         @RemoveOuterParaHtml(trail.headline)
                     </a>
                 </h2>
-                @if(trail.mainPicture(620).isEmpty) {
-                    @trail.trailText.map { text =>
-                        <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>
-                    }
+                @trail.trailText.map { text =>
+                    <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>
                 }
                 <div class="item__meta">
                     <time class="item__timestamp js-item__timestamp"
