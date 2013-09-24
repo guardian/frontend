@@ -6,7 +6,7 @@
 	</div>
 	<ul class="d-thread">
 	    @page.comments.map{ comment =>
-	        @fragments.comment(comment)
+	        @fragments.comment(comment, page.isClosedForRecommendation)
 	    }
 	</ul>
 </div>

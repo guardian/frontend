@@ -126,6 +126,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object assets {
     lazy val path = configuration.getMandatoryStringProperty("assets.path")
+    lazy val securePath = configuration.getMandatoryStringProperty("assets.securePath")
   }
 
   object oas {
@@ -142,14 +143,19 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val usAppId = "411493119"
   }
 
+  object discussion {
+    lazy val apiRoot = configuration.getStringProperty("guardian.page.discussionApiRoot").getOrElse{
+          throw new IllegalStateException("no value for key guardian.page.discussionApiRoot")
+    }
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments
     lazy val config: Map[String, String] = Map(
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
-      "discussionApiUrl" -> "http://discussion.guardianapis.com/discussion-api",
-      "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
+      "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/"
       "idApiUrl" -> id.apiRoot
     )
     lazy val pageData: Map[String, String] = {

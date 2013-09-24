@@ -32,6 +32,7 @@ define([
 
         // properties from the config, about this collection
         this.configMeta   = common.util.asObservableProps([
+            'displayName',
             'min',
             'max',
             'roleName',
@@ -39,7 +40,7 @@ define([
         common.util.populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
-        this.collectionMeta = common.util.asObservableProps([ 
+        this.collectionMeta = common.util.asObservableProps([
             'displayName',
             'lastUpdated',
             'updatedBy',
@@ -166,8 +167,8 @@ define([
 
                 self.state.hasDraft(_.isArray(resp.draft));
 
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) { 
-                    // noop    
+                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) {
+                    // noop
                 } else {
                     self.populateLists(resp);
                 }
@@ -179,7 +180,7 @@ define([
 
                 self.decorate();
 
-                if (_.isFunction(opts.callback)) { opts.callback(); } 
+                if (_.isFunction(opts.callback)) { opts.callback(); }
             }
         );
     };
@@ -242,7 +243,7 @@ define([
             method: 'post',
             type: 'json',
             contentType: 'application/json',
-            data: JSON.stringify({ 
+            data: JSON.stringify({
                 config: {
                     displayName: this.collectionMeta.displayName()
                 }
