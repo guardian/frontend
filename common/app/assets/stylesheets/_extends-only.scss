@@ -3,7 +3,6 @@
 
 
 //SerifHeadline
-%type-0 { @include font($serifheadline, normal, 22, 32); }
 %type-1 { @include font($serifheadline, normal, 20, 28); }
 %type-2 { @include font($serifheadline, normal, 18, 28); }
 
