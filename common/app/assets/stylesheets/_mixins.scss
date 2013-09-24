@@ -20,6 +20,7 @@
         @include font-size(nth($headline, 1), nth($headline, 2));
     } @else {
         @include font($serifheadline, normal, nth($headline, 1), nth($headline, 2));
+        text-rendering: optimizeLegibility;
     }
 }
 
