@@ -1,12 +1,12 @@
-package services
+package utils
 
-import play.api.mvc.{Request, AnyContent}
+import play.api.mvc.RequestHeader
 import common.Logging
 
 trait RemoteAddress extends Logging {
   private val Ip = """(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})""".r
 
-  def clientIp(request: Request[AnyContent]): Option[String] = {
+  def clientIp(request: RequestHeader): Option[String] = {
     request.headers.get("X-Forwarded-For").flatMap { xForwardedFor =>
       xForwardedFor.split(", ").find {  // leftmost non-private IP from header is client
         case Ip(a, b, c, d) => {

@@ -1,4 +1,4 @@
-package services
+package utils
 
 import org.scalatest.FunSuite
 import play.api.test.FakeRequest
