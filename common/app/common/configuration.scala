@@ -155,7 +155,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val config: Map[String, String] = Map(
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
-      "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/"
+      "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
       "idApiUrl" -> id.apiRoot
     )
     lazy val pageData: Map[String, String] = {
