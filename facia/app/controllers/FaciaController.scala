@@ -170,7 +170,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     FrontPage(editionalisedPath).map{ frontPage =>
 
       // get the first trailblock
-      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.headOption)
+      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.filter(_._2.items.nonEmpty).headOption)
 
       if (path != editionalisedPath) {
         Redirect(editionalisedPath)
