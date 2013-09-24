@@ -34,6 +34,10 @@
 
 .card {
     position: relative;
+
+    a {
+        color: #444444;
+    }
 }
 
 .card-wrapper {
@@ -63,7 +67,7 @@
 }
 .card__body {
     padding: $baseline*1.5 0 $baseline*6;
-
+    position: relative;
 }
 
 .card__zone {
@@ -74,8 +78,8 @@
 .card__headline {
     font-family: $serif !important; // Override .from-content-api h3 defaults
     color: #444444;
-    font-size: 14px !important;
-    font-size: 1.4rem !important;
+    font-size: 18px !important;
+    font-size: 1.8rem !important;
     line-height: 20px !important;
     line-height: 2rem !important;
 }
@@ -101,14 +105,40 @@
 
     .card__body {
         padding-top: $baseline*2;
-        min-height: 180px;
+        min-height: 90px;
         border-top: 1px solid $grey;
         @include box-sizing(border-box);
-        @include font($serifheadline, 700, 18, 24);
+        @include font($serifheadline, normal, 18, 24);
     }
 
-    /*.relative-timestamp {
-        position: absolute;
-        bottom: $baseline;
-    }*/
+    .card__meta {
+        min-height: $unitHeight;
+        @include font($sans-serif, lighter, 12, 12);
+    }
+
+    .relative-timestamp {
+        float: left;
+
+        i {
+            @extend .i-clock-grey;
+        }
+    }
+
+    .trail__count {
+        position: static;
+        float: left;
+        color: #cccccc;
+        border-left: 1px solid #cccccc;
+        margin-left: 4px;
+
+        a {
+            color: #cccccc;
+            margin-left: $gs-gutter/2 - 1;
+        }
+
+        i {
+            @extend .i-comment-grey;
+        }
+    }
+
 }
