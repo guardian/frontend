@@ -60,8 +60,7 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
                     popular(_config, context, false, '/most-read-facebook', '.js-popular-facebook');
 
                     common.mediator.on('modules:popular:loaded', function () {
-                        var $jsPopularTitle = bonzo(context.querySelector('#most-read-head'));
-                        $jsPopularTitle[0].innerHTML = "Most read from Facebook";
+                        context.querySelector('#most-read-head').innerHTML = "Most read from Facebook";
                     });
                 }
             }
