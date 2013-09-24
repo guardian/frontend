@@ -52,18 +52,27 @@ function (
                         return g.name === s.name;
                     }) || groups[0]; // ...defaulting to the first ('Other')
 
+                // Drop the last data point.
+                s.data.pop();
+
                 // How many 1 min points are we adding into each slot
                 var minsPerSlot = Math.max(1, Math.floor(s.data.length / slots));
 
                 // ...sum the data into each group
-                _.each(_.first(_.last(s.data, 1+minsPerSlot*slots), minsPerSlot*slots), function(d,index) {
+                _.each(_.last(s.data, minsPerSlot*slots), function(d,index) {
                     var i = Math.floor(index / minsPerSlot);
-                    group.data[i] = (group.data[i] || 0) + d.count/minsPerSlot; // dividing by minsPerSlot produces an average
+                    group.data[i] = (group.data[i] || 0) + (d.count / minsPerSlot);
                     group.max = Math.max(group.max, group.data[i]);
                 });
             });
 
-            item.state.pageViewsSeries(groups);
+            item.state.pageViewsSeries(
+                // Round off the points
+                _.map(groups, function(group){
+                    group.data = _.map(group.data, function(d) { return Math.round(d*10)/10; });
+                    return group;
+                })
+            );
         }
     }
 

@@ -254,27 +254,20 @@ define([
 
                 if (!max) { return };
 
-                _.chain(groups)
-                .sortBy(function(g){
-                    // Put biggest groups first, so that its fill color is behind the other groups
-                    return -1 * g.max;
-                }).each(function(group, i){
-
-                    group.data.pop(); // drop the last data point.
-
+                _.each(groups, function(group, i){
                     var data = group.data,
-                        isHot = _.reduce(_.last(data, 5), function(m, n){ return m + n; }, 0)/5 > 50;
+                        isHot = _.reduce(_.last(data, 5), function(m, n){ return m + n; }, 0) > 250;
 
                     $(element).sparkline(data, {
                         chartRangeMax: max,
                         defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
-                        height: Math.max(10, Math.min(30, max)),
+                        height: Math.round(Math.max(10, Math.min(30, max))),
                         lineColor: '#' + group.color,
                         spotColor: false,
                         minSpotColor: false,
                         maxSpotColor: false,
                         lineWidth: isHot ? 2 : 1,
-                        fillColor: isHot ? '#eeeeee' : false,
+                        fillColor: false,
                         composite: i > 0
                     });
                 });
