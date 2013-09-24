@@ -283,8 +283,8 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianHeadline-Medium.woff",
+                  "font-weight": "400",
+                  "file": "resources/fonts/EgyptianHeadline-Regular.woff",
                   "format": "woff"
                 },
                 // This weight contains only a certain set of chars
@@ -328,8 +328,8 @@ module.exports = function (grunt) {
                 },
                 {
                   "font-family": "EgyptianHeadline",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
+                  "font-weight": "400",
+                  "file": "resources/fonts/EgyptianHeadline-Regular.ttf",
                   "format": "ttf"
                 },
                 // This weight contains only a certain set of chars

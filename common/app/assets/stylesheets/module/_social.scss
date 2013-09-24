@@ -7,11 +7,6 @@
 
 }
 
-.social__item--mail    { background-color: #84847E; }
-.social__item--fb      { background-color: #3b5998; }
-.social__item--twitter { background-color: #00aced; }
-.social__item--gplus   { background-color: #dd4b39; }
-
 .social__action {
     height: 36px;
     display: block;
@@ -22,7 +17,12 @@
 .social__icon {
     position: absolute;
     left: 5px;
-    bottom: 5px;
+    bottom: 3px;
+
+    .social__item--mail & {
+        @include transform(scale(0.9));
+        @include transform-origin(0 100%);
+    }
 }
 
 @include mq(320px) {
@@ -42,7 +42,7 @@
         @include box-sizing(border-box);
 
         + .social__item {
-            border-left: $gutter/2 solid #ffffff;
+            border-left: 1px solid $neutral3;
         }
     }
     .social__action {
