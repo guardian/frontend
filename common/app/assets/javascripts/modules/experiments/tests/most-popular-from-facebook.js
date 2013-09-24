@@ -1,4 +1,4 @@
-define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular) {
+define(['common', 'bonzo', 'modules/popular', 'modules/storage'], function (common, bonzo, popular, storage) {
 
     return function () {
 
@@ -14,9 +14,10 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
 
             var isArticle = config.page && config.page.contentType === "Article",
                 isFromFacebook = document.referrer.indexOf('facebook.com') !== -1,
+                hasBeenFromFacebook = storage.get('gu.ab.participations')[this.id],
                 isTest = /#dev-fbpopular/.test(window.location.hash);
 
-            return isArticle && (isFromFacebook || isTest);
+            return isArticle && (isFromFacebook || hasBeenFromFacebook || isTest);
         };
         this.variants = [
             {
