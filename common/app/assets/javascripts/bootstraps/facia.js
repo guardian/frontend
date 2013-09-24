@@ -1,15 +1,19 @@
 define([
     //Common libraries
     'common',
+    'bonzo',
     //Modules
     'modules/facia-popular',
     'modules/facia-relativise-timestamp',
-    'modules/facia-items-show-more'
+    'modules/facia-items-show-more',
+    'modules/footballfixtures'
 ], function (
     common,
+    bonzo,
     popular,
     RelativiseTimestamp,
-    ItemsShowMore
+    ItemsShowMore,
+    FootballFixtures
 ) {
 
     var modules = {
@@ -36,6 +40,35 @@ define([
                         .addShowMore();
                 });
             });
+        },
+
+        showFootballFixtures: function(path) {
+            common.mediator.on('page:front:ready', function(config, context) {
+                if (config.page.edition === 'UK' && config.page.pageId === "") {
+                    // wrap the return sports stats component in an 'item'
+                    var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
+                    common.mediator.on('modules:footballfixtures:render', function() {
+                        // only show 7 rows
+                        common.$g('.match:nth-child(n + 8)', $statsItem)
+                            .addClass('u-h');
+                        // add it adter the first item
+                        common.$g('.collection--news.collection--sport-section .item:first-child', context)
+                            .after($statsItem);
+                        // now hide one of the shown ones
+                        common.$g('.collection--news.collection--sport-section .item.u-h', context)
+                            .first()
+                            .previous()
+                            .addClass('u-h');
+                    });
+                    new FootballFixtures({
+                        prependTo: $statsItem,
+                        attachMethod: 'append',
+                        competitions: ['500', '510', '100', '400'],
+                        contextual: false,
+                        expandable: false
+                    }).init();
+                }
+            });
         }
 
     };
@@ -46,6 +79,7 @@ define([
             modules.showPopular();
             modules.relativiseTimestamps();
             modules.showItemsShowMore();
+            modules.showFootballFixtures();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

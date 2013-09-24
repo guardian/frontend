@@ -1,11 +1,11 @@
-@(config: Config, collection: Collection)(implicit request: RequestHeader)
+@(config: Config, collection: Collection, style: Style)(implicit request: RequestHeader)
 
-<section class="collection collection--highlights collection--@{config.section}-section"
+<section class="collection collection--@style.className collection--@{config.section}-section"
          data-link-name="block | @collection.displayName.getOrElse(config.id)"
-         data-collection-type="highlights"
+         data-collection-type="@style.className"
          data-section="@config.section">
 
-    @collection.displayName.map { title =>
+    @Seq(config.displayName, collection.displayName).find(_.nonEmpty).map { title =>
         <h2 class="collection__title">@title</h2>
     }
 

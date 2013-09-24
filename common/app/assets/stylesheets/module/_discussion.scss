@@ -108,7 +108,7 @@ $keylineSize: 1px;
     }
 }
 .d-comment {
-    color: #333;
+    color: $neutral1;
     font-family: sans-serif;
     border-top: 1px solid $medianMushroom;
 }
@@ -138,7 +138,7 @@ $keylineSize: 1px;
 
 .d-comment__pick {
     position: absolute;
-    top: $baseline * 2;
+    top: 0;
     right: 0;
 }
 
@@ -242,7 +242,7 @@ $keylineSize: 1px;
 }
 
 .d-meta-item {
-    color: #767676;
+    color: $neutral2;
     font-size: .85714285714em;
     font-family: $sans-serif; // Force font when used outside of comment context
 }
@@ -253,20 +253,34 @@ $keylineSize: 1px;
 }
 
 .d-comment__action {
-    color: #767676;
+    color: $neutral2;
     font-size: .85714285714em;
 }
 
-.d-comment__action--recommend {
-    display: table-cell; /* 1 */
-    max-width: 100%;
-    width: 10000px; /* 2 */
-    *width: auto; /* 3 */
-    *zoom:1; /* 4 */
-    margin-left: $gs-gutter;
-    text-align: right;
+.d-comment__recommend {
+    background-color: #929497;
+    color: #fff;
+    font-size: 14px;
+    font-size: 1.4rem;
+    padding: $baseline $gutter/2;
+    position: absolute;
+    right: 0;
+    top: $baseline * 4;
 }
 
+.d-comment__recommend--left {
+    right: $gutter * 1.5;
+}
+
+.d-comment__recommend--active {
+    background-color: #4490ce;
+    color: #fff;
+    cursor: pointer;
+}
+
+.d-comment__recommend--user-recommended {
+    background-color: #931c55;
+}
 
 /* Badges
    ========================================================================== */

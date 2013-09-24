@@ -35,7 +35,7 @@ window.addEventListener('load', function() {
                             
                             var project = deploy.projectName;
                             var stage = deploy.stage;
-                            if (!latestDeployments[stage].hasOwnProperty(project)) {
+                            if (stage && !latestDeployments[stage].hasOwnProperty(project)) {
                                 latestDeployments[stage][project] = deploy;
                             }
                         });
