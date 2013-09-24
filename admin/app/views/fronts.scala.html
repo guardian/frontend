@@ -78,8 +78,6 @@
                         <span class="list-header__role"    data-bind="text: configMeta.roleName"></span>
 
                         <span class="list-header__id" data-bind="text: id"></span>
-
-                        <span class="list-header__role__description" data-bind="text: ': ' + configMeta.roleDescription()"></span>
                     </div>
 
                     <div class="collection-config" data-bind="visible: state.editingConfig">
@@ -132,8 +130,9 @@
                         'data-list-id': id
                     },
                     css: {
-                        'pending': state.loadIsPending,
-                        'is-live': state.liveMode()
+                        'pending':   state.loadIsPending,
+                        'is-live':   state.liveMode(),
+                        'is-draft': !state.liveMode()
                     },
                     template: {name: 'template_article', foreach: state.liveMode() ? live : draft}"></div>
             </div>

@@ -423,15 +423,10 @@ a.cta, .cta a {
     overflow: hidden;
 }
 
-.fronts .collection:hover .list-header__title {
-    background: #CCCCCC;
-}
-
 .fronts .list-header__saving,
 .fronts .list-header__part,
 .fronts .list-header__role,
-.fronts .list-header__display,
-.fronts .list-header__role__description {
+.fronts .list-header__display {
     font-size: 14px;
 }
 
@@ -448,17 +443,10 @@ a.cta, .cta a {
 .fronts .list-header__saving  { color: #d61d00; font-weight: bold; }
 .fronts .list-header__id      { display: none;}
 
-.fronts .list-header__role,
-.fronts .list-header__role__description {
+.fronts .list-header__role {
     font-style: italic;
     text-transform: lowercase;
     color: #666666;
-}
-.fronts .list-header__role__description {
-    display: none;
-}
-.fronts .collection:hover .list-header__role__description {
-    display: inline-block;
 }
 
 .fronts .collection:hover .list-header__id {
@@ -571,12 +559,12 @@ a.cta, .cta a {
     position: relative;
 }
 
-.fronts .is-live .trail {
-    background-color: #ffffff;
+.fronts .is-draft .trail {
+    background-color: #EEEEEE;
 }
 
 .fronts .trail:hover {
-    background-color: rgb(223, 240, 216);
+    background: #dddddd;
 }
 
 .fronts .trail.redundant {
@@ -652,15 +640,20 @@ a.cta, .cta a {
     position: absolute;
     top: 0;
     right: 0;
-    background: #999999;
+    background: #CCCCCC;
     width: 14px;
     height: 20px;
     padding: 0px 3px;
     cursor: pointer;
+    z-index: 99;
 }
 
-.fronts .collection .trail:hover .trail__remove {
+.fronts .trail:hover .trail__remove {
     display: block;
+}
+
+.fronts .trail .trail__remove:hover {
+    background: #999999;
 }
 
 .fronts .trail_tweaks {
