@@ -65,6 +65,21 @@ $sans-serif: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serif: "EgyptianText", georgia, serif;
 $serifheadline: "EgyptianHeadline", georgia, serif;
 
+// Headlines font sizes
+// Usage:
+// font-size (px) line-height (px) // level
+$headlines: (
+    46 50, // 1
+    42 46, // 2
+    38 42, // 3
+    34 38, // 4
+    30 34, // 5
+    26 30, // 6
+    22 26, // 7
+    18 22, // 8
+    16 20  // 9
+);
+
 
 /* Colours
    ========================================================================== */

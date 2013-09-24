@@ -14,6 +14,11 @@
     @include font-size($size, $line-height);
 }
 
+@mixin headline($level) {
+    $headline: nth($headlines, $level);
+    @include font($serifheadline, normal, nth($headline, 1), nth($headline, 2));
+}
+
 @mixin box-sizing($box) {
     -webkit-box-sizing: $box;
     -moz-box-sizing: $box;
@@ -90,7 +95,6 @@
     position: relative;
     overflow: hidden;
 }
-
 
 @mixin old-ie {
     // Only use this content if we're dealing with old IE
