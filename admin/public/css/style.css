@@ -355,8 +355,10 @@ a.cta, .cta a {
 }
 
 .fronts .finder {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     float: left;
-    width: 480px;
+    width: 40%;
     padding: 15px 15px 10px 10px;
     border-right: 1px solid #CCCCCC;
 }
@@ -535,7 +537,11 @@ a.cta, .cta a {
 
 .fronts #list-picker,
 .fronts #collections {
-    margin: 0 0 0 520px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 15px;
+    width: 60%;
+    float: right;
 }
 
 .fronts .collection {
