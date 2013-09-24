@@ -48,6 +48,22 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
 
                     popular(_config, context, false, '/most-read-facebook', '.js-popular-facebook');
                 }
+            },
+            {
+                id: 'fb-label',
+                test: function (context) {
+                    var $jsPopularEl = bonzo(context.querySelector('.js-popular'));
+
+                    $jsPopularEl.hide();
+                    $jsPopularEl.after('<div class="js-popular-facebook article__popular"></div>');
+
+                    popular(_config, context, false, '/most-read-facebook', '.js-popular-facebook');
+
+                    common.mediator.on('modules:popular:loaded', function () {
+                        var $jsPopularTitle = bonzo(context.querySelector('#most-read-head'));
+                        $jsPopularTitle[0].innerHTML = "Most read from Facebook";
+                    });
+                }
             }
         ];
     };
