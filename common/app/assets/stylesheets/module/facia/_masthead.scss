@@ -207,55 +207,32 @@
 .collection--masthead {
     .item {
         float: left;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-        margin-right: $gs-gutter;
-    }
-    .item:last-child {
-        margin-right: 0;
-    }
-    .item__image {
-        width: 100%;
-        display: block;
-    }
-    .item__title {
-        @include font-size(24, 28);
-        @include box-sizing(border-box);
-        border-top-style: none;
-        padding-top: 0;
-    }
-    .item__standfirst {
-        display: none;
-        margin: $gs-baseline 0 0;
-    }
-    .item__meta {
-        position:absolute;
-        bottom: 0;
-        .item__timestamp {
-            border-left-style: solid;
-            padding-left: $gs-gutter;
-            i {
-                left: 4px;
+        @include mq($to: tablet) {
+            margin-top: $gs-baseline*2;
+            &:first-child {
+                margin-top: 0;
+                .item__title {
+                    padding-top: 0;
+                    border-top-style: none;
+                }
             }
         }
     }
-    .item--feature {
-        border-top-color: $pink !important;
+    .item__image {
+        width: 100%;
     }
-    .item--comment {
-        border-top-color: $green !important;
+    .item__title {
+        @include font-size(26, 28);
+    }
+    .item__standfirst {
+        margin: $gs-baseline*2 0 0;
+        @include font-size(16, 20);
+        @include mq(tablet) {
+            min-height: gs-height(4);
+        }
     }
     .items {
-        @include mq(tablet) {
-            height: gs-height(6);
-        }
-        @include mq(wide) {
-            height: gs-height(8);
-        }
-    }
-    @include mq($to: tablet) {
-        @include collection--stacked;
+        overflow: hidden;
     }
 
     .item-count-1 .item {
@@ -309,65 +286,184 @@
     .item-count-3 {
         .item:nth-child(1) {
             @include mq(tablet, desktop) {
-                @extend %item--with-overlay;
+                @include box-sizing(content-box);
+                padding-right: $gs-gutter/2;
+                width: gs-span(4);
+                .item__title {
+                    min-height: gs-height(3);
+                    padding-top: 0;
+                    border-top-style: none;
+                }
             }
             @include mq(desktop, wide) {
-                @extend %item--with-overlay;
-                @include customise-item--large(gs-span(9), gs-span(6));
-            }
-            @include mq(wide) {
-                @extend %item--with-overlay;
-                @include customise-item--with-overlay(gs-span(8), 28);
+                @include box-sizing(content-box);
+                width: gs-span(8);
+                padding-right: $gs-gutter/2;
+                &.item--with-image {
+                    height: gs-height(8);
+                    .item__title {
+                        background-color: rgba(#ffffff, 0.8);
+                        padding: $gs-baseline/2 $gs-gutter/2 gs-height(1) + $gs-baseline;
+                        width:  gs-span(5);
+                        min-height: 0;
+                        border-top-style: solid;
+                        position: absolute;
+                        bottom: 0;
+                    }
+                    .item__meta {
+                        position: absolute;
+                        bottom: $gs-baseline;
+                        left: $gs-gutter/2;
+                    }
+                    .item__image-container {
+                        height: 100%;
+                        position: absolute;
+                        top: 0;
+                        z-index: -1;
+                        margin-top: 0;
+                    }
+                    .item__image {
+                        height: 100%;
+                        width: auto;
+                    }
+                }
             }
         }
-        .item:nth-child(n+2) {
-            @include mq(tablet, desktop) {
-                @extend %item--small;
-            }
-            @include mq(desktop, wide) {
-                @extend %item--small;
+        .item:nth-child(n + 2) {
+            @include mq(tablet, wide) {
+                padding-right: 0;
+                width: gs-span(4);
+                .item__title {
+                    min-height: gs-height(2) - 8;
+                }
+                .item__standfirst,
+                .item__image-container {
+                    display: none;
+                }
             }
             @include mq(wide) {
-                @extend %item--medium;
+                @include box-sizing(content-box);
+                padding-left: $gs-gutter/2 - 1;
+                padding-right: $gs-gutter/2;
+                border-left: 1px dotted $grey;
+                width: gs-span(4);
+                .item__title {
+                    min-height: gs-height(3);
+                    padding-top: 0;
+                    border-top-style: none;
+                }
+                &:last-child {
+                    padding-right: 0;
+                }
             }
         }
     }
 
     .item-count-4 {
         .item:nth-child(1) {
-            @include mq(tablet, desktop) {
-                @extend %item--with-overlay;
-            }
-            @include mq(desktop, wide) {
-                @extend %item--with-overlay;
+            @include mq(tablet, wide) {
+                @include box-sizing(content-box);
+                padding-right: $gs-gutter/2;
+                width: gs-span(4);
+                .item__title {
+                    min-height: gs-height(3);
+                    padding-top: 0;
+                    border-top-style: none;
+                }
             }
             @include mq(wide) {
-                @extend %item--with-overlay;
-                @include customise-item--with-overlay(gs-span(8), 28);
+                @include box-sizing(content-box);
+                width: gs-span(8);
+                padding-right: $gs-gutter/2;
+                &.item--with-image {
+                    height: gs-height(8);
+                    .item__title {
+                        background-color: rgba(#ffffff, 0.8);
+                        padding: $gs-baseline/2 $gs-gutter/2 gs-height(1) + $gs-baseline;
+                        width:  gs-span(5);
+                        min-height: 0;
+                        border-top-style: solid;
+                        position: absolute;
+                        bottom: 0;
+                    }
+                    .item__meta {
+                        position: absolute;
+                        bottom: $gs-baseline;
+                        left: $gs-gutter/2;
+                    }
+                    .item__image-container {
+                        height: 100%;
+                        position: absolute;
+                        top: 0;
+                        z-index: -1;
+                        margin-top: 0;
+                    }
+                    .item__image {
+                        height: 100%;
+                        width: auto;
+                    }
+                }
+            }
+        }
+        .item:nth-child(n + 2) {
+            @include mq(tablet, desktop) {
+                @include box-sizing(content-box);
+                width: gs-span(4);
+                padding-left: $gs-gutter/2 - 1;
+                border-left: 1px dotted $grey;
+                .item__title {
+                    min-height: gs-height(2) - 8;
+                    @include font-size(20, 24);
+                }
+                .item__image-container {
+                    display: none;
+                }
+            }
+            @include mq(desktop) {
+                @include box-sizing(content-box);
+                padding-left: $gs-gutter/2 - 1;
+                padding-right: $gs-gutter/2;
+                border-left: 1px dotted $grey;
+                width: gs-span(4);
+                .item__title {
+                    min-height: gs-height(3);
+                }
+            }
+        }
+        .item:nth-child(n + 3) {
+            @include mq(tablet, desktop) {
+                padding-top: $gs-baseline;
+            }
+            @include mq(desktop) {
+                padding-right: 0;
+                .item__title {
+                    min-height: gs-height(3) + $gs-baseline;
+                }
+                .item__image-container {
+                    display: none;
+                }
             }
         }
         .item:nth-child(2) {
-            @include mq(desktop, wide) {
-                @extend %item--medium;
-                @include customise-item--medium(gs-span(3), $font-size: 20);
-            }
-            @include mq(wide) {
-                @extend %item--medium;
-            }
-        }
-        .item:nth-child(n+2) {
-            @include mq(tablet, desktop) {
-                @extend %item--small;
-                @include customise-item--small($num: 3);
+            @include mq(tablet) {
+                .item__title {
+                    padding-top: 0;
+                    border-top-style: none;
+                }
             }
         }
-        .item:nth-child(n+3) {
-            @include mq(desktop, wide) {
-                @extend %item--small;
+        .item:nth-child(2),
+        .item:nth-child(3) {
+            @include mq(desktop) {
+                .item__title {
+                    padding-top: 0;
+                    border-top-style: none;
+                }
             }
-            @include mq(wide) {
-                @extend %item--small;
-                @include customise-item--small($num: 2, $show-meta: true);
+        }
+        .item:nth-child(4) {
+            @include mq(desktop) {
+                padding-top: $gs-baseline;
             }
         }
     }

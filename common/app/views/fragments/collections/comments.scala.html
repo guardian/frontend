@@ -21,6 +21,9 @@
                         @RemoveOuterParaHtml(trail.headline)
                     </a>
                 </h2>
+                @if(trail.trailType == Option("comment")) {
+                    <p class="item__byline">@trail.byline</p>
+                }
                 @if(trail.mainPicture(620).isEmpty) {
                     @trail.trailText.map { text =>
                         <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>
