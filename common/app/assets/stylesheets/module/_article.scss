@@ -123,14 +123,14 @@
     border-top: 1px dotted $neutral3;
     border-bottom: 1px dotted $neutral3;
     margin-bottom: $baseline*2;
-    height: 20px;
+    min-height: 20px;
     padding: $baseline - 1 0 $baseline*3 - 1 0;
 
     article & {
         @include mq(tablet, leftCol) {
             font-size: 16px;
             font-size: 1.6rem;
-            height: 32px;
+            min-height: 32px;
         }
         @include mq(rightCol) {
             display: block;
