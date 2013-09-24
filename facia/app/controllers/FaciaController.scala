@@ -5,6 +5,8 @@ import front._
 import model._
 import conf._
 import play.api.mvc._
+import views.support.TemplateDeduping
+import play.api.libs.json.Json
 
 // TODO, this needs a rethink, does not seem elegant
 
@@ -145,9 +147,17 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
           if (path != editionalisedPath) {
             Redirect(editionalisedPath)
           } else {
-            val htmlResponse = () => views.html.front(frontPage, faciaPage)
-            val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
-            renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+            if (request.isJson) {
+              val templateDeduping: TemplateDeduping = TemplateDeduping()
+              val html = views.html.fragments.frontBody(frontPage, faciaPage, Some(templateDeduping))
+              JsonComponent(
+                "html" -> html,
+                "trails" -> templateDeduping.getTrailIds,
+                "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
+              )
+            }
+            else
+              Ok(views.html.front(frontPage, faciaPage))
           }
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here

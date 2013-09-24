@@ -1,8 +1,8 @@
-@(front: FrontPage, faciaTrailblock: FaciaPage)(implicit request: RequestHeader)
+@(front: FrontPage, faciaTrailblock: FaciaPage, templateDeduping: Option[TemplateDeduping] = None)(implicit request: RequestHeader)
 
 @if(faciaTrailblock.collections.nonEmpty) {
     <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
-        @defining {TemplateDeduping()} { dedupe: TemplateDeduping =>
+        @defining {templateDeduping.getOrElse(TemplateDeduping())} { dedupe: TemplateDeduping =>
             @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
                 @if(block._2.items.nonEmpty){
                     @FindStyle(faciaTrailblock.id, block._1) match {

@@ -22,6 +22,8 @@ class TemplateDeduping extends implicits.Collections {
 
   def apply(numberWanted: Int, collection: Collection): Collection = take(numberWanted, collection)
   def apply(collection: Collection): Collection = take(defaultTake, collection)
+
+  def getTrailIds: Seq[String] = alreadyUsed.toList
 }
 
 object TemplateDeduping {
