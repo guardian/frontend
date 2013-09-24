@@ -256,6 +256,32 @@ module.exports = function (grunt) {
         // Create JSON web font files from fonts.
         // Docs here: https://github.com/ahume/grunt-webfontjson
         webfontjson: {
+          WebAgateSansWoff: {
+              options: {
+                  "filename": "common/app/public/fonts/WebAgateSans.woff.js",
+                  "callback": "guFont",
+                  "fonts": [
+                      {
+                          "font-family": "AgateSans",
+                          "file": "resources/fonts/AgateSans-Regular.woff",
+                          "format": "woff"
+                      }
+                  ]
+              }
+          },
+        WebAgateSansTtf: {
+            options: {
+                "filename": "common/app/public/fonts/WebAgateSans.ttf.js",
+                "callback": "guFont",
+                "fonts": [
+                    {
+                        "font-family": "AgateSans",
+                        "file": "resources/fonts/AgateSans-Regular.ttf",
+                        "format": "ttf"
+                    }
+                ]
+            }
+        },
           WebEgyptianWoff: {
             options: {
               "filename": "common/app/public/fonts/WebEgyptian.woff.js",
@@ -306,6 +332,11 @@ module.exports = function (grunt) {
               "filename": "common/app/public/fonts/WebEgyptian.ttf.js",
               "callback": "guFont",
               "fonts": [
+                {
+                  "font-family": "AgateSans",
+                  "file": "resources/fonts/AgateSans-Regular.ttf",
+                  "format": "ttf"
+                },
                 {
                   "font-family": "EgyptianText",
                   "file": "resources/fonts/EgyptianText-Regular.ttf",
