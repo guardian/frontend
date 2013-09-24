@@ -2,8 +2,8 @@ define([
     'common',
     'ajax',
     'bonzo',
-    'modules/facia-relativise-timestamp',
-    'modules/facia-items-show-more'
+    'modules/facia/relativise-timestamp',
+    'modules/facia/items-show-more'
 ], function (common, ajax, bonzo, RelativiseTimestamp, ItemsShowMore) {
 
     var updateTmpl = function(tmpl, trail) {

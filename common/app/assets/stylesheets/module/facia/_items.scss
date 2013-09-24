@@ -8,6 +8,7 @@ $light-green: #d2dd2e;
 $dark-green: #19646c;
 
 .collection {
+    position: relative;
     margin-top: gs-height(1);
 }
 .collection__title {
@@ -23,6 +24,16 @@ $dark-green: #19646c;
 .collection--top-stories .collection__title {
     background-color: $blue;
     border-color: $light-blue;
+}
+.collection__display-toggle {
+    position: absolute;
+    top: $gs-baseline*(2/3);
+    right: $gs-gutter/5;
+    border: none;
+    background-color: transparent;
+    @include font($serifheadline, 800, 16);
+    color: #ffffff;
+    padding: 0;
 }
 .item {
     position: relative;
