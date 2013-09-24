@@ -66,7 +66,7 @@ define([
             imageFragment = '<img src="' + image + '" alt="" class="card__media" />';
         }
         if (datePublished) {
-            publishedFragment = '<div class="dateline"><i class="i i-date relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
+            publishedFragment = '<div class="dateline"><i class="i i-clock-grey relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
         }
         if (title === 'Wikipedia') {
             contentFragment = '<div class="card__description type-11">' + description + '</div>';
@@ -78,13 +78,15 @@ define([
         }
 
         tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
-                  '<div class="furniture furniture--left card">' +
+                  '<div class="furniture furniture--left card card--left">' +
                       titleFragment +
-                      imageFragment +
                       '<div class="card__body u-text-hyphenate">' +
-                          publishedFragment +
                           contentFragment +
                       '</div>' +
+                      '<div class="card__meta">' +
+                          publishedFragment +
+                      '</div>' +
+                      imageFragment +
                   '</div>' +
               '</a>';
 
