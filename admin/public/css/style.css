@@ -650,9 +650,9 @@ a.cta, .cta a {
 .fronts .trail .trail__remove {
     display: none;
     position: absolute;
-    top: 4px;
-    left: 59px;
-    background: rgba(0, 0, 0, 0.6);
+    top: 0;
+    right: 0;
+    background: #999999;
     width: 14px;
     height: 20px;
     padding: 0px 3px;
