@@ -5,13 +5,8 @@
     <div class="splash" data-bind="visible: false">Loading Editor...</div>
 
     <div class="fronts" data-bind="visible: true, makeDropabble: true" style="display: none">
-        <header>
-            <div class="tool-title">Front Collections Editor</div>
-            <div class="list-picker">
-                <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select>
-                <button data-bind="enable: collections().length, click: actions.unsetConfig">Clear</button>
-            </div>
-        </header>
+
+        <div class="tool-title">Fronts Editor</div>
 
         <div class="finder">
 
@@ -56,6 +51,11 @@
             </div>
         </script>
 
+        <div id="list-picker">
+            <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select>
+            <button data-bind="enable: collections().length, click: actions.unsetConfig">Clear</button>
+        </div>
+
         <div id="collections" data-bind="foreach: collections">
             <div class="collection" data-bind="
                 css: { 'collection--isMajor': configMeta.displayName() || collectionMeta.displayName() }">
@@ -68,7 +68,7 @@
                         <a class="list-header__display" data-bind="
                             visible: typeof configMeta.displayName() === 'undefined',
                             css: { 'list-header__display--is-set': !!collectionMeta.displayName() },
-                            text: collectionMeta.displayName() || 'Set Title',
+                            text: collectionMeta.displayName() || 'Set title for',
                             click: toggleEditingConfig"></a>
 
                         <span class="list-header__display list-header__display--is-set" data-bind="

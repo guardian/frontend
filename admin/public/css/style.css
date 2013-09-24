@@ -355,11 +355,10 @@ a.cta, .cta a {
 }
 
 .fronts .finder {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     float: left;
-    width: 350px;
-    padding: 10px;
+    width: 480px;
+    padding: 15px 15px 10px 10px;
+    border-right: 1px solid #CCCCCC;
 }
 
 .fronts .finder input[type="text"] {
@@ -372,25 +371,12 @@ a.cta, .cta a {
     text-transform: uppercase;
 }
 
-.fronts header {
-    padding: 5px 5px 5px 10px;
-    overflow: auto;
-}
-
-.fronts header .tool-title {
-    margin: 7px 0 0 0;
-    float: left;
-}
-
-.fronts header .list-picker {
-    float: right;
-}
-
 .fronts .tool-title {
+    padding: 0 5px 0 10px;
     font-size: 18px;
+    text-transform: uppercase;
 }
 
-.fronts .list-picker__title,
 .fronts .finder__title {
     font-size: 14px;
     font-weight: bold;
@@ -409,23 +395,6 @@ a.cta, .cta a {
 
 .fronts .list-tool:active {
     opacity: 0.6;
-}
-
-.fronts .list-picker__item {
-    color: #214583;
-    font-weight: bold;
-    display: inline-block;
-    padding-right: 5px;
-    margin-right:  5px;
-    border-right:  1px solid #cccccc;
-}
-
-.fronts .list-picker__item:last-child {
-    font-weight: bold;
-    display: inline-block;
-    padding-right: 0;
-    margin-right:  0;
-    border-right:  0;
 }
 
 .fronts #collections .connectedList {
@@ -447,7 +416,7 @@ a.cta, .cta a {
 }
 
 .fronts .list-header__title {
-    padding: 1px 4px;
+    padding: 2px 4px 1px 4px;
     height: 20px;
     overflow: hidden;
 }
@@ -465,9 +434,11 @@ a.cta, .cta a {
 }
 
 .fronts .list-header__display {
-    font-size: 16px;
+    font-style: italic;
 }
 .fronts .list-header__display--is-set {
+    font-style: normal;
+    font-size: 16px;
     font-weight: bold;
     color: #000000;
 }
@@ -562,8 +533,9 @@ a.cta, .cta a {
     margin: 0 2px 0 0;
 }
 
+.fronts #list-picker,
 .fronts #collections {
-    margin: 0 0 0 350px;
+    margin: 0 0 0 520px;
 }
 
 .fronts .collection {
@@ -571,17 +543,17 @@ a.cta, .cta a {
     box-sizing: border-box;
     width: 100%;
     float: left;
-    padding: 0 0 20px 0;
+    padding: 0 0 5px 0;
     border-top: 1px solid #CCCCCC;
     position: relative;
 }
 
 .fronts .collection--isMajor {
-    border-top: 3px solid #333333;
+    border-top: 3px solid #999999;
 }
 
 .fronts .collection:first-child {
-    margin-top: 35px;
+    margin-top: 10px;
 }
 
 .fronts .trail {
@@ -589,14 +561,8 @@ a.cta, .cta a {
     box-sizing: border-box;
     overflow: hidden;
     cursor: move;
-    background-color: #ededed;
     padding: 1px 3px 4px 4px;
-    border-bottom: 1px solid #FFFFFF;
     position: relative;
-}
-
-.fronts .trail:last-child {
-    border-bottom: 0;
 }
 
 .fronts .is-live .trail {
@@ -657,21 +623,10 @@ a.cta, .cta a {
 }
 
 .fronts .trail .trail__meta {
-    float: left;
-    clear: left;
-    width: 75px;
-    height: 16px;
     color: #999999;
     font-size: 10px;
-    line-height: 10px;
-    margin: 4px 0 0 0;
-}
-
-.fronts .collection .trail .trail__meta {
-    float: inherit;
-    width: inherit;
-    clear: inherit;
-    margin: 2px 0 0 80px;
+    line-height: 14px;
+    margin: 0 0 0 80px;
 }
 
 .fronts .trail .trail__meta a {
@@ -716,6 +671,10 @@ a.cta, .cta a {
     height: 30px;
     width: 160px;
     margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
 }
 
 .fronts select:disabled {
@@ -732,7 +691,7 @@ a.cta, .cta a {
 
 .fronts .clipboard__wrapper {
     position: relative;
-    margin: 5px 0 40px 0;
+    margin: 5px 0 27px 0;
 }
 
 .fronts #clipboard,
