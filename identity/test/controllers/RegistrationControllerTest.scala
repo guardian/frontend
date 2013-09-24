@@ -131,13 +131,8 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
         .withHeaders("X-Forwarded-For" -> xForwardedFor)
       val badPassword = List(Error("Invalid password:", "Password should be between 6 and 20 characters long:", 500, Some("user.password")))
 
-<<<<<<< HEAD
-      when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
-      when(api.register(user, omnitureData, Some(testIp))).thenReturn(Future.successful(Left(badPassword)))
-=======
      when(api.register(Matchers.same(user), Matchers.same(omnitureData), Matchers.any[Option[String]]))
        .thenReturn(Future.successful(Left(badPassword)))
->>>>>>> origin/master
 
       "there is no attempt to sign the user in" in Fake {
         registrationController.processForm()(fakeRequest)
