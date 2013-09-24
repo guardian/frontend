@@ -538,7 +538,6 @@ a.cta, .cta a {
     width: 100%;
     float: left;
     padding: 0 0 5px 0;
-    border-top: 1px solid #CCCCCC;
     position: relative;
 }
 
@@ -557,6 +556,9 @@ a.cta, .cta a {
     cursor: move;
     padding: 1px 3px 4px 4px;
     position: relative;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 }
 
 .fronts .is-draft .trail {
@@ -572,7 +574,7 @@ a.cta, .cta a {
 }
 
 .fronts .trail.ui-sortable-placeholder {
-    height: 60px !important;
+    height: 5px !important;
     background-color: #47ae38 !important;
     visibility: visible !important;
 }
@@ -646,6 +648,9 @@ a.cta, .cta a {
     padding: 0px 3px;
     cursor: pointer;
     z-index: 99;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 }
 
 .fronts .trail:hover .trail__remove {
