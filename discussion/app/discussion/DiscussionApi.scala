@@ -46,7 +46,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           }
         case other =>
           log.error(s"Error loading comment counts id: $ids status: $other message: ${response.statusText}")
-          throw new RuntimeException(s"Error from discussion API: ${response.statusText}")
+          throw new RuntimeException("Error from discussion API")
       }
     }
   }
@@ -86,7 +86,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
         case other =>
           log.error(s"Error loading comments id: $id status: $other message: ${response.statusText}")
-          throw new RuntimeException(s"Error from discussion API: ${response.statusText}")
+          throw new RuntimeException("Error from discussion API")
       }
     }
   }
