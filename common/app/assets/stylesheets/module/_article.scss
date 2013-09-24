@@ -37,12 +37,12 @@
 }
 
 .article__headline {
-    @include headline(6);
+    @include headline(4);
     margin-bottom: $baseline*6;
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        @include headline(2, true);
+        @include headline(8, true);
         margin-bottom: $gs-column-height;
     }
 
