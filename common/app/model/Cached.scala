@@ -38,3 +38,7 @@ object Cached extends Results {
     )
   }
 }
+
+object NoCache extends Results {
+  def apply(result: Result) = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
+}

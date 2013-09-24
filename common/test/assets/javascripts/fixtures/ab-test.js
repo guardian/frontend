@@ -9,6 +9,7 @@ define([], function () {
         this.canRun = function(config) {
             return true;
         };
+        this.events = ['most popular | The Guardian | trail ', 'most popular | Section | trail ']
         this.variants = [
             {
                 id: 'control',

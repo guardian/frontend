@@ -1,4 +1,4 @@
 100:conf.SwitchBoardPlugin
 
-1000:assets.AssetsPlugin
+1000:assets.SecureAssetsPlugin
 1000:com.gu.management.play.InternalManagementPlugin

@@ -15,18 +15,20 @@ case class CommentPage(
   comments: Seq[Comment],
   contentUrl: String,
   currentPage: Int,
-  pages: Int
+  pages: Int,
+  isClosedForRecommendation: Boolean
 ) extends Page(id = id, section = "Global", webTitle = title, analyticsName = s"GFE:Article:Comment discussion page $currentPage") {
   lazy val hasMore: Boolean = currentPage < pages
 }
 
 trait DiscussionApi extends ExecutionContexts with Logging {
 
+  import conf.Configuration.discussion.apiRoot
   protected def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
 
   def commentCounts(ids: String) = {
 
-    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/getCommentCounts?short-urls=$ids"
+    val apiUrl = s"$apiRoot/getCommentCounts?short-urls=$ids"
 
     val start = currentTimeMillis
 
@@ -53,7 +55,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
     val size = if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
 
-    val apiUrl = s"http://discussion.guardianapis.com/discussion-api/discussion/$id?pageSize=$size&page=$page&orderBy=oldest&showSwitches=true"
+    val apiUrl = s"$apiRoot/discussion/$id?pageSize=$size&page=$page&orderBy=oldest&showSwitches=true"
 
     val start = currentTimeMillis
 
@@ -78,7 +80,8 @@ trait DiscussionApi extends ExecutionContexts with Logging {
             contentUrl = (json \ "discussion" \ "webUrl").as[String],
             comments = comments,
             currentPage =  (json \ "currentPage").as[Int],
-            pages = (json \ "pages").as[Int]
+            pages = (json \ "pages").as[Int],
+            isClosedForRecommendation = (json \ "discussion" \ "isClosedForRecommendation").as[Boolean]
           )
 
         case other =>
