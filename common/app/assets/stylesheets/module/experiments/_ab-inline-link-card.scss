@@ -19,6 +19,7 @@
 
     @include mq(wide) {
         margin-left: (gs-span(3) + $gs-gutter)*-1;
+        width: gs-span(3);
     }
 }
 
@@ -54,71 +55,45 @@
     margin-bottom: 0;
 
     .furniture--left & {
-        width: 140px;
         min-height: 84px;
     }
 }
 .card__title {
+    min-height: gs-height(1);
+    margin-bottom: $gs-baseline;
+    border-top: 2px solid $grey;
+
     font-family: $serifheadline !important;
     font-size: 18px !important;
     font-size: 1.8rem !important;
     line-height: 26px !important;
     line-height: 2.6rem !important;
+    @include box-sizing(border-box);
 }
 .card__body {
+    border-top: 1px solid $grey;
     padding: $baseline*1.5 0 $baseline*6;
     position: relative;
+    @include box-sizing(border-box);
 }
 
-.card__zone {
-    @extend %type-2;
-    margin-bottom: 0;
-}
+.card__meta {
+    min-height: gs-height(1);//$unitHeight;
+    @include font($sans-serif, lighter, 12, 12);
+    @include box-sizing(border-box);
 
-.card__headline {
-    font-family: $serif !important; // Override .from-content-api h3 defaults
-    color: #444444;
-    font-size: 18px !important;
-    font-size: 1.8rem !important;
-    line-height: 20px !important;
-    line-height: 2rem !important;
-}
-
-.card__description {
-    color: #444444;
-}
-
-.card__appendix {
-    color: #8c8c8c;
-    padding-top: $baseline;
-}
-
-.card--right {
-    margin-top: $baseline*4;
-
-    .card__title {
-        min-height: $unitHeight;
-        margin-bottom: $baseline*3;
-        border-top: 2px solid $grey;
-        @include font($serifheadline, 700, 18, 24);
-    }
-
-    .card__body {
-        padding-top: $baseline*2;
-        min-height: 90px;
-        border-top: 1px solid $grey;
-        @include box-sizing(border-box);
-        @include font($serifheadline, normal, 18, 24);
-    }
-
-    .card__meta {
-        min-height: $unitHeight;
-        @include font($sans-serif, lighter, 12, 12);
+    .dateline {
+        margin-bottom: 0;
     }
 
     .relative-timestamp {
         float: left;
         color: $grey;
+
+        i {
+            float: left;
+            margin: 3px 4px 0 0;
+        }
     }
 
     .trail__count {
@@ -137,5 +112,55 @@
             @extend .i-comment-grey;
         }
     }
+}
 
+.card__zone {
+    @extend %type-2;
+    margin-bottom: 0;
+}
+
+.card__headline {
+    font-family: $serif !important; // Override .from-content-api h3 defaults
+    color: #444444;
+    font-size: 22px !important;
+    font-size: 2.2rem !important;
+    line-height: 26px !important;
+    line-height: 2.6rem !important;
+
+
+}
+
+.card__description {
+    color: #444444;
+}
+
+.card__appendix {
+    color: #8c8c8c;
+    padding-top: $baseline;
+}
+
+.card--left {
+
+    .card__headline {
+        font-size: 16px !important;
+        font-size: 1.6rem !important;
+        line-height: 20px !important;
+        line-height: 2.0rem !important;
+    }
+}
+
+
+.card--right {
+    margin-top: $baseline*4;
+
+    .card__title {
+        @include font($serifheadline, 700, 18, 24);
+    }
+
+    .card__body {
+        min-height: gs-height(2);
+        padding-bottom: 0;
+        margin-bottom: $gs-baseline;
+        @include font($serifheadline, normal, 18, 24);
+    }
 }
