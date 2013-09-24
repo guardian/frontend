@@ -14,10 +14,7 @@
     color: #333;
 
     @include mq(tablet) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 26px;
-        line-height: 2.6rem;
+        @include font-size(18, 28);
     }
 
     > p,
@@ -30,14 +27,11 @@
     }
     h2 {
         @extend %type-4;
-        color: #333;
+        color: #333333;
         margin-bottom: $baseline;
 
         @include mq(tablet) {
-            font-size: 22px;
-            font-size: 2.2rem;
-            line-height: 28px;
-            line-height: 2.8rem;
+            @include font-size(22, 28);
         }
     }
     h3 {
@@ -65,10 +59,7 @@
 .article blockquote,
 .article blockquote p {
     @include mq(tablet) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 26px;
-        line-height: 2.6rem;
+        @include font-size(18, 26);
     }
 }
 
@@ -80,7 +71,11 @@
 figcaption,
 .main-caption {
     @extend %type-12;
-    color: #666;
+    color: #666666;
+
+    @include mq(tablet) {
+        @include font-size(12, 18);
+    }
 }
 
 .main-caption {
