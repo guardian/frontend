@@ -23,10 +23,12 @@
         }
 
 
-        @fragments.collections.topStories(Config(tag.id, None, None), Collection(leadContent, None))
+        @fragments.collections.topStories(Config(tag.id, None, None), Collection(leadContent, None), TopStories)
 
-        @fragments.collections.topStories(Config(tag.id, None, None), Collection(trails.take(2), None))
+        @fragments.collections.topStories(Config(tag.id, None, None), Collection(trails.take(2), None), TopStories)
 
-        @fragments.collections.mediumStories(Config(tag.id, None, None), Collection(trails.drop(2), None))
+        @fragments.collections.mediumStories(Config(tag.id, None, None), Collection(trails.drop(2).take(4), None), MediumStories)
+
+        @fragments.collections.smallStories(Config(tag.id, None, None), Collection(trails.drop(6)), SmallStories(showMore=false))
     </div>
 }

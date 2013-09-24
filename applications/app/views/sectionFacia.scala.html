@@ -4,9 +4,11 @@
 
     <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
 
-        @fragments.collections.topStories(Config(section.id, None, Some(section.webTitle)), Collection(trails.take(2), None))
+        @fragments.collections.topStories(Config(section.id, None, Some(section.webTitle)), Collection(trails.take(2), None), TopStories)
 
-        @fragments.collections.mediumStories(Config(section.id, None, None), Collection(trails.drop(2), None))
+        @fragments.collections.mediumStories(Config(section.id, None, None), Collection(trails.drop(2).take(4), None), MediumStories)
+
+        @fragments.collections.smallStories(Config(section.id, None, None), Collection(trails.drop(6), None), SmallStories(showMore=false))
 
     </div>
 }
