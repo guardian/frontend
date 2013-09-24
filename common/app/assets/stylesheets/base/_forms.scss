@@ -71,6 +71,19 @@
     margin-bottom: 12px;
 }
 
+.form-field__note--below {
+    margin-bottom: 0;
+    margin-top: 6px;
+}
+
+.form-field__note--left {
+    float: left;
+}
+
+.form-field__note--right {
+    float: right;
+}
+
 .label {
     color: #333;
     cursor: pointer;
