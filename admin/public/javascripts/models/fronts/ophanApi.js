@@ -3,7 +3,7 @@ define([
     'Reqwest',
     'models/fronts/common',
     'models/fronts/cache'
-], 
+],
 function (
     Config,
     Reqwest,
@@ -21,14 +21,14 @@ function (
 
             if (data && _.isUndefined(item.state.pageViews())) {
                 decorateItem(data, item);
-                return; 
+                return;
             }
 
             setTimeout(function(){
                 fetchData(id, function(data){
                     cache.put('pageViews', id, data);
                     decorateItem(data, item);
-                });                    
+                });
             }, index * 1000/(common.config.ophanCallsPerSecond || 4)); // stagger requests
         });
     };
@@ -48,18 +48,17 @@ function (
             _.each(data.seriesData, function(s){
 
                 // Pick the relevant group...
-                var group = _.find(groups, function(g){ 
+                var group = _.find(groups, function(g){
                         return g.name === s.name;
                     }) || groups[0]; // ...defaulting to the first ('Other')
 
                 // How many 1 min points are we adding into each slot
                 var minsPerSlot = Math.max(1, Math.floor(s.data.length / slots));
-                group.minsPerSlot = minsPerSlot;
 
                 // ...sum the data into each group
                 _.each(_.first(_.last(s.data, 1+minsPerSlot*slots), minsPerSlot*slots), function(d,index) {
                     var i = Math.floor(index / minsPerSlot);
-                    group.data[i] = (group.data[i] || 0) + d.count;
+                    group.data[i] = (group.data[i] || 0) + d.count/minsPerSlot; // dividing by minsPerSlot produces an average
                     group.max = Math.max(group.max, group.data[i]);
                 });
             });

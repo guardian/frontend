@@ -62,7 +62,7 @@ define([
                             return new List(collection);
                         })
                     );
-                    connectSortableLists();                
+                    connectSortableLists();
                 });
             });
         }
@@ -83,12 +83,12 @@ define([
                 start: function(event, ui) {
                     common.state.uiBusy = true;
 
-                    // Display the source item. (The clone gets dragged.) 
+                    // Display the source item. (The clone gets dragged.)
                     sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    fromListObj = knockout.dataFor(fromList[0]);                    
+                    fromListObj = knockout.dataFor(fromList[0]);
                 },
                 stop: function(event, ui) {
                     var index,
@@ -146,7 +146,7 @@ define([
                     if (numOfItems > 1) {
                         delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
                         delta.after = true;
-                    } 
+                    }
                 }
 
                 listObj.state.loadIsPending(true);
@@ -166,7 +166,7 @@ define([
         function startPoller() {
             var period = common.config.collectionsPollMs || 60000;
 
-            setInterval(function(){                
+            setInterval(function(){
                 model.collections().forEach(function(list, index){
                     setTimeout(function(){
                         list.refresh();
@@ -184,8 +184,8 @@ define([
             }).then(
                 function(resp) {
                     if (!_.isArray(resp) || resp.length === 0) {
-                        window.console.log("ERROR: No configs were found");      
-                        return; 
+                        window.console.log("ERROR: No configs were found");
+                        return;
                     }
                     model.configs(resp.sort());
                     if (_.isFunction(callback)) { callback(); }
@@ -260,10 +260,10 @@ define([
                     return -1 * g.max;
                 }).each(function(group, i){
 
-                    group.data.pop(); // drop the last data point. 
+                    group.data.pop(); // drop the last data point.
 
                     var data = group.data,
-                        isHot = (_.last(data)/group.minsPerSlot) > 10;
+                        isHot = _.reduce(_.last(data, 5), function(m, n){ return m + n; }, 0)/5 > 50;
 
                     $(element).sparkline(data, {
                         chartRangeMax: max,
