@@ -447,7 +447,7 @@ a.cta, .cta a {
 }
 
 .fronts .list-header__title {
-    padding: 1px 6px;
+    padding: 1px 4px;
     height: 20px;
     overflow: hidden;
 }
@@ -514,8 +514,7 @@ a.cta, .cta a {
 .fronts .list-header__status__draft {
     font-size: 10px;
     float: left;
-    padding: 0 6px;
-    margin: 0 1px;
+    padding: 0 5px 0 4px;
     height: 19px;
     cursor: pointer;
     color: #999999;
@@ -578,7 +577,7 @@ a.cta, .cta a {
 }
 
 .fronts .collection--isMajor {
-    border-top: 3px solid #f89406;
+    border-top: 3px solid #333333;
 }
 
 .fronts .collection:first-child {
@@ -591,7 +590,7 @@ a.cta, .cta a {
     overflow: hidden;
     cursor: move;
     background-color: #ededed;
-    padding: 2px 5px 7px 6px;
+    padding: 1px 3px 4px 4px;
     border-bottom: 1px solid #FFFFFF;
     position: relative;
 }
@@ -622,13 +621,8 @@ a.cta, .cta a {
     float: left;
     width: 75px;
     height: 45px;
-    margin: 5px 0 0 0;
+    margin: 3px 0 0 0;
     background-color: #EEEEEE;
-}
-
-.fronts .collection .trail img,
-.fronts .trail:hover img {
-    display: block;
 }
 
 .fronts .trail p {
@@ -637,7 +631,6 @@ a.cta, .cta a {
 }
 
 .fronts .trail .webTitle {
-    margin-top: 2px;
     margin-left: 80px;
     display: block;
     text-decoration: none;
@@ -671,15 +664,14 @@ a.cta, .cta a {
     color: #999999;
     font-size: 10px;
     line-height: 10px;
-    margin-top: 4px;
+    margin: 4px 0 0 0;
 }
 
 .fronts .collection .trail .trail__meta {
-    float: right;
-    clear: right;
-    text-align: right;
+    float: inherit;
     width: inherit;
-    margin-right: 32px;
+    clear: inherit;
+    margin: 2px 0 0 80px;
 }
 
 .fronts .trail .trail__meta a {
@@ -694,15 +686,20 @@ a.cta, .cta a {
     cursor: pointer;
 }
 
-.fronts .trail .trail__actions {
+.fronts .trail .trail__remove {
     display: none;
+    position: absolute;
+    top: 4px;
+    left: 59px;
+    background: rgba(0, 0, 0, 0.6);
+    width: 14px;
+    height: 20px;
+    padding: 0px 3px;
+    cursor: pointer;
 }
 
-.fronts .collection .trail:hover .trail__actions {
+.fronts .collection .trail:hover .trail__remove {
     display: block;
-    position: absolute;
-    top: 2px;
-    right: 3px;
 }
 
 .fronts .trail_tweaks {
@@ -770,33 +767,33 @@ a.cta, .cta a {
     font-weight: bold;
 }
 
-.fronts .list-config {
-    padding: 2px 7px 7px 7px;
+.fronts .collection-config {
+    padding: 5px 7px 7px 7px;
     font-size: 10px;
     background: #CCCCCC;
     color: #000000;
 }
 
-.fronts .list-config.editable {
+.fronts .collection-config.editable {
     background-color: #eee;
 }
 
-.fronts .list-config a {
+.fronts .collection-config a {
     color: #666666;
     cursor: pointer;
 }
 
-.fronts .list-config input {
+.fronts .collection-config input {
 }
 
-.fronts .list-config input.tiny {
+.fronts .collection-config input.tiny {
     width: 40px;
     text-align: right;
 }
 
 .fronts .trail_stats {
-    width: 180px;
-    height: 30px;
+    width: 130px;
+    height: 40px;
     float: right;
     clear: right;
     font-size: 9px;
@@ -809,7 +806,7 @@ a.cta, .cta a {
     font-weight: bold;
     position: absolute;
     bottom: -2px;
-    left: 150px;
+    left: 100px;
 }
 
 .fronts .pageviews-graph canvas {
