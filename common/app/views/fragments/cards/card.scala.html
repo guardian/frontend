@@ -13,7 +13,6 @@
 
         <div class="card__meta">
             @fragments.relativeDate(trail.webPublicationDate, trail.isLive)
-
         </div>
 
         @trail.thumbnailPath.map{ thumbnailPath =>
@@ -31,44 +30,4 @@
         }
     </div>
 </div>
-
-
-<!--div class="furniture furniture--@column card card--@column">
-
-    <div class="item @trail.trailType.map("item--" + _) @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image}" data-link-name="@linkName"
-        @trail.discussionId.map{ id => data-discussion-id="@id" }>
-        <h2 class="item__title">
-            <a href="@LinkTo{@trail.url}" class="item__link">
-                @RemoveOuterParaHtml(trail.headline)
-            </a>
-        </h2>
-        <div class="item__meta item__meta--grey">
-            <time class="item__timestamp js-item__timestamp"
-                  itemprop="datePublished"
-                  datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                  data-timestamp="@trail.webPublicationDate.getMillis">
-                <i class="i"></i>
-                <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
-            </time>
-        </div>
-        @trail.thumbnailPath.map{ thumbnailPath =>
-            @trail.mainPicture(width=220).map { largeCrop =>
-            <div class="item__image-container">
-                <a href="@LinkTo{@trail.url}" class="item__link">
-                    <img class="item__image" src="@thumbnailPath"
-                    data-thumb-width="140"
-                    data-fullsrc="@largeCrop.path"
-                    data-full-width="@largeCrop.width"
-                    alt=""
-                    itemprop="contentURL"
-                    />
-                </a>
-            </div>
-            }
-        }
-    </div>
-
-</div-->
-
-
 
