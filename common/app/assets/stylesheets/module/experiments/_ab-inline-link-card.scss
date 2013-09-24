@@ -118,21 +118,18 @@
 
     .relative-timestamp {
         float: left;
-
-        i {
-            @extend .i-clock-grey;
-        }
+        color: $grey;
     }
 
     .trail__count {
         position: static;
         float: left;
-        color: #cccccc;
-        border-left: 1px solid #cccccc;
+        color: $grey;
+        border-left: 1px solid $grey;
         margin-left: 4px;
 
         a {
-            color: #cccccc;
+            color: $grey;
             margin-left: $gs-gutter/2 - 1;
         }
 
