@@ -290,9 +290,9 @@ define([
                 renderConfig();
                 window.onpopstate = renderConfig;
 
-                //startPoller();
+                startPoller();
                 model.latestArticles.search();
-                //model.latestArticles.startPoller();
+                model.latestArticles.startPoller();
             });
         };
 
