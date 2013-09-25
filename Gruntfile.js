@@ -252,6 +252,14 @@ module.exports = function (grunt) {
             }
         },
 
+        imagemin: {
+            static: {
+                files: [{
+                    'common/app/assets/images/global/sprite.png': 'common/app/assets/images/global/sprite.png'
+                }]
+            }
+        },
+
 
         // Create JSON web font files from fonts.
         // Docs here: https://github.com/ahume/grunt-webfontjson
@@ -380,6 +388,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
 
     // Standard tasks
     grunt.registerTask('test:unit', ['jasmine']);
@@ -401,7 +410,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:common:js', ['requirejs:common']);
     grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
 
-    grunt.registerTask('compile:icons', ['shell:icons']);
+    grunt.registerTask('compile:icons', ['shell:icons', 'imagemin']);
 
     grunt.registerTask('analyse:common:css', ['cssmetrics:common']);
     grunt.registerTask('analyse', ['analyse:common:css']);
