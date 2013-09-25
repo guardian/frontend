@@ -37,12 +37,12 @@
 }
 
 .article__headline {
-    @extend %type-3;
+    @include fs-headline(4);
     margin-bottom: $baseline*6;
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        @include font-size(42, 46);
+        @include fs-headline(8, true);
         margin-bottom: $gs-column-height;
     }
 
@@ -58,7 +58,7 @@
 
 .article__dateline {
     @include box-sizing(border-box);
-    @include font($sans-serif, normal, 12, 16);
+    @include fs-data(2);
     position: relative;
     min-height: $gs-column-height;
     padding-top: $baseline;
@@ -70,7 +70,7 @@
     }
 
     @include mq(desktop) {
-        @include font-size(13, 16);
+        @include fs-data(3, true);
     }
 
     @include mq(leftCol) {
@@ -105,7 +105,7 @@
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        @include font-size(18, 22);
+        @include fs-bodyCopy(4);
         margin-bottom: $baseline*4;
     }
 }
@@ -149,8 +149,7 @@
 
     article & {
         @include mq(tablet, leftCol) {
-            font-size: 16px;
-            font-size: 1.6rem;
+            @include fs-bodyCopy(3, true);
             min-height: 32px;
         }
         @include mq(rightCol) {
