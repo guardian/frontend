@@ -253,9 +253,23 @@ module.exports = function (grunt) {
         },
 
         imagemin: {
-            static: {
+            sprite: {
                 files: [{
                     'common/app/assets/images/global/sprite.png': 'common/app/assets/images/global/sprite.png'
+                }]
+            },
+
+            all: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/images/',
+                    src: ['**/*.png'],
+                    dest: 'common/app/assets/images/'
+                },{
+                    expand: true,
+                    cwd: 'common/app/public/images/',
+                    src: ['**/*.{png,gif,jpg}'],
+                    dest: 'common/app/public/images/'
                 }]
             }
         },
@@ -410,7 +424,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:common:js', ['requirejs:common']);
     grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
 
-    grunt.registerTask('compile:icons', ['shell:icons', 'imagemin']);
+    grunt.registerTask('compile:icons', ['shell:icons', 'imagemin:sprite']);
 
     grunt.registerTask('analyse:common:css', ['cssmetrics:common']);
     grunt.registerTask('analyse', ['analyse:common:css']);
