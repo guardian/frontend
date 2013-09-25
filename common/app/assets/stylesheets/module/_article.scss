@@ -58,7 +58,8 @@
 
 .article__dateline {
     @include box-sizing(border-box);
-    @extend %type-11;
+    @include fs-data(2);
+    position: relative;
     min-height: $gs-column-height;
     padding-top: $baseline;
     margin-bottom: $baseline*3;
@@ -68,12 +69,32 @@
         display: none;
     }
 
+    @include mq(desktop) {
+        @include fs-data(3, true);
+    }
+
     @include mq(leftCol) {
         display: none;
 
         .article__meta-container & {
             display: block;
             margin-bottom: $baseline*3;
+
+            time {
+                display: inline-block;
+                width: 86%;
+            }
+
+            i {
+                vertical-align: top;
+                margin-top: 2px;
+            }
+        }
+    }
+
+    @include mq(wide) {
+        .article__dateline-time {
+            display: inline-block;
         }
     }
 }
@@ -84,7 +105,7 @@
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        @include font-size(18, 22);
+        @include fs-bodyCopy(4);
         margin-bottom: $baseline*4;
     }
 }
@@ -128,8 +149,7 @@
 
     article & {
         @include mq(tablet, leftCol) {
-            font-size: 16px;
-            font-size: 1.6rem;
+            @include fs-bodyCopy(3, true);
             min-height: 32px;
         }
         @include mq(rightCol) {
@@ -196,7 +216,7 @@ video {
 .commentcount {
     @extend %type-11;
     display: none;
-    color: #F6644F;
+    color: $linkBlue;
 
     i {
         vertical-align: middle;
@@ -204,8 +224,20 @@ video {
     }
 
     .article__head & {
+        @include box-sizing(border-box);
         display: block;
-        float: right;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: $gs-column-width - 1px;
+        height: $gs-column-height - 1px;
+        padding: $baseline 0 0 $baseline;
+        border-left: 1px dotted $neutral3;
+    }
+
+    &:active,
+    &:hover {
+        color: $linkBlue;
     }
 }
 
