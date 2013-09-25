@@ -146,7 +146,12 @@ function processFile() {
 
                         document.getElementById('container').appendChild(placeholder);
 
-                        return { x: placeholder.offsetLeft, y: placeholder.offsetTop, w: svgel.getAttribute('width'), h: svgel.getAttribute('height') };
+                        return {
+                            x: placeholder.offsetLeft,
+                            y: placeholder.offsetTop,
+                            w: Math.round(svgel.getAttribute('width')),
+                            h: Math.round(svgel.getAttribute('height'))
+                        };
 
                     }, svgdata);
 
