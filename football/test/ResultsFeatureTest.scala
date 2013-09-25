@@ -78,7 +78,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("the 'Desktop version' link should point to '/football/results?view=desktop'")
-        findFirst(".js-main-site-link").getAttribute("href") should be("http://localhost:9000/football/results?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/football/results"))
       }
 
       Given("I visit the results page")
@@ -87,7 +87,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         import browser._
 
         Then("the 'Desktop version' link should point to '/football/results?view=desktop'")
-        findFirst(".js-main-site-link").getAttribute("href") should be("http://localhost:9000/football/results?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/football/results"))
       }
 
     }
