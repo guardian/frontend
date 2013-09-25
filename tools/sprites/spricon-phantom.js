@@ -140,6 +140,7 @@ function processFile() {
                         var placeholder = document.createElement('div');
                         placeholder.style.display = 'block';
                         placeholder.style.float = 'left';
+                        placeholder.style.margin = '1px 1px 0 0'; // prevents the sprite icons from leaking
                         placeholder.innerHTML = svgdata;
                         var svgel = placeholder.querySelector('svg');
 
