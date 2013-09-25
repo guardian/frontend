@@ -64,7 +64,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst(".js-main-site-link").href should endWith("/uk?view=desktop")
+          findFirst(".js-main-site-link").href should be(DesktopVersionLink("/uk"))
       }
     }
 
@@ -75,7 +75,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst(".js-main-site-link").href should endWith("/us?view=desktop")
+          findFirst(".js-main-site-link").href should be(DesktopVersionLink("/us"))
       }
     }
 
