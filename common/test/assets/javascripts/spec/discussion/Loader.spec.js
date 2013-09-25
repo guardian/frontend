@@ -32,7 +32,6 @@ define([
         // rerender the button each time
         beforeEach(function() {
             server = sinon.fakeServer.create();
-            // server.autoRespond = true;
             fixtures.render(fixture);
             context = document.getElementById(fixturesId);
             button = context.querySelector('.'+ DiscussionLoader.CONFIG.classes.getDiscussion);
