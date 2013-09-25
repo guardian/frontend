@@ -37,12 +37,12 @@
 }
 
 .article__headline {
-    @extend %type-3;
+    @include fs-headline(4);
     margin-bottom: $baseline*6;
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        @include font-size(42, 46);
+        @include fs-headline(8, true);
         margin-bottom: $gs-column-height;
     }
 
