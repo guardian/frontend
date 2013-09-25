@@ -358,11 +358,7 @@ a.cta, .cta a {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
-<<<<<<< HEAD
     width: 45%;
-=======
-    width: 40%;
->>>>>>> master
     padding: 15px 15px 10px 10px;
     border-right: 1px solid #CCCCCC;
 }
@@ -601,11 +597,7 @@ a.cta, .cta a {
 }
 
 .fronts .trail .webTitle {
-<<<<<<< HEAD
     margin: 0 140px 0 80px;
-=======
-    margin-left: 80px;
->>>>>>> master
     display: block;
     text-decoration: none;
     font-size: 13px;
