@@ -363,7 +363,7 @@ module.exports = function (grunt) {
 
         watch: {
             test: {
-                files: 'common/test/assets/javascripts/**/*.js',
+                files: ['common/test/assets/javascripts/**/*.js', 'common/app/assets/javascripts/**/*.js'],
                 tasks: 'test:unit:common'
             }
         }

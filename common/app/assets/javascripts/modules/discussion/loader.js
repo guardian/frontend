@@ -1,6 +1,12 @@
 define([
-    'bean'
-], function(bean) {
+    'bean',
+    'ajax',
+    'common'
+], function(
+    bean,
+    ajax,
+    common
+) {
 
 /**
  * Singleton for loading a discussion into a page
@@ -57,7 +63,12 @@ Loader.handleGetDiscussion = function(e) {
  * @param {string} id
  */
 Loader.getDiscussion = function(id) {
-    // console.log(id);
+    var url = '/discussion'+ id + '.json';
+
+    ajax({
+        url: url,
+        type: 'json'
+    });
 };
 return Loader;
 
