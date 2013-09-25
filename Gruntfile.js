@@ -362,13 +362,9 @@ module.exports = function (grunt) {
         },
 
         watch: {
-            sass: {
-                files: 'common/app/assets/stylesheets/**/*.scss',
-                tasks: 'sass:common'
-            },
-            js: {
-                files: 'common/app/assets/javascripts/**/*.js',
-                tasks: 'requirejs:common'
+            test: {
+                files: 'common/test/assets/javascripts/**/*.js',
+                tasks: 'test:unit:common'
             }
         }
 
