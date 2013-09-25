@@ -71,6 +71,7 @@ require([
             dragging;
 
         bean.on(window, 'resize', common.debounce(function(e){
+            buildGrid();
             layout();
         }, 500));
 
