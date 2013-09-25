@@ -97,14 +97,14 @@
         min-height: $unitHeight;
         margin-bottom: $baseline*3;
         border-top: 1px solid $grey;
-        @include font($serifheadline, 700, 18, 24);
+        @include font($serifheadline, normal, 18, 24);
     }
 
     .card__body {
         padding-top: $baseline*2;
         min-height: 180px;
         @include box-sizing(border-box);
-        @include font($serifheadline, 700, 18, 24);
+        @include font($serifheadline, normal, 18, 24);
     }
 
     .relative-timestamp {

@@ -41,20 +41,9 @@
     margin-bottom: $baseline*6;
 
     @include mq(tablet) {
-        font-family: $serifheadline;
         -webkit-font-smoothing: antialiased;
-        font-size: 34px;
-        font-size: 3.4rem;
-        line-height: 42px;
-        line-height: 4.2rem;
+        @include font-size(42, 46);
         margin-bottom: $gs-column-height;
-    }
-
-    @include mq(($a-rightCol-trigger + gs-span(1))) {
-        font-size: 40px;
-        font-size: 4rem;
-        line-height: 48px;
-        line-height: 4.8rem;
     }
 
     a {
@@ -62,7 +51,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: #333;
+            color: #333333;
         }
     }
 }
@@ -95,16 +84,8 @@
 
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        font-size: 16px;
-        font-size: 1.6rem;
-        line-height: 24px;
-        line-height: 2.4rem;
-    }
-    @include mq(desktop) {
-        font-size: 18px;
-        font-size: 1.8rem;
-        line-height: 24px;
-        line-height: 2.4rem;
+        @include font-size(18, 22);
+        margin-bottom: $baseline*4;
     }
 }
 .article-body {
@@ -138,15 +119,18 @@
 }
 
 .byline {
+    font-weight: bold;
     border-top: 1px dotted $neutral3;
     border-bottom: 1px dotted $neutral3;
     margin-bottom: $baseline*2;
-    padding: $baseline 0 $baseline*4 0;
+    min-height: 20px;
+    padding: $baseline - 1 0 $baseline*3 - 1 0;
 
     article & {
         @include mq(tablet, leftCol) {
             font-size: 16px;
             font-size: 1.6rem;
+            min-height: 32px;
         }
         @include mq(rightCol) {
             display: block;
@@ -183,13 +167,6 @@
         position: absolute;
         top: 0;
         left: 0;
-    }
-}
-
-@include mq(tablet) {
-    .d-tabs__item--byline {
-        font-size: 16px !important;
-        font-size: 1.6rem !important;
     }
 }
 
@@ -247,14 +224,10 @@ video {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
-    .d-tabs,
     .player,
     .media-primary {
         margin-left: 0 !important;
         margin-right: 0 !important;
-    }
-    .d-tabs__item--byline {
-        padding-left: $gutter/4 !important;
     }
     .article-v2__columning-wrapper {
         padding-right: gs-span(1) + $gs-gutter;
@@ -270,21 +243,20 @@ video {
 }
 
 @mixin hide-discussion-tabs {
-    .d-actions .top,
-    .d-tabs {
-        display: none;
-    }
+
 }
 @mixin comments-below-article {
     .article__container,
     .article__discussion {
         display: block !important;
     }
+    .d-actions .top {
+        display: none;
+    }
 }
 
 @include mq(rightCol) {
 
-    @include hide-discussion-tabs;
     @include comments-below-article;
 
     .article-wrapper {
