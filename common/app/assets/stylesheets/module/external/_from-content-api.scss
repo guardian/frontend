@@ -41,6 +41,23 @@
             @include fs-bodyHeading(3, true);
         }
     }
+    > p {
+        + figure,
+        + video {
+            margin-top: $baseline;
+        }
+        + p {
+            text-indent: 1.5em;
+        }
+    }
+    > p,
+    > figure,
+    > video {
+        + h2,
+        + h3 {
+            margin-top: $baseline*3;
+        }
+    }
 }
 
 .from-content-api--small {
