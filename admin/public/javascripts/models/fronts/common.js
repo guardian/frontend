@@ -10,12 +10,11 @@ define([
             searchPageSize:        20,
             maxDisplayableLists:   20,
 
-            pvHot:                 50,    // pageviews-per-min to quality as 'hot'
-            pvWarm:                25,    // pageviews-per-min to quality as 'warm'
-            pvPeriod:              5,     // num of recent datapoints over which to calc page views
+            pvmHot:                 50,    // pageviews-per-min to qualify as 'hot'
+            pvmWarm:                25,    // pageviews-per-min to qualify as 'warm'
+            pvmPeriod:              5,     // num of recent datapoints over which to calc pageviews
 
             ophanCallsPerSecond:   4,     // n.b. times number of blocks
-
             collectionsPollMs:     10000, // 10 seconds
             latestArticlesPollMs:  10000, // 10 seconds
             cacheExpiryMs:         60000, // 1 min

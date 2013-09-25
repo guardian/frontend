@@ -68,10 +68,10 @@ function (
 
             item.state.pageViewsSeries(
                 _.map(groups, function(group){
-                    // recent pageview average
-                    var pvs = _.reduce(_.last(group.data, common.config.pvPeriod), function(m, n){ return m + n; }, 0) / common.config.pvPeriod;
+                    // recent pageviews per minute average
+                    var pvm = _.reduce(_.last(group.data, common.config.pvmPeriod), function(m, n){ return m + n; }, 0) / common.config.pvmPeriod;
                     // classify activity on scale of 1,2,3
-                    group.activity = pvs < common.config.pvHot ? pvs < common.config.pvWarm ? 1 : 2 : 3;
+                    group.activity = pvm < common.config.pvmHot ? pvm < common.config.pvmWarm ? 1 : 2 : 3;
                     // Round the datapoints
                     group.data = _.map(group.data, function(d) { return Math.round(d*10)/10; });
                     return group;
