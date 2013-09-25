@@ -63,6 +63,7 @@
     @if $size-only == false {
         font-family: $serif;
         -webkit-font-smoothing: subpixel-antialiased;
+        text-rendering: optimizeSpeed;
     }
 }
 
@@ -74,6 +75,7 @@
     @if $size-only == false {
         font-family: $sans-serif;
         -webkit-font-smoothing: subpixel-antialiased;
+        text-rendering: optimizeSpeed;
     }
 }
 
