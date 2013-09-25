@@ -435,6 +435,7 @@ object VisualTone {
 
   def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
 
+  // these tones are all considered to be 'News' it is the default so we do not list them explicitly
 
   //  "tone/minutebyminute",
   //  "tone/obituaries",
@@ -456,7 +457,6 @@ object VisualTone {
   //    "tone/extract",
   //    "tone/editorials",
   //    "tone/help",
-  //
   //    "tone/readeroffers",
   //    "tone/interview"
 
