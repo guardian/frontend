@@ -383,7 +383,10 @@ module.exports = function (grunt) {
           },
 
           icons: {
-            command: 'cd tools/sprites/; node spricon.js global-icon-config.json'
+            command: [
+                'cd tools/sprites/',
+                'node spricon.js global-icon-config.json'
+            ].join('&&')
           }
         }
 
