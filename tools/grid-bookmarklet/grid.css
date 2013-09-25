@@ -20,6 +20,7 @@
     height: 400px;
     /*background-color: rgba(0,0,200,0.3);*/
     z-index: 10000;
+    overflow: hidden;
 }
 
 .grid-overlay.is-hidden {
