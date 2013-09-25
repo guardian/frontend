@@ -25,12 +25,12 @@ GET        /most-read/*path                                                     
 
 #Optimise User Journey to referrer
 GET        /most-read-facebook                                                                            controllers.MostPopularFromFacebookController.render(path = "")
-GET        /most-read-facebook.json         controllers.MostPopularFromFacebookController.render(path = "")
-GET        /most-read-facebook/*path.json   controllers.MostPopularFromFacebookController.render(path)
-GET        /most-read-facebook/*path        controllers.MostPopularFromFacebookController.render(path)
-GET        /most-read-facebook/card.json    controllers.MostPopularFromFacebookController.renderCard()
-GET        /most-read/expandable-facebook/*path.json     controllers.MostPopularFromFacebookController.renderExpandable(path)
-GET        /most-read/expandable-facebook/*path          controllers.MostPopularFromFacebookController.renderExpandable(path)
+GET        /most-read-facebook.json                                                                       controllers.MostPopularFromFacebookController.render(path = "")
+GET        /most-read-facebook/*path.json                                                                 controllers.MostPopularFromFacebookController.render(path)
+GET        /most-read-facebook/*path                                                                      controllers.MostPopularFromFacebookController.render(path)
+GET        /most-read-facebook/card.json                                                                  controllers.MostPopularFromFacebookController.renderCard()
+GET        /most-read/expandable-facebook/*path.json                                                      controllers.MostPopularFromFacebookController.renderExpandable(path)
+GET        /most-read/expandable-facebook/*path                                                           controllers.MostPopularFromFacebookController.renderExpandable(path)
 
 GET        /top-stories                                                                                   controllers.TopStoriesController.render()
 GET        /top-stories.json                                                                              controllers.TopStoriesController.renderJson()
@@ -40,6 +40,7 @@ GET        /related/*path.json                                                  
 GET        /related/*path                                                                                 controllers.RelatedController.render(path)
 GET        /recent/card.json                                                                              controllers.RecentController.render()
 
+GET        /preference/platform/:platform                                                                 controllers.ChangeViewController.render(platform, page)
 
 #Style-guide
 GET        /style-guide                                                                                   controllers.StyleGuideController.renderIndex

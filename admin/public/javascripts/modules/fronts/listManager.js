@@ -261,7 +261,7 @@ define([
                     $(element).sparkline(data, {
                         chartRangeMax: max,
                         defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
-                        height: Math.round(Math.max(10, Math.min(30, max))),
+                        height: Math.round(Math.max(10, Math.min(40, max))),
                         lineColor: '#' + group.color,
                         spotColor: false,
                         minSpotColor: false,

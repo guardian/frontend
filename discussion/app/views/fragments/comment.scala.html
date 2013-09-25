@@ -1,13 +1,23 @@
-@(comment: Comment, isResponse: Boolean = false)(implicit request: RequestHeader)
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 
 <li class="d-comment
            @if(isResponse){d-comment--response}else{d-comment--top-level}
            @if(comment.isBlocked){d-comment--blocked}
            @if(comment.responses.nonEmpty){d-comment--has-replies}"
-    id="comment-@comment.id">
+    id="comment-@comment.id" data-comment-id="@comment.id">
     <div class="d-comment__inner">
         @if(comment.isHighlighted && !comment.isBlocked){
             <div class="d-comment__pick i i-guardian-picks"><span class="u-h">Guardian pick</span></div>
+        }
+
+        @if(!(isClosedForRecommendation && comment.numRecommends == 0) && !comment.isBlocked){
+            <div
+                class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted){ d-comment__recommend--left}" 
+                data-comment-id="@comment.id"
+                data-recommend-count="@comment.numRecommends"
+                title="@comment.numRecommends recommendations">
+                <i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>
+            </div>
         }
         <div class="d-comment-header">
             <div class="d-comment__media">
@@ -27,9 +37,6 @@
                     </time>
                 </div>
             </div>
-            @if(comment.numRecommends != 0){
-                <div class="d-comment__action d-comment__action--recommend">Recommended (@comment.numRecommends)</div>
-            }
         </div>
         <div class="d-comment__main">
             <div class="d-comment__body">
@@ -55,7 +62,7 @@
     @if(comment.responses.nonEmpty){
         <ul class="d-thread" data-responses="@comment.responses.length">
             @comment.responses.map{ response =>
-                @fragments.comment(response, true)
+                @fragments.comment(response, isClosedForRecommendation, true)
             }
         </ul>
     }
