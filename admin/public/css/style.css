@@ -638,6 +638,9 @@ a.cta, .cta a {
 
 .fronts .trail .trail__remove {
     display: none;
+}
+
+.fronts .collection .trail .trail__remove {
     position: absolute;
     top: 0;
     right: 0;
@@ -652,11 +655,11 @@ a.cta, .cta a {
     border-radius: 2px;
 }
 
-.fronts .trail:hover .trail__remove {
+.fronts .collection .trail:hover .trail__remove {
     display: block;
 }
 
-.fronts .trail .trail__remove:hover {
+.fronts .collection .trail .trail__remove:hover {
     background: #999999;
 }
 

@@ -105,12 +105,24 @@ define([
                     }
 
                     // Delete out of fromList, if we've dragged between lists
-                    if(fromListPersists && fromList !==  toList) {
+                    if(fromListPersists && toListPersists && fromList !==  toList) {
                         saveList({
                             listEl: fromList,
                             itemEl: item,
                             delete: true
                         });
+                    }
+
+                    // If dragging to/from a non-persisted list (e.g. clipboard, or latest articles)
+                    // make a clone instead, and stick it in the toList, so that a "copy" is achieved
+                    if (!(fromListPersists && toListPersists)) {
+                        if(fromList !== toList) {
+                            index = toList.children().index(item);
+                            clone = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
+                            toList.children(':eq(' + index + ')').after(clone);
+                        }
+                        // So that the original stays in place:
+                        $(this).sortable('cancel');
                     }
 
                 },
