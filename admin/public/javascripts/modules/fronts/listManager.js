@@ -250,33 +250,26 @@ define([
         knockout.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
                 var groups = knockout.utils.unwrapObservable(valueAccessor()),
-                    max = _.max(_.pluck(groups, 'max'));
+                    max;
 
-                if (!max) { return };
+                if (!_.isArray(groups)) { return; };
+                max = _.max(_.pluck(groups, 'max'));
+                if (!max) { return; };
 
-                _.chain(groups)
-                .sortBy(function(g){
-                    // Put biggest groups first, so that its fill color is behind the other groups
-                    return -1 * g.max;
-                }).each(function(group, i){
-
-                    group.data.pop(); // drop the last data point.
-
-                    var data = group.data,
-                        isHot = (_.last(data)/group.minsPerSlot) > 10;
-
-                    $(element).sparkline(data, {
+                _.each(_.toArray(groups).reverse(), function(group, i){
+                    $(element).sparkline(group.data, {
                         chartRangeMax: max,
-                        defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
-                        height: Math.max(10, Math.min(40, max)),
+                        defaultPixelsPerValue: group.data.length < 50 ? group.data.length < 30 ? 3 : 2 : 1,
+                        height: Math.round(Math.max(10, Math.min(40, max))),
                         lineColor: '#' + group.color,
                         spotColor: false,
                         minSpotColor: false,
                         maxSpotColor: false,
-                        lineWidth: isHot ? 2 : 1,
-                        fillColor: isHot ? '#eeeeee' : false,
+                        lineWidth: group.activity || 1,
+                        fillColor: false,
                         composite: i > 0
                     });
+
                 });
             }
         };
