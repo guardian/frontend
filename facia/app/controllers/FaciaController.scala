@@ -5,6 +5,7 @@ import front._
 import model._
 import conf._
 import play.api.mvc._
+import play.api.libs.json.Json
 
 // TODO, this needs a rethink, does not seem elegant
 
@@ -145,9 +146,16 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
           if (path != editionalisedPath) {
             Redirect(editionalisedPath)
           } else {
-            val htmlResponse = () => views.html.front(frontPage, faciaPage)
-            val jsonResponse = () => views.html.fragments.frontBody(frontPage, faciaPage)
-            renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+            if (request.isJson) {
+              val html = views.html.fragments.frontBody(frontPage, faciaPage)
+              JsonComponent(
+                "html" -> html,
+                "trails" -> faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(_.url)).toList,
+                "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
+              )
+            }
+            else
+              Ok(views.html.front(frontPage, faciaPage))
           }
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
@@ -160,7 +168,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     FrontPage(editionalisedPath).map{ frontPage =>
 
       // get the first trailblock
-      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.headOption)
+      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.filter(_._2.items.nonEmpty).headOption)
 
       if (path != editionalisedPath) {
         Redirect(editionalisedPath)
