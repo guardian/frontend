@@ -20,10 +20,6 @@ $dark-green: #19646c;
     background-color: $light-blue;
     border-top: $gs-baseline/3 solid $blue;
 }
-.collection--top-stories .collection__title {
-    background-color: $blue;
-    border-color: $light-blue;
-}
 .collection__display-toggle {
     position: absolute;
     top: $gs-baseline*(2/3);
@@ -106,9 +102,6 @@ a.item__link,
         }
     }
 }
-.item__image-container {
-    overflow: hidden;
-}
 .item__duration {
     position: absolute;
     top: 0;
@@ -152,22 +145,74 @@ a.item__link,
         border-top-color: $green;
     }
 }
-.item--shown {
-    @include mq($to: tablet) {
-        .item__title {
-            @include font-size(18, 24);
-            border-top-color: $grey;
-            border-top-width: 1px;
+
+.items--cards {
+    font-size: 0;
+    .item {
+        margin-top: $gs-baseline*2;
+        display: inline-block;
+        vertical-align: top;
+        padding-left: $gs-gutter/2 - 1;
+        padding-right: $gs-gutter/2;
+        border-left: 1px dotted $grey;
+        @include mq(tablet) {
+            @include box-sizing(content-box);
+            width: gs-span(4);
         }
-        .item__meta,
-        .item__image-container {
+    }
+    .item__title {
+        min-height: gs-height(3);
+    }
+    .item__standfirst {
+        display: none;
+    }
+    .item--without-image .item__standfirst {
+        @include mq(tablet) {
+            display: block;
+            min-height: gs-height(4);
+        }
+    }
+    .item__meta {
+        @include mq($to: tablet) {
             display: none;
         }
     }
-    @include mq(tablet) {
-        .item__standfirst,
-        .item__image-container {
-            display: none;
+    .item__image-container {
+        @include mq($to: tablet) {
+            margin-top: $gs-baseline;
+        }
+        @include mq(tablet) {
+            height: gs-height(4);
+        }
+    }
+    .item__image {
+        @include mq($to: tablet) {
+            width: 100%;
+        }
+        @include mq(tablet) {
+            height: 100%;
+        }
+    }
+    .item--shown {
+        @include mq($to: tablet) {
+            padding: 0;
+            border-left-style: none;
+            .item__title {
+                min-height: 0;
+                @include font-size(18, 24);
+                border-top-color: $grey;
+                border-top-width: 1px;
+            }
+            .item__meta,
+            .item__image-container {
+                display: none;
+            }
+        }
+        @include mq(tablet) {
+            .item__standfirst,
+            .item__image-container {
+                display: none;
+            }
         }
     }
 }

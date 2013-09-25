@@ -3,31 +3,13 @@
         background-color: $pink;
         border-color: $light-pink;
     }
-    .items {
-        font-size: 0;
-    }
-    .item {
-        margin-top: $gs-baseline*2;
-        display: inline-block;
-        vertical-align: top;
-        padding-left: $gs-gutter/2 - 1;
-        padding-right: $gs-gutter/2;
-        border-left: 1px dotted $grey;
-        @include mq($to: tablet) {
-            width: 50%;
-        }
-        @include mq(tablet) {
-            @include box-sizing(content-box);
-            width: gs-span(4);
-        }
-    }
     @mixin row($row-size) {
         // styling for first row
         .item:nth-child(-n + #{$row-size}) .item__title {
             padding-top: 0;
             border-top-style: none;
         }
-        // stylings for beggining and end of rows
+        // stylings for beginning and end of rows
         .item:nth-child(#{$row-size}n + 1) {
             padding-left: 0;
             border-left-style: none;
@@ -46,98 +28,19 @@
         @include row(3);
     }
     @include mq(wide) {
-        // styling for first row
-        .item:nth-child(-n + 3) .item__title {
-            padding-top: 0;
-            border-top-style: none;
-        }
-        // stylings for beggining and end of rows
-        .item:first-child,
-        .item:nth-child(4n + 4) {
-            padding-left: 0;
-            border-left-style: none;
-        }
-        .item:nth-child(3),
-        .item:nth-child(4n + 7) {
-            padding-right: 0;
-        }
-    }
-    .item__title {
-        min-height: gs-height(3);
-        @include mq($to: tablet) {
-            @include font-size(20, 24);
-        }
+        @include row(4);
     }
     @include mq($to: tablet) {
+        .item {
+            width: 50%;
+        }
+        .item__title {
+            @include font-size(20, 24);
+        }
         .item--shown {
             width: 100%;
-            padding: 0;
-            border-left-style: none;
             .item__title {
                 @include font-size(18, 24);
-                min-height: 0;
-            }
-        }
-    }
-    .item__standfirst {
-        display: none;
-    }
-    .item--without-image .item__standfirst {
-        @include mq(tablet) {
-            display: block;
-            margin: $gs-baseline*2 0 0;
-            @include font-size(16, 20);
-            min-height: gs-height(4);
-        }
-    }
-    .item__meta {
-        @include mq($to: tablet) {
-            display: none;
-        }
-    }
-    .item__image-container {
-        @include mq($to: tablet) {
-            margin-top: $gs-baseline;
-        }
-        @include mq(tablet) {
-            height: gs-height(4);
-        }
-    }
-    .item__image {
-        @include mq($to: tablet) {
-            width: 100%;
-        }
-        @include mq(tablet) {
-            height: 100%;
-        }
-    }
-    // larger image styling
-    .item:first-child {
-        @include mq(wide) {
-            width: gs-span(8);
-            &.item--with-image {
-                height: gs-height(8);
-                .item__title {
-                    background-color: rgba(#ffffff, 0.8);
-                    padding: $gs-baseline/2 $gs-gutter/2 gs-height(1) + $gs-baseline;
-                    width:  gs-span(5);
-                    min-height: 0;
-                    border-top-style: solid;
-                    position: absolute;
-                    bottom: 0;
-                }
-                .item__meta {
-                    position: absolute;
-                    bottom: $gs-baseline;
-                    left: $gs-gutter/2;
-                }
-                .item__image-container {
-                    height: 100%;
-                    position: absolute;
-                    top: 0;
-                    z-index: -1;
-                    margin-top: 0;
-                }
             }
         }
     }

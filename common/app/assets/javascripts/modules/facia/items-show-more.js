@@ -8,7 +8,6 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     wide: {
                         default: 4,
                         features: 3,
-                        'medium-stories-section': 3,
                         'popular-full-width': 3
                     },
                     desktop: {

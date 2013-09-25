@@ -1,5 +1,9 @@
 .collection--top-stories {
     overflow: hidden;
+    .collection__title {
+        background-color: $blue;
+        border-color: $light-blue;
+    }
     .item {
         margin-top: $gs-baseline*2;
         @include mq(tablet) {
