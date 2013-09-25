@@ -254,7 +254,7 @@ define([
 
                 if (!max) { return };
 
-                _.each(groups, function(group, i){
+                _.each(_.toArray(groups).reverse(), function(group, i){
                     var data = group.data,
                         isHot = _.reduce(_.last(data, 5), function(m, n){ return m + n; }, 0) > 250;
 
