@@ -148,11 +148,10 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
             Redirect(editionalisedPath)
           } else {
             if (request.isJson) {
-              val templateDeduping: TemplateDeduping = TemplateDeduping()
-              val html = views.html.fragments.frontBody(frontPage, faciaPage, Some(templateDeduping))
+              val html = views.html.fragments.frontBody(frontPage, faciaPage)
               JsonComponent(
                 "html" -> html,
-                "trails" -> templateDeduping.getTrailIds,
+                "trails" -> faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(_.url)).toList,
                 "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
               )
             }
