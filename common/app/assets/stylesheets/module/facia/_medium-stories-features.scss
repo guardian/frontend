@@ -1,10 +1,15 @@
-.collection--popular-full-width {
+.collection--medium-stories-features {
+    .collection__title {
+        background-color: $pink;
+        border-color: $light-pink;
+    }
+    &.collection--commentisfree-section .collection__title {
+        background-color: $green;
+        border-color: $light-green;
+    }
     .items {
         @include mq(tablet) {
             font-size: 0;
-        }
-        @include mq(wide) {
-            overflow: hidden;
         }
     }
     .item {
@@ -18,18 +23,14 @@
             border-left: 1px dotted $grey;
             width: gs-span(4);
         }
-        @include mq(wide) {
-            float: left;
-        }
     }
-
     @mixin row($row-size) {
-        // styling for first row
+    // styling for first row
         .item:nth-child(-n + #{$row-size}) .item__title {
             padding-top: 0;
             border-top-style: none;
         }
-        // stylings for beggining and end of rows
+    // stylings for beggining and end of rows
         .item:nth-child(#{$row-size}n + 1) {
             padding-left: 0;
             border-left-style: none;
@@ -49,7 +50,7 @@
     }
     @include mq(wide) {
         // styling for first row
-        .item:nth-child(-n + 2) .item__title {
+        .item:nth-child(-n + 3) .item__title {
             padding-top: 0;
             border-top-style: none;
         }
@@ -59,25 +60,23 @@
             padding-left: 0;
             border-left-style: none;
         }
+        .item:nth-child(3),
         .item:nth-child(4n + 7) {
             padding-right: 0;
         }
     }
-
     .item__title {
         @include mq(tablet) {
             min-height: gs-height(3);
         }
     }
     .item__standfirst {
+        display: none;
         margin: $gs-baseline*2 0 0;
         @include font-size(16, 20);
         @include mq(tablet) {
             min-height: gs-height(4);
         }
-    }
-    .item--with-image .item__standfirst {
-        display: none;
     }
     .item__image-container {
         @include mq(tablet) {
@@ -93,41 +92,33 @@
         }
     }
     // larger image styling
-    @include mq(wide) {
-        .item:first-child {
-            width: gs-span(12);
-            height: gs-height(8);
+    .item:first-child {
+        @include mq(wide) {
+            width: gs-span(8);
             &.item--with-image {
-                width: gs-span(4);
-                padding-left: gs-span(8) + $gs-gutter;
+                height: gs-height(8);
+                .item__title {
+                    background-color: rgba(#ffffff, 0.8);
+                    padding: $gs-baseline/2 $gs-gutter/2 gs-height(1) + $gs-baseline;
+                    width:  gs-span(5);
+                    min-height: 0;
+                    border-top-style: solid;
+                    position: absolute;
+                    bottom: 0;
+                }
+                .item__meta {
+                    position: absolute;
+                    bottom: $gs-baseline;
+                    left: $gs-gutter/2;
+                }
+                .item__image-container {
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    z-index: -1;
+                    margin-top: 0;
+                }
             }
-            .item__standfirst {
-                 display: block;
-             }
-            .item__image-container {
-                height: 100%;
-                width: gs-span(8);
-                position: absolute;
-                top: 0;
-                left: 0;
-                margin: 0 auto;
-            }
-        }
-        // larger image styling
-        .item:nth-child(2),
-        .item:nth-child(3){
-            padding-right: 0;
-            .item__title {
-                min-height: gs-height(3) + $gs-baseline;
-            }
-            .item__standfirst,
-            .item__image-container {
-                display: none;
-            }
-        }
-        .item:nth-child(3) {
-            margin-top: 0;
-            padding-top: $gs-baseline;
         }
     }
     @include mq($to: tablet) {
@@ -135,7 +126,6 @@
             @include font-size(26, 28);
         }
         .item:nth-child(n + 2) {
-            .item__standfirst,
             .item__image-container {
                 display: none;
             }

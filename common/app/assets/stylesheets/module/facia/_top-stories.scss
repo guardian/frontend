@@ -1,11 +1,7 @@
 .collection--top-stories {
     overflow: hidden;
     .item {
-        @include mq($to: tablet) {
-            &:last-child {
-                margin-top: $gs-baseline*2;
-            }
-        }
+        margin-top: $gs-baseline*2;
         @include mq(tablet) {
             float: left;
             border: 10px none #ffffff;

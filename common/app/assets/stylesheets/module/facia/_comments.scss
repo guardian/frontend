@@ -29,7 +29,6 @@
     @mixin row($row-size) {
         // styling for first row
         .item:nth-child(-n + #{$row-size}) {
-            margin-top: 0;
             .item__title {
                 padding-top: 0;
                 border-top-style: none;
@@ -65,6 +64,7 @@
         @include row(4);
     }
     .item__standfirst {
+        display: none;
         margin: $gs-baseline*2 0 0;
         @include font-size(16, 20);
         @include mq(tablet) {

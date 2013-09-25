@@ -1,5 +1,4 @@
 .collection--medium-stories {
-    margin-top: 0;
     .items {
         font-size: 0;
         @include mq(desktop, wide) {
@@ -71,13 +70,14 @@
         }
     }
     .item__standfirst {
-        @include mq($to: tablet) {
-            display: none;
-        }
+        display: none;
+    }
+    .item--without-image .item__standfirst {
         @include mq(tablet) {
-            min-height: gs-height(4);
+            display: block;
             margin: $gs-baseline*2 0 0;
             @include font-size(16, 20);
+            min-height: gs-height(4);
         }
     }
     .item__meta {

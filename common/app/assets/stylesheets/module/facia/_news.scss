@@ -19,12 +19,9 @@
 
     @mixin row($row-size) {
         // styling for first row
-        .item:nth-child(-n + #{$row-size}) {
-            margin-top: 0;
-            .item__title {
-                padding-top: 0;
-                border-top-style: none;
-            }
+        .item:nth-child(-n + #{$row-size}) .item__title {
+            padding-top: 0;
+            border-top-style: none;
         }
         // stylings for beggining and end of rows
         .item:nth-child(#{$row-size}n + 1) {
@@ -54,11 +51,13 @@
         }
     }
     .item__standfirst {
-        margin: $gs-baseline*2 0 0;
-        @include font-size(16, 20);
+        display: none;
         @include mq(tablet) {
             min-height: gs-height(4);
         }
+    }
+    .item--without-image .item__standfirst {
+        display: block;
     }
     .item__image-container {
         @include mq(tablet) {
@@ -78,7 +77,6 @@
             @include font-size(26, 28);
         }
         .item:nth-child(n + 2) {
-            .item__standfirst,
             .item__image-container {
                 display: none;
             }

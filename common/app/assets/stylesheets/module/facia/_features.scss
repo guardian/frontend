@@ -26,12 +26,9 @@
     }
     @mixin row($row-size) {
         // styling for first row
-        .item:nth-child(-n + #{$row-size}) {
-            margin-top: 0;
-            .item__title {
-                padding-top: 0;
-                border-top-style: none;
-            }
+        .item:nth-child(-n + #{$row-size}) .item__title {
+            padding-top: 0;
+            border-top-style: none;
         }
         // stylings for beggining and end of rows
         .item:nth-child(#{$row-size}n + 1) {
@@ -53,12 +50,9 @@
     }
     @include mq(wide) {
         // styling for first row
-        .item:nth-child(-n + 3) {
-            margin-top: 0;
-            .item__title {
-                padding-top: 0;
-                border-top-style: none;
-            }
+        .item:nth-child(-n + 3) .item__title {
+            padding-top: 0;
+            border-top-style: none;
         }
         // stylings for beggining and end of rows
         .item:first-child,
@@ -132,40 +126,8 @@
             @include font-size(26, 28);
         }
         .item:nth-child(n + 2) {
-            .item__standfirst,
             .item__image-container {
                 display: none;
-            }
-        }
-    }
-
-    // styling up
-    @include mq($to: tablet) {
-        &.collection--travel-section .item:first-child {
-            $image-width: 40%;
-            overflow: hidden;
-            .item__standfirst,
-            .item__meta {
-                float: right;
-                clear: right;
-                width: 100 - $image-width;
-                @include box-sizing(border-box);
-                padding-left: $gs-gutter/2;
-            }
-            .item__title {
-                @include font-size(20, 24);
-            }
-            .item__standfirst {
-                display: block;
-                @include font-size(14, 20);
-            }
-            .item__image-container {
-                @include box-sizing(border-box);
-                width: $image-width;
-                padding-right: $gs-gutter/2;
-            }
-            .item__image {
-                width: 100%;
             }
         }
     }
