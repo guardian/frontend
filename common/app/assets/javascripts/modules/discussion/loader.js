@@ -47,7 +47,8 @@ Loader.bindEvents = function(context) {
  * @return {Reqwest}
  */
 Loader.handleGetDiscussion = function(e) {
-    var id = e.currentTarget;
+    var id = e.currentTarget.getAttribute('data-discussion-id');
+
     e.preventDefault();
     Loader.getDiscussion(id);
 };
@@ -56,7 +57,7 @@ Loader.handleGetDiscussion = function(e) {
  * @param {string} id
  */
 Loader.getDiscussion = function(id) {
-
+    // console.log(id);
 };
 return Loader;
 
