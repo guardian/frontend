@@ -6,15 +6,16 @@
             @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
                 @if(block._2.items.nonEmpty){
                     @FindStyle(faciaTrailblock.id, block._1) match {
-                        case Masthead             => { @collections.masthead(block._1, dedupe(4, block._2), Masthead) }
-                        case TopStories           => { @collections.topStories(block._1, dedupe(2, block._2), TopStories) }
-                        case MediumStories        => { @collections.mediumStories(block._1,  dedupe(4, block._2), MediumStories) }
-                        case style: SmallStories  => { @collections.smallStories(block._1,  dedupe(block._2), style) }
-                        case News                 => { @collections.news(block._1,  dedupe(block._2), News) }
-                        case Features             => { @collections.features(block._1,  dedupe(block._2), Features) }
-                        case Highlights           => { @collections.highlights(block._1,  dedupe(block._2), Highlights) }
-                        case Comments             => { @collections.comments(block._1,  dedupe(block._2), Comments) }
-                        case style                => { @collections.news(block._1, dedupe(block._2), style) }
+                        case Masthead              => { @collections.masthead(block._1, dedupe(4, block._2), Masthead) }
+                        case TopStories            => { @collections.topStories(block._1, dedupe(2, block._2), TopStories) }
+                        case MediumStories         => { @collections.mediumStories(block._1,  dedupe(4, block._2), MediumStories) }
+                        case MediumStoriesFeatures => { @collections.mediumStories(block._1,  dedupe(block._2), MediumStoriesFeatures) }
+                        case style: SmallStories   => { @collections.smallStories(block._1,  dedupe(block._2), style) }
+                        case News                  => { @collections.news(block._1,  dedupe(block._2), News) }
+                        case Features              => { @collections.features(block._1,  dedupe(block._2), Features) }
+                        case Highlights            => { @collections.highlights(block._1,  dedupe(block._2), Highlights) }
+                        case Comments              => { @collections.comments(block._1,  dedupe(block._2), Comments) }
+                        case style                 => { @collections.news(block._1, dedupe(block._2), style) }
                     }
                 }
             }

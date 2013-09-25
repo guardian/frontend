@@ -32,10 +32,10 @@ object FindStyle {
       ("au/travel/regular-stories", Features)
     )),
     ("au/business", Map(
-      ("au/business/other-stories", SmallStories(showMore = false))
+      ("au/business/other-stories", SmallStories())
     )),
     ("au/commentisfree", Map(
-      ("au/commentisfree/other-stories", SmallStories(showMore = false))
+      ("au/commentisfree/other-stories", SmallStories())
     )),
     ("au/culture", Map(
       ("au/film/regular-stories", Features),
@@ -44,7 +44,7 @@ object FindStyle {
       ("au/technology/games/regular-stories", Features)
     )),
     ("au/money", Map(
-      ("au/money/other-stories", SmallStories(showMore = false))
+      ("au/money/other-stories", SmallStories())
     )),
     ("au/sport", Map(
       ("au/sport/football/regular-stories", News),
@@ -67,13 +67,13 @@ object FindStyle {
       ("uk/lifeandstyle/regular-stories", Features),
       ("uk/technology/regular-stories", Features),
       ("uk/money/regular-stories", News),
-      ("uk/travel/regular-stories", Features)
+      ("uk/travel/regular-stories", MediumStoriesFeatures)
     )),
     ("uk/business", Map(
-      ("uk/business/other-stories", SmallStories(showMore = false))
+      ("uk/business/other-stories", SmallStories())
     )),
     ("uk/commentisfree", Map(
-      ("uk/commentisfree/other-stories", SmallStories(showMore = false))
+      ("uk/commentisfree/other-stories", SmallStories())
     )),
     ("uk/culture", Map(
       ("uk/tv-and-radio/regular-stories", Features),
@@ -85,7 +85,7 @@ object FindStyle {
       ("uk/technology/games/regular-stories", Features)
     )),
     ("uk/money", Map(
-      ("uk/money/other-stories", SmallStories(showMore = false))
+      ("uk/money/other-stories", SmallStories())
     )),
     ("uk/sport", Map(
       ("uk/sport/football/regular-stories", News),
@@ -111,10 +111,10 @@ object FindStyle {
       ("us/travel/regular-stories", Features)
     )),
     ("us/business", Map(
-      ("us/business/other-stories", SmallStories(showMore = false))
+      ("us/business/other-stories", SmallStories())
     )),
     ("us/commentisfree", Map(
-      ("us/commentisfree/other-stories", SmallStories(showMore = false))
+      ("us/commentisfree/other-stories", SmallStories())
     )),
     ("us/culture", Map(
       ("us/film/regular-stories", Features),
@@ -126,7 +126,7 @@ object FindStyle {
       ("us/tv-and-radio/regular-stories", Features)
     )),
     ("us/money", Map(
-      ("us/money/other-stories", SmallStories(showMore = false))
+      ("us/money/other-stories", SmallStories())
     )),
     ("us/sport", Map(
       ("us/sport/nfl/regular-stories", News),
