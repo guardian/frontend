@@ -17,6 +17,7 @@ import org.joda.time.format.DateTimeFormat
 import com.gu.openplatform.contentapi.model.Asset
 import play.Play
 import org.apache.commons.lang.StringEscapeUtils
+import conf.Switches._
 
 
 sealed trait Style {
@@ -267,9 +268,11 @@ object InBodyElementCleaner extends HtmlCleaner {
   )
 
   override def clean(document: Document): Document = {
-    val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
-    val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
-    unsupportedElements.foreach(_.remove())
+    if (EmbeddedElementsSwitch.isSwitchedOff) {
+      val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+      val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
+      unsupportedElements.foreach(_.remove())
+    }
     document
   }
 }
