@@ -6,7 +6,7 @@
  * Discussion feature tests 
  *
  **/
-casper.start(host + 'commentisfree/2012/mar/12/threading-experiment-comment-is-free?view=mobile');
+casper.start(host + 'help/insideguardian/2012/feb/29/threaded-comments?view=mobile');
 
 /**
  *   Scenario: Read top level comments
@@ -19,7 +19,7 @@ casper.start(host + 'commentisfree/2012/mar/12/threading-experiment-comment-is-f
 // Check the correct login/out buttons are present
 casper.test.begin('Read top level comments', function(test) {
     //wait for comment count to be visible
-    casper.waitForText('424', function() {
+    casper.waitForText('277', function() {
         casper.click('.js-show-discussion');
     },function timeout(){
         test.fail('failed to find comment bubble');
@@ -31,7 +31,7 @@ casper.test.begin('Read top level comments', function(test) {
             return document.querySelectorAll('.d-comment--top-level').length;
         }, 10, 'Then I can see 10 top level comments');
 
-        test.assertSelectorHasText('.d-comment__author', 'felixcohen', 'And the first comment is authored by "felixcohen"');
+        test.assertSelectorHasText('.d-comment__author', 'monkeyface', 'And the first comment is authored by "monkeyface"');
 
         test.done();
 
