@@ -421,44 +421,26 @@ object VisualTone {
   private val Feature = "feature"
 
   private val toneMappings = Map(
-    ("tone/blog", Comment),
     ("tone/comment", Comment),
     ("tone/letters", Comment),
-    ("tone/q-and-as", Comment),
+    ("tone/obituaries", Comment),
+    ("tone/profiles", Comment),
+    ("tone/editorials", Comment),
+    ("tone/analysis", Comment),
 
-    ("tone/blog", Feature),
-    ("tone/comment", Feature),
-    ("tone/letters", Feature),
-    ("tone/q-and-as", Feature)
+    ("tone/features", Feature),
+    ("tone/recipes", Feature),
+    ("tone/interview", Feature),
+    ("tone/performances", Feature),
+    ("tone/extract", Feature),
+    ("tone/reviews", Feature),
+    ("tone/albumreview", Feature),
+    ("tone/livereview", Feature),
+    ("tone/childrens-user-reviews", Feature)
   )
 
 
   def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
 
   // these tones are all considered to be 'News' it is the default so we do not list them explicitly
-
-  //  "tone/minutebyminute",
-  //  "tone/obituaries",
-  //  "tone/timelines",
-  //  "tone/extracompetitions",
-  //  "tone/sponsoredfeatures",
-  //  "tone/extraoffers",
-  //  "tone/profiles",
-  //  "tone/event-descriptions",
-  //  "tone/albumreview",
-  //  "tone/thirdpartyventures",
-  //  "tone/childrens-user-reviews",
-  //  "tone/resource",
-  //  "tone/performances",
-  //   "tone/livereview",
-  //    "tone/news",
-  //    "tone/recipes",
-  //    "tone/matchreports",
-  //    "tone/extract",
-  //    "tone/editorials",
-  //    "tone/help",
-  //    "tone/readeroffers",
-  //    "tone/interview"
-
-
 }
