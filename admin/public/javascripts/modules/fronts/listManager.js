@@ -72,7 +72,6 @@ define([
                 sortables = $(selector),
                 item,
                 fromList,
-                fromListObj,
                 toList;
 
             sortables.sortable({
@@ -88,24 +87,32 @@ define([
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    fromListObj = knockout.dataFor(fromList[0]);
                 },
                 stop: function(event, ui) {
-                    var index,
+                    var toListPersists = toList.hasClass('persisted'),
+                        fromListPersists = fromList.hasClass('persisted'),
+                        index,
                         clone;
 
                     common.state.uiBusy = false;
 
-                    // If we move between lists, effect a copy by cloning
-                    if(toList !== fromList) {
-                        index = toList.children().index(item);
-                        clone = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
-                        toList.children(':eq(' + index + ')').after(clone);
-                        // So that the original stays in place:
-                        $(this).sortable('cancel');
+                    // Save into toList
+                    if(toListPersists) {
+                        saveList({
+                            listEl: toList,
+                            itemEl: item
+                        });
                     }
 
-                    saveListDelta(item.data('url'), toList);
+                    // Delete out of fromList, if we've dragged between lists
+                    if(fromListPersists && fromList !==  toList) {
+                        saveList({
+                            listEl: fromList,
+                            itemEl: item,
+                            delete: true
+                        });
+                    }
+
                 },
                 change: function(event, ui) {
                     if(ui.sender) toList = ui.placeholder.parent();
@@ -114,53 +121,43 @@ define([
             }).disableSelection();
         };
 
-        function saveListDelta(id, list) {
-            var isLive = list.hasClass('is-live'),
-                listId,
-                inList,
-                listObj,
-                position,
+        function saveList(opts) {
+            var itemId  = opts.itemEl.data('url'),
+                isLive  = opts.listEl.hasClass('is-live'),
+                method  = opts.delete ? 'delete' : 'post',
+                listObj = knockout.dataFor(opts.listEl[0]),
                 delta;
 
-            if (!list.hasClass('persisted')) { return; }
+            if (!listObj || !listObj.id || !opts.itemEl.length || !itemId) { return; }
 
-            listObj = knockout.dataFor(list[0]);
+            delta = {
+                item:   itemId,
+                live:   isLive,
+                draft: !isLive
+            };
 
-            listId = list.attr('data-list-id');
-            if (!listId) { return; }
-
-            inList = $("[data-url='" + id + "']", list);
-
-            if (inList.length) {
-                delta = {
-                    item: id,
-                    live:   isLive,
-                    draft: !isLive
-                };
-
-                position = inList.next().data('url');
-                if (position) {
-                    delta.position = position;
-                } else {
-                    var numOfItems = $("[data-url]", list).length;
+            if (method === 'post') {
+                delta.position = opts.itemEl.next().data('url');
+                if (!delta.position) {
+                    var numOfItems = $("[data-url]", opts.listEl).length;
                     if (numOfItems > 1) {
-                        delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
+                        delta.position = $("[data-url]", opts.listEl).eq(numOfItems - 2).data('url');
                         delta.after = true;
                     }
                 }
-
-                listObj.state.loadIsPending(true);
-
-                reqwest({
-                    method: 'post',
-                    url: common.config.apiBase + '/collection/' + listId,
-                    type: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify(delta)
-                }).always(function(resp) {
-                    listObj.load();
-                });
             }
+
+            listObj.state.loadIsPending(true);
+
+            reqwest({
+                method: method,
+                url: common.config.apiBase + '/collection/' + listObj.id,
+                type: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(delta)
+            }).always(function(resp) {
+                listObj.load();
+            });
         };
 
         function startPoller() {
@@ -281,9 +278,9 @@ define([
                 renderConfig();
                 window.onpopstate = renderConfig;
 
-                startPoller();
+                //startPoller();
                 model.latestArticles.search();
-                model.latestArticles.startPoller();
+                //model.latestArticles.startPoller();
             });
         };
 

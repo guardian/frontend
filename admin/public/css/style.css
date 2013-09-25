@@ -359,7 +359,7 @@ a.cta, .cta a {
     box-sizing: border-box;
     float: left;
     width: 50%;
-    padding: 15px 15px 10px 10px;
+    padding: 15px 15px 10px 0;
     border-right: 1px solid #CCCCCC;
 }
 
@@ -374,7 +374,6 @@ a.cta, .cta a {
 }
 
 .fronts .tool-title {
-    padding: 0 5px 0 10px;
     font-size: 18px;
     text-transform: uppercase;
 }
