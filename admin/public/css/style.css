@@ -358,7 +358,7 @@ a.cta, .cta a {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
-    width: 45%;
+    width: 50%;
     padding: 15px 15px 10px 10px;
     border-right: 1px solid #CCCCCC;
 }
@@ -528,11 +528,7 @@ a.cta, .cta a {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding-left: 15px;
-<<<<<<< HEAD
-    width: 55%;
-=======
-    width: 60%;
->>>>>>> master
+    width: 50%;
     float: right;
 }
 
@@ -563,6 +559,7 @@ a.cta, .cta a {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
+    background-color: #FFFFFF;
 }
 
 .fronts .is-draft .trail {
