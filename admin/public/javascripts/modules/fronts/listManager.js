@@ -250,26 +250,26 @@ define([
         knockout.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
                 var groups = knockout.utils.unwrapObservable(valueAccessor()),
-                    max = _.max(_.pluck(groups, 'max'));
+                    max;
 
-                if (!max) { return };
+                if (!_.isArray(groups)) { return; };
+                max = _.max(_.pluck(groups, 'max'));
+                if (!max) { return; };
 
                 _.each(_.toArray(groups).reverse(), function(group, i){
-                    var data = group.data,
-                        isHot = _.reduce(_.last(data, 5), function(m, n){ return m + n; }, 0) > 250;
-
-                    $(element).sparkline(data, {
+                    $(element).sparkline(group.data, {
                         chartRangeMax: max,
-                        defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
+                        defaultPixelsPerValue: group.data.length < 50 ? group.data.length < 30 ? 3 : 2 : 1,
                         height: Math.round(Math.max(10, Math.min(40, max))),
                         lineColor: '#' + group.color,
                         spotColor: false,
                         minSpotColor: false,
                         maxSpotColor: false,
-                        lineWidth: isHot ? 2 : 1,
+                        lineWidth: group.activity || 1,
                         fillColor: false,
                         composite: i > 0
                     });
+
                 });
             }
         };

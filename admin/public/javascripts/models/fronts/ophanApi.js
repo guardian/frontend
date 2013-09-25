@@ -67,8 +67,12 @@ function (
             });
 
             item.state.pageViewsSeries(
-                // Round off the points
                 _.map(groups, function(group){
+                    // recent pageview average
+                    var pvs = _.reduce(_.last(group.data, common.config.pvPeriod), function(m, n){ return m + n; }, 0) / common.config.pvPeriod;
+                    // classify activity on scale of 1,2,3
+                    group.activity = pvs < common.config.pvHot ? pvs < common.config.pvWarm ? 1 : 2 : 3;
+                    // Round the datapoints
                     group.data = _.map(group.data, function(d) { return Math.round(d*10)/10; });
                     return group;
                 })
