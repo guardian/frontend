@@ -161,10 +161,7 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
         }
 
         if (path != realPath) {
-          Redirect(request.path.endsWith(".json") match {
-            case true => s"/$realPath.json"
-            case _ => s"/$realPath"
-          })
+          redirectWithParameters(request, realPath)
         } else if (trailblocks.isEmpty) {
           InternalServerError
         } else {
@@ -184,6 +181,14 @@ class FrontController extends Controller with Logging with JsonTrails with Execu
 
       }.getOrElse(NotFound) //TODO is 404 the right thing here
     }
+  }
+
+  private def redirectWithParameters(request: Request[AnyContent], realPath: String): SimpleResult[Results.EmptyContent] = {
+    val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""
+    Redirect(request.path.endsWith(".json") match {
+      case true => s"/$realPath.json$params"
+      case _ => s"/$realPath$params"
+    })
   }
 
   def renderTrails(path: String) = Action { implicit request =>

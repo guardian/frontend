@@ -42,7 +42,7 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
         import browser._
 
         Then("the 'Desktop version' link should point to '/football/live?view=desktop'")
-        findFirst(".js-main-site-link").getAttribute("href") should be("http://localhost:9000/football/live?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/football/live"))
       }
 
       Given("I visit the live page")
@@ -51,7 +51,7 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldM
         import browser._
 
         Then("the 'Desktop version' link should point to '/football/matches?view=desktop'")
-        findFirst(".js-main-site-link").getAttribute("href") should be("http://localhost:9000/football/live?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/football/live"))
       }
 
     }
