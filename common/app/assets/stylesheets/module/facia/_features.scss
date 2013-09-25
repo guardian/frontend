@@ -77,6 +77,7 @@
         }
     }
     .item__standfirst {
+        display: none;
         margin: $gs-baseline*2 0 0;
         @include font-size(16, 20);
         @include mq(tablet) {
@@ -134,6 +135,37 @@
             .item__standfirst,
             .item__image-container {
                 display: none;
+            }
+        }
+    }
+
+    // styling up
+    @include mq($to: tablet) {
+        &.collection--travel-section .item:first-child {
+            $image-width: 40%;
+            overflow: hidden;
+            .item__standfirst,
+            .item__meta {
+                float: right;
+                clear: right;
+                width: 100 - $image-width;
+                @include box-sizing(border-box);
+                padding-left: $gs-gutter/2;
+            }
+            .item__title {
+                @include font-size(20, 24);
+            }
+            .item__standfirst {
+                display: block;
+                @include font-size(14, 20);
+            }
+            .item__image-container {
+                @include box-sizing(border-box);
+                width: $image-width;
+                padding-right: $gs-gutter/2;
+            }
+            .item__image {
+                width: 100%;
             }
         }
     }

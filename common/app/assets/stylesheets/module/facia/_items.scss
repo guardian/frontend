@@ -59,6 +59,11 @@ a.item__link,
         @include font-size(26, 28);
     }
 }
+.item__byline {
+    margin: $gs-baseline 0 0;
+    color: $dark-green;
+    @include font-size(16);
+}
 .item__standfirst {
     margin: $gs-baseline 0 0;
 }
