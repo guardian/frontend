@@ -216,7 +216,6 @@ video {
 .commentcount {
     @extend %type-11;
     display: none;
-    color: $linkBlue;
 
     i {
         vertical-align: middle;
@@ -234,17 +233,19 @@ video {
         padding: $baseline 0 0 $baseline;
         border-left: 1px dotted $neutral3;
     }
-
-    &:active,
-    &:hover {
-        color: $linkBlue;
-    }
 }
 
 .commentcount__label {
     .article__head & {
         @extend .u-h;
     }
+}
+
+.article__meta-heading {
+    @include fs-headline(2);
+    padding-top: $baseline;
+    padding-bottom: $baseline*4;
+    border-top: 1px dotted $neutral3;
 }
 
 /* Layout changes across devices
