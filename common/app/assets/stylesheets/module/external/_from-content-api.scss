@@ -42,12 +42,33 @@
         }
     }
     > p {
+        margin-bottom: 0;
+
         + figure,
         + video {
             margin-top: $baseline;
         }
         + p {
-            text-indent: 1.5em;
+            // Indent consecutive paragraphs
+            // by the value of the line-height
+            text-indent: 24px;
+            text-indent: 2.4rem;
+
+            @include mq(tablet) {
+                text-indent: 28px;
+                text-indent: 2.8rem;
+            }
+
+            .bullet {
+                text-indent: 0;
+                margin-left: -24px;
+                margin-left: -2.4rem;
+
+                @include mq(tablet) {
+                    margin-left: -28px;
+                    margin-left: -2.8rem;
+                }
+            }
         }
     }
     > p,
