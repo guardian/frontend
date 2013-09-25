@@ -94,7 +94,6 @@
     @include mq(wide) {
         .article__dateline-time {
             display: inline-block;
-            margin-left: 18px;
         }
     }
 }
@@ -146,6 +145,10 @@
     margin-bottom: $baseline*2;
     min-height: 20px;
     padding: $baseline - 1 0 $baseline*3 - 1 0;
+
+    a {
+
+    }
 
     article & {
         @include mq(tablet, leftCol) {
