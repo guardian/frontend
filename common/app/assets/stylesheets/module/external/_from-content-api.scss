@@ -26,11 +26,11 @@
         padding: 0;
     }
     h2 {
-        margin-bottom: $baseline;
-        @include fs-bodyHeading(3);
+        @include fs-header(2);
 
         @include mq(tablet) {
-            @include fs-bodyHeading(4, true);
+            margin-bottom: 1px;
+            @include fs-header(3, true);
         }
     }
     h3 {
@@ -48,6 +48,7 @@
         + video {
             margin-top: $baseline;
         }
+        + a + p, // Inline link cards are inserted between paragraphs
         + p {
             // Indent consecutive paragraphs
             // by the value of the line-height
@@ -74,7 +75,13 @@
     > p,
     > figure,
     > video {
-        + h2,
+        + h2 {
+            margin-top: 24px;
+
+            @include mq(tablet) {
+                margin-top: 27px;
+            }
+        }
         + h3 {
             margin-top: $baseline*3;
         }

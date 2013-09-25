@@ -69,11 +69,11 @@ $serifheadline: "EgyptianHeadline", georgia, serif;
 // Usage:
 // font-size (px) line-height (px) // level
 $fs-headers: (
-    16, // 1
-    18, // 2
-    20, // 3
-    22, // 4
-    24  // 5
+    16 20, // 1
+    18 24, // 2
+    20 28, // 3
+    22 28, // 4
+    24 28  // 5
 );
 
 $fs-headlines: (
