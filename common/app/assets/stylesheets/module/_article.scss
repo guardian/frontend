@@ -59,6 +59,7 @@
 .article__dateline {
     @include box-sizing(border-box);
     @include font($sans-serif, normal, 12, 16);
+    position: relative;
     min-height: $gs-column-height;
     padding-top: $baseline;
     margin-bottom: $baseline*3;
@@ -228,8 +229,20 @@ video {
     }
 
     .article__head & {
+        @include box-sizing(border-box);
         display: block;
-        float: right;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: $gs-column-width - 1px;
+        height: $gs-column-height - 1px;
+        padding: $baseline 0 0 $baseline;
+        border-left: 1px dotted $neutral3;
+    }
+
+    &:active,
+    &:hover {
+        color: $linkBlue;
     }
 }
 
