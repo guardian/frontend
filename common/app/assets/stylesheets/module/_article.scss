@@ -228,8 +228,8 @@ video {
         @include box-sizing(border-box);
         display: block;
         position: absolute;
-        right: 0px;
-        top: 0px;
+        right: 0;
+        top: 0;
         width: $gs-column-width - 1px;
         height: $gs-column-height - 1px;
         padding: $baseline 0 0 $baseline;
