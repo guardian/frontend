@@ -100,12 +100,14 @@
 }
 
 .article__standfirst {
-    margin-bottom: $baseline*3;
+    @include fs-bodyCopy(3, true);
     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    margin-bottom: $baseline*3;
 
     @include mq(tablet) {
+        @include fs-bodyCopy(4, true);
         -webkit-font-smoothing: antialiased;
-        @include fs-bodyCopy(4);
         margin-bottom: $baseline*4;
     }
 }

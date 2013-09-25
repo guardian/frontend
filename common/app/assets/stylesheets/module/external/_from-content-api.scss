@@ -11,7 +11,7 @@
 .from-content-api {
 
     @include fs-bodyCopy(3);
-    color: #333;
+    color: #333333;
 
     @include mq(tablet) {
         @include fs-bodyCopy(4, true);
