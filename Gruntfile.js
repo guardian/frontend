@@ -358,6 +358,10 @@ module.exports = function (grunt) {
           hooks: {
             // Copy the project's pre-commit hook into .git/hooks
             command: 'cp git-hooks/pre-commit .git/hooks/'
+          },
+
+          icons: {
+            command: 'cd tools/sprites/; node spricon.js global-icon-config.json'
           }
         }
 
@@ -396,6 +400,8 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:common:css', ['sass:common']);
     grunt.registerTask('compile:common:js', ['requirejs:common']);
     grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
+
+    grunt.registerTask('compile:icons', ['shell:icons']);
 
     grunt.registerTask('analyse:common:css', ['cssmetrics:common']);
     grunt.registerTask('analyse', ['analyse:common:css']);
