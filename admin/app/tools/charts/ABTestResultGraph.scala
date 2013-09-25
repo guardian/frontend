@@ -84,3 +84,11 @@ object SwipeAvgSessionDurationGraph extends ABTestResultGraph {
   override val yAxis = Some("Avg duration / session (s)")
   val dataLocation = s"${Configuration.environment.stage.toUpperCase}/analytics/ab-test-results/swipe-avg-session-durations-by-day-by-variant.csv"
 }
+
+
+object FacebookMostReadPageViewsPerSessionGraph extends ABTestResultGraph {
+
+  val name = "Facebook Most Read Page Views per Session"
+  override val yAxis = Some("Avg pvs / session")
+  val dataLocation = s"${Configuration.environment.stage.toUpperCase}/analytics/ab-test-results/fb-most-read-session-page-views-by-day-by-variant.csv"
+}
