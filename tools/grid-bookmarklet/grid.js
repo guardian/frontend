@@ -36,7 +36,7 @@ require([
             $rowsEl = bonzo($gridEl[0].querySelector('.grid-rows'));
 
         // First came the columns...
-        for (var i=0; i<20; i++) {
+        for (var i=0; i<(docW/80); i++) {
             $colsEl.append('<div class="grid-column"></div>');
         }
 
