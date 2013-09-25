@@ -89,10 +89,15 @@
     .relative-timestamp {
         float: left;
         color: $grey;
+        position: relative;
+        padding: 0 $gs-gutter/2 0 16px;
+        min-width: gs-span(1) - 16;
 
         i {
-            float: left;
-            margin: 3px 4px 0 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 2px 0;
         }
     }
 
@@ -100,7 +105,6 @@
         position: static;
         float: left;
         color: $grey;
-        border-left: 1px solid $grey;
         margin-left: 4px;
 
         a {
@@ -122,10 +126,10 @@
 .card__headline {
     font-family: $serif !important; // Override .from-content-api h3 defaults
     color: #444444;
-    font-size: 22px !important;
-    font-size: 2.2rem !important;
-    line-height: 26px !important;
-    line-height: 2.6rem !important;
+    font-size: 20px !important;
+    font-size: 2.0rem !important;
+    line-height: 24px !important;
+    line-height: 2.4rem !important;
 
 
 }
