@@ -38,9 +38,9 @@ $trailblockImgWidthLarge: 140px;
 
 // Article breakpoints
 $a-rightCol-width:   gs-span(4);
-$a-rightCol-trigger: gs-span(11) + $gs-gutter*2;
-$a-leftCol-width:    gs-span(2);
-$a-leftCol-trigger:  gs-span(13) + $gs-gutter*2;
+$a-rightCol-trigger: gs-span(11) + $gs-gutter*2; // 900px
+$a-leftCol-width:    gs-span(2); // Grows to 3 columns on wide viewports
+$a-leftCol-trigger:  gs-span(13) + $gs-gutter*2; // 1060px
 
 $mq-breakpoints: (
     (mobile  gs-span(4)  + $gs-gutter)   // 320px
