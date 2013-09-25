@@ -60,13 +60,9 @@
         }
     }
     .item__title {
+        min-height: gs-height(3);
         @include mq($to: tablet) {
             @include font-size(20, 24);
-            min-height: gs-height(3);
-        }
-        @include mq(tablet) {
-            @include font-size(26, 28);
-            min-height: gs-height(3);
         }
     }
     .item__standfirst {

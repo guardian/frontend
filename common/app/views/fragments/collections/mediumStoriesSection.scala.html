@@ -1,6 +1,6 @@
-@(config: Config, collection: Collection, style: Style)(implicit request: RequestHeader)
+@(config: Config, collection: Collection, style: MediumStoriesSection)(implicit request: RequestHeader)
 
-<section class="collection collection--@style.className collection--@{config.section}-section"
+<section class="collection collection--@style.className collection--@{config.section}-section collection--@style.collectionType-type"
          data-link-name="block | @collection.displayName.getOrElse(config.id)"
          data-collection-type="@style.className"
          data-section="@config.section">

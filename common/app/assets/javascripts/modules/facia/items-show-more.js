@@ -8,6 +8,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     wide: {
                         default: 4,
                         features: 3,
+                        'medium-stories-section': 3,
                         'popular-full-width': 3
                     },
                     desktop: {
@@ -18,7 +19,8 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     },
                     mobile: {
                         default: 3,
-                        'small-stories': 2
+                        'small-stories': 2,
+                        'medium-stories-section': 2
                     }
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];

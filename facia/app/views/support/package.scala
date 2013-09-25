@@ -63,11 +63,11 @@ object FindStyle {
       ("uk/sport/regular-stories", News),
       ("uk/commentisfree/regular-stories", Comments),
       ("uk/culture/regular-stories", Features),
-      ("uk/business/regular-stories", News),
-      ("uk/lifeandstyle/regular-stories", Features),
-      ("uk/technology/regular-stories", Features),
-      ("uk/money/regular-stories", News),
-      ("uk/travel/regular-stories", MediumStoriesFeatures)
+      ("uk/business/regular-stories", MediumStoriesSection()),
+      ("uk/lifeandstyle/regular-stories", MediumStoriesSection(collectionType = "features")),
+      ("uk/technology/regular-stories", MediumStoriesSection(collectionType = "features")),
+      ("uk/money/regular-stories", MediumStoriesSection()),
+      ("uk/travel/regular-stories", MediumStoriesSection(collectionType = "features"))
     )),
     ("uk/business", Map(
       ("uk/business/other-stories", SmallStories())

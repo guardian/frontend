@@ -48,7 +48,9 @@ object TopStories extends Style { val className = "top-stories" }
 
 object MediumStories extends Style { val className = "medium-stories" }
 
-object MediumStoriesFeatures extends Style { val className = "medium-stories-features" }
+case class MediumStoriesSection(val collectionType: String = "news") extends Style {
+  val className = "medium-stories-section"
+}
 
 case class SmallStories(val showMore: Boolean = false) extends Style {
   val className = "small-stories"

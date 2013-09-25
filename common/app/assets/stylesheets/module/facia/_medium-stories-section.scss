@@ -1,36 +1,33 @@
-.collection--medium-stories-features {
-    .collection__title {
+.collection--medium-stories-section {
+    &.collection--features-type .collection__title {
         background-color: $pink;
         border-color: $light-pink;
     }
-    &.collection--commentisfree-section .collection__title {
-        background-color: $green;
-        border-color: $light-green;
-    }
     .items {
-        @include mq(tablet) {
-            font-size: 0;
-        }
+        font-size: 0;
     }
     .item {
         margin-top: $gs-baseline*2;
+        display: inline-block;
+        vertical-align: top;
+        padding-left: $gs-gutter/2 - 1;
+        padding-right: $gs-gutter/2;
+        border-left: 1px dotted $grey;
+        @include mq($to: tablet) {
+            width: 50%;
+        }
         @include mq(tablet) {
             @include box-sizing(content-box);
-            display: inline-block;
-            vertical-align: top;
-            padding-left: $gs-gutter/2 - 1;
-            padding-right: $gs-gutter/2;
-            border-left: 1px dotted $grey;
             width: gs-span(4);
         }
     }
     @mixin row($row-size) {
-    // styling for first row
+        // styling for first row
         .item:nth-child(-n + #{$row-size}) .item__title {
             padding-top: 0;
             border-top-style: none;
         }
-    // stylings for beggining and end of rows
+        // stylings for beggining and end of rows
         .item:nth-child(#{$row-size}n + 1) {
             padding-left: 0;
             border-left-style: none;
@@ -40,7 +37,7 @@
         }
     }
     @include mq($to: tablet) {
-        @include row(1);
+        @include row(2);
     }
     @include mq(tablet, desktop) {
         @include row(2);
@@ -66,19 +63,42 @@
         }
     }
     .item__title {
-        @include mq(tablet) {
-            min-height: gs-height(3);
+        min-height: gs-height(3);
+        @include mq($to: tablet) {
+            @include font-size(20, 24);
+        }
+    }
+    @include mq($to: tablet) {
+        .item--shown {
+            width: 100%;
+            padding: 0;
+            border-left-style: none;
+            .item__title {
+                @include font-size(18, 24);
+                min-height: 0;
+            }
         }
     }
     .item__standfirst {
         display: none;
-        margin: $gs-baseline*2 0 0;
-        @include font-size(16, 20);
+    }
+    .item--without-image .item__standfirst {
         @include mq(tablet) {
+            display: block;
+            margin: $gs-baseline*2 0 0;
+            @include font-size(16, 20);
             min-height: gs-height(4);
         }
     }
+    .item__meta {
+        @include mq($to: tablet) {
+            display: none;
+        }
+    }
     .item__image-container {
+        @include mq($to: tablet) {
+            margin-top: $gs-baseline;
+        }
         @include mq(tablet) {
             height: gs-height(4);
         }
@@ -118,16 +138,6 @@
                     z-index: -1;
                     margin-top: 0;
                 }
-            }
-        }
-    }
-    @include mq($to: tablet) {
-        .item:first-child .item__title {
-            @include font-size(26, 28);
-        }
-        .item:nth-child(n + 2) {
-            .item__image-container {
-                display: none;
             }
         }
     }
