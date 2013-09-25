@@ -30,6 +30,7 @@ require([
                            '  <div class="grid-rows"></div>' +
                            '</div>'
         $gridEl = bonzo(bonzo.create(gridTemplate));
+        layout();
 
         var $colsEl = bonzo($gridEl[0].querySelector('.grid-cols')),
             $rowsEl = bonzo($gridEl[0].querySelector('.grid-rows'));
@@ -40,7 +41,7 @@ require([
         }
 
         // ...and then the rows
-        for (var i=0; i<20; i++) {
+        for (var i=0; i<(docH/60); i++) {
             $rowsEl.append('<div class="grid-row"></div>');
         }
 
