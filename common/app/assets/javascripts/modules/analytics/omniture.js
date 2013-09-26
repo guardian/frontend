@@ -144,7 +144,7 @@ define([
                 s.prop9 = "userid";
                 s.eVar42 = config.page.returnUrl || '';
                 s.hier2="GU/Users/Registration";
-                s.events = s.apl(s.events, config.page.registrationEvent, '');
+                s.events = s.apl(s.events, config.page.registrationEvent, ',');
             }
 
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
