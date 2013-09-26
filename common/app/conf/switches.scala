@@ -279,7 +279,11 @@ object Switches extends Collections {
     CssFromStorageSwitch,
     ABMostPopularFromFacebook,
     ElasticSearchSwitch,
+<<<<<<< HEAD
     ShowAllEmbeddedElementsSwitch
+=======
+    EmbeddedElementsSwitch
+>>>>>>> d5d68ff0b0e9251f8594f000a47f709724285970
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
