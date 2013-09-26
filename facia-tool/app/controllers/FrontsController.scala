@@ -17,6 +17,10 @@ object FrontsController extends Controller with Logging with ExecutionContexts {
     Ok(views.html.fronts(Configuration.environment.stage))
   }
 
+  def admin() = AuthAction { request =>
+    Redirect("/")
+  }
+
   def listCollections = AuthAction { request =>
     Async {
       Future{

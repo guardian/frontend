@@ -33,3 +33,5 @@ GET           /json/proxy/*absUrl        controllers.Api.json(absUrl)
 
 # Ophan proxying for https
 GET           /ophan/pageviews/*path     controllers.OphanApiController.pageViews(path)
+
+GET           /admin                     controllers.FrontsController.admin()
