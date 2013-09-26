@@ -17,13 +17,11 @@
 @mixin fs-header($level, $size-only: false) {
     $header: nth($fs-headers, $level);
 
-    font-size: nth($header, 1)*1px;
-    font-size: nth($header, 1)/10*1rem;
+    @include font-size(nth($header, 1), nth($header, 2));
 
     @if $size-only == false {
         font-family: $serifheadline;
         font-weight: 900;
-        line-height: 1;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
     }

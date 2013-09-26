@@ -62,7 +62,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         import browser._
 
         Then("the 'Desktop version' link should point to '/football/fixtures?view=desktop'")
-        findFirst(".js-main-site-link").getAttribute("href") should be("http://localhost:9000/football/fixtures?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/football/fixtures"))
       }
 
       Given("I visit the fixtures page")
@@ -71,7 +71,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatc
         import browser._
 
         Then("the 'Desktop version' link should point to '/football/fixtures?view=desktop'")
-        findFirst(".js-main-site-link").getAttribute("href") should be("http://localhost:9000/football/fixtures?view=desktop")
+        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/football/fixtures"))
       }
 
     }
