@@ -14,10 +14,10 @@ define([
             p = cache[pot];
         }
 
-        p[key] = { 
-            data: data,
+        p[key] = {
+            data: JSON.stringify(data),
             // Spread actual timeouts into the range "expiry two-times expiry"
-            time: +new Date() + expiry * Math.random() 
+            time: +new Date() + expiry * Math.random()
         };
     }
 
@@ -32,7 +32,7 @@ define([
             delete obj;
             return;
         }
-        return obj.data; 
+        return JSON.parse(obj.data);
     }
 
     return {
