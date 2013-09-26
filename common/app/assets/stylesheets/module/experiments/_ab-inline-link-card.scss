@@ -70,8 +70,8 @@
 }
 
 .card__meta {
-    min-height: gs-height(1);//$unitHeight;
-    @include font($sans-serif, lighter, 12, 12);
+    min-height: gs-height(1);
+    @include fs-data(2);
     @include box-sizing(border-box);
 
     .dateline {
