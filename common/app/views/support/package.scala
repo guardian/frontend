@@ -44,33 +44,9 @@ object SectionFront extends Style { val className = "section-front" }
  */
 object Masthead extends Style { val className = "masthead" }
 
-object TopStories extends Style { val className = "top-stories" }
-
-object MediumStories extends Style { val className = "medium-stories" }
-
-case class MediumStoriesSection(val collectionType: String = "news") extends Style {
-  val className = "medium-stories-section"
+case class SectionZone(val collectionType: String = "news") extends Style {
+  val className = "section-zone"
 }
-
-case class Section(val collectionType: String = "news") extends Style {
-  val className = "section"
-}
-
-case class SmallStories(val showMore: Boolean = false) extends Style {
-  val className = "small-stories"
-}
-
-object News extends Style { val className = "news" }
-
-object Features extends Style { val className = "features" }
-
-object Highlights extends Style { val className = "highlights" }
-
-object Comments extends Style { val className = "comments" }
-
-object Culture extends Style { val className = "culture" }
-
-object Sport extends Style { val className = "sport" }
 
 case class Container(val section: String) extends Style {
   val className = "container"

@@ -2,7 +2,7 @@
 
 <section class="collection collection--@style.className collection--@{config.section}-section js-collection--display-toggle section--@style.section"
          data-link-name="block | @collection.displayName.getOrElse(config.id)"
-         data-collection-type="@style.className"
+         data-collection-type="@config.section"
          data-section="@config.section">
 
     @Seq(config.displayName, collection.displayName).find(_.nonEmpty).map { title =>
