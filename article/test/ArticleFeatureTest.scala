@@ -444,5 +444,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
 
     }
 
+    scenario("Show tags in an article"){
+      Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
+      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting"){ browser =>
+        import browser._
+
+        Then("I should see links to tags")
+        $(".article__tags a").size should be (19)
+      }
+    }
+
   }
 }
