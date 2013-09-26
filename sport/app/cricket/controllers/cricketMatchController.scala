@@ -28,11 +28,11 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
           Cached(60){
             if (request.isJson)
               JsonComponent(
-                "summary" -> views.html.fragments.cricketMatchSummary(page.theMatch).toString,
-                "scorecard" -> views.html.fragments.cricketMiniScorecard(page).toString
+                "summary" -> cricket.views.html.fragments.cricketMatchSummary(page.theMatch).toString,
+                "scorecard" -> cricket.views.html.fragments.cricketMiniScorecard(page).toString
               )
             else
-              Ok(views.html.cricketMatch(page))
+              Ok(cricket.views.html.cricketMatch(page))
           }
       }
     }

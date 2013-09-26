@@ -1,0 +1,29 @@
+@(entry: pa.LeagueTableEntry, row: RowInfo, highlight: Boolean = false)
+<tr @if(highlight){ class="highlight" }>
+    <td class="table-football-leftaligned">@entry.team.rank</td>
+    <td class="table-football-leftaligned"><a href="@TeamUrl(entry.team)" data-link-name="View team">@TeamName(entry.team)</a></td>
+
+    <td>@entry.team.total.played</td>
+
+    <td class="stats-3">@entry.team.home.won</td>
+    <td class="stats-3">@entry.team.home.drawn</td>
+    <td class="stats-3">@entry.team.home.lost</td>
+    <td class="stats-3">@entry.team.home.goalsFor</td>
+    <td class="stats-3">@entry.team.home.goalsAgainst</td>
+
+    <td class="stats-3">@entry.team.away.won</td>
+    <td class="stats-3">@entry.team.away.drawn</td>
+    <td class="stats-3">@entry.team.away.lost</td>
+    <td class="stats-3">@entry.team.away.goalsFor</td>
+    <td class="stats-3">@entry.team.away.goalsAgainst</td>
+
+    <td class="stats-1">@entry.team.total.won</td>
+    <td class="stats-1">@entry.team.total.drawn</td>
+    <td class="stats-1">@entry.team.total.lost</td>
+
+    <td class="stats-2">@entry.team.total.goalsFor</td>
+    <td class="stats-2">@entry.team.total.goalsAgainst</td>
+
+    <td>@entry.team.goalDifference</td>
+    <td>@entry.team.points</td>
+</tr>

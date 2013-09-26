@@ -1,0 +1,10 @@
+@(page: Page, filters: Map[String, Seq[CompetitionFilter]], fixtures: Seq[TeamFixture])(implicit request: RequestHeader)
+@import support._
+@import org.joda.time.DateTime
+
+@main(page, Switches.all){
+}{
+
+    @fragments.teamFixturesBody(page, filters, fixtures)
+
+}

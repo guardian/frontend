@@ -1,0 +1,6 @@
+@(game: pa.FootballMatch)(implicit request: RequestHeader)
+
+@game match {
+    case gameFixture: pa.Fixture    => { @fixture(gameFixture) }
+    case theMatch                   => { @liveMatch(theMatch) }
+}
