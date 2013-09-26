@@ -18,17 +18,14 @@
     border-top: none;
 }
 
-.trail__headline {
-    @include mq(400px) { @extend %type-4; }
-    @include mq(1024px) { @extend %type-5; }
-}
+.trail__headline {}
 
     .trail__headline a,
     .trail__headline a:hover,
     .trail__headline a:focus,
     .trail__headline a:active,
     .trail h2 a {
-        color: #333;
+        color: #333333;
     }
 
     .trail__headline a:active {
@@ -172,7 +169,6 @@
 }
 
 .trail--gallery {
-
     background-color: #F9F9F6;
     padding-bottom: 3px;
     border-bottom: 0;
@@ -228,5 +224,3 @@
     margin-top: $baseline*3;
     border-bottom: none;
 }
-
-

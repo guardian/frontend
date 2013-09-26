@@ -18,7 +18,7 @@ define(["reqwest"], function (reqwest) {
 
         params = appendEdition(params);
 
-        if(params.url.lastIndexOf("http://", 0)!==0){
+        if (!params.url.match('^https?://')) {
             params.url = makeAbsolute(params.url);
         }
         return ajax.reqwest(params);

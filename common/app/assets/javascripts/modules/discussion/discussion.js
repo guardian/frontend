@@ -4,6 +4,7 @@ define([
     'qwery',
     'bean',
     'ajax',
+    'modules/discussion/recommend-comments',
     'modules/userPrefs',
     'modules/analytics/clickstream',
     'modules/inview',
@@ -14,6 +15,7 @@ define([
     qwery,
     bean,
     ajax,
+    RecommendComments,
     userPrefs,
     ClickStream,
     Inview,
@@ -76,7 +78,7 @@ define([
             insertCommentCounts: function(commentCount) {
                 var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
                     html = '<a href="#comments" class="js-show-discussion commentcount" data-link-name="Comment count">' +
-                           '  <i class="i i-comment-count-small"></i>' + commentCount +
+                           '  <i class="i i-comment-blue"></i>' + commentCount +
                            '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                            '</a>';
 
@@ -131,6 +133,8 @@ define([
 
                         commentsHaveLoaded = true;
                         currentPage = response.currentPage;
+
+                        RecommendComments.init(context, { apiRoot: config.page.discussionApiRoot });
 
                         common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                         loadingInProgress = false;

@@ -10,11 +10,11 @@
 
 .from-content-api {
 
-    @extend %type-6;
-    color: #333;
+    @include fs-bodyCopy(3);
+    color: #333333;
 
     @include mq(tablet) {
-        @include font-size(18, 28);
+        @include fs-bodyCopy(4, true);
     }
 
     > p,
@@ -26,32 +26,79 @@
         padding: 0;
     }
     h2 {
-        @extend %type-4;
-        color: #333333;
-        margin-bottom: $baseline;
+        @include fs-header(2);
 
         @include mq(tablet) {
-            @include font-size(22, 28);
+            margin-bottom: 1px;
+            @include fs-header(3, true);
         }
     }
     h3 {
-        @extend %type-5;
         margin: 0;
-        font-family: georgia, serif;
+        @include fs-bodyHeading(2);
+
+        @include mq(tablet) {
+            @include fs-bodyHeading(3, true);
+        }
+    }
+    > p {
+        margin-bottom: 0;
+
+        + figure,
+        + video {
+            margin-top: $baseline;
+        }
+        + a + p, // Inline link cards are inserted between paragraphs
+        + p {
+            // Indent consecutive paragraphs
+            // by the value of the line-height
+            text-indent: 24px;
+            text-indent: 2.4rem;
+
+            @include mq(tablet) {
+                text-indent: 28px;
+                text-indent: 2.8rem;
+            }
+
+            .bullet {
+                text-indent: 0;
+                margin-left: -24px;
+                margin-left: -2.4rem;
+
+                @include mq(tablet) {
+                    margin-left: -28px;
+                    margin-left: -2.8rem;
+                }
+            }
+        }
+    }
+    > p,
+    > figure,
+    > video {
+        + h2 {
+            margin-top: 24px;
+
+            @include mq(tablet) {
+                margin-top: 27px;
+            }
+        }
+        + h3 {
+            margin-top: $baseline*3;
+        }
     }
 }
 
 .from-content-api--small {
-    @extend %type-7;
+    @include fs-bodyCopy(2, true);
 
     @include mq(tablet) {
-        @include font($serif, normal, 16, 24);
+        @include fs-bodyCopy(3, true);
     }
     h2 {
-        @extend %type-5;
+        @include fs-bodyHeading(2, true);
 
         @include mq(tablet) {
-            @include font($serif, 700, 18, 24);
+            @include fs-bodyHeading(3, true);
         }
     }
 }
@@ -59,7 +106,7 @@
 .article blockquote,
 .article blockquote p {
     @include mq(tablet) {
-        @include font-size(18, 26);
+        @include fs-bodyCopy(4, true);
     }
 }
 
@@ -70,11 +117,11 @@
 .caption,
 figcaption,
 .main-caption {
-    @extend %type-12;
+    @include fs-data(2);
     color: #666666;
 
     @include mq(tablet) {
-        @include font-size(12, 18);
+        @include fs-data(3, true);
     }
 }
 
@@ -134,10 +181,10 @@ figure {
 
 .from-content-api {
     cite {
-        @extend %type-7;
+        @include fs-bodyCopy(1);
 
         a {
-            color: #666;
+            color: #666666;
 
             &:hover,
             &:focus,
@@ -154,6 +201,7 @@ figure {
     }
 }
 
+
 /* Tables
    ========================================================================== */
 
@@ -164,7 +212,7 @@ figure {
 
     // This is a weird xml output from the api
     table caption {
-        @extend %type-5;
+        @include fs-headline(2);
         padding: $baseline*2 0;
         text-align: left;
         border-top: 1px solid #B3B3B4;
@@ -172,14 +220,14 @@ figure {
 
     th,
     td {
-        @extend %type-11;
+        @include fs-data(3);
         padding: $baseline*2;
         color: #676767;
     }
 
     th {
         font-weight: 600;
-        color: #333;
+        color: #333333;
     }
 
     tbody tr:nth-child(odd) td {

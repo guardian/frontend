@@ -5,13 +5,8 @@
     <div class="splash" data-bind="visible: false">Loading Editor...</div>
 
     <div class="fronts" data-bind="visible: true, makeDropabble: true" style="display: none">
-        <header>
-            <div class="tool-title">Front Collections Editor</div>
-            <div class="list-picker">
-                <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select>
-                <button data-bind="enable: collections().length, click: actions.unsetConfig">Clear</button>
-            </div>
-        </header>
+
+        <div class="tool-title">Fronts Editor</div>
 
         <div class="finder">
 
@@ -56,37 +51,38 @@
             </div>
         </script>
 
-        <div id="collections" data-bind="foreach: collections">
-            <div class="collection">
+        <div id="list-picker">
+            <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select>
+            <button data-bind="enable: collections().length, click: actions.unsetConfig">Clear</button>
+        </div>
 
-                <span class="savingIndicator" data-bind="visible: state.loadIsPending">SAVING</span>
+        <div id="collections" data-bind="foreach: collections">
+            <div class="collection" data-bind="
+                css: { 'collection--isMajor': configMeta.displayName() || collectionMeta.displayName() }">
 
                 <div class="list-header">
 
-                    <div class="list-header__title">
-                        <span class="list-header__edition" data-bind="text: edition"></span>
-                        <span class="list-header__section" data-bind="text: section"></span>
+                    <div class="list-header__title" data-bind="visible: !state.editingConfig()">
+                        <span class="list-header__saving" data-bind="visible: state.loadIsPending">SAVING</span>
+
+                        <a class="list-header__display" data-bind="
+                            visible: typeof configMeta.displayName() === 'undefined',
+                            css: { 'list-header__display--is-set': !!collectionMeta.displayName() },
+                            text: collectionMeta.displayName() || 'Set title for',
+                            click: toggleEditingConfig"></a>
+
+                        <span class="list-header__display list-header__display--is-set" data-bind="
+                            visible: typeof configMeta.displayName() !== 'undefined',
+                            text: configMeta.displayName"></span>
+
                         <span class="list-header__role"    data-bind="text: configMeta.roleName"></span>
-                        <span data-bind="visible: !state.editingConfig()"> :
-                            <a class="list-header__display" data-bind="
-                                visible: typeof configMeta.displayName() === 'undefined',
-                                css: { 'list-header__display--is-set': !!collectionMeta.displayName() },
-                                text: collectionMeta.displayName() || 'Set Title',
-                                click: toggleEditingConfig"></a>
 
-                            <span class="list-header__display list-header__display--is-set" data-bind="
-                                visible: typeof configMeta.displayName() !== 'undefined',
-                                text: configMeta.displayName"></a>
-                        </span>
-
-                        <span class="list-header__role__description"> :
-                            <span data-bind="text: configMeta.roleDescription"></span>
-                        </span>
+                        <span class="list-header__id" data-bind="text: id"></span>
                     </div>
 
-                    <div class="list-config" data-bind="visible: state.editingConfig">
+                    <div class="collection-config" data-bind="visible: state.editingConfig">
                         <div>
-                            <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Add Title"/>
+                            <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Title"/>
                         </div>
                         <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
                         <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
@@ -114,10 +110,10 @@
                             </span>
                         </div>
                     </div>
-                    <div class="list-header__meta">
+                    <div class="list-header__timings">
                         <!-- ko if: state.timeAgo -->
-                            Updated <span class="list-header__meta__last-updated" data-bind="text: state.timeAgo"></span>
-                            by <span class="list-header__meta__user" data-bind="text: collectionMeta.updatedBy"></span>
+                            Updated <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                            by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
                         <!-- /ko -->
                         <!-- ko ifnot: state.timeAgo -->
                             Empty
@@ -134,8 +130,9 @@
                         'data-list-id': id
                     },
                     css: {
-                        'pending': state.loadIsPending,
-                        'is-live': state.liveMode()
+                        'pending':   state.loadIsPending,
+                        'is-live':   state.liveMode(),
+                        'is-draft': !state.liveMode()
                     },
                     template: {name: 'template_article', foreach: state.liveMode() ? live : draft}"></div>
             </div>
@@ -144,9 +141,8 @@
 
     <script type="text/html" id="template_article">
         <div class="trail u-cf" data-bind="
-                attr: {'data-url': meta.id},
-                css: {redundant: $parent.collectionMeta && $parent.collectionMeta.max ? (0 + $index()) >= (0 + $parent.collectionMeta.max()) : false}
-            ">
+            attr: {'data-url': meta.id},
+            css: {redundant: $parent.collectionMeta && $parent.collectionMeta.max ? (0 + $index()) >= (0 + $parent.collectionMeta.max()) : false}">
 
             <div class="trail_tweaks u-cf" data-bind="visible: state.editingConfig">
                 <div>
@@ -159,13 +155,8 @@
 
             <img data-bind="attr: {src: fields.thumbnail}" />
 
-            <div class="trail__meta">
-                <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
-                <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
-            </div>
-
-            <div class="trail__actions">
-                <i class="icon-trash list-tool trail__actions__remove" data-bind="click: $parent.dropItem"></i>
+            <div class="trail__remove">
+                <i class="icon-remove icon-white" data-bind="click: $parent.dropItem"></i>
             </div>
 
             <a class="trail_stats u-cf" target="_blank" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + meta.id()}">
@@ -180,6 +171,11 @@
             <a class="webTitle" target="_blank" data-bind="
                 html: meta.webTitle,
                 attr: {href: 'http://www.theguardian.com/' + meta.id()}"></a>
+
+            <div class="trail__meta">
+                <span data-bind="html: humanDate() ? humanDate : 'Loading...'"></span>
+                <!--a class="trail__meta__tweak"  data-bind="click: toggleEditingConfig">tweak</a-->
+            </div>
 
         </div>
     </script>

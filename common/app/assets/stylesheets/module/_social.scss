@@ -1,51 +1,33 @@
 .social-wrapper {
    padding: $baseline*3 0 $baseline*4;
+   max-width: gs-span(4);
    overflow: hidden;
+   white-space: nowrap;
+   margin-bottom: $baseline*4;
 }
+.social__item {
+    float: left;
+    width: 25%;
+    @include box-sizing(border-box);
 
-.social {
-
+    + .social__item {
+        border-left: 1px solid $neutral3;
+    }
 }
-
 .social__action {
     height: 36px;
     display: block;
-    margin-bottom: 8px;
     position: relative;
 }
-
 .social__icon {
     position: absolute;
     left: 5px;
     bottom: 3px;
-
-    .social__item--mail & {
-        @include transform(scale(0.9));
-        @include transform-origin(0 100%);
-    }
 }
-
-@include mq(320px) {
-    .social-wrapper {
-        width: gs-span(4);
-    }
-    .social {
-        display: table;
-        width: 100%;
-    }
-    ul.social {
-        margin-bottom: $baseline*4;
-    }
-    .social__item {
-        float: left;
-        width: gs-span(4) / 4;
-        @include box-sizing(border-box);
-
-        + .social__item {
-            border-left: 1px solid $neutral3;
-        }
-    }
-    .social__action {
-        margin-bottom: 0;
-    }
+.social__icon--dock {
+    left: 0;
+}
+.social__icon--small {
+    @include transform(scale(0.9));
+    @include transform-origin(0 100%);
 }

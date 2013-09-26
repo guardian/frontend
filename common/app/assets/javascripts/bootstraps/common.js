@@ -18,7 +18,6 @@ define([
     'modules/navigation/sections',
     'modules/navigation/search',
     'modules/navigation/edition-switch',
-    'modules/navigation/platform-switch',
     'modules/tabs',
     'modules/toggles',
     'modules/relativedates',
@@ -57,7 +56,6 @@ define([
     Search,
 
     EditionSwitch,
-    PlatformSwitch,
     Tabs,
     Toggles,
     RelativeDates,
@@ -102,7 +100,6 @@ define([
                 sections = new Sections(config),
                 search = new Search(config),
                 editions = new EditionSwitch(),
-                platforms = new PlatformSwitch(),
                 header = document.body,
                 profile;
 
