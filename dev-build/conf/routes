@@ -42,15 +42,6 @@ GET        /recent/card.json                                                    
 
 GET        /preference/platform/:platform                                                                 controllers.ChangeViewController.render(platform, page)
 
-#Style-guide
-GET        /style-guide                                                                                   controllers.StyleGuideController.renderIndex
-GET        /style-guide/zones                                                                             controllers.StyleGuideController.renderZones
-GET        /style-guide/typography                                                                        controllers.StyleGuideController.renderTypography
-GET        /style-guide/modules                                                                           controllers.StyleGuideController.renderModules
-GET        /style-guide/sprites                                                                           controllers.StyleGuideController.renderSprites
-GET        /style-guide/csshelpers                                                                        controllers.StyleGuideController.cssHelpers
-GET        /style-guide/codingstandards                                                                   controllers.StyleGuideController.codingStandards
-
 #Football
 GET        /football/fixtures/:year/:month/:day.json                                                      controllers.FixturesController.renderForJson(year, month, day)
 GET        /football/fixtures/:year/:month/:day                                                           controllers.FixturesController.renderFor(year, month, day)

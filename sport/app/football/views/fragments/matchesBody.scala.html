@@ -1,0 +1,43 @@
+@(model: MatchesPage)(implicit request: RequestHeader)
+@import support._
+@import org.joda.time.DateTime
+
+<h2 class="article-zone type-1 sport-header">
+    <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
+</h2>
+
+@if(model.pageType == "live") {
+    <div class="live-matches-dateline box-indent">
+        @fragments.dateline(new DateTime, true)
+    </div>
+}
+
+@if(model.pageType == "live") {
+    <div class="box-indent is-live">
+        <div class="live-toolbar">
+            <div class="update update-live-matches" data-link-name="autoupdate"></div>
+        </div>
+    </div>
+}
+
+@filterBar(model.page.webTitle)
+
+@filters(model.filters, model.page, model.pageType)
+
+<div class="matches-container box-indent" role="main">
+    @matchesList(model, model.pageType)
+
+    @if(model.previousPage.isDefined || model.nextPage.isDefined) {
+        <div class="js-matches-nav matches-nav u-cf js-not-ajax" data-link-name="@model.pageType nav">
+            @model.previousPage.map{url => <a href="@LinkTo{@url}" class="type-11 match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
+            @model.nextPage.map{url => <a href="@LinkTo{@url}" class="type-11 match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
+        </div>
+    }
+
+</div>
+
+<div class="box-indent article-zone-no-indent">
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
+
+    @fragments.mostPopularPlaceholder("sport")
+</div>

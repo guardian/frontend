@@ -1,0 +1,8 @@
+@(model: MatchesPage)(implicit request: RequestHeader)
+
+@main(model.page, Switches.all){
+}{
+
+    @fragments.matchesBody(model)
+
+}
