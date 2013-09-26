@@ -121,8 +121,8 @@ public class ArticleSteps {
 
 	@Then("^\"([^\"]*)\" section tab show read \"([^\"]*)\"$")
 	public void section_tab_show_read(String arg1, String arg2) throws Throwable {
-        webDriver.waitForElement(By.className("tabs-selected"));
-		assertTrue(webDriver.isTextPresentByElement(By.className("tabs-selected"), arg2));
+        webDriver.waitForElement(By.className("tabs__tab--selected"));
+		assertTrue(webDriver.isTextPresentByElement(By.className("tabs__tab--selected"), arg2));
 	}
 
 	@When("^I click \"([^\"]*)\" tab at the top of the page$")
