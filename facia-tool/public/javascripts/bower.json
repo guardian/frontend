@@ -10,7 +10,6 @@
     "curl": "0.7",
     "eventEmitter": "4.1",
     "knockout.js": "2.1",
-    "knockout-sortable": "0.7",
     "jasmine": "1.3",
     "sinon": "1.7",
     "underscore": "1.4",

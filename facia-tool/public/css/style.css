@@ -29,7 +29,7 @@ input[type=text] {
     box-sizing: border-box;
     float: left;
     width: 50%;
-    padding: 15px 15px 10px 10px;
+    padding: 15px 15px 10px 0;
     border-right: 1px solid #CCCCCC;
 }
 
@@ -44,7 +44,6 @@ input[type=text] {
 }
 
 .tool-title {
-    padding: 0 5px 0 10px;
     font-size: 18px;
     text-transform: uppercase;
 }
@@ -125,6 +124,7 @@ input[type=text] {
     color: #999999;
     font-size: 12px;
 }
+
 
 .list-header__timings {
     font-size: 10px;
@@ -308,6 +308,9 @@ a.list-header__status__control:visited {
 
 .trail .trail__remove {
     display: none;
+}
+
+.collection .trail .trail__remove {
     position: absolute;
     top: 0;
     right: 0;
@@ -322,11 +325,11 @@ a.list-header__status__control:visited {
     border-radius: 2px;
 }
 
-.trail:hover .trail__remove {
+.collection .trail:hover .trail__remove {
     display: block;
 }
 
-.trail .trail__remove:hover {
+.collection .trail .trail__remove:hover {
     background: #999999;
 }
 
@@ -447,53 +450,5 @@ button {
     position: absolute;
     bottom: -2px;
     right: 33px;
-}
-
-/** http://localhost:9003/analytics/browsers */
-
-#usage {
-    font-family: Georgia, serif;
-}
-
-#usage h1, #usage h2, #usage h3 {
-    font-weight: normal;
-}
-
-.browser-table {
-    width: 100%;
-    max-width: 600px;
-}
-.browser-table .perc {
-    margin-left: 5px;
-    float: right;
-}
-
-.browser-table caption {
-    margin: 5px 0;
-    text-align: left;
-}
-
-.browser-table thead,
-.browser-table tfoot{
-    font-weight: bold;
-}
-
-.browser-table thead .perc,
-.browser-table tfoot .perc {
-    color: #000000;
-}
-
-.browser-table .total {
-    min-width: 170px;
-}
-
-table.browser-table, table.browser-table th, table.browser-table td {
-    border-width: 0px !important;
-}
-
-.table-striped tbody td, .table-striped tbody th {
-    background-color: white !important;
-    border-bottom: 1px solid #eee;
-    border-bottom-width: 1px !important;
 }
 
