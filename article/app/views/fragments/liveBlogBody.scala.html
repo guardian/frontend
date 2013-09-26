@@ -2,10 +2,10 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
-    <div class="article-wrapper monocolumn-wrapper">
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
         <div class="article-v2__inner">
             <h2 class="article-zone type-1">
-                <a class="zone-color" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
+                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
             </h2>
         </div>
         <article id="article" class="article @if(article.isLive){is-live}"
@@ -109,7 +109,7 @@
                                     }
                                     @if(Switches.SocialSwitch.isSwitchedOn) {
                                         <div class="from-content-api from-content-api--small">
-                                            <h2>Share this live blog</h2>
+                                            <h2 class="tone-colour">Share this live blog</h2>
                                         </div>
                                     }
                                     @fragments.social(article, "next to content")
