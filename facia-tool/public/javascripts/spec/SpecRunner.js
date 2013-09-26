@@ -12,5 +12,3 @@ requirejs.config({
     //are loaded relative to the top-level JS file.
     nodeRequire: require
 });
-
-requirejs(['TagSearch'], function(TagSearch) {});
