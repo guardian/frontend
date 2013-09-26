@@ -1,0 +1,19 @@
+@(component: controllers.MatchNav)(implicit request: RequestHeader)
+@import implicits.Football._
+
+
+@report(trail: Trail, text: String) = {
+    @if(component.currentPage.exists(_.url == trail.url)){
+        <li class="tabs__tab tabs__tab--selected"><a href="#">@text</a></li>
+    } else {
+        <li class="tabs__tab"><a href="@LinkTo{@trail.url}" data-link-name="@text">@text</a></li>
+    }
+}
+
+@if(component.hasReports){
+    <ol class="tabs__container tabs__continer--multiple @if(component.hasMinByMin && component.hasReport){ type-7 }" data-link-name="Football match nav">
+        @component.matchReport.map{ matchReport => @report(matchReport, "Report") }
+        @component.minByMin.map{ minByMin => @report(minByMin, "Min-by-min") }
+        @report(component.stats, "Stats")
+    </ol>
+}

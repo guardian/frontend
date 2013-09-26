@@ -41,7 +41,8 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
     request =>
       Ok(views.html.abtests("PROD",
         SwipeAvgPageViewsPerSessionGraph,
-        SwipeAvgSessionDurationGraph
+        SwipeAvgSessionDurationGraph,
+        FacebookMostReadPageViewsPerSessionGraph
       ))
   }
 }
