@@ -160,7 +160,7 @@
             </div>
 
             <a class="trail_stats u-cf" target="_blank" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + meta.id()}">
-                <div class="pageviews" data-bind="if: pageViewsCommas(), text: pageViewsCommas"></div>
+                <div class="pageviews" data-bind="if: totalHitsFormatted(), text: totalHitsFormatted"></div>
                 <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
             </a>
 

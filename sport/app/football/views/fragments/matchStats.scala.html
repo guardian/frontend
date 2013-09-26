@@ -1,0 +1,102 @@
+@(page: MatchPage)(implicit request: RequestHeader)
+@import support._
+@import FootballHelpers._
+@import feed._
+
+
+@stat(title: String, home: Int, away: Int, firstItem: Boolean = false) = {
+    @defining(home + away){ total =>
+        @defining(PercentMaker(home, away)){ case (homePercent, awayPercent) =>
+<div class="match-stat @if(!firstItem){item-divider}" data-stat="@title"
+     data-home-stat="@home" data-home-percent="@homePercent"
+     data-away-stat="@away" data-away-percent="@awayPercent">
+    <h5 class="type-7"><b>@title</b></h5>
+    <ol class="unstyled u-cf">
+        <li class="match-stat__item" style="width:@{NudgePercent(homePercent, awayPercent)}%">
+            <div class="home-num type-7" >@home@if(home+away == 100){%}</div>
+            <div class="home-stat">&nbsp;</div>
+        </li>
+        <li class="match-stat__item" style="width:@{NudgePercent(awayPercent, homePercent)}%">
+            <div class="away-num type-7">@away@if(home+away == 100){%}</div>
+            <div class="away-stat">&nbsp;</div>
+        </li>
+    </ol>
+</div>
+        }
+    }
+}
+
+@events(player: LineUpPlayer) = {
+    @player.events.map{ event =>
+        @{ event.eventType match {
+            case "booking" => <i class="i i-yellow-card"></i>
+            case "dismissal" => <i class="i i-red-card"></i>
+            case "substitution" => "(s " + event.eventTime + "')"
+            case _ =>  ""
+        }}
+    }
+}
+
+@cleanScorers(teamScorers: Option[String]) = {
+    @teamScorers.map{ scorers => @scorers.replace("(", "").replace(")", "").replace(",", ", ") }.getOrElse(Html("&nbsp;"))
+}
+
+@team(players: Seq[LineUpPlayer]) = {
+    <ul class="team-list unstyled">
+        @players.map{ player =>
+        <li class="type-11">
+            @player.name
+            @events(player)
+        </li>
+        }
+    </ul>
+}
+
+@defining((page.theMatch, page.theMatch.homeTeam, page.theMatch.awayTeam)){ case (theMatch, homeTeam, awayTeam) =>
+
+  @if(page.matchStarted){
+    <div class="u-cf">
+        <h5 class="home-header type-5">@homeTeam.name</h5>
+        <h5 class="away-header type-5">@awayTeam.name</h5>
+    </div>
+
+    @defining((page.lineUp.homeTeam, page.lineUp.awayTeam)){ case (homeStats, awayStats) =>
+      @stat("Possession", page.lineUp.homeTeamPossession, page.lineUp.awayTeamPossession, firstItem = true)
+      @stat("Goal attempts", homeStats.shotsOn + homeStats.shotsOff, awayStats.shotsOn + awayStats.shotsOff)
+      @stat("On target", homeStats.shotsOn, awayStats.shotsOn)
+      @stat("Off target", homeStats.shotsOff, awayStats.shotsOff)
+      @stat("Corners", homeStats.corners, awayStats.corners)
+      @stat("Fouls", homeStats.fouls, awayStats.fouls)
+      @stat("Offsides", homeStats.offsides, awayStats.offsides)
+    }
+  }
+
+  <h3 class="type-2 section-divider">Teams</h3>
+  <div class="u-cf">
+      <h5 class="team-list-name type-5">@homeTeam.name</h5>
+      <h5 class="team-list-name type-5">@awayTeam.name</h5>
+  </div>
+
+  @if(!page.hasLineUp){
+    <p class="type-7 place-holder">Team lineups will be available once announced.</p>
+
+  } else {
+    <div class="u-cf">
+        <div class="lineup">
+            @team(page.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
+        </div>
+        <div class="lineup">
+            @team(page.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
+        </div>
+    </div>
+    <h3 class="type-5 item-divider">Unused substitutes</h3>
+    <div class="u-cf">
+        <div class="lineup">
+            @team(page.lineUp.homeTeam.players.filter{_.isUnusedSub})
+        </div>
+        <div class="lineup">
+            @team(page.lineUp.awayTeam.players.filter{_.isUnusedSub})
+        </div>
+    </div>
+  }
+}
