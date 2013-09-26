@@ -8,8 +8,10 @@
                 color: $colour;
             }
         }
-        .from-content-api {
-            a { color: $colour; }
+        .commentcount {
+            i {
+                @extend .i-comment-#{$tone};
+            }
         }
     }
 }
