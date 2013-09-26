@@ -63,7 +63,7 @@
     min-height: $gs-column-height;
     padding-top: $baseline;
     margin-bottom: $baseline*3;
-    border-top: 1px dotted $neutral3;
+    border-top: 1px dotted $c-neutral3;
     color: $grey;
 
     .article__meta-container & {
@@ -144,8 +144,8 @@
 
 .byline {
     font-weight: bold;
-    border-top: 1px dotted $neutral3;
-    border-bottom: 1px dotted $neutral3;
+    border-top: 1px dotted $c-neutral3;
+    border-bottom: 1px dotted $c-neutral3;
     margin-bottom: $baseline*2;
     min-height: 20px;
     padding: $baseline - 1 0 $baseline*3 - 1 0;
@@ -235,7 +235,7 @@ video {
         width: $gs-column-width - 1px;
         height: $gs-column-height - 1px;
         padding: $baseline 0 0 $baseline;
-        border-left: 1px dotted $neutral3;
+        border-left: 1px dotted $c-neutral3;
     }
 
     &:active,
@@ -386,7 +386,7 @@ video {
             display: block;
             padding-top: $baseline;
             margin-bottom: $baseline*3;
-            border-top: 1px dotted $neutral3;
+            border-top: 1px dotted $c-neutral3;
         }
     }
 }
