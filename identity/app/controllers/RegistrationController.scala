@@ -54,7 +54,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
       },
       {
         case(email, username, password, gnmMarketing, thirdPartyMarketing) => {
-          val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing)
+          val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing, clientIp(request))
           Async {
             api.register(user, omnitureData, clientIp(request)) map ( _ match {
               case Left(errors) => {

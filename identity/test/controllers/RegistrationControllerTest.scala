@@ -34,7 +34,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
   val user = User("test@example.com", "123")
   val xForwardedFor = "123.456.789.12, 12.345.678.91"
 
-  when(userCreationService.createUser(Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[Boolean], Matchers.any[Boolean]))
+  when(userCreationService.createUser(Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[Boolean], Matchers.any[Boolean], Matchers.any[Option[String]]))
     .thenReturn(user)
   when(requestParser.apply(Matchers.anyObject())).thenReturn(identityRequest)
 
@@ -75,7 +75,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
 
       "should create the user with the username, email and password required" in Fake {
         registrationController.processForm()(fakeRequest)
-        verify(userCreationService).createUser("test@example.com", "username", "password", false, false)
+        verify(userCreationService).createUser("test@example.com", "username", "password", false, false, Matchers.any[Option[String]])
       }
 
       "should pass marketing values to the create user service" in Fake {
@@ -84,7 +84,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
         when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 
         registrationController.processForm()(fakeRequest)
-        verify(userCreationService).createUser("test@example.com", "username", "password", true, true)
+        verify(userCreationService).createUser("test@example.com", "username", "password", true, true, None)
       }
 
       "should pass the created user to the api object to the api" in Fake {
