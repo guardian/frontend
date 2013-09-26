@@ -65,8 +65,6 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val styleGuide = application("style-guide").dependsOn(commonWithTests).aggregate(common)
-
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
@@ -138,7 +136,6 @@ object Frontend extends Build with Prototypes {
     discussion,
     router,
     diagnostics,
-    styleGuide,
     identity)
 
   val faciaDev = application("facia-dev-build").dependsOn(
@@ -164,7 +161,6 @@ object Frontend extends Build with Prototypes {
     discussion,
     router,
     diagnostics,
-    styleGuide,
     admin,
     porter,
     identity
