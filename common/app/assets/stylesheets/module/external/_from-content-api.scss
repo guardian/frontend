@@ -27,10 +27,10 @@
     }
     > ol, > ul {
        margin-top: 0.8em;
+       list-style: none;
     }
     > ol {
         counter-reset: li;
-        list-style: none;
     }
     > ol > li:before {
         content: counter(li)".";
@@ -42,8 +42,20 @@
             @include fs-header(2, true);
         }
     }
+    > ul > li {
+        text-indent: 20px;
+    }
+    > ul > li:before {
+        font-size: 48px;
+        content: "\2022";
+        color: $c-neutral5;
+        position: absolute;
+        left: -22px;
+        top: 1px;
+    }
     > ol > li,
     > ul > li {
+        position: relative;
         margin-bottom: 0.8em;
     }
     h2 {
