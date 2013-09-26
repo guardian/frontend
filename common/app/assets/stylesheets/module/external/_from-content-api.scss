@@ -25,6 +25,27 @@
         margin: 0 0 $baseline*2 0;
         padding: 0;
     }
+    > ol, > ul {
+       margin-top: 0.8em;
+    }
+    > ol {
+        counter-reset: li;
+        list-style: none;
+    }
+    > ol > li:before {
+        content: counter(li)".";
+        counter-increment: li;
+        @include fs-header(1);
+        margin-right: 4px;
+
+        @include mq(tablet) {
+            @include fs-header(2, true);
+        }
+    }
+    > ol > li,
+    > ul > li {
+        margin-bottom: 0.8em;
+    }
     h2 {
         @include fs-header(2);
 
