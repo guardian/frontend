@@ -99,6 +99,10 @@
     a:active {
         color: #F6644F;
     }
+
+    i {
+        @extend .i-comment-count-small;
+    }
 }
 
 .trail__count--imagecount {

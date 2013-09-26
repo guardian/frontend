@@ -16,6 +16,11 @@
             display: block;
         }
     }
+
+    @include mq(wide) {
+        margin-left: (gs-span(3) + $gs-gutter)*-1;
+        width: gs-span(3);
+    }
 }
 
 .furniture--right {
@@ -30,13 +35,9 @@
 
 .card {
     position: relative;
-}
 
-.card-wrapper {
-    &:hover,
-    &:active,
-    &:focus {
-        text-decoration: none;
+    a {
+        color: #444444;
     }
 }
 
@@ -46,24 +47,66 @@
     margin-bottom: 0;
 
     .furniture--left & {
-        width: 140px;
         min-height: 84px;
     }
 }
 .card__title {
+    min-height: gs-height(1);
+    margin-bottom: $gs-baseline;
+    border-top: 2px solid $c-neutral2;
+
     font-family: $serifheadline !important;
     font-size: 18px !important;
     font-size: 1.8rem !important;
     line-height: 26px !important;
     line-height: 2.6rem !important;
+    @include box-sizing(border-box);
 }
 .card__body {
-    padding: $baseline*1.5 $gutter/2 $baseline*6;
-    background: $mushroom;
+    border-top: 1px solid $c-neutral2;
+    padding: $baseline*1.5 0 $baseline*6;
+    position: relative;
+    @include box-sizing(border-box);
+}
 
-    .card-wrapper:hover &,
-    .card-wrapper:focus & {
-        background: $darkMushroom;
+.card__meta {
+    min-height: gs-height(1);
+    @include fs-data(2);
+    @include box-sizing(border-box);
+
+    .dateline {
+        margin-bottom: 0;
+    }
+
+    .relative-timestamp {
+        float: left;
+        color: $c-neutral2;
+        position: relative;
+        padding: 0 $gs-gutter/2 0 16px;
+        min-width: gs-span(1) - 16;
+
+        i {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 2px 0;
+        }
+    }
+
+    .trail__count {
+        position: static;
+        float: left;
+        color: $c-neutral2;
+        margin-left: 4px;
+
+        a {
+            color: $c-neutral2;
+            margin-left: $gs-gutter/2 - 1;
+        }
+
+        i {
+            @extend .i-comment-grey;
+        }
     }
 }
 
@@ -75,10 +118,11 @@
 .card__headline {
     font-family: $serif !important; // Override .from-content-api h3 defaults
     color: #444444;
-    font-size: 14px !important;
-    font-size: 1.4rem !important;
-    line-height: 20px !important;
-    line-height: 2rem !important;
+    font-size: 20px !important;
+    font-size: 2.0rem !important;
+    line-height: 24px !important;
+    line-height: 2.4rem !important;
+
 }
 
 .card__description {
@@ -90,25 +134,28 @@
     padding-top: $baseline;
 }
 
+.card--left {
+
+    .card__headline {
+        font-size: 16px !important;
+        font-size: 1.6rem !important;
+        line-height: 20px !important;
+        line-height: 2.0rem !important;
+    }
+}
+
+
 .card--right {
     margin-top: $baseline*4;
 
     .card__title {
-        min-height: $unitHeight;
-        margin-bottom: $baseline*3;
-        border-top: 1px solid $grey;
-        @include font($serifheadline, normal, 18, 24);
+        @include fs-header(2);
     }
 
     .card__body {
-        padding-top: $baseline*2;
-        min-height: 180px;
-        @include box-sizing(border-box);
-        @include font($serifheadline, normal, 18, 24);
-    }
-
-    .relative-timestamp {
-        position: absolute;
-        bottom: $baseline;
+        min-height: gs-height(2);
+        padding-bottom: 0;
+        margin-bottom: $gs-baseline;
+        @include fs-header(2);
     }
 }
