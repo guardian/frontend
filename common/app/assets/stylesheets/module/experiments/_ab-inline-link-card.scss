@@ -123,7 +123,6 @@
     line-height: 24px !important;
     line-height: 2.4rem !important;
 
-
 }
 
 .card__description {
@@ -150,13 +149,13 @@
     margin-top: $baseline*4;
 
     .card__title {
-        @include font($serifheadline, 700, 18, 24);
+        @include fs-header(2);
     }
 
     .card__body {
         min-height: gs-height(2);
         padding-bottom: 0;
         margin-bottom: $gs-baseline;
-        @include font($serifheadline, normal, 18, 24);
+        @include fs-header(2);
     }
 }
