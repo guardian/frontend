@@ -49,7 +49,6 @@ var sprite = require( "webpage" ).create();
     sprite.viewportSize = { width: 600, height: 1 };
     sprite.content = '<html><body><div id="container" style="overflow:auto;"></div></body></html>';
 
-var outputHTML = [];
 
 // add a single reference to the sprite background
 pngcssrules.push(".i { background-repeat: no-repeat; display: inline-block; }");
@@ -83,7 +82,6 @@ function finishUp(){
 // process an svg file from the source directory
 function processFile() {
     var theFile = files[ currfile ];
-    var tableRowHTML = '';
 
     if( theFile ){
         // only parse svg files

@@ -83,7 +83,7 @@
 
             time {
                 display: inline-block;
-                width: 86%;
+                width: 85%;
             }
 
             i {
@@ -248,7 +248,7 @@ video {
     @include fs-headline(2);
     padding-top: $baseline;
     padding-bottom: $baseline*4;
-    border-top: 1px dotted $neutral3;
+    border-top: 1px dotted $c-neutral3;
 }
 
 /* Layout changes across devices

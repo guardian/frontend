@@ -1,4 +1,4 @@
-@mixin tone-colour($tone, $colour) {
+@mixin tone($tone, $colour) {
     .tone-#{$tone} {
         .tone-colour {
             &,
@@ -8,6 +8,7 @@
                 color: $colour;
             }
         }
+        .tone-background { background-color: $colour; }
         .commentcount {
             i {
                 @extend .i-comment-#{$tone};
@@ -18,17 +19,14 @@
 
 /* News
    ========================================================================== */
-@include tone-colour(news, $c-newsDefault);
-.tone-news .tone-background { background-color: $c-newsDefault; }
+@include tone(news, $c-newsDefault);
 
 /* Comment
    ========================================================================== */
-@include tone-colour(comment, $c-commentDefault);
-.tone-comment .tone-background { background-color: $c-commentDefault; }
+@include tone(comment, $c-commentDefault);
 
 /* Feature
    ========================================================================== */
-@include tone-colour(feature, $c-featureDefault);
-.tone-feature .tone-background { background-color: $c-featureDefault; }
+@include tone(feature, $c-featureDefault);
 
 
