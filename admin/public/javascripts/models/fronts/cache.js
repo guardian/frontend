@@ -15,10 +15,12 @@ define([
         }
 
         p[key] = {
-            data: JSON.stringify(data),
-            // Spread actual timeouts into the range "expiry two-times expiry"
+            data: data,
+            // Spread actual timeouts into the range of "two-times expiry"
             time: +new Date() + expiry * Math.random()
         };
+
+        return data;
     }
 
     function get(pot, key) {
@@ -32,7 +34,7 @@ define([
             delete obj;
             return;
         }
-        return JSON.parse(obj.data);
+        return obj.data;
     }
 
     return {
