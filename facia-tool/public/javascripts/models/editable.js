@@ -18,7 +18,7 @@ define([
             if(this.hasOwnProperty(prop) && this[prop].subscribe) {
                 this['_editing_' + prop] = ko.observable(i === 0 && this[prop]() === '');
 
-                this[prop].subscribe(function(value) {                    
+                this[prop].subscribe(function(value) {
                     if (self._propDelta && self._propDelta.value !== value) {
                         self._propDelta.value = value;
 
@@ -45,7 +45,7 @@ define([
     }
 
     // Generic edit sate function; looks for a data-edit attribute
-    // indicating which property should have its _editing_* observable set to true  
+    // indicating which property should have its _editing_* observable set to true
     Editable.prototype._edit = function(item, e) {
         var prop = ancestorsData(e.target, 'edit'),
             list = ancestorsData(e.target, 'list-name');

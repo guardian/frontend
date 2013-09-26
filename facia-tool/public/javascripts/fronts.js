@@ -1,5 +1,7 @@
-curl(['modules/fronts/listManager']).then(function(ListManager) {
-
+curl([
+    'modules/listManager'
+]).then(function(
+    ListManager
+){
     new ListManager('.top-stories').init();
-
 });

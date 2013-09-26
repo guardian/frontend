@@ -1,5 +1,5 @@
 define([
-    'models/fronts/common',
+    'models/common',
 ], function(
     common
 ) {

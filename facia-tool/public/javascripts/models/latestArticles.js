@@ -1,8 +1,8 @@
 define([
-    'models/fronts/common',
-    'models/fronts/article',
-    'models/fronts/ophanApi',
-    'models/fronts/cache',
+    'models/common',
+    'models/article',
+    'models/ophanApi',
+    'models/cache',
     'knockout',
     'Reqwest'
 ], function (
@@ -27,7 +27,7 @@ define([
         this.page       = ko.observable(1);
 
         var reqwest = opts.reqwest || Reqwest;
-        
+
         this.isTermAnItem = function() {
             return self.term().match(/\//);
         }
@@ -81,14 +81,14 @@ define([
                     error: function() {}
                 });
             }, 250);
-            
+
             return true; // ensure default click happens on all the bindings
         };
 
         this.flush = function(message) {
             self.articles.removeAll();
-            // clean up any dragged-in articles 
-            container.innerHTML = message || ''; 
+            // clean up any dragged-in articles
+            container.innerHTML = message || '';
         }
 
         this.refresh = function() {

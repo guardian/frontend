@@ -1,12 +1,12 @@
 define([
     'Reqwest',
     'knockout',
-    'models/fronts/common',
-    'models/fronts/list',
-    'models/fronts/article',
-    'models/fronts/latestArticles',
-    'models/fronts/contentApi',
-    'models/fronts/ophanApi'
+    'models/common',
+    'models/list',
+    'models/article',
+    'models/latestArticles',
+    'models/contentApi',
+    'models/ophanApi'
 ], function(
     reqwest,
     knockout,

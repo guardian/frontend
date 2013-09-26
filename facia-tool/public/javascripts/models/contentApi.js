@@ -1,9 +1,9 @@
 define([
     'Config',
     'Reqwest',
-    'models/fronts/common',
-    'models/fronts/cache'
-], 
+    'models/common',
+    'models/cache'
+],
 function (
     Config,
     Reqwest,

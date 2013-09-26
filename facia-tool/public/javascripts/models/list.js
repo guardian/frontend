@@ -2,10 +2,10 @@ define([
     'Reqwest',
     'EventEmitter',
     'knockout',
-    'models/fronts/common',
-    'models/fronts/article',
-    'models/fronts/contentApi',
-    'models/fronts/ophanApi'
+    'models/common',
+    'models/article',
+    'models/contentApi',
+    'models/ophanApi'
 ], function(
     reqwest,
     eventEmitter,

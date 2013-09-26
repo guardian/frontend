@@ -1,6 +1,6 @@
 define([
-    'models/fronts/common',
-    'models/fronts/editable',
+    'models/common',
+    'models/editable',
     'knockout',
     'Reqwest',
     'js!humanizedTimeSpan'
