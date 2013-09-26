@@ -77,18 +77,22 @@ define([
             contentFragment += '<div class="card__appendix type-12">' + host + '</div>';
         }
 
-        tpl = '<a href="' + href + '" class="card-wrapper" data-link-name="in card link" aria-hidden="true">' +
+        tpl = '<div class="card-wrapper">' +
                   '<div class="furniture furniture--left card card--left">' +
                       titleFragment +
                       '<div class="card__body u-text-hyphenate">' +
+                          '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
                           contentFragment +
+                          '</a>' +
                       '</div>' +
                       '<div class="card__meta">' +
                           publishedFragment +
                       '</div>' +
-                      imageFragment +
+                      '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
+                         imageFragment +
+                      '</a>' +
                   '</div>' +
-              '</a>';
+              '</div>';
 
         self.$linkContext.before(tpl);
         common.mediator.emit('fragment:ready:dates');

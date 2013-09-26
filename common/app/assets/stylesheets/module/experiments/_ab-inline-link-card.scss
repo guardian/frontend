@@ -41,14 +41,6 @@
     }
 }
 
-.card-wrapper {
-    &:hover,
-    &:active,
-    &:focus {
-        text-decoration: none;
-    }
-}
-
 .card__media {
     display: block;
     width: 100%;
