@@ -3,22 +3,11 @@
         background-color: $pink;
         border-color: $light-pink;
     }
-    @mixin row($row-size) {
-        // styling for first row
-        .item:nth-child(-n + #{$row-size}) .item__title {
-            padding-top: 0;
-            border-top-style: none;
-        }
-        // stylings for beginning and end of rows
-        .item:nth-child(#{$row-size}n + 1) {
-            padding-left: 0;
-            border-left-style: none;
-        }
-        .item:nth-child(#{$row-size}n) {
-            padding-right: 0;
-        }
-    }
     @include mq($to: tablet) {
+        .item:nth-child(1),
+        .item:nth-child(2) {
+            @include card-half-width;
+        }
         @include row(2);
     }
     @include mq(tablet, desktop) {
@@ -29,23 +18,5 @@
     }
     @include mq(wide) {
         @include row(4);
-    }
-    @include mq($to: tablet) {
-        .item {
-            width: 50%;
-        }
-        .item__title {
-            @include font-size(20, 24);
-            min-height: gs-height(3);
-        }
-        .item__meta {
-            display: none;
-        }
-        .item--shown {
-            width: 100%;
-            .item__title {
-                @include font-size(18, 24);
-            }
-        }
     }
 }

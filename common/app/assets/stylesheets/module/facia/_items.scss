@@ -68,6 +68,7 @@ a.item__link,
     color: $grey;
     @include font($sans-serif, lighter, 12, 12);
     margin-top: $gs-baseline*(5/3);
+    padding-bottom: $gs-baseline;
     overflow: hidden;
     min-height: 16px;
     .item__timestamp,
@@ -116,7 +117,7 @@ a.item__link,
     }
 }
 .item__image-container {
-    margin-top: $gs-baseline*2;
+    margin-top: $gs-baseline;
 }
 .item__image {
     display: block;
@@ -157,12 +158,12 @@ a.item__link,
     font-size: 0;
     .item {
         margin-top: $gs-baseline*2;
-        display: inline-block;
-        vertical-align: top;
-        padding-left: $gs-gutter/2 - 1;
-        padding-right: $gs-gutter/2;
-        border-left: 1px dotted $grey;
         @include mq(tablet) {
+            display: inline-block;
+            vertical-align: top;
+            padding-left: $gs-gutter/2 - 1;
+            padding-right: $gs-gutter/2;
+            border-left: 1px dotted $grey;
             @include box-sizing(content-box);
             width: gs-span(4);
         }
@@ -201,8 +202,12 @@ a.item__link,
             .item__title {
                 min-height: 0;
                 @include font-size(18, 24);
+                padding-top: $gs-baseline*(2/3);
                 border-top-color: $grey;
                 border-top-width: 1px;
+                .i {
+                    display: none
+                }
             }
             .item__meta,
             .item__image-container {
@@ -215,5 +220,101 @@ a.item__link,
                 display: none;
             }
         }
+    }
+}
+
+@mixin row($row-size, $first-row-size: $row-size) {
+// styling for first row
+    .item:nth-child(-n + #{$first-row-size}) {
+        .item__title {
+            padding-top: 0;
+            border-top-style: none;
+        }
+        &.item--comment {
+            .item__title {
+                padding-top: 32px;
+            }
+            .item__link .i {
+                top: 0;
+            }
+        }
+    }
+// stylings for begining and end of rows
+    .item:first-child,
+    .item:nth-child(#{$row-size}n + #{$first-row-size + 1}) {
+        padding-left: 0;
+        border-left-style: none;
+    }
+    .item:nth-child(#{$row-size}n + #{$first-row-size}),
+    .item:nth-child(#{$row-size}n + #{$first-row-size + $row-size}) {
+        padding-right: 0;
+    }
+}
+@mixin first-row($first-row-size) {
+    .item:nth-child(-n + #{$first-row-size}) {
+        .item__title {
+            padding-top: 0;
+            border-top-style: none;
+        }
+        &.item--comment {
+            .item__title {
+                padding-top: 32px;
+            }
+            .item__link .i {
+                top: 0;
+            }
+        }
+    }
+}
+@mixin row-start {
+    padding-left: 0;
+    border-left-style: none;
+}
+@mixin row-end {
+    padding-right: 0;
+}
+
+@mixin card($without-extras: false, $not-first-row: false) {
+    .item__title {
+        @include font-size(24, 28);
+    }
+    @include mq($to: tablet) {
+        width: 100%;
+    }
+    @if $without-extras {
+        .item__standfirst,
+        .item__image-container {
+            display: none;
+        }
+        @include mq($to: tablet) {
+            .item__meta {
+                padding-bottom: 0;
+            }
+        }
+    }
+    @if $not-first-row {
+        padding-top: $gs-baseline;
+        margin-top: 0;
+    }
+}
+@mixin card-half-width {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: $gs-gutter/2 - 1;
+    padding-right: $gs-gutter/2;
+    border-left: 1px dotted $grey;
+    .item__title {
+        @include font-size(20, 24);
+        min-height: gs-height(3);
+    }
+}
+@mixin card-double-width {
+    width: gs-span(8);
+    .item__image-container {
+        height: gs-height(8);
+    }
+    @include mq(desktop) {
+        float: left;
     }
 }

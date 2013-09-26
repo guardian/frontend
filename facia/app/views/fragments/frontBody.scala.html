@@ -13,6 +13,7 @@
                         case style: SmallStories         => { @collections.smallStories(block._1,  dedupe(block._2), style) }
                         case News                        => { @collections.news(block._1,  dedupe(block._2), News) }
                         case Features                    => { @collections.features(block._1,  dedupe(block._2), Features) }
+                        case Culture                     => { @collections.culture(block._1,  dedupe(block._2), Culture) }
                         case Highlights                  => { @collections.highlights(block._1,  dedupe(block._2), Highlights) }
                         case Comments                    => { @collections.comments(block._1,  dedupe(block._2), Comments) }
                         case style                       => { @collections.news(block._1, dedupe(block._2), style) }

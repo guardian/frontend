@@ -1,19 +1,26 @@
-.collection--comments {
+.collection--culture {
     .collection__title {
-        background-color: $green;
-        border-color: $light-green;
+        background-color: $pink;
+        border-color: $light-pink;
     }
     @include mq($to: tablet) {
         @include first-row(1);
-        .item:first-child {
+        .item:nth-child(1) {
             @include card;
         }
         .item:nth-child(2),
         .item:nth-child(3) {
-            @include card($without-extras: true);
+            @include card-half-width;
+        }
+        .item:nth-child(2) {
+            @include row-start;
+        }
+        .item:nth-child(3) {
+            @include row-end;
         }
     }
     @include mq(tablet) {
+        @include first-row(1);
         .items {
             overflow: hidden;
         }
