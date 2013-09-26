@@ -66,7 +66,7 @@
         }
         .item:nth-child(3),
         .item:nth-child(5),
-        .item:nth-child(4n + 6) {
+        .item:nth-child(4n + 9) {
             @include row-end;
         }
     }

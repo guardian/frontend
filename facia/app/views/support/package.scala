@@ -13,8 +13,7 @@ object FindStyle {
     "regular-stories" -> TopStories,
     "lesser-stories" -> MediumStories,
     "other-stories" -> SmallStories(showMore = true),
-    "feature-stories" -> Features,
-    "highlight-stories" -> Highlights
+    "feature-stories" -> Section(collectionType = "features")
   )
 
   /**
@@ -60,14 +59,15 @@ object FindStyle {
       ("au/sport/boxing/regular-stories", News)
     )),
     ("uk", Map(
-      ("uk/sport/regular-stories", News),
-      ("uk/commentisfree/regular-stories", Comments),
-      ("uk/culture/regular-stories", Culture),
-      ("uk/business/regular-stories", MediumStoriesSection()),
-      ("uk/lifeandstyle/regular-stories", MediumStoriesSection(collectionType = "features")),
-      ("uk/technology/regular-stories", MediumStoriesSection(collectionType = "features")),
-      ("uk/money/regular-stories", MediumStoriesSection()),
-      ("uk/travel/regular-stories", MediumStoriesSection(collectionType = "features"))
+      ("uk/news/regular-stories", Container("news")),
+      ("uk/sport/regular-stories", Container("sport")),
+      ("uk/commentisfree/regular-stories", Container("comments")),
+      ("uk/culture/regular-stories", Container("culture")),
+      ("uk/business/regular-stories", Section()),
+      ("uk/lifeandstyle/regular-stories", Section(collectionType = "features")),
+      ("uk/technology/regular-stories", Section(collectionType = "features")),
+      ("uk/money/regular-stories", Section()),
+      ("uk/travel/regular-stories", Section(collectionType = "features"))
     )),
     ("uk/business", Map(
       ("uk/business/other-stories", SmallStories())
