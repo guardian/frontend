@@ -1,4 +1,10 @@
-define(['bean', 'qwery'], function(bean, qwery) {
+define([
+    'bean',
+    'qwery'
+], function(
+    bean,
+    qwery
+) {
 
 /**
  * TODO:
@@ -19,7 +25,8 @@ var Component = function() {};
  */
 Component.CONFIG = {
     // These are CSS classes for DOM elements in this component
-    classes: { component: 'component' }
+    classes: { component: 'component' },
+    elements: {}
 };
 
 /** @type {Element|null} */
@@ -30,6 +37,9 @@ Component.prototype.elem = null;
 
 /** @type {Object|string|null} */
 Component.prototype.template = null;
+
+/** @type {Object.<string.Element>} */
+Component.prototype.elems = {};
 
 /**
  * Uses the CONFIG.classes.component
@@ -49,16 +59,12 @@ Component.prototype.attachTo = function() {
  * This is where you could do your event binding
  * This function is made to be overridden
  */
-Component.prototype.ready = function() {
-
-};
+Component.prototype.ready = function() {};
 
 /**
  * Once we're done with it, remove event bindings etc
  */
-Component.prototype.dispose = function() {
-
-};
+Component.prototype.dispose = function() {};
 
 /**
  * TODO: Error on argument checks
@@ -88,15 +94,30 @@ Component.prototype.emit = function(eventName, args) {
 };
 
 /**
+ * TODO: Add caching in this.elems
+ * @param {string} elemName this corresponds to CONFIG.classes
+ */
+Component.prototype.getElem = function(elemName) {
+    var elem = qwery(this.getClass(elemName), this.elem)[0];
+    return elem;
+};
+
+/**
  * @param {string} eventName
  * @param {boolean} sansDot
  * @return {string}
  */
 Component.prototype.getClass = function(elemName, sansDot) {
-    var config = this.constructor.CONFIG;
+    var config = this.getConf();
     return (sansDot ? '' : '.') + config.classes[elemName] || null;
 };
 
+/**
+ * @return {Object}
+ */
+Component.prototype.getConf = function() {
+    return this.constructor.CONFIG;
+};
 
 /**
  * @param {Function} child
