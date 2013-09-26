@@ -36,6 +36,10 @@
         }
         .item__title {
             @include font-size(20, 24);
+            min-height: gs-height(3);
+        }
+        .item__meta {
+            display: none;
         }
         .item--shown {
             width: 100%;

@@ -143,6 +143,13 @@ a.item__link,
 .item--comment {
     .item__title {
         border-top-color: $green;
+        position: relative;
+        padding-top: 40px;
+    }
+    .item__link .i {
+        position: absolute;
+        left: 0;
+        top: 8px;
     }
 }
 
@@ -161,7 +168,9 @@ a.item__link,
         }
     }
     .item__title {
-        min-height: gs-height(3);
+        @include mq(tablet) {
+            min-height: gs-height(3);
+        }
     }
     .item__standfirst {
         display: none;
@@ -172,15 +181,7 @@ a.item__link,
             min-height: gs-height(4);
         }
     }
-    .item__meta {
-        @include mq($to: tablet) {
-            display: none;
-        }
-    }
     .item__image-container {
-        @include mq($to: tablet) {
-            margin-top: $gs-baseline;
-        }
         @include mq(tablet) {
             height: gs-height(4);
         }

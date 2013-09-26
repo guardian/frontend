@@ -9,7 +9,7 @@
         <h2 class="collection__title">@title</h2>
     }
 
-    <ul class="unstyled items item-count-@collection.items.size js-items--show-more">
+    <ul class="unstyled items item-count-@collection.items.size js-items--show-more items--cards">
         @collection.items.zipWithIndex.map{ case (trail, index) =>
             @fragments.items.standard(trail, index)
         }

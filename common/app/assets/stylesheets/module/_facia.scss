@@ -1,3 +1,31 @@
+@mixin row($row-size, $first-row-size: $row-size) {
+    // styling for first row
+    .item:nth-child(-n + #{$first-row-size}) {
+        .item__title {
+            padding-top: 0;
+            border-top-style: none;
+        }
+        &.item--comment {
+            .item__title {
+                padding-top: 32px;
+            }
+            .item__link .i {
+                top: 0;
+            }
+        }
+    }
+    // stylings for begining and end of rows
+    .item:first-child,
+    .item:nth-child(#{$row-size}n + #{$first-row-size + 1}) {
+        padding-left: 0;
+        border-left-style: none;
+    }
+    .item:nth-child(#{$row-size}n + #{$first-row-size}),
+    .item:nth-child(#{$row-size}n + #{$first-row-size + $row-size}) {
+        padding-right: 0;
+    }
+}
+
 .facia-container {
     @include mq(tablet) {
         width: gs-span(8);

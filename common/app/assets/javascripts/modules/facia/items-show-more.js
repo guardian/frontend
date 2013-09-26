@@ -8,13 +8,15 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     wide: {
                         default: 4,
                         features: 3,
-                        'popular-full-width': 3
+                        'popular-full-width': 3,
+                        comments: 5
                     },
                     desktop: {
                         default: 3
                     },
                     tablet: {
-                        default: 2
+                        default: 2,
+                        comments: 3
                     },
                     mobile: {
                         default: 3,
