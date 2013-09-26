@@ -42,7 +42,13 @@ object Frontend extends Build with Prototypes {
       "feed._"
     )
   )
-  val sport = application("sport").dependsOn(commonWithTests).aggregate(common)
+  val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies += "com.gu" %% "pa-client" % "4.0",
+    templatesImport ++= Seq(
+      "pa._",
+      "feed._"
+    )
+  )
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)
   val image = application("image").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
