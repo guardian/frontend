@@ -268,7 +268,7 @@ object InBodyElementCleaner extends HtmlCleaner {
   )
 
   override def clean(document: Document): Document = {
-    if (EmbeddedElementsSwitch.isSwitchedOff) {
+    if (ShowAllEmbeddedElementsSwitch.isSwitchedOff) {
       val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
       val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
       unsupportedElements.foreach(_.remove())

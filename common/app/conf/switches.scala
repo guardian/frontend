@@ -161,8 +161,8 @@ object Switches extends Collections {
     "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
     safeState = Off)
 
-  val EmbeddedElementsSwitch = Switch("Feature Switches", "embedded-elements",
-    "If this switch is switched on then all embedded elements will be shown.",
+  val ShowAllEmbeddedElementsSwitch = Switch("Feature Switches", "show-all-embedded-elements",
+    "If this switch is switched on then all embedded elements will be shown (including ones that have not been tested).",
     safeState = Off)
 
   // A/B Test Switches
@@ -279,7 +279,7 @@ object Switches extends Collections {
     CssFromStorageSwitch,
     ABMostPopularFromFacebook,
     ElasticSearchSwitch,
-    EmbeddedElementsSwitch
+    ShowAllEmbeddedElementsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
