@@ -40,7 +40,7 @@ define([
         });
 
         afterEach(function() {
-            fixtures.clean();
+            fixtures.clean(fixturesId);
             server.restore();
         });
 

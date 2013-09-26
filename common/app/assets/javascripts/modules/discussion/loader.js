@@ -1,75 +1,100 @@
 define([
+    'common',
     'bean',
     'ajax',
-    'common'
+    'modules/component'
 ], function(
+    common,
     bean,
     ajax,
-    common
+    component
 ) {
 
 /**
  * Singleton for loading a discussion into a page
- * @type {Object}
+ * @constructor
+ * @param {Element=} context (optional)
+ * @param {Object=} options (optional)
  */
-var Loader = {};
+var Loader = function(context, options) {
+    this.context = context || document;
+    for (var prop in options) {
+        this.options[prop] = options[prop];
+    }
+};
+component.create(Loader);
 
 /** @type {Object.<string.*>} */
 Loader.CONFIG = {
     classes: {
-        getDiscussion: 'js-show-discussion'
+        component: 'js-show-discussion'
+    },
+    events: {
+        prefix: 'discussion:loader',
+        loading: 'loading'
     }
 };
 
 /**
  * @type {Object.<string.*>}
+ * @override
  */
-Loader.options = {
-    apiRoot: null
+Loader.prototype.options = {
+    root: null
 };
 
-/**
- * @param {Element} context
- * @param {Object=} options
- */
-Loader.init = function(context, options) {
-    for (var prop in options) {
-        Loader.options[prop] = options[prop];
-    }
-
-    Loader.bindEvents(context);
-};
 
 /**
- * @param {Element} context
- * @param {String} buttonClass
+ * @override
  */
-Loader.bindEvents = function(context) {
-    bean.on(context, 'click', '.'+ Loader.CONFIG.classes.getDiscussion, Loader.handleGetDiscussion);
+Loader.prototype.ready = function() {
+    bean.on(this.context, 'click', [this.elem], this.handleClick.bind(this));
 };
 
 /**
  * @param {Event} e
  * @return {Reqwest}
  */
-Loader.handleGetDiscussion = function(e) {
-    var id = e.currentTarget.getAttribute('data-discussion-id');
+Loader.prototype.handleClick = function(e) {
+    var id = e.currentTarget.getAttribute('data-discussion-id'),
+        result = this.getDiscussion(id);
 
     e.preventDefault();
-    Loader.getDiscussion(id);
+    result.then(
+        this.success,
+        this.fail
+    );
 };
 
 /**
  * @param {string} id
+ * @return {Reqwest}
  */
-Loader.getDiscussion = function(id) {
+Loader.prototype.getDiscussion = function(id) {
     var url = '/discussion'+ id + '.json';
+    this.emit('loading', { id: id });
 
-    ajax({
+    return ajax({
         url: url,
         type: 'json'
     });
 };
+
+/**
+ * @param {Object} resp
+ */
+Loader.prototype.success = function(resp) {
+
+};
+
+/**
+ * @param {XMLHttpRequest} xhr
+ */
+Loader.prototype.fail = function(xhr) {
+    
+};
+
+
 return Loader;
 
 }); //define
