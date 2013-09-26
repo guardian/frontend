@@ -10,7 +10,8 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                         news: 9,
                         sport: 9,
                         commentisfree: 5,
-                        culture: 5
+                        culture: 5,
+                        popular: 3
                     },
                     desktop: {
                         default: 3,

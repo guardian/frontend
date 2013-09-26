@@ -45,10 +45,12 @@
                 @include card;
             }
             .item:nth-child(2),
-            .item:nth-child(3),
+            .item:nth-child(3) {
+                @include card-half-width;
+            }
             .item:nth-child(4),
             .item:nth-child(5) {
-                @include card-half-width;
+                @include card-half-width($without-image: true);
             }
             .item:nth-child(2),
             .item:nth-child(4) {

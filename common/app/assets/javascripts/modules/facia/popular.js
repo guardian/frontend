@@ -14,7 +14,7 @@ define([
             });
         },
         collectionTmpl =
-            '<section class="collection collection--popular" data-collection-type="popular">' +
+            '<section class="collection collection--popular items--cards" data-collection-type="popular">' +
                 '<h2 class="collection__title">Popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
