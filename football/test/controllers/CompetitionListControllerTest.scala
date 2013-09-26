@@ -11,7 +11,7 @@ class CompetitionListControllerTest extends FlatSpec with ShouldMatchers {
   val callbackName = "aFunction"
   
   "Competition List Controller" should "200 when content type is competition list" in Fake {
-    val result = controllers.CompetitionListController.render()(TestRequest())
+    val result = controllers.CompetitionListController.renderCompetitionList()(TestRequest())
     status(result) should be(200)
   }
 
@@ -20,7 +20,7 @@ class CompetitionListControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Accept" -> "application/javascript")
       
-    val result = controllers.CompetitionListController.render()(fakeRequest)
+    val result = controllers.CompetitionListController.renderCompetitionList()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
@@ -31,7 +31,7 @@ class CompetitionListControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.CompetitionListController.render()(fakeRequest)
+    val result = controllers.CompetitionListController.renderCompetitionListJson()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")

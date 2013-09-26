@@ -10,21 +10,19 @@ object CompetitionListController extends Controller with CompetitionListFilters 
 
   val page = Page("football/competitions", "football", "Leagues & competitions", "GFE:Football:automatic:Leagues & competitions")
 
-  def renderJson() = render()
-  def render = Action { implicit request =>
+  val competitionList = List(
+    "English",
+    "European",
+    "Scottish",
+    "Internationals",
+    "Rest of world"
+  )
 
-    val competitionList = List(
-      "English",
-      "European",
-      "Scottish",
-      "Internationals",
-      "Rest of world"
-    )
-    
+  def renderCompetitionListJson() = renderCompetitionList()
+  def renderCompetitionList() = Action { implicit request =>
     val htmlResponse = () => views.html.competitions(filters, page, competitionList)
     val jsonResponse = () => views.html.fragments.competitionsBody(filters, page, competitionList)
-    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
-    
-  }
 
+    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+  }
 }

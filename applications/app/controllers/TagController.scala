@@ -4,9 +4,9 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
+import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.json._
 
 import contentapi.QueryDefaults
@@ -15,23 +15,19 @@ case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections with QueryDefaults {
 
-  def render(path: String) = Action { implicit request =>
-    val promiseOfTag = lookup(path)
-    Async {
-      promiseOfTag.map {
-        case Left(model) => renderTag(model)
-        case Right(notFound) => notFound
-      }
+  def renderJson(path: String) = render(path)
+  def render(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => renderTag(model)
+      case Right(notFound) => notFound
     }
   }
 
-  def renderTrails(path: String) = Action { implicit request =>
-    val promiseOfTag = lookup(path)
-    Async {
-      promiseOfTag.map {
-        case Left(model) => renderTrailsFragment(model)
-        case Right(notFound) => notFound
-      }
+  def renderTrailsJson(path: String) = renderTrails(path)
+  def renderTrails(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => renderTrailsFragment(model)
+      case Right(notFound) => notFound
     }
   }
 

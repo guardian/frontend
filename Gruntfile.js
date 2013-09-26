@@ -20,8 +20,7 @@ module.exports = function (grunt) {
                     'common/app/assets/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
                     'common/app/assets/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
                     'common/app/assets/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
-                    'common/app/assets/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss',
-                    'style-guide/app/assets/stylesheets/styleguide.min.css': 'style-guide/app/assets/stylesheets/styleguide.scss'
+                    'common/app/assets/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss'
                 },
                 options: {
                     check: false,

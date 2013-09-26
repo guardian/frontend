@@ -12,7 +12,7 @@ object OphanApi extends ExecutionContexts with Logging {
   private def getAsString(path: String): Future[String] = {
     val url = "%s/%s&api-key=%s" format(ophanApi.host, path, ophanApi.key)
     log.info("Making request to Ophan API: " + url)
-    WS.url(url) withTimeout ophanApi.timeout get() map (_.body)
+    WS.url(url) withRequestTimeout ophanApi.timeout get() map (_.body)
   }
 
   private def getAsJson(path: String): Future[JsValue] = {

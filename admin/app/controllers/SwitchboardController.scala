@@ -4,37 +4,32 @@ import common._
 import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
 import conf.{ Switches, Configuration }
 import play.api.mvc._
-import play.api.Play.current
-import play.api.libs.concurrent.Akka
-import services.{Notification, Audit}
+import scala.concurrent.Future
+import services.{ Notification, Audit }
 import tools.Store
 
 object SwitchboardController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def render() = AuthAction { request =>
+  def renderSwitchboard() = Authenticated.async { request =>
     log("loaded Switchboard", request)
 
-    val promiseOfSwitches = Akka future { Store.getSwitches }
+    Future { Store.getSwitches } map { configuration =>
+      val nextStateLookup = Properties(configuration getOrElse "")
 
-    Async {
-      promiseOfSwitches map { configuration =>
-        val nextStateLookup = Properties(configuration getOrElse "")
-
-        Switches.all foreach { switch =>
-          nextStateLookup.get(switch.name) foreach {
-            case "on" => switch.switchOn()
-            case _ => switch.switchOff()
-          }
+      Switches.all foreach { switch =>
+        nextStateLookup.get(switch.name) foreach {
+          case "on" => switch.switchOn()
+          case _ => switch.switchOff()
         }
-
-        Ok(views.html.switchboard(Configuration.environment.stage))
       }
+
+      Ok(views.html.switchboard(Configuration.environment.stage))
     }
   }
 
-  def save() = AuthAction { request =>
+  def save() = Authenticated.async { request =>
     log("saving switchboard", request)
 
     val requester = Identity(request).get.fullName
@@ -44,13 +39,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
       }
     }.get
 
-    val promiseOfSavedSwitches = Akka.future {
-      saveSwitchesOrError(requester, updates)
-    }
-
-    Async {
-      promiseOfSavedSwitches
-    }
+    Future { saveSwitchesOrError(requester, updates) }
   }
 
   private def saveSwitchesOrError(requester: String, updates: List[String]) = try {
@@ -69,12 +58,12 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
       Audit(s"Switch change by ${requester}: ${change}")
     }
 
-    Redirect(routes.SwitchboardController.render())
+    Redirect(routes.SwitchboardController.renderSwitchboard())
   } catch { case e: Throwable =>
     log.error("exception saving switches", e)
     SwitchesUpdateErrorCounter.recordCount(1)
 
-    Redirect(routes.SwitchboardController.render()).flashing(
+    Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
       "error" -> ("Error saving switches '%s'" format e.getMessage)
     )
   }
