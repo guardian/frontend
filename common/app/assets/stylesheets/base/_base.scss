@@ -23,7 +23,7 @@ body:after {
 .dateline {
     font-family: $sans-serif;
     margin: 0 0 $baseline*2;
-    color: $grey;
+    color: $c-neutral2;
     @extend %type-11;
 }
 
