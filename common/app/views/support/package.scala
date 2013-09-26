@@ -232,6 +232,7 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
     links.foreach { link =>
       link.attr("href", LinkTo(link.attr("href"), edition))
       link.attr("data-link-name", dataLinkName)
+      link.addClass("tone-colour")
     }
     body
   }
@@ -295,7 +296,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" } data-link-context={ s"${tag.id}" }>{ tag.name }</a></span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" } data-link-context={ s"${tag.id}" }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)
@@ -412,4 +413,35 @@ object CricketMatch {
     case c: Content => c.cricketMatch
     case _ => None
   }
+}
+
+object VisualTone {
+
+  private val Comment = "comment"
+  private val News = "news"
+  private val Feature = "feature"
+
+  private val toneMappings = Map(
+    ("tone/comment", Comment),
+    ("tone/letters", Comment),
+    ("tone/obituaries", Comment),
+    ("tone/profiles", Comment),
+    ("tone/editorials", Comment),
+    ("tone/analysis", Comment),
+
+    ("tone/features", Feature),
+    ("tone/recipes", Feature),
+    ("tone/interview", Feature),
+    ("tone/performances", Feature),
+    ("tone/extract", Feature),
+    ("tone/reviews", Feature),
+    ("tone/albumreview", Feature),
+    ("tone/livereview", Feature),
+    ("tone/childrens-user-reviews", Feature)
+  )
+
+
+  def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
+
+  // these tones are all considered to be 'News' it is the default so we do not list them explicitly
 }

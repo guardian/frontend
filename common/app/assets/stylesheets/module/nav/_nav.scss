@@ -176,7 +176,7 @@
     }
 
     .nav__link {
-        color: #333333; // This is here because the below selectors are too specific for zone-color to work
+        color: $c-neutral1; // This is here because the below selectors are too specific for zone-color to work
     }
 
     .nav__link,
@@ -191,7 +191,9 @@
     }
 
     .is-active .nav__link {
+        color: $c-neutral1;
         font-weight: bold;
+        border-color: $c-neutral1;
     }
 
     .nav__item:first-child .nav__link { padding-left: 0; }
