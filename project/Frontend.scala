@@ -59,7 +59,7 @@ object Frontend extends Build with Prototypes {
     )
   )
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
-    templatesImport ++= Seq("discussion._")
+    templatesImport ++= Seq("discussion._", "discussion.model._")
   )
 
   val router = application("router")
