@@ -1,60 +1,47 @@
-define(['bean'], function(bean) {
+define(['bean', 'qwery'], function(bean, qwery) {
 
 /**
  * TODO:
+ * * ERROR HANDLING!
  * * Remove bean dependency (make it an arg (DI?))
+ * * Find a way to run the Component constructor manually,
+ *   Perhaps in the create method somewhere.
  * @constructor
  */
 var Component = function() {};
 
 /**
- * @type {Object|string|null}
+ * This object is an interface and meant to be overridden
+ * mostly used for absttracting CSS classes.
+ * This makes for easy testing, less duplication of string variables,
+ * and hopefully, one day, in string compilation
+ * @type {Object.<string.*>}
  */
+Component.CONFIG = {
+    // These are CSS classes for DOM elements in this component
+    classes: { component: 'component' }
+};
+
+/** @type {Element|null} */
+Component.prototype.context = null;
+
+/** @type {Element|null} */
+Component.prototype.elem = null;
+
+/** @type {Object|string|null} */
 Component.prototype.template = null;
 
 /**
- * @param {Element} elem
- * @private
+ * Uses the CONFIG.classes.component
+ * TODO (jamesgorrie): accept elements, strings etc
  */
-Component.prototype.decorate = function(elem) {
-    this.element = elem;
+Component.prototype.attachTo = function() {
+    var selector = this.getClass('component'),
+        elem = qwery(selector, this.context);
 
+    if (elem.length === 0) { throw new ComponentError('No element of type "'+ selector +'" to attach to.'); }
+    this.elem = elem[0];
     this.ready();
-};
-
-/**
- * Renders the element onto the page
- * There are three sources of the element
- * 1. The element provided. This will maintain data values.
- * 2. An already existing element on the page,
- *    retrieved from ```this.selector```.
- *    This will not maintain data values. e.g.
- *    * ```<script type="template" id="template"></script>```
- *    * ```<div class="template">...</div>```
- * 3. An XHR request to the server.
- *
- * @param {Element=} elem
- */
-Component.prototype.render = function(elem) {
-    // 1.
-    if (elem) {
-        this.setup(elem, true);
-        this.ready();
-    }
-
-    // TODO (james): 2.
-
-    // TODO (james): 3.
-};
-
-/**
- * This will take the DOM object and make it into a data array
- * A.K.A: data-binding (will look at Ractive)
- * @param {Element} template
- * @param {Boolean=} retainData (optional).
- */
-Component.prototype.setup = function(elem, retainData) {
-    this.elem = elem;
 };
 
 /**
@@ -75,7 +62,6 @@ Component.prototype.dispose = function() {
 
 /**
  * TODO: Error on argument checks
- * @param {string} eventName
  */
 Component.prototype.on = function() {
     var selector, eventName, handler,
@@ -89,16 +75,43 @@ Component.prototype.on = function() {
     eventName = arguments[0];
     handler = arguments[1];
 
+    selector = selector || handler; // Hack around dynamic arguments
     bean.on(this.elem, eventName, selector, handler);
 };
 
+/**
+ * @param {string} eventName
+ * @param {Object=} args (optional)
+ */
+Component.prototype.emit = function(eventName, args) {
+    bean.fire(this.elem, eventName);
+};
 
+/**
+ * @param {string} eventName
+ * @param {boolean} sansDot
+ * @return {string}
+ */
+Component.prototype.getClass = function(elemName, sansDot) {
+    var config = this.constructor.CONFIG;
+    return (sansDot ? '' : '.') + config.classes[elemName] || null;
+};
+
+
+/**
+ * @param {Function} child
+ */
 Component.create = function(child) {
     function Tmp() {}
     Tmp.prototype = Component.prototype;
     child.prototype = new Tmp();
     child.prototype.constructor = child;
 };
+
+/** @contructor */
+function ComponentError(message) {
+    return new Error('Component: '+ message);
+}
 
 return Component;
 

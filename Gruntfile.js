@@ -129,6 +129,9 @@ module.exports = function (grunt) {
             corenavigation: {
                 src: ['integration-tests/casper/tests/core-navigation/*.js']
             },
+            allexceptadmin: {
+                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
+            },
             },
 
         jasmine: {
@@ -139,7 +142,7 @@ module.exports = function (grunt) {
             common: {
                 options: {
                     specs: grunt.file.expand(
-                         'common/test/assets/javascripts/spec/*.js',[
+                         'common/test/assets/javascripts/spec/**/*.js',[
                         '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
                         '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
                         '!common/test/assets/javascripts/spec/Fonts.spec.js',
@@ -359,13 +362,9 @@ module.exports = function (grunt) {
         },
 
         watch: {
-            sass: {
-                files: 'common/app/assets/stylesheets/**/*.scss',
-                tasks: 'sass:common'
-            },
-            js: {
-                files: 'common/app/assets/javascripts/**/*.js',
-                tasks: 'requirejs:common'
+            test: {
+                files: ['common/test/assets/javascripts/**/*.js', 'common/app/assets/javascripts/**/*.js'],
+                tasks: 'test:unit:common'
             }
         }
 
@@ -397,6 +396,8 @@ module.exports = function (grunt) {
     grunt.registerTask('test:integration:article',  ['env:casperjs', 'casperjs:article']);
     grunt.registerTask('test:integration:front',  ['env:casperjs', 'casperjs:front']);
     grunt.registerTask('test:integration:corenavigation',  ['env:casperjs', 'casperjs:corenavigation']);
+    grunt.registerTask('test:integration:allexceptadmin',  ['env:casperjs', 'casperjs:allexceptadmin']);
+
 
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
 

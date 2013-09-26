@@ -3,7 +3,7 @@ define(['common', 'modules/cookies'], function(common, Cookies) {
     /**
      * Left this as an object as there are onlty static methods
      * We'll need to change this once there is some state change
-     * TODO(james): Allow this to show policies too (not needed yet)
+     * TODO(jamesgorrie): Allow this to show policies too (not needed yet)
      */
     var Id = {};
 

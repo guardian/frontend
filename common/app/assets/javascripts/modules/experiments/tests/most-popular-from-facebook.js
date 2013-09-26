@@ -1,4 +1,4 @@
-define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular) {
+define(['common', 'bonzo', 'modules/popular', 'modules/storage'], function (common, bonzo, popular, storage) {
 
     return function () {
 
@@ -8,14 +8,16 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
         this.expiry = '2013-09-30';
         this.audience = 0.5;
         this.description = 'Tests whether showing Most Popular for visitors referred from Facebook to visitors referred from Facebook increases clickthrough';
+        this.events = ['most popular'];
         this.canRun = function (config) {
             _config = config;
 
             var isArticle = config.page && config.page.contentType === "Article",
                 isFromFacebook = document.referrer.indexOf('facebook.com') !== -1,
+                hasBeenFromFacebook = storage.get('gu.ab.participations')[this.id],
                 isTest = /#dev-fbpopular/.test(window.location.hash);
 
-            return isArticle && (isFromFacebook || isTest);
+            return isArticle && (isFromFacebook || hasBeenFromFacebook || isTest);
         };
         this.variants = [
             {
@@ -60,7 +62,7 @@ define(['common', 'bonzo', 'modules/popular'], function (common, bonzo, popular)
                     popular(_config, context, false, '/most-read-facebook', '.js-popular-facebook');
 
                     common.mediator.on('modules:popular:loaded', function () {
-                        context.querySelector('#most-read-head').innerHTML = "Most read from Facebook";
+                        context.querySelector('.js-popular-facebook #most-read-head').innerHTML = "Most read from Facebook";
                     });
                 }
             }

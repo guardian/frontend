@@ -79,6 +79,7 @@ define([
         },
 
         initDiscussion: function() {
+
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable) {
                     var discussionArticle = new Discussion({
