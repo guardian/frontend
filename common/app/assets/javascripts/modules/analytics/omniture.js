@@ -139,8 +139,8 @@ define([
                 s.events = s.apl(s.events,'event46',',');
             }
 
-            if (config.page.section === "Users")  {
-                s.prop11 = config.page.section || '';
+            if (config.page.section === "identity")  {
+                s.prop11 = 'Users';
                 s.prop9 = "userid";
                 s.eVar42 = config.page.returnUrl || '';
                 s.hier2="GU/Users/Registration";

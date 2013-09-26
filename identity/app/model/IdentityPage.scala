@@ -3,7 +3,7 @@ package model
 import tracking.Omniture
 
 class IdentityPage(id: String, webTitle: String, analyticsName: String, overridenMetadata: Option[Map[String, Any]] = None)
-  extends Page(id, "Users", webTitle, analyticsName) {
+  extends Page(id, "identity", webTitle, analyticsName) {
 
   override def metaData: Map[String, Any] = overridenMetadata.getOrElse(super.metaData + ("blockAds" -> true))
 }
