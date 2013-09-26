@@ -14,11 +14,13 @@ define([
             p = cache[pot];
         }
 
-        p[key] = { 
+        p[key] = {
             data: data,
-            // Spread actual timeouts into the range "expiry two-times expiry"
-            time: +new Date() + expiry * Math.random() 
+            // Spread actual timeouts into the range of "two-times expiry"
+            time: +new Date() + expiry * Math.random()
         };
+
+        return data;
     }
 
     function get(pot, key) {
@@ -32,7 +34,7 @@ define([
             delete obj;
             return;
         }
-        return obj.data; 
+        return obj.data;
     }
 
     return {

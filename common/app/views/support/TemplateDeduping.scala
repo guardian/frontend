@@ -1,10 +1,10 @@
 package views.support
 
-import scala.collection.mutable.HashSet
 import model.{Collection, Trail}
+import scala.collection.mutable
 
 class TemplateDeduping extends implicits.Collections {
-  private var alreadyUsed: HashSet[String] = new HashSet[String]()
+  private val alreadyUsed: mutable.HashSet[String] = new mutable.HashSet[String]()
   private val defaultTake: Int = 20
 
   def take(numberWanted: Int, items: Seq[Trail]): Seq[Trail] =

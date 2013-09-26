@@ -16,5 +16,7 @@ trait Requests {
       header.contains("text/javascript") ||
       header.contains("application/javascript")
     } || r.path.endsWith(".json")
+
+    lazy val hasParameters = !r.queryString.isEmpty
   }
 }
