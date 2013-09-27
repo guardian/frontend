@@ -177,7 +177,7 @@ a.item__link {
     .item--without-image .item__standfirst {
         @include mq(tablet) {
             display: block;
-            min-height: gs-height(4);
+            min-height: gs-height(4) - $gs-baseline;
         }
     }
     .item__image-container {
