@@ -45,9 +45,16 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                 mobile: 5
             }[detect.getBreakpoint()],
             _renderToggle = function($items) {
-                var $button = bonzo(bonzo.create('<button class="items__show-more">Show more</button>'))
-                    .insertAfter($items);
+                var buttonText = 'Show more',
+                    $button = bonzo(bonzo.create('<button class="items__show-more" data-link-name="' + buttonText + ' | 0">' + buttonText + '</button>'))
+                        .insertAfter($items);
                 bean.on($button[0], 'click', function(e) {
+                    // increment button counter
+                    var newDataAttr = $button.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
+                        // http://nicolaasmatthijs.blogspot.co.uk/2009/05/missing-radix-parameter.html
+                        return prefix + (parseInt(count, 10) + 1);
+                    });
+                    $button.attr('data-link-name', newDataAttr);
                     // show x more, depending on current breakpoint
                     var moreHidden = qwery('.item.u-h', $items[0]).some(function(item, index) {
                             if (index === _rowSize) {
@@ -55,8 +62,11 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                             }
                             bonzo(item).removeClass('u-h');
                         });
+                    // listen to the clickstream, as happens later, before removing
                     if (!moreHidden) {
-                        $button.remove();
+                        common.mediator.on('module:clickstream:click', function(clickSpec) {
+                            $button.remove();
+                        });
                     }
                 });
             };
