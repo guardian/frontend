@@ -1,0 +1,8 @@
+{
+  "name": "sinon",
+  "version": "1.7.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cjohansen/Sinon.JS.git"
+  }
+}
