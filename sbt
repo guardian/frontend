@@ -70,4 +70,4 @@ java -Xmx6144M -XX:MaxPermSize=3072m \
   $BUILD_PARAMS \
   $IVY_PARAMS \
   $SBT_EXTRA_PARAMS \
-  -jar `dirname $0`/dev/sbt-launch-0.12.2.jar "$@"
+  -jar `dirname $0`/dev/sbt-launch-0.13.0.jar "$@"
