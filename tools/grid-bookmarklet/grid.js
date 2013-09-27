@@ -1,4 +1,5 @@
-//javascript:(function()%7Bdocument.body.appendChild(document.createElement('script')).src='http://localhost:8000/gudev/frontend/tools/grid-bookmarklet/grid.js?'+(new Date()).getTime();%7D)();
+//javascript:(function()%7Bdocument.body.appendChild(document.createElement('script')).src='https://rawgithub.com/guardian/frontend/grid-bookmarklet/tools/grid-bookmarklet/grid.js?'+(new Date()).getTime();%7D)();
+
 require([
     'common',
     'bonzo',
@@ -34,7 +35,6 @@ require([
                            '</div>';
 
         if (!$gridEl) {
-            console.log('appending');
             $gridEl = bonzo(bonzo.create(gridTemplate));
             bonzo(document.body).append($gridEl);
         }
@@ -45,20 +45,18 @@ require([
             $rowsEl = bonzo($gridEl[0].querySelector('.grid-rows'));
 
         // First came the columns...
-        //$colsEl.empty();
+        $colsEl.empty();
         for (var i=0; i<(docW/colWidth); i++) {
             leftPos = i * colWidth;
             $colsEl.append('<div class="grid-column" style="left: '+leftPos+'px"></div>');
         }
 
         // ...and then the rows
-        //$rowsEl.empty();
+        $rowsEl.empty();
         for (var i=0; i<(docH/rowHeight); i++) {
             topPos = i * rowHeight;
             $rowsEl.append('<div class="grid-row" style="top: '+topPos+'px"></div>');
         }
-
-        layout();
     }
 
 
@@ -72,6 +70,10 @@ require([
             width:  docW+'px',
             height: docH+'px'
         });
+
+        // Set these again, in case they've changed
+        docW = $doc.dim().width,
+        docH = $doc.dim().height;
     }
 
 
@@ -90,8 +92,8 @@ require([
         bean.on(document.body, 'keydown', function(e) {
             startingGridTop = parseInt($gridEl.css('top'), 10);
             startingGridLeft = parseInt($gridEl.css('left'), 10);
+            var moveBy = e.shiftKey ? 5 : 1; // Move faster when shift key is down
 
-            console.log(e.keyCode);
             if (e.keyCode === 71) {
                 // g key - toggle grid visiblity
                 $gridEl.toggleClass('is-hidden');
@@ -101,19 +103,19 @@ require([
                 bonzo(document.body).toggleClass('is-desaturated');
             } else if (e.keyCode === 38) {
                 // Up
-                $gridEl[0].style.top = (startingGridTop - 1) + 'px';
+                $gridEl[0].style.top = (startingGridTop - moveBy) + 'px';
             } else if (e.keyCode === 40) {
                 // Down
-                $gridEl[0].style.top = (startingGridTop + 1) + 'px';
+                $gridEl[0].style.top = (startingGridTop + moveBy) + 'px';
             } else if (e.keyCode === 37) {
                 // Left
-                $gridEl[0].style.left = (startingGridLeft - 1) + 'px';
+                $gridEl[0].style.left = (startingGridLeft - moveBy) + 'px';
             } else if (e.keyCode === 39) {
                 // Right
-                $gridEl[0].style.left = (startingGridLeft + 1) + 'px';
+                $gridEl[0].style.left = (startingGridLeft + moveBy) + 'px';
             }
 
-            if (gridIsVisible) {
+            if ([71,68,38,40,37,39].indexOf(e.keyCode) != -1 && gridIsVisible) {
                 e.preventDefault();
             }
         });
@@ -137,7 +139,7 @@ require([
                 }
             },
 
-            mouseup: function(e) {
+            'mouseup mouseout': function(e) {
                 dragging = false;
             }
         });
@@ -147,7 +149,7 @@ require([
         setInterval(function() {
             var $doc = bonzo(document);
             if (docW !== $doc.dim().width || docH !== $doc.dim().height) {
-                //buildGrid();
+                buildGrid();
             }
         }, 2000);
     }
