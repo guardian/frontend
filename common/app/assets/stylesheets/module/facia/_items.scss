@@ -150,7 +150,7 @@ a.item__link,
     .item__link .i {
         position: absolute;
         left: 0;
-        top: 8px;
+        top: $gs-baseline*(2/3);
     }
 }
 
