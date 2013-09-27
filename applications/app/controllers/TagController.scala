@@ -4,21 +4,31 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
+import play.api.mvc._
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.json._
 
 import contentapi.QueryDefaults
+import play.api.templates.Html
+import com.gu.openplatform.contentapi.model.ItemResponse
+import model.Tag
+import model.Content
 
 case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections with QueryDefaults {
 
+  def getTemplate(implicit request: RequestHeader): (TagAndTrails) => SimpleResult = IsFacia(request) match {
+    case Some(v) if Switches.FaciaSwitch.isSwitchedOn => renderTagFaciaStyle
+    case _ => renderTag
+  }
+
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {
-      case Left(model) => renderTag(model)
+      case Left(model) => getTemplate(request)(model)
       case Right(notFound) => notFound
     }
   }
@@ -60,7 +70,13 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     }.recover{suppressApiNotFound}
   }
 
-  private def renderTag(model: TagAndTrails)(implicit request: RequestHeader) = {
+  private def renderTag(model: TagAndTrails)(implicit request: RequestHeader): SimpleResult =
+    renderTag(model, views.html.tag.apply)
+
+  private def renderTagFaciaStyle(mode: TagAndTrails)(implicit request: RequestHeader): SimpleResult =
+    renderTag(mode, views.html.tagFacia.apply)
+
+  private def renderTag(model: TagAndTrails, template: (Tag, Seq[Trail], Seq[Trail]) => Html)(implicit request: RequestHeader) = {
     Cached(model.tag){
       if (request.isJson)
         JsonComponent(
@@ -68,8 +84,9 @@ object TagController extends Controller with Logging with JsonTrails with Execut
           "trails" -> (model.leadContent ++ model.trails).map(_.url),
           "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.tag, Switches.all).body)
         )
-      else
-        Ok(views.html.tag(model.tag, model.trails, model.leadContent))
+      else {
+        Ok(template(model.tag, model.trails, model.leadContent))
+      }
     }
   }
   

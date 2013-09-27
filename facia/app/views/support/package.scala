@@ -10,11 +10,8 @@ object FindStyle {
   val generalStyles: Map[String, Style] = Map(
     "epic-story" -> Masthead,
     "major-story" -> Masthead,
-    "regular-stories" -> TopStories,
-    "lesser-stories" -> MediumStories,
-    "other-stories" -> SmallStories(showMore = true),
-    "feature-stories" -> Features,
-    "highlight-stories" -> Highlights
+    "regular-stories" -> Container("news"),
+    "feature-stories" -> SectionZone(collectionType = "features")
   )
 
   /**
@@ -22,118 +19,91 @@ object FindStyle {
    */
   val specificStyles: Map[String, Map[String, Style]] = Map(
     ("au", Map(
-      ("au/sport/regular-stories", News),
-      ("au/commentisfree/regular-stories", Comments),
-      ("au/culture/regular-stories", Features),
-      ("au/business/regular-stories", News),
-      ("au/lifeandstyle/regular-stories", Features),
-      ("au/technology/regular-stories", Features),
-      ("au/money/regular-stories", News),
-      ("au/travel/regular-stories", Features)
-    )),
-    ("au/business", Map(
-      ("au/business/other-stories", SmallStories(showMore = false))
-    )),
-    ("au/commentisfree", Map(
-      ("au/commentisfree/other-stories", SmallStories(showMore = false))
+      ("au/sport/regular-stories", Container("sport")),
+      ("au/commentisfree/regular-stories", Container("comments")),
+      ("au/culture/regular-stories", Container("culture")),
+      ("au/business/regular-stories", SectionZone()),
+      ("au/lifeandstyle/regular-stories", SectionZone(collectionType = "features")),
+      ("au/technology/regular-stories", SectionZone(collectionType = "features")),
+      ("au/money/regular-stories", SectionZone()),
+      ("au/travel/regular-stories", SectionZone(collectionType = "features"))
     )),
     ("au/culture", Map(
-      ("au/film/regular-stories", Features),
-      ("au/music/regular-stories", Features),
-      ("au/books/regular-stories", Features),
-      ("au/technology/games/regular-stories", Features)
-    )),
-    ("au/money", Map(
-      ("au/money/other-stories", SmallStories(showMore = false))
+      ("au/film/regular-stories", SectionZone(collectionType = "features")),
+      ("au/music/regular-stories", SectionZone(collectionType = "features")),
+      ("au/books/regular-stories", SectionZone(collectionType = "features")),
+      ("au/technology/games/regular-stories", SectionZone(collectionType = "features"))
     )),
     ("au/sport", Map(
-      ("au/sport/football/regular-stories", News),
-      ("au/sport/cricket/regular-stories", News),
-      ("au/sport/afl/regular-stories", News),
-      ("au/sport/nrl/regular-stories", News),
-      ("au/sport/rugby-union/regular-stories", News),
-      ("au/sport/tennis/regular-stories", News),
-      ("au/sport/golf/regular-stories", News),
-      ("au/sport/motorsports/regular-stories", News),
-      ("au/sport/cycling/regular-stories", News),
-      ("au/sport/us-sport/regular-stories", News),
-      ("au/sport/boxing/regular-stories", News)
+      ("au/sport/football/regular-stories", SectionZone()),
+      ("au/sport/cricket/regular-stories", SectionZone()),
+      ("au/sport/afl/regular-stories", SectionZone()),
+      ("au/sport/nrl/regular-stories", SectionZone()),
+      ("au/sport/rugby-union/regular-stories", SectionZone()),
+      ("au/sport/tennis/regular-stories", SectionZone()),
+      ("au/sport/golf/regular-stories", SectionZone()),
+      ("au/sport/motorsports/regular-stories", SectionZone()),
+      ("au/sport/cycling/regular-stories", SectionZone()),
+      ("au/sport/us-sport/regular-stories", SectionZone()),
+      ("au/sport/boxing/regular-stories", SectionZone())
     )),
     ("uk", Map(
-      ("uk/sport/regular-stories", News),
-      ("uk/commentisfree/regular-stories", Comments),
-      ("uk/culture/regular-stories", Features),
-      ("uk/business/regular-stories", News),
-      ("uk/lifeandstyle/regular-stories", Features),
-      ("uk/technology/regular-stories", Features),
-      ("uk/money/regular-stories", News),
-      ("uk/travel/regular-stories", Features)
-    )),
-    ("uk/business", Map(
-      ("uk/business/other-stories", SmallStories(showMore = false))
-    )),
-    ("uk/commentisfree", Map(
-      ("uk/commentisfree/other-stories", SmallStories(showMore = false))
+      ("uk/sport/regular-stories", Container("sport")),
+      ("uk/commentisfree/regular-stories", Container("comments")),
+      ("uk/culture/regular-stories", Container("culture")),
+      ("uk/business/regular-stories", SectionZone()),
+      ("uk/lifeandstyle/regular-stories", SectionZone(collectionType = "features")),
+      ("uk/technology/regular-stories", SectionZone(collectionType = "features")),
+      ("uk/money/regular-stories", SectionZone()),
+      ("uk/travel/regular-stories", SectionZone(collectionType = "features"))
     )),
     ("uk/culture", Map(
-      ("uk/tv-and-radio/regular-stories", Features),
-      ("uk/film/regular-stories", Features),
-      ("uk/music/regular-stories", Features),
-      ("uk/stage/regular-stories", Features),
-      ("uk/books/regular-stories", Features),
-      ("uk/artanddesign/regular-stories", Features),
-      ("uk/technology/games/regular-stories", Features)
-    )),
-    ("uk/money", Map(
-      ("uk/money/other-stories", SmallStories(showMore = false))
+      ("uk/tv-and-radio/regular-stories", SectionZone(collectionType = "features")),
+      ("uk/film/regular-stories", SectionZone(collectionType = "features")),
+      ("uk/music/regular-stories", SectionZone(collectionType = "features")),
+      ("uk/stage/regular-stories", SectionZone(collectionType = "features")),
+      ("uk/books/regular-stories", SectionZone(collectionType = "features")),
+      ("uk/artanddesign/regular-stories", SectionZone(collectionType = "features")),
+      ("uk/technology/games/regular-stories", SectionZone(collectionType = "features"))
     )),
     ("uk/sport", Map(
-      ("uk/sport/football/regular-stories", News),
-      ("uk/sport/cricket/regular-stories", News),
-      ("uk/sport/rugby-union/regular-stories", News),
-      ("uk/sport/motorsports/regular-stories", News),
-      ("uk/sport/tennis/regular-stories", News),
-      ("uk/sport/golf/regular-stories", News),
-      ("uk/sport/horse-racing/regular-stories", News),
-      ("uk/sport/rugbyleague/regular-stories", News),
-      ("uk/sport/us-sport/regular-stories", News),
-      ("uk/sport/boxing/regular-stories", News),
-      ("uk/sport/cycling/regular-stories", News)
+      ("uk/sport/football/regular-stories", SectionZone()),
+      ("uk/sport/cricket/regular-stories", SectionZone()),
+      ("uk/sport/rugby-union/regular-stories", SectionZone()),
+      ("uk/sport/motorsports/regular-stories", SectionZone()),
+      ("uk/sport/tennis/regular-stories", SectionZone()),
+      ("uk/sport/golf/regular-stories", SectionZone()),
+      ("uk/sport/horse-racing/regular-stories", SectionZone()),
+      ("uk/sport/rugbyleague/regular-stories", SectionZone()),
+      ("uk/sport/us-sport/regular-stories", SectionZone()),
+      ("uk/sport/boxing/regular-stories", SectionZone()),
+      ("uk/sport/cycling/regular-stories", SectionZone())
     )),
     ("us", Map(
-      ("us/sport/regular-stories", News),
-      ("us/commentisfree/regular-stories", Comments),
-      ("us/culture/regular-stories", Features),
-      ("us/business/regular-stories", News),
-      ("us/lifeandstyle/regular-stories", Features),
-      ("us/technology/regular-stories", Features),
-      ("us/money/regular-stories", News),
-      ("us/travel/regular-stories", Features)
-    )),
-    ("us/business", Map(
-      ("us/business/other-stories", SmallStories(showMore = false))
-    )),
-    ("us/commentisfree", Map(
-      ("us/commentisfree/other-stories", SmallStories(showMore = false))
+      ("us/sport/regular-stories", Container("sport")),
+      ("us/commentisfree/regular-stories", Container("comments")),
+      ("us/culture/regular-stories", Container("culture")),
+      ("us/business/regular-stories", SectionZone()),
+      ("us/lifeandstyle/regular-stories", SectionZone(collectionType = "features")),
+      ("us/technology/regular-stories", SectionZone(collectionType = "features")),
+      ("us/money/regular-stories", SectionZone()),
+      ("us/travel/regular-stories", SectionZone(collectionType = "features"))
     )),
     ("us/culture", Map(
-      ("us/film/regular-stories", Features),
-      ("us/music/regular-stories", Features),
-      ("us/stage/regular-stories", Features),
-      ("us/books/regular-stories", Features),
-      ("us/artanddesign/regular-stories", Features),
-      ("us/technology/games/regular-stories", Features),
-      ("us/tv-and-radio/regular-stories", Features)
-    )),
-    ("us/money", Map(
-      ("us/money/other-stories", SmallStories(showMore = false))
+      ("us/film/regular-stories", SectionZone(collectionType = "features")),
+      ("us/music/regular-stories", SectionZone(collectionType = "features")),
+      ("us/stage/regular-stories", SectionZone(collectionType = "features")),
+      ("us/books/regular-stories", SectionZone(collectionType = "features")),
+      ("us/artanddesign/regular-stories", SectionZone(collectionType = "features")),
+      ("us/technology/games/regular-stories", SectionZone(collectionType = "features")),
+      ("us/tv-and-radio/regular-stories", SectionZone(collectionType = "features"))
     )),
     ("us/sport", Map(
-      ("us/sport/nfl/regular-stories", News),
-      ("us/sport/mlb/regular-stories", News),
-      ("us/sport/nba/regular-stories", News),
-      ("us/sport/mls/regular-stories", News),
-      ("us/sport/nhl/regular-stories", News)
+      ("us/sport/nfl/regular-stories", SectionZone()),
+      ("us/sport/mlb/regular-stories", SectionZone()),
+      ("us/sport/nba/regular-stories", SectionZone()),
+      ("us/sport/mls/regular-stories", SectionZone()),
+      ("us/sport/nhl/regular-stories", SectionZone())
     ))
   )
 
@@ -143,7 +113,7 @@ object FindStyle {
       frontStyles.get(config.id)
     }.getOrElse {
       // else use general, defaulting to Highlights
-      generalStyles.get(config.id.split("/").last).getOrElse(News)
+      generalStyles.get(config.id.split("/").last).getOrElse(SectionZone())
     }
   }
 
