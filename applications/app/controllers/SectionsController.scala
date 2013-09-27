@@ -9,8 +9,8 @@ object SectionsController extends Controller with Logging {
 
   val page = Page("sections", "sections", "All sections", "GFE:All sections")
 
-  def renderJson() = render()
-  def render = Action { implicit request =>
+  def renderSectionsJson() = renderSections()
+  def renderSections() = Action { implicit request =>
     val htmlResponse = () => views.html.sections(page)
     val jsonResponse = () => views.html.fragments.sectionsBody(page)
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)

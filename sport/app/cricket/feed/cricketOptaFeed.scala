@@ -1,14 +1,14 @@
 package cricketOpta
 
 import common.Logging
-import scala.concurrent.{Future, ExecutionContext}
-import play.api.libs.ws.{Response, WS}
+import play.api.libs.ws.{WS, Response}
 import Parser._
+import scala.concurrent.{ Future, ExecutionContext }
 
 trait Feed extends Logging {
 
   // Can be overridden for test.
-  def get(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
+  def get(url: String): Future[Response] = WS.url(url).withRequestTimeout(2000).get()
 
   private val baseUrl: String = "http://guardian.cloud.opta.net/"
 
