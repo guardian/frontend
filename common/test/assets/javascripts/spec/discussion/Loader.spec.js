@@ -3,7 +3,7 @@ define([
     'ajax',
     'bean',
     'helpers/fixtures',
-    'fixtures/discussion',
+    'fixtures/discussion/discussion',
     'modules/discussion/loader'
 ], function(
     common,

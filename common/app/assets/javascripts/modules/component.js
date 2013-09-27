@@ -7,7 +7,7 @@ define([
 ) {
 
 /**
- * TODO:
+ * TODO (jamesgorrie):
  * * ERROR HANDLING!
  * * Remove bean dependency (make it an arg (DI?))
  * * Find a way to run the Component constructor manually,
@@ -67,22 +67,12 @@ Component.prototype.ready = function() {};
 Component.prototype.dispose = function() {};
 
 /**
- * TODO: Error on argument checks
+ * @param {string} eventName
+ * @param {Function} handler
+ * @param {*} args
  */
-Component.prototype.on = function() {
-    var selector, eventName, handler,
-        params = Array.prototype.slice.call(arguments);
-
-    if (arguments.length === 3) {
-        selector = arguments[0];
-        arguments.shift();
-    }
-
-    eventName = arguments[0];
-    handler = arguments[1];
-
-    selector = selector || handler; // Hack around dynamic arguments
-    bean.on(this.elem, eventName, selector, handler);
+Component.prototype.on = function(eventName, handler, args) {
+    bean.on(this.elem, eventName, handler, args);
 };
 
 /**
@@ -90,11 +80,11 @@ Component.prototype.on = function() {
  * @param {Object=} args (optional)
  */
 Component.prototype.emit = function(eventName, args) {
-    bean.fire(this.elem, eventName);
+    bean.fire(this.elem, eventName, args);
 };
 
 /**
- * TODO: Add caching in this.elems
+ * TODO (jamesgorrie): Add caching in this.elems
  * @param {string} elemName this corresponds to CONFIG.classes
  */
 Component.prototype.getElem = function(elemName) {
