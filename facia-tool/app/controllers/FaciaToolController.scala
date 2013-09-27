@@ -6,12 +6,12 @@ import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import tools.FrontsApi
+import tools.FaciaApi
 import scala.concurrent.Future
 import services.S3FrontsApi
 
 
-object FrontsController extends Controller with Logging with ExecutionContexts {
+object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
   def index() = AuthAction{ request =>
     Ok(views.html.fronts(Configuration.environment.stage))
@@ -62,12 +62,12 @@ object FrontsController extends Controller with Logging with ExecutionContexts {
         val identity = Identity(request).get
         blockAction.publish.filter {_ == true}
           .map { _ =>
-            FrontsApi.publishBlock(id, identity)
+            FaciaApi.publishBlock(id, identity)
             Ok
           }
           .orElse {
           blockAction.discard.filter {_ == true}.map { _ =>
-            FrontsApi.discardBlock(id, identity)
+            FaciaApi.discardBlock(id, identity)
             Ok
           }
         } getOrElse NotFound("Invalid JSON")

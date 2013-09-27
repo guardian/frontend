@@ -5,7 +5,7 @@ import services.OphanApi
 import common.ExecutionContexts
 
 
-object OphanApiController extends Controller with ExecutionContexts {
+object FaciaOphanApiController extends Controller with ExecutionContexts {
 
   def pageViews(path: String) = AuthAction {
     request =>
