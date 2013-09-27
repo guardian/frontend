@@ -12,8 +12,7 @@ define(['common', 'bonzo', 'bean'], function (common, bonzo, bean) {
             _elmsNotToHide = ['collection__title', 'collection__display-toggle'];
 
         this.addToggle =  function () {
-            var $button = bonzo(bonzo.create('<button class="collection__display-toggle">Hide<span class="u-h"> section</span></button>'))
-                .text(_toggleText[_initialState]);
+            var $button = bonzo(bonzo.create('<button class="collection__display-toggle" data-link-name="Show">Hide<span class="u-h"> section</span></button>'));
             // append toggle button
             _$collection
                 .attr(_dataAttr, _initialState)
@@ -21,7 +20,7 @@ define(['common', 'bonzo', 'bean'], function (common, bonzo, bean) {
             // listen to event
             bean.on($button[0], 'click', function(e) {
                 var newState = (_$collection.attr(_dataAttr) === 'displayed') ? 'hidden' : 'displayed';
-                // hide everything which isn't the title
+                // hide almost everything
                 common.toArray(_$collection[0].children).forEach(function(child) {
                     var $child = bonzo(child),
                         show = _elmsNotToHide.some(function(className) {
@@ -32,7 +31,10 @@ define(['common', 'bonzo', 'bean'], function (common, bonzo, bean) {
                     }
                 });
                 _$collection.attr(_dataAttr, newState);
-                $button.text(_toggleText[newState]);
+                $button
+                    .text(_toggleText[newState])
+                    // data-link-name is inverted, as happens before clickstream
+                    .attr('data-link-name', _toggleText[newState === 'displayed' ? 'hidden' : 'displayed']);
             });
         };
 

@@ -24,14 +24,19 @@ $comment-dark: #951c55;
     border-top: $gs-baseline/3 solid $blue;
 }
 .collection__display-toggle {
+    @include box-sizing(border-box);
     position: absolute;
-    top: $gs-baseline*(2/3);
-    right: $gs-gutter/5;
+    min-height: gs-height(1) - $gs-baseline/3;
+    min-width: gs-span(1);
+    top: $gs-baseline/3;
+    right: 0;
     border: none;
+    border-left: 1px solid #ffffff;
     background-color: transparent;
-    @include font($serifheadline, 800, 16);
+    @include fs-data(2);
     color: #ffffff;
-    padding: 0;
+    padding: $gs-baseline*(2/3) 0 0 $gs-baseline*(1/3);
+    text-align: left;
 }
 .item {
     position: relative;
