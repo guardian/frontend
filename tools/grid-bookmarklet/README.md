@@ -2,8 +2,10 @@
 
 ![grid view](screenshot.png)
 
-The gridlet bookmarklet overlays the NextGen grid over the current page. It can be dragged around and can also be controlled by keyboard:
+The gridlet bookmarklet overlays the NextGen grid over the current page. It can be dragged around and can also be controlled by keyboard.
 
-*Arrow keys*: precise positioning
-*g*: Hide/Show grid
-*d*: Desaturate content area
+**G**: Hide/Show grid 
+**D**: Desaturate content area
+**Arrow keys**: precise positioning 
+
+Drag [me](javascript:(function()%7Bdocument.body.appendChild(document.createElement('script')).src='https://rawgithub.com/guardian/frontend/grid-bookmarklet/tools/grid-bookmarklet/grid.js?'+(new Date()).getTime();%7D)();) to the bookmarks bar
