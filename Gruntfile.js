@@ -277,96 +277,139 @@ module.exports = function (grunt) {
         // Create JSON web font files from fonts.
         // Docs here: https://github.com/ahume/grunt-webfontjson
         webfontjson: {
-          WebEgyptianWoff: {
-            options: {
-              "filename": "common/app/public/fonts/WebEgyptian.woff.js",
-              "callback": "guFont",
-              "fonts": [
-                {
-                  "font-family": "EgyptianText",
-                  "file": "resources/fonts/EgyptianText-Regular.woff",
-                  "format": "woff"
-                },
-                {
-                  "font-family": "EgyptianText",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianText-Medium.woff",
-                  "format": "woff"
-                },
-                {
-                  "font-family": "EgyptianText",
-                  "font-style": "italic",
-                  "file": "resources/fonts/EgyptianText-RegularItalic.woff",
-                  "format": "woff"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "200",
-                  "file": "resources/fonts/EgyptianHeadline-Light.woff",
-                  "format": "woff"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianHeadline-Medium.woff",
-                  "format": "woff"
-                },
-                // This weight contains only a certain set of chars
-                // since it is used only in one place (section names)
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "900",
-                  "file": "resources/fonts/EgyptianHeadline-Semibold-redux.woff",
-                  "format": "woff"
+            WebAgateSansWoff: {
+                options: {
+                    "filename": "common/app/public/fonts/WebAgateSans.woff.js",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "AgateSans",
+                            "file": "resources/fonts/AgateSans-Regular.woff",
+                            "format": "woff"
+                        }
+                    ]
                 }
-              ]
-            }
-          },
-          WebEgyptianTtf: {
-            options: {
-              "filename": "common/app/public/fonts/WebEgyptian.ttf.js",
-              "callback": "guFont",
-              "fonts": [
-                {
-                  "font-family": "EgyptianText",
-                  "file": "resources/fonts/EgyptianText-Regular.ttf",
-                  "format": "ttf"
-                },
-                {
-                  "font-family": "EgyptianText",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianText-Medium.ttf",
-                  "format": "ttf"
-                },
-                {
-                  "font-family": "EgyptianText",
-                  "font-style": "italic",
-                  "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
-                  "format": "ttf"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "200",
-                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
-                  "format": "ttf"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
-                  "format": "ttf"
-                },
-                // This weight contains only a certain set of chars
-                // since it is used only in one place (section names)
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "900",
-                  "file": "resources/fonts/EgyptianHeadline-Semibold-redux.ttf",
-                  "format": "ttf"
+            },
+            WebAgateSansTtf: {
+                options: {
+                    "filename": "common/app/public/fonts/WebAgateSans.ttf.js",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "AgateSans",
+                            "file": "resources/fonts/AgateSans-Regular.ttf",
+                            "format": "ttf"
+                        }
+                    ]
                 }
-              ]
+            },
+            WebEgyptianWoff: {
+                options: {
+                    "filename": "common/app/public/fonts/WebEgyptian.woff.js",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "EgyptianText",
+                            "file": "resources/fonts/EgyptianText-Regular.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianText-Medium.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "font-style": "italic",
+                            "file": "resources/fonts/EgyptianText-RegularItalic.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "200",
+                            "file": "resources/fonts/EgyptianHeadline-Light.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "400",
+                            "file": "resources/fonts/EgyptianHeadline-Regular.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianHeadline-Medium.woff",
+                            "format": "woff"
+                        },
+                        // This weight contains only a certain set of chars
+                        // since it is used only in one place (section names)
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "900",
+                            "file": "resources/fonts/EgyptianHeadline-Semibold-redux.woff",
+                            "format": "woff"
+                        }
+                    ]
+                }
+            },
+            WebEgyptianTtf: {
+                options: {
+                    "filename": "common/app/public/fonts/WebEgyptian.ttf.js",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "AgateSans",
+                            "file": "resources/fonts/AgateSans-Regular.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "file": "resources/fonts/EgyptianText-Regular.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianText-Medium.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "font-style": "italic",
+                            "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "200",
+                            "file": "resources/fonts/EgyptianHeadline-Light.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "400",
+                            "file": "resources/fonts/EgyptianHeadline-Regular.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
+                            "format": "ttf"
+                        },
+                        // This weight contains only a certain set of chars
+                        // since it is used only in one place (section names)
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "900",
+                            "file": "resources/fonts/EgyptianHeadline-Semibold-redux.ttf",
+                            "format": "ttf"
+                        }
+                    ]
+                }
             }
-          }
         },
         // Clean stuff up
         clean: {
