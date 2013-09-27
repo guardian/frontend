@@ -92,30 +92,24 @@ figcaption:before {
 }
 
 //Quotes
-.from-content-api blockquote:before,
-.from-content-api .block .quoted:before {
+.from-content-api blockquote.quoted:before {
     @extend .i;
-    @extend .i-livequote-before;
+    @extend .i-quotemarks-01;
     content: '';
-    margin: 13px 0 0;
+    position: absolute;
 
     @if ($svg-support) {
         .svg & {
-            @extend .svg-i-livequote-before;
+            @extend .svg-i-quotemarks-01;
         }
     }
-}
 
-.from-content-api blockquote:after,
-.from-content-api .block .quoted:after {
-    @extend .i;
-    @extend .i-livequote-after;
-    content: '';
-    margin-bottom: 6px;
+    /*@include mq(tablet) {
+        @extend .i;
+        @extend .i-quotemarks-02;
 
-    @if ($svg-support) {
         .svg & {
-            @extend .svg-i-livequote-after;
+            @extend .svg-i-quotemarks-02;
         }
-    }
+    }*/
 }
