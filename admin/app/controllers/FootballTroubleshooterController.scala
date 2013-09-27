@@ -6,7 +6,7 @@ import conf.Configuration
 
 object FootballTroubleshooterController extends Controller with Logging with AuthLogging {
 
-  def render() = AuthAction{ implicit request =>
-      Ok(views.html.footballTroubleshooter(Configuration.environment.stage))
+  def renderFootballTroubleshooter() = Authenticated { implicit request =>
+    Ok(views.html.footballTroubleshooter(Configuration.environment.stage))
   }
 }

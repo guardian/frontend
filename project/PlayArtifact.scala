@@ -1,12 +1,13 @@
+package com.gu
+
 import sbt._
 import sbt.Keys._
-import sbt.PlayProject._
 import sbtassembly.Plugin._
 import sbtassembly.Plugin.AssemblyKeys._
 
 object PlayArtifact extends Plugin {
 
-  val playArtifact = TaskKey[File]("play-artifact", "Builds a deployable zip file for magenta")
+  val magenta = TaskKey[File]("magenta", "Builds a deployable zip file for magenta")
   val playArtifactResources = TaskKey[Seq[(File, String)]]("play-artifact-resources", "Files that will be collected by the deployment-artifact task")
   val playArtifactFile = SettingKey[String]("play-artifact-file", "Filename of the artifact built by deployment-artifact")
 
@@ -25,8 +26,7 @@ object PlayArtifact extends Plugin {
 
     playArtifactFile := "artifacts.zip",
     executableName <<= name,
-    playArtifact <<= buildDeployArtifact,
-    dist <<= buildDeployArtifact,
+    magenta <<= buildDeployArtifact,
 
     mergeStrategy in assembly <<= (mergeStrategy in assembly) { current =>
       {

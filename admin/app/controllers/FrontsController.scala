@@ -1,51 +1,47 @@
 package controllers
 
+import common.{ ExecutionContexts, Logging }
+import conf.Configuration
 import frontsapi.model._
 import frontsapi.model.UpdateList
-import play.api.mvc.{AnyContent, Action, Controller}
+import play.api.mvc.Controller
 import play.api.libs.json._
-import common.{ExecutionContexts, Logging}
-import conf.Configuration
-import tools.FrontsApi
 import scala.concurrent.Future
 import services.S3FrontsApi
+import tools.FrontsApi
 
 
 object FrontsController extends Controller with Logging with ExecutionContexts {
 
-  def index() = AuthAction{ request =>
+  def index() = Authenticated { request =>
     Ok(views.html.fronts(Configuration.environment.stage))
   }
 
-  def listCollections = AuthAction { request =>
-    Async {
-      Future{
-        Ok(Json.toJson(S3FrontsApi.listCollectionIds))
-      }
+  def listCollections = Authenticated.async { request =>
+    Future { S3FrontsApi.listCollectionIds } map { collectionIds =>
+      Ok(Json.toJson(collectionIds))
     }
   }
 
-  def listConfigs = AuthAction { request =>
-    Async {
-      Future{
-        Ok(Json.toJson(S3FrontsApi.listConfigsIds))
-      }
+  def listConfigs = Authenticated.async { request =>
+    Future { S3FrontsApi.listConfigsIds } map { configIds =>
+      Ok(Json.toJson(configIds))
     }
   }
 
-  def readBlock(id: String) = AuthAction{ request =>
+  def readBlock(id: String) = Authenticated { request =>
     S3FrontsApi.getBlock(id) map { json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
-  def getConfig(id: String) = AuthAction{ request =>
+  def getConfig(id: String) = Authenticated { request =>
     S3FrontsApi.getConfig(id) map { json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
-  def updateBlock(id: String): Action[AnyContent] = AuthAction { request =>
+  def updateBlock(id: String) = Authenticated { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
       case update: UpdateList => {
@@ -77,13 +73,13 @@ object FrontsController extends Controller with Logging with ExecutionContexts {
     } getOrElse NotFound
   }
 
-  def updateTrail(id: String, trailId: String) = AuthAction{ request =>
+  def updateTrail(id: String, trailId: String) = Authenticated { request =>
     request.body.asJson.map{ json =>
     }
     Ok
   }
 
-  def deleteTrail(id: String) = AuthAction { request =>
+  def deleteTrail(id: String) = Authenticated { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList => {
         val identity = Identity(request).get

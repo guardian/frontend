@@ -1,14 +1,13 @@
 package controllers
 
-import play.api.mvc.{Action, Controller}
 import conf.Configuration
+import play.api.mvc.{ Action, Controller }
 
 object IndexController extends Controller {
 
   def index() = Action { Redirect("/admin") }
 
-  def admin() = AuthAction { request =>
+  def admin() = Authenticated { request =>
     Ok(views.html.admin(Configuration.environment.stage))
   }
-
 }
