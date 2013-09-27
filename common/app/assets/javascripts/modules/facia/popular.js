@@ -2,8 +2,8 @@ define([
     'common',
     'ajax',
     'bonzo',
-    'modules/facia-relativise-timestamp',
-    'modules/facia-items-show-more'
+    'modules/facia/relativise-timestamp',
+    'modules/facia/items-show-more'
 ], function (common, ajax, bonzo, RelativiseTimestamp, ItemsShowMore) {
 
     var updateTmpl = function(tmpl, trail) {
@@ -14,7 +14,7 @@ define([
             });
         },
         collectionTmpl =
-            '<section class="collection collection--popular-full-width" data-collection-type="popular-full-width">' +
+            '<section class="collection collection--popular items--cards" data-collection-type="popular">' +
                 '<h2 class="collection__title">Popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
@@ -72,7 +72,7 @@ define([
                     // add the popular collection before the sports zone
                     bonzo(bonzo.create(collectionTmpl))
                         .append($items)
-                        .insertBefore('.collection--news.collection--sport-section');
+                        .insertAfter('.collection:last-child');
                     // add show more button
                     new ItemsShowMore($items[0])
                         .addShowMore();

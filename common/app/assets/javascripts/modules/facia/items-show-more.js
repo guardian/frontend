@@ -7,18 +7,33 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                 var breakpointOptions = {
                     wide: {
                         default: 4,
-                        features: 3,
-                        'popular-full-width': 3
+                        news: 9,
+                        sport: 9,
+                        commentisfree: 5,
+                        culture: 5,
+                        popular: 3
                     },
                     desktop: {
-                        default: 3
+                        default: 3,
+                        news: 6,
+                        sport: 6,
+                        commentisfree: 3,
+                        culture: 3
                     },
                     tablet: {
-                        default: 2
+                        default: 2,
+                        news: 5,
+                        sport: 5,
+                        commentisfree: 3,
+                        culture: 3
                     },
                     mobile: {
-                        default: 3,
-                        'small-stories': 2
+                        default: 2,
+                        news: 5,
+                        sport: 5,
+                        commentisfree: 3,
+                        culture: 3,
+                        popular: 3
                     }
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];
@@ -38,9 +53,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                             if (index === _rowSize) {
                                 return true;
                             }
-                            bonzo(item)
-                                .removeClass('u-h')
-                                .addClass('item--headline');
+                            bonzo(item).removeClass('u-h');
                         });
                     if (!moreHidden) {
                         $button.remove();
