@@ -45,7 +45,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
       val remoteLastModified = Store.getSwitchesLastModified
 
       if (remoteLastModified.exists(_.getMillis > localLastModified)) {
-        Redirect(routes.SwitchboardController.render()).flashing("error" -> "Stomp! Try Again.")
+        Redirect(routes.SwitchboardController.render()).flashing("error" -> "A more recent change to the switch has been found, please refresh and try again.")
       } else {
 
         log("saving switchboard", request)
