@@ -25,6 +25,7 @@ CommentBox.CONFIG = {
     classes: {
         component: 'js-comment-box',
         body: 'd-comment-box__body',
+        bodyExpanded: 'd-comment-box__body--expanded',
         submitButton: 'd-comment-box__submit',
         errors: 'd-comment-box__errors',
         error: 'd-comment-box__error'
@@ -60,7 +61,8 @@ CommentBox.prototype.ready = function() {
     this.setFormState();
 
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
-    bean.on(this.context, 'change mousedown', [commentBody], this.setFormState.bind(this));
+    bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
+    bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
 };
 
 /**
@@ -72,6 +74,7 @@ CommentBox.prototype.postComment = function(e) {
     };
 
     e.preventDefault();
+    this.getElem('errors').innerHTML = '';
     this.errors = [];
 
     if (comment.body === '') {
@@ -79,7 +82,7 @@ CommentBox.prototype.postComment = function(e) {
     }
 
     else if (comment.body.length > this.options.maxLength) {
-        this.error('COMMENT_TOO_LONG');
+        this.error('COMMENT_TOO_LONG', 'Comments must be '+ this.options.maxLength +' characters. Yours is currently '+ (comment.body.length-this.options.maxLength) +' too long.');
     }
 
     if (this.errors.length === 0) {
@@ -90,7 +93,8 @@ CommentBox.prototype.postComment = function(e) {
             type: 'json',
             method: 'post',
             crossOrigin: true,
-            headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
+            headers: { 'D2-X-UID': 'zHoBy6HNKsk' },
+            withCredentials: true
         }).then(this.success.bind(this), this.fail.bind(this));
     }
 };
@@ -98,11 +102,12 @@ CommentBox.prototype.postComment = function(e) {
 /**
  * TODO (jamesgorrie): Perhaps change error states to use bit operators
  * @param {string} type
+ * @param {string} message Overrides the default message
  */
-CommentBox.prototype.error = function(type) {
+CommentBox.prototype.error = function(type, message) {
     var error = document.createElement('div');
     error.className = this.getClass('error', true);
-    error.innerHTML = this.getConf().errors[type];
+    error.innerHTML = message || this.getConf().errors[type];
     this.getElem('errors').appendChild(error);
     this.errors.push(type);
 };
@@ -121,26 +126,26 @@ CommentBox.prototype.success = function(resp) {
 /**
  * @param {Reqwest=} resp (optional)
  */
-CommentBox.prototype.fail = function(resp) {
-    
-};
+CommentBox.prototype.fail = function(resp) {};
 
 
 /**
+ * TODO: remove the replace, get the Scala to be better
  * @return {string}
  */
 CommentBox.prototype.getDiscussionId = function() {
-    return this.elem.getAttribute('data-discussion-id');
+    return this.elem.getAttribute('data-discussion-id').replace('discussion', '');
 };
 
 /**
  * Set the form to be postable or not dependant on the comment
+ * @param {Event=} e (optional)
  */
-CommentBox.prototype.setFormState = function() {
+CommentBox.prototype.setFormState = function(e) {
     var commentBody = this.getElem('body'),
         submitButton = this.getElem('submitButton');
 
-    if (commentBody.value.length === 0 || commentBody.value.length > this.options.maxLength) {
+    if (commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
         this.elem.setAttribute('data-disabled', true);
     } else {
@@ -148,6 +153,19 @@ CommentBox.prototype.setFormState = function() {
         this.elem.setAttribute('data-disabled', true);
     }
 };
+
+/**
+ * @param {Event=} e (optional)
+ */
+CommentBox.prototype.setExpanded = function(e) {
+    var commentBody = this.getElem('body'),
+        expandedClass = this.getClass('bodyExpanded', true);
+
+    if (!commentBody.className.match(expandedClass)) {
+        commentBody.className = commentBody.className +' '+ expandedClass;
+    }
+};
+
 
 return CommentBox;
 

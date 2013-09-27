@@ -16,7 +16,7 @@ trait CommentPageController extends DiscussionController {
             "html" -> views.html.fragments.commentsBody(commentPage).toString,
             "hasMore" -> commentPage.hasMore,
             "currentPage" -> commentPage.currentPage,
-            "commentBoxHtml" -> views.html.fragments.commentBox()
+            "commentBoxHtml" -> views.html.fragments.commentBox(commentPage.id)
           )
         else
           Ok(views.html.comments(commentPage))

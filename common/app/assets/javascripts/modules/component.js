@@ -43,11 +43,13 @@ Component.prototype.elems = {};
 
 /**
  * Uses the CONFIG.classes.component
- * TODO (jamesgorrie): accept elements, strings etc
+ * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?
+ * @param {Element|string=} elem (optional)
  */
-Component.prototype.attachTo = function() {
-    var selector = this.getClass('component'),
-        elem = qwery(selector, this.context);
+Component.prototype.attachTo = function(elem) {
+    var selector = this.getClass('component');
+    
+    elem = (elem && elem.nodeType === 1) ? [elem] : qwery(selector, this.context);
 
     if (elem.length === 0) { throw new ComponentError('No element of type "'+ selector +'" to attach to.'); }
     this.elem = elem[0];
@@ -118,6 +120,9 @@ Component.create = function(child) {
     child.prototype = new Tmp();
     child.prototype.constructor = child;
 };
+
+
+
 
 /** @contructor */
 function ComponentError(message) {

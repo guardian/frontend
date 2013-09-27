@@ -418,11 +418,8 @@ $keylineSize: 1px;
     padding: ($baseline*2) ($gutter/2);
     resize: vertical;
     width: 100%;
-
-    &:focus {
-        height: 150px;
-    }
 }
 
-.comment-box__submit {
+.d-comment-box__body--expanded {
+    height: 150px;
 }

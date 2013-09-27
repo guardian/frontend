@@ -5,8 +5,8 @@ define([
     'qwery',
     'bean',
     'ajax',
-    'modules/discussion/recommend-comments',
     'modules/discussion/comment-box',
+    'modules/discussion/recommend-comments',
     'modules/userPrefs',
     'modules/analytics/clickstream',
     'modules/inview',
@@ -17,8 +17,8 @@ define([
     qwery,
     bean,
     ajax,
-    RecommendComments,
     CommentBox,
+    RecommendComments,
     userPrefs,
     ClickStream,
     Inview,
@@ -45,6 +45,7 @@ define([
                     'Want to comment? Visit the desktop site</a>' +
                 '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
             clickstream           = new ClickStream({ addListener: false }),
+            apiRoot               = config.page.discussionApiRoot,
             self;
 
         return {
@@ -137,10 +138,13 @@ define([
                         commentsHaveLoaded = true;
                         currentPage = response.currentPage;
 
-                        RecommendComments.init(context, { apiRoot: config.page.discussionApiRoot });
-
                         common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                         loadingInProgress = false;
+
+                        RecommendComments.init(context, { apiRoot: apiRoot });
+                        if (config.switches.discussionPostComment) {
+                            self.buildCommentBox(response.commentBoxHtml);
+                        }
                     },
                     error: function() {
                         self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments' +
@@ -210,6 +214,15 @@ define([
 
             buildShowMoreLabel: function(num) {
                 return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
+            },
+
+            buildCommentBox: function(html) {
+                var elem = bonzo.create(html),
+                    commentBox;
+
+                bonzo(this.discussionContainerNode).prepend(elem);
+                commentBox = new CommentBox(context, { apiRoot: apiRoot });
+                commentBox.attachTo(elem[0]);
             },
 
             bindEvents: function() {
