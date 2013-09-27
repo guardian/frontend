@@ -59,8 +59,8 @@
     }
     &.section--comments {
         .collection__title {
-            background-color: $green;
-            border-color: $light-green;
+            background-color: $comment-light;
+            border-color: $comment-dark;
         }
         @include mq($to: tablet) {
             @include first-row(1);
