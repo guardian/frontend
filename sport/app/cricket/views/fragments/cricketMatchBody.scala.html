@@ -1,0 +1,11 @@
+@(page: CricketMatchPage)(implicit request: RequestHeader)
+
+<h2 class="article-zone type-1 sport-header">
+    <a class="zone-color" data-link-name="article section" href="@LinkTo{/sport/cricket}">Cricket</a>
+</h2>
+
+<article class="article" role="main">
+    @cricketMatchSummary(page.theMatch)
+
+    @cricketFullScorecard(page.theMatch)
+</article>

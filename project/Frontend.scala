@@ -42,7 +42,13 @@ object Frontend extends Build with Prototypes {
       "feed._"
     )
   )
-  val sport = application("sport").dependsOn(commonWithTests).aggregate(common)
+  val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies += "com.gu" %% "pa-client" % "4.0",
+    templatesImport ++= Seq(
+      "pa._",
+      "feed._"
+    )
+  )
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)
   val image = application("image").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -65,14 +71,13 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val styleGuide = application("style-guide").dependsOn(commonWithTests).aggregate(common)
-
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.novus" %% "salat" % "1.9.2-SNAPSHOT-20130624"
     ),
     (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:admin"))
   )
+  val faciaTool = application("facia-tool").dependsOn(commonWithTests, admin)
   val porter = application("porter").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
@@ -138,7 +143,6 @@ object Frontend extends Build with Prototypes {
     discussion,
     router,
     diagnostics,
-    styleGuide,
     identity)
 
   val faciaDev = application("facia-dev-build").dependsOn(
@@ -164,7 +168,6 @@ object Frontend extends Build with Prototypes {
     discussion,
     router,
     diagnostics,
-    styleGuide,
     admin,
     porter,
     identity

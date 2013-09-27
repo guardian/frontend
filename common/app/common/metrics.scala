@@ -249,6 +249,11 @@ object FootballMetrics {
   )
 }
 
+object FaciaToolMetrics {
+
+  val all: Seq[Metric] = Nil
+}
+
 
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
@@ -258,6 +263,7 @@ object Metrics {
 
   lazy val discussion = DiscussionMetrics.all
   lazy val admin = AdminMetrics.all
+  lazy val faciaTool = FaciaToolMetrics.all
   lazy val porter = PorterMetrics.all
   lazy val coreNavigation = CoreNavivationMetrics.all
   lazy val front = FrontMetrics.all
