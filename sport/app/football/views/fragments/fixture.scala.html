@@ -1,0 +1,14 @@
+@(fixture: pa.Fixture)(implicit request: RequestHeader)
+
+<li class="match">
+    <a href="@LinkTo{@MatchUrl(fixture)}" data-link-name="fixture stats" data-match-id="@fixture.id">
+        <p class="match-desc type-10">
+            <span class="match-desc__team match-desc__team--home">@fixture.homeTeam.name</span>
+            <span class="match-desc__result">v</span>
+            <span class="match-desc__team match-desc__team--away">@fixture.awayTeam.name</span>
+        </p>
+        <p class="match-status type-12">
+            <span class="match-status-desc">Kick-off:</span> @fixture.date.toString("HH:mm")
+        </p>
+    </a>
+</li>

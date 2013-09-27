@@ -153,16 +153,12 @@ $headerHeight: 58px;
     width: 100%;
 }
 
-#preload-0,
-#preload-1,
-#preload-2 {
+.preload {
     @include transform(translateZ(0));
 }
 
 .has-swipe {
-    #preload-0,
-    #preload-1,
-    #preload-2 {
+    .preload {
         position: absolute;
         width: 100%;
     }

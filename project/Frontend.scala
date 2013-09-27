@@ -42,7 +42,13 @@ object Frontend extends Build with Prototypes {
       "feed._"
     )
   )
-  val sport = application("sport").dependsOn(commonWithTests).aggregate(common)
+  val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies += "com.gu" %% "pa-client" % "4.0",
+    templatesImport ++= Seq(
+      "pa._",
+      "feed._"
+    )
+  )
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)
   val image = application("image").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -64,8 +70,6 @@ object Frontend extends Build with Prototypes {
       "net.sf.opencsv" % "opencsv" % "2.3"
     )
   )
-
-  val styleGuide = application("style-guide").dependsOn(commonWithTests).aggregate(common)
 
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -138,7 +142,6 @@ object Frontend extends Build with Prototypes {
     discussion,
     router,
     diagnostics,
-    styleGuide,
     identity)
 
   val faciaDev = application("facia-dev-build").dependsOn(
@@ -164,7 +167,6 @@ object Frontend extends Build with Prototypes {
     discussion,
     router,
     diagnostics,
-    styleGuide,
     admin,
     porter,
     identity

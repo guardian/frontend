@@ -18,10 +18,11 @@ define([
         // Setup
         var context, button, server, loader,
             fixturesId = 'discussion-loader',
+            discussionId = '/p/3ht42',
             fixture = {
                 id: fixturesId,
                 fixtures: [
-                    '<a class="'+ Loader.CONFIG.classes.component +' d-show-cta" href="/discussion/p/3ht42" data-is-ajax data-link-name="View all comments" data-discussion-id="/p/3ht42">View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span></a>'
+                    '<a class="'+ Loader.CONFIG.classes.component +' d-show-cta" href="/discussion'+ discussionId +'" data-is-ajax data-link-name="View all comments" data-discussion-id="'+ discussionId +'">View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span></a>'
                 ]
             };
 
@@ -46,7 +47,6 @@ define([
         });
 
         describe('init', function() {
-
             it('should bind load click events on component elements', function() {
                 var callback = jasmine.createSpy();
                 loader.on('loading', callback);
@@ -61,6 +61,14 @@ define([
                     return callback.calls.length > 0;
                 }, 500);
             });
+        });
+
+        describe('success', function() {
+            it('should render the discussion on the page', function() {
+            });
+        });
+
+        describe('fail', function() {
 
         });
 
