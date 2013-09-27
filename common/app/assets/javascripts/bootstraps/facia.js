@@ -3,9 +3,10 @@ define([
     'common',
     'bonzo',
     //Modules
-    'modules/facia-popular',
-    'modules/facia-relativise-timestamp',
-    'modules/facia-items-show-more',
+    'modules/facia/popular',
+    'modules/facia/relativise-timestamp',
+    'modules/facia/items-show-more',
+    'modules/facia/collection-display-toggle',
     'modules/footballfixtures'
 ], function (
     common,
@@ -13,6 +14,7 @@ define([
     popular,
     RelativiseTimestamp,
     ItemsShowMore,
+    CollectionDisplayToggle,
     FootballFixtures
 ) {
 
@@ -51,7 +53,7 @@ define([
                         // only show 7 rows
                         common.$g('.match:nth-child(n + 8)', $statsItem)
                             .addClass('u-h');
-                        // add it adter the first item
+                        // add it after the first item
                         common.$g('.collection--news.collection--sport-section .item:first-child', context)
                             .after($statsItem);
                         // now hide one of the shown ones
@@ -69,6 +71,15 @@ define([
                     }).init();
                 }
             });
+        },
+
+        showCollectionDisplayToggle: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                common.$g('.js-collection--display-toggle', context).each(function(collection) {
+                    new CollectionDisplayToggle(collection)
+                        .addToggle();
+                });
+            });
         }
 
     };
@@ -80,6 +91,7 @@ define([
             modules.relativiseTimestamps();
             modules.showItemsShowMore();
             modules.showFootballFixtures();
+            modules.showCollectionDisplayToggle();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

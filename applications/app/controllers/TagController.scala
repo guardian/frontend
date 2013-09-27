@@ -7,6 +7,7 @@ import model._
 import play.api.mvc._
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
+import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.json._
 
 import contentapi.QueryDefaults
@@ -19,28 +20,24 @@ case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections with QueryDefaults {
 
-  def getTemplate(implicit request: RequestHeader): (TagAndTrails) => Result = IsFacia(request) match {
+  def getTemplate(implicit request: RequestHeader): (TagAndTrails) => SimpleResult = IsFacia(request) match {
     case Some(v) if Switches.FaciaSwitch.isSwitchedOn => renderTagFaciaStyle
     case _ => renderTag
   }
 
-  def render(path: String) = Action { implicit request =>
-    val promiseOfTag = lookup(path)
-    Async {
-      promiseOfTag.map {
-        case Left(model) => getTemplate(request)(model)
-        case Right(notFound) => notFound
-      }
+  def renderJson(path: String) = render(path)
+  def render(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => getTemplate(request)(model)
+      case Right(notFound) => notFound
     }
   }
 
-  def renderTrails(path: String) = Action { implicit request =>
-    val promiseOfTag = lookup(path)
-    Async {
-      promiseOfTag.map {
-        case Left(model) => renderTrailsFragment(model)
-        case Right(notFound) => notFound
-      }
+  def renderTrailsJson(path: String) = renderTrails(path)
+  def renderTrails(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => renderTrailsFragment(model)
+      case Right(notFound) => notFound
     }
   }
 
@@ -73,10 +70,10 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     }.recover{suppressApiNotFound}
   }
 
-  private def renderTag(model: TagAndTrails)(implicit request: RequestHeader): Result =
+  private def renderTag(model: TagAndTrails)(implicit request: RequestHeader): SimpleResult =
     renderTag(model, views.html.tag.apply)
 
-  private def renderTagFaciaStyle(mode: TagAndTrails)(implicit request: RequestHeader): Result =
+  private def renderTagFaciaStyle(mode: TagAndTrails)(implicit request: RequestHeader): SimpleResult =
     renderTag(mode, views.html.tagFacia.apply)
 
   private def renderTag(model: TagAndTrails, template: (Tag, Seq[Trail], Seq[Trail]) => Html)(implicit request: RequestHeader) = {

@@ -9,5 +9,5 @@ GET     /resize/im4j/*path      controllers.ImageController.render(path, mode: S
 
 # Nb. changing these URLs will bust the image cache. Be very careful! 
 
-GET     /:profile/*path   controllers.ImageController.render(path, mode: String = "im4java", profile: String)
+GET     /:profile/*path         controllers.ImageController.render(path, mode: String = "im4java", profile: String)
 

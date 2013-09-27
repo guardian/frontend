@@ -3,19 +3,20 @@
 @if(content.allowUserGeneratedContent) {
     @content.witnessAssignment.map{ assignmentId =>
         @defining(s"https://witness.theguardian.com/assignment/$assignmentId#contribute"){ assignmentUrl =>
-            <div class="witness-call-to-action">
-                <a href="@LinkTo{@assignmentUrl}" data-link-name="witness cta plus">
-                    <i class="i i-ee-add-button"></i>
-                 </a>
-                    <div class="witness-call-to-action--box">
-                        <a href="@LinkTo{@assignmentUrl}" data-link-name="witness cta text">
-                            <p>
-                                Contribute with <i class="i i-witness-logo" title="Guardian Witness"></i>
-                            </p>
-                        </a>
-                        <i class="i i-powered-by-ee"></i>
+            <a href="@LinkTo{@assignmentUrl}" data-link-name="witness cta">
+                <div class="witness-cta-wrapper">
+                    <i class="i i-ee-add-button witness-cta__icon"></i>
+                    <div class="witness-cta">
+                        <div class="witness-cta__body">
+                            Contribute with
+                            <span class="witness-logo witness-cta__logo">Guardian <span class="witness-logo__witness">Witness</span></span>
+                        </div>
+                        <div class="witness-cta__sponsor">
+                            <i class="i i-powered-by-ee"></i>
+                        </div>
                     </div>
-            </div>
+                </div>
+            </a>
        }
     }
 }

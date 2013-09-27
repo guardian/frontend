@@ -1,4 +1,6 @@
-import io.Source
+package com.gu
+
+import scala.io.Source
 import java.io.FileWriter
 import sbt._
 import Keys._

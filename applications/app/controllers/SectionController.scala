@@ -15,29 +15,23 @@ object SectionController extends Controller with Logging with Paging with JsonTr
 
   def renderJson(path: String) = render(path)
 
-  def getTemplate(implicit request: RequestHeader): (SectionFrontPage) => Result = IsFacia(request) match {
+  def getTemplate(implicit request: RequestHeader): (SectionFrontPage) => SimpleResult = IsFacia(request) match {
     case Some(v) if Switches.FaciaSwitch.isSwitchedOn => renderSectionFrontFaciaStyle
     case _  => renderSectionFront
   }
 
-  def render(path: String) = Action { implicit request =>
-    val promiseOfSection = lookup(path)
-    Async {
-      promiseOfSection.map {
-        case Left(model) => getTemplate(request)(model)
-        case Right(notFound) => notFound
-      }
+  def render(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => getTemplate(request)(model)
+      case Right(notFound) => notFound
     }
   }
 
-  def renderJsonTrails(path: String) = renderTrails(path)
-  def renderTrails(path: String) = Action { implicit request =>
-    val promiseOfSection = lookup(path)
-    Async {
-      promiseOfSection.map {
-        case Left(model) => renderTrailsFragment(model)
-        case Right(notFound) => notFound
-      }
+  def renderTrailsJson(path: String) = renderTrails(path)
+  def renderTrails(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => renderTrailsFragment(model)
+      case Right(notFound) => notFound
     }
   }
 
@@ -58,10 +52,10 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     }.recover{suppressApiNotFound}
   }
 
-  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader): Result =
+  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader): SimpleResult =
     renderSectionFront(model, views.html.section.apply)
 
-  private def renderSectionFrontFaciaStyle(mode: SectionFrontPage)(implicit request: RequestHeader): Result =
+  private def renderSectionFrontFaciaStyle(mode: SectionFrontPage)(implicit request: RequestHeader): SimpleResult =
     renderSectionFront(mode, views.html.sectionFacia.apply)
 
   private def renderSectionFront(model: SectionFrontPage, template: (Section, Seq[Trail]) => Html)(implicit request: RequestHeader) = {

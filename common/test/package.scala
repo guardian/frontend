@@ -1,6 +1,7 @@
 package test
 
 import conf.{ElasticSearchContentApi, Configuration, ContentApi}
+import java.net.URLEncoder
 import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
@@ -78,7 +79,7 @@ trait TestSettings {
 class EditionalisedHtmlUnit extends TestSettings {
 
   // the default is I.E 7 which we do not support
-  BrowserVersion.setDefault(BrowserVersion.FIREFOX_3_6)
+  BrowserVersion.setDefault(BrowserVersion.CHROME)
 
   val host = "http://localhost:9000"
 
@@ -140,6 +141,10 @@ object WithHost {
   def apply(path: String): String = UK(path)
   def UK(path: String): String = s"http://localhost:9000$path"
   def US(path: String): String = s"http://127.0.0.1:9000$path"
+}
+
+object DesktopVersionLink {
+  def apply(path: String) = s"http://localhost:9000/preference/platform/desktop?page=${URLEncoder.encode(s"$path?view=desktop", "UTF-8")}"
 }
 
 /**

@@ -8,9 +8,10 @@ $light-green: #d2dd2e;
 $dark-green: #19646c;
 
 .collection {
-    margin-top: gs-height(1);
+    position: relative;
 }
 .collection__title {
+    margin-top: gs-height(1);
     @include font($serifheadline, 800, 16);
     @include box-sizing(border-box);
     height: gs-height(1);
@@ -18,11 +19,16 @@ $dark-green: #19646c;
     color: #ffffff;
     background-color: $light-blue;
     border-top: $gs-baseline/3 solid $blue;
-    margin-bottom: $gs-baseline;
 }
-.collection--top-stories .collection__title {
-    background-color: $blue;
-    border-color: $light-blue;
+.collection__display-toggle {
+    position: absolute;
+    top: $gs-baseline*(2/3);
+    right: $gs-gutter/5;
+    border: none;
+    background-color: transparent;
+    @include font($serifheadline, 800, 16);
+    color: #ffffff;
+    padding: 0;
 }
 .item {
     position: relative;
@@ -41,14 +47,28 @@ a.item__link,
     @include box-sizing(border-box);
     border-top: 2px solid $light-blue;
     padding-top: $gs-baseline*(2/3);
+    @include mq($to: tablet) {
+        @include font-size(20, 24);
+    }
+    @include mq(tablet) {
+        @include font-size(26, 28);
+    }
+}
+.item__byline {
+    margin: $gs-baseline/3 0 0;
+    color: $dark-green;
+    font-weight: 700;
+    @include font-size(16);
 }
 .item__standfirst {
-    margin: $gs-baseline 0 0;
+    margin: $gs-baseline*2 0 0;
+    @include font-size(16, 20);
 }
 .item__meta {
     color: $grey;
     @include font($sans-serif, lighter, 12, 12);
     margin-top: $gs-baseline*(5/3);
+    padding-bottom: $gs-baseline;
     overflow: hidden;
     min-height: 16px;
     .item__timestamp,
@@ -83,9 +103,6 @@ a.item__link,
         }
     }
 }
-.item__image-container {
-    overflow: hidden;
-}
 .item__duration {
     position: absolute;
     top: 0;
@@ -100,7 +117,7 @@ a.item__link,
     }
 }
 .item__image-container {
-    margin-top: $gs-baseline*2;
+    margin-top: $gs-baseline;
 }
 .item__image {
     display: block;
@@ -127,17 +144,180 @@ a.item__link,
 .item--comment {
     .item__title {
         border-top-color: $green;
+        position: relative;
+        padding-top: 40px;
+    }
+    .item__link .i {
+        position: absolute;
+        left: 0;
+        top: $gs-baseline*(2/3);
     }
 }
-.item--headline {
-    @include mq($to: tablet) {
-        .item__title {
-            @include font-size(18, 24);
-            border-top-color: $grey;
-            border-top-width: 1px;
+
+.items--cards {
+    font-size: 0;
+    .item {
+        margin-top: $gs-baseline*2;
+        @include mq(tablet) {
+            display: inline-block;
+            vertical-align: top;
+            padding-left: $gs-gutter/2 - 1;
+            padding-right: $gs-gutter/2;
+            border-left: 1px dotted $grey;
+            @include box-sizing(content-box);
+            width: gs-span(4);
         }
-        .item__meta {
+    }
+    .item__title {
+        @include mq(tablet) {
+            min-height: gs-height(3);
+        }
+    }
+    .item__standfirst {
+        display: none;
+    }
+    .item--without-image .item__standfirst {
+        @include mq(tablet) {
+            display: block;
+            min-height: gs-height(4);
+        }
+    }
+    .item__image-container {
+        @include mq(tablet) {
+            height: gs-height(4);
+        }
+    }
+    .item__image {
+        @include mq($to: tablet) {
+            width: 100%;
+        }
+        @include mq(tablet) {
+            height: 100%;
+        }
+    }
+}
+
+@mixin first-row($first-row-size) {
+    .item:nth-child(-n + #{$first-row-size}) {
+        .item__title {
+            padding-top: 0;
+            border-top-style: none;
+        }
+        &.item--comment {
+            .item__title {
+                padding-top: 32px;
+            }
+            .item__link .i {
+                top: 0;
+            }
+        }
+    }
+}
+@mixin row-start {
+    padding-left: 0;
+    border-left-style: none;
+}
+@mixin row-end {
+    padding-right: 0;
+}
+@mixin row($row-size, $first-row-size: $row-size) {
+    // styling for first row
+    @include first-row($row-size);
+    // stylings for begining and end of rows
+    .item:first-child,
+    .item:nth-child(#{$row-size}n + #{$first-row-size + 1}) {
+        @include row-start;
+    }
+    .item:nth-child(#{$row-size}n + #{$first-row-size}),
+    .item:nth-child(#{$row-size}n + #{$first-row-size + $row-size}) {
+        @include row-end;
+    }
+}
+
+@mixin card($without-extras: false, $not-first-row: false) {
+    .item__title {
+        @include font-size(24, 28);
+    }
+    @include mq($to: tablet) {
+        width: 100%;
+    }
+    @if $without-extras {
+        .item__standfirst,
+        .item__image-container {
             display: none;
         }
+        @include mq($to: tablet) {
+            .item__meta {
+                padding-bottom: 0;
+            }
+        }
+    }
+    @if $not-first-row {
+        padding-top: $gs-baseline;
+        margin-top: 0;
+    }
+}
+@mixin card-half-width($without-image: false) {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: $gs-gutter/2 - 1;
+    padding-right: $gs-gutter/2;
+    border-left: 1px dotted $grey;
+    .item__title {
+        @include font-size(20, 24);
+        min-height: gs-height(3);
+    }
+    @if $without-image {
+        .item__image-container {
+            display: none;
+        }
+    }
+}
+@mixin card-headline {
+    padding: 0;
+    border-left-style: none;
+    .item__title {
+        min-height: 0;
+        @include font-size(18, 24);
+        padding-top: $gs-baseline*(2/3);
+        border-top-color: $grey;
+        border-top-width: 1px;
+        .i {
+            display: none
+        }
+    }
+    .item__meta,
+    .item__image-container {
+        display: none;
+    }
+}
+@mixin card-double-width {
+    width: gs-span(8);
+    .item__image-container {
+        height: gs-height(8);
+    }
+    @include mq(desktop) {
+        float: left;
+    }
+}
+
+@mixin card-triple-width {
+    width: gs-span(12);
+    height: gs-height(8);
+    &.item--with-image {
+        width: gs-span(4);
+        padding-left: gs-span(8) + $gs-gutter;
+    }
+    .item__standfirst {
+        display: block;
+    }
+    .item__image-container {
+        height: 100%;
+        width: gs-span(8);
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0 auto;
     }
 }

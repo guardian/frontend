@@ -1,4 +1,4 @@
-define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
+define(['common', 'modules/detect', 'bean', 'modules/experiments/ab'], function (common, detect, bean, ab) {
 
     var Clickstream = function (opts) {
 
@@ -91,6 +91,16 @@ define(['common', 'modules/detect', 'bean'], function (common, detect, bean) {
                 }
 
                 clickSpec = getClickSpec(clickSpec);
+
+                // prefix ab tests to the click spec
+                var applicableTests = ab.getActiveTestsEventIsApplicableTo(clickSpec);
+                if (applicableTests !== undefined && applicableTests.length > 0) {
+                    clickSpec.tag = applicableTests.map(function (test) {
+                        var variant = ab.getTestVariant(test);
+                        return "AB," + test + "," + variant + "," + clickSpec.tag;
+                    }).join(',');
+                }
+
                 if (clickSpec) {
                     common.mediator.emit('module:clickstream:click', clickSpec);
                 }
