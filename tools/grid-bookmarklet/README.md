@@ -8,5 +8,7 @@ The gridlet bookmarklet overlays the NextGen grid over the current page. It can 
 - **D**: Desaturate content area
 - **Arrow keys**: precise positioning 
 
-Drag the link below to the bookmarks bar:
-#### [NG Grid](javascript:\(function\(\)%7Bdocument.body.appendChild\(document.createElement\('script'\)\).src='https://rawgithub.com/guardian/frontend/grid-bookmarklet/tools/grid-bookmarklet/grid.js?'+\(new Date\(\)\).getTime\(\);%7D\)\(\);)
+Copy the code below to the bookmarks bar:
+```
+javascript:javascript:(function()%7Bdocument.body.appendChild(document.createElement('script')).src='https://rawgithub.com/guardian/frontend/grid-bookmarklet/tools/grid-bookmarklet/grid.js?'+(new Date()).getTime();%7D)();
+```
