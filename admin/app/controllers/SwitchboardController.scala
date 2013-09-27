@@ -39,7 +39,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
 
     if (remoteLastModified.exists(_.getMillis > localLastModified)) {
       Future {
-        Redirect(routes.SwitchboardController.render()).flashing("error" -> "A more recent change to the switch has been found, please refresh and try again.")
+        Redirect(routes.SwitchboardController.renderSwitchboard()).flashing("error" -> "A more recent change to the switch has been found, please refresh and try again.")
       }
     } else {
       log("saving switchboard", request)
