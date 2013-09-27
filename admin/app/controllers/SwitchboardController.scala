@@ -12,10 +12,11 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def renderSwitchboard() = Authenticated.async { request =>
+  def renderSwitchboard() = Authenticated.async { implicit request =>
     log("loaded Switchboard", request)
 
-    Future { Store.getSwitches } map { configuration =>
+    Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
+      val configuration = switchesWithLastModified.map(_._1)
       val nextStateLookup = Properties(configuration getOrElse "")
 
       Switches.all foreach { switch =>
@@ -25,21 +26,35 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
         }
       }
 
-      Ok(views.html.switchboard(Configuration.environment.stage))
+      val lastModified = switchesWithLastModified.map(_._2).map(_.getMillis).getOrElse(System.currentTimeMillis)
+      Ok(views.html.switchboard(Configuration.environment.stage, lastModified))
     }
   }
 
-  def save() = Authenticated.async { request =>
-    log("saving switchboard", request)
+  def save() = Authenticated.async { implicit request =>
+    val form = request.body.asFormUrlEncoded
 
-    val requester = Identity(request).get.fullName
-    val updates = request.body.asFormUrlEncoded.map { params =>
-      Switches.all map { switch =>
-        switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")
+    val localLastModified = form.get("lastModified").head.toLong
+    val remoteLastModified = Store.getSwitchesLastModified
+
+    if (remoteLastModified.exists(_.getMillis > localLastModified)) {
+      Future {
+        Redirect(routes.SwitchboardController.render()).flashing("error" -> "A more recent change to the switch has been found, please refresh and try again.")
       }
-    }.get
+    } else {
+      log("saving switchboard", request)
 
-    Future { saveSwitchesOrError(requester, updates) }
+      val requester = Identity(request).get.fullName
+      val updates = request.body.asFormUrlEncoded.map { params =>
+          Switches.all map { switch =>
+              switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")
+          }
+      }.get
+
+      Future {
+        saveSwitchesOrError(requester, updates)
+      }
+    }
   }
 
   private def saveSwitchesOrError(requester: String, updates: List[String]) = try {

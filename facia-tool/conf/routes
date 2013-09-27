@@ -1,0 +1,37 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# authentication endpoints
+GET           /login                     controllers.Login.login
+POST          /login                     controllers.Login.loginPost
+GET           /openIDCallback            controllers.Login.openIDCallback
+GET           /logout                    controllers.Login.logout
+
+# static files
+GET           /assets/*file              controllers.Assets.at(path="/public", file)
+
+##################### NOTE ############################
+#all endpoints below this line should be authenticated#
+#######################################################
+
+# Fronts
+GET           /                          controllers.FrontsController.index()
+GET           /config/*id                controllers.FrontsController.getConfig(id)
+
+GET           /collection/*id            controllers.FrontsController.readBlock(id)
+POST          /collection/*id            controllers.FrontsController.updateBlock(id)
+DELETE        /collection/*id            controllers.FrontsController.deleteTrail(id)
+GET           /collection                controllers.FrontsController.listCollections
+GET           /config                    controllers.FrontsController.listConfigs
+
+# API endpoint proxying for https
+GET           /api/proxy/*path           controllers.Api.proxy(path, callback)
+GET           /api/tag                   controllers.Api.tag(q, callback)
+GET           /api/item/*path            controllers.Api.item(path, callback)
+GET           /json/proxy/*absUrl        controllers.Api.json(absUrl)
+
+# Ophan proxying for https
+GET           /ophan/pageviews/*path     controllers.OphanApiController.pageViews(path)
+
+GET           /admin                     controllers.FrontsController.admin()
