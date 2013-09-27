@@ -195,32 +195,6 @@ a.item__link,
             height: 100%;
         }
     }
-    .item--shown {
-        @include mq($to: tablet) {
-            padding: 0;
-            border-left-style: none;
-            .item__title {
-                min-height: 0;
-                @include font-size(18, 24);
-                padding-top: $gs-baseline*(2/3);
-                border-top-color: $grey;
-                border-top-width: 1px;
-                .i {
-                    display: none
-                }
-            }
-            .item__meta,
-            .item__image-container {
-                display: none;
-            }
-        }
-        @include mq(tablet) {
-            .item__standfirst,
-            .item__image-container {
-                display: none;
-            }
-        }
-    }
 }
 
 @mixin first-row($first-row-size) {
@@ -298,6 +272,24 @@ a.item__link,
         .item__image-container {
             display: none;
         }
+    }
+}
+@mixin card-headline {
+    padding: 0;
+    border-left-style: none;
+    .item__title {
+        min-height: 0;
+        @include font-size(18, 24);
+        padding-top: $gs-baseline*(2/3);
+        border-top-color: $grey;
+        border-top-width: 1px;
+        .i {
+            display: none
+        }
+    }
+    .item__meta,
+    .item__image-container {
+        display: none;
     }
 }
 @mixin card-double-width {

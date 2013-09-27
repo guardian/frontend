@@ -53,9 +53,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                             if (index === _rowSize) {
                                 return true;
                             }
-                            bonzo(item)
-                                .removeClass('u-h')
-                                .addClass('item--shown');
+                            bonzo(item).removeClass('u-h');
                         });
                     if (!moreHidden) {
                         $button.remove();

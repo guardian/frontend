@@ -8,12 +8,21 @@
         .item:nth-child(3) {
             @include card($without-extras: true);
         }
+        .item:nth-child(n + 4) {
+            @include card-headline;
+        }
     }
     @include mq(tablet, desktop) {
         @include row(2);
+        .item:nth-child(n + 3) {
+            @include card($without-extras: true);
+        }
     }
     @include mq(desktop, wide) {
         @include row(3);
+        .item:nth-child(n + 4) {
+            @include card($without-extras: true);
+        }
     }
     @include mq(wide) {
         @include first-row(2);
@@ -34,11 +43,12 @@
             @include card-triple-width;
             float: left;
         }
-        .item:nth-child(2) {
+        .item:nth-child(n + 2) {
             @include card($without-extras: true);
         }
         .item:nth-child(3) {
-            @include card($without-extras: true, $not-first-row: true);
+            padding-top: $gs-baseline;
+            margin-top: 0;
         }
     }
 }
