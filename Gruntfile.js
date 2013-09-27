@@ -251,6 +251,28 @@ module.exports = function (grunt) {
             }
         },
 
+        imagemin: {
+            sprite: {
+                files: [{
+                    'common/app/assets/images/global/sprite.png': 'common/app/assets/images/global/sprite.png'
+                }]
+            },
+
+            all: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/images/',
+                    src: ['**/*.png'],
+                    dest: 'common/app/assets/images/'
+                },{
+                    expand: true,
+                    cwd: 'common/app/public/images/',
+                    src: ['**/*.{png,gif,jpg}'],
+                    dest: 'common/app/public/images/'
+                }]
+            }
+        },
+
 
         // Create JSON web font files from fonts.
         // Docs here: https://github.com/ahume/grunt-webfontjson
@@ -357,6 +379,13 @@ module.exports = function (grunt) {
           hooks: {
             // Copy the project's pre-commit hook into .git/hooks
             command: 'cp git-hooks/pre-commit .git/hooks/'
+          },
+
+          icons: {
+            command: [
+                'cd tools/sprites/',
+                'node spricon.js global-icon-config.json'
+            ].join('&&')
           }
         }
 
@@ -375,6 +404,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
 
     // Standard tasks
     grunt.registerTask('test:unit', ['jasmine']);
@@ -395,6 +425,8 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:common:css', ['sass:common']);
     grunt.registerTask('compile:common:js', ['requirejs:common']);
     grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
+
+    grunt.registerTask('compile:icons', ['shell:icons', 'imagemin:sprite']);
 
     grunt.registerTask('analyse:common:css', ['cssmetrics:common']);
     grunt.registerTask('analyse', ['analyse:common:css']);
