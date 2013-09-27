@@ -1,0 +1,52 @@
+@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, registrationForm: Form[(String, String, String, Boolean, Boolean)])(implicit request: RequestHeader)
+
+@import form.IdFormHelpers._
+@import views.html.fragments.form.{idInputEmail, idInputPassword, idInputUsername, idCheckbox}
+@import views.html.fragments.registrationFooter
+@import views.html.fragments.socialSignin
+
+@main(page, conf.Switches.all){
+}{
+<div class="identity-wrapper">
+    <h1>Create your Guardian account</h1>
+
+    @socialSignin(page, idRequest, idUrlBuilder)
+
+    <div class="identity-section">
+        <h2 class="type-2">Register with an email address</h2>
+        <p>All fields required.</p>
+
+        <form class="form js-register-form" novalidate action="@idUrlBuilder.buildUrl("/register", idRequest)" role="main" method="post">
+            @if(registrationForm.globalError.isDefined) {
+                <div class="form__error">@registrationForm.globalErrors.map(_.message).mkString(", ")</div>
+            }
+
+            <ul class="form-fields">
+
+                @idInputEmail(registrationForm("user.primaryEmailAddress"), '_label -> "Email address")
+                @idInputUsername(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only", 'class -> "js-register-username")
+                @idInputPassword(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password js-password-strength")
+
+                <li>
+                    <label class="check-label">
+                        @idCheckbox(registrationForm("receive_gnm_marketing"))
+                        Keep me up to date with offers and developments from the Guardian
+                    </label>
+                    <label class="check-label">
+                        @idCheckbox(registrationForm("receive_third_party_marketing"))
+                        Send me messages from 3rd party organisations screened by the Guardian
+                    </label>
+                </li>
+                <li>
+                    <button type="submit" class="submit-input" data-link-name="Create account">Create account</button>
+                </li>
+            </ul>
+            <div class="form__note">
+                By proceeding, you agree to The Guardian's <a href="http://www.theguardian.com/help/terms-of-service" data-link-name="Terms of service">Terms of Service</a> and <a href="http://www.theguardian.com/help/privacy-policy" data-link-name="Privacy policy">Privacy Policy</a>.
+            </div>
+        </form>
+    </div>
+
+    @registrationFooter(page, idRequest, idUrlBuilder)
+</div>
+}

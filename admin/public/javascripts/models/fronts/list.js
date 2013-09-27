@@ -16,26 +16,37 @@ define([
     ophanApi
 ) {
 
-    function List(id) {
+    function List(opts) {
         var self = this;
 
-        this.id = id;
-        this.crumbs = id.split(/\//g);
+        opts = opts || {};
+
+        if (!opts.id) { return; }
+
+        this.id      = opts.id;
 
         this.live   = ko.observableArray();
         this.draft  = ko.observableArray();
 
-        this.meta   = common.util.asObservableProps([
+        // properties from the config, about this collection
+        this.configMeta   = common.util.asObservableProps([
+            'displayName',
+            'min',
+            'max',
+            'roleName',
+            'roleDescription']);
+        common.util.populateObservables(this.configMeta, opts);
+
+        // properties from the collection itself
+        this.collectionMeta = common.util.asObservableProps([
+            'displayName',
             'lastUpdated',
             'updatedBy',
             'updatedEmail']);
-        this.config = common.util.asObservableProps([
-            'contentApiQuery',
-            'min',
-            'max']);
+
         this.state  = common.util.asObservableProps([
             'liveMode',
-            'hasUnPublishedEdits',
+            'hasDraft',
             'loadIsPending',
             'editingConfig',
             'timeAgo']);
@@ -43,8 +54,8 @@ define([
         this.state.liveMode(common.config.defaultToLiveMode);
 
         this.needsMore = ko.computed(function() {
-            if (self.state.liveMode()  && self.live().length  < self.config.min()) { return true; }
-            if (!self.state.liveMode() && self.draft().length < self.config.min()) { return true; }
+            if (self.state.liveMode()  && self.live().length  < self.configMeta.min()) { return true; }
+            if (!self.state.liveMode() && self.draft().length < self.configMeta.min()) { return true; }
             return false;
         });
 
@@ -68,8 +79,9 @@ define([
         this.state.editingConfig(!this.state.editingConfig());
     };
 
-    List.prototype.stopEditingConfig = function() {
+    List.prototype.cancelEditingConfig = function() {
         this.state.editingConfig(false);
+        this.load();
     };
 
     List.prototype.setMode = function(isLiveMode) {
@@ -77,7 +89,7 @@ define([
         this.decorate();
     };
 
-    List.prototype.setLiveMode = function(isLiveMode) {
+    List.prototype.setLiveMode = function() {
         this.setMode(true);
     };
 
@@ -105,14 +117,14 @@ define([
         }).then(
             function(resp) {
                 self.load({
-                    callback: function(){ self.setMode(goLive); }
+                    callback: function(){ self.setLiveMode(); }
                 });
             },
             function(xhr) {
                 self.state.loadIsPending(false);
             }
         );
-        this.state.hasUnPublishedEdits(false);
+        this.state.hasDraft(false);
         this.state.loadIsPending(true);
     };
 
@@ -127,8 +139,8 @@ define([
             contentType: 'application/json',
             data: JSON.stringify({
                 item: item.meta.id(),
-                live: self.state.liveMode(),
-                draft: true
+                live:   self.state.liveMode(),
+                draft: !self.state.liveMode()
             })
         }).then(
             function(resp) {
@@ -144,8 +156,6 @@ define([
         var self = this;
         opts = opts || {};
 
-        common.util.mediator.emit('list:load:start');
-
         reqwest({
             url: common.config.apiBase + '/collection/' + this.id,
             type: 'json'
@@ -153,40 +163,27 @@ define([
             function(resp) {
                 self.state.loadIsPending(false);
 
-                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.meta.lastUpdated())) { 
-                    // noop    
+                self.state.hasDraft(_.isArray(resp.draft));
+
+                if (opts.isRefresh && (self.state.loadIsPending() || resp.lastUpdated === self.collectionMeta.lastUpdated())) {
+                    // noop
                 } else {
                     self.populateLists(resp);
                 }
 
-                if (resp.lastUpdated !== self.meta.lastUpdated()) {
-                    self.populateMeta(resp);
-                }
-
                 if (!self.state.editingConfig()) {
-                    self.populateConfig(resp);
+                    common.util.populateObservables(self.collectionMeta, resp)
+                    self.state.timeAgo(self.getTimeAgo(resp.lastUpdated));
                 }
 
-                if (_.isFunction(opts.callback)) { opts.callback(); } 
+                self.decorate();
 
-                common.util.mediator.emit('list:load:end');
+                if (_.isFunction(opts.callback)) { opts.callback(); }
             }
         );
     };
 
-    List.prototype.populateMeta = function(opts) {
-        common.util.populateObservables(this.meta, opts)
-        this.state.timeAgo(this.getTimeAgo(opts.lastUpdated));
-    }
-
-    List.prototype.populateConfig = function(opts) {
-        common.util.populateObservables(this.config, opts)
-    };
-
     List.prototype.populateLists = function(opts) {
-        var self = this;
-        
-
         opts = opts || {};
 
         if (common.state.uiBusy) { return; }
@@ -198,24 +195,26 @@ define([
             this.containerEl.empty();
         }
 
-        ['live', 'draft'].forEach(function(list){
-            if (self[list]) {
-                self[list].removeAll();
-            }
-            if (opts[list] && opts[list].length) {
-                opts[list].forEach(function(item, index) {
-                    self[list].push(new Article({
-                        id: item.id,
-                        index: index,
-                        webTitleOverride: item.webTitleOverride
-                    }));
-                });
-            }
-        });
-
-        self.decorate();
-        this.state.hasUnPublishedEdits(opts.areEqual === false);
+        this.importList(opts, 'live', 'live');
+        this.importList(opts, this.state.hasDraft() ? 'draft' : 'live', 'draft');
     };
+
+    List.prototype.importList = function(opts, from, to) {
+        var self = this;
+
+        if (self[to]) {
+            self[to].removeAll();
+        }
+        if (opts[from]) {
+            opts[from].forEach(function(item, index) {
+                self[to].push(new Article({
+                    id: item.id,
+                    index: index,
+                    webTitleOverride: item.webTitleOverride
+                }));
+            });
+        }
+    }
 
     List.prototype.decorate = function() {
         var list = this[this.state.liveMode() ? 'live' : 'draft']();
@@ -234,25 +233,21 @@ define([
     List.prototype.saveConfig = function() {
         var self = this;
 
-        // Normalise
-        this.config.contentApiQuery(this.config.contentApiQuery().replace(/^.*\/api\/?/, ''));
-        this.config.min(parseInt(this.config.min(), 10) || undefined);
-        this.config.max(parseInt(this.config.max(), 10) || undefined);
+        this.state.editingConfig(false);
+        this.state.loadIsPending(true);
 
         reqwest({
             url: common.config.apiBase + '/collection/' + this.id,
             method: 'post',
             type: 'json',
             contentType: 'application/json',
-            data: JSON.stringify({ 
+            data: JSON.stringify({
                 config: {
-                    contentApiQuery: this.config.contentApiQuery(),
-                    min: this.config.min(),
-                    max: this.config.max()
+                    displayName: this.collectionMeta.displayName()
                 }
             })
         }).always(function(){
-            self.stopEditingConfig();
+            self.load();
         });
     };
 

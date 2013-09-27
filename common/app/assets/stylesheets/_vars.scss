@@ -36,15 +36,25 @@ $trailblockImgWidthLarge: 140px;
 
 @import 'layout/_grid-system';
 
+// Article breakpoints
+$a-leftCol-width:    gs-span(2);
+$a-leftCol-trigger:  gs-span(13) + $gutter*2;
+$a-rightCol-width:   gs-span(4);
+$a-rightCol-trigger: gs-span(11) + $gutter*2;
+
 $mq-breakpoints: (
-    (mobile  gs-span(4) + $gutter*2)  // 332px
-    (tablet  gs-span(9) + $gutter*2)  // 732px
-    (desktop gs-span(12) + $gutter*2) // 972px
-    (wide    gs-span(16) + $gutter*2) // 1292px
+    (mobile  gs-span(4) + $gutter*2)  // 340px
+    (tablet  gs-span(8) + $gutter*2)  // 660px
+    (desktop gs-span(12) + $gutter*2) // 980px
+    (wide    gs-span(16) + $gutter*2) // 1300px
 
     // Tweakpoints
     (desktopAd 810px)
     (mobileLandscape 480px)
+
+    // Article layout
+    (rightCol $a-rightCol-trigger)
+    (leftCol $a-leftCol-trigger)
 );
 
 
@@ -72,13 +82,16 @@ $darkMushroom: #E3E3DB;
 $grey: #B3B3B4;
 $darkGrey: #676767;
 
+$neutral1: #333333;
+$neutral2: #676767;
+$neutral3: #cfcfcd;
+
 
 
 /* Zones
    ========================================================================== */
 
 /**
- * (be sure to update the styleguide when changing these)
  * note: try to at least alphabetise these within sections
  */
 $articleOrange: #e47a39; //Used for live-blogging

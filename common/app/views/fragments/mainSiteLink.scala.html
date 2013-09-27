@@ -1,7 +1,12 @@
 @(item: MetaData)(implicit request: RequestHeader)
 @import common._
 @import model.MetaData
+@import java.net.URLEncoder.encode
 
-<a class="main-site-link" rel="nofollow" href="@LinkTo{/@item.id}?view=desktop" data-link-name="desktop version @Edition(request).id - bottom of page">Desktop version</a>
-
-
+@defining(encode(s"${LinkTo(s"/${item.id}")}?view=desktop", "UTF-8")){ encodedDestinationUrl =>
+    <a class="js-main-site-link" rel="nofollow"
+        href="@LinkTo{/preference/platform/desktop}?page=@encodedDestinationUrl"
+        data-link-name="desktop version @Edition(request).id - bottom of page">
+        Desktop version
+    </a>
+}

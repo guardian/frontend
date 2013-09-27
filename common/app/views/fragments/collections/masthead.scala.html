@@ -1,0 +1,53 @@
+@(config: Config, collection: Collection, style: Style)(implicit request: RequestHeader)
+
+<section class="collection collection--@style.className collection--@{config.section}-section"
+         data-link-name="block | @collection.displayName.getOrElse(config.id)"
+         data-collection-type="@style.className"
+         data-section="@config.section">
+
+    @Seq(config.displayName, collection.displayName).find(_.nonEmpty).map { title =>
+        <h2 class="collection__title">@title</h2>
+    }
+
+    @defining(collection.items.take(4)) { items =>
+        <ul class="unstyled items item-count-@items.size">
+            @items.zipWithIndex.map{ case (trail, index) =>
+                <li class="item @trail.trailType.map("item--" + _)" data-link-name="trail | @{index + 1}" @trail.discussionId.map{ id => data-discussion-id="@id" }>
+                    @if(trail.trailType == Option("comment")) {
+                        <span class="i i-quotes-green"></span>
+                    }
+                    <a href="@LinkTo{@trail.url}" class="item__link">
+                        @trail.mainPicture(620).map{ mainPicture =>
+                            <div class="item__image-container">
+                                <img class="item__image" src="@mainPicture.path" alt="" />
+                            </div>
+                        }
+                        <h2 class="item__title">@RemoveOuterParaHtml(trail.headline)</h2>
+                    </a>
+                    @if(trail.trailType == Option("comment")) {
+                        <p class="item__byline">@trail.byline</p>
+                    }
+                    <div class="item__meta">
+                        <time class="item__timestamp js-item__timestamp"
+                              itemprop="datePublished"
+                              datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                              data-timestamp="@trail.webPublicationDate.getMillis">
+                            <i class="i"></i>
+                            <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
+                        </time>
+                    </div>
+                    @trail match {
+                        case trail: Video => {
+                            <span class="item__duration"><i class="i"></i><span class="u-h">Duration: </span>@{trail.duration/60}: @{trail.duration%60}</span>
+                        }
+                        case _ => {}
+                    }
+                    @trail.trailText.map { text =>
+                        <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>
+                    }
+                </li>
+            }
+        </ul>
+    }
+
+</section>

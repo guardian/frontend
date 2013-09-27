@@ -1,12 +1,9 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-
-import concurrent.Future
 
 case class GalleryPage(
   gallery: Gallery,
@@ -16,33 +13,26 @@ case class GalleryPage(
 
 object GalleryController extends Controller with Logging with ExecutionContexts {
 
-  def render(path: String) = Action { implicit request =>
+  def renderJson(path: String) = render(path)
+  def render(path: String) = Action.async { implicit request =>
     val index = request.getQueryString("index") map (_.toInt) getOrElse 1
     val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
 
-    val promiseOfGalleryPage = lookup(path, index, isTrail)
-
-    Async {
-      promiseOfGalleryPage.map {
-        case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
-        case Left(model) => renderGallery(model)
-        case Right(notFound) => notFound
-      }
+    lookup(path, index, isTrail) map {
+      case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
+      case Left(model) => renderGallery(model)
+      case Right(notFound) => notFound
     }
   }
 
-  def renderLightbox(path: String) = Action { implicit request =>
+  def renderLightbox(path: String) = Action.async { implicit request =>
     val index = request.getQueryString("index") map (_.toInt) getOrElse 1
     val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
 
-    val promiseOfGalleryPage = lookup(path, index, isTrail)
-
-    Async {
-      promiseOfGalleryPage.map {
-        case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
-        case Left(model) => renderLightboxGallery(model)
-        case Right(notFound) => notFound
-      }
+    lookup(path, index, isTrail) map {
+      case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
+      case Left(model) => renderLightboxGallery(model)
+      case Right(notFound) => notFound
     }
   }
 
@@ -52,15 +42,14 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
     ContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
+      .showMedia("picture") // TODO remove after content api team have properly ordered elements
       .response.map{response =>
         val gallery = response.content.filter { _.isGallery } map { new Gallery(_) }
-        val storyPackage = response.storyPackage map { new Content(_) }
+        val storyPackage = response.storyPackage map { Content(_) }
 
         val model = gallery map { g => GalleryPage(g, storyPackage.filterNot(_.id == g.id), index, isTrail) }
         ModelOrResult(model, response)
     }.recover{suppressApiNotFound}
-
-
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
@@ -73,5 +62,4 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
     val response = () => views.html.fragments.lightboxGalleryBody(model.gallery, model.storyPackage, model.index, model.trail)
     renderFormat(response, response, model.gallery, Switches.all)
   }
-    
 }

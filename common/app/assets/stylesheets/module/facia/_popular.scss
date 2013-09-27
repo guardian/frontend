@@ -1,0 +1,39 @@
+.collection--popular {
+    @include mq(tablet) {
+        float: right;
+        clear: right;
+        width: gs-span(4);
+        min-height: gs-height(8);
+        padding-left: ($gs-gutter/2) - 1;
+        border-left: 1px solid $grey;
+    }
+    .items {
+        margin-top: $baseline*3;
+        counter-reset: most-read;
+        @include mq(tablet) {
+            min-height: gs-height(8);
+        }
+    }
+    .item {
+        padding: $gs-baseline/3 $gs-gutter/5 $gs-baseline/3 $gs-gutter*2;
+        border-top: 1px dotted $grey;
+        color: #000000;
+        @include font($serifheadline, normal, 18);
+        min-height: gs-height(1) + $gs-baseline;
+        @include mq(tablet) {
+            min-height: gs-height(8)/5;
+        }
+    }
+    .item:before {
+        content: counter(most-read);
+        counter-increment: most-read;
+        color: $grey;
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include font-size(52);
+    }
+    .item:last-child {
+        border-bottom: 1px solid $grey;
+    }
+}

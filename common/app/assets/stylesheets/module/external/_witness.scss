@@ -8,18 +8,15 @@
         margin-bottom: $baseline*5;
     }
 
-    .element-witness a,
-    .element-witness a:hover,
-    .element-witness a:link {
-        color: #333;
-    }
-
     .element-witness {
-        a,
-        a:link,
-        a:visited {
+        a {
             color: #005689;
             text-decoration: none;
+
+            &:focus,
+            &:hover {
+                color: #333;
+            }
         }
     }
 
@@ -112,53 +109,63 @@
     }
 }
 
-.witness-call-to-action {
-    position: relative;
-    overflow: hidden;
-    max-height: 47px;
-    margin: 0 $gutter $baseline*4;
-
-    p {
-        @extend %type-10;
-        float: left;
-        padding: 2px $gutter/2 $baseline;
-        margin-left: 50px;
-    }
-
-    .i-witness-logo {
-        display: block;
-        overflow: hidden;
-    }
-}
-
 .element-witness-text .element-witness--main {
     @extend .svg-i-quote-marks;
     background-position: $baseline*2 0 !important;
 }
 
-.witness-call-to-action--box {
+.witness-cta-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 47px;
+    margin-bottom: $baseline*4;
+}
+.witness-cta__body {
+    @extend %type-10;
+    float: left;
+    padding: 5px $gutter/2 0;
+    margin-left: 50px;
+    line-height: 15px;
+
+    .witness-cta__logo {
+        display: block;
+    }
+}
+.witness-logo {
+    display: inline-block;
+    color: #247EB3;
+    @include font($serif, 700, 16, 16);
+    letter-spacing: -.04em;
+    text-transform: lowercase;
+    text-rendering: optimizeLegibility;
+}
+.witness-logo__witness {
+    color: $darkGrey;
+    margin-left: -3px;
+}
+
+.witness-cta {
     border: 1px solid $darkMushroom;
     overflow: hidden;
-    max-height: 45px;
+    max-height: 42px;
     margin: 1px 0 0 0;
     position: relative;
-    display: inline-block;
-    float: left;
-    width: 100%;
-    box-sizing: border-box;
 }
 
-.i-powered-by-ee {
+.witness-cta__sponsor {
     float: right;
     border-left: 1px solid $darkMushroom;
-    margin: 6px 8px 0 4px;
-    background-position: 8px 0 !important;
-    padding-left: 8px;
+    padding-left: 6px;
+    margin: 6px $gutter/2;
+
+    .i {
+        display: block;
+    }
 }
 
-.i-ee-add-button {
+.witness-cta__icon {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 1;
 }

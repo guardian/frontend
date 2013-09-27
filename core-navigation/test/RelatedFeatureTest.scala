@@ -1,7 +1,6 @@
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
-import test.`package`._
-import conf.Switches._
+import test.HtmlUnit
 
 class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
@@ -45,7 +44,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val article = findFirst("li")
         article.findFirst("a").getAttribute("href").length should be > 0
         article.findFirst("h3").getText.length should be > 0
-        article.find(".trail__text") should have length 0
+        article.find(".trail__text").size should be > 0
         article.findFirst("time").getAttribute("data-timestamp") should be("1344426007000")
 
         findFirst("ul").find(".trail__headline") should have length 5

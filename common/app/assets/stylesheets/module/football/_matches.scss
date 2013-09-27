@@ -224,16 +224,13 @@ a.competition-title {
     }
 }
 
-.live-matches-dateline .dateline {
-    margin-left: $gutter;
-}
-
 .live-matches-update .update {
     border-bottom: 0;
     margin-bottom: 0;
     margin-top: 12px;
 
     .is-active,
+    button:focus,
     button:hover {
         background-color: $sportBright;
     }
@@ -307,20 +304,19 @@ a.competition-title {
     background: $sportDark;
     color: #fff;
     margin-bottom: $baseline*2;
-    margin-top: $gutter;
+    margin-top: $baseline*4;
     padding: 15px 0;
-
-    &:link,
-    &:visited {
-        color: #fff;
-    }
 }
 
 // football-filter is the dropdown link item
 
 .football-filter {
     background: $sportBright;
-    margin: 0 $gutter $baseline*2;
+    margin: 0 $gs-gutter/2 $baseline*2;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
     color: #fff;
     border-bottom: none;
 
@@ -348,7 +344,7 @@ a.competition-title {
 
 .live-matches-dateline {
     display: block;
-    margin-bottom: $baseline*3;
+    padding-bottom: $baseline*3;
 
     .has-localnav & {
         padding-top: 12px;

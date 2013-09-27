@@ -1,0 +1,152 @@
+@(model: LiveBlogPage)(implicit request: RequestHeader)
+@import conf.Switches._
+
+@defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
+    <div class="article-wrapper monocolumn-wrapper">
+        <div class="article-v2__inner">
+            <h2 class="article-zone type-1">
+                <a class="zone-color" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName)</a>
+            </h2>
+        </div>
+        <article id="article" class="article @if(article.isLive){is-live}"
+            itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+            <div class="article-v2__inner">
+                <header class="article__head">
+                    @fragments.headline(article.headline)
+
+                    @if(LiveCricketSwitch.isSwitchedOn) {
+                        @article.cricketMatch.map { id =>
+                            <div class="after-headline">
+                                <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
+                                    itemprop="significantLink"
+                                    id="schema-WebPage">View full scorecard<i class="i i-sport-arrow-small"></i></a>
+                            </div>
+                        }
+                    }
+
+                    @fragments.standfirst(article)
+                    @fragments.article.dateline(article.webPublicationDate, article.isLive)
+                </header>
+
+                @fragments.witnessCallToAction(article)
+
+                <div class="after-header"></div>
+            </div>
+            <div class="article-v2__columning-wrapper">
+                <div class="article-v2__main-column">
+
+                    @if(!article.isLive && !article.hasVideoAtTop) {
+                        @article.mainPicture.map{ mainPicture =>
+                            @article.mainPicture(width=220).map{ smallCrop =>
+                                @fragments.img(mainPicture, smallCrop)
+                            }
+                        }
+                    }
+                    <div class="article__meta-container">
+                        @fragments.byline(article.byline, article)
+
+                        @fragments.article.dateline(article.webPublicationDate, secondary=true)
+                        <div class="js-comment-count"></div>
+                    </div>
+
+                    <div class="js-article__container article__container u-cf">
+                        <div class="live-toolbar">
+                            @fragments.liveFilter()
+
+                            @if(article.isLive) {
+                                @fragments.autoUpdate()
+                            }
+                        </div>
+                        @if(LiveSummarySwitch.isSwitchedOn) {
+                            <div class="js-article__summary is-hidden live-summary--before from-content-api" data-link-name="summary before content">
+                                <div class="block">
+                                    @article.summary.map{ summary =>
+                                        @fragments.liveSummary(BodyCleaner(article, summary))
+                                    }
+                                </div>
+                            </div>
+                        }
+
+                        <div class="article-body from-content-api @if(article.isLive) {live-blog} js-live-blog"
+                        itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+
+                            @if(article.groupedBlocks.nonEmpty) {
+                                @article.groupedBlocks.map{ blockGroup =>
+                                    <div class="live-blog__blocks js-live-blog-blocks">
+                                        @BodyCleaner(article, blockGroup)
+                                    </div>
+                                }
+                                <button class="h u-button-reset cta cta--read-more js-live-blog-show-more" data-link-name="live blog | read more">
+                                    Read more <i class="i i-swipe-arrow cta--read-more__icon"></i>
+                                </button>
+                            }  else {
+                                @BodyCleaner(article, article.body)
+                            }
+
+                        </div>
+                    </div>
+
+                    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+                        <div class="article__discussion" id="comments"></div>
+                    }
+                    <div class="social-wrapper">
+                        @fragments.social(article)
+                    </div>
+                </div>
+                <div class="article-v2__secondary-column" aria-hidden="true">
+                    <div class="article-v2__secondary-column__inner">
+                        <div class="u-table">
+                            <div class="u-table__row">
+                                <div class="u-table__cell u-table__cell--top">
+                                    @if(LiveSummarySwitch.isSwitchedOn) {
+                                        <div class="js-article__summary is-hidden from-content-api from-content-api--small" data-link-name="summary after content" aria-hidden="true">
+                                            <div class="block">
+                                                @article.summary.map{ summary =>
+                                                    @fragments.liveSummary(BodyCleaner(article, summary))
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    @if(Switches.SocialSwitch.isSwitchedOn) {
+                                        <div class="from-content-api from-content-api--small">
+                                            <h2>Share this live blog</h2>
+                                        </div>
+                                    }
+                                    @fragments.social(article, "next to content")
+                                </div>
+                            </div>
+                            <div class="u-table__row">
+                                <div class="u-table__cell u-table__cell--bottom">
+                                    @if(storyPackage.nonEmpty && ABRightHandCard.isSwitchedOn) {
+                                        @fragments.cards.card(storyPackage.last, "right", "More on this story", "Story package card", "hidden")
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+
+        <div class="article-v2__inner">
+            @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+                <div class="d-show-cta-wrapper">
+                    <a class="d-show-cta js-show-discussion js-top" href="@LinkTo{/discussion@article.shortUrlId}"
+                       data-is-ajax data-link-name="View all comments">
+                        View all comments <span class="d-commentcount speech-bubble"><span class="js-commentcount__number"></span></span>
+                    </a>
+                </div>
+            }
+            @if(storyPackage.nonEmpty) {
+                <aside role="complementary" data-link-context="@article.section">
+                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+                </aside>
+            } else {
+                <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
+            }
+
+            <div class="js-popular article__popular" role="complementary"></div>
+        </div>
+    </div>
+    }

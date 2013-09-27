@@ -3,12 +3,12 @@ package controllers
 import common._
 import conf._
 import feed.{ CompetitionSupport, Competitions }
-import play.api.mvc.{ RequestHeader, Action, Controller }
 import model._
 import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Imports._
 import play.api.templates.Html
+import play.api.mvc.{ RequestHeader, Action, Controller }
 
 
 trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
@@ -88,6 +88,7 @@ object FixturesController extends FixtureRenderer with Logging with ExecutionCon
     TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamFixturesController.render(tag, teamId) }
   }
 
+  def renderTagJson(tag: String) = renderTag(tag)
   def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
 
   override def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]) = date match {
@@ -155,6 +156,7 @@ object TeamFixturesController extends Controller with Logging with CompetitionFi
     }.getOrElse(NotFound)
   }
 
+  def renderComponentJson(teamId: String) = renderComponent(teamId)
   def renderComponent(teamId: String) = Action { implicit request =>
     Competitions.findTeam(teamId).map { team =>
       val fixtures = Competitions.withTeamMatches(teamId).sortBy(_.fixture.date.getMillis)

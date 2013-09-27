@@ -1,85 +1,90 @@
 $blue: #005688;
-$light-blue: #4cc7e0;
+$light-blue: #00b1f7;
 $pink: #AB1454;
 $light-pink: #f66980;
 $grey: #cccccc;
 $green: #6ca940;
+$light-green: #d2dd2e;
 $dark-green: #19646c;
 
+.collection {
+    margin-top: gs-height(1);
+}
+.collection__title {
+    @include font($serifheadline, 800, 16);
+    @include box-sizing(border-box);
+    height: gs-height(1);
+    padding: $gs-baseline/3 0 0 $gs-gutter/5;
+    color: #ffffff;
+    background-color: $light-blue;
+    border-top: $gs-baseline/3 solid $blue;
+    margin-bottom: $gs-baseline;
+}
+.collection--top-stories .collection__title {
+    background-color: $blue;
+    border-color: $light-blue;
+}
 .item {
-    float: left;
-    height: 100%;
     position: relative;
-    overflow: hidden;
-    margin-right: $gs-gutter;
     color: #000000;
     font-family: $serifheadline;
+    font-weight: normal;
     @include box-sizing(border-box);
-}
-.item:last-child {
-    margin-right: 0;
-}
-.item__image {
-    width: 100%;
-    display: block;
 }
 a.item__link,
-.item__title{
+.item__title {
     color: inherit;
     font-family: inherit;
+    font-weight: normal;
 }
 .item__title {
-    font-weight: 700;
-    @include font-size(24, 28);
     @include box-sizing(border-box);
+    border-top: 2px solid $light-blue;
+    padding-top: $gs-baseline*(2/3);
 }
 .item__standfirst {
-    display: none;
-    margin: $baseline*5 0 0;
+    margin: $gs-baseline 0 0;
 }
 .item__meta {
     color: $grey;
-    position: absolute;
-    bottom: 0;
-    border-color: $grey;
     @include font($sans-serif, lighter, 12, 12);
-}
-.item__timestamp,
-.item .trail__count {
-    padding-bottom: $baseline * 5;
-    float: left;
-    border-left: 1px solid;
-    /* inherit doesn't work in above shorthand, for some reason */
-    border-color: inherit;
-    i {
-        margin:0;
-        position: absolute;
+    margin-top: $gs-baseline*(5/3);
+    overflow: hidden;
+    min-height: 16px;
+    .item__timestamp,
+    .trail__count {
+        position: relative;
+        float: left;
+        i {
+            margin: 0;
+            position: absolute;
+            top: 0;
+        }
+    }
+    .item__timestamp {
+        min-width: gs-span(1) - 16;
+        padding: 0 $gs-gutter/2 0 16px;
+        i {
+            @extend .i-clock-grey;
+            left: 0;
+        }
+    }
+    .trail__count {
+        padding-bottom: 0;
+        padding-left: 28px;
         top: 0;
-        left: 4px;
+        a {
+            line-height: inherit;
+            color: inherit;
+        }
+        i {
+            @extend .i-comment-grey;
+            left: $gs-gutter/2 - 1;
+        }
     }
 }
-.item__timestamp {
-    min-width: 58px;
-    margin-right: $gutter/4;
-    padding-left: 21px;
-    i {
-        @extend .i-clock-blue;
-    }
-}
-.item .trail__count {
-    position: relative;
-    top: auto;
-    padding-left: 23px;
-    a {
-        color: inherit;
-        line-height: inherit;
-        float: none;
-        display: inline;
-        margin: 0;
-    }
-    i {
-        @extend .i-comment-blue;
-    }
+.item__image-container {
+    overflow: hidden;
 }
 .item__duration {
     position: absolute;
@@ -94,269 +99,44 @@ a.item__link,
         margin-right: $baseline;
     }
 }
+.item__image-container {
+    margin-top: $gs-baseline*2;
+}
+.item__image {
+    display: block;
+    margin: 0 auto;
+}
+.items__show-more {
+    background-color: #f1f1f1;
+    border-style: none;
+    min-width: gs-span(2);
+    min-height: gs-height(1);
+    color: #666666;
+    @include font($sans-serif, normal, 14);
+    position: relative;
+    left: 50%;
+    margin-top: $gs-baseline*2;
+    margin-left: -(gs-span(1) + $gs-gutter/2);
+}
+
 .item--feature {
-    border: none;
-    background-color: $pink !important;
-    color: #ffffff;
-    border-bottom-style: none !important;
-    border-top-color: $light-pink !important;
     .item__title {
-        font-weight: normal;
-        padding: 0 $baseline*2;
-    }
-    .item__meta {
-        color: #ffffff;
-        border-color: $light-pink !important;
-    }
-    .item__timestamp {
-        border-left-style: none;
-        i {
-            @extend .i-clock-pink;
-        }
-    }
-    .trail__count i {
-        @extend .i-comment-pink;
-    }
-    .item__duration {
-        background-color: $light-pink;
+        border-top-color: $pink;
     }
 }
 .item--comment {
-    color: #000000 !important;
-    background: none !important;
-    border-top-color: $green !important;
-    border-bottom: 1px solid $grey;
-    .i-quotes-green {
-        margin-top: $baseline * 2;
-    }
-    .item__image-container {
-        display: none;
-    }
     .item__title {
-        position: relative !important;
-        background: none !important;
-        width: auto !important;
-        padding: 0 !important;
-        margin: $baseline * 2 0 0 !important;
-    }
-    .item__byline {
-        color: $dark-green;
-        font-family: $serifheadline;
-        font-weight: bold;
-    }
-    .item__meta {
-        color: $grey  !important;
-        border-color: $grey  !important;
-    }
-    .item__timestamp {
-        border-left-style: solid  !important;
-        i {
-            @extend .i-clock-green;
-        }
-    }
-    .trail__count i {
-        @extend .i-comment-green;
+        border-top-color: $green;
     }
 }
-
-@mixin item--with-overlay {
-    width: gs-span(6);
-    color: #ffffff;
-    .item__title {
-        position:absolute;
-        bottom: 0;
-        background-color: $blue;
-        background-color: rgba($blue, 0.7);
-        padding: $baseline*2 $gutter/2 $baseline*13;
-    }
-    .item__meta {
-        color: #ffffff;
-        border-color: $light-blue;
-        .item__timestamp {
-            border-left-style: none;
-        }
-    }
-    &.item--feature .item__title {
-        background-color: $pink;
-        background-color: rgba($pink, 0.7);
-    }
-}
-%item--with-overlay {
-    @include mq(tablet, desktop) {
-        @include item--with-overlay;
-    }
-    @include mq(desktop, wide) {
-        @include item--with-overlay;
-    }
-    @include mq(wide) {
-        @include item--with-overlay;
-    }
-}
-@mixin customise-item--with-overlay($width, $font-size) {
-    width: $width;
-    .item__title {
-        width: $width - $gs-column-width - $gs-gutter;
-        @include font-size($font-size, $font-size+4);
-    }
-}
-
-@mixin item--small {
-    height: 50%;
-    float: none;
-    padding-top: $baseline*2;
-    border-top: 2px solid $blue;
-    margin-right: 0;
-    .item__image-container,
-    .item__meta,
-    .item__duration {
-        display: none;
-    }
-    .item__title {
-        @include font-size(20, 24);
-    }
-}
-%item--small {
-    @include mq(tablet, desktop) {
-        @include item--small;
-    }
-    @include mq(desktop, wide) {
-        @include item--small;
-    }
-    @include mq(wide) {
-        @include item--small;
-    }
-}
-@mixin customise-item--small($num: false, $show-meta: false, $font-size: false) {
-    @if $num != false {
-        height: 100% / $num;
-    }
-    @if $show-meta == true {
-        &:last-child {
-            border-bottom: 1px solid $grey
+.item--headline {
+    @include mq($to: tablet) {
+        .item__title {
+            @include font-size(18, 24);
+            border-top-color: $grey;
+            border-top-width: 1px;
         }
         .item__meta {
-            display: block;
-        }
-    }
-    @if $font-size != false {
-        .item__title {
-            @include font-size($font-size, $font-size + 4);
-        }
-    }
-}
-
-@mixin item--medium {
-    width: gs-span(4);
-    border-bottom: 1px solid $grey;
-    .item__image {
-        margin-bottom: $baseline*3;
-    }
-}
-%item--medium {
-    @include mq(desktop, wide) {
-        @include item--medium;
-    }
-    @include mq(wide) {
-        @include item--medium;
-    }
-}
-@mixin customise-item--medium($width, $font-size: false) {
-    width: $width;
-    @if $font-size != false {
-        .item__title {
-            @include font-size($font-size, $font-size + 4);
-        }
-    }
-}
-
-@mixin item--large {
-    background-color: $blue;
-    color: #ffffff;
-    .item__image {
-        float: left;
-        margin-right: $gs-gutter;
-    }
-    .item__title,
-    .item__standfirst {
-        margin-left: $gutter/2;
-        margin-right: $gutter/2;
-    }
-    .item__title {
-        padding-top: $baseline*2;
-    }
-    .item__meta {
-        color: #ffffff;
-        border-color: $light-blue;
-        .item__timestamp {
-            border-left-style: solid;
-        }
-    }
-}
-%item--large {
-    @include mq(tablet, desktop) {
-        @include item--large;
-    }
-    @include mq(desktop, wide) {
-        @include item--large;
-    }
-    @include mq(wide) {
-        @include item--large;
-    }
-}
-@mixin customise-item--large($width, $img-width, $show-standfirst: false, $font-size: false) {
-    width: $width;
-    .item__image {
-        width: $img-width;
-    }
-    .item__meta {
-        left: $img-width + $gs-gutter;
-    }
-    @if $show-standfirst == true {
-        .item__standfirst {
-            display: block;
-            @if $font-size != false {
-                @include font-size($font-size - 8, $font-size - 4);
-            }
-        }
-    }
-    @if $font-size != false {
-        .item__title {
-            @include font-size($font-size, $font-size + 4);
-        }
-    }
-}
-
-@mixin collection--stacked {
-    .item {
-        width: 100%;
-        float: none;
-        margin-right: 0;
-    }
-    .item:nth-child(1) {
-        background-color: $blue;
-        padding-bottom: $baseline*10;
-        color: #ffffff;
-        .item__title {
-            margin: $baseline*2 $baseline*2 0;
-        }
-        .item__meta {
-            color: #ffffff;
-            border-color: $light-blue;
-            .item__timestamp {
-                border-left-style: none;
-            }
-        }
-    }
-    .item:nth-child(n+2) {
-        border-top: 2px solid $blue;
-        .item__title {
-            margin-top: $baseline*2;
-            margin-bottom: $baseline*4;
-            @include font-size(20, 24);
-        }
-        .item__image-container,
-        .item__meta,
-        .item__duration {
             display: none;
         }
     }

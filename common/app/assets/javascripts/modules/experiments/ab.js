@@ -3,36 +3,40 @@ define([
     'modules/storage',
 
     //Current tests
-    'modules/experiments/tests/paragraph-spacing',
     'modules/experiments/tests/inline-link-card',
     'modules/experiments/tests/aa',
     'modules/experiments/tests/gallery-style',
     'modules/experiments/tests/gallery-cta',
     'modules/experiments/tests/swipe-ctas',
     'modules/experiments/tests/expandable-mostpopular',
-    'modules/experiments/tests/right-hand-card'
+    'modules/experiments/tests/right-hand-card',
+    'modules/experiments/tests/live-blog-show-more',
+    'modules/experiments/tests/most-popular-from-facebook'
 ], function (
     common,
     store,
-    ParagraphSpacing,
+
     ExperimentInlineLinkCard,
     Aa,
     GalleryStyle,
     GalleryCta,
     SwipeCtas,
     ExperimentExpandableMostPopular,
-    RightHandCard
+    RightHandCard,
+    LiveBlogShowMore,
+    MostPopularFromFacebook
     ) {
 
     var TESTS = [
-            new ParagraphSpacing(),
             new ExperimentInlineLinkCard(),
             new Aa(),
             new GalleryStyle(),
             new GalleryCta(),
             new SwipeCtas(),
             new ExperimentExpandableMostPopular(),
-            new RightHandCard()
+            new RightHandCard(),
+            new LiveBlogShowMore(),
+            new MostPopularFromFacebook()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -63,21 +67,6 @@ define([
         return store.remove(participationsKey);
     }
 
-    function initTracking(test, variantId) {
-        var dataLinkTest = [],
-            currentDataLinkTest = common.$g(document.body).attr('data-link-test');
-        if (currentDataLinkTest) {
-            dataLinkTest.push(currentDataLinkTest);
-        }
-
-        var testName = ['AB', test.id + ' test', variantId]. join(' | ');
-        if (!currentDataLinkTest || currentDataLinkTest.indexOf(testName) === -1) {
-            dataLinkTest.push(testName);
-        }
-
-        common.$g(document.body).attr('data-link-test', dataLinkTest.join(', '));
-    }
-
     function getActiveTests() {
         return TESTS.filter(function(test) {
             var expired = (new Date() - new Date(test.expiry)) > 0;
@@ -102,12 +91,16 @@ define([
     }
 
     function makeOmnitureTag (config) {
-        var participations = getParticipations();
-        return Object.keys(participations).map(function (k) {
+        var participations = getParticipations(),
+            tag = [];
+
+        Object.keys(participations).forEach(function (k) {
             if (testCanBeRun(getTest(k), config)) {
-                return ['AB', k, participations[k].variant].join(' | ');
+                tag.push(['AB', k, participations[k].variant].join(' | '));
             }
-        }).join(',');
+        });
+
+        return tag.join(',');
     }
 
     // Finds variant in specific tests and runs it
@@ -122,7 +115,6 @@ define([
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
                     variant.test(context);
-                    initTracking(test, variantId);
                     return true;
                 }
         });
@@ -171,12 +163,52 @@ define([
             });
         },
 
+        // mostly for private use
+        forceSegment: function (testId, variant) {
+            getActiveTests().filter(function (test) {
+                return (test.id === testId);
+            }).forEach(function (test) {
+                addParticipation(test, variant);
+            });
+        },
+
         run: function(config, context, options) {
             var opts = options || {};
 
             getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });
+        },
+
+        isEventApplicableToAnActiveTest: function (event) {
+            var participations = Object.keys(getParticipations());
+            return participations.some(function (id) {
+                var listOfEventStrings = getTest(id).events;
+                return listOfEventStrings.some(function (ev) {
+                    return event.indexOf(ev) === 0;
+                });
+            });
+        },
+
+        getActiveTestsEventIsApplicableTo: function (event) {
+
+            function startsWith(string, prefix) {
+                return string.indexOf(prefix) === 0;
+            }
+
+            var eventTag = event.tag;
+            return eventTag && getActiveTests().filter(function (test) {
+                var testEvents = test.events;
+                return testEvents && testEvents.some(function (testEvent) {
+                    return startsWith(eventTag, testEvent);
+                });
+            }).map(function (test) {
+                return test.id;
+            });
+        },
+
+        getTestVariant: function(testId) {
+            return getParticipations()[testId].variant;
         },
 
         getParticipations: getParticipations,

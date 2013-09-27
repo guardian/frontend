@@ -4,7 +4,7 @@ define([
     'knockout',
     'Reqwest',
     'js!humanizedTimeSpan'
-], 
+],
 function (
     common,
     Editable,
@@ -33,15 +33,15 @@ function (
             'editingConfig',
             'shares',
             'comments',
-            'pageViews',
+            'totalHits',
             'pageViewsSeries']);
 
         // Computeds
         this.humanDate = ko.computed(function(){
             return this.meta.webPublicationDate() ? humanized_time_span(this.meta.webPublicationDate()) : '&nbsp;';
         }, this);
-        this.pageViewsCommas = ko.computed(function(){
-            return common.util.numberWithCommas(this.state.pageViews());
+        this.totalHitsFormatted = ko.computed(function(){
+            return common.util.numberWithCommas(this.state.totalHits());
         }, this);
 
         this.populate(opts);
@@ -50,10 +50,6 @@ function (
     Article.prototype.populate = function(opts) {
         common.util.populateObservables(this.meta, opts)
         common.util.populateObservables(this.fields, opts.fields)
-
-        if (opts.index < 3) {
-            //this.fetchPageViews();
-        }
     }
 
     Article.prototype.toggleEditingConfig = function() {
@@ -86,7 +82,7 @@ function (
     }
 
     Article.prototype.addCommentCount = function() {
-        var url = 'http://discussion.guardianapis.com/discussion-api/discussion/p/' + 
+        var url = 'http://discussion.guardianapis.com/discussion-api/discussion/p/' +
             this.shortId() + '/comments/count',
             self = this;
         if(this.shortId()) {
@@ -98,8 +94,8 @@ function (
                 },
                 complete: function() {
                 }
-            });            
-        }    
+            });
+        }
     };
 
     return Article;

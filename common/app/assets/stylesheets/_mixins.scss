@@ -8,7 +8,7 @@
     line-height: ($line-height / 10)*1rem;
 }
 
-@mixin font($family, $weight, $size, $line-height) {
+@mixin font($family, $weight, $size, $line-height: $size) {
     font-family: $family;
     font-weight: $weight;
     @include font-size($size, $line-height);
@@ -20,7 +20,7 @@
     box-sizing: $box;
 }
 
-@mixin transition($args) {
+@mixin transition($args...) {
     -webkit-transition: $args;
     -moz-transition: $args;
     transition: $args;
@@ -31,6 +31,27 @@
     -moz-transform: $args;
     -ms-transform: $args;
     transform: $args;
+}
+
+@mixin transform-origin($args) {
+    -webkit-transform-origin: $args;
+    -moz-transform-origin: $args;
+    -ms-transform-origin: $args;
+    transform-origin: $args;
+}
+
+@mixin animation($args) {
+    -webkit-animation: $args;
+    -moz-animation: $args;
+    -ms-animation: $args;
+    animation: $args;
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes $name { @content; }
+    @-moz-keyframes $name { @content; }
+    @-ms-keyframes $name { @content; }
+    @keyframes $name { @content; }
 }
 
 @mixin rounded-corners($radius: 5px) {

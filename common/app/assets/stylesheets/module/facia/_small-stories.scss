@@ -1,0 +1,65 @@
+.collection--small-stories {
+    margin-top: 0;
+    .items {
+        @include mq(tablet) {
+            font-size: 0;
+        }
+    }
+    .item {
+        margin-top: $gs-baseline*2;
+        @include mq(tablet) {
+            @include box-sizing(content-box);
+            display: inline-block;
+            vertical-align: top;
+            padding-right: $gs-gutter/2;
+            padding-left: ($gs-gutter/2) - 1;
+            border-left: 1px dotted $grey;
+            width: gs-span(4);
+            &:first-child {
+                border-left-style: none;
+            }
+        }
+        @include mq(tablet, desktop) {
+            &:nth-child(2n + 1) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(2n + 2) {
+                padding-right: 0;
+            }
+        }
+        @include mq(desktop, wide) {
+            &:nth-child(3n + 1) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(3n + 3) {
+                padding-right: 0;
+            }
+
+        }
+        @include mq(wide) {
+            &:nth-child(4n + 1) {
+                padding-left: 0;
+                border-left-style: none;
+            }
+            &:nth-child(4n + 4) {
+                padding-right: 0;
+            }
+        }
+    }
+    .item__title {
+        @include mq($to: tablet) {
+            @include font-size(20, 24);
+        }
+        @include mq(tablet) {
+            @include font-size(26, 28);
+            min-height: gs-height(3);
+        }
+    }
+    .item--headline .item__title {
+        @include mq($to: tablet) {
+            @include font-size(18, 24);
+        }
+    }
+}

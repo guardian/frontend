@@ -6,9 +6,9 @@ import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import feed.Competitions
-import model.{TeamMap, LiveBlog}
-import pa.{Http, PaClient}
-import play.api.{Application => PlayApp, Plugin}
+import model.{ TeamMap, LiveBlogAgent }
+import pa.{ Http, PaClient }
+import play.api.{ Application => PlayApp, Plugin }
 import play.api.libs.ws.WS
 import scala.concurrent.Future
 
@@ -35,7 +35,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     }
 
     Jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?", FootballMetrics.LiveBlogRefreshTimingMetric) {
-      LiveBlog.refresh()
+      LiveBlogAgent.refresh()
     }
 
     Jobs.schedule("TeamMapRefreshJob", "0 * * * * ?", FootballMetrics.TeamTagMappingsRefreshTimingMetric) {
@@ -62,7 +62,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     descheduleJobs()
 
     Competitions.stop()
-    LiveBlog.stop()
+    LiveBlogAgent.stop()
     TeamMap.stop()
   }
 }
@@ -74,7 +74,7 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   private var _http: Http = new Http {
     override def GET(urlString: String): Future[pa.Response] = {
         val start = System.currentTimeMillis()
-        val promiseOfResponse = WS.url(urlString).withTimeout(2000).get()
+        val promiseOfResponse = WS.url(urlString).withRequestTimeout(2000).get()
         promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordTimeSpent(System.currentTimeMillis() - start))
 
         promiseOfResponse.map{ r =>

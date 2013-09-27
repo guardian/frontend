@@ -1,26 +1,259 @@
-.section--masthead {
-    .section__title {
-        background-color: #3b65ad;
-        border-bottom: 4px solid #64abe1;
-        color: #ffffff;
-        @include font-size(20);
-        font-weight: lighter;
-        padding: $baseline*2 $gutter/2 $baseline*3;
+
+@mixin item--with-overlay {
+    width: gs-span(4);
+    color: #ffffff;
+    .item__title {
+        position: absolute;
+        bottom: 0;
+        background-color: $blue;
+        background-color: rgba($blue, 0.7);
+        padding: $baseline*2 $gutter/2 $baseline*13;
     }
-    .collection {
-        margin-top: $baseline*4;
-        padding: $baseline*3 0;
-        border-top: 1px solid #000000;
-        border-bottom: 1px solid #000000;
-        max-width: gs-span(16);
-        @include mq(tablet, wide) {
+    .item__meta {
+        color: #ffffff;
+        border-color: $light-blue;
+        .item__timestamp {
+            border-left-style: none;
+        }
+    }
+    &.item--feature {
+        .item__title {
+            background-color: $pink;
+            background-color: rgba($pink, 0.7);
+        }
+    }
+}
+%item--with-overlay {
+    @include mq(tablet, desktop) {
+        @include item--with-overlay;
+    }
+    @include mq(desktop, wide) {
+        @include item--with-overlay;
+    }
+    @include mq(wide) {
+        @include item--with-overlay;
+    }
+}
+@mixin customise-item--with-overlay($width, $font-size) {
+    width: $width;
+    .item__title {
+        width: $width - $gs-column-width - $gs-gutter;
+        @include font-size($font-size, $font-size+4);
+    }
+}
+
+@mixin item--small {
+    height: 50%;
+    float: none;
+    padding-top: $baseline*2;
+    border-top: 2px solid $blue;
+    margin-right: 0;
+    .item__image-container,
+    .item__meta,
+    .item__duration {
+        display: none;
+    }
+    .item__title {
+        @include font-size(20, 24);
+    }
+}
+%item--small {
+    @include mq(tablet, desktop) {
+        @include item--small;
+    }
+    @include mq(desktop, wide) {
+        @include item--small;
+    }
+    @include mq(wide) {
+        @include item--small;
+    }
+}
+@mixin customise-item--small($num: false, $show-meta: false, $font-size: false) {
+    @if $num {
+        height: 100% / $num;
+    }
+    @if $show-meta {
+        &:last-child {
+            border-bottom: 1px solid $grey
+        }
+        .item__meta {
+            display: block;
+        }
+    }
+    @if $font-size {
+        .item__title {
+            @include font-size($font-size, $font-size + 4);
+        }
+    }
+}
+
+@mixin item--medium {
+    width: gs-span(4);
+    border-bottom: 1px solid $grey;
+    .item__image {
+        margin-bottom: $baseline*3;
+    }
+}
+%item--medium {
+    @include mq(desktop, wide) {
+        @include item--medium;
+    }
+    @include mq(wide) {
+        @include item--medium;
+    }
+}
+@mixin customise-item--medium($width, $font-size: false) {
+    width: $width;
+    @if $font-size != false {
+        .item__title {
+            @include font-size($font-size, $font-size + 4);
+        }
+    }
+}
+
+@mixin item--large {
+    background-color: $blue;
+    color: #ffffff;
+    .item__image {
+        float: left;
+        margin-right: $gs-gutter;
+    }
+    .item__title,
+    .item__standfirst {
+        margin-left: $gutter/2;
+        margin-right: $gutter/2;
+    }
+    .item__title {
+        padding-top: $baseline*2;
+    }
+    .item__meta {
+        color: #ffffff;
+        border-color: $light-blue;
+        .item__timestamp {
+            border-left-style: solid;
+        }
+    }
+}
+%item--large {
+    @include mq(tablet, desktop) {
+        @include item--large;
+    }
+    @include mq(desktop, wide) {
+        @include item--large;
+    }
+    @include mq(wide) {
+        @include item--large;
+    }
+}
+@mixin customise-item--large($width, $img-width, $show-standfirst: false, $font-size: false) {
+    width: $width;
+    .item__image {
+        width: $img-width;
+    }
+    .item__meta {
+        left: $img-width + $gs-gutter;
+    }
+    @if $show-standfirst == true {
+        .item__standfirst {
+            display: block;
+            @if $font-size {
+                @include font-size($font-size - 8, $font-size - 4);
+            }
+        }
+    }
+    @if $font-size {
+        .item__title {
+            @include font-size($font-size, $font-size + 4);
+        }
+    }
+}
+
+@mixin collection--stacked {
+    .item {
+        width: 100%;
+        float: none;
+        margin-right: 0;
+    }
+    .item:nth-child(1) {
+        background-color: $blue;
+        padding-bottom: $baseline*10;
+        color: #ffffff;
+        .item__title {
+            margin: $baseline*2 $baseline*2 0;
+        }
+        .item__meta {
+            color: #ffffff;
+            border-color: $light-blue;
+            .item__timestamp {
+                border-left-style: none;
+            }
+        }
+    }
+    .item:nth-child(n+2) {
+        border-top: 2px solid $blue;
+        .item__title {
+            margin-top: $baseline*2;
+            margin-bottom: $baseline*4;
+            @include font-size(20, 24);
+        }
+        .item__image-container,
+        .item__meta,
+        .item__duration {
+            display: none;
+        }
+    }
+}
+
+.collection--masthead {
+    .item {
+        float: left;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        margin-right: $gs-gutter;
+    }
+    .item:last-child {
+        margin-right: 0;
+    }
+    .item__image {
+        width: 100%;
+        display: block;
+    }
+    .item__title {
+        @include font-size(24, 28);
+        @include box-sizing(border-box);
+        border-top-style: none;
+        padding-top: 0;
+    }
+    .item__standfirst {
+        display: none;
+        margin: $gs-baseline 0 0;
+    }
+    .item__meta {
+        position:absolute;
+        bottom: 0;
+        .item__timestamp {
+            border-left-style: solid;
+            padding-left: $gs-gutter;
+            i {
+                left: 4px;
+            }
+        }
+    }
+    .item--feature {
+        border-top-color: $pink !important;
+    }
+    .item--comment {
+        border-top-color: $green !important;
+    }
+    .items {
+        @include mq(tablet) {
             height: gs-height(6);
         }
         @include mq(wide) {
             height: gs-height(8);
         }
     }
-
     @include mq($to: tablet) {
         @include collection--stacked;
     }
@@ -28,7 +261,7 @@
     .item-count-1 .item {
         @include mq(tablet, desktop) {
             @extend %item--large;
-            @include customise-item--large(100%, gs-span(6));
+            @include customise-item--large(100%, gs-span(4));
         }
         @include mq(desktop, wide) {
             @extend %item--large;

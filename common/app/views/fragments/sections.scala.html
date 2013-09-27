@@ -3,10 +3,10 @@
 @import common._
 @import common.Edition
 
- <nav role="navigation" aria-label="Guardian sections"
+<nav role="navigation" aria-label="Guardian sections"
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
-    <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} cf">
+    <ul class="nav nav--columns nav--top-border-off @if(isFooter){nav--footer} u-cf">
         @* <!-- TODO delete site after switch to single domain --> *@
             @Edition(request).navigation(page).map{ section =>
                 <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
@@ -18,18 +18,22 @@
                     </a>
                 </li>
             }
-        <li class="nav__item @if(!isFooter){ mobile-only}"><a class="nav__link" data-link-name="all sections" href="/sections">All sections</a></li>
+        <li class="nav__item @if(!isFooter){ mobile-only}"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
     </ul>
-
-    <ul class="nav nav--columns nav--section-divider @if(isFooter){ nav--top-border-off nav--footer} cf">
-        <li class="nav__item"><a class="nav__link" href="https://soulmates.theguardian.com/" target="_blank" data-link-name="Soulmates">Soulmates</a></li>
-        <li class="nav__item"><a class="nav__link" href="http://jobs.theguardian.com/" target="_blank" data-link-name="Jobs">Jobs</a></li>
-
-        @*<!-- TODO EDITIONS -->*@
-        @Edition.others(request).map{ edition =>
-            <li class="nav__item"><a class="nav__link edition" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="@LinkTo("/", edition)">@edition.displayName</a></li>
-        }
-        <li class="nav__item @if(isFooter){ hide-in-footer} tablet-only"><a class="nav__link" data-link-name="all sections" href="/sections">All sections</a></li>
+    <ul class="nav nav--columns nav--section-divider u-cf">
+        <li class="nav__item">
+            <ul class="nav @if(isFooter){nav--footer nav--alternate-link-colors}">
+                <li class="nav__item nav__item--full"><a class="nav__link" href="https://soulmates.theguardian.com/" target="_blank" data-link-name="Soulmates">Soulmates</a></li>
+                <li class="nav__item nav__item--full"><a class="nav__link" href="http://jobs.theguardian.com/" target="_blank" data-link-name="Jobs">Jobs</a></li>
+            </ul>
+        </li>
+        <li class="nav__item">
+            <ul class="nav @if(isFooter){nav--footer nav--alternate-link-colors}">
+                @Edition.others(request).map{ edition =>
+                    <li class="nav__item nav__item--full"><a class="nav__link edition @if(isFooter){nav__link--faded}" data-edition="@edition.id" data-link-name="switch to @edition.id edition" href="@LinkTo("/", edition)">@edition.displayName</a></li>
+                }
+                <li class="nav__item @if(isFooter){hide-in-footer} nav__item--full hide-on-mobile"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
+            </ul>
+        </li>
     </ul>
- </nav>
-
+</nav>

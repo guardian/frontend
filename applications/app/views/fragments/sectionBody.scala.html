@@ -3,15 +3,16 @@
 <section class="front-section zone-@section.section" role="main">
 
     @fragments.headers.sectionHead(section.name)
-    
+
     <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @section.section">
         @fragments.trailblocks.section(trails, numWithImages = 3, numItemsVisible = trails.size)
     </div>
 
 </section>
 
-@if(section.name == "Football") {
-    @fragments.footballNav("/football")
-}
-
-@fragments.mostPopularPlaceholder(section.section)
+<div class="box-indent article-zone-no-indent">
+    @if(section.name == "Football") {
+        @fragments.footballNav("/football")
+    }
+    @fragments.mostPopularPlaceholder(section.section)
+</div>

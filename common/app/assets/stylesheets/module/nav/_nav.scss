@@ -14,17 +14,21 @@
     list-style: none;
     margin: 0;
     padding: $baseline*2 0 $baseline;
-}
 
-    .nav > li,
-    .nav > li > a {
+    .nav__item--full {
+        width: 100%;
+        margin: 0;
+    }
+    > li,
+    > li > a {
         display: inline-block;
         zoom: 1;
     }
 
-    .nav li.is-active {
+    li.is-active {
         font-weight: bold;
     }
+}
 
 /* ==========================================================================
    Nav Modifiers
@@ -33,107 +37,93 @@
 /* Stacked
    ========================================================================== */
 
-    .nav--stacked > li {
-        display: list-item;
+.nav--stacked > li {
+    display: list-item;
+
+    a {
+        display: block;
     }
+}
 
 
 /* Columns
    ========================================================================== */
 
-    .nav--columns {
-        padding: $baseline*2 $gutter $baseline $gutter;
+.nav--columns {
+    padding: $baseline $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+    > .nav__item {
+        float: left;
+        width: 50%;
+        @include box-sizing(border-box);
+        padding-right: $gs-gutter/2;
 
-        .nav__item {
-            width: 46%;
-            margin-right: 3%;
-            display: inline-block; // doing this instead of float to prevent mixed item height float collision
-            vertical-align: top;
-        }
-
-            .nav__item--full {
-                width: 100%;
-                margin: 0;
-            }
-
-        .nav__link {
-            @extend %type-10;
-            padding: $baseline*2 0;
-            border-top: 1px solid $mushroom;
-            display: block;
-            height: auto;
-            background-color: transparent;
-
-        }
-
-        li:nth-child(even) {
-            float: right; // this aligns right edge correctly
-            margin-right: 0%;
-            margin-left: 3%;
+        &:nth-child(even) {
+            padding-right: 0;
+            padding-left: $gs-gutter/2;
         }
     }
 
-    .nav--columns-football {
-        padding: $baseline*2 0 $baseline;
+    .nav__link {
+        display: block;
+        padding: 3px 0 $baseline*4;
+        border-top: 1px solid $mushroom;
+        height: auto;
+        background-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        @include font-size(14, 20);
     }
+}
+
+.nav--columns-football {
+    padding: $baseline*2 0 $baseline;
+}
 
 
-
-    .nav--columns.nav--top-border-off > li:nth-child(-n+2) a,
-    .nav--stacked.nav--top-border-off > li:nth-child(1) a {
-        border-top: none;
-        padding-top: 0;
-    }
+.nav--top-border-off > .nav__item:nth-child(-n+2) .nav__link {
+    border-top: none;
+    padding-top: 0;
+}
 
 
 /* Section divider
    ========================================================================== */
 
-    .nav.nav--section-divider {
-        padding: $baseline*2 $gutter;
-        margin: 0;
-        background-color: $mushroom;
+.nav-popup--small .nav--section-divider {
+    margin: 0;
+    background-color: $mushroom;
+    padding: 0 $gs-gutter/2 $baseline*2;
+
+    .nav .nav__item + .nav__item {
+        .nav__link {
+            border-bottom: 0;
+            border-top: 1px solid $darkMushroom;
+        }
     }
 
-        .nav-popup--small .nav--section-divider {
-            @include mq(tablet) {
-                margin-top: -5px !important;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+    @include mq(tablet) {
+        margin-top: -5px !important;
+        border-top: $baseline*3 solid #ffffff;
 
-                .nav__item { margin: 0; }
-            }
-
-            @include mq(1248px) {
-                margin-top: -13px !important;
-            }
-        }
-
-        .control--sections .i-nav-divider {
-            @include mq(tablet) {
-                border-left: 0;
-            }
-        }
-
-
-/* Footer navigation
-   ========================================================================== */
-
-.nav--footer,
-.nav--footer.nav--section-divider {
-    background-color: $blue;
+        .nav__item { margin: 0; }
+    }
+    @include mq(desktop) {
+        border-top: none;
+        margin-top: -13px !important;
+    }
 }
 
-    .nav--footer .nav__link {
-            color: #fff;
-            border-top: 1px solid #2B528B;
-    }
-
-    .nav--footer.nav--section-divider .nav__link {
-        border-bottom: 1px solid #2B528B;
-    }
-
-    .nav--footer.nav--section-divider {
-        color: #fff !important;
-        border-top: 2px solid #2B528B;
+    .control--sections .i-nav-divider {
+        @include mq(tablet) {
+            border-left: 0;
+        }
     }
 
 
@@ -145,8 +135,12 @@
     display: none;
     overflow: auto;
     width: 100%;
-    padding: 0 $gutter;
-    background-color: #F5F5F2;
+    padding: 0 $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+    background-color: $mushroom;
     border-bottom: 1px solid $darkMushroom;
 
     @include mq(tablet) { display: block; }
@@ -177,7 +171,7 @@
             position: absolute;
             bottom: -2px;
             margin-left: -10px;
-            left:50%;
+            left: 50%;
         }
     }
 
@@ -186,37 +180,37 @@
     }
 
     .nav__link,
-    .nav__link:link,
     .nav__link:active,
-    .nav__link:hover,
-    .nav__link:visited {
+    .nav__link:focus,
+    .nav__link:hover {
         display: block;
         margin: 10px 0 $baseline*3;
         padding: 2px 9px 0 9px;
-        font-family: $serif !important;
-        font-size: 14px;
+        @include font-size(14, 19);
         text-decoration: none;
-
     }
 
     .is-active .nav__link {
-        font-family: $serifheadline !important;
-        line-height: 18px !important;
         font-weight: bold;
     }
 
-        .nav__item:first-child .nav__link { padding-left: 0; }
-        .nav__item:last-child .nav__link { border-right: none; }
+    .nav__item:first-child .nav__link { padding-left: 0; }
+    .nav__item:last-child .nav__link { border-right: none; }
 }
 
 /* Local navigation
-========================================================================== */
+   ========================================================================== */
+
 .localnav-container {
     @include box-sizing(border-box);
     display: none;
     overflow: auto;
     width: 100%;
-    padding: 0 $gutter;
+    padding: 0 $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
     background-color: #ffffff;
     border-bottom: 1px solid $darkMushroom;
 
@@ -246,10 +240,8 @@
     }
 
     .nav__link,
-    .nav__link:link,
     .nav__link:active,
-    .nav__link:hover,
-    .nav__link:visited {
+    .nav__link:hover {
         display: block;
         margin: 16px 0 $baseline*3 0;
         padding: 2px 9px 0 9px;
@@ -280,7 +272,7 @@
         float: right;
         width: 50px;
         height: 37px;
-        margin-right: -16px;
+        margin-right: $gs-gutter / -2;
         padding: 0;
         background-color: #ffffff;
 
@@ -299,7 +291,12 @@
 
 .localnav__inner {
     border-bottom: 1px solid $medianMushroom;
-    margin: 0 $gutter;
+    margin: 0 $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
 }
 
 .localnav__title {
@@ -311,21 +308,19 @@
 }
 
 
-
-
 /* Toolbar navigation
    ========================================================================== */
 
 .nav--toolbar {
     @extend %type-10;
     display: none;
-    margin: 0 $gutter/2 0 $gutter;
+    margin: 0 $gs-gutter/2 0 $gs-gutter;
     padding: $baseline*3 0 0;
     @include mq(tablet) { display: block; }
 
     .nav__item {
         margin: $baseline 0 0 0;
-        padding: $baseline $gutter/2;
+        padding: $baseline $gs-gutter/2;
         color: #fff;
         border-right: 1px solid #94B1CA;
 
@@ -334,11 +329,18 @@
     }
 
     .nav__link,
-    .nav__link:link,
     .nav__link:active,
-    .nav__link:hover,
-    .nav__link:visited {
+    .nav__link:focus,
+    .nav__link:hover {
         color: #fff;
         text-decoration: none;
     }
+}
+
+
+/* Faded link colors
+   ========================================================================== */
+
+.nav .nav__item .nav__link--faded {
+    color: #9DBBD4;
 }

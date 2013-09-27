@@ -2,12 +2,14 @@
     @media (-webkit-min-device-pixel-ratio: 2) {
         background-position: 0 0;
         background-size: 100%;
-        background-image: url('../images/guardian-logo%402x.3d645e8056e9d09e6d627953ce6116e3.png');
+        background-image: url('../images/guardian-logo%402x.faee3f5abe0a2aff446866c8196e2b48.png');
     }
 }
 
 .top .i-arrow-small-up {
     margin-left: $baseline*2;
+    position: relative;
+    top: -1px;
 }
 
 .i-sport-arrow-small {

@@ -1,0 +1,9 @@
+@(model: LiveBlogPage)(implicit request: RequestHeader)
+@import conf.Switches._
+
+@main(model.article, Switches.all){
+}{
+
+    @fragments.liveBlogBody(model)
+
+}

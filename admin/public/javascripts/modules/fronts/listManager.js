@@ -17,82 +17,54 @@ define([
     contentApi,
     ophanApi
 ) {
-    var collections = {},
-        dragging = false,
-        clipboardEl = document.querySelector('#clipboard'),
-        listLoadsPending = 0,
+    var clipboardEl = document.querySelector('#clipboard'),
         loc = window.location;
 
     return function(selector) {
 
-        var model = {},
-            self = this;
+        var self = this,
+            model = {
+                latestArticles: new LatestArticles(),
+                clipboard:      knockout.observableArray(),
+                collections:    knockout.observableArray(),
+                configs:        knockout.observableArray(),
+                config:         knockout.observable(),
+                actions: {
+                    unsetConfig: unsetConfig,
+                    flushClipboard: flushClipboard
+                }
+            };
 
-        function chosenLists() {
-            return [].concat(_.filter((common.util.queryParams().blocks || "").split(","), function(str){ return !!str; }));
+        function getConfig() {
+            return [].concat(_.filter((common.util.queryParams().config || "").split(","), function(str){ return !!str; }));
         }
 
-        function addList(id) {
-            var lists = chosenLists();
-            lists = _.without(lists, id);
-            lists.unshift(id);
-            lists = _.first(lists, common.config.maxDisplayableLists || 3);
-            setDisplayedLists(lists);
+        function setConfig(ids) {
+            history.pushState({}, "", loc.pathname + '?' + common.util.ammendedQueryStr('config', [].concat(ids).join(',')));
+            renderCollections();
         }
 
-        function dropList(list) {
-            setDisplayedLists(_.reject(chosenLists(), function(id){ return id === list.id; }));
-            common.util.pageReflow();
+        function unsetConfig() {
+            model.config(undefined);
+            setConfig([]);
         }
 
-        function clearAll() {
-            setDisplayedLists([]);
+        function renderConfig() {
+            model.config(getConfig()[0]);
         }
 
-        function setDisplayedLists(listIDs) {
-            var qp = common.util.queryParams();
-            qp.blocks = listIDs.join(',');
-            qp = _.pairs(qp)
-                .filter(function(p){ return !!p[0]; })
-                .map(function(p){ return p[0] + (p[1] ? '=' + p[1] : ''); })
-                .join('&');
-
-            history.pushState({}, "", loc.pathname + '?' + qp);
-            renderLists();
-        }
-
-        function displayInAllEditions() {
-            setDisplayedLists(model.editions().map(function(edition){
-                return [edition, model.section(), model.block()].join('/'); 
-            }));
-        }
-
-        function renderLists(opts) {
-            var chosen = chosenLists(),
-                first;
-
-            opts = opts || {};
-
-            model.listsDisplayed.remove(function(list){
-                if (chosen.indexOf(list.id) === -1) {
-                    return true;
-                } else {
-                    chosen = _.without(chosen, list.id);
-                    return false;
-                }    
+        function renderCollections() {
+            model.collections.removeAll();
+            getConfig().map(function(config){
+                fetchConfig(config, function(collections){
+                    model.collections(
+                        (collections || []).map(function(collection){
+                            return new List(collection);
+                        })
+                    );
+                    connectSortableLists();
+                });
             });
-
-            chosen.forEach(function(id){
-                model.listsDisplayed.push(new List(id));
-            });
-
-            if(opts.inferDefaults && chosen[0]) {
-                first = chosen[0].split('/');
-                model.edition(first.shift());
-                model.section(first.shift());
-            }
-
-            connectSortableLists();
         }
 
         function connectSortableLists() {
@@ -100,7 +72,6 @@ define([
                 sortables = $(selector),
                 item,
                 fromList,
-                fromListObj,
                 toList;
 
             sortables.sortable({
@@ -111,29 +82,49 @@ define([
                 start: function(event, ui) {
                     common.state.uiBusy = true;
 
-                    // Display the source item. (The clone gets dragged.) 
+                    // Display the source item. (The clone gets dragged.)
                     sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    fromListObj = knockout.dataFor(fromList[0]);                    
                 },
                 stop: function(event, ui) {
-                    var index,
+                    var toListPersists = toList.hasClass('persisted'),
+                        fromListPersists = fromList.hasClass('persisted'),
+                        index,
                         clone;
 
                     common.state.uiBusy = false;
 
-                    // If we move between lists, effect a copy by cloning
-                    if(toList !== fromList) {
-                        index = toList.children().index(item);
-                        clone = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
-                        toList.children(':eq(' + index + ')').after(clone);
+                    // Save into toList
+                    if(toListPersists) {
+                        saveList({
+                            listEl: toList,
+                            itemEl: item
+                        });
+                    }
+
+                    // Delete out of fromList, if we've dragged between lists
+                    if(fromListPersists && toListPersists && fromList !==  toList) {
+                        saveList({
+                            listEl: fromList,
+                            itemEl: item,
+                            delete: true
+                        });
+                    }
+
+                    // If dragging to/from a non-persisted list (e.g. clipboard, or latest articles)
+                    // make a clone instead, and stick it in the toList, so that a "copy" is achieved
+                    if (!(fromListPersists && toListPersists)) {
+                        if(fromList !== toList) {
+                            index = toList.children().index(item);
+                            clone = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
+                            toList.children(':eq(' + index + ')').after(clone);
+                        }
                         // So that the original stays in place:
                         $(this).sortable('cancel');
                     }
 
-                    saveListDelta(item.data('url'), toList);
                 },
                 change: function(event, ui) {
                     if(ui.sender) toList = ui.placeholder.parent();
@@ -142,102 +133,86 @@ define([
             }).disableSelection();
         };
 
-        function saveListDelta(id, list) {
-            var listId,
-                inList,
-                listObj,
-                position,
+        function saveList(opts) {
+            var itemId  = opts.itemEl.data('url'),
+                isLive  = opts.listEl.hasClass('is-live'),
+                method  = opts.delete ? 'delete' : 'post',
+                listObj = knockout.dataFor(opts.listEl[0]),
                 delta;
 
-            if (!list.hasClass('persisted')) { return; }
+            if (!listObj || !listObj.id || !opts.itemEl.length || !itemId) { return; }
 
-            listObj = knockout.dataFor(list[0]);
+            delta = {
+                item:   itemId,
+                live:   isLive,
+                draft: !isLive
+            };
 
-            listId = list.attr('data-list-id');
-            if (!listId) { return; }
-
-            inList = $("[data-url='" + id + "']", list);
-
-            if (inList.length) {
-                delta = {
-                    item: id,
-                    draft: true,
-                    live: list.hasClass('is-live')
-                };
-
-                position = inList.next().data('url');
-                if (position) {
-                    delta.position = position;
-                } else {
-                    var numOfItems = $("[data-url]", list).length;
+            if (method === 'post') {
+                delta.position = opts.itemEl.next().data('url');
+                if (!delta.position) {
+                    var numOfItems = $("[data-url]", opts.listEl).length;
                     if (numOfItems > 1) {
-                        delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
+                        delta.position = $("[data-url]", opts.listEl).eq(numOfItems - 2).data('url');
                         delta.after = true;
-                    } 
+                    }
                 }
-
-                listObj.state.loadIsPending(true);
-
-                reqwest({
-                    method: 'post',
-                    url: common.config.apiBase + '/collection/' + listId,
-                    type: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify(delta)
-                }).always(function(resp) {
-                    listObj.load();
-                });
             }
+
+            listObj.state.loadIsPending(true);
+
+            reqwest({
+                method: method,
+                url: common.config.apiBase + '/collection/' + listObj.id,
+                type: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(delta)
+            }).always(function(resp) {
+                listObj.load();
+            });
         };
 
-        function _startPoller() {
-            setInterval(function(){
-                model.listsDisplayed().forEach(function(list){
-                    if (!dragging) {
-                        list.refresh();
-                    }
-                });
-            }, 5000);
-        }
-        var startPoller = _.once(_startPoller);
+        function startPoller() {
+            var period = common.config.collectionsPollMs || 60000;
 
-        function fetchCollections(callback) {
+            setInterval(function(){
+                model.collections().forEach(function(list, index){
+                    setTimeout(function(){
+                        list.refresh();
+                    }, index * period / (model.collections().length + 1)); // stagger requests
+                });
+            }, period);
+
+            startPoller = function() {}; // make idempotent
+        }
+
+        function fetchConfigs(callback) {
             reqwest({
-                url: common.config.apiBase + '/collection',
+                url: common.config.apiBase + '/config',
                 type: 'json'
             }).then(
                 function(resp) {
-                    resp.forEach(function(id){
-                        // Only use "first/three/levels" of the collection id path
-                        treeAdd(_.first(id.split('/'), 3), collections);
-                    });                    
-                    model.editions(_.keys(collections));
+                    if (!_.isArray(resp) || resp.length === 0) {
+                        window.console.log("ERROR: No configs were found");
+                        return;
+                    }
+                    model.configs(resp.sort());
                     if (_.isFunction(callback)) { callback(); }
                 },
-                function(xhr) { window.console.log("ERROR: There was a problem listing the available collections"); }
+                function(xhr) { window.console.log("ERROR: There was a problem listing the configs"); }
             );
         };
 
-        function treeAdd(path, obj) {
-            var f = _.first(path),
-                r = _.rest(path);
-
-            obj[f] = obj[f] || {};
-            if (r.length) {
-                treeAdd(r, obj[f]);
-            }
-        };
-
-        function displaySelectedBlocks() {           
-            var blocks = model.block() ? [model.block()] : model.blocks();
-
-            blocks.forEach(function(block){
-                addList([
-                    model.edition(),
-                    model.section(),
-                    block
-                ].join('/'));
-            })
+        function fetchConfig(id, callback) {
+            reqwest({
+                url: common.config.apiBase + '/config/' + id,
+                type: 'json'
+            }).then(
+                function(resp) {
+                    if (_.isFunction(callback)) { callback(resp); }
+                },
+                function(xhr) { window.console.log("ERROR: There was a problem fetching the config for " + id); }
+            );
         };
 
         function flushClipboard() {
@@ -268,109 +243,57 @@ define([
             ophanApi.decorateItems(model.clipboard());
         }
 
-        this.init = function(callback) {
-            model.latestArticles  = new LatestArticles();
-            model.listsDisplayed  = knockout.observableArray();
-            model.clipboard        = knockout.observableArray();
+        model.config.subscribe(function(config) {
+            var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
+            model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
+            setConfig(config ? [config] : []);
+        });
 
-            model.editions = knockout.observableArray();
-            model.edition  = knockout.observable();
-
-            model.sections = knockout.observableArray();
-            model.section  = knockout.observable();
-
-            model.blocks   = knockout.observableArray();
-            model.block    = knockout.observable();
-
-            model.actions = {
-                displaySelectedBlocks: displaySelectedBlocks,
-                displayInAllEditions: displayInAllEditions,
-                dropList: dropList,
-                clearAll: clearAll,
-                flushClipboard: flushClipboard
+        knockout.bindingHandlers.makeDropabble = {
+            init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                element.addEventListener('dragover',  onDragOver,  false);
+                element.addEventListener('drop',      onDrop,      false);
             }
+        };
 
-            model.edition.subscribe(function(edition) {
-                model.sections.removeAll();
-                if (common.util.hasNestedProperty(collections, [edition])) {
-                    model.sections(_.keys(collections[edition]));
-                }
-                model.section(undefined);
+        knockout.bindingHandlers.sparkline = {
+            update: function (element, valueAccessor, allBindingsAccessor, model) {
+                var groups = knockout.utils.unwrapObservable(valueAccessor()),
+                    max;
 
-                model.blocks.removeAll();
-                model.block(undefined);
-            });
+                if (!_.isArray(groups)) { return; };
+                max = _.max(_.pluck(groups, 'max'));
+                if (!max) { return; };
 
-            model.section.subscribe(function(section) {
-                model.blocks.removeAll();
-                if (common.util.hasNestedProperty(collections, [model.edition(), section])) {
-                    model.blocks(_.keys(collections[model.edition()][section]));
-                }
-                model.block(undefined);
-
-                if (section) {
-                    model.latestArticles.section(common.config.sectionSearches[section] || section);
-                }
-            });
-
-            knockout.bindingHandlers.makeDropabble = {
-                init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-                    element.addEventListener('dragover',  onDragOver,  false);
-                    element.addEventListener('drop',      onDrop,      false);
-                }
-            };
-
-            knockout.bindingHandlers.sparkline = {
-                update: function (element, valueAccessor, allBindingsAccessor, model) {
-                    var groups = knockout.utils.unwrapObservable(valueAccessor()),
-                        max = _.max(_.pluck(groups, 'max'));
-
-                    if (!max) { return };
-
-                    _.chain(groups)
-                    .sortBy(function(g){
-                        // Put biggest groups first, so that its fill color is behind the other groups
-                        return -1 * g.max;
-                    }).each(function(group, i){
-                        $(element).sparkline(group.data, {
-                            chartRangeMax: max,
-                            height: Math.max(10, Math.min(30, max)),
-                            lineColor: '#' + group.color,
-                            fillColor: _.last(group.data) > 25 ? '#eeeeee' : false,
-                            spotColor: false,
-                            minSpotColor: false,
-                            maxSpotColor: false,
-                            lineWidth: _.last(group.data) > 25 ? 2 : 1,
-                            composite: i > 0
-                        });
+                _.each(_.toArray(groups).reverse(), function(group, i){
+                    $(element).sparkline(group.data, {
+                        chartRangeMax: max,
+                        defaultPixelsPerValue: group.data.length < 50 ? group.data.length < 30 ? 3 : 2 : 1,
+                        height: Math.round(Math.max(10, Math.min(40, max))),
+                        lineColor: '#' + group.color,
+                        spotColor: false,
+                        minSpotColor: false,
+                        maxSpotColor: false,
+                        lineWidth: group.activity || 1,
+                        fillColor: false,
+                        composite: i > 0
                     });
-                }
-            };
 
-            common.util.mediator.on('list:load:start', function() {
-                listLoadsPending += 1;
-            });
+                });
+            }
+        };
 
-            common.util.mediator.on('list:load:end', function() {
-                listLoadsPending -= 1;
-                if (listLoadsPending < 1) {
-                    listLoadsPending = 0;
-                    common.util.pageReflow();
-                }
-            });
-
-            fetchCollections(function(){
+        this.init = function(callback) {
+            fetchConfigs(function(){
                 knockout.applyBindings(model);
 
-                renderLists({inferDefaults: true});
-
-                window.onpopstate = renderLists;
+                renderConfig();
+                window.onpopstate = renderConfig;
 
                 startPoller();
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
             });
-
         };
 
     };

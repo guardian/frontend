@@ -1,0 +1,2206 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":28320,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":2832,
+    "orderBy":"newest",
+    "edition":{
+      "id":"environment",
+      "webTitle":"Environment",
+      "webUrl":"http://www.theguardian.com/environment",
+      "apiUrl":"http://content.guardianapis.com/environment",
+      "code":"default"
+    },
+    "section":{
+      "id":"environment",
+      "webTitle":"Environment",
+      "webUrl":"http://www.theguardian.com/environment",
+      "apiUrl":"http://content.guardianapis.com/environment",
+      "editions":[{
+        "id":"environment",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment",
+        "apiUrl":"http://content.guardianapis.com/environment",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"environment/2013/sep/17/romanians-mobilise-gold-mine",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-17T10:28:55Z",
+      "webTitle":"Romanians mobilise in protest against gold mine plans",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/17/romanians-mobilise-gold-mine",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/17/romanians-mobilise-gold-mine",
+      "fields":{
+        "trailText":"<p><strong>IPS:</strong> Street protests are snowballing in Romania against a Canadian-led gold mining project in Rosia Montana</p>",
+        "headline":"Romanians mobilise in protest against gold mine plans",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tzha",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/3/1378201115049/Rosia-Montana-Romania-003.jpg",
+        "wordcount":"1004",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/series/guardian-environment-network",
+        "type":"series",
+        "webTitle":"Guardian Environment Network",
+        "webUrl":"http://www.theguardian.com/environment/series/guardian-environment-network",
+        "apiUrl":"http://content.guardianapis.com/environment/series/guardian-environment-network",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/mining",
+        "type":"keyword",
+        "webTitle":"Mining",
+        "webUrl":"http://www.theguardian.com/environment/mining",
+        "apiUrl":"http://content.guardianapis.com/environment/mining",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/romania",
+        "type":"keyword",
+        "webTitle":"Romania",
+        "webUrl":"http://www.theguardian.com/world/romania",
+        "apiUrl":"http://content.guardianapis.com/world/romania",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/activism",
+        "type":"keyword",
+        "webTitle":"Activism",
+        "webUrl":"http://www.theguardian.com/environment/activism",
+        "apiUrl":"http://content.guardianapis.com/environment/activism",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417511189",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/3/1378201121104/Rosia-Montana-Romania-008.jpg",
+          "typeData":{
+            "source":"Karen Robinson",
+            "altText":"Rosia Montana, Romania",
+            "height":"276",
+            "credit":"Karen Robinson",
+            "caption":"the Rosia Montana area in the Apuseni Mountains, where Gold Corporation plans to build Europe's largest gold mine.  Photograph: Karen Robinson",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417511190",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/3/1378201115049/Rosia-Montana-Romania-003.jpg",
+          "typeData":{
+            "source":"Karen Robinson",
+            "altText":"Rosia Montana, Romania",
+            "height":"84",
+            "credit":"Karen Robinson",
+            "caption":"Rosia Montana, above, is where firms want to mine for gold but protesters say it will wreck the environment as cynaide will be used for mining.  Photograph: Karen Robinson",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/climate-consensus-97-per-cent/2013/sep/17/global-warming-fingerprints-santer-2013",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-17T04:50:42Z",
+      "webTitle":"What's causing global warming?  Look for the fingerprints | John Abraham",
+      "webUrl":"http://www.theguardian.com/environment/climate-consensus-97-per-cent/2013/sep/17/global-warming-fingerprints-santer-2013",
+      "apiUrl":"http://content.guardianapis.com/environment/climate-consensus-97-per-cent/2013/sep/17/global-warming-fingerprints-santer-2013",
+      "fields":{
+        "trailText":"<p><strong>John Abraham: </strong>A new paper by <a href=\"http://www.pnas.org/content/early/2013/09/10/1305332110.full.pdf+html\">Santer et al. (2013)</a> finds patterns in the climate that indicate human-caused global warming</p>",
+        "headline":"What's causing global warming?  Look for the fingerprints",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tnhv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/25/1322217188836/Fingerprint-scanned-for-b-004.jpg",
+        "wordcount":"700",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/climate-consensus-97-per-cent",
+        "type":"blog",
+        "webTitle":"Climate Consensus - the 97%",
+        "webUrl":"http://www.theguardian.com/environment/climate-consensus-97-per-cent",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-consensus-97-per-cent",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/climate-change",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/environment/climate-change",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/climate-change-scepticism",
+        "type":"keyword",
+        "webTitle":"Climate change scepticism",
+        "webUrl":"http://www.theguardian.com/environment/climate-change-scepticism",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change-scepticism",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/series/guardian-environment-blogs",
+        "type":"series",
+        "webTitle":"Guardian Environment Blogs",
+        "webUrl":"http://www.theguardian.com/environment/series/guardian-environment-blogs",
+        "apiUrl":"http://content.guardianapis.com/environment/series/guardian-environment-blogs",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"profile/john-abraham",
+        "type":"contributor",
+        "webTitle":"John Abraham",
+        "webUrl":"http://www.theguardian.com/profile/john-abraham",
+        "apiUrl":"http://content.guardianapis.com/profile/john-abraham",
+        "bio":"<p>Dr. John Abraham is a Professor of Thermal Sciences where he researches in climate monitoring and renewable energy generation for the developing world. His energy development work has extended to Africa, South America, and Asia. </p>",
+        "r2ContributorId":"55887",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/1/1367419455692/John_Abraham.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"science/scienceofclimatechange",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/science/scienceofclimatechange",
+        "apiUrl":"http://content.guardianapis.com/science/scienceofclimatechange",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417475368",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/25/1322217192486/Fingerprint-scanned-for-b-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Waldie",
+            "altText":"Fingerprint scanned for biometrics",
+            "height":"276",
+            "credit":"Ian Waldie/Getty Images",
+            "caption":"Benjamin Santer's study looked for fingerprints of human-caused climate change. Photograph: Ian Waldie/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417475369",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/25/1322217188836/Fingerprint-scanned-for-b-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ian Waldie",
+            "altText":"Fingerprint scanned for biometrics",
+            "height":"84",
+            "credit":"Ian Waldie/Getty Images",
+            "caption":"Teenagers readers can get involved in Root: a new interactive serialised story for teenagers, set in the shadowy world of computer hacking and espionage where readers have the chance to influence the story. Photograph: Ian Waldie/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/sep/16/cerne-valley-dorset-thomas-hardy-woodlanders",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-16T20:00:00Z",
+      "webTitle":"Country diary: Cerne valley, Dorset: In pursuit of Hardy's woodlanders",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/16/cerne-valley-dorset-thomas-hardy-woodlanders",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/16/cerne-valley-dorset-thomas-hardy-woodlanders",
+      "fields":{
+        "trailText":"<strong>Country diary: Cerne valley, Dorset:</strong> In 1912, Thomas Hardy lamented the decline of traditional trades but there are neat piles of sawn logs at the roadside and thatched roofs in the villages",
+        "headline":"In pursuit of Hardy's woodlanders",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tnna",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379341665869/Country-Diary--Cerne-vall-001.jpg",
+        "wordcount":"307",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/series/country-diary",
+        "type":"series",
+        "webTitle":"Country diary",
+        "webUrl":"http://www.theguardian.com/environment/series/country-diary",
+        "apiUrl":"http://content.guardianapis.com/environment/series/country-diary",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"books/thomashardy",
+        "type":"keyword",
+        "webTitle":"Thomas Hardy",
+        "webUrl":"http://www.theguardian.com/books/thomashardy",
+        "apiUrl":"http://content.guardianapis.com/books/thomashardy",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"travel/literary-trips",
+        "type":"keyword",
+        "webTitle":"Literary trips",
+        "webUrl":"http://www.theguardian.com/travel/literary-trips",
+        "apiUrl":"http://content.guardianapis.com/travel/literary-trips",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/dorset",
+        "type":"keyword",
+        "webTitle":"Dorset",
+        "webUrl":"http://www.theguardian.com/travel/dorset",
+        "apiUrl":"http://content.guardianapis.com/travel/dorset",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"uk/ruralaffairs",
+        "type":"keyword",
+        "webTitle":"Rural affairs",
+        "webUrl":"http://www.theguardian.com/uk/ruralaffairs",
+        "apiUrl":"http://content.guardianapis.com/uk/ruralaffairs",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"travel/england",
+        "type":"keyword",
+        "webTitle":"England",
+        "webUrl":"http://www.theguardian.com/travel/england",
+        "apiUrl":"http://content.guardianapis.com/travel/england",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/travel",
+        "type":"keyword",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/johnvallins",
+        "type":"contributor",
+        "webTitle":"John Vallins",
+        "webUrl":"http://www.theguardian.com/profile/johnvallins",
+        "apiUrl":"http://content.guardianapis.com/profile/johnvallins",
+        "bio":"<p>John Vallins has been writing Country diaries fortnightly since 1992, mainly from Hardy's Wessex. He retired to Somerset from Manchester, where he was headmaster of Chetham's School of Music</p>",
+        "rcsId":"GNL084111",
+        "r2ContributorId":"15885",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/1/23/1327317890178/John-Vallins2.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417446253",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379341567272/Country-Diary--Cerne-vall-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Chris Cooper-Smith",
+            "altText":"Country Diary : Cerne valley  : The Dorset Village of Piddletrenthide and it s thatched cottages",
+            "height":"276",
+            "credit":"Chris Cooper-Smith/Alamy",
+            "caption":"Homes for Hardy's Woodlanders: thatched cottages in Piddletrenthide, Dorset. Photograph: Chris Cooper-Smith/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417446254",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379341665869/Country-Diary--Cerne-vall-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Chris Cooper-Smith",
+            "altText":"Country Diary : Cerne valley  : The Dorset Village of Piddletrenthide and it s thatched cottages",
+            "height":"84",
+            "credit":"Chris Cooper-Smith/Alamy",
+            "caption":"The Dorset Village of Piddletrenthide and its thatched cottages Photograph: Chris Cooper-Smith/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/sep/16/north-york-potash-mine-delayed-environment-concerns",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-16T18:35:10Z",
+      "webTitle":"North York potash mine construction delayed over environmental concerns",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/16/north-york-potash-mine-delayed-environment-concerns",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/16/north-york-potash-mine-delayed-environment-concerns",
+      "fields":{
+        "trailText":"Sirius Minerals' chief executive says concerns are outweighed by 'huge economic benefits'",
+        "headline":"North York potash mine construction delayed over environmental concerns",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tz8y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355774680/North-York-Moors-National-005.jpg",
+        "wordcount":"425",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/construction",
+        "type":"keyword",
+        "webTitle":"Construction industry",
+        "webUrl":"http://www.theguardian.com/business/construction",
+        "apiUrl":"http://content.guardianapis.com/business/construction",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/york",
+        "type":"keyword",
+        "webTitle":"York",
+        "webUrl":"http://www.theguardian.com/uk/york",
+        "apiUrl":"http://content.guardianapis.com/uk/york",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/rupertneate",
+        "type":"contributor",
+        "webTitle":"Rupert Neate",
+        "webUrl":"http://www.theguardian.com/profile/rupertneate",
+        "apiUrl":"http://content.guardianapis.com/profile/rupertneate",
+        "bio":"<p>Rupert Neate is a reporter. He was shortlisted for Reporter of the Year at the 2012 British Press Awards and the British Journalism Awards for <a href=\"http://www.pressgazette.co.uk/story.asp?storycode=48784\">his investigation that led to Liam Fox's resignation as defence secretary</a>. He joined the Guardian in 2011 from the Daily Telegraph, were he worked for four years as City Diary editor and telecoms and technology correspondent. He was <a href=\"http://www.guardian.co.uk/student-media-awards-2012/success-stories-rupert-neate\">named Student Journalist of the Year</a> at the Guardian Student Media Awards in 2006.</p>",
+        "r2ContributorId":"26470",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2011/10/17/1318845485033/Rupert-Neate-Guardian-byl-004.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417444258",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355771354/North-York-Moors-National-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355772505/North-York-Moors-National-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"340",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355773590/North-York-Moors-National-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355774680/North-York-Moors-National-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355775759/North-York-Moors-National-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355776811/North-York-Moors-National-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355777853/North-York-Moors-National-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355778903/North-York-Moors-National-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355779922/North-York-Moors-National-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355781029/North-York-Moors-National-011.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355779922/North-York-Moors-National-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417444259",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379355774680/North-York-Moors-National-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"North York Moors National Park",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"North York Moors National Park: Sirius Minerals' chief executive says the mine will 'disappear into the surroundings'. Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/sep/16/tidal-energy-scheme-northern-scotland",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-16T16:44:00Z",
+      "webTitle":"Tidal energy scheme off northern Scotland gets go-ahead",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/16/tidal-energy-scheme-northern-scotland",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/16/tidal-energy-scheme-northern-scotland",
+      "fields":{
+        "trailText":"Six machines to exploit fast currents in Pentland Firth will be installed as first part of much larger planned tidal scheme",
+        "headline":"Tidal energy scheme off northern Scotland gets go-ahead",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tz24",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342852591/Pentland-Firth-005.jpg",
+        "wordcount":"1030",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/wave-tidal-hydropower",
+        "type":"keyword",
+        "webTitle":"Wave and tidal power",
+        "webUrl":"http://www.theguardian.com/environment/wave-tidal-hydropower",
+        "apiUrl":"http://content.guardianapis.com/environment/wave-tidal-hydropower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/renewableenergy",
+        "type":"keyword",
+        "webTitle":"Renewable energy",
+        "webUrl":"http://www.theguardian.com/environment/renewableenergy",
+        "apiUrl":"http://content.guardianapis.com/environment/renewableenergy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"uk/scotland",
+        "type":"keyword",
+        "webTitle":"Scotland",
+        "webUrl":"http://www.theguardian.com/uk/scotland",
+        "apiUrl":"http://content.guardianapis.com/uk/scotland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/severincarrell",
+        "type":"contributor",
+        "webTitle":"Severin Carrell",
+        "webUrl":"http://www.theguardian.com/profile/severincarrell",
+        "apiUrl":"http://content.guardianapis.com/profile/severincarrell",
+        "bio":"<p>Severin Carrell is <a href=\"http://www.guardian.co.uk/politics/scotland\">Scotland</a> correspondent for the <a href=\"http://www.guardian.co.uk/theguardian\">Guardian</a>. He has worked as a home affairs, environment and politics correspondent for the Scotsman and Scotland on Sunday, and as a senior reporter with the Independent and Independent on Sunday</p>",
+        "r2ContributorId":"19388",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/severin_carrell_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417419626",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342836293/Pentland-Firth-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"54",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342837887/Pentland-Firth-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"340",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342851452/Pentland-Firth-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"130",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342852591/Pentland-Firth-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"84",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342856563/Pentland-Firth-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"132",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342857590/Pentland-Firth-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"168",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342858706/Pentland-Firth-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"180",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342860394/Pentland-Firth-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"228",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342861610/Pentland-Firth-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"276",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342864776/Pentland-Firth-011.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"372",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342861610/Pentland-Firth-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"276",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth seen from Caithness, with Orkney visible beyond: six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417419627",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379342852591/Pentland-Firth-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Albaimages",
+            "altText":"Pentland Firth",
+            "height":"84",
+            "credit":"Albaimages/Alamy",
+            "caption":"The Pentland Firth, with Orkney visible beyond. Six tidal turbines will be installed in the fast-moving waters. Photograph: Albaimages/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/sep/16/david-king-fracking-shale-gas",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-16T16:42:23Z",
+      "webTitle":"Sir David King warns against fracking",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/16/david-king-fracking-shale-gas",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/16/david-king-fracking-shale-gas",
+      "fields":{
+        "trailText":"Former UK scientific adviser says gas from unconventional sources could have huge environmental consequences",
+        "headline":"Sir David King warns against fracking",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tz6v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348623035/Sir-David-King--003.jpg",
+        "wordcount":"964",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/shale-gas",
+        "type":"keyword",
+        "webTitle":"Shale gas and fracking",
+        "webUrl":"http://www.theguardian.com/environment/shale-gas",
+        "apiUrl":"http://content.guardianapis.com/environment/shale-gas",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/fossil-fuels",
+        "type":"keyword",
+        "webTitle":"Fossil fuels",
+        "webUrl":"http://www.theguardian.com/environment/fossil-fuels",
+        "apiUrl":"http://content.guardianapis.com/environment/fossil-fuels",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/gas",
+        "type":"keyword",
+        "webTitle":"Gas",
+        "webUrl":"http://www.theguardian.com/environment/gas",
+        "apiUrl":"http://content.guardianapis.com/environment/gas",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"politics/davidcameron",
+        "type":"keyword",
+        "webTitle":"David Cameron",
+        "webUrl":"http://www.theguardian.com/politics/davidcameron",
+        "apiUrl":"http://content.guardianapis.com/politics/davidcameron",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/georgeosborne",
+        "type":"keyword",
+        "webTitle":"George Osborne",
+        "webUrl":"http://www.theguardian.com/politics/georgeosborne",
+        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"environment/climate-change",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/environment/climate-change",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/technology/energy",
+        "apiUrl":"http://content.guardianapis.com/technology/energy",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/fiona-harvey",
+        "type":"contributor",
+        "webTitle":"Fiona Harvey",
+        "webUrl":"http://www.theguardian.com/profile/fiona-harvey",
+        "apiUrl":"http://content.guardianapis.com/profile/fiona-harvey",
+        "r2ContributorId":"42410",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/2/1/1296557630486/Fiona-Harvey.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417430706",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348620114/Sir-David-King--001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"54",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348621774/Sir-David-King--002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"130",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348623035/Sir-David-King--003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"84",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348624802/Sir-David-King--004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"132",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348626078/Sir-David-King--005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"168",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348627355/Sir-David-King--006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"180",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348628746/Sir-David-King--007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"228",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348630037/Sir-David-King--008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"276",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348630037/Sir-David-King--008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"276",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417430707",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/16/1379348623035/Sir-David-King--003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"David Sillitoe",
+            "altText":"Sir David King ",
+            "height":"84",
+            "credit":"David Sillitoe/Guardian",
+            "caption":"Sir David King, former chief scientific adviser to the government, says fracking 'won't be a game-changer in the UK.'  Photograph: David Sillitoe for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/sep/16/climate-change-case-overwhelming-scientists",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-16T15:25:24Z",
+      "webTitle":"Case for climate change is overwhelming, say scientists",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/16/climate-change-case-overwhelming-scientists",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/16/climate-change-case-overwhelming-scientists",
+      "fields":{
+        "trailText":"<p><strong>Climate News Network: </strong>Eleven days before the IPCC publishes its latest report, a group of eminent scientists says there is massive evidence of human responsibility</p>",
+        "headline":"Case for climate change is overwhelming, say scientists",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tz44",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/5/1378343665443/6415e857-f56e-46dc-869f-0ff0421e7d3a-140x84.jpeg",
+        "wordcount":"636",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/climate-change",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/environment/climate-change",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"science/scienceofclimatechange",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/science/scienceofclimatechange",
+        "apiUrl":"http://content.guardianapis.com/science/scienceofclimatechange",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"environment/series/guardian-environment-network",
+        "type":"series",
+        "webTitle":"Guardian Environment Network",
+        "webUrl":"http://www.theguardian.com/environment/series/guardian-environment-network",
+        "apiUrl":"http://content.guardianapis.com/environment/series/guardian-environment-network",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417423255",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/5/1378343668455/6415e857-f56e-46dc-869f-0ff0421e7d3a-460x276.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"MICK TSIKAS",
+            "altText":"A flare stack emitting fire is silhouetted against the sun at an oil refinery in Melbourne June 24, 2009. A senator crucial to Australia's plans for carbon trading said on Wednesday he did not believe climate change was real, delivering what could be a fatal blow to government plans to slash industrial gas emissions. REUTERS/Mick Tsikas (AUSTRALIA POLITICS ENERGY ENVIRONMENT BUSINESS IMAGES OF THE DAY) :rel:d:bm:GF2E56O0NFZ01",
+            "height":"276",
+            "credit":"MICK TSIKAS/REUTERS",
+            "caption":"Scientists say that if humans continue with business as usual, using fossil fuels and pumping out excessive amounts of greenhouse gases, the world will be on track for a planet that is 4C warmer by the end of this century Photograph: Mick Tsikas/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417423256",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/5/1378343665443/6415e857-f56e-46dc-869f-0ff0421e7d3a-140x84.jpeg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"MICK TSIKAS",
+            "altText":"A flare stack emitting fire is silhouetted against the sun at an oil refinery in Melbourne June 24, 2009. A senator crucial to Australia's plans for carbon trading said on Wednesday he did not believe climate change was real, delivering what could be a fatal blow to government plans to slash industrial gas emissions. REUTERS/Mick Tsikas (AUSTRALIA POLITICS ENERGY ENVIRONMENT BUSINESS IMAGES OF THE DAY) :rel:d:bm:GF2E56O0NFZ01",
+            "height":"84",
+            "credit":"MICK TSIKAS/REUTERS",
+            "caption":"A flare stack emitting fire is silhouetted against the sun at an oil refinery in Melbourne June 24, 2009. A senator crucial to Australia's plans for carbon trading said on Wednesday he did not believe climate change was real, delivering what could be a fatal blow to government plans to slash industrial gas emissions. REUTERS/Mick Tsikas (AUSTRALIA POLITICS ENERGY ENVIRONMENT BUSINESS IMAGES OF THE DAY)\r\n:rel:d:bm:GF2E56O0NFZ01 Photograph: Mick Tsikas/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/sep/16/anglo-american-alaska-gold-mines",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-16T14:59:00Z",
+      "webTitle":"Anglo American pulls out of Alaska mines project",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/16/anglo-american-alaska-gold-mines",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/16/anglo-american-alaska-gold-mines",
+      "fields":{
+        "trailText":"<p>Company withdraws from plans to develop vast open-pit gold and copper mines in an area of pristine streams and wetlands</p>",
+        "headline":"Anglo American pulls out of Alaska mines project",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tz2n",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379341036927/Pebble-mine-public-meetin-002.jpg",
+        "wordcount":"737",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/mining",
+        "type":"keyword",
+        "webTitle":"Mining",
+        "webUrl":"http://www.theguardian.com/environment/mining",
+        "apiUrl":"http://content.guardianapis.com/environment/mining",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/mining",
+        "type":"keyword",
+        "webTitle":"Mining",
+        "webUrl":"http://www.theguardian.com/business/mining",
+        "apiUrl":"http://content.guardianapis.com/business/mining",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/gold",
+        "type":"keyword",
+        "webTitle":"Gold",
+        "webUrl":"http://www.theguardian.com/business/gold",
+        "apiUrl":"http://content.guardianapis.com/business/gold",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/alaska",
+        "type":"keyword",
+        "webTitle":"Alaska",
+        "webUrl":"http://www.theguardian.com/world/alaska",
+        "apiUrl":"http://content.guardianapis.com/world/alaska",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/suzannegoldenberg",
+        "type":"contributor",
+        "webTitle":"Suzanne Goldenberg",
+        "webUrl":"http://www.theguardian.com/profile/suzannegoldenberg",
+        "apiUrl":"http://content.guardianapis.com/profile/suzannegoldenberg",
+        "bio":"<p>Suzanne Goldenberg is the <a href=\"http://www.guardian.co.uk/environment\">US environment correspondent </a>of the Guardian and is based in Washington DC. She has won several awards for her work in the Middle East, and in 2003 covered the US invasion of Iraq from Baghdad. She is author of <a href=\"http://www.suzannegoldenberg.com/\">Madam President</a>, about Hillary Clinton's historic run for White House</p>",
+        "rcsId":"GNL002302",
+        "r2ContributorId":"16503",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/01/21/suzanne_goldenberg_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"business/anglo-american",
+        "type":"keyword",
+        "webTitle":"Anglo American",
+        "webUrl":"http://www.theguardian.com/business/anglo-american",
+        "apiUrl":"http://content.guardianapis.com/business/anglo-american",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/marine-life",
+        "type":"keyword",
+        "webTitle":"Marine life",
+        "webUrl":"http://www.theguardian.com/environment/marine-life",
+        "apiUrl":"http://content.guardianapis.com/environment/marine-life",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/endangered-habitats",
+        "type":"keyword",
+        "webTitle":"Endangered habitats",
+        "webUrl":"http://www.theguardian.com/environment/endangered-habitats",
+        "apiUrl":"http://content.guardianapis.com/environment/endangered-habitats",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417450762",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379341042488/Pebble-mine-public-meetin-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Bill Roth/Anchorage Daily News",
+            "altText":"Pebble mine public meeting with EPA administrator Gena McCarthy",
+            "height":"276",
+            "credit":"Bill Roth/Anchorage Daily News/Alamy",
+            "caption":"EPA administrator Gena McCarthy, center, listens to people voice their concerns about the proposed Pebble Mine during a meeting in the Iliamna Lake Lodge in Iliamna, Alaska. Photograph: Bill Roth/Anchorage Daily News/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417450763",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379341036927/Pebble-mine-public-meetin-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Bill Roth/Anchorage Daily News",
+            "altText":"Pebble mine public meeting with EPA administrator Gena McCarthy",
+            "height":"84",
+            "credit":"Bill Roth/Anchorage Daily News/Alamy",
+            "caption":" EPA administrator Gena McCarthy, center, listens to people voice their concerns about the proposed Pebble Mine during a meeting in the Iliamna Lake Lodge in Iliamna, Alaska, Tuesday, August 27, 2013. Photograph: Bill Roth/Anchorage Daily News/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/sep/16/badger-cull-shot-animal-picture",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-16T14:35:19Z",
+      "webTitle":"Badger cull: first photo of shot animal emerges",
+      "webUrl":"http://www.theguardian.com/environment/2013/sep/16/badger-cull-shot-animal-picture",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/sep/16/badger-cull-shot-animal-picture",
+      "fields":{
+        "trailText":"<p>Animal believed to be shot by marksmen 'had time to take flight', putting in doubt claims of humane, instant killing</p>",
+        "headline":"Badger cull: first photo of shot animal emerges",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tzxv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330430084/Badger-102-killed-during--027.jpg",
+        "wordcount":"437",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/badgers",
+        "type":"keyword",
+        "webTitle":"Badgers",
+        "webUrl":"http://www.theguardian.com/environment/badgers",
+        "apiUrl":"http://content.guardianapis.com/environment/badgers",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/wildlife",
+        "type":"keyword",
+        "webTitle":"Wildlife",
+        "webUrl":"http://www.theguardian.com/environment/wildlife",
+        "apiUrl":"http://content.guardianapis.com/environment/wildlife",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/animals",
+        "type":"keyword",
+        "webTitle":"Animals",
+        "webUrl":"http://www.theguardian.com/world/animals",
+        "apiUrl":"http://content.guardianapis.com/world/animals",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/animal-welfare",
+        "type":"keyword",
+        "webTitle":"Animal welfare",
+        "webUrl":"http://www.theguardian.com/world/animal-welfare",
+        "apiUrl":"http://content.guardianapis.com/world/animal-welfare",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/ruralaffairs",
+        "type":"keyword",
+        "webTitle":"Rural affairs",
+        "webUrl":"http://www.theguardian.com/uk/ruralaffairs",
+        "apiUrl":"http://content.guardianapis.com/uk/ruralaffairs",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/bovine-tuberculosis",
+        "type":"keyword",
+        "webTitle":"Bovine tuberculosis",
+        "webUrl":"http://www.theguardian.com/uk/bovine-tuberculosis",
+        "apiUrl":"http://content.guardianapis.com/uk/bovine-tuberculosis",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/adam-vaughan",
+        "type":"contributor",
+        "webTitle":"Adam Vaughan",
+        "webUrl":"http://www.theguardian.com/profile/adam-vaughan",
+        "apiUrl":"http://content.guardianapis.com/profile/adam-vaughan",
+        "bio":"<p>Adam Vaughan is editor of <a href=\"http://www.guardian.co.uk/environment\">environmentguardian.co.uk</a>. He previously edited sites for CBS and Haymarket </p>",
+        "r2ContributorId":"30252",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2009/6/8/1244479493691/Adam-Vaughan-001.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417417267",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330436240/Badger-102-killed-during--032.jpg",
+          "typeData":{
+            "source":"Secret World Wildlife Rescue",
+            "photographer":"Pauline Kidner",
+            "altText":"Badger 102 killed during badger cull ",
+            "height":"276",
+            "credit":"Pauline Kidner/Secret World Wildlife Rescue",
+            "caption":"The X ray of the dead badger show it was hit by a single high velocity bullet, according to the vet who examined the carcass. Photograph: Pauline Kidner/Secret World Wildlife Rescue",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417417268",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330430084/Badger-102-killed-during--027.jpg",
+          "typeData":{
+            "source":"Secret World Wildlife Rescue",
+            "photographer":"Pauline Kidner",
+            "altText":"Badger 102 killed during badger cull ",
+            "height":"84",
+            "credit":"Pauline Kidner/Secret World Wildlife Rescue",
+            "caption":"Photographs and X ray of badger 102 killed during badger cull, September 2013. Photograph: Pauline Kidner/Secret World Wildlife Rescue",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-417417269",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330406626/Badger-102-killed-during--006.jpg",
+          "typeData":{
+            "source":"Secret World Wildlife Rescue",
+            "photographer":"Pauline Kidner",
+            "altText":"Badger 102 killed during badger cull ",
+            "height":"276",
+            "credit":"Pauline Kidner/Secret World Wildlife Rescue",
+            "caption":"The animal's body was brought in by a group on night vigil in the cull zone. Photograph: Pauline Kidner/Secret World Wildlife Rescue",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417417270",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/9/16/1379330417675/Badger-102-killed-during--016.jpg",
+          "typeData":{
+            "source":"Secret World Wildlife Rescue",
+            "photographer":"Pauline Kidner",
+            "altText":"Badger 102 killed during badger cull ",
+            "height":"276",
+            "credit":"Pauline Kidner/Secret World Wildlife Rescue",
+            "caption":"Badger 102 was killed during the cull, according to Secret World Wildlife Rescue. Photograph: Pauline Kidner/Secret World Wildlife Rescue",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/video/2013/sep/16/polar-bear-greenpeace-save-the-arctic-video",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-09-16T13:43:35Z",
+      "webTitle":"Giant polar bear leads Greenpeace's Save the Arctic protest – video",
+      "webUrl":"http://www.theguardian.com/environment/video/2013/sep/16/polar-bear-greenpeace-save-the-arctic-video",
+      "apiUrl":"http://content.guardianapis.com/environment/video/2013/sep/16/polar-bear-greenpeace-save-the-arctic-video",
+      "fields":{
+        "trailText":"<p>A polar bear the size of a double-decker bus marched through London on Saturday along with up to 3,000 people for Greenpeace's Save the Arctic campaign</p>",
+        "headline":"Giant polar bear leads Greenpeace's Save the Arctic protest – video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tnz2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331124140/London-polar-bear-026.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/greenpeace",
+        "type":"keyword",
+        "webTitle":"Greenpeace",
+        "webUrl":"http://www.theguardian.com/environment/greenpeace",
+        "apiUrl":"http://content.guardianapis.com/environment/greenpeace",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/activism",
+        "type":"keyword",
+        "webTitle":"Activism",
+        "webUrl":"http://www.theguardian.com/environment/activism",
+        "apiUrl":"http://content.guardianapis.com/environment/activism",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/protest",
+        "type":"keyword",
+        "webTitle":"Protest",
+        "webUrl":"http://www.theguardian.com/world/protest",
+        "apiUrl":"http://content.guardianapis.com/world/protest",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/arctic",
+        "type":"keyword",
+        "webTitle":"Arctic",
+        "webUrl":"http://www.theguardian.com/world/arctic",
+        "apiUrl":"http://content.guardianapis.com/world/arctic",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/poles",
+        "type":"keyword",
+        "webTitle":"Polar regions",
+        "webUrl":"http://www.theguardian.com/environment/poles",
+        "apiUrl":"http://content.guardianapis.com/environment/poles",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/climate-change",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/environment/climate-change",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417394876",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331078199/London-polar-bear-001.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"360",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331098849/London-polar-bear-012.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"372",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331100594/London-polar-bear-013.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"90",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331102384/London-polar-bear-014.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"225",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331104135/London-polar-bear-015.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"360",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331106063/London-polar-bear-016.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"340",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331107903/London-polar-bear-017.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"54",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331109638/London-polar-bear-018.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"130",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331113290/London-polar-bear-020.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"132",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331114994/London-polar-bear-021.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"168",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331116752/London-polar-bear-022.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"180",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331118581/London-polar-bear-023.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"228",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331120631/London-polar-bear-024.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"276",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331122334/London-polar-bear-025.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"230",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331124140/London-polar-bear-026.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"84",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"140"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/16/130916PolarBear-16x9.mp4",
+          "typeData":{
+            "source":"Greenpeace",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916PolarBear_8079313.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916PolarBear_8079313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/16/130916PolarBear_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Greenpeace",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916PolarBear_8079313.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916PolarBear_8079313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/16/130916PolarBear/130916PolarBear.m3u8",
+          "typeData":{
+            "source":"Greenpeace",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916PolarBear_8079313.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916PolarBear_8079313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/16/130916PolarBear-720.mp4",
+          "typeData":{
+            "source":"Greenpeace",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916PolarBear_8079313.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916PolarBear_8079313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/16/130916PolarBear_vpx.webm",
+          "typeData":{
+            "source":"Greenpeace",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916PolarBear_8079313.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916PolarBear_8079313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/16/130916PolarBear_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Greenpeace",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/130916PolarBear_8079313.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/130916PolarBear_8079313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        }]
+      },{
+        "id":"gu-image-417408194",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/16/1379331124140/London-polar-bear-026.jpg",
+          "typeData":{
+            "source":"Greenpeace",
+            "photographer":"Greenpeace",
+            "altText":"London polar bear",
+            "height":"84",
+            "credit":"Greenpeace/Greenpeace",
+            "caption":"London polar bear\r Photograph: Greenpeace",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

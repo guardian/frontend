@@ -5,18 +5,22 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.Matchers._
-import services.{IdentityUrlBuilder, IdentityRequest, IdRequestParser, ReturnUrlVerifier}
-import idapiclient.{OmnitureTracking, EmailPassword, IdApiClient}
+import services._
+import idapiclient.IdApiClient
 import play.api.test.Helpers._
 import play.api.test._
 import test.{TestRequest, Fake}
 import scala.concurrent.Future
-import idapiclient.responses.{CookiesResponse, CookieResponse}
 import client.Auth
-import idapiclient.ClientAuth
 import conf.IdentityConfiguration
 import play.api.mvc.Cookies
 import org.joda.time.DateTime
+import idapiclient.ClientAuth
+import idapiclient.responses.CookieResponse
+import idapiclient.EmailPassword
+import idapiclient.OmnitureTracking
+import services.IdentityRequest
+import idapiclient.responses.CookiesResponse
 
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -27,8 +31,9 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
   val conf = new IdentityConfiguration
   val omnitureData = mock[OmnitureTracking]
   val identityRequest = IdentityRequest(omnitureData, Some("http://example.com/return"))
+  val signInService = new PlaySigninService(conf)
 
-  val signinController = new SigninController(returnUrlVerifier, api, conf, requestParser, idUrlBuilder)
+  val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
 
 
@@ -45,7 +50,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
       "so api is not called" in Fake {
         signinController.processForm()(fakeRequest)
-        verify(api, never).authBrowser(any[Auth], any[ClientAuth], same(omnitureData))
+        verify(api, never).authBrowser(any[Auth], same(omnitureData))
       }
 
       "form is re-shown with errors" in Fake {
@@ -59,12 +64,13 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
       val clientAuth = ClientAuth("frontend-dev-client-token")
 
       "if api call succeeds" - {
-        when(api.authBrowser(any[Auth], any[ClientAuth], same(omnitureData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
+        when(api.authBrowser(any[Auth], same(omnitureData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
 
         "should call authBrowser with provided credentials" in Fake {
           signinController.processForm()(fakeRequest)
-          verify(api).authBrowser(auth, clientAuth, omnitureData)
+          verify(api).authBrowser(auth, omnitureData)
         }
+
 
         "should redirect the user to the returnUrl" in Fake {
           when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))

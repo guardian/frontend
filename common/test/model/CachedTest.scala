@@ -1,14 +1,13 @@
 package model
 
+import conf.Switches
 import conf.Switches.DoubleCacheTimesSwitch
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
-import play.api.templates.Html
-import play.api.mvc.{ Results, SimpleResult }
+import play.api.mvc.Results
 import org.scala_tools.time.Imports._
-import conf.Switches
 
 class CachedTest extends FlatSpec with ShouldMatchers with Results {
 
@@ -18,7 +17,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
     val liveContent = content(lastModified = modified, live = true)
 
-    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
+    val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=30, s-maxage=30, stale-while-revalidate=30, stale-if-error=345600")
@@ -30,7 +29,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val modifiedAlmost1HourAgo = DateTime.now - 58.minutes
     val liveContent = content(lastModified = modifiedAlmost1HourAgo, live = false)
 
-    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
+    val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=60, s-maxage=60, stale-while-revalidate=60, stale-if-error=345600")
@@ -42,7 +41,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
     val modifiedLongAgo = DateTime.now - 25.hours
     val liveContent = content(lastModified = modifiedLongAgo, live = false)
 
-    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
+    val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=900, s-maxage=900, stale-while-revalidate=900, stale-if-error=345600")
@@ -61,7 +60,7 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
       def analyticsName = ""
     }
 
-    val result = Cached(page)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
+    val result = Cached(page)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=60, s-maxage=60, stale-while-revalidate=60, stale-if-error=345600")
@@ -73,14 +72,14 @@ class CachedTest extends FlatSpec with ShouldMatchers with Results {
 
     val liveContent = content(lastModified = DateTime.now, live = false)
 
-    val result = Cached(liveContent)(Ok("foo")).asInstanceOf[SimpleResult[Html]]
+    val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=120, s-maxage=120, stale-while-revalidate=120, stale-if-error=345600")
   }
 
   private def content(lastModified: DateTime, live: Boolean): Content = {
-    new Content(ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
+    Content(ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
       elements = None,

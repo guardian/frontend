@@ -2,29 +2,24 @@ package views.support
 
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import model.Image
-import com.gu.openplatform.contentapi.model.MediaAsset
+import model.ImageAsset
+import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches.ImageServerSwitch
-
 
 class ImgSrcTest extends FlatSpec with ShouldMatchers  {
 
-
-
-  val imageAsset = MediaAsset(
-    "picture",
-    "body",
-    2,
+  val imageAsset = Asset(
+    "image",
+    Some("image/jpeg"),
     Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"),
-    None,
-    Nil
+    Map.empty[String,String]
   )
 
   "ImgSrc" should "convert the URL of the image to the resizing endpoint" in {
 
     ImageServerSwitch.switchOn()
 
-    ImgSrc(Image(imageAsset), GalleryLargeTrail) should be ("http://i.gucode.co.uk/glt/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg")
+    ImgSrc(ImageAsset(imageAsset,0), GalleryLargeTrail) should be ("http://i.gucode.co.uk/glt/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg")
 
   }
 
@@ -32,7 +27,7 @@ class ImgSrcTest extends FlatSpec with ShouldMatchers  {
 
     ImageServerSwitch.switchOff()
 
-    ImgSrc(Image(imageAsset), GalleryLargeTrail) should be ("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg")
+    ImgSrc(ImageAsset(imageAsset,0), GalleryLargeTrail) should be ("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg")
 
   }
 
@@ -40,7 +35,7 @@ class ImgSrcTest extends FlatSpec with ShouldMatchers  {
 
     ImageServerSwitch.switchOn()
 
-    val gifImage = Image(imageAsset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")))
+    val gifImage = ImageAsset(imageAsset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)
     ImgSrc(gifImage, GalleryLargeTrail) should be ("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")
 
   }
@@ -49,7 +44,7 @@ class ImgSrcTest extends FlatSpec with ShouldMatchers  {
 
     ImageServerSwitch.switchOn()
 
-    val someoneElsesImage = Image(imageAsset.copy(file = Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")))
+    val someoneElsesImage = ImageAsset(imageAsset.copy(file = Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)
     ImgSrc(someoneElsesImage, GalleryLargeTrail) should be ("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")
 
   }

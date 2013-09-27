@@ -4,9 +4,9 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
+import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.json._
 
 import contentapi.QueryDefaults
@@ -15,23 +15,19 @@ case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections with QueryDefaults {
 
-  def render(path: String) = Action { implicit request =>
-    val promiseOfTag = lookup(path)
-    Async {
-      promiseOfTag.map {
-        case Left(model) => renderTag(model)
-        case Right(notFound) => notFound
-      }
+  def renderJson(path: String) = render(path)
+  def render(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => renderTag(model)
+      case Right(notFound) => notFound
     }
   }
 
-  def renderTrails(path: String) = Action { implicit request =>
-    val promiseOfTag = lookup(path)
-    Async {
-      promiseOfTag.map {
-        case Left(model) => renderTrailsFragment(model)
-        case Right(notFound) => notFound
-      }
+  def renderTrailsJson(path: String) = renderTrails(path)
+  def renderTrails(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => renderTrailsFragment(model)
+      case Right(notFound) => notFound
     }
   }
 
@@ -39,19 +35,22 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     val edition = Edition(request)
     log.info(s"Fetching tag: $path for edition $edition")
 
-    ContentApi.item(path, edition).showEditorsPicks(true).pageSize(20).response.map{ response: ItemResponse =>
+    ContentApi.item(path, edition)
+      .showEditorsPicks(true)
+      .pageSize(20)
+      .response.map{ response: ItemResponse =>
 
       val tag = response.tag map { new Tag(_) }
 
       val leadContentCutOff = DateTime.now - leadContentMaxAge
-      val editorsPicks: Seq[Content] = response.editorsPicks.map(new Content(_))
+      val editorsPicks: Seq[Content] = response.editorsPicks.map(Content(_))
 
       val leadContent: Seq[Content] = if (editorsPicks.isEmpty)
-        response.leadContent.take(1).map { new Content(_) }.filter(_.webPublicationDate > leadContentCutOff)
+        response.leadContent.take(1).map {Content(_) }.filter(_.webPublicationDate > leadContentCutOff)
       else
         Nil
 
-      val latest: Seq[Content] = response.results.map(new Content(_)).filterNot(c => leadContent.map(_.id).exists(_ == c.id))
+      val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).exists(_ == c.id))
 
       val allTrails = (editorsPicks ++ latest).distinctBy(_.id).take(20)
 

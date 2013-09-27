@@ -4,11 +4,10 @@
 .timestamp,
 .published-time {
     @extend %type-9;
-    border-top: 2px solid $darkMushroom;
     display: block;
+    border-top: 2px solid $darkMushroom;
     padding: $baseline*4 0 $baseline;
     margin-top: $baseline*2;
-    color: #333;
 }
 
     .is-summary .published-time {
@@ -17,19 +16,23 @@
 
 .block-time {
     line-height: 15px;
+
+    &.published-time {
+        margin: 0;
+        font-family: $sans-serif;
+    }
 }
 
-    .block-time.published-time {
-        margin: 0;
-        font-family: arial, sans-serif
-    }
+.updated-time {
+    margin-bottom: $baseline*4;
+    @extend %type-11;
+    color: #777;
+}
 
-    .block-time.updated-time {
-        @extend %type-7;
-    }
-
-.timestamp:first-child,
-.block:first-child .published-time {
+.live-blog > .block:first-child .published-time:first-child,
+.live-blog__blocks:first-child .timestamp:first-child,
+.live-blog__blocks:first-child .is-hidden:first-child + .block .published-time,
+.live-blog__blocks:first-child .block:first-child .published-time {
     border-top: none;
     margin-top: 0;
     padding-top: 0;
@@ -40,21 +43,13 @@
    ========================================================================== */
 
 .block-title,
+.from-content-api .block-title,
 .live-blog .block-title {
-    @extend %type-4;
-    color: $articleOrange;
-    border: none;
-    padding: 0;
-    margin: 0;
     margin-bottom: 10px;
 }
 
-    .block .block-title {
-        color: #333;
-    }
-
-    .is-summary .block-title,
-    .is-key-event .block-title {
+    .is-summary > .block-title,
+    .is-key-event > .block-title {
         color: $articleOrange;
     }
 
@@ -65,23 +60,23 @@
 .block blockquote {
     padding-left: 20px;
     border-left: 5px solid $darkMushroom;
-    margin: 20px 0; 
-}
+    margin: 20px 0;
 
-    .block blockquote:before,
-    .block blockquote:after {
+    &:before,
+    &:after {
         display: none !important;
     }
+}
 
     .block .quoted {
-        border-left: none; 
-        padding: 0;    
+        border-left: none;
+        padding: 0;
         margin: 0 0 10px;
-    }
 
-    .block .quoted:before,
-    .block .quoted:after {
-        display: inline-block !important; 
+        &:before,
+        &:after {
+            display: inline-block !important;
+        }
     }
 
 
@@ -89,12 +84,14 @@
    ========================================================================== */
 
 .tweet {
-    clear: both;
+    display: table-cell;
+    width: 10000px;
+    max-width: 100%;
     background-color: #f4f4f4;
-    background-image: url(../images/twitter/bird.bfb06650ca92fafdbe3b307a812047c9.png) !important;
-    background-position: $baseline*2 $baseline*2 !important;
+    background-image: url(../images/twitter/bird.35592800bb7681abe5ef1cc7e44b8fcd.png) !important;
+    background-position: $baseline*2 $gutter/2 !important;
     background-repeat: no-repeat;
-    border-top: 4px solid #3299d0;
+    border-top: $baseline solid #3299d0;
 
     @if ($svg-support) {
         .svg & {
@@ -102,16 +99,18 @@
         }
     }
 }
+    .element-tweet {
+        margin: $baseline*3 0 $baseline*4;
+    }
     .tweet,
     .from-content-api blockquote.tweet {
-        margin: $baseline*3 0 $baseline*4;
         border-left-width: 0;
         padding: $baseline*2;
     }
 
     .tweet:before,
-    .live-blog .tweet:before,
     .tweet:after,
+    .live-blog .tweet:before,
     .live-blog .tweet:after {
         display: none !important;
     }
@@ -129,3 +128,39 @@
         padding-left: 40px;
         margin-bottom: $baseline*2;
     }
+
+
+
+
+.autoupdate--has-animation {
+
+    .autoupdate--highlight {
+        @include animation(new-block-animation 5s ease-out);
+    }
+
+}
+
+
+@include keyframes(new-block-animation) {
+    0%   { opacity: 0; background: #f4f4ee; }
+    20%  { opacity: 1; }
+    70%  { background: #f4f4ee; }
+    100% { background: transparent; }
+}
+
+/* Blocks container
+   ========================================================================== */
+
+.live-blog__blocks {
+    opacity: 1;
+    height: auto;
+    background-color: transparent;
+    @include transition(opacity 2s ease-out, background-color 4s ease-out);
+}
+
+.live-blog__blocks--hidden {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    background-color: $mushroom;
+}

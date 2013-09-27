@@ -1,23 +1,23 @@
 .facia-container {
-    .breakpoint {
-        @include mq($to: tablet) {
-            font-family: mobile;
-        }
-        @include mq(tablet, desktop) {
-            font-family: tablet;
-        }
-        @include mq(desktop, wide) {
-            font-family: desktop;
-        }
-        @include mq(wide) {
-            font-family: wide;
-        }
+    @include mq(tablet) {
+        width: gs-span(8);
+    }
+    @include mq(desktop) {
+        width: gs-span(12);
+    }
+    @include mq(wide) {
+        width: gs-span(16);
     }
 }
 
 @import "facia/_items";
 @import "facia/_masthead";
-@import "facia/_fast-news";
 @import "facia/_top-stories";
-@import "facia/_zone";
-@import "facia/_section-top-stories";
+@import "facia/_medium-stories";
+@import "facia/_small-stories";
+@import "facia/_news";
+@import "facia/_features";
+@import "facia/_comments";
+@import "facia/_highlights";
+@import "facia/_popular";
+@import "facia/_popular-full-width";

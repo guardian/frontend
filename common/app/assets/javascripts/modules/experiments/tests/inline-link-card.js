@@ -33,10 +33,31 @@ function (
                 test: function (config, context) {
                     common.mediator.on('page:article:ready', function(config, context) {
                         if (!config.switches.externalLinksCards) {
-                            var card = new LeftHandCard({
-                                origin: 'internal',
-                                context: context
-                            });
+                            var options = {
+                                    origin: 'internal',
+                                    context: context
+                                };
+                            if (config.page.isLiveBlog) {
+                                options.linksHolders = '.block-elements > p';
+                            }
+                            var card = new LeftHandCard(options);
+                        }
+                    });
+                }
+            },
+            {
+                id: 'link-card-all-origins',
+                test: function (config, context) {
+                    common.mediator.on('page:article:ready', function(config, context) {
+                        if (!config.switches.externalLinksCards) {
+                            var options = {
+                                    origin: 'all',
+                                    context: context
+                                };
+                            if (config.page.isLiveBlog) {
+                                options.linksHolders = '.block-elements > p';
+                            }
+                            var card = new LeftHandCard(options);
                         }
                     });
                 }

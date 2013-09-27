@@ -24,14 +24,7 @@ object Au extends Edition(
 
   val cultureCustomBlock = CustomTrailblockDescription("culture", "Culture", numItemsVisible = 3, style = Some(Thumbnail)){
 
-    val promiseOfCulture: Future[ItemResponse] = ContentApi.item.itemId("culture")
-      .edition("au")
-      .showTags("all")
-      .showFields(trailFields)
-      .showInlineElements(inlineElements)
-      .showMedia("all")
-      .showReferences(references)
-      .showStoryPackage(true)
+    val promiseOfCulture: Future[ItemResponse] = ContentApi.item("culture", AU)
       .tag(s"-stage/stage,-artanddesign/art,-stage/theatre,-stage/dance,-stage/comedy,-stage/musicals,-artanddesign/photography,($supportedTypes)")
       .response
 
@@ -40,16 +33,8 @@ object Au extends Edition(
 
   val commentCustomBlock = CustomTrailblockDescription("commentisfree", "Comment is free", numItemsVisible = 3, style = Some(Featured)){
 
-    val promiseOfComment: Future[ItemResponse] = ContentApi.item.itemId("commentisfree")
-      .edition("au")
-      .showTags("all")
-      .showFields(trailFields)
-      .showInlineElements(inlineElements)
-      .showMedia("all")
+    val promiseOfComment: Future[ItemResponse] = ContentApi.item("commentisfree", AU)
       .showEditorsPicks(true)
-      .showReferences(references)
-      .showStoryPackage(true)
-      .tag(s"($supportedTypes)")
       .response
 
     EditorsPicsOrLeadContentAndLatest(promiseOfComment)
@@ -57,18 +42,11 @@ object Au extends Edition(
 
   val videoCustomBlock = CustomTrailblockDescription("type/video", "Video", numItemsVisible = 1, style = Some(Featured)){
 
-    val promiseOfAustralianVideo: Future[ItemResponse] = ContentApi.item.itemId("type/video")
-      .edition("au")
-      .showTags("all")
-      .showFields(trailFields)
-      .showInlineElements(inlineElements)
-      .showMedia("all")
-      .showReferences(references)
-      .showStoryPackage(true)
-      .tag(s"world/australia")
+    val promiseOfAustralianVideo: Future[ItemResponse] = ContentApi.item("type/video", AU)
+      .tag("world/australia")
       .response
 
-    promiseOfAustralianVideo.map(_.results.map(new Content(_)))
+    promiseOfAustralianVideo.map(_.results.map(Content(_)))
   }
 
 
@@ -160,66 +138,6 @@ object Au extends Edition(
       ItemTrailblockDescription("science", "Science", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
       ItemTrailblockDescription("environment", "Environment", numItemsVisible = 1, style = Some(Thumbnail), showMore = false),
       Au.videoCustomBlock
-
     )
-  )
-
-  val configuredFrontsFacia = Map(
-
-    (Editionalise("", Au), Seq(
-      RunningOrderTrailblockDescription("", "au/news/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("", "au/news/top-stories", "Latest News", 20, style = Some(TopStories)),
-      RunningOrderTrailblockDescription("news", "au/news/election2013", "Election 2013", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("sport", "au/sport/top-stories", "Sport", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("sport/australia-sport", "au/sport/australia-sport", "Australia Sport", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("culture", "au/culture/top-stories", "Culture", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("commentisfree", "au/comment-is-free/top-stories", "Comment is free", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("lifeandstyle", "au/life-and-style/top-stories", "Life and style", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("technology", "au/technology/top-stories", "Technology", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("travel", "au/travel/top-stories", "Travel", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("science", "au/science/top-stories", "Science", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("environment", "au/environment/top-stories", "Environment", 4, style = Some(Masthead))
-    )),
-
-    (Editionalise("sport", Au), Seq(
-      RunningOrderTrailblockDescription("sport", "au/sport/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("sport", "au/sport/top-stories", "Sports", 5, style = Some(Featured), showMore = true),
-      RunningOrderTrailblockDescription("football", "au/sport/football", "Football", 3, style = Some(Featured), showMore = true),
-      RunningOrderTrailblockDescription("sport/cricket", "au/sport/cricket", "Cricket", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("sport/afl", "au/sport/afl", "AFL", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("sport/nrl", "au/sport/nrl", "NRL", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("sport/rugby-union", "au/sport/rugby-union", "Rugby Union", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("sport/tennis", "au/sport/tennis", "Tennis", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("sport/golf", "au/sport/golf", "Golf", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("sport/motorsports", "au/sport/motor-sport", "Motor Sport", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("sport/cycling", "au/sport/cycling", "Cycling", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("sport/us-sport", "au/sport/us-sport", "US Sport", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("sport/boxing", "au/sport/boxing", "Boxing", 1, style = Some(Thumbnail))
-    )),
-
-    (Editionalise("culture", Au), Seq(
-      RunningOrderTrailblockDescription("culture", "au/culture/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("culture", "au/culture/top-stories", "Culture", 5, style = Some(Featured), showMore = true),
-      RunningOrderTrailblockDescription("film", "au/film/top-stories", "Film", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("music", "au/culture/music", "Music", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("books", "au/culture/books", "Books", 1, style = Some(Thumbnail)),
-      RunningOrderTrailblockDescription("technology/games", "au/culture/games", "Games", 1, style = Some(Thumbnail))
-    )),
-
-    (Editionalise("commentisfree", Au), Seq(
-      RunningOrderTrailblockDescription("commentisfree", "au/comment-is-free/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("commentisfree", "au/comment-is-free/top-stories", "Comment is free", 20, style = Some(Featured))
-    )),
-
-    (Editionalise("business", Au), Seq(
-      RunningOrderTrailblockDescription("business", "au/business/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("business", "au/business/top-stories", "Business", 20, style = Some(Featured))
-    )),
-
-    (Editionalise("money", Au), Seq(
-      RunningOrderTrailblockDescription("money", "au/money/masthead", "", 4, style = Some(Masthead)),
-      RunningOrderTrailblockDescription("money", "au/money/top-stories", "Money", 20, style = Some(Featured))
-    ))
-
   )
 }

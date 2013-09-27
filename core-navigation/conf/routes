@@ -3,22 +3,34 @@
 # ~~~~
 
 # For dev machines
-GET        /assets/*file                   controllers.Assets.at(path="/public", file)
+GET        /assets/*file                                    controllers.Assets.at(path="/public", file)
 
-GET        /most-read                      controllers.MostPopularController.render(path = "")
-GET        /most-read.json                 controllers.MostPopularController.render(path = "")
-GET        /most-read/card.json            controllers.MostPopularController.renderCard()
-GET        /most-read/expandable/*path.json     controllers.MostPopularController.renderExpandable(path)
-GET        /most-read/expandable/*path          controllers.MostPopularController.renderExpandable(path)
-GET        /most-read/*path.json           controllers.MostPopularController.render(path)
-GET        /most-read/*path                controllers.MostPopularController.render(path)
-GET        /top-stories                    controllers.TopStoriesController.render()
-GET        /top-stories.json               controllers.TopStoriesController.renderJson()
-GET        /top-stories/trails             controllers.TopStoriesController.renderTrails()
-GET        /top-stories/trails.json        controllers.TopStoriesController.renderJsonTrails()
-GET        /related/*path.json             controllers.RelatedController.render(path)
-GET        /related/*path                  controllers.RelatedController.render(path)
-GET        /recent/card.json               controllers.RecentController.render()
+GET        /most-read                                       controllers.MostPopularController.render(path = "")
+GET        /most-read.json                                  controllers.MostPopularController.render(path = "")
+GET        /most-read/card.json                             controllers.MostPopularController.renderCard()
+GET        /most-read/expandable/*path.json                 controllers.MostPopularController.renderExpandableJson(path)
+GET        /most-read/expandable/*path                      controllers.MostPopularController.renderExpandable(path)
+GET        /most-read/*path.json                            controllers.MostPopularController.renderJson(path)
+GET        /most-read/*path                                 controllers.MostPopularController.render(path)
+
+GET        /most-read-facebook                              controllers.MostPopularFromFacebookController.render(path = "")
+GET        /most-read-facebook.json                         controllers.MostPopularFromFacebookController.render(path = "")
+GET        /most-read-facebook/*path.json                   controllers.MostPopularFromFacebookController.render(path)
+GET        /most-read-facebook/*path                        controllers.MostPopularFromFacebookController.renderJson(path)
+GET        /most-read-facebook/card.json                    controllers.MostPopularFromFacebookController.renderCard()
+GET        /most-read/expandable-facebook/*path.json        controllers.MostPopularFromFacebookController.renderExpandableJson(path)
+GET        /most-read/expandable-facebook/*path             controllers.MostPopularFromFacebookController.renderExpandable(path)
+
+
+GET        /top-stories                                     controllers.TopStoriesController.renderTopStories()
+GET        /top-stories.json                                controllers.TopStoriesController.renderTopStoriesJson()
+GET        /top-stories/trails                              controllers.TopStoriesController.renderTrails()
+GET        /top-stories/trails.json                         controllers.TopStoriesController.renderJsonTrails()
+GET        /related/*path.json                              controllers.RelatedController.renderJson(path)
+GET        /related/*path                                   controllers.RelatedController.render(path)
+GET        /recent/card.json                                controllers.RecentController.renderRecent()
+
+GET        /preference/platform/:platform                   controllers.ChangeViewController.render(platform, page)
 
 # Experimental
-GET        /cards/opengraph/*path          controllers.CardController.opengraph(path)
+GET        /cards/opengraph/*path                           controllers.CardController.opengraph(path)

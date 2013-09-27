@@ -8,8 +8,7 @@ define([
     "modules/trailblock-show-more",
     "modules/footballfixtures",
     "modules/cricket",
-    "modules/masthead-relative-dates",
-    'modules/top-stories-show-more'
+    "modules/experiments/facia-load"
 ], function (
     common,
     bonzo,
@@ -18,8 +17,7 @@ define([
     TrailblockShowMore,
     FootballFixtures,
     Cricket,
-    mastheadRelativeDates,
-    TopStoriesShowMore
+    faciaLoad
 ) {
 
     var modules = {
@@ -86,18 +84,10 @@ define([
             });
         },
 
-        relativiseMastheadDates: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                mastheadRelativeDates.init(context);
-            });
-        },
-
-        showTopStoriesShowMore: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                common.$g('.section--top-stories', context).each(function(topStories) {
-                    var t = new TopStoriesShowMore(topStories);
-                });
-            });
+        faciaLoadTest: function(config) {
+            if (config.switches.faciaLoadTest) {
+                common.mediator.on('page:front:ready', faciaLoad);
+            }
         }
 
     };
@@ -109,9 +99,7 @@ define([
             modules.showTrailblockShowMore();
             modules.showFootballFixtures();
             modules.showCricket();
-            // facia functionality
-            modules.relativiseMastheadDates();
-            modules.showTopStoriesShowMore();
+            modules.faciaLoadTest(config);
         }
         common.mediator.emit("page:front:ready", config, context);
     };

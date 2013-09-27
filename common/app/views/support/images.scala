@@ -1,37 +1,34 @@
 package views.support
 
-import model.Image
+import model.ImageAsset
 import conf.Switches.ImageServerSwitch
 import java.net.URI
 import conf.Configuration
 
-sealed trait ImageType {
-  def prefix: String
+case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int] = None, compression: Int = 10) {}
+
+// Configuration of our different image profiles
+object Contributor extends Profile("c", Some(140), Some(140), 70) {}
+object GalleryLargeTrail extends Profile("glt", Some(480), Some(288), 70) {}
+object GallerySmallTrail extends Profile("gst", Some(280), Some(168), 70) {}
+object FeaturedTrail extends Profile("f", Some(640), None, 70) {}
+object ArticleMainPicture extends Profile("a", Some(640), None, 70) {}
+
+// Just degrade the image quality without adjusting the width/height
+object Naked extends Profile("n", None, None, 70) {}
+
+object Profile {
+  lazy val all = Seq(Contributor, GalleryLargeTrail, GallerySmallTrail, FeaturedTrail, Naked, ArticleMainPicture)
 }
 
-object Contributor extends ImageType {
-  val prefix = "c"
-}
-
-object Naked extends ImageType {
-  val prefix = "n"
-}
-
-object GalleryLargeTrail extends ImageType {
-  val prefix = "glt"
-}
-
-object GallerySmallTrail extends ImageType {
-  val prefix = "gst"
-}
 
 object ImgSrc {
 
   val imageHost = Configuration.images.path
 
-  def apply(image: Image, imageType: ImageType): String = image.url.map{ url => apply(url, imageType) }.getOrElse("")
+  def apply(image: ImageAsset, imageType: Profile): String = image.url.map{ url => apply(url, imageType) }.getOrElse("")
 
-  def apply(url: String, imageType: ImageType): String = {
+  def apply(url: String, imageType: Profile): String = {
     val uri = new URI(url.trim)
 
     val isSupportedImage =

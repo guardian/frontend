@@ -1,0 +1,273 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"environment/blog/2013/jun/26/barack-obama-climate-action-plan",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-06-26T15:32:27Z",
+      "webTitle":"Is Obama's climate plan enough to 'stop the planet being beyond fixing'?",
+      "webUrl":"http://www.theguardian.com/environment/blog/2013/jun/26/barack-obama-climate-action-plan",
+      "apiUrl":"http://content.guardianapis.com/environment/blog/2013/jun/26/barack-obama-climate-action-plan",
+      "fields":{
+        "trailText":"<p>Barack Obama has laid out his 'climate action plan', but will it be enough to halt the rise in carbon emissions? <strong>Leo Hickman</strong>, with your help, investigates</p>",
+        "headline":"Is Obama's climate plan enough to 'stop the planet being beyond fixing'?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3gpg9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372192060112/Obama-climate-change-spee-005.jpg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"environment/series/the-eco-audit-with-leo-hickman",
+        "type":"series",
+        "webTitle":"The Eco audit",
+        "webUrl":"http://www.theguardian.com/environment/series/the-eco-audit-with-leo-hickman",
+        "apiUrl":"http://content.guardianapis.com/environment/series/the-eco-audit-with-leo-hickman",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"tone/minutebyminute",
+        "type":"tone",
+        "webTitle":"Minute by minutes",
+        "webUrl":"http://www.theguardian.com/tone/minutebyminute",
+        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
+        "references":[]
+      },{
+        "id":"profile/leohickman",
+        "type":"contributor",
+        "webTitle":"Leo Hickman",
+        "webUrl":"http://www.theguardian.com/profile/leohickman",
+        "apiUrl":"http://content.guardianapis.com/profile/leohickman",
+        "bio":"<p>Leo Hickman is a features journalist and editor at the Guardian</p>",
+        "rcsId":"GNL013797",
+        "r2ContributorId":"15980",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/leo_hickman_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/blog",
+        "type":"blog",
+        "webTitle":"Environment blog",
+        "webUrl":"http://www.theguardian.com/environment/blog",
+        "apiUrl":"http://content.guardianapis.com/environment/blog",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.theguardian.com/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usdomesticpolicy",
+        "type":"keyword",
+        "webTitle":"US domestic policy",
+        "webUrl":"http://www.theguardian.com/world/usdomesticpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usdomesticpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/carbon-emissions",
+        "type":"keyword",
+        "webTitle":"Carbon emissions",
+        "webUrl":"http://www.theguardian.com/environment/carbon-emissions",
+        "apiUrl":"http://content.guardianapis.com/environment/carbon-emissions",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/carbon-capture-and-storage",
+        "type":"keyword",
+        "webTitle":"Carbon capture and storage (CCS)",
+        "webUrl":"http://www.theguardian.com/environment/carbon-capture-and-storage",
+        "apiUrl":"http://content.guardianapis.com/environment/carbon-capture-and-storage",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/coal",
+        "type":"keyword",
+        "webTitle":"Coal",
+        "webUrl":"http://www.theguardian.com/environment/coal",
+        "apiUrl":"http://content.guardianapis.com/environment/coal",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/shale-gas",
+        "type":"keyword",
+        "webTitle":"Shale gas and fracking",
+        "webUrl":"http://www.theguardian.com/environment/shale-gas",
+        "apiUrl":"http://content.guardianapis.com/environment/shale-gas",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-643cb134-ff45-4e29-abf3-48b7eaa0cfcf",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372189113385/Obama-Gives-Major-Speech--011.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372189113385/Obama-Gives-Major-Speech--011.jpg",
+            "source":"Getty Images",
+            "photographer":"Alex Wong",
+            "altText":"Obama Gives Major Speech On Climate Change",
+            "height":"372",
+            "credit":"Alex Wong/Getty Images",
+            "caption":"Barack Obama speaks as he unveils his plan on climate change at Georgetown University in Washington DC. Photograph: Alex Wong/Getty Images",
+            "mediaId":"gu-fc-643cb134-ff45-4e29-abf3-48b7eaa0cfcf",
+            "width":"620"
+          }
+        }]
+      },{
+        "id":"gu-fc-45e23860-fc40-4c47-80c2-ed0e13a2d526",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250960669/60b84812-ce1c-4f3e-a0a0-047373584986-380x228.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250960669/60b84812-ce1c-4f3e-a0a0-047373584986-380x228.png",
+            "source":"Washington Post",
+            "photographer":"Washington Post",
+            "altText":"US energy-related CO2 emissions, 1973-2040",
+            "height":"228",
+            "credit":"Washington Post/Washington Post",
+            "caption":"US energy-related CO2 emissions, 1973-2040 Photograph: Washington Post",
+            "mediaId":"gu-fc-45e23860-fc40-4c47-80c2-ed0e13a2d526",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250961103/8fa33059-36f6-46e4-9aa9-0381965db7e8-300x180.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250961103/8fa33059-36f6-46e4-9aa9-0381965db7e8-300x180.png",
+            "source":"Washington Post",
+            "photographer":"Washington Post",
+            "altText":"US energy-related CO2 emissions, 1973-2040",
+            "height":"180",
+            "credit":"Washington Post/Washington Post",
+            "caption":"US energy-related CO2 emissions, 1973-2040 Photograph: Washington Post",
+            "mediaId":"gu-fc-45e23860-fc40-4c47-80c2-ed0e13a2d526",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250961322/00deca7e-5a40-4347-8378-9e18751fca0d-140x84.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250961322/00deca7e-5a40-4347-8378-9e18751fca0d-140x84.png",
+            "source":"Washington Post",
+            "photographer":"Washington Post",
+            "altText":"US energy-related CO2 emissions, 1973-2040",
+            "height":"84",
+            "credit":"Washington Post/Washington Post",
+            "caption":"US energy-related CO2 emissions, 1973-2040 Photograph: Washington Post",
+            "mediaId":"gu-fc-45e23860-fc40-4c47-80c2-ed0e13a2d526",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250961619/5a0b7505-57f9-4b08-b847-4b8a9199ddaf-bestSizeAvailable.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250961619/5a0b7505-57f9-4b08-b847-4b8a9199ddaf-bestSizeAvailable.png",
+            "source":"Washington Post",
+            "photographer":"Washington Post",
+            "altText":"US energy-related CO2 emissions, 1973-2040",
+            "height":"351",
+            "credit":"Washington Post/Washington Post",
+            "caption":"US energy-related CO2 emissions, 1973-2040 Photograph: Washington Post",
+            "mediaId":"gu-fc-45e23860-fc40-4c47-80c2-ed0e13a2d526",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250961906/32d00e9c-1ad2-40a1-a036-7226d931b943-220x132.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250961906/32d00e9c-1ad2-40a1-a036-7226d931b943-220x132.png",
+            "source":"Washington Post",
+            "photographer":"Washington Post",
+            "altText":"US energy-related CO2 emissions, 1973-2040",
+            "height":"132",
+            "credit":"Washington Post/Washington Post",
+            "caption":"US energy-related CO2 emissions, 1973-2040 Photograph: Washington Post",
+            "mediaId":"gu-fc-45e23860-fc40-4c47-80c2-ed0e13a2d526",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250962466/d79ba6a6-60e0-45b2-ad90-a681473ce5e2-460x276.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250962466/d79ba6a6-60e0-45b2-ad90-a681473ce5e2-460x276.png",
+            "source":"Washington Post",
+            "photographer":"Washington Post",
+            "altText":"US energy-related CO2 emissions, 1973-2040",
+            "height":"276",
+            "credit":"Washington Post/Washington Post",
+            "caption":"US energy-related CO2 emissions, 1973-2040 Photograph: Washington Post",
+            "mediaId":"gu-fc-45e23860-fc40-4c47-80c2-ed0e13a2d526",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250963166/de3a05ed-46fb-408a-aeeb-e5f1b084428b-540x324.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372250963166/de3a05ed-46fb-408a-aeeb-e5f1b084428b-540x324.png",
+            "source":"Washington Post",
+            "photographer":"Washington Post",
+            "altText":"US energy-related CO2 emissions, 1973-2040",
+            "height":"324",
+            "credit":"Washington Post/Washington Post",
+            "caption":"US energy-related CO2 emissions, 1973-2040 Photograph: Washington Post",
+            "mediaId":"gu-fc-45e23860-fc40-4c47-80c2-ed0e13a2d526",
+            "width":"540"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

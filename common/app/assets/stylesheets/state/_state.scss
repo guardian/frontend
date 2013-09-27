@@ -75,50 +75,12 @@
 }
 
 .update {
-    display:block;
-    background-color: $mushroom;
-    margin-bottom: $baseline*4;
-    padding: 0 0 0 $gutter/2;
+    display: block;
     overflow: hidden;
 
     &.hidden {
         display: none;
     }
-
-    @include mq(tablet) {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
-
-.update-text {
-    float:left;
-    margin: 0 $gutter 0 0;
-    padding: 6px 0 0 0;
-    line-height: 32px;
-}
-
-.update-btn {
-    float: right;
-    margin: 0;
-    padding: 13px 12px;
-    background-color: $mushroom;
-    color: #333333;
-    font-weight: normal;
-    border: none;
-    text-shadow: none;
-    @include box-shadow(none);
-}
-
-.update-btn.is-active,
-.update-btn:hover {
-    color: #fff;
-    background-color: #E47A39;
-}
-
-.update-live-matches .update-btn.is-active,
-.update-live-matches .update-btn:hover {
-    background-color: $sportBright;
 }
 
 .is-updating {

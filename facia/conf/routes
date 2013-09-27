@@ -6,9 +6,9 @@
 # For dev machines
 GET     /assets/*file                                                                         controllers.Assets.at(path="/public", file)
 
-GET     /$path<(us|uk|au)?>                                                                   controllers.FaciaController.render(path)
-GET     /$path<(us|uk|au)?>.json                                                              controllers.FaciaController.render(path)
-GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                controllers.FaciaController.render(path)
-GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json           controllers.FaciaController.render(path)
+GET     /$path<(us|uk|au)?>                                                                   controllers.FaciaController.renderEditionFront(path)
+GET     /$path<(us|uk|au)?>.json                                                              controllers.FaciaController.renderEditionFrontJson(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                controllers.FaciaController.renderEditionSectionFront(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json           controllers.FaciaController.renderEditionSectionFrontJson(path)
 GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails         controllers.FaciaController.renderTrails(path)
-GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails.json    controllers.FaciaController.renderTrails(path)
+GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/trails.json    controllers.FaciaController.renderTrailsJson(path)

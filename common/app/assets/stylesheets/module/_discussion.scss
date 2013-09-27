@@ -17,8 +17,13 @@ $keylineSize: 1px;
    ========================================================================== */
 
 .d-tabs {
-    margin: 0 $gutter*-1;
+    margin: 0 $gs-gutter/-2;
     padding-bottom: $baseline*3;
+    
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter * -1;
+        margin-right: $gs-gutter * -1;
+    }
 }
 
     .d-tabs--is-live {
@@ -31,16 +36,25 @@ $keylineSize: 1px;
     width: 100%;
 }
 .d-tabs__item {
+    @include box-sizing(border-box);
     border-top: $keylineSize solid $darkMushroom;
     border-bottom: $keylineSize solid $keylineColor;
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
     display: table-cell;
     cursor: pointer;
-    @include box-sizing(border-box);
 }
 .d-tabs__item--byline {
     @extend %type-7;
     vertical-align: top;
-    padding: $baseline $gutter;
+    padding-top: $baseline;
+    padding-bottom: $baseline;
 
     a {
         pointer-events: none;
@@ -61,7 +75,8 @@ $keylineSize: 1px;
 
 .d-tabs__item--commentcount {
     width: 50px;
-    padding: 14px 12px 16px;
+    padding-top: 14px;
+    padding-bottom: $baseline * 4;
     min-height: 60px;
     text-align: center;
     vertical-align: middle;
@@ -69,7 +84,7 @@ $keylineSize: 1px;
     &.d-tabs__item--is-active {
         border-top-color: $keylineColor;
         border-left: $keylineSize solid $keylineColor;
-        padding-bottom: 16px + $keylineSize;
+        padding-bottom: $baseline * 4 + $keylineSize;
     }
 }
 .d-tabs__item--is-active {
@@ -85,15 +100,15 @@ $keylineSize: 1px;
 }
 .d-thread .d-thread {
     padding-left: 28px; /* aligns with top level comment's body */
-    border-left: 8px solid $darkMushroom;
+    border-left: $gutter/2 solid $darkMushroom;
 
     @include mq(768px) {
         padding-left: 44px;
-        border-left-width: 16px;
+        border-left-width: $gutter;
     }
 }
 .d-comment {
-    color: #333;
+    color: $neutral1;
     font-family: sans-serif;
     border-top: 1px solid $medianMushroom;
 }
@@ -123,7 +138,7 @@ $keylineSize: 1px;
 
 .d-comment__pick {
     position: absolute;
-    top: $baseline * 2;
+    top: 0;
     right: 0;
 }
 
@@ -227,7 +242,7 @@ $keylineSize: 1px;
 }
 
 .d-meta-item {
-    color: #767676;
+    color: $neutral2;
     font-size: .85714285714em;
     font-family: $sans-serif; // Force font when used outside of comment context
 }
@@ -238,16 +253,34 @@ $keylineSize: 1px;
 }
 
 .d-comment__action {
+    color: $neutral2;
     font-size: .85714285714em;
 }
 
-.d-comment__action--report {
-    &:link,
-    &:visited {
-        color: #767676;
-    }
+.d-comment__recommend {
+    background-color: #929497;
+    color: #fff;
+    font-size: 14px;
+    font-size: 1.4rem;
+    padding: $baseline $gutter/2;
+    position: absolute;
+    right: 0;
+    top: $baseline * 4;
 }
 
+.d-comment__recommend--left {
+    right: $gutter * 1.5;
+}
+
+.d-comment__recommend--active {
+    background-color: #4490ce;
+    color: #fff;
+    cursor: pointer;
+}
+
+.d-comment__recommend--user-recommended {
+    background-color: #931c55;
+}
 
 /* Badges
    ========================================================================== */
@@ -275,9 +308,7 @@ $keylineSize: 1px;
     width: 1px;
 }
 
-.speech-bubble,
-.speech-bubble:link,
-.speech-bubble:visited {
+.speech-bubble {
     @include font($sans-serif, normal, 14, 14);
     position: relative;
     display: inline-block;
@@ -289,17 +320,22 @@ $keylineSize: 1px;
     background: #F6644F;
     text-align: center;
     color: white;
-    text-decoration: none;
-}
 
-.speech-bubble:after {
-    content: "";
-    position: absolute;
-    bottom: -7px;
-    left: 6px;
-    border-width: 0 0 8px 8px;
-    border-style: solid;
-    border-color: transparent #F6644F;
+    &,
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        bottom: -7px;
+        left: 6px;
+        border-width: 0 0 8px 8px;
+        border-style: solid;
+        border-color: transparent #F6644F;
+    }
 }
 
 
@@ -312,6 +348,7 @@ $keylineSize: 1px;
     border: 1px solid #bbb;
     position: relative;
     padding-left: $gutter*2;
+    width: auto;
 }
 
 .d-actions .top:before {
@@ -325,8 +362,6 @@ $keylineSize: 1px;
 }
 
 .d-actions__link,
-.d-actions__link:link,
-.d-actions__link:visited,
 .d-actions__link:hover,
 .d-actions__link:focus {
     @extend %type-11;
@@ -346,8 +381,6 @@ $keylineSize: 1px;
     padding: $baseline*2 0 $baseline*4;
 }
 .d-show-cta,
-.d-show-cta:link,
-.d-show-cta:visited,
 .d-show-cta:hover,
 .d-show-cta:focus {
     @extend %type-6;

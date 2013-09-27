@@ -83,6 +83,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop56).toBe("Javascript");
             expect(s.prop30).toBe("content");
             expect(s.prop19).toBe("frontend");
+            expect(s.prop67).toBe("nextgen-served");
             expect(s.eVar19).toBe("frontend");
             expect(s.cookieDomainPeriods).toBe("2")
             expect(s.trackingServer).toBe("hits.theguardian.com");
@@ -122,6 +123,16 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                 expect(s.events).toBe('event29');
                 expect(s.eVar73).toBe('top banner');
             });
+        });
+
+
+        it("should send event46 when a page has comments", function(){
+            config.page.contentType = 'Article';
+            config.page.commentable = true;
+            var o = new Omniture(s).go(config);
+
+            expect(s.apl).toHaveBeenCalled();
+            expect(s.apl.args[0][1]).toBe('event46');
         });
 
         it("should log a clickstream event", function() {

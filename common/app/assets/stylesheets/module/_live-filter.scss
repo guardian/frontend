@@ -1,0 +1,97 @@
+.live-toolbar {
+    display: none;
+    width: 100%;
+    margin-bottom: $baseline * 4;
+    background: $mushroom;
+    height: 42px;
+
+    .is-live &,
+    .has-key-events & {
+        display: table;
+    }
+
+    @include mq($to: tablet) {
+        font-size: .875em;
+    }
+}
+
+.live-toggler-wrapper {
+    display: none;
+    width: 54%;
+    text-align: center;
+
+    .has-key-events & {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+.live-toggler {
+    display: none;
+    padding: 6px 0;
+    line-height: 30px;
+    text-align: left;
+
+    &.is-active {
+        display: block;
+    }
+}
+.lt__label {
+    color: #000;
+    padding-left: $gutter/2;
+    padding-right: $gutter/2;
+}
+.lt__value {
+    color: $linkBlue;
+    padding-right: $gutter/2;
+    white-space: nowrap;
+}
+
+@include mq(tablet) {
+    .lt__label {
+        padding-left: $gutter;
+        padding-right: $gutter*2;
+    }
+    .lt__value {
+        padding-right: $gutter;
+    }
+}
+
+
+/* Filtered results
+   ========================================================================== */
+
+.live-toggler--all {
+    display: block;
+}
+.show-only-key-events {
+    .article-body {
+        .block {
+            display: none;
+        }
+        .is-key-event {
+            display: block;
+        }
+    }
+    .live-toggler--all {
+        display: none;
+    }
+    .live-toggler--key-events {
+        display: block;
+    }
+}
+
+
+/* Circle progress bar live toggler
+   ========================================================================== */
+.live-toggler--circle {
+    border-left: 1px solid #c2c2b0;
+    padding: 8px 18px;
+    width: auto;
+    float: right;
+}
+
+.lt__circle-wrapper {
+    width: 30px;
+    height: 30px;
+    display: block;
+}

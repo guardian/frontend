@@ -1,19 +1,15 @@
-$a-leftCol-width:    gs-span(2);
-$a-leftCol-trigger:  gs-span(13) + $gutter*2;
-$a-rightCol-width:   gs-span(4);
-$a-rightCol-trigger: gs-span(11) + $gutter*2;
-
-$mq-breakpoints: mq-add-breakpoint(rightCol, $a-rightCol-trigger);
-$mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
-
 .article {
     position: relative;
 }
 
 .article-zone {
     padding: 13px 0 14px;
-    margin-left: $gutter;
-    margin-right: $gutter;
+    margin-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
     font-weight: bolder;
     line-height: 1;
     border-bottom: 1px solid $mushroom;
@@ -22,8 +18,13 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
         border-top: none;
     }
 
-    .js-popular & {
+    .article__popular & {
         border-bottom: none;
+    }
+    .article-zone-no-indent &,
+    .monocolumn-wrapper & {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -31,13 +32,13 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
     @extend %type-6;
 }
 
-.article-head {
-    padding-top: $baseline*3;
+.article__head {
+    padding-top: $baseline;
 }
 
-.article-headline {
+.article__headline {
     @extend %type-3;
-    margin-bottom: $baseline*2;
+    margin-bottom: $baseline*6;
 
     @include mq(tablet) {
         font-family: $serifheadline;
@@ -46,7 +47,7 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
         font-size: 3.4rem;
         line-height: 42px;
         line-height: 4.2rem;
-        margin-bottom: $baseline*5;
+        margin-bottom: $gs-column-height;
     }
 
     @include mq(($a-rightCol-trigger + gs-span(1))) {
@@ -54,12 +55,10 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
         font-size: 4rem;
         line-height: 48px;
         line-height: 4.8rem;
-        margin-bottom: $baseline*6;
     }
 
     a {
-        &:link,
-        &:visited,
+        &,
         &:hover,
         &:active,
         &:focus {
@@ -68,8 +67,30 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
     }
 }
 
-.article-standfirst {
-    margin-bottom: $baseline*4;
+.article__dateline {
+    @include box-sizing(border-box);
+    @extend %type-11;
+    min-height: $gs-column-height;
+    padding-top: $baseline;
+    margin-bottom: $baseline*3;
+    border-top: 1px dotted $neutral3;
+
+    .article__meta-container & {
+        display: none;
+    }
+
+    @include mq(leftCol) {
+        display: none;
+
+        .article__meta-container & {
+            display: block;
+            margin-bottom: $baseline*3;
+        }
+    }
+}
+
+.article__standfirst {
+    margin-bottom: $baseline*3;
     text-rendering: optimizeLegibility;
 
     @include mq(tablet) {
@@ -86,12 +107,17 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
         line-height: 2.4rem;
     }
 }
+.article-body {
+    @include mq(tablet) {
+        margin-bottom: $baseline*4;
+    }
+}
 
 .bullet {
     font-size: 13px;
     display: inline-block;
     color: #999999;
-    margin: $baseline/2 4px 0 0;
+    margin: $baseline/2 4px $baseline/-2 0;
 
     &:first-of-type {
         margin-top: $baseline;
@@ -99,17 +125,21 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 }
 
 .article__container,
-.article__main-column {
+.article__main-column,
+.article-v2__inner,
+.article-v2__main-column {
     position: relative;
 }
 
+.article__secondary-column,
+.article-v2__secondary-column,
 .byline--cloned {
     display: none;
 }
 
 .byline {
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
+    border-top: 1px dotted $neutral3;
+    border-bottom: 1px dotted $neutral3;
     margin-bottom: $baseline*2;
     padding: $baseline 0 $baseline*4 0;
 
@@ -121,16 +151,33 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
         @include mq(rightCol) {
             display: block;
         }
+        @include mq(leftCol) {
+            padding-bottom: $baseline*12;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        @include mq(wide) {
+            padding-bottom: $baseline*15;
+        }
     }
 }
-@include mq(leftCol) {
-    article .byline {
+
+.article__meta-container {
+    @include mq(leftCol) {
         float: left;
         margin-left: ($a-leftCol-width + $gs-gutter)*-1;
         margin-bottom: $baseline*4;
         width: $a-leftCol-width;
     }
-    article .media-primary + .byline {
+
+    @include mq(wide) {
+        margin-left: (gs-span(3) + $gs-gutter)*-1;
+        width: gs-span(3);
+    }
+}
+
+@include mq(leftCol) {
+    .media-content + .article__meta-container {
         margin-left: 0;
         margin-bottom: 0;
         position: absolute;
@@ -138,6 +185,7 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
         left: 0;
     }
 }
+
 @include mq(tablet) {
     .d-tabs__item--byline {
         font-size: 16px !important;
@@ -146,8 +194,12 @@ $mq-breakpoints: mq-add-breakpoint(leftCol, $a-leftCol-trigger);
 }
 
 .media-primary {
-    margin-left: $gutter * -1;
-    margin-right: $gutter * -1;
+    margin-left: $gs-gutter / -2;
+    margin-right: $gs-gutter / -2;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / -1;
+        margin-right: $gs-gutter / -1;
+    }
 }
 .main-image {
     margin-bottom: 0;
@@ -164,12 +216,33 @@ video {
     @include user-select;
 }
 
+.commentcount {
+    @extend %type-11;
+    display: none;
+    color: #F6644F;
+
+    i {
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+
+    .article__head & {
+        display: block;
+        float: right;
+    }
+}
+
+.commentcount__label {
+    .article__head & {
+        @extend .u-h;
+    }
+}
 
 /* Layout changes across devices
    ========================================================================== */
 
 @include mq(tablet) {
-    .article-head,
+    .article__head,
     .main-caption {
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -182,6 +255,17 @@ video {
     }
     .d-tabs__item--byline {
         padding-left: $gutter/4 !important;
+    }
+    .article-v2__columning-wrapper {
+        padding-right: gs-span(1) + $gs-gutter;
+
+        .media-primary {
+            margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
+        }
+    }
+
+    .article__head .commentcount {
+        display: block;
     }
 }
 
@@ -198,7 +282,7 @@ video {
     }
 }
 
-@include mq($a-rightCol-trigger) {
+@include mq(rightCol) {
 
     @include hide-discussion-tabs;
     @include comments-below-article;
@@ -208,17 +292,55 @@ video {
         max-width: none;
     }
     .article__main-column {
-        padding-right: $a-rightCol-width + $gs-gutter;
-        padding-left: 0;
+        padding-right: $a-rightCol-width + $gs-gutter * 2;
         max-width: gs-span(8);
     }
-    article .social-wrapper {
-        padding: 0 !important;
-        margin: 0 !important;
+    .article__secondary-column {
+        display: block;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 0; right: 0; bottom: 0;
         width: $a-rightCol-width;
+    }
+    .article__secondary-column__inner {
+        height: 100%;
+    }
+
+    .article-v2__inner {
+        max-width: gs-span(8);
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__main-column {
+        max-width: gs-span(8);
+        padding-right: gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__columning-wrapper {
+        width: 100%;
+        display: table;
+        table-layout: fixed;
+        padding-right: 0;
+        position: relative;
+
+        .media-primary {
+            margin-right: 0 !important;
+        }
+    }
+    .article-v2__main-column {
+        display: table-cell;
+        vertical-align: top;
+    }
+    .article-v2__secondary-column {
+        position: relative;
+        display: table-cell;
+        width: $a-rightCol-width;
+    }
+    .article-v2__secondary-column__inner {
+        top: 0;
+        bottom: 0;
+        position: absolute;
+
+        > .u-table {
+            height: 100%;
+        }
     }
 }
 
@@ -230,14 +352,47 @@ video {
     .article__main-column {
         padding-left: $a-leftCol-width + $gs-gutter;
     }
-    .article-head {
+
+    .article-v2__inner,
+    .article-v2__main-column {
+        padding-left: $a-leftCol-width + $gs-gutter;
+    }
+
+    .article-v2__inner {
+        padding-right: $a-rightCol-width + $gs-gutter;
+    }
+
+    .article-v2__main-column {
+        padding-right: $gs-gutter;
+    }
+
+    .article__head {
         padding-top: $baseline*2;
-        padding-bottom: $baseline*2;
+    }
+
+    .commentcount {
+        .article__head & {
+            display: none;
+        }
+
+        .article__meta-container & {
+            display: block;
+            padding-top: $baseline;
+            margin-bottom: $baseline*3;
+            border-top: 1px dotted $neutral3;
+        }
     }
 }
 
 @include mq(wide) {
-    .article-wrapper {
-        margin-left: $gs-column-width;
+    .article-v2__inner,
+    .article-v2__main-column {
+        padding-left: gs-span(3) + $gs-gutter;
+    }
+    .article-v2__main-column {
+        padding-right: gs-span(1) + $gs-gutter*2;
+    }
+    .article-v2__inner {
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
     }
 }

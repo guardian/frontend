@@ -45,12 +45,14 @@
 
 </section>
 
-@if(tag.section == "football") {
-    @if(tag.isFootballCompetition) {
-        @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id))
-    } else {
-        @fragments.footballNav("/football")
+<div class="box-indent article-zone-no-indent">
+    @if(tag.section == "football") {
+        @if(tag.isFootballCompetition) {
+            @fragments.footballNav("/" + tag.id, Some(tag.webTitle), Some("/" + tag.id))
+        } else {
+            @fragments.footballNav("/football")
+        }
     }
-}
 
-@fragments.mostPopularPlaceholder(tag.section)
+    @fragments.mostPopularPlaceholder(tag.section)
+</div>

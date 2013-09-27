@@ -1,0 +1,145 @@
+/* Base form styles
+   ========================================================================== */
+
+[type=checkbox] {
+    height: 13px;
+    margin-left: $baseline;
+    position: relative;
+    top: -2px;
+    vertical-align: bottom;
+    width: 13px;
+}
+
+.form {
+    margin-top: $baseline*6;
+    margin-bottom: $baseline*6;
+    max-width: gs-span(6);
+}
+
+.form__heading {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form__note {
+    font-family: $sans-serif;
+    font-size: 12px;
+    font-size: 1.2rem;
+}
+
+.form-fields {
+    margin: $baseline*6 0;
+    padding: 0;
+}
+
+.form-fields > li,
+.form-field {
+    list-style: none;
+    margin: 0 0 $baseline*6 0;
+    padding: 0;
+}
+
+.form-field--error {
+    .label {
+        color: $newsRed;
+    }
+
+    .text-input,
+    .text-input:focus {
+        border-color: $newsRed;
+    }
+}
+
+.form__error {
+    background-color: #fdf4f3;
+    border-bottom: 1px solid lighten($newsRed, 35%);
+    border-top: 1px solid lighten($newsRed, 35%);
+    color: $newsRed;
+    margin-top: 6px;
+    padding: 7px $baseline*2;
+}
+
+.form-field__error {
+    color: $newsRed;
+    margin-top: 6px;
+}
+
+.form-field__note {
+    font-family: $sans-serif;
+    font-size: 12px;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+}
+
+.form-field__note--below {
+    margin-bottom: 0;
+    margin-top: 6px;
+}
+
+.form-field__note--left {
+    float: left;
+}
+
+.form-field__note--right {
+    float: right;
+}
+
+.label {
+    color: #333;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+}
+
+.text-input {
+    border: 1px solid $grey;
+    @include box-shadow(none);
+    @include box-sizing(border-box);
+    color: #545454;
+    display: inline-block;
+    font-family: $sans-serif;
+    font-size: 14px;
+    font-size: 1.4rem;
+    line-height: 1.4;
+    padding: 8px 8px 7px;
+    @include rounded-corners(0);
+    width: 100%;
+
+    &:focus {
+        border-color: $darkGrey;
+    }
+}
+
+.submit-input {
+    background: $linkBlue;
+    border: 0 none;
+    color: #fff;
+    font-size: 14px;
+    font-size: 1.4rem;
+    margin: 0 $gutter 0 0;
+    min-width: gs-span(2);
+    padding: 11px 0;
+
+    &:hover,
+    &:focus {
+        background: darken($linkBlue, 5%);
+    }
+
+    &:active {
+        background: #000;
+    }
+}
+
+.check-label {
+    display: inline-block;
+    font-family: $sans-serif;
+    font-size: 13px;
+    font-size: 1.3rem;
+}
+
+.check-label--helper {
+    position: relative;
+    top: $baseline;
+}

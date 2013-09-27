@@ -20,13 +20,12 @@ object WitnessCleaner extends HtmlCleaner {
     }
 
     document.getElementsByClass("element-witness--brand").foreach { brand: Element =>
-      val icon = document.createElement("i")
-      icon.attr("class", "i i-witness-logo")
-      icon.attr("title", "Guardian Witness")
-      icon.html("&nbsp;")
+      val witnessLogo = document.createElement("span")
+      witnessLogo.attr("class", "witness-logo")
+      witnessLogo.html("Guardian <span class='witness-logo__witness'>Witness</span>")
       brand.children().foreach(_.remove)
       brand.text("")
-      brand.appendChild(icon)
+      brand.appendChild(witnessLogo)
     }
     document
   }

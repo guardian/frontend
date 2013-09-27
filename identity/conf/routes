@@ -1,6 +1,13 @@
 # For dev machines
-GET         /assets/*file                       controllers.Assets.at(path="/public", file)
+GET     /assets/*file                                   controllers.Assets.at(path="/public", file)
 
-GET         /signin                             @controllers.SigninController.renderForm
-GET         /signout                            @controllers.SignoutController.signout
-POST        /signin                             @controllers.SigninController.processForm
+GET     /signin                                         @controllers.SigninController.renderForm
+POST    /signin                                         @controllers.SigninController.processForm
+GET     /signout                                        @controllers.SignoutController.signout
+GET     /reset                                          @controllers.ResetPasswordController.renderPasswordResetRequestForm
+POST    /reset                                          @controllers.ResetPasswordController.processPasswordResetRequestForm
+GET     /c/:resetToken                                  @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
+POST    /reset-password/:resetToken                     @controllers.ResetPasswordController.resetPassword( resetToken : String )
+GET     /requestnewtoken                                @controllers.ResetPasswordController.requestNewToken
+GET     /register                                       @controllers.RegistrationController.renderForm
+POST    /register                                       @controllers.RegistrationController.processForm

@@ -5,8 +5,8 @@ import front._
 import model._
 import conf._
 import play.api.mvc._
+import play.api.libs.json.Json
 
-// TODO, this needs a rethink, does not seem elegant
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
@@ -133,45 +133,51 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     case _ => Editionalise(path, edition)
   }
 
-  def renderFilm() = {
-    if (Switches.FilmFrontFacia.isSwitchedOn)
-      render("film")
-    else
-      Action { Ok.withHeaders("X-Accel-Redirect" -> "/redirect/film/film") }
-  }
-
-  def render(path: String) = Action { implicit request =>
-
+  // Needed as aliases for reverse routing
+  def renderEditionFrontJson(path: String) = renderFront(path)
+  def renderEditionFront(path: String) = renderFront(path)
+  def renderEditionSectionFrontJson(path: String) = renderFront(path)
+  def renderEditionSectionFront(path: String) = renderFront(path)
+  def renderFrontJson(path: String) = renderFront(path)
+  def renderFront(path: String) = Action { implicit request =>
       val editionalisedPath = editionPath(path, Edition(request))
 
-      FrontPage(editionalisedPath).map { frontPage =>
+      FrontPage(editionalisedPath).flatMap { frontPage =>
 
         // get the trailblocks
-        val trailblocks: Seq[Trailblock] = front(editionalisedPath)
-
-        if (trailblocks.isEmpty) {
-          InternalServerError
-        } else {
-          val htmlResponse = () => views.html.front(frontPage, trailblocks)
-          val jsonResponse = () => views.html.fragments.frontBody(frontPage, trailblocks)
-          renderFormat(htmlResponse, jsonResponse, frontPage, Switches.all)
+        val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
+        faciaPageOption map { faciaPage =>
+          if (path != editionalisedPath) {
+            Redirect(editionalisedPath)
+          } else {
+            if (request.isJson) {
+              val html = views.html.fragments.frontBody(frontPage, faciaPage)
+              JsonComponent(
+                "html" -> html,
+                "trails" -> faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(_.url)).toList,
+                "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage, Switches.all).body)
+              )
+            }
+            else
+              Ok(views.html.front(frontPage, faciaPage))
+          }
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
   }
 
+  def renderTrailsJson(path: String) = renderTrails(path)
   def renderTrails(path: String) = Action { implicit request =>
-
     val editionalisedPath = editionPath(path, Edition(request))
 
     FrontPage(editionalisedPath).map{ frontPage =>
 
       // get the first trailblock
-      val trailblock: Option[Trailblock] = front(editionalisedPath).headOption
+      val collection: Option[(Config, Collection)] = front(editionalisedPath).flatMap(_.collections.filter(_._2.items.nonEmpty).headOption)
 
-      if (trailblock.isEmpty) {
-        InternalServerError
+      if (path != editionalisedPath) {
+        Redirect(editionalisedPath)
       } else {
-        val trails: Seq[Trail] = trailblock.map(_.trails).getOrElse(Nil)
+        val trails: Seq[Trail] = collection.map(_._2.items).getOrElse(Nil)
         val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
         renderFormat(response, response, frontPage)
       }

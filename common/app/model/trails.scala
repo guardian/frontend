@@ -8,11 +8,11 @@ import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.Json._
 import play.api.libs.json.JsObject
 import scala.concurrent.Future
-import tools.QueryParams
+import services.S3FrontsApi
 import views.support.Style
 
 
-trait Trail extends Images with Tags {
+trait Trail extends Elements with Tags {
   def webPublicationDate: DateTime
   def linkText: String
   def headline: String
@@ -20,7 +20,6 @@ trait Trail extends Images with Tags {
   def trailText: Option[String]
   def section: String //sectionId
   def sectionName: String
-  def thumbnail: Option[String] = None
   def thumbnailPath: Option[String] = None
   def isLive: Boolean
   def discussionId: Option[String] = None
@@ -49,16 +48,19 @@ class ItemTrailblockDescription(
     val style: Option[Style],
     val showMore: Boolean,
     val edition: Edition,
-    val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults
+    val isConfigured: Boolean) extends TrailblockDescription with QueryDefaults with Logging
   {
     lazy val section = id.split("/").headOption.filterNot(_ == "").getOrElse("news")
 
-  def query() = EditorsPicsOrLeadContentAndLatest(
-    ContentApi.item(id, edition)
-      .showEditorsPicks(true)
-      .pageSize(20)
-      .response
-  )
+  def query() = {
+    log.info(s"Refreshing trailblock items for: ${edition.id}, $id")
+    EditorsPicsOrLeadContentAndLatest(
+      ContentApi.item(id, edition)
+        .showEditorsPicks(true)
+        .pageSize(20)
+        .response
+    )
+  }
 }
 
 object ItemTrailblockDescription {
@@ -120,7 +122,7 @@ class RunningOrderTrailblockDescription(
     // get the running order from the api
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$blockId/collection.json"
     log.info(s"loading running order configuration from: $configUrl")
-    parseResponse(WS.url(s"$configUrl").withTimeout(2000).get())
+    parseResponse(WS.url(s"$configUrl").withRequestTimeout(2000).get())
   }
 
   private def parseResponse(response: Future[Response]): Future[Option[TrailblockDescription]] = {
@@ -148,7 +150,7 @@ class RunningOrderTrailblockDescription(
               val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
               val search = ContentApi.search(edition)
               val queryParamsAsStringParams = queryParamsWithEdition map {case (k, v) => k -> search.StringParameter(k, Some(v))}
-              val newSearch = search.updated(search.parameterHolder ++ queryParamsAsStringParams).showFields("all")
+              val newSearch = search.withParameters(search.parameterHolder ++ queryParamsAsStringParams).showFields("all")
 
               newSearch.response map { r =>
                 r.results.map(Content(_))

@@ -1,11 +1,11 @@
-@(mainPicture: Image, smallCrop: Image)
+@(mainPicture: ImageAsset, smallCrop: ImageAsset)
 
-<figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary">
+<figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
     <img class="maxed main-image" src="@smallCrop.path"
         data-force-upgrade="true"
         data-thumb-width="@smallCrop.width"
-        data-fullsrc="@mainPicture.path"
-        data-full-width="@mainPicture.width"
+        data-fullsrc="@mainPicture.url.map(ImgSrc(_, ArticleMainPicture))"
+        data-full-width="640"
         itemprop="contentURL"
         alt="@Html(mainPicture.altText.getOrElse(""))"
         title="@StripHtmlTagsAndUnescapeEntities(mainPicture.caption.getOrElse(""))" />

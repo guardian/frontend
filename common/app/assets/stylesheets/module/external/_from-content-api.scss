@@ -18,8 +18,6 @@
         font-size: 1.8rem;
         line-height: 26px;
         line-height: 2.6rem;
-        margin-bottom: 16px;
-        margin-bottom: 1.6rem;
     }
 
     > p,
@@ -41,19 +39,27 @@
             line-height: 28px;
             line-height: 2.8rem;
         }
-        @include mq(desktop) {
-            font-size: 22px;
-            font-size: 2.2rem;
-            line-height: 28px;
-            line-height: 2.8rem;
-        }
     }
     h3 {
         @extend %type-5;
         margin: 0;
         font-family: georgia, serif;
     }
+}
 
+.from-content-api--small {
+    @extend %type-7;
+
+    @include mq(tablet) {
+        @include font($serif, normal, 16, 24);
+    }
+    h2 {
+        @extend %type-5;
+
+        @include mq(tablet) {
+            @include font($serif, 700, 18, 24);
+        }
+    }
 }
 
 .article blockquote,
@@ -78,7 +84,12 @@ figcaption,
 }
 
 .main-caption {
-    padding: $baseline*2 $gutter $baseline*4;
+    padding: $baseline*2 $gs-gutter/2 $gs-column-height;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 
@@ -125,6 +136,7 @@ figure {
 
 /* Citations
    ========================================================================== */
+
 .from-content-api {
     cite {
         @extend %type-7;
@@ -133,6 +145,8 @@ figure {
             color: #666;
 
             &:hover,
+            &:focus,
+            &:visited:focus,
             &:visited:hover {
                 color: #4d4d4d;
                 border-bottom: 1px dotted #4d4d4d;
@@ -147,12 +161,13 @@ figure {
 
 /* Tables
    ========================================================================== */
+
 .from-content-api {
     table {
         margin-bottom: $baseline*4;
     }
 
-    //This is a weird xml output from the api
+    // This is a weird xml output from the api
     table caption {
         @extend %type-5;
         padding: $baseline*2 0;
@@ -160,7 +175,8 @@ figure {
         border-top: 1px solid #B3B3B4;
     }
 
-    th, td {
+    th,
+    td {
         @extend %type-11;
         padding: $baseline*2;
         color: #676767;

@@ -1,13 +1,12 @@
-a,
-a:link,
-a:visited {
+a {
     color: $linkBlue;
     text-decoration: none;
-}
-a:hover,
-a:focus {
-    text-decoration: underline;
-}
-a:active {
-    color: $darkBlue;
+
+    &:hover,
+    &:focus {
+       text-decoration: underline;
+    }
+    &:active {
+        color: $darkBlue;
+    }
 }

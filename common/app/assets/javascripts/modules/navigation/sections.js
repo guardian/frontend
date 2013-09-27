@@ -95,16 +95,16 @@ define([
             },
 
             showColumns : function(sectionsHeader, sectionsNav) {
-                common.$g('.nav__item', sectionsHeader).removeClass('h');
-                common.$g('.nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
+                common.$g('.nav__item', sectionsHeader).removeClass('u-h');
+                common.$g('nav > .nav', sectionsHeader).removeClass('nav--stacked').addClass('nav--columns');
             },
 
             hideColumns :  function(sectionsHeader, sectionsNav) {
                 var firstTopPos,
                     visibleItems = [],
-                    popupItems = common.$g('.nav__item', sectionsHeader).removeClass('h');
+                    popupItems = common.$g('.nav__item', sectionsHeader).removeClass('u-h');
 
-                common.$g('.nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
+                common.$g('nav > .nav', sectionsHeader).removeClass('nav--columns').addClass('nav--stacked');
 
                 common.$g('.nav__item', sectionsNav).each(function(e) {
                     firstTopPos = firstTopPos || bonzo(e).offset().top;
@@ -114,7 +114,7 @@ define([
                 });
 
                 for(var i=0, l=visibleItems.length; i < l; i++) {
-                    bonzo(popupItems[i]).addClass('h');
+                    bonzo(popupItems[i]).addClass('u-h');
                 }
             },
 
@@ -150,7 +150,7 @@ define([
 
                     // Insert the popup local nav
                     var localNavPopupHtml = '<div class="nav-popup-localnav nav-popup nav-popup--small is-off">' +
-                                            '  <ul class="nav nav--columns nav--top-border-off cf" data-link-name="Sub Sections">' +
+                                            '  <ul class="nav nav--columns nav--top-border-off u-cf" data-link-name="Sub Sections">' +
                                                  localNavItems.join('') +
                                             '  </ul>' +
                                             '</div>';
@@ -165,11 +165,11 @@ define([
                                           currentSection.sectionName,
 
                         localNavCtaHtml = '<div class="localnav--small">' +
-                                          '  <div class="localnav__inner cf">' +
+                                          '  <div class="localnav__inner u-cf">' +
                                           '    <h1 class="localnav__title zone-color">'+localNavTitle+'</h1>' +
                                           '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +
-                                          '          data-control-for="nav-popup-localnav">' +
+                                          '          data-toggle="nav-popup-localnav">' +
                                           '        <i class="i i-nav-divider zone-background"></i>' +
                                           '        <i class="i i-local-nav-arrow zone-background"></i>' +
                                           '      </button></div>' +

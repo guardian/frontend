@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html class="js-off" lang="en-GB">
 <head>
+    <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
     @fragments.metaData(metaData)
     @fragments.commonCssSetup()
@@ -23,6 +24,7 @@
                         @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="x54")
                     </div>
                     <div class="parts__body">
+                        @fragments.releaseMessage()
                         @body
                     </div>
                     <div class="parts__foot">
@@ -37,9 +39,7 @@
 
     @fragments.footer(metaData)
 
-    <!--[if (gt IE 8) | (IEMobile)]><!-->
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.min.css")" />
-    <!--<![endif]-->
+    @fragments.loadCss()
 
     @fragments.analytics(metaData)
     @fragments.debug()

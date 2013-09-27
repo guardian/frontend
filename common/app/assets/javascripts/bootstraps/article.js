@@ -1,17 +1,27 @@
 define([
     "common",
     "modules/autoupdate",
+    "modules/live-filter",
+    "modules/live-summary",
     "modules/matchnav",
     "modules/analytics/reading",
     "modules/discussion/discussion",
-    "modules/cricket"
+    "modules/cricket",
+    "modules/experiments/live-blog-show-more",
+    "modules/notification-counter",
+    "modules/detect"
 ], function (
     common,
     AutoUpdate,
+    LiveFilter,
+    LiveSummary,
     MatchNav,
     Reading,
     Discussion,
-    Cricket
+    Cricket,
+    LiveShowMore,
+    NotificationCounter,
+    detect
 ) {
 
     var modules = {
@@ -20,14 +30,14 @@ define([
             var matchNav = new MatchNav();
             common.mediator.on('page:article:ready', function(config, context) {
                 if(config.page.section === "football") {
-                    var teamIds = config.referencesOfType('paFootballTeam');
-                    var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
+                    var teamIds = config.referencesOfType('paFootballTeam'),
+                        isRightTypeOfContent = config.hasTone("Match reports") || config.page.isLiveBlog;
 
                     if(teamIds.length === 2 && isRightTypeOfContent){
-                        var url = "/football/api/match-nav/";
-                            url += config.webPublicationDateAsUrlPart() + "/";
-                            url += teamIds[0] + "/" + teamIds[1];
-                            url += "?currentPage=" + encodeURIComponent(config.page.pageId);
+                        var url = "/football/api/match-nav/" +
+                                  config.webPublicationDateAsUrlPart() + "/" +
+                                  teamIds[0] + "/" + teamIds[1] +
+                                  "?currentPage=" + encodeURIComponent(config.page.pageId);
 
                         matchNav.load(url, context);
                     }
@@ -38,17 +48,32 @@ define([
         initLiveBlogging: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
-                    var a = new AutoUpdate({
+
+                    var timerDelay = /desktop|extended/.test(detect.getLayoutMode()) ? 30000 : 60000,
+                        a = new AutoUpdate({
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
                                 path = window.location.pathname;
+
                            return path + '.json' + '?lastUpdate=' + id;
                         },
-                        delay: 60000,
+                        delay: timerDelay,
                         attachTo: context.querySelector(".article-body"),
                         switches: config.switches,
-                        manipulationType: 'prepend'
+                        manipulationType: 'prepend',
+                        animateInserts: true,
+                        progressToggle: true,
+                        progressColour: '#ec1c1c'
                     }).init();
+                }
+                if (config.page.isLiveBlog) {
+                    var lf = new LiveFilter(context).init(),
+                        nc = new NotificationCounter().init();
+
+
+                    if (config.switches.liveSummary) {
+                        var ls = new LiveSummary(context).init();
+                    }
                 }
             });
         },
@@ -91,8 +116,8 @@ define([
                     var options = { url: cricketMatchRefs[0],
                                 loadSummary: true,
                                 loadScorecard: true,
-                                summaryElement: '.article-headline',
-                                scorecardElement: '.article-headline',
+                                summaryElement: '.article__headline',
+                                scorecardElement: '.article__headline',
                                 summaryManipulation: 'after',
                                 scorecardManipulation: 'after' };
                     Cricket.cricketArticle(config, context, options);

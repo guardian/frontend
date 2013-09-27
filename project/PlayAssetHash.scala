@@ -1,9 +1,10 @@
+package com.gu
+
 import org.apache.commons.io.FileUtils
 import sbt._
 import sbt.Keys._
 import sbtassembly.Plugin.AssemblyKeys._
 import PlayArtifact._
-
 
 object PlayAssetHash extends Plugin {
 

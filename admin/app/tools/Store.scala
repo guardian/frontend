@@ -1,7 +1,8 @@
 package tools
 
-import common.{ Logging, S3 }
+import common.Logging
 import conf.AdminConfiguration
+import services.S3
 
 trait Store extends Logging {
   lazy val configKey = AdminConfiguration.configKey
@@ -12,6 +13,8 @@ trait Store extends Logging {
   def putConfig(config: String) { S3.putPublic(configKey, config, "application/json") }
 
   def getSwitches = S3.get(switchesKey)
+  def getSwitchesWithLastModified = S3.getWithLastModified(switchesKey)
+  def getSwitchesLastModified = S3.getLastModified(switchesKey)
   def putSwitches(config: String) { S3.putPublic(switchesKey, config, "text/plain") }
 
   def getTopStories = S3.get(topStoriesKey)

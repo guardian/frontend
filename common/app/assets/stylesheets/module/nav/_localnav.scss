@@ -6,12 +6,11 @@
         margin-top: 156px;
     }
 
-    .parts__body {        
+    .parts__body {
         @include mq(tablet) {
             margin-top: 0;
         }
     }
-
 
     .ad-slot-top-banner-ad {
         padding-top: 5px;
@@ -23,7 +22,9 @@
         }
     }
 
-    h2.article-zone,
+    h2.article-zone:only-child,
+    .parts__body > .article-zone,
+    .article__head > .article-zone,
     .section-head,
     .front-section:first-child .sub-section-head {
         display: none;

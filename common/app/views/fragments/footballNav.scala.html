@@ -1,46 +1,45 @@
 @(urlBase: String, competitionName: Option[String] = None, competitionUrl: Option[String] = None)(implicit request: RequestHeader)
 @import common._
 
+
 <h3 class="article-zone type-2">
     <a class="zone-color" href="@LinkTo{@competitionUrl.getOrElse("/football")}" data-link-name="football index">@competitionName.getOrElse("Football")</a>
 </h3>
-<div class="box-indent">
-    <div class="sections cf football-nav" data-link-name="football bottom nav">
-        <ul class="nav nav--columns nav--top-border-off sections cf">
-            @defining({
-                var linkList = List(
-                    Link("/football/competitions", "leagues and competitions", "Leagues & competitions")
-                )
+<div class="sections u-cf football-nav" data-link-name="football bottom nav">
+    <ul class="nav nav--columns nav--top-border-off sections u-cf">
+        @defining({
+            var linkList = List(
+                Link("/football/competitions", "leagues and competitions", "Leagues & competitions")
+            )
 
-                if (competitionName.nonEmpty) {
-                    if (TeamCompetitions(competitionName.get)) {
-	                    linkList ::= Link("/football/teams#" + urlBase.split("/")(2), "teams", "Teams")
-                    }
+            if (competitionName.nonEmpty) {
+                if (TeamCompetitions(competitionName.get)) {
+                    linkList ::= Link("/football/teams#" + urlBase.split("/")(2), "teams", "Teams")
+                }
+            } else {
+                linkList ::=  Link("/football/teams", "teams", "Teams")
+            }
+
+            linkList :::= List(
+                Link(urlBase + "/live", "livescores", "Live scores"),
+                Link(urlBase + "/fixtures", "fixtures", "Fixtures"),
+                Link(urlBase + "/results", "results", "Results")
+            )
+
+            if(!competitionName.getOrElse("").contains("Cup")) {
+                if (urlBase == "/football") {
+                  linkList ::= Link(urlBase + "/tables", "tables", "Tables")
                 } else {
-                    linkList ::=  Link("/football/teams", "teams", "Teams")
-                }
-
-                linkList :::= List(
-                    Link(urlBase + "/live", "livescores", "Live scores"),
-                    Link(urlBase + "/fixtures", "fixtures", "Fixtures"),
-                    Link(urlBase + "/results", "results", "Results")
-                )
-
-                if(!competitionName.getOrElse("").contains("Cup")) {
-                    if (urlBase == "/football") {
-                      linkList ::= Link(urlBase + "/tables", "tables", "Tables")
-                    } else {
-                      linkList ::= Link(urlBase + "/table", "tables", "Tables")
-                    }
-                }
-
-                linkList
-
-            }) { links =>
-                @links.map{ l =>
-                    <li class="nav__item"><a class="nav__link" href="@LinkTo{@l.url}" data-link-name="@l.linkName">@l.linkText</a></li>
+                  linkList ::= Link(urlBase + "/table", "tables", "Tables")
                 }
             }
-        </ul>
-    </div>
+
+            linkList
+
+        }) { links =>
+            @links.map{ l =>
+                <li class="nav__item"><a class="nav__link" href="@LinkTo{@l.url}" data-link-name="@l.linkName">@l.linkText</a></li>
+            }
+        }
+    </ul>
 </div>

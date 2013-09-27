@@ -106,14 +106,15 @@ define([
             self.search();
         }
 
-        function _startPoller() {
+        this.startPoller = function() {
             setInterval(function(){
                 if (self.page() === 1) {
                     self.search({noFlushFirst: true});
                 }
-            }, 10000);
+            }, common.config.latestArticlesPollMs || 60000);
+
+            this.startPoller = function() {}; // make idempotent
         }
-        this.startPoller = _.once(_startPoller);
 
     };
 });

@@ -3,7 +3,6 @@ package controllers.front
 import common._
 import model.Trailblock
 
-
 class Front extends Logging {
 
   private def allFronts = fronts.values
@@ -16,7 +15,11 @@ class Front extends Logging {
 
   def refresh() {
     log.info("Refreshing Front")
-    allFronts.foreach(_.refresh())
+    refreshJobs().foreach(body => body())
+  }
+
+  def refreshJobs(): List[() => Unit] =allFronts.toList map { front =>
+    () => front.refresh()
   }
 
   def apply(path: String): Seq[Trailblock] = fronts(path)()

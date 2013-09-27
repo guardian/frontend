@@ -32,6 +32,8 @@ object `package` {
 }
 
 class AssetsPlugin(val app: Application) extends Plugin with Logging {
+  val secure = false
+
   override def onStart() {
     // Trap: The following has global application and may interfere with caching on non-local fetching
     // http://stackoverflow.com/questions/1374438/disappearing-jar-entry-when-loading-using-spi
@@ -41,13 +43,16 @@ class AssetsPlugin(val app: Application) extends Plugin with Logging {
 
   private val reloadAssetMapsOnAccess = app.mode == Mode.Dev
 
-  def getAssetMappings(base: String = ""): String => String = reloadAssetMapsOnAccess match {
-    case true =>
-      asset: String => loadAssetMappings(base)(asset)
+  def getAssetMappings(base: String = "", secureBase: String = ""): String => String = {
+    val assetBase = if (secure) secureBase else base
+    reloadAssetMapsOnAccess match {
+      case true =>
+        asset: String => loadAssetMappings(assetBase)(asset)
 
-    case false =>
-      val cachedMappings = loadAssetMappings(base)
-      asset: String => cachedMappings(asset)
+      case false =>
+        val cachedMappings = loadAssetMappings(assetBase)
+        asset: String => cachedMappings(asset)
+    }
   }
 
   private def loadAssetMappings(base: String = ""): Map[String, String] = {
@@ -91,4 +96,8 @@ class AssetsPlugin(val app: Application) extends Plugin with Logging {
 
     case _ => List()
   }
+}
+
+class SecureAssetsPlugin(app: Application) extends AssetsPlugin(app) {
+  override val secure = true
 }

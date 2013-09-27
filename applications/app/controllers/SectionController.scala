@@ -1,14 +1,10 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.json._
-
-import concurrent.Future
-import play.api.templates.Html
 
 
 case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
@@ -16,24 +12,18 @@ case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestCo
 object SectionController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
-  def render(path: String) = Action { implicit request =>
-    val promiseOfSection = lookup(path)
-    Async {
-      promiseOfSection.map {
-        case Left(model) => renderSectionFront(model)
-        case Right(notFound) => notFound
-      }
+  def render(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => renderSectionFront(model)
+      case Right(notFound) => notFound
     }
   }
 
-  def renderJsonTrails(path: String) = renderTrails(path)
-  def renderTrails(path: String) = Action { implicit request =>
-    val promiseOfSection = lookup(path)
-    Async {
-      promiseOfSection.map {
-        case Left(model) => renderTrailsFragment(model)
-        case Right(notFound) => notFound
-      }
+  def renderTrailsJson(path: String) = renderTrails(path)
+  def renderTrails(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => renderTrailsFragment(model)
+      case Right(notFound) => notFound
     }
   }
 
@@ -46,9 +36,9 @@ object SectionController extends Controller with Logging with Paging with JsonTr
       .showEditorsPicks(true)
       .response.map {response =>
         val section = response.section map { Section(_) }
-        val editorsPicks = response.editorsPicks map { new Content(_) }
+        val editorsPicks = response.editorsPicks map { Content(_) }
         val editorsPicksIds = editorsPicks map { _.id }
-        val latestContent = response.results map { new Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
+        val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
         val model = section map { SectionFrontPage(_, editorsPicks, latestContent) }
         ModelOrResult(model, response)
     }.recover{suppressApiNotFound}

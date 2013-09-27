@@ -2,6 +2,9 @@
 module.exports = function (grunt) {
     var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1',
         jasmineSpec = grunt.option('spec') || '*';
+     var env = grunt.option('env') || 'code',
+        screenshotsDir = './screenshots',
+        timestampDir = require('moment')().format('YYYY/MM/DD/HH:mm:ss/');
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
@@ -17,8 +20,7 @@ module.exports = function (grunt) {
                     'common/app/assets/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
                     'common/app/assets/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
                     'common/app/assets/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
-                    'common/app/assets/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss',
-                    'style-guide/app/assets/stylesheets/styleguide.min.css': 'style-guide/app/assets/stylesheets/styleguide.scss'
+                    'common/app/assets/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss'
                 },
                 options: {
                     check: false,
@@ -102,6 +104,9 @@ module.exports = function (grunt) {
                 loglevel: 'debug',
                 direct: true
             },
+            screenshot: {
+                src: ['tools/screenshots/screenshot.js']
+            },
             all: {
                 src: ['integration-tests/casper/tests/**/*.spec.js']
             },
@@ -109,15 +114,24 @@ module.exports = function (grunt) {
                 src: ['integration-tests/casper/tests/admin/*.spec.js']
             },
             common : {
-                src: ['integration-tests/casper/tests/*.spec.js']
+                src: ['integration-tests/casper/tests/**/*.spec.js']
             },
             discussion: {
-                src: ['integration-tests/casper/tests/discussion.spec.js']
+                src: ['integration-tests/casper/tests/discussion/*.spec.js']
             },
-            networkfront: {
-                src: ['integration-tests/casper/tests/network-front.spec.js']
-            }
-        },
+            article: {
+                src: ['integration-tests/casper/tests/article/*.spec.js']
+            },
+            front: {
+                src: ['integration-tests/casper/tests/front/*.js']
+            },
+            corenavigation: {
+                src: ['integration-tests/casper/tests/core-navigation/*.js']
+            },
+            allexceptadmin: {
+                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
+            },
+            },
 
         jasmine: {
             options: {
@@ -126,7 +140,25 @@ module.exports = function (grunt) {
             },
             common: {
                 options: {
-                    specs: 'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js',
+                    specs: grunt.file.expand(
+                         'common/test/assets/javascripts/spec/*.js',[
+                        '!common/test/assets/javascripts/spec/Autoupdate.spec.js',
+                        '!common/test/assets/javascripts/spec/DocumentWrite.spec.js',
+                        '!common/test/assets/javascripts/spec/Fonts.spec.js',
+                        '!common/test/assets/javascripts/spec/FootballFixtures.spec.js',
+                        '!common/test/assets/javascripts/spec/FootballTables.spec.js',
+                        '!common/test/assets/javascripts/spec/Gallery.spec.js',
+                        '!common/test/assets/javascripts/spec/GallerySwipe.spec.js',
+                        '!common/test/assets/javascripts/spec/LightboxGallery.spec.js',
+                        '!common/test/assets/javascripts/spec/MatchNav.spec.js',
+                        '!common/test/assets/javascripts/spec/MoreMatches.spec.js',
+                        '!common/test/assets/javascripts/spec/OmnitureLib.spec.js',
+                        '!common/test/assets/javascripts/spec/Popular.spec.js',
+                        '!common/test/assets/javascripts/spec/ProfileNav.spec.js',
+                        '!common/test/assets/javascripts/spec/Related.spec.js',
+                        '!common/test/assets/javascripts/spec/TopStories.spec.js',
+                        '!common/test/assets/javascripts/spec/TrailblockShowMore.spec.js'
+                        ]),
                     vendor: [
                         'common/test/assets/javascripts/components/sinon/lib/sinon.js',
                         'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
@@ -200,6 +232,47 @@ module.exports = function (grunt) {
                 'common/app/assets/javascripts/modules/**/*.js'
             ]
         },
+
+        mkdir: {
+            screenshots: {
+                create: [screenshotsDir]
+            }
+        },
+        s3: {
+            options: {
+                bucket: 'aws-frontend-store',
+                access:'public-read'
+            },
+            upload: {
+                upload: [{
+                    src: screenshotsDir + '/*.png',
+                    dest: env.toUpperCase() + '/screenshots/' + timestampDir
+                }]
+            }
+        },
+
+        imagemin: {
+            sprite: {
+                files: [{
+                    'common/app/assets/images/global/sprite.png': 'common/app/assets/images/global/sprite.png'
+                }]
+            },
+
+            all: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/images/',
+                    src: ['**/*.png'],
+                    dest: 'common/app/assets/images/'
+                },{
+                    expand: true,
+                    cwd: 'common/app/public/images/',
+                    src: ['**/*.{png,gif,jpg}'],
+                    dest: 'common/app/public/images/'
+                }]
+            }
+        },
+
 
         // Create JSON web font files from fonts.
         // Docs here: https://github.com/ahume/grunt-webfontjson
@@ -306,6 +379,13 @@ module.exports = function (grunt) {
           hooks: {
             // Copy the project's pre-commit hook into .git/hooks
             command: 'cp git-hooks/pre-commit .git/hooks/'
+          },
+
+          icons: {
+            command: [
+                'cd tools/sprites/',
+                'node spricon.js global-icon-config.json'
+            ].join('&&')
           }
         }
 
@@ -321,7 +401,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-casperjs');
     grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-mkdir');
+    grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
 
     // Standard tasks
     grunt.registerTask('test:unit', ['jasmine']);
@@ -331,13 +414,19 @@ module.exports = function (grunt) {
     grunt.registerTask('test:integration',  ['env:casperjs', 'casperjs:all']);
     grunt.registerTask('test:integration:admin',  ['env:casperjs', 'casperjs:admin']);
     grunt.registerTask('test:integration:discussion',  ['env:casperjs', 'casperjs:discussion']);
-    grunt.registerTask('test:integration:front',  ['env:casperjs', 'casperjs:networkfront']);
+    grunt.registerTask('test:integration:article',  ['env:casperjs', 'casperjs:article']);
+    grunt.registerTask('test:integration:front',  ['env:casperjs', 'casperjs:front']);
+    grunt.registerTask('test:integration:corenavigation',  ['env:casperjs', 'casperjs:corenavigation']);
+    grunt.registerTask('test:integration:allexceptadmin',  ['env:casperjs', 'casperjs:allexceptadmin']);
+
 
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
 
     grunt.registerTask('compile:common:css', ['sass:common']);
     grunt.registerTask('compile:common:js', ['requirejs:common']);
     grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
+
+    grunt.registerTask('compile:icons', ['shell:icons', 'imagemin:sprite']);
 
     grunt.registerTask('analyse:common:css', ['cssmetrics:common']);
     grunt.registerTask('analyse', ['analyse:common:css']);
@@ -346,4 +435,5 @@ module.exports = function (grunt) {
 
     // Clean the .git/hooks/pre-commit file then copy in the latest version
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:hooks']);
+    grunt.registerTask('snap', ['env:casperjs','clean', 'mkdir:screenshots', 'casperjs:screenshot', 's3:upload']);
 };

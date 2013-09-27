@@ -1,106 +1,74 @@
-@mixin row($row-size) {
-    &:nth-child(#{$row-size}n + 1) {
-        padding-left: 0;
-    }
-    &:nth-child(#{$row-size}n + #{$row-size}) {
-        padding-right: 0;
-        border-right-style: none;
-    }
-    &:nth-child(n + #{$row-size + 1}) {
-        padding-top: 5px;
-        border-top: 1px dotted $grey;
-        @if $row-size!= 1 {
-            min-height: gs-height(4);
-        }
-        .item__image-container {
-            display: none;
-        }
-    }
-}
-
-.section--top-stories {
+.collection--top-stories {
     overflow: hidden;
-    margin: 0 auto;
-    @include mq(tablet, desktop) {
-        width: gs-span(9);
-    }
-    @include mq(desktop, wide) {
-        width: gs-span(12);
-    }
-    @include mq(wide) {
-        width: gs-span(16);
-    }
-    .section__title {
-        display: none;
-    }
-    .collection {
-        font-size: 0;
-        margin-top: ($gs-gutter / 2) - 1;
-        padding: ($gs-gutter / 2) 0 ($gs-gutter / 2 - 1);
-        border-top: solid 1px $grey;
-        border-bottom: solid 1px $grey;
-    }
     .item {
-        margin: 0;
-        padding: 0 ($gs-gutter / 2 - 1) 6px $gs-gutter / 2;
-        border-top-style: none;
-        border-bottom-style: none;
-        border-right: 1px dotted $grey;
-        float: none;
-        display: inline-block;
-        vertical-align: top;
-        @include box-sizing(content-box);
         @include mq($to: tablet) {
-            @include row(1);
-            min-height: 0;
+            &:last-child {
+                margin-top: $gs-baseline*2;
+            }
         }
-        @include mq(tablet, desktop) {
-            width: gs-span(3);
-            @include row(3);
-        }
-        @include mq(desktop, wide) {
-            width: gs-span(4);
-            @include row(3);
-        }
-        @include mq(wide) {
-            width: gs-span(4);
-            @include row(4);
-        }
-    }
-    .item__image-container {
-        display: block;
-        .item__image {
-            margin-bottom: $baseline * 2;
-        }
-    }
-    .item__title {
-        @include font-size(22, 24);
-    }
-    .item__standfirst {
-        display: block;
-        margin-top: $baseline;
-        @include font-size(16, 20);
-        color: #666666;
-    }
-    .item__meta {
-        position: relative;
-        margin-top: $baseline * 2;
-        .item__timestamp {
-            border-left-style: none !important;
-            @include font-size(12, 13);
-            padding-bottom: 0;
-            padding-left: 17px;
-            .i {
-                left: 0;
-                @extend .i-clock-grey;
+        @include mq(tablet) {
+            float: left;
+            border: 10px none #ffffff;
+            width: 50%;
+            &:first-child {
+                padding-right: $gs-gutter/2;
+            }
+            &:last-child {
+                border-left: 1px dotted $grey;
+                padding-left: $gs-gutter/2 - 1;
             }
         }
     }
-    .collection__show-more {
-        border-style: none;
-        @extend %type-7;
-        display: block;
-        margin: 0 auto;
-        background-color: #dddddd;
+    .item__title {
+        @include font-size(26, 28);
+        @include mq(tablet) {
+            border-top-style: none;
+            padding-top: 0;
+            min-height: gs-height(3);
+        }
+        @include mq(desktop) {
+            min-height: gs-height(2);
+        }
+        @include mq(wide) {
+            @include font-size(34, 36);
+        }
+    }
+    .item:first-child .item__title {
+        @include mq($to: tablet) {
+            padding-top: 0;
+            border-top-style: none;
+        }
+    }
+    .item__standfirst {
+        margin: 20px 0 0;
+        @include font-size(16, 20);
+        @include mq(wide) {
+            @include font-size(20, 24);
+            min-height: gs-height(2);
+        }
+    }
+    .item--with-image .item__standfirst {
+        @include mq($to: wide) {
+            display: none;
+        }
+    }
+    .item__image-container {
+        @include mq(tablet) {
+            height: gs-height(4);
+        }
+        @include mq(desktop) {
+            height: gs-height(6);
+        }
+        @include mq(wide) {
+            height: gs-height(8);
+        }
+    }
+    .item__image {
+        @include mq($to: wide) {
+            width: 100%;
+        }
+        @include mq(wide) {
+            height: 100%;
+        }
     }
 }

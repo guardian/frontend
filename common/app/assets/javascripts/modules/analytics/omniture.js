@@ -28,14 +28,6 @@ define([
         w = w || {};
 
         this.logView = function() {
-
-            // temporary test of the diagnostics box - @commuterjoy
-            var oneInOneThousand = (Math.random() < 0.001);
-            if (oneInOneThousand) {
-                var msg = document.body.className + '~' + s.prop51 + '~' + s.eVar51 + '~' + localStorage.getItem('gu.ab.participations'),
-                    e = new Errors({ window: window, isDev: config.page.isDev }).log(msg, 'modules/analytics/omniture', 0, false);
-            }
-
             s.t();
         };
 
@@ -141,9 +133,15 @@ define([
                 s.events = s.apl(s.events,'event58',',');
             }
 
+            if (config.page.commentable) {
+                s.events = s.apl(s.events,'event46',',');
+            }
+
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
 
             s.prop65    = config.page.headline || '';
+
+            s.prop67    = "nextgen-served";
 
             s.prop68    = detect.getConnectionSpeed(w.performance, null, true);
 

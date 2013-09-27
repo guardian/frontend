@@ -6,7 +6,7 @@
     <a class="zone-color" data-link-name="article section" href="@LinkTo{/football}">Football</a>
 </h2>
 
-<div class="live-matches-dateline">
+<div class="live-matches-dateline box-indent">
     <p class="dateline"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
 </div>
 
@@ -15,10 +15,8 @@
 @fragments.filters(model.filters, model.page, "tables")
 
 <ol class="competitions football-table-container unstyled box-indent" data-link-name="tables" role="main">
-    
 
     @model.tables.map{ table =>
-    
 
     <li class="league-table">
 
@@ -61,6 +59,8 @@
     }
 </ol>
 
-@fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
+<div class="box-indent article-zone-no-indent">
+    @fragments.footballNav(model.urlBase, model.comp.map(c => c.fullName), model.comp.map(c => c.url))
 
-@fragments.mostPopularPlaceholder("sport")
+    @fragments.mostPopularPlaceholder("sport")
+</div>

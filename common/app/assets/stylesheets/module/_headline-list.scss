@@ -1,16 +1,8 @@
-.headline-list ul {
-    margin: 0 $gutter;
-}
-    .headline-list--top ul {
-        margin: 0 !important;
-        list-style: none;
-    }
-
 .headline-list {
     li {
         display: block;
         overflow: auto;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #dddddd;
         padding: $baseline*2 0;
 
         &:last-child {
@@ -25,31 +17,34 @@
     }
 
     a {
-        color: #333;
+        color: #333333;
 
         &:visited {
-            color:#777;
+            color: #777777;
         }
     }
 
     .count {
         @extend %type-7;
-        float:left;
-        line-height: 16px;
-        color: #777;
+        float: left;
+        line-height: 20px;
+        line-height: 2rem;
+        color: #777777;
         width: 12px;
     }
 }
 
 
-.headline-list__tile {
-    @extend %type-6;
-    color: #333;
-    margin: 0 $gutter $baseline;
+.headline-list__title {
+    margin: 0 $gs-gutter/2 $baseline;
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
     border-bottom: 1px solid #ddd;
     padding: $baseline $gutter/4 $baseline*3 0;
 
-    @include mq(420px) {
+    @include mq(544px) {
         display: none;
     }
 }

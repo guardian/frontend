@@ -1,47 +1,49 @@
 package controllers
 
+import com.gu.openplatform.contentapi.model.ItemResponse
 import conf._
 import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
-import play.api.libs.json.Json._
-import play.api.libs.json.JsObject
+import scala.concurrent.Future
+
 
 case class VideoPage(video: Video, storyPackage: List[Trail])
 
 object VideoController extends Controller with Logging with ExecutionContexts {
 
-  def render(path: String) = Action { implicit request =>
-    val promiseOfVideo = lookup(path)
-    Async {
-      promiseOfVideo.map {
-        case Left(model) if model.video.isExpired => Gone(views.html.expired(model.video))
-        case Left(model) => renderVideo(model)
-        case Right(notFound) => notFound
-      }
+  def renderJson(path: String) = render(path)
+  def render(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) if model.video.isExpired => Gone(views.html.expired(model.video))
+      case Left(model) => renderVideo(model)
+      case Right(notFound) => notFound
     }
   }
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
-    log.info(s"Fetching video: $path for edition $edition")
-    ContentApi.item(path, edition)
-      .showExpired(true)
-      .showTags("all")
-      .showFields("all")
-      .response.map{response =>
-        val videoOption = response.content.filter { _.isVideo } map { new Video(_) }
-        val storyPackage = response.storyPackage map { new Content(_) }
 
-        val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
-        ModelOrResult(model, response)
-    }.recover{suppressApiNotFound}
+    log.info(s"Fetching video: $path for edition $edition")
+    val response: Future[ItemResponse] = ContentApi.item(path, edition)
+      .showExpired(true)
+      .showFields("all")
+      .response
+
+    val result = response map { response =>
+      val storyPackage = response.storyPackage map { Content(_) }
+      val videoOption = response.content filter { _.isVideo } map { new Video(_) }
+      val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
+
+      ModelOrResult(model, response)
+    }
+
+    result recover suppressApiNotFound
   }
 
-  private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
+  private def renderVideo(model: VideoPage)(implicit request: RequestHeader): SimpleResult = {
     val htmlResponse = () => views.html.video(model)
     val jsonResponse = () => views.html.fragments.videoBody(model)
     renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
   }
-
 }

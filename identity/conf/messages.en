@@ -1,3 +1,6 @@
 error.email=Please enter a valid email address
 error.passwordLength=Please enter a password between 6 and 20 characters
+error.passwordsMustMatch=The passwords don''t match, please try again.
 error.login=That email address/password combination doesn''t match our records. Please try again.
+error.passwordReset=We could not reset your password please request another password reset email
+error.usernameLength=Please enter a username between 6 and 20 characters

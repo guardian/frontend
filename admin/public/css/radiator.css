@@ -1,4 +1,4 @@
-body { background-color: #fff; margin: 0 auto; max-width: 90%; padding-top: 20px; padding-bottom: 1000px; }
+body { background-color: #fff; margin: 0 auto; max-width: 90%; padding-top: 10px; padding-bottom: 1000px; }
 
 .charts {
     margin-bottom: 50px;
@@ -18,17 +18,17 @@ header {
 .down, .Failed { color: red; }
 .Running { color: orange; }
 ul {
-    height: 30px;
+    margin: 0;
 }
 
 
 .pingdom-wrapper small,
-.deployments-wrapper small {
-    display: block;
+.riffraff-wrapper small {
+
 }
 
 #pingdom li,
-#riffraff li {
+.riffraff li {
     min-width: 30px;
     min-height: 30px;
     font-size: 0;
@@ -38,24 +38,34 @@ ul {
     margin: 5px 5px 0 0;
 }
 
-#pingdom li.up, #riffraff li.Completed { 
+#pingdom li.up, .riffraff li.Completed {
     background-color: #B8FAA0;
 }
 
-#pingdom li.down, #riffraff li.Failed {
+#pingdom li.down, .riffraff li.Failed {
     background-color: red;
 }
 
 
 
-#riffraff,
+.riffraff,
 #pingdom {
+    overflow: hidden;
     padding: 0;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+#pingdom {
+    padding-right: 10px;
 }
 
 
-#riffraff li.Running {
+.riffraff li.Running {
     background-color: yellow;
+}
+
+li.Not.running {
+    background-color: lightgrey;
 }
 
 h2 {
@@ -63,7 +73,7 @@ h2 {
     color: #999;
     clear: both;
     font-weight: normal;
-    padding: 20px 0;
+    padding: 20px 0 10px 0;
     margin: 0;
 }
 h2 small {
@@ -79,11 +89,19 @@ a {
     text-decoration: none;
 }
 
-.pageviews-wrapper {
-    display: none; /* Disabling this for now */
+.pageviews-per-second {
+    font-size: 20px;
+    font-weight: bold;
+    color: #95B1CA;
 }
 
 
+.deployers {
+    list-style: none;
+    font-family: Georgia, serif;
+    color: #999;
+    font-weight: normal;
+}
 
 @media screen and (min-width: 600px) {
     .charts {
@@ -91,10 +109,10 @@ a {
         float: left;
     }
 
-    .pingdom-wrapper,
-    .deployments-wrapper {
+    .monitoring-wrapper,
+    .pageviews-wrapper {
         float: left;
         width: 50%;
     }
-},
+}
 
