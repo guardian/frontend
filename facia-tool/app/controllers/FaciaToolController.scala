@@ -13,43 +13,35 @@ import services.S3FrontsApi
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
-  def index() = AuthAction{ request =>
+  def index() = Authenticated { request =>
     Ok(views.html.fronts(Configuration.environment.stage))
   }
 
-  def admin() = AuthAction { request =>
+  def admin() = Authenticated { request =>
     Redirect("/")
   }
 
-  def listCollections = AuthAction { request =>
-    Async {
-      Future{
-        Ok(Json.toJson(S3FrontsApi.listCollectionIds))
-      }
-    }
+  def listCollections = Authenticated { request =>
+    Ok(Json.toJson(S3FrontsApi.listCollectionIds))
   }
 
-  def listConfigs = AuthAction { request =>
-    Async {
-      Future{
-        Ok(Json.toJson(S3FrontsApi.listConfigsIds))
-      }
-    }
+  def listConfigs = Authenticated { request =>
+    Ok(Json.toJson(S3FrontsApi.listConfigsIds))
   }
 
-  def readBlock(id: String) = AuthAction{ request =>
+  def readBlock(id: String) = Authenticated { request =>
     S3FrontsApi.getBlock(id) map { json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
-  def getConfig(id: String) = AuthAction{ request =>
+  def getConfig(id: String) = Authenticated { request =>
     S3FrontsApi.getConfig(id) map { json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
-  def updateBlock(id: String): Action[AnyContent] = AuthAction { request =>
+  def updateBlock(id: String): Action[AnyContent] = Authenticated { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
       case update: UpdateList => {
@@ -81,13 +73,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def updateTrail(id: String, trailId: String) = AuthAction{ request =>
+  def updateTrail(id: String, trailId: String) = Authenticated { request =>
     request.body.asJson.map{ json =>
     }
     Ok
   }
 
-  def deleteTrail(id: String) = AuthAction { request =>
+  def deleteTrail(id: String) = Authenticated { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList => {
         val identity = Identity(request).get
