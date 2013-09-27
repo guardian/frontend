@@ -18,7 +18,6 @@
     left: 0px;
     width: 100%;
     height: 400px;
-    /*background-color: rgba(0,0,200,0.3);*/
     z-index: 10000;
     overflow: hidden;
 }
@@ -38,22 +37,33 @@
 }
 
 .grid-column {
+    position: absolute;
     width: 60px;
     height: 100%;
     border-left: 1px solid cyan;
     border-right: 1px solid cyan;
-    margin: 0 10px;
-    float: left;
 }
 
-.grid-column:first-child {
-    margin-left: 20px;
-}
 
 .grid-row {
     width: 100%;
     height: 36px;
     border-top: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
+    position: absolute;
     margin: 12px 0;
+}
+
+
+#header,
+#preloads,
+.footer {
+    -webkit-transition: 1s -webkit-filter ease-out, 1s opacity ease-out;
+}
+
+.is-desaturated #header,
+.is-desaturated #preloads,
+.is-desaturated .footer {
+    -webkit-filter: grayscale(100%);
+    opacity: 0.5;
 }
