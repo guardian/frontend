@@ -65,7 +65,9 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                     // listen to the clickstream, as happens later, before removing
                     if (!moreHidden) {
                         common.mediator.on('module:clickstream:click', function(clickSpec) {
-                            $button.remove();
+                            if (bonzo(clickSpec.target)[0] === $button[0]) {
+                                $button.remove();
+                            }
                         });
                     }
                 });
