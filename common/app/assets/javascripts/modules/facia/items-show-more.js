@@ -45,7 +45,7 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                 mobile: 5
             }[detect.getBreakpoint()],
             _renderToggle = function($items) {
-                var $button = bonzo(bonzo.create('<button class="items__show-more">Show more news</button>'))
+                var $button = bonzo(bonzo.create('<button class="items__show-more">Show more</button>'))
                     .insertAfter($items);
                 bean.on($button[0], 'click', function(e) {
                     // show x more, depending on current breakpoint
