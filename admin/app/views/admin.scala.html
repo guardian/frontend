@@ -29,22 +29,22 @@
         <h3>Metrics</h3>
         <p class="muted">Ops metrics (is the site healthy?)</p>
         <ul>
-            <li><a href="@controllers.metrics.routes.DashboardController.render()">Load Balancers</a></li>
-            <li><a href="@controllers.metrics.routes.FastlyController.render()">Fastly</a></li>
+            <li><a href="@controllers.metrics.routes.DashboardController.renderDashboard()">Load Balancers</a></li>
+            <li><a href="@controllers.metrics.routes.FastlyController.renderFastly()">Fastly</a></li>
         </ul>
     </div>
     <div class="row">
         <h3>Radiator</h3>
         <p class="muted">Big screen display.</p>
         <ul>
-            <li><a href="@controllers.routes.RadiatorController.render()">Radiator</a></li>
+            <li><a href="@controllers.routes.RadiatorController.renderRadiator()">Radiator</a></li>
         </ul>
     </div>
     <div class="row">
         <h3>Troubleshoot</h3>
         <p class="muted">Diagnose problems with features.</p>
         <ul>
-            <li><a href="@controllers.routes.FootballTroubleshooterController.render()">Football feeds</a></li>
+            <li><a href="@controllers.routes.FootballTroubleshooterController.renderFootballTroubleshooter()">Football feeds</a></li>
         </ul>
     </div>
 }

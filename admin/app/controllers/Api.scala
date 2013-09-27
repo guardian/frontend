@@ -8,7 +8,7 @@ import play.api.libs.ws.WS
 
 object Api extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
-  def proxy(path: String, callback: String) = AuthAction { request =>
+  def proxy(path: String, callback: String) = Authenticated.async { request =>
     val queryString = request.queryString.map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)
     }.mkString("&")
@@ -17,14 +17,12 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
 
     log("Proxying tag API query to: %s" format url, request)
 
-    Async {
-      WS.url(url).get().map { response =>
-        Ok(response.body).as("application/javascript")
-      }
+    WS.url(url).get().map { response =>
+      Ok(response.body).as("application/javascript")
     }
   }
 
-  def tag(q: String, callback: String) = AuthAction { request =>
+  def tag(q: String, callback: String) = Authenticated.async { request =>
     val url = "%s/tags?format=json&page-size=50&api-key=%s&callback=%s&q=%s".format(
       Configuration.contentApi.host,
       Configuration.contentApi.key,
@@ -34,14 +32,12 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
 
     log("Proxying tag API query to: %s" format url, request)
 
-    Async {
-      WS.url(url).get().map { response =>
-        Ok(response.body).as("application/javascript")
-      }
+    WS.url(url).get().map { response =>
+      Ok(response.body).as("application/javascript")
     }
   }
 
-  def item(path: String, callback: String) = AuthAction { request =>
+  def item(path: String, callback: String) = Authenticated.async { request =>
     val url = "%s/%s?format=json&page-size=1&api-key=%s&callback=%s".format(
       Configuration.contentApi.host,
       path.javascriptEscaped.urlEncoded,
@@ -51,20 +47,16 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
 
     log("Proxying item API query to: %s" format url, request)
 
-    Async {
-      WS.url(url).get().map { response =>
-        Ok(response.body).as("application/javascript")
-      }
+    WS.url(url).get().map { response =>
+      Ok(response.body).as("application/javascript")
     }
   }
 
-  def json(url: String) = AuthAction { request =>
+  def json(url: String) = Authenticated.async { request =>
     log("Proxying json request to: %s" format url, request)
 
-    Async {
-      WS.url(url).get().map { response =>
-        Ok(response.body).as("application/json")
-      }
+    WS.url(url).get().map { response =>
+      Ok(response.body).as("application/json")
     }
   }
 }

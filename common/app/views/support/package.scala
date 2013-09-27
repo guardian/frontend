@@ -14,10 +14,9 @@ import scala.collection.JavaConversions._
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import com.gu.openplatform.contentapi.model.Asset
 import play.Play
 import org.apache.commons.lang.StringEscapeUtils
-
+import conf.Switches.ShowUnsupportedEmbedsSwitch
 
 sealed trait Style {
   val className: String
@@ -267,9 +266,12 @@ object InBodyElementCleaner extends HtmlCleaner {
   )
 
   override def clean(document: Document): Document = {
-    val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
-    val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
-    unsupportedElements.foreach(_.remove())
+    if (ShowUnsupportedEmbedsSwitch.isSwitchedOff) {
+      // this code removes unsupported embeds
+      val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+      val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
+      unsupportedElements.foreach(_.remove())
+    }
     document
   }
 }

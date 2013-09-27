@@ -13,17 +13,17 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
   val callbackName = "aFunction"
 
   "Article Controller" should "200 when content type is article" in Fake {
-    val result = controllers.ArticleController.render(articleUrl)(TestRequest())
+    val result = controllers.ArticleController.renderArticle(articleUrl)(TestRequest())
     status(result) should be(200)
   }
 
   "Article Controller" should "200 when content type is live blog" in Fake {
-    val result = controllers.ArticleController.render(liveBlogUrl)(TestRequest())
+    val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest())
     status(result) should be(200)
   }
 
   "Article Controller" should "200 when content type is sudoku" in Fake {
-    val result = controllers.ArticleController.render(sudokuUrl)(TestRequest())
+    val result = controllers.ArticleController.renderArticle(sudokuUrl)(TestRequest())
     status(result) should be(200)
   }
 
@@ -31,7 +31,7 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"${articleUrl}?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
         
-    val result = controllers.ArticleController.render(articleUrl)(fakeRequest)
+    val result = controllers.ArticleController.renderArticle(articleUrl)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""$callbackName({\"config\"""")
@@ -42,20 +42,20 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("Host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.ArticleController.render(articleUrl)(fakeRequest)
+    val result = controllers.ArticleController.renderArticle(articleUrl)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
 
   it should "redirect to desktop when content type is not supported in app" in Fake {
-    val result = controllers.ArticleController.render("/world/interactive/2013/mar/04/choose-a-pope-interactive-guide")(TestRequest())
+    val result = controllers.ArticleController.renderArticle("/world/interactive/2013/mar/04/choose-a-pope-interactive-guide")(TestRequest())
     status(result) should be(303)
     header("Location", result).get should be("http://www.theguardian.com/world/interactive/2013/mar/04/choose-a-pope-interactive-guide?view=desktop")
   }
 
   it should "internal redirect unsupported content to desktop" in Fake {
-    val result = controllers.ArticleController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest())
+    val result = controllers.ArticleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest())
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/type/video/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
@@ -63,7 +63,7 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
 
   it should "display an expired message for expired content" in Fake {
-    val result = controllers.ArticleController.render(expiredArticle)(TestRequest())
+    val result = controllers.ArticleController.renderArticle(expiredArticle)(TestRequest())
     status(result) should be(410)
     contentAsString(result) should include("Zlatan Ibrahimovic shines as Paris St Germain ease past Toulouse")
     contentAsString(result) should include("This content has been removed as our copyright has expired.")
@@ -73,7 +73,7 @@ class ArticleControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"/${expiredArticle}?callback=${callbackName}")
       .withHeaders("host" -> "localhost:9000")
 
-    val result = controllers.ArticleController.render(expiredArticle)(fakeRequest)
+    val result = controllers.ArticleController.renderArticle(expiredArticle)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""") // the callback
