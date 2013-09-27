@@ -54,10 +54,10 @@ define([
                         common.$g('.match:nth-child(n + 8)', $statsItem)
                             .addClass('u-h');
                         // add it after the first item
-                        common.$g('.collection--news.collection--sport-section .item:first-child', context)
+                        common.$g('.collection--sport-section .item:first-child', context)
                             .after($statsItem);
                         // now hide one of the shown ones
-                        common.$g('.collection--news.collection--sport-section .item.u-h', context)
+                        common.$g('.collection--sport-section .item.u-h', context)
                             .first()
                             .previous()
                             .addClass('u-h');

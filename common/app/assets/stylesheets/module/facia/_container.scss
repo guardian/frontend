@@ -160,4 +160,24 @@
             }
         }
     }
+    .item--sport-stats {
+        .competition-table {
+            padding-top: 0;
+            h3 {
+                color: #000000;
+                @include font($serifheadline, lighter, 26, 28);
+            }
+            .match-desc__team {
+                width: 87px;
+            }
+            .match-desc__result {
+                width: 30px;
+            }
+        }
+        .cta-small.cta-small-border {
+            border-bottom-style: none;
+            padding-top: 5px;
+            padding-bottom: 0;
+        }
+    }
 }
