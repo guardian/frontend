@@ -7,12 +7,15 @@ $green: #6ca940;
 $light-green: #d2dd2e;
 $dark-green: #19646c;
 
+$comment-light: #fb8935;
+$comment-dark: #951c55;
+
 .collection {
     position: relative;
 }
 .collection__title {
     margin-top: gs-height(1);
-    @include font($serifheadline, 800, 16);
+    @include fs-header(1);
     @include box-sizing(border-box);
     height: gs-height(1);
     padding: $gs-baseline/3 0 0 $gs-gutter/5;
@@ -21,52 +24,52 @@ $dark-green: #19646c;
     border-top: $gs-baseline/3 solid $blue;
 }
 .collection__display-toggle {
+    @include box-sizing(border-box);
     position: absolute;
-    top: $gs-baseline*(2/3);
-    right: $gs-gutter/5;
+    min-height: gs-height(1) - $gs-baseline/3;
+    min-width: gs-span(1);
+    top: $gs-baseline/3;
+    right: 0;
     border: none;
+    border-left: 1px solid #ffffff;
     background-color: transparent;
-    @include font($serifheadline, 800, 16);
+    @include fs-data(2);
     color: #ffffff;
-    padding: 0;
+    padding: $gs-baseline*(2/3) 0 0 $gs-baseline*(1/3);
+    text-align: left;
 }
 .item {
     position: relative;
-    color: #000000;
-    font-family: $serifheadline;
-    font-weight: normal;
     @include box-sizing(border-box);
-}
-a.item__link,
-.item__title {
-    color: inherit;
-    font-family: inherit;
-    font-weight: normal;
 }
 .item__title {
     @include box-sizing(border-box);
     border-top: 2px solid $light-blue;
     padding-top: $gs-baseline*(2/3);
+    color: #000000;
     @include mq($to: tablet) {
-        @include font-size(20, 24);
+        @include fs-headline(3);
     }
     @include mq(tablet) {
-        @include font-size(26, 28);
+        @include fs-headline(4);
     }
+}
+a.item__link {
+    color: inherit;
 }
 .item__byline {
     margin: $gs-baseline/3 0 0;
-    color: $dark-green;
-    font-weight: 700;
-    @include font-size(16);
+    color: $comment-light;
+    @include fs-header(1);
 }
 .item__standfirst {
     margin: $gs-baseline*2 0 0;
-    @include font-size(16, 20);
+    @include fs-headline(1);
+    color: #676767;
 }
 .item__meta {
     color: $grey;
-    @include font($sans-serif, lighter, 12, 12);
+    @include fs-data(2);
     margin-top: $gs-baseline*(5/3);
     padding-bottom: $gs-baseline;
     overflow: hidden;
@@ -109,7 +112,7 @@ a.item__link,
     left: 0;
     color: #ffffff;
     background-color: $light-blue;
-    @include font($sans-serif, lighter, 12, 12);
+    @include fs-data(2);
     padding: $baseline $gutter/2;
     i {
         @extend .i-play;
@@ -129,7 +132,7 @@ a.item__link,
     min-width: gs-span(2);
     min-height: gs-height(1);
     color: #666666;
-    @include font($sans-serif, normal, 14);
+    @include fs-data(4);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline*2;
@@ -143,7 +146,7 @@ a.item__link,
 }
 .item--comment {
     .item__title {
-        border-top-color: $green;
+        border-top-color: $comment-dark;
         position: relative;
         padding-top: 40px;
     }
@@ -179,7 +182,7 @@ a.item__link,
     .item--without-image .item__standfirst {
         @include mq(tablet) {
             display: block;
-            min-height: gs-height(4);
+            min-height: gs-height(4) - $gs-baseline;
         }
     }
     .item__image-container {
@@ -235,9 +238,6 @@ a.item__link,
 }
 
 @mixin card($without-extras: false, $not-first-row: false) {
-    .item__title {
-        @include font-size(24, 28);
-    }
     @include mq($to: tablet) {
         width: 100%;
     }
@@ -247,8 +247,16 @@ a.item__link,
             display: none;
         }
         @include mq($to: tablet) {
+            .item__title {
+                @include fs-headline(1, $size-only: true);
+            }
             .item__meta {
                 padding-bottom: 0;
+            }
+        }
+        @include mq(tablet) {
+            .item__title {
+                @include fs-headline(3, $size-only: true);
             }
         }
     }
@@ -265,8 +273,8 @@ a.item__link,
     padding-right: $gs-gutter/2;
     border-left: 1px dotted $grey;
     .item__title {
-        @include font-size(20, 24);
-        min-height: gs-height(3);
+        @include fs-headline(1, $size-only: true);
+        min-height: gs-height(2);
     }
     @if $without-image {
         .item__image-container {
@@ -279,7 +287,7 @@ a.item__link,
     border-left-style: none;
     .item__title {
         min-height: 0;
-        @include font-size(18, 24);
+        @include fs-headline(1, $size-only: true);
         padding-top: $gs-baseline*(2/3);
         border-top-color: $grey;
         border-top-width: 1px;
@@ -294,6 +302,9 @@ a.item__link,
 }
 @mixin card-double-width {
     width: gs-span(8);
+    .item__title {
+        @include fs-headline(7, $size-only: true);
+    }
     .item__image-container {
         height: gs-height(8);
     }
@@ -309,8 +320,12 @@ a.item__link,
         width: gs-span(4);
         padding-left: gs-span(8) + $gs-gutter;
     }
+    .item__title {
+        @include fs-headline(5, $size-only: true);
+    }
     .item__standfirst {
         display: block;
+        min-height: gs-height(4) - $gs-baseline;
     }
     .item__image-container {
         height: 100%;

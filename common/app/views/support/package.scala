@@ -48,7 +48,7 @@ case class SectionZone(val collectionType: String = "news") extends Style {
   val className = "section-zone"
 }
 
-case class Container(val section: String) extends Style {
+case class Container(val section: String, val showMore: Boolean = false) extends Style {
   val className = "container"
 }
 

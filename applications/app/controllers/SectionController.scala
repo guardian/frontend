@@ -3,66 +3,59 @@ package controllers
 import common._
 import conf._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.mvc._
 import play.api.libs.json._
+import services.{IndexPage, Concierge}
 
 
-case class IndexPage(section: MetaData, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
-
-object SectionController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
+object IndexController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
+
   def render(path: String) = Action.async { implicit request =>
-    lookup(path) map {
-      case Left(model) => renderSectionFront(model)
+    Concierge.index(Edition(request), path) map {
+      case Left(model) => if (IsFacia(request)) renderFaciaFront(model) else renderFront(model)
       case Right(notFound) => notFound
     }
   }
 
   def renderTrailsJson(path: String) = renderTrails(path)
   def renderTrails(path: String) = Action.async { implicit request =>
-    lookup(path) map {
+    Concierge.index(Edition(request), path) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader) = {
-    val edition = Edition(request)
-    log.info(s"Fetching front: $path for edition $edition")
-
-    ContentApi.item(path, edition)
-      .pageSize(20)
-      .showEditorsPicks(true)
-      .response.map {response =>
-        val section = response.section map { Section(_) }
-        val editorsPicks = response.editorsPicks map { Content(_) }
-        val editorsPicksIds = editorsPicks map { _.id }
-        val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
-        val model = section map { IndexPage(_, editorsPicks, latestContent) }
-        ModelOrResult(model, response)
-    }.recover{suppressApiNotFound}
-  }
-
-  private def renderSectionFront(model: IndexPage)(implicit request: RequestHeader) = {
-    val numTrails = math.max(model.editorsPicks.length, 15)
-    val trails = (model.editorsPicks ++ model.latestContent).take(numTrails)
-    Cached(model.section){
+  // TODO delete after Facia release
+  private def renderFront(model: IndexPage)(implicit request: RequestHeader) = {
+    Cached(model.page){
       if (request.isJson)
         JsonComponent(
-          "html" -> views.html.fragments.indexBody(model.section, trails, Nil),
-          "trails" -> trails.map(_.url),
-          "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.section, Switches.all).body)
+          "html" -> views.html.fragments.indexBody(model.page, model.trails, Nil),
+          "trails" -> model.trails.map(_.url),
+          "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.page, Switches.all).body)
         )
       else
-        Ok(views.html.index(model.section, trails, Nil))
+        Ok(views.html.index(model))
     }
   }
-  
-  private def renderTrailsFragment(model: IndexPage)(implicit request: RequestHeader) = {
-    val trails: Seq[Trail] = model.editorsPicks ++ model.latestContent
-    val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
-    renderFormat(response, response, model.section)
+
+  private def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader) = {
+    Cached(model.page){
+      if (request.isJson)
+        JsonComponent(
+          "html" -> views.html.fragments.indexBody(model.page, model.trails, Nil),
+          "trails" -> model.trails.map(_.url),
+          "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.page, Switches.all).body)
+        )
+      else
+        Ok(views.html.indexFacia(model))
+    }
   }
-  
+
+  private def renderTrailsFragment(model: IndexPage)(implicit request: RequestHeader) = {
+    val response = () => views.html.fragments.trailblocks.headline(model.trails, numItemsVisible = model.trails.size)
+    renderFormat(response, response, model.page)
+  }
 }

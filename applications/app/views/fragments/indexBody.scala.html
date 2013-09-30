@@ -1,4 +1,4 @@
-@(page: model.MetaData, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
+@(index: model.IndexPage)(implicit request: RequestHeader)
 
 <section class="front-section zone-@page.section" role="main">
 
@@ -6,7 +6,7 @@
 
     @fragments.contributor(page)
 
-    @if(leadContent.nonEmpty) {
+    @if(model.leadContent.nonEmpty) {
         @leadContent.zipWithRowInfo.map{ case (trail, info) =>
         <div class="box-indent lead-content @if(info.rowNum == 1 && trail.mainPicture) {has-image}"
         data-link-name="lead content"
