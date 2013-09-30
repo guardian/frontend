@@ -7,33 +7,33 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
                 var breakpointOptions = {
                     wide: {
                         default: 4,
-                        news: 9,
-                        sport: 9,
-                        commentisfree: 5,
-                        culture: 5,
-                        popular: 3
+                        'container-news': 9,
+                        'container-sport': 9,
+                        'container-commentisfree': 5,
+                        'container-culture': 5,
+                        'container-popular': 3
                     },
                     desktop: {
                         default: 3,
-                        news: 6,
-                        sport: 6,
-                        commentisfree: 3,
-                        culture: 3
+                        'container-news': 6,
+                        'container-sport': 6,
+                        'container-commentisfree': 3,
+                        'container-culture': 3
                     },
                     tablet: {
                         default: 2,
-                        news: 5,
-                        sport: 5,
-                        commentisfree: 3,
-                        culture: 3
+                        'container-news': 5,
+                        'container-sport': 5,
+                        'container-commentisfree': 3,
+                        'container-culture': 3
                     },
                     mobile: {
                         default: 2,
-                        news: 5,
-                        sport: 5,
-                        commentisfree: 3,
-                        culture: 3,
-                        popular: 3
+                        'container-news': 5,
+                        'container-sport': 5,
+                        'container-commentisfree': 3,
+                        'container-culture': 3,
+                        'container-popular': 3
                     }
                 }[detect.getBreakpoint()];
                 return breakpointOptions[collectionType] || breakpointOptions['default'];
@@ -74,7 +74,8 @@ define(['common', 'bonzo', 'bean', 'qwery', 'modules/detect'], function (common,
             };
 
         this.addShowMore = function() {
-            var collectionType = _$items.parent().attr('data-collection-type'),
+            var $collection = _$items.parent(),
+                collectionType = $collection.attr('data-collection-type') + '-' + $collection.attr('data-section'),
                 $overflowStories = common.$g('.item:nth-child(n + ' + (_getShownSize(collectionType) + 1) + ')', _$items[0]);
             // hide stories
             $overflowStories.addClass('u-h');
