@@ -16,6 +16,7 @@ define([
             recommendComments,
             buttons, button,
             currentCount,
+            server,
             fixturesId = 'recommend-comment-container',
             recommendCommentFixture = {
                 id: fixturesId,
@@ -29,11 +30,10 @@ define([
             ajaxUrl: '',
             edition: 'UK'
         }});
-        server = sinon.fakeServer.create();
-        server.autoRespond = true;
 
         // rerender the button each time
         beforeEach(function() {
+            server = sinon.fakeServer.create();
             fixtures.render(recommendCommentFixture);
             context = document.getElementById(fixturesId);
             button = context.querySelectorAll('.d-comment__recommend')[0];
@@ -42,6 +42,7 @@ define([
 
         afterEach(function() {
             fixtures.clean();
+            server.restore();
         });
 
         describe('init', function() {
@@ -66,21 +67,22 @@ define([
             });
 
             it('should add the recommended state to the button', function() {
-                expect(button.className.match(RecommendComments.CONFIG.classes.recommended)).not.toBeNull();
+                expect(button.className.match(RecommendComments.CONFIG.classes.userRecommended)).not.toBeNull();
             });
         });
 
         describe('success', function() {
             it('should fire a success event', function() {
                 var successFunction = jasmine.createSpy();
-                server.respondWith([200, {}, '{"status": "ok", "message": "63 total recommendations", "statusCode": 200}']);
                 common.mediator.on(RecommendComments.getEvent('success'), successFunction);
+                server.respondWith([200, {}, '{"status": "ok", "message": "63 total recommendations", "statusCode": 200}']);
 
                 runs(function() {
                     bean.fire(button, 'click');
                 });
 
                 waitsFor(function() {
+                    server.respond();
                     return successFunction.calls.length > 0;
                 }, 500);
             });
@@ -94,9 +96,9 @@ define([
             var clicked, passCondition;
 
             beforeEach(function() {
+                server.respondWith([400, {}, '{"status": "error", "message": "wrong", "statusCode": 400}']);
                 clicked = false;
                 passCondition = false;
-                server.respondWith([400, {}, '{"status": "error", "message": "wrong", "statusCode": 400}']);
                 currentCount = parseInt(button.getAttribute('data-recommend-count'), 10);
             });
 
@@ -106,6 +108,7 @@ define([
                 });
 
                 waitsFor(function() {
+                    server.respond();
                     var passCondition = (parseInt(button.getAttribute('data-recommend-count'), 10) === currentCount &&
                                         button.querySelector('.'+ RecommendComments.CONFIG.classes.count).innerHTML === ''+(currentCount));
 
@@ -122,6 +125,7 @@ define([
                 });
 
                 waitsFor(function() {
+                    server.respond();
                     passCondition = button.className.match(RecommendComments.CONFIG.classes.active);
                     if (passCondition === null) {
                         clicked = true;
@@ -136,6 +140,7 @@ define([
                 });
 
                 waitsFor(function() {
+                    server.respond();
                     passCondition = !button.className.match(RecommendComments.CONFIG.classes.userRecommended);
                     if (passCondition === false) {
                         clicked = true;
