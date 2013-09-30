@@ -68,7 +68,6 @@ define(['common', 'bonzo'], function (common, bonzo) {
 
         } else if (isToday(then)) {
             return (Math.round(delta / 3600)) + 'h';
-            //return 'Today' + withTime(then, true);
 
         } else if (isWithinPastWeek(then) && opts.format === 'short') {
             return (Math.round(delta / 3600 / 24)) + 'd';
