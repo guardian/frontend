@@ -61,7 +61,7 @@ $mq-breakpoints: (
 /* Fonts
    ========================================================================== */
 
-$sans-serif: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serif: "EgyptianText", georgia, serif;
 $serifheadline: "EgyptianHeadline", georgia, serif;
 
@@ -69,11 +69,11 @@ $serifheadline: "EgyptianHeadline", georgia, serif;
 // Usage:
 // font-size (px) line-height (px) // level
 $fs-headers: (
-    16, // 1
-    18, // 2
-    20, // 3
-    22, // 4
-    24  // 5
+    16 20, // 1
+    18 24, // 2
+    20 28, // 3
+    22 28, // 4
+    24 28  // 5
 );
 
 $fs-headlines: (
@@ -118,7 +118,7 @@ $fs-data: (
  */
 $blue: #214583;
 $darkBlue: #152E5F;
-$lightBlue: #95B2CB;
+$lightBlue: #4490CE;
 $linkBlue: #005689;
 $mushroom: #F4F4EE;
 $medianMushroom: #EDEDE7;
@@ -126,10 +126,16 @@ $darkMushroom: #E3E3DB;
 $grey: #B3B3B4;
 $darkGrey: #676767;
 
-$neutral1: #333333;
-$neutral2: #676767;
-$neutral3: #cfcfcd;
+$c-neutral1: #333333;
+$c-neutral2: #676767;
+$c-neutral3: #cfcfcd;
 
+
+/* Tones
+   ========================================================================== */
+$c-newsDefault: #4490CE;
+$c-featureDefault: #D23D54;
+$c-commentDefault: #FB8935;
 
 
 /* Zones
