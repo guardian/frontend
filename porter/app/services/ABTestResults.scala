@@ -26,15 +26,17 @@ object ABTestResults extends implicits.Dates with Logging {
     }
   }
 
-  private def avgPageViewsPerSessionByDayByVariant(testName: String, testExpires: DateMidnight) = {
+  private def avgPageViewsPerSessionByDayByVariant(testName: String, testBegins: Option[DateMidnight] = None, testExpires: DateMidnight) = {
+    val firstDayOfTest = testBegins map (_.dayOfEpoch) getOrElse "e.enrolled_days_since_epoch"
     val finalDayOfTest = testExpires.dayOfEpoch
     s"""with sessions as (
               select p.days_since_epoch, e.variant, p.ophan, p.ophan_visit, count(*) page_views
               from pageviews p, experiments e
               where e.ophan = p.ophan
               and e.name = '$testName'
+              and e.variant != 'notintest'
               and p.ophan_visit is not null
-              and p.days_since_epoch >= e.enrolled_days_since_epoch
+              and p.days_since_epoch >= $firstDayOfTest
               and p.days_since_epoch <= $finalDayOfTest
               group by p.days_since_epoch, e.variant, p.ophan, p.ophan_visit
             )
@@ -50,6 +52,7 @@ object ABTestResults extends implicits.Dates with Logging {
               from pageviews p, experiments e
               where e.ophan = p.ophan
               and e.name = '$testName'
+              and e.variant != 'notintest'
               and p.ophan_visit is not null
               and p.days_since_epoch >= e.enrolled_days_since_epoch
               and p.days_since_epoch <= $finalDayOfTest
@@ -69,6 +72,7 @@ object ABTestResults extends implicits.Dates with Logging {
   }
 
   def getFacebookMostReadAvgPageViewsPerSessionByDayByVariant: List[(Int, String, Double)] = dataByDayByVariant {
-    avgPageViewsPerSessionByDayByVariant("MostPopularFromFacebook", testExpires = new DateMidnight(2013, 9, 30))
+    avgPageViewsPerSessionByDayByVariant("MostPopularFromFacebook",
+      testBegins = Some(new DateMidnight(2013, 9, 25)), testExpires = new DateMidnight(2013, 10, 8))
   }
 }
