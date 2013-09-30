@@ -1,13 +1,11 @@
 package controllers
 
-import com.gu.openplatform.contentapi.model.ItemResponse
 import common._
 import conf._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.mvc._
 import play.api.libs.json._
 
-import concurrent.Future
 import play.api.templates.Html
 
 
@@ -16,24 +14,24 @@ case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestCo
 object SectionController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
-  def render(path: String) = Action { implicit request =>
-    val promiseOfSection = lookup(path)
-    Async {
-      promiseOfSection.map {
-        case Left(model) => renderSectionFront(model)
-        case Right(notFound) => notFound
-      }
+
+  def getTemplate(implicit request: RequestHeader): (SectionFrontPage) => SimpleResult = IsFacia(request) match {
+    case Some(v) if Switches.FaciaSwitch.isSwitchedOn => renderSectionFrontFaciaStyle
+    case _  => renderSectionFront
+  }
+
+  def render(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => getTemplate(request)(model)
+      case Right(notFound) => notFound
     }
   }
 
-  def renderJsonTrails(path: String) = renderTrails(path)
-  def renderTrails(path: String) = Action { implicit request =>
-    val promiseOfSection = lookup(path)
-    Async {
-      promiseOfSection.map {
-        case Left(model) => renderTrailsFragment(model)
-        case Right(notFound) => notFound
-      }
+  def renderTrailsJson(path: String) = renderTrails(path)
+  def renderTrails(path: String) = Action.async { implicit request =>
+    lookup(path) map {
+      case Left(model) => renderTrailsFragment(model)
+      case Right(notFound) => notFound
     }
   }
 
@@ -54,7 +52,13 @@ object SectionController extends Controller with Logging with Paging with JsonTr
     }.recover{suppressApiNotFound}
   }
 
-  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = {
+  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader): SimpleResult =
+    renderSectionFront(model, views.html.section.apply)
+
+  private def renderSectionFrontFaciaStyle(mode: SectionFrontPage)(implicit request: RequestHeader): SimpleResult =
+    renderSectionFront(mode, views.html.sectionFacia.apply)
+
+  private def renderSectionFront(model: SectionFrontPage, template: (Section, Seq[Trail]) => Html)(implicit request: RequestHeader) = {
     val numTrails = math.max(model.editorsPicks.length, 15)
     val trails = (model.editorsPicks ++ model.latestContent).take(numTrails)
     Cached(model.section){
@@ -65,7 +69,7 @@ object SectionController extends Controller with Logging with Paging with JsonTr
           "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.section, Switches.all).body)
         )
       else
-        Ok(views.html.section(model.section, trails))
+        Ok(template(model.section, trails))
     }
   }
   

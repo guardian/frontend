@@ -6,6 +6,5 @@
     "urlpngcss" : "_global-icons-sprite.scss",
     "spritepath" : "../images/global/",
     "svg" : true,
-    "styleguidepath" : "../../style-guide/app/views/styleGuide/fragments/",
     "styleguidefilename" : "sprites.scala.html"
 }

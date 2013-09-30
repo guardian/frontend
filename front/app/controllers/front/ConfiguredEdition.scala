@@ -1,12 +1,10 @@
 package controllers.front
 
 import common._
-import play.api.libs.json.{JsObject, JsValue, JsNull}
-import play.api.libs.json.Json.parse
-
-import scala.concurrent.duration._
 import conf.Configuration
-import model.{ItemTrailblockDescription, Trailblock, TrailblockDescription}
+import model.{ ItemTrailblockDescription, Trailblock, TrailblockDescription }
+import play.api.libs.json.JsValue
+import play.api.libs.json.Json.parse
 import play.api.libs.ws.WS
 
 //responsible for managing the blocks of an edition that are externally configured
@@ -15,7 +13,6 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
     with ExecutionContexts with Logging {
 
   val configUrl = Configuration.front.config
-
   val configAgent = AkkaAgent[Seq[TrailblockAgent]](Nil)
 
   override def apply(): Seq[Trailblock] = {
@@ -30,7 +27,7 @@ class ConfiguredEdition(edition: Edition, descriptions: Seq[TrailblockDescriptio
   override def refresh() = {
     super.refresh()
     log.info(s"loading front configuration from: $configUrl")
-    WS.url(configUrl).withTimeout(2000).get().foreach{ response =>
+    WS.url(configUrl).withRequestTimeout(2000).get().foreach{ response =>
       response.status match {
         case 200 => configAgent.send(oldAgents => refreshAgents(response.body, oldAgents))
         case _ => log.error(s"error fetching config ${response.status} ${response.statusText}")

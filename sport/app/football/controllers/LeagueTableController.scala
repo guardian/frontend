@@ -23,8 +23,8 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
   private def loadTables: Seq[Table] = Competitions.competitions.filter(_.hasLeagueTable).map { Table(_) }
 
-  def renderJson() = render()
-  def render() = Action { implicit request =>
+  def renderLeagueTableJson() = renderLeagueTable()
+  def renderLeagueTable() = Action { implicit request =>
 
     val page = new Page(
       "football/tables",
@@ -69,6 +69,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
   }
 
+  def renderCompetitionJson(competition: String) = renderCompetition(competition)
   def renderCompetition(competition: String) = Action { implicit request =>
     loadTables.find(_.competition.url.endsWith(s"/$competition")).map { table =>
 

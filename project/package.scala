@@ -1,3 +1,5 @@
+package com.gu
+
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.IOUtils
 import sbt._

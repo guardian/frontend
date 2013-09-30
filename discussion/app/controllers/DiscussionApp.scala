@@ -19,6 +19,6 @@ object DiscussionApp extends DiscussionDispatcher {
 class DiscussionApiPlugin(app: Application) extends DiscussionApi with Plugin{
   protected val apiRoot =   Configuration.discussion.apiRoot
 
-  protected def GET(url: String): Future[Response] = WS.url(url).withTimeout(2000).get()
+  protected def GET(url: String): Future[Response] = WS.url(url).withRequestTimeout(2000).get()
 
 }

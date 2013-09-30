@@ -165,6 +165,10 @@ object Switches extends Collections {
     "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
     safeState = Off)
 
+  val ShowUnsupportedEmbedsSwitch = Switch("Feature Switches", "unsupported-embeds",
+    "If this is switched on then unsupported embeds will be included in article bodies.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -279,7 +283,8 @@ object Switches extends Collections {
     ABLiveBlogShowMore,
     CssFromStorageSwitch,
     ABMostPopularFromFacebook,
-    ElasticSearchSwitch
+    ElasticSearchSwitch,
+    ShowUnsupportedEmbedsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

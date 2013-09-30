@@ -2,9 +2,7 @@ package controllers
 
 import play.api.mvc.Controller
 import common.Logging
-import tools.{PageviewsByDayGraph, CloudWatch}
-import model.MetaData
-import conf.Switches
+import tools.CloudWatch
 import play.api.libs.ws.WS
 import com.ning.http.client.Realm
 import play.api.libs.concurrent.Execution.Implicits._
@@ -24,16 +22,14 @@ object RadiatorController extends Controller with Logging with AuthLogging {
 
 
   // proxy call to github so we do not leak the access key
-  def commitDetail(hash: String) = AuthAction{ implicit request =>
+  def commitDetail(hash: String) = Authenticated.async { implicit request =>
     val call = WS.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
-    Async{
-      call.map{ c =>
-        Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8")
-      }
+    call.map{ c =>
+      Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8")
     }
   }
 
-  def render() = AuthAction{ implicit request =>
+  def renderRadiator() = Authenticated { implicit request =>
       val graphs = (CloudWatch.latency filter { _.name match {
           case "Router" => true
           case "Article" => true
@@ -45,21 +41,18 @@ object RadiatorController extends Controller with Logging with AuthLogging {
       Ok(views.html.radiator(graphs, multilineGraphs, Configuration.environment.stage))
   }
 
-  def pingdom() = AuthAction{ implicit request =>
+  def pingdom() = Authenticated.async { implicit request =>
   
     val url = Configuration.pingdom.url + "/checks" 
     val user = Configuration.pingdom.user
     val password = Configuration.pingdom.password
     val apiKey = Configuration.pingdom.apiKey
 
-    Async {
-          WS.url(url)
-            .withAuth(user, password,  Realm.AuthScheme.BASIC)
-            .withHeaders("App-Key" ->  apiKey)
-            .get().map { response =>
-              Ok(Json.toJson(response.body))
-            }
+    WS.url(url)
+      .withAuth(user, password,  Realm.AuthScheme.BASIC)
+      .withHeaders("App-Key" ->  apiKey)
+      .get().map { response =>
+        Ok(Json.toJson(response.body))
       }
   }
-
 }

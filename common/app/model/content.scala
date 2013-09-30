@@ -69,10 +69,10 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   }
   override lazy val byline: Option[String] = fields.get("byline")
   override lazy val trailType: Option[String] = {
-    if (tags.exists(_.id == "tone/features")) {
-      Option("feature")
-    } else if (tags.exists(_.id == "tone/comment")) {
+    if (tags.exists(_.id == "tone/comment")) {
       Option("comment")
+    } else if (tags.exists(_.id == "tone/features")) {
+      Option("feature")
     } else {
       Option("news")
     }

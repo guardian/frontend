@@ -58,7 +58,7 @@ class DiscussionApiStub(app: Application) extends DiscussionApi with Plugin{
 
   protected val apiRoot = conf.Configuration.discussion.apiRoot
   protected def GET(url: String) = DiscussionApiHttpRecorder.load(url, Map.empty){
-    WS.url(url).withTimeout(2000).get()
+    WS.url(url).withRequestTimeout(2000).get()
   }
 
 }

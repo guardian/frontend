@@ -6,20 +6,26 @@ import play.api.mvc.Action
 
 trait CommentPageController extends DiscussionController {
 
-  def commentPage(shortUrl: String) = Action { implicit request =>
-    val page = request.getQueryString("page").getOrElse("1")
+  def commentPageJson(shortUrl: String) = commentPage(shortUrl)
 
-    Cached.async(discussionApi.commentsFor(shortUrl, page)) {
-      commentPage =>
-        if (request.isJson)
-          JsonComponent(
-            "html" -> views.html.fragments.commentsBody(commentPage).toString,
-            "hasMore" -> commentPage.hasMore,
-            "currentPage" -> commentPage.currentPage,
-            "commentBoxHtml" -> views.html.fragments.commentBox()
-          )
-        else
-          Ok(views.html.comments(commentPage))
-    }
+  def commentPage(shortUrl: String) = Action.async {
+    implicit request =>
+      val page = request.getQueryString("page").getOrElse("1")
+      val commentPage = discussionApi.commentsFor(shortUrl, page)
+
+      commentPage map {
+        commentPage =>
+          Cached(60) {
+            if (request.isJson)
+              JsonComponent(
+                "html" -> views.html.fragments.commentsBody(commentPage).toString,
+                "hasMore" -> commentPage.hasMore,
+                "currentPage" -> commentPage.currentPage
+              )
+            else
+              Ok(views.html.comments(commentPage))
+          }
+      }
   }
+
 }

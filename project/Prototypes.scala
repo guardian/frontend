@@ -1,12 +1,14 @@
+package com.gu
+
 import com.gu.versioninfo.VersionInfo
+import com.gu.PlayArtifact._
+import com.gu.PlayAssetHash._
+import com.gu.SbtGruntPlugin._
 import sbt._
 import sbt.Keys._
 import play.Project._
-import PlayArtifact._
-import PlayAssetHash._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin.MergeStrategy
-import SbtGruntPlugin._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -74,13 +76,18 @@ trait Prototypes {
   val frontendTestSettings = Seq(
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
+
+    // APP_SECRET system property not passed to forked?
     sbt.Keys.fork in Test := false,
+
+    concurrentRestrictions in Global := Seq(Tags.limitAll(1)),
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "1.9.1" % "test"
+      "org.scalatest" %% "scalatest" % "1.9.1" % "test",
+      "org.mockito" % "mockito-all" % "1.9.5" % "test"
     ),
 
     (javaOptions in test) += "-DAPP_SECRET=secret"
@@ -90,8 +97,7 @@ trait Prototypes {
     test in assembly := {},
     executableName <<= (name) { "frontend-%s" format _ },
     jarName in assembly <<= (executableName) map { "%s.jar" format _ },
-    aggregate in assembly := false,
-    aggregate in dist := false,
+    aggregate in magenta := false,
 
     mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
       {
@@ -123,8 +129,7 @@ trait Prototypes {
 
   def root() = Project("root", base = file("."))
     .settings(
-      scalaVersion := "2.10.0", //TODO why does root not get auto 2.10.0?
-      parallelExecution in ThisBuild := false
+      scalaVersion := "2.10.2"
     )
 
   def base(name: String) = play.Project(name, version, path = file(name))
@@ -138,7 +143,7 @@ trait Prototypes {
     .settings(frontendDependencyManagementSettings:_*)
     .settings(frontendAssemblySettings:_*)
     .settings(libraryDependencies ++= Seq(
-      "com.gu" %% "management-play" % "5.27",
+      "com.gu" %% "management-play" % "6.0",
       "commons-io" % "commons-io" % "2.4"
     ))
 

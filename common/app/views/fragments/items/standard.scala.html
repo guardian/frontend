@@ -1,0 +1,35 @@
+@(trail: Trail, index: Int)(implicit request: RequestHeader)
+
+<li class="item @trail.trailType.map("item--" + _) @trail.mainPicture(620).map{image => item--with-image}.getOrElse{item--without-image}" data-link-name="trail | @{index + 1}"
+    @trail.discussionId.map{ id => data-discussion-id="@id" }>
+    <h2 class="item__title">
+        <a href="@LinkTo{@trail.url}" class="item__link">
+            @if(trail.trailType == Option("comment")) {
+                <span class="i i-quote-marks"></span>
+            }
+            @RemoveOuterParaHtml(trail.headline)
+        </a>
+    </h2>
+    @if(trail.trailType == Option("comment")) {
+        <p class="item__byline">@trail.byline</p>
+    }
+    @trail.trailText.map { text =>
+        <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>
+    }
+    <div class="item__meta item__meta--grey">
+        <time class="item__timestamp js-item__timestamp"
+              itemprop="datePublished"
+              datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+              data-timestamp="@trail.webPublicationDate.getMillis">
+            <i class="i"></i>
+            <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
+        </time>
+    </div>
+    @trail.mainPicture(620).map{ mainPicture =>
+        <div class="item__image-container">
+            <a href="@LinkTo{@trail.url}" class="item__link">
+                <img class="item__image" src="@mainPicture.path" alt="" />
+            </a>
+        </div>
+    }
+</li>
