@@ -80,6 +80,8 @@ trait Prototypes {
     // APP_SECRET system property not passed to forked?
     sbt.Keys.fork in Test := false,
 
+    concurrentRestrictions in Global := Seq(Tags.limitAll(1)),
+
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
@@ -127,8 +129,7 @@ trait Prototypes {
 
   def root() = Project("root", base = file("."))
     .settings(
-      scalaVersion := "2.10.2",
-      parallelExecution in ThisBuild := false
+      scalaVersion := "2.10.2"
     )
 
   def base(name: String) = play.Project(name, version, path = file(name))
