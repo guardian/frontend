@@ -71,6 +71,8 @@ object NonAuthAction {
 class AuthAction(loginRoute: String) extends ExecutionContexts {
   import Play.current
 
+  def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future { f(request) })
+
   def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = Action.async { _ match {
     case authenticatedRequest: AuthenticatedRequest[_] => f(authenticatedRequest)
 

@@ -189,10 +189,10 @@ class PageFront(val id: String, edition: Edition) {
 trait ConfigAgent extends ExecutionContexts {
   private val configAgent = AkkaAgent[List[String]](Nil)
 
-  def refresh() = Future {
-    val ids: List[String] = S3FrontsApi.listConfigsIds
-    configAgent.send(ids)
-  }
+  def refresh() =
+    S3FrontsApi.listConfigsIds map { ids =>
+      configAgent.send(ids)
+    }
 
   def close() = configAgent.close()
 

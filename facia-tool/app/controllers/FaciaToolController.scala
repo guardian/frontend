@@ -8,6 +8,7 @@ import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
 import services.S3FrontsApi
+import scala.concurrent.Future
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -24,20 +25,26 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     Ok(Json.toJson(S3FrontsApi.listCollectionIds))
   }
 
-  def listConfigs = Authenticated { request =>
-    Ok(Json.toJson(S3FrontsApi.listConfigsIds))
+  def listConfigs = Authenticated.async { request =>
+    S3FrontsApi.listConfigsIds map {l =>
+      Ok(Json.toJson(l))
+    }
   }
 
-  def readBlock(id: String) = Authenticated { request =>
-    S3FrontsApi.getBlock(id) map { json =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
+  def readBlock(id: String) = Authenticated.async { request =>
+    S3FrontsApi.getBlock(id) map { jsonOption =>
+      jsonOption map { json =>
+        Ok(json).as("application/json")
+      } getOrElse NotFound
+    }
   }
 
-  def getConfig(id: String) = Authenticated { request =>
-    S3FrontsApi.getConfig(id) map { json =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
+  def getConfig(id: String) = Authenticated.async { request =>
+    S3FrontsApi.getConfig(id) map { jsonOption =>
+      jsonOption map {json =>
+        Ok(json).as("application/json")
+      } getOrElse NotFound
+    }
   }
 
   def updateBlock(id: String): Action[AnyContent] = Authenticated { request =>

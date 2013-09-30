@@ -6,9 +6,7 @@ import play.api.mvc._
 import play.api.libs.openid.OpenID
 import scala.concurrent.Future
 
-object Authenticated extends AuthAction(routes.Login.login.url) {
-  def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future.apply(f(request)))
-}
+object Authenticated extends AuthAction(routes.Login.login.url)
 
 object Login extends Controller with ExecutionContexts {
   val openIdAttributes = Seq(
