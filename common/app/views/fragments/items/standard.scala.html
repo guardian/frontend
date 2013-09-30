@@ -30,7 +30,7 @@
     @trail.mainPicture(620).map{ mainPicture =>
         <div class="item__image-container">
             <a href="@LinkTo{@trail.url}" class="item__link">
-                <img class="item__image" src="@mainPicture.path" alt="" />
+                <img class="item__image" src="" alt="" data-src="@mainPicture.path" />
             </a>
         </div>
     }

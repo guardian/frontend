@@ -8,7 +8,8 @@ define([
     'modules/facia/relativise-timestamp',
     'modules/facia/items-show-more',
     'modules/facia/collection-display-toggle',
-    'modules/footballfixtures'
+    'modules/footballfixtures',
+    'modules/facia/image-upgrade'
 ], function (
     common,
     bonzo,
@@ -17,7 +18,8 @@ define([
     RelativiseTimestamp,
     ItemsShowMore,
     CollectionDisplayToggle,
-    FootballFixtures
+    FootballFixtures,
+    ImageUpgrade
 ) {
 
     var modules = {
@@ -88,6 +90,15 @@ define([
                         .addToggle();
                 });
             });
+        },
+
+        upgradeImages: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                common.$g('.item__image-container', context).each(function(imageContainer) {
+                    new ImageUpgrade(imageContainer)
+                        .upgrade();
+                });
+            });
         }
 
     };
@@ -100,6 +111,7 @@ define([
             modules.showItemsShowMore();
             modules.showFootballFixtures();
             modules.showCollectionDisplayToggle();
+            modules.upgradeImages();
         }
         common.mediator.emit("page:front:ready", config, context);
     };
