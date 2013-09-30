@@ -3,7 +3,8 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
     return function(collection, config) {
 
         var _$collection = bonzo(collection),
-            _$button = bonzo(bonzo.create('<button class="collection__display-toggle" data-link-name="Show">Hide<span class="u-h"> section</span></button>')),
+            _$button = bonzo(bonzo.create('<button class="collection__display-toggle" data-link-name="Show"><span class="collection__display-toggle__text">Hide</span></button>'))
+                           .append('<span class="u-h"> ' + _$collection.attr('data-section') + '</span>'),
             _prefName = 'front-trailblocks',
             _edition = config.page.edition.toLowerCase(),
             _toggleText = {
@@ -49,10 +50,9 @@ define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo
                 _$collection
                     [newState === 'displayed' ? 'removeClass' : 'addClass']('collection--rolled-up')
                     .attr(_dataAttr, newState);
-                _$button
-                    .text(_toggleText[newState])
-                    // data-link-name is inverted, as happens before clickstream
-                    .attr('data-link-name', _toggleText[newState === 'displayed' ? 'hidden' : 'displayed']);
+                // data-link-name is inverted, as happens before clickstream
+                _$button.attr('data-link-name', _toggleText[newState === 'displayed' ? 'hidden' : 'displayed']);
+                common.$g('.collection__display-toggle__text', _$button[0]).text(_toggleText[newState]);
                 _updatePref(_$collection, newState);
             });
             _readPrefs(_$collection);
