@@ -93,23 +93,21 @@ figcaption:before {
 
 //Quotes
 .from-content-api blockquote.quoted:before {
-    @extend .i;
-    @extend .i-quotemarks-01;
     content: '';
     position: absolute;
+    @include background-size(30px 19px);
+    width: 30px;
+    height: 19px;
 
     @if ($svg-support) {
         .svg & {
-            @extend .svg-i-quotemarks-01;
+            @extend .svg-i-quote-marks;
         }
     }
 
-    /*@include mq(tablet) {
-        @extend .i;
-        @extend .i-quotemarks-02;
-
-        .svg & {
-            @extend .svg-i-quotemarks-02;
-        }
-    }*/
+    @include mq(tablet) {
+        @include background-size(34px 21px);
+        width: 34px;
+        height: 21px;
+    }
 }
