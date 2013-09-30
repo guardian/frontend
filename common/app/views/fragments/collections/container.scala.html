@@ -11,7 +11,7 @@
         </h2>
     }
 
-    <ul class="unstyled items item-count-@collection.items.size @if(style.showMore){js-items--show-more} items--cards">
+    <ul class="unstyled items item-count-@collection.items.size @if(style.showMore){js-items--show-more} items--cards items--without-sport-stats">
         @collection.items.zipWithIndex.map{ case (trail, index) =>
             @fragments.items.standard(trail, index)
         }
