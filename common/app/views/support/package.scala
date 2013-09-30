@@ -14,10 +14,9 @@ import scala.collection.JavaConversions._
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import com.gu.openplatform.contentapi.model.Asset
 import play.Play
 import org.apache.commons.lang.StringEscapeUtils
-
+import conf.Switches.ShowUnsupportedEmbedsSwitch
 
 sealed trait Style {
   val className: String
@@ -45,21 +44,13 @@ object SectionFront extends Style { val className = "section-front" }
  */
 object Masthead extends Style { val className = "masthead" }
 
-object TopStories extends Style { val className = "top-stories" }
-
-object MediumStories extends Style { val className = "medium-stories" }
-
-case class SmallStories(val showMore: Boolean) extends Style {
-  val className = "small-stories"
+case class SectionZone(val collectionType: String = "news") extends Style {
+  val className = "section-zone"
 }
 
-object News extends Style { val className = "news" }
-
-object Features extends Style { val className = "features" }
-
-object Highlights extends Style { val className = "highlights" }
-
-object Comments extends Style { val className = "comments" }
+case class Container(val section: String, val showMore: Boolean = false) extends Style {
+  val className = "container"
+}
 
 
 object MetadataJson {
@@ -232,6 +223,7 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
     links.foreach { link =>
       link.attr("href", LinkTo(link.attr("href"), edition))
       link.attr("data-link-name", dataLinkName)
+      link.addClass("tone-colour")
     }
     body
   }
@@ -267,9 +259,12 @@ object InBodyElementCleaner extends HtmlCleaner {
   )
 
   override def clean(document: Document): Document = {
-    val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
-    val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
-    unsupportedElements.foreach(_.remove())
+    if (ShowUnsupportedEmbedsSwitch.isSwitchedOff) {
+      // this code removes unsupported embeds
+      val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+      val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
+      unsupportedElements.foreach(_.remove())
+    }
     document
   }
 }
@@ -295,7 +290,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" } data-link-context={ s"${tag.id}" }>{ tag.name }</a></span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" } data-link-context={ s"${tag.id}" }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)
@@ -412,4 +407,35 @@ object CricketMatch {
     case c: Content => c.cricketMatch
     case _ => None
   }
+}
+
+object VisualTone {
+
+  private val Comment = "comment"
+  private val News = "news"
+  private val Feature = "feature"
+
+  private val toneMappings = Map(
+    ("tone/comment", Comment),
+    ("tone/letters", Comment),
+    ("tone/obituaries", Comment),
+    ("tone/profiles", Comment),
+    ("tone/editorials", Comment),
+    ("tone/analysis", Comment),
+
+    ("tone/features", Feature),
+    ("tone/recipes", Feature),
+    ("tone/interview", Feature),
+    ("tone/performances", Feature),
+    ("tone/extract", Feature),
+    ("tone/reviews", Feature),
+    ("tone/albumreview", Feature),
+    ("tone/livereview", Feature),
+    ("tone/childrens-user-reviews", Feature)
+  )
+
+
+  def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
+
+  // these tones are all considered to be 'News' it is the default so we do not list them explicitly
 }

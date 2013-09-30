@@ -16,7 +16,7 @@ class ChangeViewControllerTest extends FlatSpec with ShouldMatchers {
 
   it should "set a preference cookie" in Fake {
     val result = controllers.ChangeViewController.render("desktop", "/foo/bar?view=mobile")(TestRequest())
-    val GU_VIEW = cookies(result)("GU_VIEW")
+    val GU_VIEW = cookies(result).apply("GU_VIEW")
 
     GU_VIEW.maxAge should be (Some(60))
     GU_VIEW.value should be ("desktop")

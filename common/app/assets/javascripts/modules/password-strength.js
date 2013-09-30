@@ -68,7 +68,7 @@ define(["common", "bonzo", "bean"], function (common, bonzo, bean) {
                 if (dom.element.value.length < config.minLength) {
                     label = config.text.short;
                     score = null;
-                } else if (dom.element.value.length >= config.maxLength) {
+                } else if (dom.element.value.length > config.maxLength) {
                     label = config.text.long;
                     score = null;
                 }

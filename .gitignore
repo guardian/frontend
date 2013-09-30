@@ -37,7 +37,6 @@ local.sbt
 node_modules
 
 common/app/assets/stylesheets/*.min.css
-style-guide/app/assets/stylesheets/styleguide.min.css
 
 dev/gems
 dev/casperjs

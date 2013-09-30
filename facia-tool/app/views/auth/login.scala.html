@@ -1,0 +1,12 @@
+@(request: controllers.AuthenticatedRequest[AnyContent], error: Option[String] = None, env: String)
+
+@admin_main("Login", env) {
+        @if(error.isDefined) {
+            <div class="alert alert-error">
+                <p>@error.get</p>
+            </div>
+        }
+    </div>
+
+</div>
+}

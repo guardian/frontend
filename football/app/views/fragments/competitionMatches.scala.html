@@ -1,4 +1,0 @@
-@(competition: model.Competition)(implicit request: RequestHeader)
-<ol class="matches unstyled">
-    @competition.matches.map{theMatch => @fragments.renderMatch(theMatch) }
-</ol>

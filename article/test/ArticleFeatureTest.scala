@@ -364,10 +364,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
 
         Then("I should see buttons for my favourite social network")
-        findFirst(".social__item--mail .social__action").getAttribute("href") should be(mailShareUrl)
-        findFirst(".social__item--fb .social__action").getAttribute("href") should be(fbShareUrl)
-        findFirst(".social__item--twitter .social__action").getAttribute("href") should be(twitterShareUrl)
-        findFirst(".social__item--gplus .social__action").getAttribute("href") should be(gplusShareUrl)
+        findFirst(".social__action[data-link-name=social-mail]").getAttribute("href") should be(mailShareUrl)
+        findFirst(".social__action[data-link-name=social-fb]").getAttribute("href") should be(fbShareUrl)
+        findFirst(".social__action[data-link-name=social-twitter]").getAttribute("href") should be(twitterShareUrl)
+        findFirst(".social__action[data-link-name=social-gplus]").getAttribute("href") should be(gplusShareUrl)
       }
       
       Given("I want to track the responsive share buttons using Facebook Insights")
@@ -380,7 +380,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val fbShareTrackingToken = "ref=responsive"
 
         Then("I should pass Facebook a tracking token")
-        findFirst(".social__item--fb .social__action").getAttribute("href") should include(fbShareTrackingToken)
+        findFirst(".social__action[data-link-name=social-fb]").getAttribute("href") should include(fbShareTrackingToken)
       }
 
 

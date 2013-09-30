@@ -166,12 +166,12 @@ define([
 
                         localNavCtaHtml = '<div class="localnav--small">' +
                                           '  <div class="localnav__inner u-cf">' +
-                                          '    <h1 class="localnav__title zone-color">'+localNavTitle+'</h1>' +
+                                          '    <h1 class="localnav__title tone-colour">'+localNavTitle+'</h1>' +
                                           '      <button class="cta localnav__cta control" ' +
                                           '          data-link-name="Popup Localnav" ' +
                                           '          data-toggle="nav-popup-localnav">' +
-                                          '        <i class="i i-nav-divider zone-background"></i>' +
-                                          '        <i class="i i-local-nav-arrow zone-background"></i>' +
+                                          '        <i class="i i-nav-divider tone-background"></i>' +
+                                          '        <i class="i i-local-nav-arrow tone-background"></i>' +
                                           '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
@@ -191,13 +191,11 @@ define([
                     // Highlight the section that we're in
                     // Try to match the against pageId first (covers sport pseudo-sections, eg Cricket, Rugby...)
                     var activeNodes = common.$g('.nav__link[href="/'+config.page.pageId+'"]', headerNode)
-                                            .addClass('zone-color')
                                             .parent().addClass('is-active');
 
                     // ...otherwise fallback to matching real sections (eg Books, Arts)
                     if (activeNodes.length === 0) {
                         common.$g('.nav__link[href="/'+config.page.section+'"]', headerNode)
-                              .addClass('zone-color')
                               .parent().addClass('is-active');
                     }
 
@@ -205,7 +203,6 @@ define([
                     // Hack to remove the double highlighting in the nav of Sport+Football
                     if (currentSection.sectionId === 'football') {
                         var sportNode = common.$g('.is-active .nav__link[data-link-name="Sport"]', headerNode);
-                        sportNode.removeClass('zone-color');
                         sportNode.parent().removeClass('is-active');
                     }
 
