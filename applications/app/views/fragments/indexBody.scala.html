@@ -1,0 +1,32 @@
+@(page: model.MetaData, trails: Seq[Trail], leadContent: Seq[Trail])(implicit request: RequestHeader)
+
+<section class="front-section zone-@page.section" role="main">
+
+    @fragments.headers.sectionHead(page.webTitle)
+
+    @fragments.contributor(page)
+
+    @if(leadContent.nonEmpty) {
+        @leadContent.zipWithRowInfo.map{ case (trail, info) =>
+        <div class="box-indent lead-content @if(info.rowNum == 1 && trail.mainPicture) {has-image}"
+        data-link-name="lead content"
+            @CricketMatch(trail).map{ id => data-cricket-match="@id" }>
+        <ul class="unstyled">
+        @fragments.trails.featured(trail, info.rowNum)
+        </ul>
+            </div>
+        }
+    }
+
+    <div class="trailblock" data-count="@trails.length" data-link-name="Section | block | @page.section">
+        @fragments.trailblocks.section(trails, numWithImages = 3, numItemsVisible = trails.size)
+    </div>
+
+</section>
+
+<div class="box-indent article-zone-no-indent">
+
+    @fragments.footballNav(page)
+
+    @fragments.mostPopularPlaceholder(page.section)
+</div>

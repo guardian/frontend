@@ -7,7 +7,7 @@ import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.json._
 
 
-case class SectionFrontPage(section: Section, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
+case class IndexPage(section: MetaData, editorsPicks: Seq[Trail], latestContent: Seq[Trail])
 
 object SectionController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
@@ -39,27 +39,27 @@ object SectionController extends Controller with Logging with Paging with JsonTr
         val editorsPicks = response.editorsPicks map { Content(_) }
         val editorsPicksIds = editorsPicks map { _.id }
         val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
-        val model = section map { SectionFrontPage(_, editorsPicks, latestContent) }
+        val model = section map { IndexPage(_, editorsPicks, latestContent) }
         ModelOrResult(model, response)
     }.recover{suppressApiNotFound}
   }
 
-  private def renderSectionFront(model: SectionFrontPage)(implicit request: RequestHeader) = {
+  private def renderSectionFront(model: IndexPage)(implicit request: RequestHeader) = {
     val numTrails = math.max(model.editorsPicks.length, 15)
     val trails = (model.editorsPicks ++ model.latestContent).take(numTrails)
     Cached(model.section){
       if (request.isJson)
         JsonComponent(
-          "html" -> views.html.fragments.sectionBody(model.section, trails),
+          "html" -> views.html.fragments.indexBody(model.section, trails, Nil),
           "trails" -> trails.map(_.url),
           "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.section, Switches.all).body)
         )
       else
-        Ok(views.html.section(model.section, trails))
+        Ok(views.html.index(model.section, trails, Nil))
     }
   }
   
-  private def renderTrailsFragment(model: SectionFrontPage)(implicit request: RequestHeader) = {
+  private def renderTrailsFragment(model: IndexPage)(implicit request: RequestHeader) = {
     val trails: Seq[Trail] = model.editorsPicks ++ model.latestContent
     val response = () => views.html.fragments.trailblocks.headline(trails, numItemsVisible = trails.size)
     renderFormat(response, response, model.section)

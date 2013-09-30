@@ -11,7 +11,7 @@ import play.api.libs.json._
 
 import contentapi.QueryDefaults
 
-case class TagAndTrails(tag: Tag, trails: Seq[Trail], leadContent: Seq[Trail])
+case class TagAndTrails(tag: MetaData, trails: Seq[Trail], leadContent: Seq[Trail])
 
 object TagController extends Controller with Logging with JsonTrails with ExecutionContexts with implicits.Collections with QueryDefaults {
 
@@ -64,12 +64,12 @@ object TagController extends Controller with Logging with JsonTrails with Execut
     Cached(model.tag){
       if (request.isJson)
         JsonComponent(
-          "html" -> views.html.fragments.tagBody(model.tag, model.trails, model.leadContent),
+          "html" -> views.html.fragments.indexBody(model.tag, model.trails, model.leadContent),
           "trails" -> (model.leadContent ++ model.trails).map(_.url),
           "config" -> Json.parse(views.html.fragments.javaScriptConfig(model.tag, Switches.all).body)
         )
       else
-        Ok(views.html.tag(model.tag, model.trails, model.leadContent))
+        Ok(views.html.index(model.tag, model.trails, model.leadContent))
     }
   }
   
