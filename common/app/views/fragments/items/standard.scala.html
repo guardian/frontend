@@ -20,7 +20,8 @@
         <time class="item__timestamp js-item__timestamp"
               itemprop="datePublished"
               datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-              data-timestamp="@trail.webPublicationDate.getMillis">
+              data-timestamp="@trail.webPublicationDate.getMillis"
+              data-relativeformat="short">
             <i class="i"></i>
             <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
         </time>
