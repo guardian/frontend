@@ -10,7 +10,7 @@
 }{
 <div class="identity-wrapper">
     <h1>Create your Guardian account</h1>
-    <p>Already have an account? <a href="#">Sign in</a>.</p>
+    <p>Already have an account? <a href="@idUrlBuilder.buildUrl("/signin", idRequest)">Sign in</a>.</p>
 
     @socialSignin(page, idRequest, idUrlBuilder)
 
