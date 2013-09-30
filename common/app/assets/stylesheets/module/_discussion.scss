@@ -418,8 +418,17 @@ $keylineSize: 1px;
     padding: ($baseline*2) ($gutter/2);
     resize: vertical;
     width: 100%;
+
+    font-family: $sans-serif;
+    font-size: 14px;
+    font-size: 1.4rem;
 }
 
 .d-comment-box__body--expanded {
     height: 150px;
+}
+
+.d-comment-box__error {
+    background: #ffcc66;
+    padding: $baseline*2 $gutter;
 }

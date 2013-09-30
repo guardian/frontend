@@ -82,7 +82,7 @@ CommentBox.prototype.postComment = function(e) {
     }
 
     else if (comment.body.length > this.options.maxLength) {
-        this.error('COMMENT_TOO_LONG', 'Comments must be '+ this.options.maxLength +' characters. Yours is currently '+ (comment.body.length-this.options.maxLength) +' too long.');
+        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b> Yours is currently '+ (comment.body.length-this.options.maxLength) +' too long.');
     }
 
     if (this.errors.length === 0) {
@@ -93,8 +93,8 @@ CommentBox.prototype.postComment = function(e) {
             type: 'json',
             method: 'post',
             crossOrigin: true,
-            headers: { 'D2-X-UID': 'zHoBy6HNKsk' },
-            withCredentials: true
+            withCredentials: true,
+            headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
         }).then(this.success.bind(this), this.fail.bind(this));
     }
 };
