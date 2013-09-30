@@ -6,7 +6,8 @@ define([
     'models/article',
     'models/latestArticles',
     'models/contentApi',
-    'models/ophanApi'
+    'models/ophanApi',
+    'models/viewer',
 ], function(
     reqwest,
     knockout,
@@ -15,7 +16,8 @@ define([
     Article,
     LatestArticles,
     contentApi,
-    ophanApi
+    ophanApi,
+    viewer
 ) {
     var clipboardEl = document.querySelector('#clipboard'),
         loc = window.location;
@@ -24,14 +26,17 @@ define([
 
         var self = this,
             model = {
+                viewer:         viewer,
+                showViewer:     knockout.observable(),
+
                 latestArticles: new LatestArticles(),
                 clipboard:      knockout.observableArray(),
                 collections:    knockout.observableArray(),
                 configs:        knockout.observableArray(),
                 config:         knockout.observable(),
                 actions: {
-                    unsetConfig: unsetConfig,
-                    flushClipboard: flushClipboard
+                    flushClipboard: flushClipboard,
+                    toggleViewer:   toggleViewer
                 }
             };
 
@@ -44,9 +49,11 @@ define([
             renderCollections();
         }
 
-        function unsetConfig() {
-            model.config(undefined);
-            setConfig([]);
+        function toggleViewer() {
+            model.showViewer(!model.showViewer());
+            if (model.showViewer()) {
+                model.viewer.layout();
+            }
         }
 
         function renderConfig() {

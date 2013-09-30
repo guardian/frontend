@@ -7,6 +7,14 @@ define([
 ) {
     return {
         config: {
+            breakpoints: [
+                { width:  320,  height: 480,  name: "iPhone" },
+                { width:  768,  height: 1024, name: "iPad portrait" },
+                { width:  1024, height: 768,  name: "iPad landscape" },
+                { width:  1295, height: 1024, name: "Desktop" }
+            ],
+            previewUrl: 'http://www.theguardian.com',
+
             searchPageSize:        50,
             sectionSearches: {
                 "default": "news|uk|uk-news|world",
