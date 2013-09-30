@@ -2,14 +2,17 @@
 
 @admin_main("Fronts editor", env, isAuthed = true) {
 
-    <div class="splash" data-bind="visible: false">Loading Editor...</div>
+    <div class="tool-title">Fronts Editor</div>
+    <div data-bind="visible: false">Loading...</div>
+
+    <div id="list-picker" data-bind="visible: true" style="display: none">
+        <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select>
+        <button data-bind="enable: collections().length, click: actions.unsetConfig">Clear</button>
+    </div>
 
     <div data-bind="visible: true, makeDropabble: true" style="display: none">
 
-        <div class="tool-title">Fronts Editor</div>
-
         <div class="finder">
-
             <i class="icon-trash list-tool" data-bind="click: actions.flushClipboard"></i>
             <div class="finder__title">Clipboard</div>
             <div class="clipboard__wrapper">
@@ -39,7 +42,6 @@
 
                 <div data-bind="template: {name: 'template_search_controls'}, visible: articles().length > 0"></div>
             </div>
-
         </div>
 
         <script type="text/html" id="template_search_controls">
@@ -50,11 +52,6 @@
                 <a data-bind="click: refresh,  visible: page() > 2">top</a>
             </div>
         </script>
-
-        <div id="list-picker">
-            <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select>
-            <button data-bind="enable: collections().length, click: actions.unsetConfig">Clear</button>
-        </div>
 
         <div id="collections" data-bind="foreach: collections">
             <div class="collection" data-bind="

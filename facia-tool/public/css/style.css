@@ -28,6 +28,7 @@ input[type=text] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
+    clear: left;
     width: 50%;
     padding: 15px 15px 10px 0;
     border-right: 1px solid #CCCCCC;
@@ -44,6 +45,7 @@ input[type=text] {
 }
 
 .tool-title {
+    float: left;
     font-size: 18px;
     text-transform: uppercase;
 }
@@ -192,7 +194,10 @@ a.list-header__status__control:visited {
     margin: 0 2px 0 0;
 }
 
-#list-picker,
+#list-picker {
+    float: right;
+}
+
 #collections {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -215,7 +220,7 @@ a.list-header__status__control:visited {
 }
 
 .collection:first-child {
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .trail {
