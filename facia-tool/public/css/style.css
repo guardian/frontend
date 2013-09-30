@@ -367,6 +367,7 @@ select:disabled {
 
 button {
     height: 30px;
+    padding: 0 10px;
 }
 
 .strong {
@@ -472,10 +473,9 @@ button {
 .frame {
     padding: 0 0 20px 0;
     position: absolute;
-    -webkit-transition:left 0.5s;
-       -moz-transition:left 0.5s;
-         -o-transition:left 0.5s;
-            transition:left 0.5s;
+    -webkit-transition:left 0.4s;
+       -moz-transition:left 0.4s;
+            transition:left 0.4s;
 }
 
 iframe {
