@@ -1,0 +1,10 @@
+@(section: Section, trails: Seq[Trail])(implicit request: RequestHeader)
+
+@main(section, Switches.all){  }{
+
+    <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
+
+        @fragments.collections.container(Config(section.id, None, Some(section.webTitle)), Collection(trails, None), Container("news"))
+
+    </div>
+}

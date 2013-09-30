@@ -7,8 +7,10 @@ import tools.charts._
 
 
 object AnalyticsController extends Controller with Logging with AuthLogging {
-  def kpis() = AuthAction { request =>
-  // thats right, we only do PROD analytics
+
+  // We only do PROD analytics
+
+  def kpis() = Authenticated { request =>
     Ok(views.html.kpis("PROD", Seq(
       PageviewsPerUserGraph,
       ReturnUsersPercentageByDayGraph,
@@ -18,18 +20,17 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
     )))
   }
 
-  def pageviews() = AuthAction { request =>
-      // thats right, we only do PROD analytics
-      Ok(views.html.pageviews("PROD", Seq(
-        PageviewsByCountryGeoGraph,
-        PageviewsByDayGraph,
-        NewPageviewsByDayGraph,
-        PageviewsByBrowserTreeMapGraph,
-        PageviewsByOperatingSystemTreeMapGraph
-      )))
+  def pageviews() = Authenticated { request =>
+    Ok(views.html.pageviews("PROD", Seq(
+      PageviewsByCountryGeoGraph,
+      PageviewsByDayGraph,
+      NewPageviewsByDayGraph,
+      PageviewsByBrowserTreeMapGraph,
+      PageviewsByOperatingSystemTreeMapGraph
+    )))
   }
 
-  def browsers() = AuthAction { request =>
+  def browsers() = Authenticated { request =>
     Ok(views.html.browsers("PROD",
       Analytics.getPageviewsByOperatingSystem(),
       Analytics.getPageviewsByBrowser(),
@@ -37,12 +38,11 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
     ))
   }
 
-  def abtests() = AuthAction {
-    request =>
-      Ok(views.html.abtests("PROD",
-        SwipeAvgPageViewsPerSessionGraph,
-        SwipeAvgSessionDurationGraph,
-        FacebookMostReadPageViewsPerSessionGraph
-      ))
+  def abtests() = Authenticated { request =>
+    Ok(views.html.abtests("PROD",
+      SwipeAvgPageViewsPerSessionGraph,
+      SwipeAvgSessionDurationGraph,
+      FacebookMostReadPageViewsPerSessionGraph
+    ))
   }
 }

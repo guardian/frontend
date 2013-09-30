@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>apiName/apiContext curl test file</title>
+
+<script>
+
+	// simulate existing define
+	function existingDefine () {}
+	define = existingDefine;
+
+</script>
+<script src="../src/curl.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+</body>
+
+<script type="text/javascript">
+
+var foo = {},
+	cfg = {
+		defineName: 'bar',
+		defineContext: foo,
+		paths: {
+			curl: '../src/curl/'
+		}
+	};
+	curl(
+		cfg,
+		[ 'support/foo-bar-define/simple' ]
+	).then(
+		function (three) {
+			var restoredPrev, createdNew;
+			restoredPrev = define == existingDefine ? 'SUCCESS' : 'FAILED';
+			createdNew = foo && foo.bar && foo.bar.amd ? 'SUCCESS' : 'FAILED';
+			document.body.appendChild(document.createElement('div')).innerHTML = restoredPrev + ' previous global define() restored';
+			document.body.appendChild(document.createElement('div')).innerHTML = createdNew + ' new custom define() created';
+		}
+	);
+
+</script>
+
+</html>

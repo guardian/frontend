@@ -49,7 +49,6 @@ var sprite = require( "webpage" ).create();
     sprite.viewportSize = { width: 600, height: 1 };
     sprite.content = '<html><body><div id="container" style="overflow:auto;"></div></body></html>';
 
-
 // add a single reference to the sprite background
 pngcssrules.push(".i { background-repeat: no-repeat; display: inline-block; }");
 
@@ -126,12 +125,18 @@ function processFile() {
                         var placeholder = document.createElement('div');
                         placeholder.style.display = 'block';
                         placeholder.style.float = 'left';
+                        placeholder.style.margin = '1px 1px 0 0'; // prevents the sprite icons from leaking
                         placeholder.innerHTML = svgdata;
                         var svgel = placeholder.querySelector('svg');
 
                         document.getElementById('container').appendChild(placeholder);
 
-                        return { x: placeholder.offsetLeft, y: placeholder.offsetTop, w: svgel.getAttribute('width'), h: svgel.getAttribute('height') };
+                        return {
+                            x: placeholder.offsetLeft,
+                            y: placeholder.offsetTop,
+                            w: Math.round(svgel.getAttribute('width')),
+                            h: Math.round(svgel.getAttribute('height'))
+                        };
 
                     }, svgdata);
 

@@ -1,18 +1,14 @@
 package controllers.front
 
-import scala.concurrent.Future
 import common._
+import conf.{ ContentApi, Configuration }
 import model._
-import play.api.libs.ws.WS
-import conf.{ContentApi, Configuration}
 import play.api.libs.json.Json._
-import play.api.libs.json.JsValue
-import model.FaciaPage
-import play.api.libs.ws.Response
-import model.Config
+import play.api.libs.json._
+import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
 import services.S3FrontsApi
-import views.support._
+import scala.concurrent.Future
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -29,7 +25,7 @@ object Seg {
 trait ParseConfig extends ExecutionContexts {
   def getConfigMap(id: String): Future[Seq[JsValue]] = {
     val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/config/$id/config.json"
-    WS.url(configUrl).withTimeout(2000).get map { r =>
+    WS.url(configUrl).withRequestTimeout(2000).get map { r =>
       val json = parse(r.body)
       json.asOpt[Seq[JsValue]] getOrElse Nil
     }
@@ -54,7 +50,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
     // get the running order from the apiwith
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: $collectionUrl")
-    val response: Future[Response] = WS.url(collectionUrl).withTimeout(2000).get()
+    val response: Future[Response] = WS.url(collectionUrl).withRequestTimeout(2000).get()
     for {
       collectionList <- parseResponse(response, edition)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))

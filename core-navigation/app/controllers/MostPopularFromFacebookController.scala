@@ -17,50 +17,40 @@ object MostPopularFromFacebookController extends Controller with Logging with Ex
     "GFE:Most Read"
   )
 
-  def render(path: String) = Action { implicit request =>
+  def renderJson(path: String) = render(path)
+  def render(path: String) = Action.async { implicit request =>
     val globalPopular = MostPopular("The Guardian", "", MostPopularFromFacebookAgent.mostPopular)
+
     val promiseOfSectionPopular = Future(Nil)
-    Async {
-      promiseOfSectionPopular.map {
-        sectionPopular =>
-          sectionPopular :+ globalPopular match {
-            case Nil => NotFound
-            case popular => {
-              Cached(900){
-                if (request.isJson)
-                  JsonComponent(
-                    "html" -> views.html.fragments.mostPopular(popular, 5),
-                    "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
-                  )
-                else
-                  Ok(views.html.mostPopular(page, popular))
-              }
-            }
-          }
+    promiseOfSectionPopular.map { sectionPopular =>
+      sectionPopular :+ globalPopular match {
+        case Nil => NotFound
+        case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
+        case popular => Cached(900) {
+            JsonComponent(
+              "html" -> views.html.fragments.mostPopular(popular, 5),
+              "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
+            )
+        }
       }
     }
   }
 
-  def renderExpandable(path: String) = Action { implicit request =>
+  def renderExpandableJson(path: String) = renderExpandable(path)
+  def renderExpandable(path: String) = Action.async { implicit request =>
     val globalPopular = MostPopular("The Guardian", "", MostPopularFromFacebookAgent.mostPopular)
+
     val promiseOfSectionPopular = Future(Nil)
-    Async {
-      promiseOfSectionPopular.map {
-        sectionPopular =>
-          sectionPopular :+ globalPopular match {
-            case Nil => NotFound
-            case popular => {
-              Cached(900){
-                if (request.isJson)
-                  JsonComponent(
-                    "html" -> views.html.fragments.mostPopularExpandable(popular, 5),
-                    "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
-                  )
-                else
-                  Ok(views.html.mostPopular(page, popular))
-              }
-            }
-          }
+    promiseOfSectionPopular.map { sectionPopular =>
+      sectionPopular :+ globalPopular match {
+        case Nil => NotFound
+        case popular if !request.isJson => Cached(900) { Ok(views.html.mostPopular(page, popular)) }
+        case popular => Cached(900) {
+          JsonComponent(
+            "html" -> views.html.fragments.mostPopularExpandable(popular, 5),
+            "trails" -> popular.headOption.map(_.trails).getOrElse(Nil).map(_.url)
+          )
+        }
       }
     }
   }

@@ -1,12 +1,12 @@
 package common
 
-import play.api.mvc.{ RequestHeader, Result, Results }
 import com.gu.openplatform.contentapi.model.ItemResponse
+import play.api.mvc.{ SimpleResult, RequestHeader, Results }
 import model._
 
 // http://wiki.nginx.org/X-accel
 object ModelOrResult extends Results {
-  def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, Result] =
+  def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, SimpleResult] =
     item.map(Left(_)).orElse {
       response.content.map {
         case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
