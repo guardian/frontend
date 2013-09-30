@@ -6,8 +6,8 @@
     <div data-bind="visible: false">loading...</div>
 
     <div id="list-picker" data-bind="visible: true" style="display: none">
-        <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select>
-        <button data-bind="visible: !showViewer(), click: actions.toggleViewer">Preview</button>
+        <select data-bind="options: configs, value: config, optionsCaption: 'Choose a Front...'"></select> &middot;
+        <button data-bind="visible: !showViewer(), click: actions.toggleViewer">View</button>
 
         <!-- ko if: showViewer -->
         <button data-bind="click: actions.toggleViewer">Edit</button> &middot;
