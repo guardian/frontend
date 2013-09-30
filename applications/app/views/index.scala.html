@@ -1,6 +1,6 @@
-@(index: model.IndexPage)(implicit request: RequestHeader)
+@(index: services.IndexPage)(implicit request: RequestHeader)
 
-@main(page, Switches.all){  }{
+@main(index.page, Switches.all){  }{
 
     @fragments.indexBody(index)
 

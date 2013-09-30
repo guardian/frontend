@@ -108,11 +108,6 @@ GET     /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>/t
 GET     /sections                                                                               controllers.SectionsController.renderSections()
 GET     /sections.json                                                                          controllers.SectionsController.renderSectionsJson()
 
-GET     /$path<[\w\d-]*(/\w\w-edition)?>/trails.json                                            controllers.SectionController.renderTrailsJson(path)
-GET     /$path<[\w\d-]*(/\w\w-edition)?>/trails                                                 controllers.SectionController.renderTrails(path)
-GET     /$path<[\w\d-]*(/\w\w-edition)?>.json                                                   controllers.SectionController.renderJson(path)
-GET     /$path<[\w\d-]*(/\w\w-edition)?>                                                        controllers.SectionController.render(path)
-
 GET     /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                   controllers.GalleryController.renderLightbox(path)
 GET     /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                            controllers.GalleryController.renderJson(path)
 GET     /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                                 controllers.GalleryController.render(path)
@@ -120,11 +115,10 @@ GET     /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                 
 GET     /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                                              controllers.VideoController.renderJson(path)
 GET     /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                                   controllers.VideoController.render(path)
 
-GET     /$path<[\w\d-]*/[\w\d-]*(/[\w\d-]*)?>/trails.json                                       controllers.TagController.renderTrailsJson(path)
-GET     /$path<[\w\d-]*/[\w\d-]*(/[\w\d-]*)?>/trails                                            controllers.TagController.renderTrails(path)
-GET     /$path<[\w\d-]*/[\w\d-]*(/[\w\d-]*)?>.json                                              controllers.TagController.renderJson(path)
-GET     /$path<[\w\d-]*/[\w\d-]*(/[\w\d-]*)?>                                                   controllers.TagController.render(path)
-
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                 controllers.SectionController.renderTrailsJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                      controllers.SectionController.renderTrails(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                        controllers.SectionController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                             controllers.SectionController.render(path)
 # Articles
 GET     /*path.json                                                                             controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
 GET     /*path                                                                                  controllers.ArticleController.renderArticle(path)

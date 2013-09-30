@@ -1,4 +1,4 @@
-@(config: Config, collection: Collection, style: Container)(implicit request: RequestHeader)
+@(page: model.MetaData, config: Config, collection: Collection, style: Container)(implicit request: RequestHeader)
 
 <section class="collection collection--@style.className collection--@{config.section}-section @if(style.section != "news"){js-collection--display-toggle} section--@style.section"
          data-link-name="block | @collection.displayName.getOrElse(config.id)"
@@ -8,6 +8,8 @@
     @Seq(config.displayName, collection.displayName).find(_.nonEmpty).map { title =>
         <h2 class="collection__title">@title</h2>
     }
+
+    @fragments.contributor(page)
 
     <ul class="unstyled items item-count-@collection.items.size @if(style.showMore){js-items--show-more} items--cards">
         @collection.items.zipWithIndex.map{ case (trail, index) =>

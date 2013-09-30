@@ -9,6 +9,7 @@ object Host {
 }
 
 object IsFacia {
+
   def apply(request: RequestHeader): Boolean =
     request.headers.get("X-Gu-Facia").filter(_=="true").isDefined &&
     Switches.FaciaSwitch.isSwitchedOn

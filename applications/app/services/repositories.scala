@@ -9,9 +9,9 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 
-case class IndexPage(page: MetaData, trails: Seq[Trail], leadContent: Seq[Trail])
+case class IndexPage(page: MetaData, trails: Seq[Trail])
 
-trait Index extends Concierge with QueryDefaults {
+trait Index extends ConciergeRepository with QueryDefaults {
 
   def index(edition: Edition, path: String) = {
     ContentApi.item(path, edition)
@@ -29,7 +29,7 @@ trait Index extends Concierge with QueryDefaults {
       val editorsPicksIds = editorsPicks map { _.id }
       val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains (c.id) }
       val trails = (editorsPicks ++ latestContent).take(math.max(editorsPicks.length, 20))
-      section map { IndexPage(_, trails, Nil) }
+      section map { IndexPage(_, trails) }
   }
 
   private def tag(response: ItemResponse) = {
@@ -42,9 +42,9 @@ trait Index extends Concierge with QueryDefaults {
       Nil
 
     val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).exists(_ == c.id))
-    val allTrails = (editorsPicks ++ latest).distinctBy(_.id).take(20)
-    tag map { IndexPage(_, allTrails, leadContent) }
+    val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.id).take(20)
+    tag map { IndexPage(_, allTrails) }
   }
 }
 
-object Concierge extends Index
+object Concierges extends Index

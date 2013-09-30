@@ -5,7 +5,7 @@ import conf.SwitchingContentApi
 import model.{Trail, Content, SupportedContentFilter}
 import scala.concurrent.Future
 
-trait Related extends Concierge {
+trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String): Future[Seq[Trail]] = {
     val response = SwitchingContentApi().item(path, edition)
       .tag(None)
