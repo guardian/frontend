@@ -1,9 +1,10 @@
-@(env: String)
+@(env: String, lastModified: Long)(implicit flash: Flash)
 
 @admin_main("Switchboard", env, isAuthed = true) {
+@if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
 <div class="row">
     <form id="switchboard" action="/dev/switchboard" method="POST">
-
+        <input type="hidden" name="lastModified" value="@lastModified" />
         @Switches.grouped.map { case (group, switches) =>
             <h4>@group</h4>
             <div class="well">

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="shortcut icon" type="image/png" href="../components/jasmine/images/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="../components/jasmine/lib/jasmine-core/jasmine.css">
+  <script type="text/javascript" src="../components/jasmine/lib/jasmine-core/jasmine.js"></script>
+  <script type="text/javascript" src="../components/jasmine/lib/jasmine-core/jasmine-html.js"></script>
+
+  <!-- include source files here... -->
+  <script>
+            var curl = {
+                paths: {
+                    EventEmitter: '../components/eventEmitter/EventEmitter',
+                    Common:       '../common',
+                    Reqwest:      '../components/reqwest/reqwest',
+                    knockout:     '../vendor/knockout-2.1.0.debug',
+                    models:       '../models'
+                }
+            }
+        </script>
+
+  <!-- supporting libraries -->
+  <script type="text/javascript" src="../components/curl/src/curl.js"></script>
+  <script type="text/javascript" src="../components/underscore/underscore.js"></script>
+  <script type="text/javascript" src="../vendor/jquery-ui-1.8.23.custom/js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="../vendor/humanized_time_span.js"></script>
+
+  <script>
+    define('Config', function() {
+        return {
+            identity: { 'email': 'foor@example.com', 'openid' : 'http://google-id', 'firstName': 'Foo', 'lastName': 'Bar' },
+            apiKey: '55kszyb2sy6d48bjue95n778' // Content API calls
+      }
+    });
+  </script>
+
+  <!-- model specs -->
+
+  <!-- modules specs -->
+
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var htmlReporter = new jasmine.HtmlReporter();
+
+      jasmineEnv.addReporter(htmlReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+
+</head>
+
+<body>
+    <div id="autocomplete">autocomplete</div>
+    <div id="autocomplete-after">autocomplete-after</div>
+    <input id="i" />
+</body>
+</html>

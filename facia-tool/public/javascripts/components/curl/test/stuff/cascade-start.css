@@ -1,0 +1,12 @@
+#test-cascade-parent {
+	position: relative;
+}
+
+#test-cascade {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 3px;
+	left: 0px;
+	color: #b00bee;
+}

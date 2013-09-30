@@ -3,7 +3,6 @@ package controllers
 import common._
 import feed.Competitions
 import play.api.mvc.{ Action, Controller }
-import model._
 
 
 object FrontScoresController extends Controller with implicits.Football with Logging with ExecutionContexts {
@@ -11,8 +10,8 @@ object FrontScoresController extends Controller with implicits.Football with Log
   /*
    * Finds the first competition with matches on today in a list of competition ids passed in
    */
-  def renderJson() = render()
-  def render() = Action { implicit request =>
+  def renderFrontScoresJson() = renderFrontScores()
+  def renderFrontScores() = Action { implicit request =>
     val competitionIds = request.queryString("competitionId")
 
     val numVisible = request.getIntParameter("numVisible").getOrElse(0)
