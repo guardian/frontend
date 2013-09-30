@@ -11,7 +11,8 @@ object FindStyle {
     "epic-story" -> Masthead,
     "major-story" -> Masthead,
     "regular-stories" -> Container("news"),
-    "feature-stories" -> SectionZone(collectionType = "features")
+    "feature-stories" -> SectionZone(collectionType = "features"),
+    "special-story" -> SectionZone()
   )
 
   /**

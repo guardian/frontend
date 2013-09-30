@@ -11,7 +11,9 @@
         </a>
     </h2>
     @if(trail.trailType == Option("comment")) {
-        <p class="item__byline">@trail.byline</p>
+        @trail.byline.map { byLine =>
+            <p class="item__byline">@Html(byLine)</p>
+        }
     }
     @trail.trailText.map { text =>
         <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>

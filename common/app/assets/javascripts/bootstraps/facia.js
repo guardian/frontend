@@ -84,7 +84,7 @@ define([
         showCollectionDisplayToggle: function () {
             common.mediator.on('page:front:ready', function(config, context) {
                 common.$g('.js-collection--display-toggle', context).each(function(collection) {
-                    new CollectionDisplayToggle(collection)
+                    new CollectionDisplayToggle(collection, config)
                         .addToggle();
                 });
             });

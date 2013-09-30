@@ -13,6 +13,12 @@ $comment-dark: #951c55;
 .collection {
     position: relative;
 }
+.collection--rolled-up {
+    .items,
+    .items__show-more {
+        display: none;
+    }
+}
 .collection__title {
     margin-top: gs-height(1);
     @include fs-header(1);
