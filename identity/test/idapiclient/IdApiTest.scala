@@ -31,11 +31,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val http = mock[Http]
   val jsonParser = mock[JsonBodyParser]
   val clientAuth = ClientAuth("clientAccessToken")
-  val clientAuthHeaders = List(("accessToken" -> "clientAccessToken"))
+  val clientAuthHeaders = List("accessToken" -> "clientAccessToken")
   val api = new SynchronousIdApi(apiRoot, http, jsonParser, clientAuth)
   val errors = List(Error("Test error", "Error description", 500))
   val trackingParameters = mock[OmnitureTracking]
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
+  when(trackingParameters.ipAddress).thenReturn(None)
 
   "the authApp method" - {
     val validAccessTokenResponse = HttpResponse("""{"accessToken": "abc", "expiresAt": "2013-10-30T12:21:00+00:00"}""", 200, "OK")
@@ -177,7 +178,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       "when providing authentication to the request" - {
         "adds the url parameters" in {
           api.user("123", ParamAuth)
-          verify(http).GET(Matchers.any[String], Matchers.eq(List(("testParam" -> "value")) ++ clientAuthHeaders), argThat(EmptyParamMatcher))
+          verify(http).GET(Matchers.any[String], Matchers.argThat(new ParamsMatcher(Iterable(("testParam" -> "value")) ++ clientAuthHeaders)), argThat(EmptyParamMatcher))
         }
 
         "adds the request headers" in {

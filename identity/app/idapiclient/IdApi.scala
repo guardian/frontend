@@ -1,7 +1,7 @@
 package idapiclient
 
 import com.gu.identity.model.{LiftJsonConfig, User}
-import client.{Anonymous, Auth, Response}
+import client.{Anonymous, Auth, Response, Parameters}
 import client.connection.Http
 import scala.concurrent.{Future, ExecutionContext}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
@@ -28,15 +28,26 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
 
   def jsonField(field: String)(json: JValue): JValue = json \ field
 
+  private def buildParams(auth: Option[Auth] = None,
+                          trackingData: Option[OmnitureTracking] = None,
+                          extra: Parameters = Iterable.empty): Parameters = {
+    extra ++ clientAuth.parameters ++
+      auth.map(_.parameters).getOrElse(Iterable.empty) ++
+      trackingData.map(tracking => {
+        tracking.parameters ++ tracking.ipAddress.map("ip" -> _)
+      }).getOrElse(Iterable.empty)
+  }
+
   // AUTH
 
   def authApp(auth: Auth, trackingData: OmnitureTracking): Future[Response[AccessTokenResponse]] = {
-    val response = http.GET(apiUrl("auth"), auth.parameters ++ trackingData.parameters ++ clientAuth.parameters, auth.headers ++ clientAuth.headers)
+    val params = buildParams(Some(auth), Some(trackingData))
+    val response = http.GET(apiUrl("auth"), params, auth.headers ++ clientAuth.headers)
     response map jsonBodyParser.extract[AccessTokenResponse](jsonField("accessToken"))
   }
 
   def authBrowser(userAuth: Auth, trackingData: OmnitureTracking): Future[Response[CookiesResponse]] = {
-    val params = userAuth.parameters ++ trackingData.parameters ++ clientAuth.parameters ++ Iterable(("format", "cookies"))
+    val params = buildParams(Some(userAuth), Some(trackingData), Iterable("format" -> "cookies"))
     val response = http.POST(apiUrl("auth"), None, params, userAuth.headers ++ clientAuth.headers)
     response map jsonBodyParser.extract[CookiesResponse](jsonField("cookies"))
   }
@@ -45,13 +56,15 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
 
   def user(userId: String, auth: Auth = Anonymous): Future[Response[User]] = {
     val apiPath = urlJoin("user", userId)
-    val response = http.GET(apiUrl(apiPath), auth.parameters ++ clientAuth.parameters, auth.headers ++ clientAuth.headers)
+    val params = buildParams(Some(auth))
+    val response = http.GET(apiUrl(apiPath), params, auth.headers ++ clientAuth.headers)
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
-    val response = http.GET(apiUrl(apiPath), auth.parameters ++ clientAuth.parameters, auth.headers ++ clientAuth.headers)
+    val params = buildParams(Some(auth))
+    val response = http.GET(apiUrl(apiPath), params, auth.headers ++ clientAuth.headers)
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
@@ -59,29 +72,29 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
 
   def userForToken( token : String ): Future[Response[User]] = {
     val apiPath = urlJoin("pwd-reset", "user-for-token")
-    val params = Iterable(("token", token))
-    val response = http.GET(apiUrl(apiPath), params ++ clientAuth.parameters, clientAuth.headers)
+    val params = buildParams(extra = Iterable("token" -> token))
+    val response = http.GET(apiUrl(apiPath), params, clientAuth.headers)
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
   def resetPassword( token : String, newPassword : String ): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
-    val response = http.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, clientAuth.headers)
+    val response = http.POST(apiUrl(apiPath), Some(postBody), buildParams(), clientAuth.headers)
     response map jsonBodyParser.extract[Unit]({_ => JNothing})
   }
 
   def sendPasswordResetEmail( emailAddress : String ): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset","send-password-reset-email")
-    val params = Iterable(("email-address", emailAddress), ("type", "reset"))
-    val response = http.GET(apiUrl(apiPath), params ++ clientAuth.parameters, clientAuth.headers)
+    val params = buildParams(extra = Iterable("email-address" -> emailAddress, "type" -> "reset"))
+    val response = http.GET(apiUrl(apiPath), params, clientAuth.headers)
     response map jsonBodyParser.extract[Unit]({_ => JNothing})
   }
 
  def register(user: User, trackingParameters : OmnitureTracking, clientIp: Option[String]): Future[Response[User]] = {
     val userData = write(user)
-    val response = http.POST(apiUrl("user"), Some(userData),
-      clientAuth.parameters ++ trackingParameters.parameters,
+    val params = buildParams(trackingData = Some(trackingParameters))
+    val response = http.POST(apiUrl("user"), Some(userData), params,
       clientAuth.headers ++ clientIp.map(ip => Iterable("X-GU-ID-REMOTE-IP" -> ip)).getOrElse(Iterable.empty)
     )
     response map jsonBodyParser.extract[User](jsonField("user"))

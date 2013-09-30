@@ -3,8 +3,9 @@ package services
 import idapiclient.OmnitureTracking
 import play.api.mvc.{AnyContent, Request}
 import com.google.inject.Inject
+import utils.RemoteAddress
 
-class IdRequestParser @Inject()(geoHeaderParser: GeoLocationHttpHeaderParser, returnUrlVerifier: ReturnUrlVerifier) {
+class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
   def apply(request: Request[AnyContent]) = {
     val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
     IdentityRequest(
@@ -12,7 +13,7 @@ class IdRequestParser @Inject()(geoHeaderParser: GeoLocationHttpHeaderParser, re
         returnUrl,
         request.getQueryString("type"),
         request.cookies.get("S_VI").map(_.value),
-        geoHeaderParser(request).ipAddress,
+        clientIp(request),
         request.headers.get("Referer"),
         request.headers.get("User-Agent")
       ),
