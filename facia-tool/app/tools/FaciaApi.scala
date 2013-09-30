@@ -1,6 +1,6 @@
 package tools
 
-import frontsapi.model.{Trail, Block}
+import model.{Trail, Block}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import services.S3FrontsApi
@@ -20,7 +20,7 @@ trait FaciaApiWrite {
   def archive(id: String, block: Block): Unit
 }
 
-object FaciaApi extends FaciaApiRead with FrontsApiWrite {
+object FaciaApi extends FaciaApiRead with FaciaApiWrite {
   implicit val trailRead = Json.reads[Trail]
   implicit val blockRead = Json.reads[Block]
 

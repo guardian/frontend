@@ -1,13 +1,12 @@
 package controllers
 
-import frontsapi.model._
-import frontsapi.model.UpdateList
+import model._
+import model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
-import scala.concurrent.Future
 import services.S3FrontsApi
 
 

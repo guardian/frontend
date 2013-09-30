@@ -1,7 +1,7 @@
-package frontsapi.model
+package model
 
 import play.api.libs.json.{Json, JsValue}
-import tools.FrontsApi
+import tools.FaciaApi
 import controllers.Identity
 import org.joda.time.DateTime
 import play.api.templates.HtmlFormat
@@ -62,7 +62,7 @@ trait UpdateActions {
   def shouldUpdate[T](cond: Boolean, original: T, updated: => T) = if (cond) updated else original
 
   def updateCollectionFilter(id: String, update: UpdateList, identity: Identity) = {
-    FrontsApi.getBlock(id) map { block: Block =>
+    FaciaApi.getBlock(id) map { block: Block =>
       lazy val updatedLive = block.live.filterNot(_.id == update.item)
       lazy val updatedDraft = block.draft map { l =>
         l.filterNot(_.id == update.item)
@@ -72,7 +72,7 @@ trait UpdateActions {
   }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity) = {
-    FrontsApi.getBlock(id) map { block: Block =>
+    FaciaApi.getBlock(id) map { block: Block =>
       lazy val updatedDraft: Option[List[Trail]] = block.draft map { l =>
         updateList(update, l)
       } orElse {if (update.draft) Some(updateList(update, block.live)) else None}
@@ -91,8 +91,8 @@ trait UpdateActions {
         block.copy(draft = draft)
              .copy(live = live)
 
-      FrontsApi.putBlock(id, newBlock, identity)
-      FrontsApi.archive(id, block)
+      FaciaApi.putBlock(id, newBlock, identity)
+      FaciaApi.archive(id, block)
   }
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
@@ -106,22 +106,22 @@ trait UpdateActions {
 
   def createBlock(id: String, identity: Identity, update: UpdateList) {
     if (update.live)
-      FrontsApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
+      FaciaApi.putBlock(id, Block(id, None, List(emptyTrailWithId(update.item)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
     else
-      FrontsApi.putBlock(id, Block(id, None, Nil, Some(List(emptyTrailWithId(update.item))), DateTime.now.toString, identity.fullName, identity.email, None), identity)
+      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(emptyTrailWithId(update.item))), DateTime.now.toString, identity.fullName, identity.email, None), identity)
   }
 
   def updateTrailblockJson(id: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
-    FrontsApi.getBlock(id).map { block =>
+    FaciaApi.getBlock(id).map { block =>
       val newBlock = block.copy(
         displayName = updateTrailblock.config.displayName map HtmlFormat.escape map (_.body)
       )
       if (newBlock != block) {
-        FrontsApi.putBlock(id, newBlock, identity)
+        FaciaApi.putBlock(id, newBlock, identity)
       }
     } getOrElse {
       val newBlock = Block(id, None, Nil, None, DateTime.now.toString, identity.fullName, identity.email, updateTrailblock.config.displayName)
-      FrontsApi.putBlock(id, newBlock, identity)
+      FaciaApi.putBlock(id, newBlock, identity)
     }
   }
 }
