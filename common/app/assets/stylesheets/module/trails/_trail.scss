@@ -81,12 +81,12 @@
         float: right;
         display: inline-block;
         margin: 0 0 0 4px;
-        color: #F6644F;
+        color: $c-neutral2;
     }
 
     i {
         float: left;
-        margin: 3px 4px 0 0;
+        margin-right: 4px;
     }
 }
 
@@ -97,11 +97,11 @@
     a:hover,
     a:focus,
     a:active {
-        color: #F6644F;
+        color: $c-neutral2;
     }
 
     i {
-        @extend .i-comment-count-small;
+        @extend .i-comment-grey;
     }
 }
 
