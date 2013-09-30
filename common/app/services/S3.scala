@@ -19,18 +19,37 @@ trait S3 extends Logging {
     client
   }
 
-  def get(key: String): Option[String] = try {
+  private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = try {
     val request = new GetObjectRequest(bucket, key)
     val result = client.getObject(request)
-    val content = result.getObjectContent
-
-    Some(Source.fromInputStream(content).mkString)
+    Some(action(result))
   } catch {
     case e: AmazonS3Exception if e.getStatusCode == 404 =>
       log.warn("not found at %s - %s" format(bucket, key))
       None
   } finally {
     client.shutdown()
+  }
+
+  def get(key: String): Option[String] = try {
+    withS3Result(key) {
+      result => Source.fromInputStream(result.getObjectContent).mkString
+    }
+  }
+
+  def getWithLastModified(key: String): Option[(String, DateTime)] = try {
+    withS3Result(key) {
+      result =>
+        val content = Source.fromInputStream(result.getObjectContent).mkString
+        val lastModified = new DateTime(result.getObjectMetadata.getLastModified)
+        (content, lastModified)
+    }
+  }
+
+  def getLastModified(key: String): Option[DateTime] = try {
+    withS3Result(key) {
+      result => new DateTime(result.getObjectMetadata.getLastModified)
+    }
   }
 
   def putPublic(key: String, value: String, contentType: String) {

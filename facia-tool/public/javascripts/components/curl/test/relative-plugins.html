@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>relative plugins and resources</title>
+
+<script src="../src/curl.js" type="text/javascript"></script>
+<!--<script src="../dist/curl-kitchen-sink/curl.js" type="text/javascript"></script>-->
+
+<script type="text/javascript">
+
+	curl({
+			paths: {
+				curl: '../src/curl/',
+				aView: 'stuff/aView'
+			}
+		},
+		[
+			'aView/controller',
+			'support/requires-fake',
+			'domReady!'
+		]
+	).then(
+		function (aView, rf) {
+			var testEl;
+			testEl = document.getElementById('test');
+			write('SUCCESS: should load all files');
+			write((rf ? 'SUCCESS' : 'FAILED') + ': should load a module that requires a relative plugin');
+			aView.render(testEl);
+			write((testEl.innerHTML ? 'SUCCESS' : 'FAILED') + ': should render a view that requires relative plugin resources');
+		},
+		function (ex) {
+			write('FAILED: should load all files - ' + ex.message);
+		}
+	);
+
+function write (msg) {
+	curl(['domReady!'], function () {
+		document.body.appendChild(document.createElement('div')).innerHTML = msg;
+	})
+}
+
+
+</script>
+
+</head>
+<body>
+
+<p id="test"></p>
+
+</body>
+</html>

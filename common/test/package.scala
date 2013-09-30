@@ -79,7 +79,7 @@ trait TestSettings {
 class EditionalisedHtmlUnit extends TestSettings {
 
   // the default is I.E 7 which we do not support
-  BrowserVersion.setDefault(BrowserVersion.FIREFOX_3_6)
+  BrowserVersion.setDefault(BrowserVersion.CHROME)
 
   val host = "http://localhost:9000"
 

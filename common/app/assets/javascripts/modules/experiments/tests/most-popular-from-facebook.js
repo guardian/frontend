@@ -5,7 +5,7 @@ define(['common', 'bonzo', 'modules/popular', 'modules/storage'], function (comm
         var _config;
 
         this.id = 'MostPopularFromFacebook';
-        this.expiry = '2013-09-30';
+        this.expiry = '2013-10-08';
         this.audience = 0.5;
         this.description = 'Tests whether showing Most Popular for visitors referred from Facebook to visitors referred from Facebook increases clickthrough';
         this.events = ['most popular'];

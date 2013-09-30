@@ -1,0 +1,1 @@
+exports.config = function () { return module.config() };

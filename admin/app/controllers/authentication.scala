@@ -9,6 +9,7 @@ import play.api.mvc.Results._
 import play.api.mvc.BodyParsers._
 import play.api.libs.openid.OpenID
 import play.api.Play
+import scala.concurrent.Future
 
 case class Identity(openid: String, email: String, firstName: String, lastName: String) {
   implicit val formats = Serialization.formats(NoTypeHints)
@@ -69,17 +70,24 @@ object NonAuthAction {
 
 }
 
-object AuthAction {
-
+object Authenticated extends ExecutionContexts {
   import Play.current
 
-  def apply(f: Request[AnyContent] => Result): Action[AnyContent] = Action { request =>
-    request match {
-      case auth: AuthenticatedRequest[_] => f(auth)
-      case req if Play.isTest => f(new AuthenticatedRequest(Some(Identity("1234", "foo@bar.com", "John", "Smith")), req))
-      case req => Identity(request).map { identity =>
-          f(new AuthenticatedRequest(Some(identity), request))
-      }.getOrElse(Redirect(routes.Login.login).withSession(request.session +("loginFromUrl", request.uri)))
+  def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future { f(request) })
+
+  def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = Action.async { _ match {
+      case authenticatedRequest: AuthenticatedRequest[_] => f(authenticatedRequest)
+
+      case request if Play.isTest =>
+        val stubbedIdentity = new AuthenticatedRequest(Some(Identity("1234", "foo@bar.com", "John", "Smith")), request)
+        f(stubbedIdentity)
+
+      case request =>
+        val authenticatedRequest = Identity(request) map { id => f(new AuthenticatedRequest(Some(id), request)) }
+        authenticatedRequest getOrElse { Future {
+            Redirect(routes.Login.login).withSession(request.session + ("loginFromUrl", request.uri))
+          }
+        }
     }
   }
 }
@@ -98,50 +106,42 @@ object Login extends Controller with ExecutionContexts {
       Ok(views.html.auth.login(request, error, Configuration.environment.stage))
   }
 
-  def loginPost = Action {
-    implicit request =>
-      AsyncResult(
-        OpenID
-          .redirectURL(googleOpenIdUrl, routes.Login.openIDCallback.absoluteURL(secure = true), openIdAttributes)
-          .map(Redirect(_))
-          .recover {
-          case error => Redirect(routes.Login.login).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
-        }
+  def loginPost = Action.async { implicit request =>
+    OpenID
+      .redirectURL(googleOpenIdUrl, routes.Login.openIDCallback.absoluteURL(secure = true), openIdAttributes)
+      .map(Redirect(_))
+      .recover {
+      case error => Redirect(routes.Login.login).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
+    }
+  }
+
+  def openIDCallback = Action.async { implicit request =>
+    OpenID.verifiedId.map { info =>
+      val credentials = Identity(
+        info.id,
+        info.attributes.get("email").get,
+        info.attributes.get("firstname").get,
+        info.attributes.get("lastname").get
       )
-  }
 
-  def openIDCallback = Action {
-    implicit request =>
-      Async {
-        OpenID.verifiedId.map {
-          info =>
-            val credentials = Identity(
-              info.id,
-              info.attributes.get("email").get,
-              info.attributes.get("firstname").get,
-              info.attributes.get("lastname").get
-            )
+      // allow test user access
+      val isTestUser = (credentials.email == "test.automation@gutest.com" && List("dev", "code", "gudev").contains(Configuration.environment.stage.toLowerCase))
 
-            // allow test user access
-            val isTestUser = (credentials.email == "test.automation@gutest.com" && List("dev", "code", "gudev").contains(Configuration.environment.stage.toLowerCase))
-
-            if (credentials.emailDomain == "guardian.co.uk" || isTestUser) {
-              Redirect(session.get("loginFromUrl").getOrElse("/admin")).withSession {
-                session + (Identity.KEY -> credentials.writeJson) - "loginFromUrl"
-              }
-            } else {
-              Redirect(routes.Login.login).flashing(
-                ("error" -> "You can only log in using a Guardian Google Account")
-              ).withSession(session - Identity.KEY)
-            }
-        }.recover {
-          case error => Redirect(routes.Login.login).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
+      if (credentials.emailDomain == "guardian.co.uk" || isTestUser) {
+        Redirect(session.get("loginFromUrl").getOrElse("/admin")).withSession {
+          session + (Identity.KEY -> credentials.writeJson) - "loginFromUrl"
         }
+      } else {
+        Redirect(routes.Login.login).flashing(
+          ("error" -> "You can only log in using a Guardian Google Account")
+        ).withSession(session - Identity.KEY)
       }
+    }.recover {
+      case error => Redirect(routes.Login.login).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
+    }
   }
 
-  def logout = Action {
-    implicit request =>
-      Redirect("/login").withNewSession
+  def logout = Action { implicit request =>
+    Redirect("/login").withNewSession
   }
 }

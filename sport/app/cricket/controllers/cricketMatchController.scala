@@ -7,7 +7,6 @@ import cricketOpta.Feed
 import cricketModel.Match
 
 case class CricketMatchPage(theMatch: Match, matchId: String) extends MetaData with ExecutionContexts {
-
   override lazy val id = s"sport/cricket/match/$matchId"
   override lazy val section = "cricket"
   override lazy val webTitle = s"${theMatch.description}, ${theMatch.venueName}"
@@ -16,24 +15,19 @@ case class CricketMatchPage(theMatch: Match, matchId: String) extends MetaData w
 
 object CricketMatchController extends Controller with Logging with ExecutionContexts {
 
-  def renderMatchId(matchId: String) = Action { implicit request =>
+  def renderMatchIdJson(matchId: String) = renderMatchId(matchId)
+  def renderMatchId(matchId: String) = Action.async { implicit request =>
+    Feed.getMatchSummary(matchId) map { cricketMatch =>
+      val page = CricketMatchPage(cricketMatch, matchId)
 
-    val promiseOfCricketMatch = Feed.getMatchSummary(matchId)
-
-    Async {
-      promiseOfCricketMatch.map { matchSummary =>
-
-          val page = CricketMatchPage(matchSummary, matchId)
-
-          Cached(60){
-            if (request.isJson)
-              JsonComponent(
-                "summary" -> cricket.views.html.fragments.cricketMatchSummary(page.theMatch).toString,
-                "scorecard" -> cricket.views.html.fragments.cricketMiniScorecard(page).toString
-              )
-            else
-              Ok(cricket.views.html.cricketMatch(page))
-          }
+      Cached(60){
+        if (request.isJson)
+          JsonComponent(
+            "summary" -> cricket.views.html.fragments.cricketMatchSummary(page.theMatch).toString,
+            "scorecard" -> cricket.views.html.fragments.cricketMiniScorecard(page).toString
+          )
+        else
+          Ok(cricket.views.html.cricketMatch(page))
       }
     }
   }
