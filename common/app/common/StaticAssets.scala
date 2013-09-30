@@ -11,7 +11,7 @@ class StaticAssets(val base: String = "", val secureBase: String = "") extends L
     throw new RuntimeException("Missing AssetPlugin.")
   }
 
-  val assetMappings: String => String = plugin.getAssetMappings(base, secureBase)
+  val assetMappings: String => String = plugin.getAssetMappings(base)
 
   def apply(path: String) = new StaticPath(assetMappings(path))
 }

@@ -14,6 +14,6 @@ object SwitchingContentApi {
   def apply() = if (Switches.ElasticSearchSwitch.isSwitchedOn) ElasticSearchContentApi else ContentApi
 }
 
-object Static extends StaticAssets(Configuration.assets.path, Configuration.assets.securePath)
+object Static extends StaticAssets(Configuration.assets.path)
 
 object RequestMeasurementMetrics extends RequestMetrics.Standard
