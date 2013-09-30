@@ -121,18 +121,12 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   override lazy val thumbnail: Option[ImageElement] = imageMap("thumbnail").headOption
   override lazy val mainPicture: Option[ImageAsset] = largestMainPicture.orElse(thumbnail.flatMap(_.largestImage))
 
-  private def findIndex( element: ApiElement): Int =  {
-    // Use the old media asset class, which defines an index, and find a media asset with a matching file path to the element
-    // This can be removed when the content api element query is implicityly ordered,
-    delegate.mediaAssets.find(element.assets.flatMap(_.file) contains _.file.getOrElse("")).map(_.index).getOrElse(0)
-  }
-
   private def elements(elementType: String): Map[String,List[Element]] = {
     // Find the elements associated with a given element type, keyed by a relation string.
     // Example relations are gallery, thumbnail, main, body
     delegate.elements.map(_.filter(_.elementType == elementType)
                            .groupBy(_.relation)
-                           .mapValues(_.map(element => Element(element, findIndex(element))).toList)
+                           .mapValues(_.map(element => Element(element)).toList)
     ).getOrElse(Map.empty).withDefaultValue(Nil)
   }
 }
