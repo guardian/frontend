@@ -54,7 +54,7 @@ $comment-dark: #951c55;
 .item__title {
     @include box-sizing(border-box);
     border-top: 2px solid $light-blue;
-    padding-top: $gs-baseline*(2/3);
+    padding-top: 2px;
     color: #000000;
     @include mq($to: tablet) {
         @include fs-headline(3);
@@ -79,8 +79,7 @@ a.item__link {
 .item__meta {
     color: $grey;
     @include fs-data(2);
-    margin-top: $gs-baseline*(5/3);
-    padding-bottom: $gs-baseline;
+    margin-top: gs-height(1) - 16;
     overflow: hidden;
     min-height: 16px;
     .item__timestamp,
@@ -145,7 +144,7 @@ a.item__link {
     @include fs-data(4);
     position: relative;
     left: 50%;
-    margin-top: $gs-baseline*2;
+    margin-top: $gs-baseline;
     margin-left: -(gs-span(1) + $gs-gutter/2);
 }
 
@@ -158,19 +157,19 @@ a.item__link {
     .item__title {
         border-top-color: $comment-dark;
         position: relative;
-        padding-top: 40px;
+        padding-top: 34px;
     }
     .item__link .i {
         position: absolute;
         left: 0;
-        top: $gs-baseline*(2/3);
+        top: 2px;
     }
 }
 
 .items--cards {
     font-size: 0;
     .item {
-        margin-top: $gs-baseline*2;
+        margin-top: $gs-baseline;
         @include mq(tablet) {
             display: inline-block;
             vertical-align: top;
@@ -182,8 +181,11 @@ a.item__link {
         }
     }
     .item__title {
+        @include mq(mobile) {
+            min-height: gs-height(2) + $gs-baseline;
+        }
         @include mq(tablet) {
-            min-height: gs-height(3);
+            min-height: gs-height(3) + $gs-baseline;
         }
     }
     .item__standfirst {
@@ -256,14 +258,6 @@ a.item__link {
         .item__image-container {
             display: none;
         }
-        @include mq($to: tablet) {
-            .item__title {
-                @include fs-headline(1, $size-only: true);
-            }
-            .item__meta {
-                padding-bottom: 0;
-            }
-        }
         @include mq(tablet) {
             .item__title {
                 @include fs-headline(3, $size-only: true);
@@ -284,7 +278,6 @@ a.item__link {
     border-left: 1px dotted $grey;
     .item__title {
         @include fs-headline(1, $size-only: true);
-        min-height: gs-height(2);
     }
     @if $without-image {
         .item__image-container {
@@ -303,7 +296,7 @@ a.item__link {
     .item__title {
         min-height: 0;
         @include fs-headline(1, $size-only: true);
-        padding-top: $gs-baseline*(2/3);
+        padding-top: 2px;
         border-top-color: $grey;
         border-top-width: 1px;
         .i {
