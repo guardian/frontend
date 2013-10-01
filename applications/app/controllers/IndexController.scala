@@ -8,7 +8,7 @@ import play.api.libs.json._
 import services.{IndexPage, Concierges}
 
 
-object SectionController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
+object IndexController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
 

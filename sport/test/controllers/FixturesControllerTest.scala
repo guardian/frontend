@@ -13,7 +13,7 @@ class FixturesControllerTest extends FlatSpec with ShouldMatchers {
   val callbackName = "aFunction" 
   
   "Fixtures Controller" should "200 when content type is fixtures" in Fake {
-    val result = controllers.FixturesController.render()(TestRequest())
+    val result = football.controllers.FixturesController.render()(TestRequest())
     status(result) should be(200)
   }
 
@@ -21,7 +21,7 @@ class FixturesControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"${fixturesUrl}?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
     
-    val result = controllers.FixturesController.render()(fakeRequest)
+    val result = football.controllers.FixturesController.render()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
@@ -32,14 +32,14 @@ class FixturesControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.FixturesController.render()(fakeRequest)
+    val result = football.controllers.FixturesController.render()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
   
   it should "200 when content type is tag fixtures" in Fake {
-    val result = controllers.FixturesController.renderTag(tag)(TestRequest())
+    val result = football.controllers.FixturesController.renderTag(tag)(TestRequest())
     status(result) should be(200)
   }
 
@@ -47,7 +47,7 @@ class FixturesControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"/football/${tag}/fixtures?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
       
-    val result = controllers.FixturesController.renderTag(tag)(fakeRequest)
+    val result = football.controllers.FixturesController.renderTag(tag)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
@@ -58,14 +58,14 @@ class FixturesControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.FixturesController.renderTag(tag)(fakeRequest)
+    val result = football.controllers.FixturesController.renderTag(tag)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
   
   it should "200 when content type is for fixtures" in Fake {
-    val result = controllers.FixturesController.renderFor("2012", "oct", "20")(TestRequest())
+    val result = football.controllers.FixturesController.renderFor("2012", "oct", "20")(TestRequest())
     status(result) should be(200)
   }
 
@@ -73,7 +73,7 @@ class FixturesControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"${fixtureUrl}?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
       
-    val result = controllers.FixturesController.renderFor("2012", "oct", "20")(fakeRequest)
+    val result = football.controllers.FixturesController.renderFor("2012", "oct", "20")(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
@@ -84,7 +84,7 @@ class FixturesControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.FixturesController.renderFor("2012", "oct", "20")(fakeRequest)
+    val result = football.controllers.FixturesController.renderFor("2012", "oct", "20")(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
