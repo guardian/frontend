@@ -12,22 +12,20 @@
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article-v2__inner">
                 <header class="article__head">
-                    @fragments.dateline(article.webPublicationDate, article.isLive)
-
                     @fragments.headline(article.headline)
 
                     @if(LiveCricketSwitch.isSwitchedOn) {
                         @article.cricketMatch.map { id =>
                             <div class="after-headline">
                                 <a class="cta-small type-8 zone-color" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
-                                    itemprop="significantLink" id="schema-WebPage">View full scorecard
-                                    <i class="i i-sport-arrow-small"></i>
-                                </a>
+                                    itemprop="significantLink"
+                                    id="schema-WebPage">View full scorecard<i class="i i-sport-arrow-small"></i></a>
                             </div>
                         }
                     }
 
                     @fragments.standfirst(article)
+                    @fragments.article.dateline(article.webPublicationDate, article.isLive)
                 </header>
 
                 @fragments.witnessCallToAction(article)
@@ -44,8 +42,12 @@
                             }
                         }
                     }
+                    <div class="article__meta-container">
+                        @fragments.byline(article.byline, article)
 
-                    @fragments.byline(article.byline, article)
+                        @fragments.article.dateline(article.webPublicationDate, secondary=true)
+                        <div class="js-comment-count"></div>
+                    </div>
 
                     <div class="js-article__container article__container u-cf">
                         <div class="live-toolbar">

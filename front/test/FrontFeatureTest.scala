@@ -1,17 +1,18 @@
 package test
 
+import collection.JavaConversions._
+import common.editions.{Us, Uk}
+import controllers.front.{ TrailblockAgent, FrontEdition, Front }
+import controllers.FrontController
+import model._
+import org.joda.time.DateTime
+import org.scalatest.concurrent.Eventually
+import org.scalatest.time.SpanSugar
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.matchers.ShouldMatchers
-import controllers.front.{ TrailblockAgent, FrontEdition, Front }
-import model._
-import org.joda.time.DateTime
-import collection.JavaConversions._
-import controllers.FrontController
 import play.api.mvc._
-import common.editions.{Us, Uk}
-import org.scalatest.concurrent.Eventually
-import org.scalatest.time.SpanSugar
+import play.api.test.Helpers._
 
 
 class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers with Results with Eventually with SpanSugar{
@@ -64,7 +65,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst(".js-main-site-link").href should endWith("/uk?view=desktop")
+          findFirst(".js-main-site-link").href should be(DesktopVersionLink("/uk"))
       }
     }
 
@@ -75,7 +76,7 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
           import browser._
 
           Then("I should see the link for the desktop site")
-          findFirst(".js-main-site-link").href should endWith("/us?view=desktop")
+          findFirst(".js-main-site-link").href should be(DesktopVersionLink("/us"))
       }
     }
 
@@ -277,7 +278,8 @@ class FrontFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatcher
         }
 
         Then("I should see an internal server error")
-        controller.render("front")(TestRequest()).asInstanceOf[SimpleResult[AnyContent]].header.status should be(500)
+        val result = controller.renderFront("front")(TestRequest())
+        status(result) should be(500)
       }
     }
   }

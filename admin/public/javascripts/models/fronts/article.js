@@ -4,7 +4,7 @@ define([
     'knockout',
     'Reqwest',
     'js!humanizedTimeSpan'
-], 
+],
 function (
     common,
     Editable,
@@ -33,15 +33,15 @@ function (
             'editingConfig',
             'shares',
             'comments',
-            'pageViews',
+            'totalHits',
             'pageViewsSeries']);
 
         // Computeds
         this.humanDate = ko.computed(function(){
             return this.meta.webPublicationDate() ? humanized_time_span(this.meta.webPublicationDate()) : '&nbsp;';
         }, this);
-        this.pageViewsCommas = ko.computed(function(){
-            return common.util.numberWithCommas(this.state.pageViews());
+        this.totalHitsFormatted = ko.computed(function(){
+            return common.util.numberWithCommas(this.state.totalHits());
         }, this);
 
         this.populate(opts);
@@ -82,7 +82,7 @@ function (
     }
 
     Article.prototype.addCommentCount = function() {
-        var url = 'http://discussion.guardianapis.com/discussion-api/discussion/p/' + 
+        var url = 'http://discussion.guardianapis.com/discussion-api/discussion/p/' +
             this.shortId() + '/comments/count',
             self = this;
         if(this.shortId()) {
@@ -94,8 +94,8 @@ function (
                 },
                 complete: function() {
                 }
-            });            
-        }    
+            });
+        }
     };
 
     return Article;

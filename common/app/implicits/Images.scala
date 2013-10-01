@@ -25,22 +25,24 @@ trait Images extends Numbers with AutomaticResourceManagement {
     }
   }
 
-  implicit class Image2Bytes(image: BufferedImage) {
-    def apply(format: String) = new {
-      def compress(percent: Int) = {
-        withDisposable(ImageIO.getImageWritersByFormatName(format).next) { writer =>
-          withCloseable(new ByteArrayOutputStream()) { baos =>
-            val parameters = writer.getDefaultWriteParam
-            parameters setCompression percent
+  case class BufferedImageWithFormat(image: BufferedImage, format: String) {
+    def compressedTo(percent: Int): Array[Byte] = {
+      withDisposable(ImageIO.getImageWritersByFormatName(format).next) { writer =>
+        withCloseable(new ByteArrayOutputStream()) { baos =>
+          val parameters = writer.getDefaultWriteParam
+          parameters setCompression percent
 
-            writer.setOutput(ImageIO.createImageOutputStream(baos))
-            writer.write(image, parameters)
+          writer.setOutput(ImageIO.createImageOutputStream(baos))
+          writer.write(image, parameters)
 
-            baos.flush()
-            baos.toByteArray
-          }
+          baos.flush()
+          baos.toByteArray
         }
       }
     }
+  }
+
+  implicit class Image2BufferedImageWithFormat(image: BufferedImage) {
+    def formattedWith(format: String) = BufferedImageWithFormat(image, format)
   }
 }

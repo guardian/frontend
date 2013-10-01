@@ -1,0 +1,8 @@
+@(competition: Option[model.Competition])(implicit request: RequestHeader)
+@import model.FootballNavigation
+
+@competition.map{ comp =>
+    @html.fragments.footballNavLinks(Link(comp.url, comp.shortName, comp.fullName), FootballNavigation.navFor(comp.url))
+}.getOrElse{
+    @html.fragments.footballNavLinks(Link("/football", "football", "Football"), FootballNavigation.defaultNav)
+}

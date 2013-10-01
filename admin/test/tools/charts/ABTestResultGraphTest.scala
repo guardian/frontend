@@ -44,7 +44,8 @@ class ABTestResultGraphTest extends FeatureSpec with ShouldMatchers {
       (1526, "A", 45.4554),
       (1527, "A", 54167.3),
       (1527, "B", 1687.3),
-      (1523, "A", 12.1234)
+      (1523, "A", 12.1234),
+      (1538, "A", 2.341)
     )
 
     scenario("Labels") {
@@ -62,7 +63,8 @@ class ABTestResultGraphTest extends FeatureSpec with ShouldMatchers {
         DataPoint("15/03", List(17.3, 7.3, 27.3)),
         DataPoint("16/03", List(3.234, 3.2345, 23.234)),
         DataPoint("17/03", List(451.4554, 45.4554, 45.45541)),
-        DataPoint("18/03", List(34167.3, 54167.3, 1687.3)))
+        DataPoint("18/03", List(34167.3, 54167.3, 1687.3)),
+        DataPoint("19/03", List(0, 2.341, 0)))
       testGraph.buildDataset(data) should equal(dataset)
     }
   }

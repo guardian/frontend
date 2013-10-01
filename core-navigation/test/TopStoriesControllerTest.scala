@@ -10,7 +10,7 @@ class TopStoriesControllerTest extends FlatSpec with ShouldMatchers {
   val callbackName = "aFunction"
 
   "Top Stories" should "should return 200" in Fake {
-    val result = controllers.TopStoriesController.render()(TestRequest())
+    val result = controllers.TopStoriesController.renderTopStories()(TestRequest())
     status(result) should be(200)
   }
 
@@ -18,7 +18,7 @@ class TopStoriesControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, s"/top-stories?callback=${callbackName}")
       .withHeaders("host" -> "localhost:9000")
 
-    val result = controllers.TopStoriesController.render()(fakeRequest)
+    val result = controllers.TopStoriesController.renderTopStories()(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""${callbackName}({\"html\"""") // the callback
@@ -29,7 +29,7 @@ class TopStoriesControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = controllers.TopStoriesController.render()(fakeRequest)
+    val result = controllers.TopStoriesController.renderTopStoriesJson()(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"html\"")

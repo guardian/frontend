@@ -62,7 +62,7 @@ define([
                             return new List(collection);
                         })
                     );
-                    connectSortableLists();                
+                    connectSortableLists();
                 });
             });
         }
@@ -72,7 +72,6 @@ define([
                 sortables = $(selector),
                 item,
                 fromList,
-                fromListObj,
                 toList;
 
             sortables.sortable({
@@ -83,29 +82,49 @@ define([
                 start: function(event, ui) {
                     common.state.uiBusy = true;
 
-                    // Display the source item. (The clone gets dragged.) 
+                    // Display the source item. (The clone gets dragged.)
                     sortables.find('.trail:hidden').show();
 
                     item = ui.item;
                     toList = fromList = item.parent();
-                    fromListObj = knockout.dataFor(fromList[0]);                    
                 },
                 stop: function(event, ui) {
-                    var index,
+                    var toListPersists = toList.hasClass('persisted'),
+                        fromListPersists = fromList.hasClass('persisted'),
+                        index,
                         clone;
 
                     common.state.uiBusy = false;
 
-                    // If we move between lists, effect a copy by cloning
-                    if(toList !== fromList) {
-                        index = toList.children().index(item);
-                        clone = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
-                        toList.children(':eq(' + index + ')').after(clone);
+                    // Save into toList
+                    if(toListPersists) {
+                        saveList({
+                            listEl: toList,
+                            itemEl: item
+                        });
+                    }
+
+                    // Delete out of fromList, if we've dragged between lists
+                    if(fromListPersists && toListPersists && fromList !==  toList) {
+                        saveList({
+                            listEl: fromList,
+                            itemEl: item,
+                            delete: true
+                        });
+                    }
+
+                    // If dragging to/from a non-persisted list (e.g. clipboard, or latest articles)
+                    // make a clone instead, and stick it in the toList, so that a "copy" is achieved
+                    if (!(fromListPersists && toListPersists)) {
+                        if(fromList !== toList) {
+                            index = toList.children().index(item);
+                            clone = $(ui.item[0]).clone(true).removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone');
+                            toList.children(':eq(' + index + ')').after(clone);
+                        }
                         // So that the original stays in place:
                         $(this).sortable('cancel');
                     }
 
-                    saveListDelta(item.data('url'), toList);
                 },
                 change: function(event, ui) {
                     if(ui.sender) toList = ui.placeholder.parent();
@@ -114,59 +133,49 @@ define([
             }).disableSelection();
         };
 
-        function saveListDelta(id, list) {
-            var isLive = list.hasClass('is-live'),
-                listId,
-                inList,
-                listObj,
-                position,
+        function saveList(opts) {
+            var itemId  = opts.itemEl.data('url'),
+                isLive  = opts.listEl.hasClass('is-live'),
+                method  = opts.delete ? 'delete' : 'post',
+                listObj = knockout.dataFor(opts.listEl[0]),
                 delta;
 
-            if (!list.hasClass('persisted')) { return; }
+            if (!listObj || !listObj.id || !opts.itemEl.length || !itemId) { return; }
 
-            listObj = knockout.dataFor(list[0]);
+            delta = {
+                item:   itemId,
+                live:   isLive,
+                draft: !isLive
+            };
 
-            listId = list.attr('data-list-id');
-            if (!listId) { return; }
-
-            inList = $("[data-url='" + id + "']", list);
-
-            if (inList.length) {
-                delta = {
-                    item: id,
-                    live:   isLive,
-                    draft: !isLive
-                };
-
-                position = inList.next().data('url');
-                if (position) {
-                    delta.position = position;
-                } else {
-                    var numOfItems = $("[data-url]", list).length;
+            if (method === 'post') {
+                delta.position = opts.itemEl.next().data('url');
+                if (!delta.position) {
+                    var numOfItems = $("[data-url]", opts.listEl).length;
                     if (numOfItems > 1) {
-                        delta.position = $("[data-url]", list).eq(numOfItems - 2).data('url');
+                        delta.position = $("[data-url]", opts.listEl).eq(numOfItems - 2).data('url');
                         delta.after = true;
-                    } 
+                    }
                 }
-
-                listObj.state.loadIsPending(true);
-
-                reqwest({
-                    method: 'post',
-                    url: common.config.apiBase + '/collection/' + listId,
-                    type: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify(delta)
-                }).always(function(resp) {
-                    listObj.load();
-                });
             }
+
+            listObj.state.loadIsPending(true);
+
+            reqwest({
+                method: method,
+                url: common.config.apiBase + '/collection/' + listObj.id,
+                type: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(delta)
+            }).always(function(resp) {
+                listObj.load();
+            });
         };
 
         function startPoller() {
             var period = common.config.collectionsPollMs || 60000;
 
-            setInterval(function(){                
+            setInterval(function(){
                 model.collections().forEach(function(list, index){
                     setTimeout(function(){
                         list.refresh();
@@ -184,8 +193,8 @@ define([
             }).then(
                 function(resp) {
                     if (!_.isArray(resp) || resp.length === 0) {
-                        window.console.log("ERROR: No configs were found");      
-                        return; 
+                        window.console.log("ERROR: No configs were found");
+                        return;
                     }
                     model.configs(resp.sort());
                     if (_.isFunction(callback)) { callback(); }
@@ -250,33 +259,26 @@ define([
         knockout.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
                 var groups = knockout.utils.unwrapObservable(valueAccessor()),
-                    max = _.max(_.pluck(groups, 'max'));
+                    max;
 
-                if (!max) { return };
+                if (!_.isArray(groups)) { return; };
+                max = _.max(_.pluck(groups, 'max'));
+                if (!max) { return; };
 
-                _.chain(groups)
-                .sortBy(function(g){
-                    // Put biggest groups first, so that its fill color is behind the other groups
-                    return -1 * g.max;
-                }).each(function(group, i){
-
-                    group.data.pop(); // drop the last data point. 
-
-                    var data = group.data,
-                        isHot = (_.last(data)/group.minsPerSlot) > 10;
-
-                    $(element).sparkline(data, {
+                _.each(_.toArray(groups).reverse(), function(group, i){
+                    $(element).sparkline(group.data, {
                         chartRangeMax: max,
-                        defaultPixelsPerValue: data.length < 50 ? data.length < 30 ? 3 : 2 : 1,
-                        height: Math.max(10, Math.min(30, max)),
+                        defaultPixelsPerValue: group.data.length < 50 ? group.data.length < 30 ? 3 : 2 : 1,
+                        height: Math.round(Math.max(10, Math.min(40, max))),
                         lineColor: '#' + group.color,
                         spotColor: false,
                         minSpotColor: false,
                         maxSpotColor: false,
-                        lineWidth: isHot ? 2 : 1,
-                        fillColor: isHot ? '#eeeeee' : false,
+                        lineWidth: group.activity || 1,
+                        fillColor: false,
                         composite: i > 0
                     });
+
                 });
             }
         };

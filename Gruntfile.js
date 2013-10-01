@@ -20,8 +20,7 @@ module.exports = function (grunt) {
                     'common/app/assets/stylesheets/gallery.min.css': 'common/app/assets/stylesheets/gallery.scss',
                     'common/app/assets/stylesheets/video.min.css': 'common/app/assets/stylesheets/video.scss',
                     'common/app/assets/stylesheets/old-ie.head.min.css': 'common/app/assets/stylesheets/old-ie.head.scss',
-                    'common/app/assets/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss',
-                    'style-guide/app/assets/stylesheets/styleguide.min.css': 'style-guide/app/assets/stylesheets/styleguide.scss'
+                    'common/app/assets/stylesheets/old-ie.global.min.css': 'common/app/assets/stylesheets/old-ie.global.scss'
                 },
                 options: {
                     check: false,
@@ -128,6 +127,9 @@ module.exports = function (grunt) {
             },
             corenavigation: {
                 src: ['integration-tests/casper/tests/core-navigation/*.js']
+            },
+            allexceptadmin: {
+                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
             },
             },
 
@@ -249,100 +251,165 @@ module.exports = function (grunt) {
             }
         },
 
+        imagemin: {
+            sprite: {
+                files: [{
+                    'common/app/assets/images/global/sprite.png': 'common/app/assets/images/global/sprite.png'
+                }]
+            },
+
+            all: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/images/',
+                    src: ['**/*.png'],
+                    dest: 'common/app/assets/images/'
+                },{
+                    expand: true,
+                    cwd: 'common/app/public/images/',
+                    src: ['**/*.{png,gif,jpg}'],
+                    dest: 'common/app/public/images/'
+                }]
+            }
+        },
+
 
         // Create JSON web font files from fonts.
         // Docs here: https://github.com/ahume/grunt-webfontjson
         webfontjson: {
-          WebEgyptianWoff: {
-            options: {
-              "filename": "common/app/public/fonts/WebEgyptian.woff.js",
-              "callback": "guFont",
-              "fonts": [
-                {
-                  "font-family": "EgyptianText",
-                  "file": "resources/fonts/EgyptianText-Regular.woff",
-                  "format": "woff"
-                },
-                {
-                  "font-family": "EgyptianText",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianText-Medium.woff",
-                  "format": "woff"
-                },
-                {
-                  "font-family": "EgyptianText",
-                  "font-style": "italic",
-                  "file": "resources/fonts/EgyptianText-RegularItalic.woff",
-                  "format": "woff"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "200",
-                  "file": "resources/fonts/EgyptianHeadline-Light.woff",
-                  "format": "woff"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianHeadline-Medium.woff",
-                  "format": "woff"
-                },
-                // This weight contains only a certain set of chars
-                // since it is used only in one place (section names)
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "900",
-                  "file": "resources/fonts/EgyptianHeadline-Semibold-redux.woff",
-                  "format": "woff"
+            WebAgateSansWoff: {
+                options: {
+                    "filename": "common/app/public/fonts/WebAgateSans.woff.js",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "AgateSans",
+                            "file": "resources/fonts/AgateSans-Regular.woff",
+                            "format": "woff"
+                        }
+                    ]
                 }
-              ]
-            }
-          },
-          WebEgyptianTtf: {
-            options: {
-              "filename": "common/app/public/fonts/WebEgyptian.ttf.js",
-              "callback": "guFont",
-              "fonts": [
-                {
-                  "font-family": "EgyptianText",
-                  "file": "resources/fonts/EgyptianText-Regular.ttf",
-                  "format": "ttf"
-                },
-                {
-                  "font-family": "EgyptianText",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianText-Medium.ttf",
-                  "format": "ttf"
-                },
-                {
-                  "font-family": "EgyptianText",
-                  "font-style": "italic",
-                  "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
-                  "format": "ttf"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "200",
-                  "file": "resources/fonts/EgyptianHeadline-Light.ttf",
-                  "format": "ttf"
-                },
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "700",
-                  "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
-                  "format": "ttf"
-                },
-                // This weight contains only a certain set of chars
-                // since it is used only in one place (section names)
-                {
-                  "font-family": "EgyptianHeadline",
-                  "font-weight": "900",
-                  "file": "resources/fonts/EgyptianHeadline-Semibold-redux.ttf",
-                  "format": "ttf"
+            },
+            WebAgateSansTtf: {
+                options: {
+                    "filename": "common/app/public/fonts/WebAgateSans.ttf.js",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "AgateSans",
+                            "file": "resources/fonts/AgateSans-Regular.ttf",
+                            "format": "ttf"
+                        }
+                    ]
                 }
-              ]
+            },
+            WebEgyptianWoff: {
+                options: {
+                    "filename": "common/app/public/fonts/WebEgyptian.woff.js",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "EgyptianText",
+                            "file": "resources/fonts/EgyptianText-Regular.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianText-Medium.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "font-style": "italic",
+                            "file": "resources/fonts/EgyptianText-RegularItalic.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "200",
+                            "file": "resources/fonts/EgyptianHeadline-Light.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "400",
+                            "file": "resources/fonts/EgyptianHeadline-Regular.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianHeadline-Medium.woff",
+                            "format": "woff"
+                        },
+                        // This weight contains only a certain set of chars
+                        // since it is used only in one place (section names)
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "900",
+                            "file": "resources/fonts/EgyptianHeadline-Semibold-redux.woff",
+                            "format": "woff"
+                        }
+                    ]
+                }
+            },
+            WebEgyptianTtf: {
+                options: {
+                    "filename": "common/app/public/fonts/WebEgyptian.ttf.js",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "AgateSans",
+                            "file": "resources/fonts/AgateSans-Regular.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "file": "resources/fonts/EgyptianText-Regular.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianText-Medium.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianText",
+                            "font-style": "italic",
+                            "file": "resources/fonts/EgyptianText-RegularItalic.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "200",
+                            "file": "resources/fonts/EgyptianHeadline-Light.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "400",
+                            "file": "resources/fonts/EgyptianHeadline-Regular.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "700",
+                            "file": "resources/fonts/EgyptianHeadline-Medium.ttf",
+                            "format": "ttf"
+                        },
+                        // This weight contains only a certain set of chars
+                        // since it is used only in one place (section names)
+                        {
+                            "font-family": "EgyptianHeadline",
+                            "font-weight": "900",
+                            "file": "resources/fonts/EgyptianHeadline-Semibold-redux.ttf",
+                            "format": "ttf"
+                        }
+                    ]
+                }
             }
-          }
         },
         // Clean stuff up
         clean: {
@@ -355,6 +422,13 @@ module.exports = function (grunt) {
           hooks: {
             // Copy the project's pre-commit hook into .git/hooks
             command: 'cp git-hooks/pre-commit .git/hooks/'
+          },
+
+          icons: {
+            command: [
+                'cd tools/sprites/',
+                'node spricon.js global-icon-config.json'
+            ].join('&&')
           }
         }
 
@@ -373,6 +447,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
 
     // Standard tasks
     grunt.registerTask('test:unit', ['jasmine']);
@@ -385,12 +460,16 @@ module.exports = function (grunt) {
     grunt.registerTask('test:integration:article',  ['env:casperjs', 'casperjs:article']);
     grunt.registerTask('test:integration:front',  ['env:casperjs', 'casperjs:front']);
     grunt.registerTask('test:integration:corenavigation',  ['env:casperjs', 'casperjs:corenavigation']);
+    grunt.registerTask('test:integration:allexceptadmin',  ['env:casperjs', 'casperjs:allexceptadmin']);
+
 
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
 
     grunt.registerTask('compile:common:css', ['sass:common']);
     grunt.registerTask('compile:common:js', ['requirejs:common']);
     grunt.registerTask('compile', ['compile:common:css', 'compile:common:js']);
+
+    grunt.registerTask('compile:icons', ['shell:icons', 'imagemin:sprite']);
 
     grunt.registerTask('analyse:common:css', ['cssmetrics:common']);
     grunt.registerTask('analyse', ['analyse:common:css']);

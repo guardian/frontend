@@ -1,0 +1,749 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":5,
+    "startIndex":1,
+    "pageSize":20,
+    "currentPage":1,
+    "pages":1,
+    "orderBy":"newest",
+    "tag":{
+      "id":"news/series/lunchtime-briefing",
+      "type":"series",
+      "webTitle":"Lunchtime briefing",
+      "webUrl":"http://www.theguardian.com/news/series/lunchtime-briefing",
+      "apiUrl":"http://content.guardianapis.com/news/series/lunchtime-briefing",
+      "sectionId":"news",
+      "sectionName":"News",
+      "references":[]
+    },
+    "results":[{
+      "id":"news/2013/sep/30/1",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-09-30T11:05:00Z",
+      "webTitle":"Lunchtime briefing: the 10 key stories of the day",
+      "webUrl":"http://www.theguardian.com/news/2013/sep/30/1",
+      "apiUrl":"http://content.guardianapis.com/news/2013/sep/30/1",
+      "fields":{
+        "trailText":"<p>In a hurry? Get up to date with today's news agenda</p>",
+        "headline":"Lunchtime briefing: the 10 key stories of the day",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6ag",
+        "wordcount":"356",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"news/series/lunchtime-briefing",
+        "type":"series",
+        "webTitle":"Lunchtime briefing",
+        "webUrl":"http://www.theguardian.com/news/series/lunchtime-briefing",
+        "apiUrl":"http://content.guardianapis.com/news/series/lunchtime-briefing",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418631168",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380525169913/70f9b5c4-362a-49a3-a5e0-547f084cb528-460x276.jpeg",
+          "typeData":{
+            "source":"REX/Ray Tang",
+            "photographer":"REX/Ray Tang",
+            "altText":"George Osborne at the Conservative party conference",
+            "height":"276",
+            "credit":"REX/Ray Tang/REX/Ray Tang",
+            "caption":"George Osborne at the Conservative party conference in Manchester. Photograph: Rex/Ray Tang",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418631169",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380533664217/796af362-69f8-4859-8731-0729c647f651-460x276.jpeg",
+          "typeData":{
+            "source":"Alberto Ghizzi Panizza/Solent",
+            "photographer":"Alberto Ghizzi Panizza / Solent News",
+            "altText":"Best of friends: two damselflies on a flower in the Po Valley, Italy, look like they're holding hands. Photographer Alberto Ghizzi Panizza, 38, spotted the insects in the dew as he walked across a flood plain early one morning. Struck by their cute poses, he took the shots shortly after dawn as they rested on wild flowers.",
+            "height":"276",
+            "credit":"Alberto Ghizzi Panizza / Solent News/Alberto Ghizzi Panizza/Solent",
+            "caption":"Best of friends: two damselflies on a flower in the Po Valley, Italy, look like they're holding hands. Photographer Alberto Ghizzi Panizza, 38, spotted the insects in the dew as he walked across a flood plain early one morning. Struck by their cute poses, he took the shots shortly after dawn as they rested on wild flowers. Photograph: Alberto Ghizzi Panizza/Solent News",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"news/2013/sep/27/10-key-stories-of-the-day",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-09-27T11:11:00Z",
+      "webTitle":"Lunchtime briefing: the 10 key stories of the day",
+      "webUrl":"http://www.theguardian.com/news/2013/sep/27/10-key-stories-of-the-day",
+      "apiUrl":"http://content.guardianapis.com/news/2013/sep/27/10-key-stories-of-the-day",
+      "fields":{
+        "trailText":"<p>In a hurry? Get up to date with today's news agenda</p>",
+        "headline":"Lunchtime briefing: the 10 key stories of the day",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j55j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/06/burma_cyclone1_140.jpg",
+        "wordcount":"284",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"news/series/lunchtime-briefing",
+        "type":"series",
+        "webTitle":"Lunchtime briefing",
+        "webUrl":"http://www.theguardian.com/news/series/lunchtime-briefing",
+        "apiUrl":"http://content.guardianapis.com/news/series/lunchtime-briefing",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418457622",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380211850296/Burma-cyclone-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Getty Images",
+            "altText":"Burma cyclone",
+            "height":"276",
+            "credit":"Getty Images/Getty Images",
+            "caption":"A man rebuilds a house after Cyclone Nargis, which caused devastation in Burma in 2008. A report warns of further cyclones in the future. Photograph: Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418457623",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380280136053/Indian-Fire-officials-res-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Indian Fire officials rescue a girl from debris of a collapsed building in Mumbai, India.",
+            "height":"276",
+            "credit":"AP",
+            "caption":"Indian Fire officials rescue a girl from debris of a collapsed building in Mumbai, India. Photograph: AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418457624",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/06/burma_cyclone1_140.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "altText":"Burma Cyclone",
+            "height":"84",
+            "credit":"Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"news/2013/sep/26/2",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-09-26T10:54:00Z",
+      "webTitle":"Lunchtime briefing: the 10 key stories of the day",
+      "webUrl":"http://www.theguardian.com/news/2013/sep/26/2",
+      "apiUrl":"http://content.guardianapis.com/news/2013/sep/26/2",
+      "fields":{
+        "trailText":"<p>In a hurry? Get up to date with today's news agenda</p>",
+        "headline":"Lunchtime briefing: the 10 key stories of the day",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j48x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380192324942/A-molotov-cocktail-explod-003.jpg",
+        "wordcount":"255",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"news/series/lunchtime-briefing",
+        "type":"series",
+        "webTitle":"Lunchtime briefing",
+        "webUrl":"http://www.theguardian.com/news/series/lunchtime-briefing",
+        "apiUrl":"http://content.guardianapis.com/news/series/lunchtime-briefing",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418328297",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380192324942/A-molotov-cocktail-explod-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Aris Messinis",
+            "altText":"A molotov cocktail explodes in front of riot police in Athens",
+            "height":"84",
+            "credit":"Aris Messinis/AFP/Getty Images",
+            "caption":"A molotov cocktail explodes in front of riot police on September 25, 2013 during clashes with demonstrators in Athens. Photograph: Aris Messinis/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418328298",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380192331749/A-molotov-cocktail-explod-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Aris Messinis",
+            "altText":"A molotov cocktail explodes in front of riot police in Athens",
+            "height":"276",
+            "credit":"Aris Messinis/AFP/Getty Images",
+            "caption":"A molotov cocktail explodes in front of riot police on September 25, 2013 during clashes with demonstrators in Athens. Photograph: Aris Messinis/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-418135745",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/24/130924NepalQatar-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/24/130924NepalQatar_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/24/130924NepalQatar_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/24/130924NepalQatar/130924NepalQatar.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924NepalQatar_8111677.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924NepalQatar_8111677.jpg",
+            "width":"480",
+            "durationSeconds":"36"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"news/2013/sep/25/10-key-stories-of-the-day",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-09-25T11:00:00Z",
+      "webTitle":"Lunchtime briefing: the eight key stories of the day",
+      "webUrl":"http://www.theguardian.com/news/2013/sep/25/10-key-stories-of-the-day",
+      "apiUrl":"http://content.guardianapis.com/news/2013/sep/25/10-key-stories-of-the-day",
+      "fields":{
+        "trailText":"<p>In a hurry? Get up to date with today's news agenda</p>",
+        "headline":"Lunchtime briefing: the eight key stories of the day",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j37f",
+        "wordcount":"222",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"news/series/lunchtime-briefing",
+        "type":"series",
+        "webTitle":"Lunchtime briefing",
+        "webUrl":"http://www.theguardian.com/news/series/lunchtime-briefing",
+        "apiUrl":"http://content.guardianapis.com/news/series/lunchtime-briefing",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418240842",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380094795659/Ed-Miliband-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Peter Macdiarmid",
+            "altText":"Ed Miliband",
+            "height":"276",
+            "credit":"Peter Macdiarmid/Getty Images",
+            "caption":"Ed Miliband gives a TV interview the morning after his speech to the Labour conference.  Photograph: Peter Macdiarmid/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418240843",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380104187577/Men-walk-on-an-island-tha-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "altText":"Men walk on an island that appeared 2 kilometres off the coastline of Gwadar",
+            "height":"276",
+            "credit":"AFP/Getty Images",
+            "caption":"Men walk on an island that appeared 2km off the coastline of Gwadar, Pakistan following an earthquake the day before. The National Institute of Oceanography has sent a team to survey the island, which stands about 20 metres high.  Photograph: AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-418184844",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/24/130924LabourConfFilmlow_FromRemote-16x9.mp4",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/24/130924LabourConfFilmlow_FromRemote_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/24/130924LabourConfFilmlow_FromRemote/130924LabourConfFilmlow_FromRemote.m3u8",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/24/130924LabourConfFilmlow_FromRemote_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/24/130924LabourConfFilmlow_FromRemote_vpx.webm",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"8",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"58"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"news/blog/2013/sep/24/10-key-stories-of-the-day",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-09-24T11:03:00Z",
+      "webTitle":"Lunchtime briefing: the 10 key stories of the day",
+      "webUrl":"http://www.theguardian.com/news/blog/2013/sep/24/10-key-stories-of-the-day",
+      "apiUrl":"http://content.guardianapis.com/news/blog/2013/sep/24/10-key-stories-of-the-day",
+      "fields":{
+        "trailText":"<p>Get up to date with today's news agenda</p>",
+        "headline":"Lunchtime briefing: the 10 key stories of the day",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j2ct",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/24/1380000583783/Kenyan-security-forces-pa-003.jpg",
+        "wordcount":"265",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"news/series/lunchtime-briefing",
+        "type":"series",
+        "webTitle":"Lunchtime briefing",
+        "webUrl":"http://www.theguardian.com/news/series/lunchtime-briefing",
+        "apiUrl":"http://content.guardianapis.com/news/series/lunchtime-briefing",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"news/blog",
+        "type":"blog",
+        "webTitle":"News blog",
+        "webUrl":"http://www.theguardian.com/news/blog",
+        "apiUrl":"http://content.guardianapis.com/news/blog",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418139249",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/24/1380000583783/Kenyan-security-forces-pa-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "altText":"Kenyan security forces patrol outside the Westgate mall in Nairobi.",
+            "height":"84",
+            "credit":"Reuters",
+            "caption":"Kenyan security forces patrol outside the Westgate mall. Photograph: Reuters",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418139250",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/24/1380000603112/Kenyan-security-forces-pa-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "altText":"Kenyan security forces patrol outside the Westgate mall in Nairobi.",
+            "height":"276",
+            "credit":"Reuters",
+            "caption":"Kenyan security forces patrol outside the Westgate mall. Photograph: Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-418116599",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/24/130924DaleProtester-16x9.mp4",
+          "typeData":{
+            "source":"Guido Fawkes",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924DaleProtester_8111464.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924DaleProtester_8111464.jpg",
+            "width":"480",
+            "durationSeconds":"20"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/24/130924DaleProtester_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Guido Fawkes",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924DaleProtester_8111464.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924DaleProtester_8111464.jpg",
+            "width":"480",
+            "durationSeconds":"20"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/24/130924DaleProtester_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Guido Fawkes",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924DaleProtester_8111464.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924DaleProtester_8111464.jpg",
+            "width":"480",
+            "durationSeconds":"20"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/24/130924DaleProtester-720.mp4",
+          "typeData":{
+            "source":"Guido Fawkes",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924DaleProtester_8111464.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924DaleProtester_8111464.jpg",
+            "width":"480",
+            "durationSeconds":"20"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/24/130924DaleProtester/130924DaleProtester.m3u8",
+          "typeData":{
+            "source":"Guido Fawkes",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924DaleProtester_8111464.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924DaleProtester_8111464.jpg",
+            "width":"480",
+            "durationSeconds":"20"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/24/130924DaleProtester_vpx.webm",
+          "typeData":{
+            "source":"Guido Fawkes",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/24/130924DaleProtester_8111464.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/24/130924DaleProtester_8111464.jpg",
+            "width":"480",
+            "durationSeconds":"20"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "editorsPicks":[],
+    "storyPackage":[],
+    "leadContent":[]
+  }
+}

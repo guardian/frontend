@@ -2,18 +2,15 @@
 
 @if(faciaTrailblock.collections.nonEmpty) {
     <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
-        @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
-            @if(block._2.items.nonEmpty){
-                @FindStyle(faciaTrailblock.id, block._1) match {
-                    case Masthead      => { @collections.masthead(block._1, block._2) }
-                    case TopStories    => { @collections.topStories(block._1, block._2) }
-                    case MediumStories => { @collections.mediumStories(block._1, block._2) }
-                    case SmallStories  => { @collections.smallStories(block._1, block._2) }
-                    case News          => { @collections.news(block._1, block._2) }
-                    case Features      => { @collections.features(block._1, block._2) }
-                    case Highlights    => { @collections.highlights(block._1, block._2) }
-                    case Comments      => { @collections.comments(block._1, block._2) }
-                    case _             => { @collections.features(block._1, block._2) }
+        @defining {TemplateDeduping()} { dedupe: TemplateDeduping =>
+            @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
+                @if(block._2.items.nonEmpty){
+                    @FindStyle(faciaTrailblock.id, block._1) match {
+                        case Masthead           => { @collections.masthead(block._1, dedupe(4, block._2), Masthead) }
+                        case style: Container   => { @collections.container(front, block._1,  dedupe(block._2), style) }
+                        case style: SectionZone => { @collections.sectionZone(block._1,  dedupe(block._2), style) }
+                        case style              => { @collections.masthead(block._1,  dedupe(block._2), style) }
+                    }
                 }
             }
         }

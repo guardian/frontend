@@ -997,9 +997,28 @@
         "references":[]
       }],
       "elements":[{
+        "id":"gu-image-411541997",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372130429461/6a97c9bc-2c46-41ab-a82c-f6454d795505-140x84.jpeg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bruce Bennett",
+            "altText":"Jonathan Toews #19 of the Chicago Blackhawks kisses the Stanley Cup",
+            "height":"84",
+            "credit":"Bruce Bennett/Getty Images",
+            "caption":"Jonathan Toews #19 of the Chicago Blackhawks kisses the Stanley Cup after defeating the Boston Bruins in Game Six of the 2013 NHL Stanley Cup Final at TD Garden on June 24, 2013 in Boston, Massachusetts. The Chicago Blackhawks defeated the Boston Bruins 3-2. Photograph: Bruce Bennett/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
         "id":"gu-image-411481509",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":1,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1018,6 +1037,7 @@
         "id":"gu-image-411481511",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":2,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1036,6 +1056,7 @@
         "id":"gu-image-411481513",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":3,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1054,6 +1075,7 @@
         "id":"gu-image-411481515",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":4,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1072,6 +1094,7 @@
         "id":"gu-image-411481519",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":5,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1090,6 +1113,7 @@
         "id":"gu-image-411481521",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":6,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1108,6 +1132,7 @@
         "id":"gu-image-411481525",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":7,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1126,6 +1151,7 @@
         "id":"gu-image-411481583",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":8,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1141,9 +1167,29 @@
           }
         }]
       },{
+        "id":"gu-image-411535800",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372171734429/2013-NHL-Stanley-Cup-Fina-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Harry How",
+            "altText":"Stanley Cup final: 2013 NHL Stanley Cup Final - Game Four",
+            "height":"372",
+            "credit":"Harry How/Getty Images",
+            "caption":"Brent Seabrook finally ends Game Four  - with Chicago emerging <a href=\"http://www.guardian.co.uk/sport/2013/jun/20/blackhawks-bruins-wild-game-4\">6-5 victors in overtime</a>",
+            "width":"620"
+          }
+        }]
+      },{
         "id":"gu-image-411481587",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":10,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1162,6 +1208,7 @@
         "id":"gu-image-411481591",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":11,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1177,20 +1224,21 @@
           }
         }]
       },{
-        "id":"gu-image-411535800",
+        "id":"gu-image-411537531",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":12,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372171734429/2013-NHL-Stanley-Cup-Fina-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372173316995/2013-NHL-Stanley-Cup-Fina-009.jpg",
           "typeData":{
             "source":"Getty Images",
             "photographer":"Harry How",
-            "altText":"Stanley Cup final: 2013 NHL Stanley Cup Final - Game Four",
+            "altText":"Stanley Cup final: 2013 NHL Stanley Cup Final - Game Five",
             "height":"372",
             "credit":"Harry How/Getty Images",
-            "caption":"Brent Seabrook finally ends Game Four  - with Chicago emerging <a href=\"http://www.guardian.co.uk/sport/2013/jun/20/blackhawks-bruins-wild-game-4\">6-5 victors in overtime</a>",
+            "caption":"Corey Crawford celebrates a crucial victory for the Blackhawks. Chicago now lead the 2013 Stanley Cup Final series 3-2",
             "width":"620"
           }
         }]
@@ -1198,6 +1246,7 @@
         "id":"gu-image-411536106",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":13,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1216,6 +1265,7 @@
         "id":"gu-image-411536109",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":14,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1234,6 +1284,7 @@
         "id":"gu-image-411536111",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":15,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1252,6 +1303,7 @@
         "id":"gu-image-411536114",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":16,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1270,6 +1322,7 @@
         "id":"gu-image-411536119",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":17,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1288,6 +1341,7 @@
         "id":"gu-image-411536123",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":18,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1300,42 +1354,6 @@
             "credit":"Pool/Reuters",
             "caption":"…and Patrick Kane decides to take an impromptu shower",
             "width":"608"
-          }
-        }]
-      },{
-        "id":"gu-image-411537531",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372173316995/2013-NHL-Stanley-Cup-Fina-009.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Harry How",
-            "altText":"Stanley Cup final: 2013 NHL Stanley Cup Final - Game Five",
-            "height":"372",
-            "credit":"Harry How/Getty Images",
-            "caption":"Corey Crawford celebrates a crucial victory for the Blackhawks. Chicago now lead the 2013 Stanley Cup Final series 3-2",
-            "width":"620"
-          }
-        }]
-      },{
-        "id":"gu-image-411541997",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/25/1372130429461/6a97c9bc-2c46-41ab-a82c-f6454d795505-140x84.jpeg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Bruce Bennett",
-            "altText":"Jonathan Toews #19 of the Chicago Blackhawks kisses the Stanley Cup",
-            "height":"84",
-            "credit":"Bruce Bennett/Getty Images",
-            "caption":"Jonathan Toews #19 of the Chicago Blackhawks kisses the Stanley Cup after defeating the Boston Bruins in Game Six of the 2013 NHL Stanley Cup Final at TD Garden on June 24, 2013 in Boston, Massachusetts. The Chicago Blackhawks defeated the Boston Bruins 3-2. Photograph: Bruce Bennett/Getty Images",
-            "width":"140"
           }
         }]
       }],
