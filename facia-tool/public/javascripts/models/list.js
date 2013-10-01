@@ -34,7 +34,8 @@ define([
             'min',
             'max',
             'roleName',
-            'roleDescription']);
+            'roleDescription',
+            'zones']);
         common.util.populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
@@ -200,19 +201,36 @@ define([
     };
 
     List.prototype.importList = function(opts, from, to) {
-        var self = this;
+        var self = this,
+            zoneNames = _.isArray(this.configMeta.zones()) ? this.configMeta.zones() : [0],
+            zoneLists = _.map(zoneNames, function(name) {
+                return {
+                    name: name,
+                    list: []
+                };
+            });
 
-        if (self[to]) {
-            self[to].removeAll();
+        if (this[to]) {
+            this[to].removeAll();
         }
+
         if (opts[from]) {
             opts[from].forEach(function(item, index) {
+                var zoneList;
+
+                // FAKE A ZONE!
+                item.zone = ["major", "minor", "other"][Math.min(2, Math.floor(index/2))];
+
+                zoneList = _.find(zoneLists, function(zone){ return zone.name === item.zone}) || zoneLists[0];
+
+                zoneList.list.push(new Article(item));
+
                 self[to].push(new Article({
                     id: item.id,
-                    index: index,
                     webTitleOverride: item.webTitleOverride
                 }));
             });
+            console.log(zoneLists);
         }
     }
 
