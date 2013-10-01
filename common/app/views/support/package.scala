@@ -189,6 +189,13 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
               case width if width < 460 => "img-median inline-image"
               case width => "img-extended"
             })
+            Option(img.attr("height")).filter(_.isInt) foreach { height =>
+              fig.addClass(height.toInt match {
+                case height if height > width.toInt => "img-portrait"
+                case height if height < width.toInt => "img-landscape"
+                case height => "img"
+              })
+            }
           }
         }
         fig.getElementsByTag("figcaption").foreach { figcaption =>

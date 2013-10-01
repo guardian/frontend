@@ -143,29 +143,50 @@ figure {
 
     img {
         display: block;
-        margin-bottom: $baseline*2;
     }
 
     &.img-extended {
         margin-top: $baseline*4;
         margin-bottom: $baseline*4;
+    }
 
-        figcaption {
-            background-color: #FBFBF9;
-            padding: $baseline*2 $gs-gutter/2 $gs-column-height $gs-gutter/2;
-        }
-
+    &.img-landscape,
+    &.img-portrait {
         @include mq(leftCol) {
             float:left;
-            width: gs-span(6) + $gs-gutter;
-            margin-top: 0;
-            margin-left: - gs-span(2) + $gs-gutter;
+            clear: left;
+        }
+
+        figcaption {
+            background-color: $c-neutral7;
+            padding: $baseline*2 $gs-gutter/2 $gs-column-height $gs-gutter/2;
+        }
+    }
+
+    &.img-landscape {
+        @include mq(leftCol) {
+            width: gs-span(6);
+            margin-top: $baseline;
+            margin-left: - (gs-span(2) + $gs-gutter);
             margin-right: $gs-gutter;
         }
 
         @include mq(wide) {
-            width: gs-span(6) + $gs-gutter;
-            margin-left: - gs-span(4);
+            width: gs-span(6);
+            margin-left: - (gs-span(3) + $gs-gutter);
+        }
+    }
+
+    &.img-portrait {
+        @include mq(leftCol) {
+            width: gs-span(2);
+            margin-top: $baseline;
+            margin-left: - (gs-span(2) + $gs-gutter);
+        }
+
+        @include mq(wide) {
+            width: gs-span(3);
+            margin-left: - (gs-span(3) + $gs-gutter);
         }
     }
 }
