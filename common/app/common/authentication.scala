@@ -8,6 +8,8 @@ import play.api.mvc.Results._
 import play.api.mvc.BodyParsers._
 import play.api.Play
 import scala.concurrent.Future
+import play.api.libs.openid.OpenID
+import conf.Configuration
 
 case class Identity(openid: String, email: String, firstName: String, lastName: String) {
   implicit val formats = Serialization.formats(NoTypeHints)
@@ -91,7 +93,7 @@ class AuthAction(loginRoute: String) extends ExecutionContexts {
   }
 }
 
-trait LoginController {
+trait LoginController extends ExecutionContexts { self: Controller =>
   val openIdAttributes = Seq(
     ("email", "http://axschema.org/contact/email"),
     ("firstname", "http://axschema.org/namePerson/first"),
@@ -103,9 +105,44 @@ trait LoginController {
   val baseUrl: String //Where to go if there is no loginFromUrl
 
   def openIdCallback(secure: Boolean)(implicit request: RequestHeader): String
-
   def login: Action[AnyContent]
-  def loginPost: Action[AnyContent]
-  def openIDCallback: Action[AnyContent]
-  def logout: Action[AnyContent]
+
+  def loginPost = Action.async { implicit request =>
+    OpenID
+      .redirectURL(googleOpenIdUrl, openIdCallback(secure=true), openIdAttributes)
+      .map(Redirect(_))
+      .recover {
+      case error => Redirect(loginUrl).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
+    }
+  }
+
+  def openIDCallback = Action.async { implicit request =>
+    OpenID.verifiedId.map { info =>
+      val credentials = Identity(
+        info.id,
+        info.attributes.get("email").get,
+        info.attributes.get("firstname").get,
+        info.attributes.get("lastname").get
+      )
+
+      // allow test user access
+      val isTestUser = (credentials.email == "test.automation@gutest.com" && List("dev", "code", "gudev").contains(Configuration.environment.stage.toLowerCase))
+
+      if (credentials.emailDomain == "guardian.co.uk" || isTestUser) {
+        Redirect(session.get("loginFromUrl").getOrElse(baseUrl)).withSession {
+          session + (Identity.KEY -> credentials.writeJson) - "loginFromUrl"
+        }
+      } else {
+        Redirect(loginUrl).flashing(
+          ("error" -> "You can only log in using a Guardian Google Account")
+        ).withSession(session - Identity.KEY)
+      }
+    }.recover {
+      case error => Redirect(loginUrl).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
+    }
+  }
+
+  def logout = Action { implicit request =>
+    Redirect(loginUrl).withNewSession
+  }
 }
