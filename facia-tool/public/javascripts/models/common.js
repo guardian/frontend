@@ -8,9 +8,9 @@ define([
     return {
         config: {
             breakpoints: [
-                { width:  320,  height: 480,  name: "iPhone" },
-                { width:  768,  height: 1024, name: "iPad portrait" },
-                { width:  1024, height: 768,  name: "iPad landscape" },
+                { width:  320,  height: 480,  name: "Mobile" },
+                { width:  768,  height: 1024, name: "Tablet portrait" },
+                { width:  1024, height: 768,  name: "Tablet landscape" },
                 { width:  1295, height: 1024, name: "Desktop" }
             ],
             previewUrl: 'http://www.theguardian.com',
