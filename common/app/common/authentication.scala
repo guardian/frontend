@@ -81,7 +81,7 @@ class AuthActionWithTimeout(loginUrl: String) extends AuthAction(loginUrl) {
   }
 
   def withinAllowedTime(request: Request[AnyContent]): Boolean = {
-    lazy val oneMinuteAgo: Long = DateTime.now.getMillis - Configuration.cookies.sessionExpiryTime.toMillis
+    lazy val oneMinuteAgo: Long = DateTime.now.getMillis - Configuration.cookies.sessionExpiryTime
     request.session.get(Configuration.cookies.lastSeenKey).exists(new DateTime(_).getMillis > oneMinuteAgo)
   }
 }
