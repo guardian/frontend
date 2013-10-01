@@ -1,14 +1,13 @@
 package services
 
 import conf.Configuration
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.util.StringInputStream
 import scala.io.Source
 import org.joda.time.DateTime
-import scala.concurrent.Future
 
 trait S3 extends Logging {
 
@@ -89,19 +88,18 @@ trait S3 extends Logging {
 
 object S3 extends S3
 
-object S3FrontsApi extends S3 with ExecutionContexts {
+object S3FrontsApi extends S3 {
 
   override lazy val bucket = Configuration.aws.bucket
   lazy val stage = Configuration.facia.stage.toUpperCase
   val namespace = "frontsapi"
   lazy val location = s"${stage}/${namespace}"
 
-
-  def getSchema: Future[Option[String]] = Future.apply(get(s"${location}/schema.json"))
-  def getConfig(id: String): Future[Option[String]] = Future.apply(get(s"${location}/config/${id}/config.json"))
-  def getBlock(id: String): Future[Option[String]] = Future.apply(get(s"${location}/collection/${id}/collection.json"))
-  def listConfigsIds: Future[List[String]] = Future.apply(getConfigIds(s"$location/config/"))
-  def listCollectionIds: Future[List[String]] = Future.apply(getCollectionIds(s"$location/collection/"))
+  def getSchema = get(s"${location}/schema.json")
+  def getConfig(id: String) = get(s"${location}/config/${id}/config.json")
+  def getBlock(id: String) = get(s"${location}/collection/${id}/collection.json")
+  def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
+  def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
   def putBlock(id: String, json: String) =
     putPublic(s"${location}/collection/${id}/collection.json", json, "application/json")
 
