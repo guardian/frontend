@@ -65,6 +65,10 @@ function (
             return isCif(url) || isGallery(url) || isVideo(url) || isArticle(url);
         }
 
+        function hasImageSibling(el) {
+            return (/img-extended/).test(el.previousElementSibling.className);
+        }
+
         function cardifyRelatedInBodyLink(link) {
 
             var href = stripHost(link.getAttribute('href')),
@@ -114,6 +118,7 @@ function (
                         if (
                             isWhiteListed(normalisedHref, self.options.origin)
                             && !(hrefPath).test(window.location) // No link to self
+                            && !hasImageSibling(articleParagraphs[i])
                             ) {
                             cardifyRelatedInBodyLink(linksInParagraph[j]);
                             linkWasCardified = true;
