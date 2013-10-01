@@ -9,6 +9,8 @@ trait MetaData {
   def section: String
   def webTitle: String
   def analyticsName: String
+  def url: String  = s"/$id"
+  def linkText: String = webTitle
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs

@@ -45,7 +45,7 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Should
     }
 
     scenario("Should redirect when no competition table data found") {
-      val result = controllers.LeagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
+      val result = football.controllers.LeagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
       status(result) should be(303)
     }
   }

@@ -1,4 +1,4 @@
-@(competitions: Map[String, Seq[CompetitionFilter]], page: Page, competitionList: List[String])(implicit request: RequestHeader)
+@(competitions: Map[String, Seq[CompetitionFilter]], page: model.Page, competitionList: List[String])(implicit request: RequestHeader)
 
 @renderFilter(name: String) = {
     @competitions.get(name).map{ filters =>
@@ -28,7 +28,7 @@
 }
 
 <div class="box-indent article-zone-no-indent">
-    @fragments.footballNav("/football")
+    @fragments.footballNav(page)
 
     @fragments.mostPopularPlaceholder("sport")
 </div>
