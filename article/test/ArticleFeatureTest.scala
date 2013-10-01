@@ -159,7 +159,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatch
         val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
 
         ImageServerSwitch.switchOn
-        inBodyImage.getAttribute("class") should include("img-extended")
+        inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 

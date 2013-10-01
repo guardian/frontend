@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import model._

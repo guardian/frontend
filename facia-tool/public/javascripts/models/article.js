@@ -1,13 +1,11 @@
 define([
     'models/common',
-    'models/editable',
     'knockout',
     'Reqwest',
     'js!humanizedTimeSpan'
 ],
 function (
     common,
-    Editable,
     ko,
     reqwest
 ){
