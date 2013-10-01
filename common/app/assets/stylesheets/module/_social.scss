@@ -8,11 +8,12 @@
 .social__item {
     float: left;
     width: 25%;
+    opacity: 0.5;
     @include box-sizing(border-box);
 
-    /*+ .social__item {
-        border-left: 1px solid $c-neutral3;
-    }*/
+    &:hover {
+        opacity: 1;
+    }
 }
 .social__action {
     height: 36px;
