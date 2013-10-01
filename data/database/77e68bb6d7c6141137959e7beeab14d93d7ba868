@@ -208,45 +208,27 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-411592951",
-        "relation":"gallery",
+        "id":"gu-image-411653514",
+        "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242189736/Bill-Shorten-speaks-to-th-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372241637389/The-Prime-Minister-Julia--003.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Stefan Postles",
-            "altText":"Labor leadership: Bill Shorten speaks to the media prior to the ballot at Parliament House in",
-            "height":"480",
-            "credit":"Stefan Postles/Getty Images",
-            "caption":"Bill Shorten, regarded as a kingmaker in Labor circles, announced he would support Rudd. He had earlier helped Gillard to unseat Rudd",
-            "width":"733"
-          }
-        }]
-      },{
-        "id":"gu-image-411592961",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242181519/Former-Australian-Prime-M-002.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Rick Rycroft",
-            "altText":"Labor leadership: Former Australian Prime Minister Kevin Rudd announces that he will contest ",
-            "height":"472",
-            "credit":"Rick Rycroft/AP",
-            "caption":"Rudd announces that he will accept Gillard's invitation to a ballot for the leadership",
-            "width":"760"
+            "source":"Mike Bowers for the Guardian",
+            "altText":"The Prime Minister Julia Gillard takes her seat in the House of Reps chamber in Parliament House, Ca",
+            "height":"84",
+            "credit":"Mike Bowers for the Guardian",
+            "caption":"The Prime Minister Julia Gillard takes her seat in the House of Reps chamber in Parliament House, Canberra Photograph: Mike Bowers for the Guardian",
+            "width":"140"
           }
         }]
       },{
         "id":"gu-image-411593023",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":1,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -262,62 +244,10 @@
           }
         }]
       },{
-        "id":"gu-image-411593025",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242210691/Kevin-Rudd-announces-his--010.jpg",
-          "typeData":{
-            "source":"Mike Bowers /  <a href=\"http://www.theglobalmail.org\">Global Mail</a>",
-            "altText":"Labor leadership: Kevin Rudd announces his candidature as leader of the ALP for tonights spil",
-            "height":"480",
-            "credit":"Mike Bowers /  <a href=\"http://www.theglobalmail.org\">Global Mail</a>",
-            "caption":"Rudd surveys the gathered media as he steps up to announce his candidature",
-            "width":"720"
-          }
-        }]
-      },{
-        "id":"gu-image-411593027",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242195707/Kevin-Rudd-during-a-divis-005.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Stefan Postles",
-            "altText":"Labor leadership: Kevin Rudd during a division at Parliament House on in Canberra",
-            "height":"444",
-            "credit":"Stefan Postles/Getty Images",
-            "caption":"Rumours of a Kevin Rudd challenge had preoccupied the media for weeks",
-            "width":"760"
-          }
-        }]
-      },{
-        "id":"gu-image-411593029",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242192635/Kevin-Rudd-walks-towards--004.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Stefan Postles",
-            "altText":"Labor leadership: Kevin Rudd walks towards the caucus room for the leadership ballot at Parli",
-            "height":"442",
-            "credit":"Stefan Postles/Getty Images",
-            "caption":"Rudd walks towards the caucus room",
-            "width":"760"
-          }
-        }]
-      },{
         "id":"gu-image-411593031",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":2,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -333,9 +263,29 @@
           }
         }]
       },{
+        "id":"gu-image-411593027",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242195707/Kevin-Rudd-during-a-divis-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stefan Postles",
+            "altText":"Labor leadership: Kevin Rudd during a division at Parliament House on in Canberra",
+            "height":"444",
+            "credit":"Stefan Postles/Getty Images",
+            "caption":"Rumours of a Kevin Rudd challenge had preoccupied the media for weeks",
+            "width":"760"
+          }
+        }]
+      },{
         "id":"gu-image-411593033",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":4,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -350,27 +300,66 @@
           }
         }]
       },{
-        "id":"gu-image-411593035",
+        "id":"gu-image-411592961",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":5,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242198666/The-ballot-box-is-taken-t-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242181519/Former-Australian-Prime-M-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Rick Rycroft",
+            "altText":"Labor leadership: Former Australian Prime Minister Kevin Rudd announces that he will contest ",
+            "height":"472",
+            "credit":"Rick Rycroft/AP",
+            "caption":"Rudd announces that he will accept Gillard's invitation to a ballot for the leadership",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-411593025",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242210691/Kevin-Rudd-announces-his--010.jpg",
+          "typeData":{
+            "source":"Mike Bowers /  <a href=\"http://www.theglobalmail.org\">Global Mail</a>",
+            "altText":"Labor leadership: Kevin Rudd announces his candidature as leader of the ALP for tonights spil",
+            "height":"480",
+            "credit":"Mike Bowers /  <a href=\"http://www.theglobalmail.org\">Global Mail</a>",
+            "caption":"Rudd surveys the gathered media as he steps up to announce his candidature",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-411592951",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242189736/Bill-Shorten-speaks-to-th-003.jpg",
           "typeData":{
             "source":"Getty Images",
             "photographer":"Stefan Postles",
-            "altText":"Labor leadership: The ballot box is taken to the caucus room for the leadership ballot at Par",
+            "altText":"Labor leadership: Bill Shorten speaks to the media prior to the ballot at Parliament House in",
             "height":"480",
             "credit":"Stefan Postles/Getty Images",
-            "caption":"The ballot box is taken to the caucus room",
-            "width":"693"
+            "caption":"Bill Shorten, regarded as a kingmaker in Labor circles, announced he would support Rudd. He had earlier helped Gillard to unseat Rudd",
+            "width":"733"
           }
         }]
       },{
         "id":"gu-image-411593037",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":8,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -385,20 +374,41 @@
           }
         }]
       },{
-        "id":"gu-image-411653514",
-        "relation":"thumbnail",
+        "id":"gu-image-411593029",
+        "relation":"gallery",
         "type":"image",
+        "galleryIndex":9,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372241637389/The-Prime-Minister-Julia--003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242192635/Kevin-Rudd-walks-towards--004.jpg",
           "typeData":{
-            "source":"Mike Bowers for the Guardian",
-            "altText":"The Prime Minister Julia Gillard takes her seat in the House of Reps chamber in Parliament House, Ca",
-            "height":"84",
-            "credit":"Mike Bowers for the Guardian",
-            "caption":"The Prime Minister Julia Gillard takes her seat in the House of Reps chamber in Parliament House, Canberra Photograph: Mike Bowers for the Guardian",
-            "width":"140"
+            "source":"Getty Images",
+            "photographer":"Stefan Postles",
+            "altText":"Labor leadership: Kevin Rudd walks towards the caucus room for the leadership ballot at Parli",
+            "height":"442",
+            "credit":"Stefan Postles/Getty Images",
+            "caption":"Rudd walks towards the caucus room",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-411593035",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372242198666/The-ballot-box-is-taken-t-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stefan Postles",
+            "altText":"Labor leadership: The ballot box is taken to the caucus room for the leadership ballot at Par",
+            "height":"480",
+            "credit":"Stefan Postles/Getty Images",
+            "caption":"The ballot box is taken to the caucus room",
+            "width":"693"
           }
         }]
       }],
@@ -1174,9 +1184,46 @@
         "references":[]
       }],
       "elements":[{
+        "id":"gu-image-411648315",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372213846431/d679e07a-c9ca-4d5b-8ede-f1092490cfe6-140x84.jpeg",
+          "typeData":{
+            "source":"Mike Bowers",
+            "photographer":"Mike Bowers",
+            "altText":"Kevin Rudd",
+            "height":"84",
+            "credit":"Mike Bowers/Mike Bowers",
+            "caption":"Kevin Rudd Photograph: Mike Bowers",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-411608433",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372249377251/Kevin-Rudd-004.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "altText":"In and Out: Kevin Rudd",
+            "height":"460",
+            "credit":"AAPIMAGE",
+            "caption":"IN: <strong>Kevin Rudd</strong> as prime minister",
+            "width":"692"
+          }
+        }]
+      },{
         "id":"gu-image-411606259",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":2,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1195,6 +1242,7 @@
         "id":"gu-image-411606261",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":3,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1209,37 +1257,20 @@
           }
         }]
       },{
-        "id":"gu-image-411608429",
+        "id":"gu-image-411608439",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":4,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372249868374/Wayne-Swan-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372249977362/Jacinta-Collins--007.jpg",
           "typeData":{
             "source":"AAP",
-            "photographer":"ALAN PORRITT",
-            "altText":"In and Out: Wayne Swan",
+            "altText":"In and Out: Jacinta Collins ",
             "height":"460",
-            "credit":"ALAN PORRITT/AAP",
-            "caption":"OUT: <strong>Wayne Swan</strong> as treasurer and deputy prime minister ",
-            "width":"692"
-          }
-        }]
-      },{
-        "id":"gu-image-411608433",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372249377251/Kevin-Rudd-004.jpg",
-          "typeData":{
-            "source":"AAPIMAGE",
-            "altText":"In and Out: Kevin Rudd",
-            "height":"460",
-            "credit":"AAPIMAGE",
-            "caption":"IN: <strong>Kevin Rudd</strong> as prime minister",
+            "credit":"AAP",
+            "caption":"IN: <strong>Jacinta Collins</strong> as deputy leader of the senate",
             "width":"692"
           }
         }]
@@ -1247,6 +1278,7 @@
         "id":"gu-image-411608436",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":5,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1262,19 +1294,21 @@
           }
         }]
       },{
-        "id":"gu-image-411608439",
+        "id":"gu-image-411608429",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":6,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372249977362/Jacinta-Collins--007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372249868374/Wayne-Swan-006.jpg",
           "typeData":{
             "source":"AAP",
-            "altText":"In and Out: Jacinta Collins ",
+            "photographer":"ALAN PORRITT",
+            "altText":"In and Out: Wayne Swan",
             "height":"460",
-            "credit":"AAP",
-            "caption":"IN: <strong>Jacinta Collins</strong> as deputy leader of the senate",
+            "credit":"ALAN PORRITT/AAP",
+            "caption":"OUT: <strong>Wayne Swan</strong> as treasurer and deputy prime minister ",
             "width":"692"
           }
         }]
@@ -1282,6 +1316,7 @@
         "id":"gu-image-411608689",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":7,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1297,9 +1332,29 @@
           }
         }]
       },{
+        "id":"gu-image-411609766",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372251001477/Peter-Garrett--011.jpg",
+          "typeData":{
+            "source":"AAP",
+            "photographer":"MARIANNA MASSEY",
+            "altText":"In and Out: Peter Garrett ",
+            "height":"460",
+            "credit":"MARIANNA MASSEY/AAP",
+            "caption":"OUT: <strong>Peter Garrett</strong> as higher education minister (not standing at election)",
+            "width":"667"
+          }
+        }]
+      },{
         "id":"gu-image-411608693",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":9,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1318,6 +1373,7 @@
         "id":"gu-image-411609341",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":10,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1336,6 +1392,7 @@
         "id":"gu-image-411609528",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":11,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1348,42 +1405,6 @@
             "credit":"DAVE HUNT/AAP",
             "caption":"OUT: <strong>Joe Ludwig</strong> as minister for agriculture, fisheries and forestry",
             "width":"681"
-          }
-        }]
-      },{
-        "id":"gu-image-411609766",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372251001477/Peter-Garrett--011.jpg",
-          "typeData":{
-            "source":"AAP",
-            "photographer":"MARIANNA MASSEY",
-            "altText":"In and Out: Peter Garrett ",
-            "height":"460",
-            "credit":"MARIANNA MASSEY/AAP",
-            "caption":"OUT: <strong>Peter Garrett</strong> as higher education minister (not standing at election)",
-            "width":"667"
-          }
-        }]
-      },{
-        "id":"gu-image-411648315",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/26/1372213846431/d679e07a-c9ca-4d5b-8ede-f1092490cfe6-140x84.jpeg",
-          "typeData":{
-            "source":"Mike Bowers",
-            "photographer":"Mike Bowers",
-            "altText":"Kevin Rudd",
-            "height":"84",
-            "credit":"Mike Bowers/Mike Bowers",
-            "caption":"Kevin Rudd Photograph: Mike Bowers",
-            "width":"140"
           }
         }]
       }],
@@ -2827,7 +2848,7 @@
         "webTitle":"David Marr",
         "webUrl":"http://www.theguardian.com/profile/david-marr",
         "apiUrl":"http://content.guardianapis.com/profile/david-marr",
-        "bio":"<p>David Marr is a Guardian Australia reporter. He has won four Walkley awards for journalism and written biographies of Sir Garfield Barwick, Patrick White, John Howard and Kevin Rudd.</p>",
+        "bio":"<p>David Marr is a Guardian Australia reporter. He has won four Walkley awards for journalism and written biographies of Sir Garfield Barwick, Patrick White, John Howard, Kevin Rudd, George Pell and Tony Abbott.</p>",
         "r2ContributorId":"56589",
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/28/1369702660785/David-Marr.jpg",
         "references":[]

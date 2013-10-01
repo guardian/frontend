@@ -1,0 +1,24 @@
+@(page: model.MetaData)
+
+@profile(tag: model.Tag) = {
+    <div class="profile media">
+        @tag.contributorImagePath.map { url =>
+            <div class="profile-img media__img">
+                <img src="@url" alt="@tag.webTitle" />
+            </div>
+        }
+        @if(tag.bio) {
+            <p class="type-7 profile-bio">
+            @RemoveOuterParaHtml(tag.bio)
+            </p>
+        }
+    </div>
+
+    <h2 class="type-2 article-zone b1">Latest</h2>
+}
+
+@{page match {
+    case tag: model.Tag if tag.isContributor => profile(tag)
+    case _ =>
+}}
+

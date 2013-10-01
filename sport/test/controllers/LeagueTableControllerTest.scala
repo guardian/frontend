@@ -8,7 +8,7 @@ import org.scalatest.FlatSpec
 class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
   
   "League Table Controller" should "200 when content type is table" in Fake {
-    val result = controllers.LeagueTableController.renderLeagueTable()(TestRequest())
+    val result = football.controllers.LeagueTableController.renderLeagueTable()(TestRequest())
     status(result) should be(200)
   }
 
@@ -16,7 +16,7 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, "/football/tables?callback=foo")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Accept" -> "application/javascript")
-    val result = controllers.LeagueTableController.renderLeagueTable()(fakeRequest)
+    val result = football.controllers.LeagueTableController.renderLeagueTable()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
@@ -26,14 +26,14 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.LeagueTableController.renderLeagueTableJson()(fakeRequest)
+    val result = football.controllers.LeagueTableController.renderLeagueTableJson()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
   
   it should "200 when content type is teams" in Fake {
-    val result = controllers.LeagueTableController.renderTeamlist()(TestRequest().withHeaders("Accept" -> "application/javascript"))
+    val result = football.controllers.LeagueTableController.renderTeamlist()(TestRequest().withHeaders("Accept" -> "application/javascript"))
     status(result) should be(200)
   }
 
@@ -41,7 +41,7 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, "/football/teams?callback=foo")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Accept" -> "application/javascript")
-    val result = controllers.LeagueTableController.renderTeamlist()(fakeRequest)
+    val result = football.controllers.LeagueTableController.renderTeamlist()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
@@ -51,7 +51,7 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.LeagueTableController.renderTeamlist()(fakeRequest)
+    val result = football.controllers.LeagueTableController.renderTeamlist()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
@@ -60,7 +60,7 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
   val competitionId = "premierleague"
   
   it should "200 when content type is competition table" in Fake {
-    val result = controllers.LeagueTableController.renderCompetition(competitionId)(TestRequest())
+    val result = football.controllers.LeagueTableController.renderCompetition(competitionId)(TestRequest())
     status(result) should be(200)
   }
 
@@ -68,7 +68,7 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, "/football/" + competitionId + "/table?callback=foo")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Accept" -> "application/javascript")
-    val result = controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
+    val result = football.controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
@@ -78,7 +78,7 @@ class LeagueTableControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
+    val result = football.controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")

@@ -1,5 +1,5 @@
 .profile {
-    padding: 0 $gs-gutter/2 $baseline*4;
+    padding: $baseline*4 $gs-gutter/2 $baseline*4;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
