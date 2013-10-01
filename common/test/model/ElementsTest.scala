@@ -92,14 +92,14 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
                       index: Int,
                       caption: String,
                       width: Int): ImageElement = {
-    new ImageElement(ApiElement(id, relation, "image", List(asset(caption, width))), index)
+    new ImageElement(ApiElement(id, relation, "image", Some(0), List(asset(caption, width))))
   }
 
   private def image(  id: String,
                       relation: String,
                       index: Int,
                       assets: List[Asset]): ImageElement = {
-    new ImageElement(ApiElement(id, relation, "image", assets), index)
+    new ImageElement(ApiElement(id, relation, "image", Some(0), assets))
   }
 
   private def video(  id: String,
@@ -107,7 +107,7 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
                       index: Int,
                       caption: String,
                       width: Int): VideoElement = {
-    new VideoElement(ApiElement(id, relation, "video", List(asset(caption, width))), index)
+    new VideoElement(ApiElement(id, relation, "video", Some(0), List(asset(caption, width))))
   }
 
   private def asset(caption: String, width: Int): Asset = {

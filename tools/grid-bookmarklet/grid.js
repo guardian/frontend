@@ -1,4 +1,4 @@
-//javascript:(function()%7Bdocument.body.appendChild(document.createElement('script')).src='https://rawgithub.com/guardian/frontend/grid-bookmarklet/tools/grid-bookmarklet/grid.js?'+(new Date()).getTime();%7D)();
+//javascript:(function()%7Bdocument.body.appendChild(document.createElement('script')).src='https://rawgithub.com/guardian/frontend/master/tools/grid-bookmarklet/grid.js?'+(new Date()).getTime();%7D)();
 
 require([
     'common',

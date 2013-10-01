@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":3,
+    "total":5,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
@@ -19,6 +19,200 @@
       "references":[]
     },
     "results":[{
+      "id":"news/2013/sep/30/1",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-09-30T11:05:00Z",
+      "webTitle":"Lunchtime briefing: the 10 key stories of the day",
+      "webUrl":"http://www.theguardian.com/news/2013/sep/30/1",
+      "apiUrl":"http://content.guardianapis.com/news/2013/sep/30/1",
+      "fields":{
+        "trailText":"<p>In a hurry? Get up to date with today's news agenda</p>",
+        "headline":"Lunchtime briefing: the 10 key stories of the day",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6ag",
+        "wordcount":"356",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"news/series/lunchtime-briefing",
+        "type":"series",
+        "webTitle":"Lunchtime briefing",
+        "webUrl":"http://www.theguardian.com/news/series/lunchtime-briefing",
+        "apiUrl":"http://content.guardianapis.com/news/series/lunchtime-briefing",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418631168",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380525169913/70f9b5c4-362a-49a3-a5e0-547f084cb528-460x276.jpeg",
+          "typeData":{
+            "source":"REX/Ray Tang",
+            "photographer":"REX/Ray Tang",
+            "altText":"George Osborne at the Conservative party conference",
+            "height":"276",
+            "credit":"REX/Ray Tang/REX/Ray Tang",
+            "caption":"George Osborne at the Conservative party conference in Manchester. Photograph: Rex/Ray Tang",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418631169",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380533664217/796af362-69f8-4859-8731-0729c647f651-460x276.jpeg",
+          "typeData":{
+            "source":"Alberto Ghizzi Panizza/Solent",
+            "photographer":"Alberto Ghizzi Panizza / Solent News",
+            "altText":"Best of friends: two damselflies on a flower in the Po Valley, Italy, look like they're holding hands. Photographer Alberto Ghizzi Panizza, 38, spotted the insects in the dew as he walked across a flood plain early one morning. Struck by their cute poses, he took the shots shortly after dawn as they rested on wild flowers.",
+            "height":"276",
+            "credit":"Alberto Ghizzi Panizza / Solent News/Alberto Ghizzi Panizza/Solent",
+            "caption":"Best of friends: two damselflies on a flower in the Po Valley, Italy, look like they're holding hands. Photographer Alberto Ghizzi Panizza, 38, spotted the insects in the dew as he walked across a flood plain early one morning. Struck by their cute poses, he took the shots shortly after dawn as they rested on wild flowers. Photograph: Alberto Ghizzi Panizza/Solent News",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"news/2013/sep/27/10-key-stories-of-the-day",
+      "sectionId":"news",
+      "sectionName":"News",
+      "webPublicationDate":"2013-09-27T11:11:00Z",
+      "webTitle":"Lunchtime briefing: the 10 key stories of the day",
+      "webUrl":"http://www.theguardian.com/news/2013/sep/27/10-key-stories-of-the-day",
+      "apiUrl":"http://content.guardianapis.com/news/2013/sep/27/10-key-stories-of-the-day",
+      "fields":{
+        "trailText":"<p>In a hurry? Get up to date with today's news agenda</p>",
+        "headline":"Lunchtime briefing: the 10 key stories of the day",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j55j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/06/burma_cyclone1_140.jpg",
+        "wordcount":"284",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"news/series/lunchtime-briefing",
+        "type":"series",
+        "webTitle":"Lunchtime briefing",
+        "webUrl":"http://www.theguardian.com/news/series/lunchtime-briefing",
+        "apiUrl":"http://content.guardianapis.com/news/series/lunchtime-briefing",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418457622",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/9/26/1380211850296/Burma-cyclone-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Getty Images",
+            "altText":"Burma cyclone",
+            "height":"276",
+            "credit":"Getty Images/Getty Images",
+            "caption":"A man rebuilds a house after Cyclone Nargis, which caused devastation in Burma in 2008. A report warns of further cyclones in the future. Photograph: Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418457623",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380280136053/Indian-Fire-officials-res-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"Indian Fire officials rescue a girl from debris of a collapsed building in Mumbai, India.",
+            "height":"276",
+            "credit":"AP",
+            "caption":"Indian Fire officials rescue a girl from debris of a collapsed building in Mumbai, India. Photograph: AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418457624",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/06/burma_cyclone1_140.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "altText":"Burma Cyclone",
+            "height":"84",
+            "credit":"Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"news/2013/sep/26/2",
       "sectionId":"news",
       "sectionName":"News",
