@@ -10,9 +10,9 @@
     width: 25%;
     @include box-sizing(border-box);
 
-    + .social__item {
+    /*+ .social__item {
         border-left: 1px solid $c-neutral3;
-    }
+    }*/
 }
 .social__action {
     height: 36px;
