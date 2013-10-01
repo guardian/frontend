@@ -151,7 +151,7 @@
                 },
                 foreach: state.liveMode() ? live : draft">
 
-                <div class="zone-name" data-bind="text: name"></div>
+                <div class="zone-name" data-bind="visible: !isDefaultZone, text: name"></div>
                 <div class="connectedList persisted" data-bind="
                     attr: {
                         'data-collection': $parent.id

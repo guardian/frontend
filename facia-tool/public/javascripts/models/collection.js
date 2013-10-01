@@ -15,11 +15,9 @@ define([
     contentApi,
     ophanApi
 ) {
-    var defaultZoneName = common.config.defaultZoneName || 0;
-
     function Collection(opts) {
         var self = this,
-            zoneNames = _.isArray(opts.zones) ? opts.zones : [defaultZoneName]; // default zone is called 0
+            zoneNames = _.isArray(opts.zones) ? opts.zones : [common.config.defaultZoneName];
 
         if (!opts.id) { return; }
 
@@ -28,6 +26,7 @@ define([
         this.live = _.map(zoneNames, function(n) {
             return {
                 name: n,
+                isDefaultZone: n === common.config.defaultZoneName,
                 articles: ko.observableArray()
             };
         })
@@ -35,6 +34,7 @@ define([
         this.draft = _.map(zoneNames, function(n) {
             return {
                 name: n,
+                isDefaultZone: n === common.config.defaultZoneName,
                 articles: ko.observableArray()
             };
         })

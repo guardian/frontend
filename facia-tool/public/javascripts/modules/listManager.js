@@ -163,11 +163,9 @@ define([
                     }
                 }
                 delta.itemMeta = {
-                    zone: zone.name
+                    zone: zone.name !== common.config.defaultZoneName ? zone.name : undefined
                 }
             }
-
-            collection.state.loadIsPending(true);
 
             reqwest({
                 method: method,
@@ -178,6 +176,8 @@ define([
             }).always(function(resp) {
                 collection.load();
             });
+
+            collection.state.loadIsPending(true);
         };
 
         function startPoller() {
@@ -300,6 +300,8 @@ define([
                 knockout.applyBindings(model);
 
                 startPoller();
+
+                model.latestArticles.search();
                 model.latestArticles.startPoller();
             });
         };

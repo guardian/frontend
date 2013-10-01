@@ -461,6 +461,13 @@ button {
     right: 33px;
 }
 
+.zone-name {
+    padding: 0 0 0 4px;
+    font-size: 14px;
+    font-style: italic;
+    color: #666666;
+}
+
 .frames {
     position: relative;
     float: left;
