@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":81582,
+    "total":81957,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
-    "pages":8159,
+    "pages":8196,
     "orderBy":"newest",
     "edition":{
       "id":"uk/commentisfree",
@@ -47,20 +47,20 @@
       }]
     },
     "results":[{
-      "id":"commentisfree/2013/sep/17/occupy-wall-street-99-percent",
+      "id":"commentisfree/2013/sep/30/why-i-hate-bridget-jones",
       "sectionId":"commentisfree",
       "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-17T11:00:00Z",
-      "webTitle":"Occupy Wall Street, two years on: we're still the 99% | Justin Wedes",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/occupy-wall-street-99-percent",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/occupy-wall-street-99-percent",
+      "webPublicationDate":"2013-09-30T11:49:59Z",
+      "webTitle":"Why I hate Bridget Jones | Suzanne Moore",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/30/why-i-hate-bridget-jones",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/30/why-i-hate-bridget-jones",
       "fields":{
-        "trailText":"<p><strong>Justin Wedes:</strong> The wave of Occupy protests in 2011 was forcibly suppressed. But it changed public debate, inspiring a generation of activists</p>",
-        "headline":"Occupy Wall Street, two years on: we're still the 99%",
+        "trailText":"Help, Bridget's back. She's a widow but she's as vapid, consumerist and self-obsessed as ever. I don't buy this anti-feminist fiction",
+        "headline":"Why I hate Bridget Jones",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tnxn",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/14/1318599872261/Members-of-Occupy-Wall-St-003.jpg",
-        "wordcount":"815",
+        "shortUrl":"http://gu.com/p/3j6gb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541586642/BRIDGET-JONES-THE-EDGE-OF-003.jpg",
+        "wordcount":"665",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -73,65 +73,56 @@
         "sectionName":"Comment is free",
         "references":[]
       },{
-        "id":"world/occupy-wall-street",
+        "id":"books/helenfielding",
         "type":"keyword",
-        "webTitle":"Occupy Wall Street",
-        "webUrl":"http://www.theguardian.com/world/occupy-wall-street",
-        "apiUrl":"http://content.guardianapis.com/world/occupy-wall-street",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "webTitle":"Helen Fielding",
+        "webUrl":"http://www.theguardian.com/books/helenfielding",
+        "apiUrl":"http://content.guardianapis.com/books/helenfielding",
+        "sectionId":"books",
+        "sectionName":"Books",
         "references":[]
       },{
-        "id":"world/occupy-movement",
+        "id":"books/fiction",
         "type":"keyword",
-        "webTitle":"Occupy movement",
-        "webUrl":"http://www.theguardian.com/world/occupy-movement",
-        "apiUrl":"http://content.guardianapis.com/world/occupy-movement",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
         "references":[]
       },{
-        "id":"world/protest",
+        "id":"books/books",
         "type":"keyword",
-        "webTitle":"Protest",
-        "webUrl":"http://www.theguardian.com/world/protest",
-        "apiUrl":"http://content.guardianapis.com/world/protest",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
         "references":[]
       },{
-        "id":"society/poverty",
+        "id":"lifeandstyle/women",
         "type":"keyword",
-        "webTitle":"Poverty",
-        "webUrl":"http://www.theguardian.com/society/poverty",
-        "apiUrl":"http://content.guardianapis.com/society/poverty",
-        "sectionId":"society",
-        "sectionName":"Society",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
         "references":[]
       },{
-        "id":"society/equality",
+        "id":"lifeandstyle/lifeandstyle",
         "type":"keyword",
-        "webTitle":"Equality",
-        "webUrl":"http://www.theguardian.com/society/equality",
-        "apiUrl":"http://content.guardianapis.com/society/equality",
-        "sectionId":"society",
-        "sectionName":"Society",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
         "references":[]
       },{
-        "id":"world/usa",
+        "id":"world/feminism",
         "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.theguardian.com/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/us-politics",
-        "type":"keyword",
-        "webTitle":"US politics",
-        "webUrl":"http://www.theguardian.com/world/us-politics",
-        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "webTitle":"Feminism",
+        "webUrl":"http://www.theguardian.com/world/feminism",
+        "apiUrl":"http://content.guardianapis.com/world/feminism",
         "sectionId":"world",
         "sectionName":"World news",
         "references":[]
@@ -145,24 +136,6 @@
         "sectionName":"World news",
         "references":[]
       },{
-        "id":"world/new-york",
-        "type":"keyword",
-        "webTitle":"New York",
-        "webUrl":"http://www.theguardian.com/world/new-york",
-        "apiUrl":"http://content.guardianapis.com/world/new-york",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/bill-de-blasio",
-        "type":"keyword",
-        "webTitle":"Bill de Blasio",
-        "webUrl":"http://www.theguardian.com/world/bill-de-blasio",
-        "apiUrl":"http://content.guardianapis.com/world/bill-de-blasio",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
         "id":"tone/comment",
         "type":"tone",
         "webTitle":"Comment",
@@ -170,14 +143,15 @@
         "apiUrl":"http://content.guardianapis.com/tone/comment",
         "references":[]
       },{
-        "id":"profile/justin-wedes",
+        "id":"profile/suzannemoore",
         "type":"contributor",
-        "webTitle":"Justin Wedes",
-        "webUrl":"http://www.theguardian.com/profile/justin-wedes",
-        "apiUrl":"http://content.guardianapis.com/profile/justin-wedes",
-        "bio":"<p><a href=\"http://www.justinwedes.com/\">Justin Wedes</a> was a founding member of Occupy Wall Street, and has appeared on the Colbert Report, DemocracyNow!, NPR and more. He is an educator and activist living in Brooklyn, and is co-principal of the <a href=\"http://paulrobesonfreedomschool.org/\">Paul Robeson Freedom School</a></p>",
-        "r2ContributorId":"58674",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379101093305/justinwedes_140x140.jpg",
+        "webTitle":"Suzanne Moore",
+        "webUrl":"http://www.theguardian.com/profile/suzannemoore",
+        "apiUrl":"http://content.guardianapis.com/profile/suzannemoore",
+        "bio":"<p>Suzanne Moore is an award-winning columnist for the Guardian.</p>",
+        "rcsId":"GNL043160",
+        "r2ContributorId":"22204",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/12/1360693289952/Suzanne_Moore.jpg",
         "references":[]
       },{
         "id":"type/article",
@@ -188,75 +162,162 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417447116",
+        "id":"gu-image-418635693",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/14/1318599876850/Members-of-Occupy-Wall-St-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541584104/BRIDGET-JONES-THE-EDGE-OF-001.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Emmanuel Dunand",
-            "altText":"Members of Occupy Wall Street celebrate after learning they can stay in Zuccotti Park in New York",
-            "height":"276",
-            "credit":"Emmanuel Dunand/AFP/Getty Images",
-            "caption":"Members of Occupy Wall Street in Zuccotti Park, New York, 2011. Photograph: Emmanuel Dunand/AFP/Getty Images",
-            "width":"460"
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
+            "height":"54",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "width":"54"
           }
-        }]
-      },{
-        "id":"gu-image-417447117",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
+        },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379357603558/occupy_gilesclarke_460x276.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541585386/BRIDGET-JONES-THE-EDGE-OF-002.jpg",
           "typeData":{
-            "source":"GIles Clarke",
-            "photographer":"Giles Clarke",
-            "altText":"Occupy, by Giles Clarke",
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
+            "height":"130",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541586642/BRIDGET-JONES-THE-EDGE-OF-003.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
+            "height":"84",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541587677/BRIDGET-JONES-THE-EDGE-OF-004.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
+            "height":"132",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541588710/BRIDGET-JONES-THE-EDGE-OF-005.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
+            "height":"168",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541589774/BRIDGET-JONES-THE-EDGE-OF-006.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
+            "height":"180",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541590818/BRIDGET-JONES-THE-EDGE-OF-007.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
+            "height":"228",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541591890/BRIDGET-JONES-THE-EDGE-OF-008.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
             "height":"276",
-            "credit":"Giles Clarke/GIles Clarke",
-            "caption":"A broad coalition. Photograph: <a href=\"http://www.gilesnclarke.com/#1\">Giles N Clarke</a>",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541591890/BRIDGET-JONES-THE-EDGE-OF-008.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
+            "height":"276",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417447118",
+        "id":"gu-image-418635694",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/14/1318599872261/Members-of-Occupy-Wall-St-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380541586642/BRIDGET-JONES-THE-EDGE-OF-003.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Emmanuel Dunand",
-            "altText":"Members of Occupy Wall Street celebrate after learning they can stay in Zuccotti Park in New York",
+            "source":"Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "photographer":"Allstar/Cinetext/Allstar Collection/Miramax",
+            "altText":"BRIDGET JONES: THE EDGE OF REA",
             "height":"84",
-            "credit":"Emmanuel Dunand/AFP/Getty Images",
-            "caption":"Members of Occupy Wall Street celebrate after learning that they can stay on Zuccotti Park in New York Photograph: Emmanuel Dunand/AFP/Getty Images",
+            "credit":"Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
+            "caption":"Bridget Jones (Renee Zellweger), with bad boy Daniel Cleaver (Hugh Grant). Bridget is 'obsessed with three of the most boring things in the entire world: dieting, trying to get a bloke and drinking and feeling bad about it.' Photograph: Allstar/Cinetext/Allstar Collection/Miramax/Allstar/Cinetext /Allstar Collection/MIRAMAX",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"commentisfree/poll/2013/sep/17/central-heating-time",
+      "id":"commentisfree/2013/sep/30/single-payer-cure-healthcare-reform",
       "sectionId":"commentisfree",
       "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-17T10:16:38Z",
-      "webTitle":"Is it time to turn on the central heating? | Poll",
-      "webUrl":"http://www.theguardian.com/commentisfree/poll/2013/sep/17/central-heating-time",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/poll/2013/sep/17/central-heating-time",
+      "webPublicationDate":"2013-09-30T11:30:00Z",
+      "webTitle":"A single-payer system, like Medicare, is the cure for America's ailing healthcare | Bernie Sanders",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/30/single-payer-cure-healthcare-reform",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/30/single-payer-cure-healthcare-reform",
       "fields":{
-        "trailText":"<p>With weather changing in the UK from a heatwave to single figure temperatures in a matter of weeks, it is tempting to turn on the central heating. Is this acceptable in early autumn?</p>",
-        "headline":"Is it time to turn on the central heating?",
+        "trailText":"<p><strong>Bernie Sanders:</strong> Obamacare's reforms are a welcome but small step. To give all Americans healthcare as a right, we need a fair, efficient solution</p>",
+        "headline":"A single-payer system, like Medicare, is the cure for America's ailing healthcare",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tzgh",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/6/1354796281237/Turning-down-central-heat-003.jpg",
+        "shortUrl":"http://gu.com/p/3j5n3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/red/blue_pics/2009/04/10/doctor140.gif",
+        "wordcount":"763",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -269,13 +330,196 @@
         "sectionName":"Comment is free",
         "references":[]
       },{
-        "id":"lifeandstyle/lifeandstyle",
+        "id":"world/healthcare",
         "type":"keyword",
-        "webTitle":"Life and style",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
+        "webTitle":"US healthcare",
+        "webUrl":"http://www.theguardian.com/world/healthcare",
+        "apiUrl":"http://content.guardianapis.com/world/healthcare",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/berniesanders",
+        "type":"contributor",
+        "webTitle":"Bernie Sanders",
+        "webUrl":"http://www.theguardian.com/profile/berniesanders",
+        "apiUrl":"http://content.guardianapis.com/profile/berniesanders",
+        "bio":"<p><a href=\"http://sanders.senate.gov/\">Bernie Sanders</a> is a US Senator, and a member of the Senate budget committee. He represents the state of Vermont, and is the longest-serving <a href=\"http://news.bbc.co.uk/2/hi/americas/6173577.stm\">independent</a> in the history of Congress.</p>",
+        "r2ContributorId":"28248",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Global/content/icons/2011/5/11/1305141273365/berniesanders_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"world/medicare",
+        "type":"keyword",
+        "webTitle":"Medicare",
+        "webUrl":"http://www.theguardian.com/world/medicare",
+        "apiUrl":"http://content.guardianapis.com/world/medicare",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/insurance",
+        "type":"keyword",
+        "webTitle":"Insurance industry",
+        "webUrl":"http://www.theguardian.com/business/insurance",
+        "apiUrl":"http://content.guardianapis.com/business/insurance",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418509460",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/gif",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/red/blue_pics/2009/04/10/doctor460.gif",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Doctor 460",
+            "height":"276",
+            "credit":"Guardian",
+            "caption":"The US spends a higher proportion of GDP on healthcare than any other industrialised country – yet 50 million Americans are uninsured, as Obamacare begins. Photograph: Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418509461",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/gif",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/red/blue_pics/2009/04/10/doctor140.gif",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Doctor 140",
+            "height":"84",
+            "credit":"Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/sep/30/how-old-first-got-drunk",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-30T11:26:29Z",
+      "webTitle":"How old were you when you first got drunk? | Open thread",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/30/how-old-first-got-drunk",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/30/how-old-first-got-drunk",
+      "fields":{
+        "trailText":"<strong>Open thread:</strong> More children are being taken to hospital in the UK suffering from the effects of alcohol. What were your experience of childhood drinking?",
+        "headline":"How old were you when you first got drunk?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6ec",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537951513/Child-Drinking-Alcohol-003.jpg",
+        "wordcount":"98",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/series/openthread",
+        "type":"series",
+        "webTitle":"Open thread",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/openthread",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/openthread",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/alcohol",
+        "type":"keyword",
+        "webTitle":"Alcohol",
+        "webUrl":"http://www.theguardian.com/society/alcohol",
+        "apiUrl":"http://content.guardianapis.com/society/alcohol",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/children",
+        "type":"keyword",
+        "webTitle":"Children",
+        "webUrl":"http://www.theguardian.com/society/children",
+        "apiUrl":"http://content.guardianapis.com/society/children",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/health",
+        "type":"keyword",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
         "references":[]
       },{
         "id":"uk/uk",
@@ -293,67 +537,342 @@
         "webUrl":"http://www.theguardian.com/articles",
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
-      },{
-        "id":"type/poll",
-        "type":"type",
-        "webTitle":"Poll",
-        "webUrl":"http://www.theguardian.com/polls",
-        "apiUrl":"http://content.guardianapis.com/polls",
-        "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417509961",
+        "id":"gu-image-418632716",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537948070/Child-Drinking-Alcohol-001.jpg",
+          "typeData":{
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
+            "height":"54",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"A boy drinking an alcopop: is underage drinking part of growing up?  Photograph: Ciaran McCrickard / Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537950323/Child-Drinking-Alcohol-002.jpg",
+          "typeData":{
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
+            "height":"130",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"A boy drinking an alcopop: is underage drinking part of growing up?  Photograph: Ciaran McCrickard / Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537951513/Child-Drinking-Alcohol-003.jpg",
+          "typeData":{
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
+            "height":"84",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"A boy drinking an alcopop: is underage drinking part of growing up?  Photograph: Ciaran McCrickard / Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537952638/Child-Drinking-Alcohol-004.jpg",
+          "typeData":{
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
+            "height":"132",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"A boy drinking an alcopop: is underage drinking part of growing up?  Photograph: Ciaran McCrickard / Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537953711/Child-Drinking-Alcohol-005.jpg",
+          "typeData":{
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
+            "height":"168",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"A boy drinking an alcopop: is underage drinking part of growing up?  Photograph: Ciaran McCrickard / Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537954831/Child-Drinking-Alcohol-006.jpg",
+          "typeData":{
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
+            "height":"180",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"A boy drinking an alcopop: is underage drinking part of growing up?  Photograph: Ciaran McCrickard / Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537955993/Child-Drinking-Alcohol-007.jpg",
+          "typeData":{
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
+            "height":"228",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"A boy drinking an alcopop: is underage drinking part of growing up?  Photograph: Ciaran McCrickard / Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537957468/Child-Drinking-Alcohol-008.jpg",
+          "typeData":{
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
+            "height":"276",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"A boy drinking an alcopop: is underage drinking part of growing up?  Photograph: Ciaran McCrickard / Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537957468/Child-Drinking-Alcohol-008.jpg",
+          "typeData":{
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
+            "height":"276",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"Is underage drinking part of growing up? Photograph: Ciaran McCrickard/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418632717",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/6/1354796281237/Turning-down-central-heat-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380537951513/Child-Drinking-Alcohol-003.jpg",
           "typeData":{
-            "source":"Alamy",
-            "photographer":"Jeffrey Blackler / Alamy",
-            "altText":"Turning down central heating thermostat",
+            "source":"Ciaran McCrickard / Rex Features",
+            "photographer":"Ciaran McCrickard / Rex Features",
+            "altText":"Child Drinking Alcohol",
             "height":"84",
-            "credit":"Jeffrey Blackler / Alamy/Alamy",
-            "caption":"Hot or cold: the tricky decision about whether to turn your heating on and off. Photograph: Jeffrey Blackler / Alamy/Alamy",
+            "credit":"Ciaran McCrickard / Rex Features/Ciaran McCrickard / Rex Features",
+            "caption":"A boy drinking an alcopop: is underage drinking part of growing up?  Photograph: Ciaran McCrickard / Rex Features",
             "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-image-417509960",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/10/18/1287418389416/Central-heating-thermosta-006.jpg",
-          "typeData":{
-            "source":"Alamy",
-            "photographer":"Jeffrey Blackler",
-            "altText":"Central heating thermostat",
-            "height":"276",
-            "credit":"Jeffrey Blackler/Alamy",
-            "caption":"Some Britons hold out on heating their homes until 1 November as a matter of principle. Photograph: Jeffrey Blackler/Alamy",
-            "width":"460"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"commentisfree/2013/sep/17/labour-pregnant-panda-policy-review-deliver",
+      "id":"commentisfree/2013/sep/30/you-tell-us",
       "sectionId":"commentisfree",
       "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-17T09:54:22Z",
-      "webTitle":"Labour's pregnant panda of a policy review must finally deliver | Jacqui Smith",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/labour-pregnant-panda-policy-review-deliver",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/labour-pregnant-panda-policy-review-deliver",
+      "webPublicationDate":"2013-09-30T11:21:56Z",
+      "webTitle":"Ideas for 30 Sep - 1 Oct",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/30/you-tell-us",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/30/you-tell-us",
       "fields":{
-        "trailText":"<strong>Jacqui Smith for Progress:</strong> If the Labour party conference is to connect with potential voters it must announce some eye-catching policies",
-        "headline":"Labour's pregnant panda of a policy review must finally deliver",
+        "trailText":"<p>Post your suggestions for subjects you'd like us to cover on Comment is free</p>",
+        "headline":"Ideas for 30 Sep - 1 Oct",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tzfb",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411066961/Ed-Miliband-speaks-to-the-003.jpg",
-        "wordcount":"977",
+        "shortUrl":"http://gu.com/p/3j6fn",
+        "wordcount":"58",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"commentisfree/series/you-tell-us",
+        "type":"series",
+        "webTitle":"You tell us",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/you-tell-us",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/you-tell-us",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/bella-mackie",
+        "type":"contributor",
+        "webTitle":"Bella Mackie",
+        "webUrl":"http://www.theguardian.com/profile/bella-mackie",
+        "apiUrl":"http://content.guardianapis.com/profile/bella-mackie",
+        "bio":"<p>Bella Mackie is Comment is free's community co-ordinator. She doesn't like fashion magazines</p>",
+        "r2ContributorId":"39037",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/8/1365417288729/Isabella-Mackie.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"world/2013/sep/30/julia-gillard-anne-summers-opera",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-30T10:30:01Z",
+      "webTitle":"Open thread: Julia Gillard's first interview | Open thread",
+      "webUrl":"http://www.theguardian.com/world/2013/sep/30/julia-gillard-anne-summers-opera",
+      "apiUrl":"http://content.guardianapis.com/world/2013/sep/30/julia-gillard-anne-summers-opera",
+      "fields":{
+        "trailText":"<p>The former PM was in conversation with journalist Anne Summers at the Sydney Opera house. What did you make of it?</p>",
+        "headline":"Open thread: Julia Gillard's first interview",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6dn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380075346700/67182b10-877a-4b2b-89f4-f4604d362235-140x84.jpeg",
+        "wordcount":"79",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/julia-gillard",
+        "type":"keyword",
+        "webTitle":"Julia Gillard",
+        "webUrl":"http://www.theguardian.com/world/julia-gillard",
+        "apiUrl":"http://content.guardianapis.com/world/julia-gillard",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/labor-party",
+        "type":"keyword",
+        "webTitle":"Labor party",
+        "webUrl":"http://www.theguardian.com/world/labor-party",
+        "apiUrl":"http://content.guardianapis.com/world/labor-party",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418628916",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380075344491/67182b10-877a-4b2b-89f4-f4604d362235-460x276.jpeg",
+          "typeData":{
+            "source":"REX/Newspix",
+            "photographer":"REX/Newspix",
+            "altText":"Julia Gillard",
+            "height":"276",
+            "credit":"REX/Newspix/REX/Newspix",
+            "caption":"Jukia Gillard endorsed Tanya Plibersk as next woman leader. Photograph: REX/Newspix",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418628917",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380075346700/67182b10-877a-4b2b-89f4-f4604d362235-140x84.jpeg",
+          "typeData":{
+            "source":"REX/Newspix",
+            "photographer":"REX/Newspix",
+            "altText":"Julia Gillard",
+            "height":"84",
+            "credit":"REX/Newspix/REX/Newspix",
+            "caption":"Gillard said she wanted to commit pen to paper while it was still fresh 'both emotionally and intellectually'. Photograph: REX/Newspix",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/sep/30/ed-miliband-energy-prices-labour-bounce",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-30T09:56:04Z",
+      "webTitle":"Ed Miliband's dilemma: is he a leftwing Thatcher or a Blair-style moderate? | Peter Kellner",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/30/ed-miliband-energy-prices-labour-bounce",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/30/ed-miliband-energy-prices-labour-bounce",
+      "fields":{
+        "trailText":"<p><strong>Peter Kellner for YouGov</strong>: Energy price freezes are playing well for Labour and polls show a post-conference bounce – but Ed needs to decide where he stands</p>",
+        "headline":"Ed Miliband's dilemma: is he a leftwing Thatcher or a Blair-style moderate?",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j6bz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531904004/Labour-party-leader-Ed-Mi-003.jpg",
+        "wordcount":"798",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -375,15 +894,6 @@
         "sectionName":"Politics",
         "references":[]
       },{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
         "id":"politics/edmiliband",
         "type":"keyword",
         "webTitle":"Ed Miliband",
@@ -391,16 +901,6 @@
         "apiUrl":"http://content.guardianapis.com/politics/edmiliband",
         "sectionId":"politics",
         "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"profile/jacqui-smith",
-        "type":"contributor",
-        "webTitle":"Jacqui Smith",
-        "webUrl":"http://www.theguardian.com/profile/jacqui-smith",
-        "apiUrl":"http://content.guardianapis.com/profile/jacqui-smith",
-        "bio":"<p>Jacqui Smith was home secretary from 2007 to 2009, and a Labour MP from 1997 to 2010</p>",
-        "r2ContributorId":"47309",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/11/10/1320951973028/jacqui.smith.jpg",
         "references":[]
       },{
         "id":"politics/politics",
@@ -412,277 +912,22 @@
         "sectionName":"Politics",
         "references":[]
       },{
-        "id":"uk/uk",
+        "id":"money/energy",
         "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.theguardian.com/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
+        "webTitle":"Energy bills",
+        "webUrl":"http://www.theguardian.com/money/energy",
+        "apiUrl":"http://content.guardianapis.com/money/energy",
+        "sectionId":"money",
+        "sectionName":"Money",
         "references":[]
       },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417506812",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411064079/Ed-Miliband-speaks-to-the-001.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"54",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411065624/Ed-Miliband-speaks-to-the-002.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"130",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411066961/Ed-Miliband-speaks-to-the-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"84",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411068211/Ed-Miliband-speaks-to-the-004.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"132",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411069498/Ed-Miliband-speaks-to-the-005.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"168",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411070745/Ed-Miliband-speaks-to-the-006.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"180",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411072046/Ed-Miliband-speaks-to-the-007.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"228",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411073347/Ed-Miliband-speaks-to-the-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"276",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411073347/Ed-Miliband-speaks-to-the-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"276",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417506813",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379411066961/Ed-Miliband-speaks-to-the-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Christopher Furlong",
-            "altText":"Ed Miliband speaks to the 2012 Labour party conference",
-            "height":"84",
-            "credit":"Christopher Furlong/Getty Images",
-            "caption":"Ed Miliband delivering his speech at last year's Labour party conference in Manchester. Photograph: Christopher Furlong/Getty",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/17/washington-dc-shootings-america-gun-disease",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-17T09:07:14Z",
-      "webTitle":"Washington DC shootings: America's gun disease diminishes its soft power | Jonathan Freedland",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/washington-dc-shootings-america-gun-disease",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/washington-dc-shootings-america-gun-disease",
-      "fields":{
-        "trailText":"<strong>Jonathan Freedland: First thoughts: </strong>The spate of shootings in the US and the lack of political will to tackle gun control shows the country as a basket case, not a model state",
-        "headline":"Washington DC shootings: America's gun disease diminishes its soft power",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tzen",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408180885/Shooting-At-Washington-DC-003.jpg",
-        "wordcount":"569",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/series/first-thoughts",
-        "type":"series",
-        "webTitle":"First thoughts",
-        "webUrl":"http://www.theguardian.com/commentisfree/series/first-thoughts",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/series/first-thoughts",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/gun-control",
+        "id":"money/consumer-affairs",
         "type":"keyword",
-        "webTitle":"US gun control",
-        "webUrl":"http://www.theguardian.com/world/gun-control",
-        "apiUrl":"http://content.guardianapis.com/world/gun-control",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/washington-dc",
-        "type":"keyword",
-        "webTitle":"Washington DC",
-        "webUrl":"http://www.theguardian.com/world/washington-dc",
-        "apiUrl":"http://content.guardianapis.com/world/washington-dc",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/usa",
-        "type":"keyword",
-        "webTitle":"United States",
-        "webUrl":"http://www.theguardian.com/world/usa",
-        "apiUrl":"http://content.guardianapis.com/world/usa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/gun-crime",
-        "type":"keyword",
-        "webTitle":"Gun crime",
-        "webUrl":"http://www.theguardian.com/world/gun-crime",
-        "apiUrl":"http://content.guardianapis.com/world/gun-crime",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/barack-obama",
-        "type":"keyword",
-        "webTitle":"Barack Obama",
-        "webUrl":"http://www.theguardian.com/world/barack-obama",
-        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/us-military",
-        "type":"keyword",
-        "webTitle":"US military",
-        "webUrl":"http://www.theguardian.com/world/us-military",
-        "apiUrl":"http://content.guardianapis.com/world/us-military",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/aaron-alexis",
-        "type":"keyword",
-        "webTitle":"Aaron Alexis",
-        "webUrl":"http://www.theguardian.com/world/aaron-alexis",
-        "apiUrl":"http://content.guardianapis.com/world/aaron-alexis",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/us-national-security",
-        "type":"keyword",
-        "webTitle":"US national security",
-        "webUrl":"http://www.theguardian.com/world/us-national-security",
-        "apiUrl":"http://content.guardianapis.com/world/us-national-security",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
         "references":[]
       },{
         "id":"commentisfree/commentisfree",
@@ -694,223 +939,11 @@
         "sectionName":"Comment is free",
         "references":[]
       },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"profile/jonathanfreedland",
-        "type":"contributor",
-        "webTitle":"Jonathan Freedland",
-        "webUrl":"http://www.theguardian.com/profile/jonathanfreedland",
-        "apiUrl":"http://content.guardianapis.com/profile/jonathanfreedland",
-        "bio":"<p>Jonathan Freedland writes a weekly column for the Guardian. He is also a regular contributor to the New York Times and the New York Review of Books, and presents BBC Radio 4's contemporary history series, The Long View. He was named columnist of the year in the 2002 What the Papers Say awards and in 2008 was awarded the David Watt prize for journalism. He has also published seven books, including five bestselling thrillers under the name Sam Bourne. He tweets as <a href=\"https://twitter.com/Freedland\">@freedland</a></p>",
-        "rcsId":"GNL042070",
-        "r2ContributorId":"15904",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_freedland_140x140.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417502350",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408176668/Shooting-At-Washington-DC-001.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"54",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408178384/Shooting-At-Washington-DC-002.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"130",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408180885/Shooting-At-Washington-DC-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"84",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408182208/Shooting-At-Washington-DC-004.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"132",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408183629/Shooting-At-Washington-DC-005.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"168",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408185028/Shooting-At-Washington-DC-006.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"180",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408186340/Shooting-At-Washington-DC-007.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"228",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408187728/Shooting-At-Washington-DC-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"276",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408187728/Shooting-At-Washington-DC-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"276",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417502351",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379408180885/Shooting-At-Washington-DC-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Greg Kahn",
-            "altText":"Shooting At Washington DC Navy Yard Reportedly Leaves Thirteen Dead",
-            "height":"84",
-            "credit":"Greg Kahn/Getty Images",
-            "caption":"A candlelit vigil against gun violence, held in Washington's Freedom Plaza following the shooting at the naval yard that left 13 people dead. Photograph: Greg Kahn/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/17/slapper-my-real-name-proud-of-it",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-17T06:00:00Z",
-      "webTitle":"So, you're wondering if Slapper's my real name? It  is. And I'm proud of it | Hannah Slapper",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/slapper-my-real-name-proud-of-it",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/slapper-my-real-name-proud-of-it",
-      "fields":{
-        "trailText":"<p><strong>Hannah Slapper:</strong> There's a parallel between bearing the burden of this name and its Yiddish origin. But really, it could have been so much worse</p>",
-        "headline":"Yes, I am a Slapper. And I'm proud of it",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tnqx",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379354556627/Close-up-of-pen-writing-o-003.jpg",
-        "wordcount":"636",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"lifeandstyle/family",
+        "id":"money/household-bills",
         "type":"keyword",
-        "webTitle":"Family",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/family",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/family",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"culture/culture",
-        "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"money/work-and-careers",
-        "type":"keyword",
-        "webTitle":"Work & careers",
-        "webUrl":"http://www.theguardian.com/money/work-and-careers",
-        "apiUrl":"http://content.guardianapis.com/money/work-and-careers",
+        "webTitle":"Household bills",
+        "webUrl":"http://www.theguardian.com/money/household-bills",
+        "apiUrl":"http://content.guardianapis.com/money/household-bills",
         "sectionId":"money",
         "sectionName":"Money",
         "references":[]
@@ -924,13 +957,22 @@
         "sectionName":"Money",
         "references":[]
       },{
-        "id":"lifeandstyle/lifeandstyle",
+        "id":"business/energy-industry",
         "type":"keyword",
-        "webTitle":"Life and style",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
         "references":[]
       },{
         "id":"tone/comment",
@@ -940,32 +982,23 @@
         "apiUrl":"http://content.guardianapis.com/tone/comment",
         "references":[]
       },{
-        "id":"profile/hannah-slapper",
+        "id":"profile/peterkellner",
         "type":"contributor",
-        "webTitle":"Hannah Slapper",
-        "webUrl":"http://www.theguardian.com/profile/hannah-slapper",
-        "apiUrl":"http://content.guardianapis.com/profile/hannah-slapper",
-        "bio":"<p>Hannah Slapper is a fashion, arts and culture writer. She is currently the assistant editor at Motilo.com, and has previously worked for Time Out Hong Kong</p>",
-        "r2ContributorId":"46525",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/3/1378217336551/Hannah-Slapper.JPG",
+        "webTitle":"Peter Kellner",
+        "webUrl":"http://www.theguardian.com/profile/peterkellner",
+        "apiUrl":"http://content.guardianapis.com/profile/peterkellner",
+        "bio":"<p>Peter Kellner is president of YouGov and chairman of the Royal Commonwealth Society</p>",
+        "r2ContributorId":"28442",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/2/12/1360667533504/Peter-Kellner.jpg",
         "references":[]
       },{
-        "id":"theguardian/mainsection/editorialsandreply",
-        "type":"newspaper-book-section",
-        "webTitle":"Editorials & reply",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
+        "id":"politics/polls",
+        "type":"keyword",
+        "webTitle":"Opinion polls",
+        "webUrl":"http://www.theguardian.com/politics/polls",
+        "apiUrl":"http://content.guardianapis.com/politics/polls",
+        "sectionId":"politics",
+        "sectionName":"Politics",
         "references":[]
       },{
         "id":"type/article",
@@ -974,88 +1007,174 @@
         "webUrl":"http://www.theguardian.com/articles",
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417492313",
+        "id":"gu-image-418619731",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379354562264/Close-up-of-pen-writing-o-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531901514/Labour-party-leader-Ed-Mi-001.jpg",
           "typeData":{
-            "source":"Alamy",
-            "photographer":"Erhan Dayi / Alamy",
-            "altText":"Close-up of pen writing on an envelope.",
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
+            "height":"54",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Labour party leader Ed Miliband Photograph: Ray Tang/Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531902949/Labour-party-leader-Ed-Mi-002.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
+            "height":"130",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Labour party leader Ed Miliband Photograph: Ray Tang/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531904004/Labour-party-leader-Ed-Mi-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
+            "height":"84",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Labour party leader Ed Miliband Photograph: Ray Tang/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531904970/Labour-party-leader-Ed-Mi-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
+            "height":"132",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Labour party leader Ed Miliband Photograph: Ray Tang/Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531905939/Labour-party-leader-Ed-Mi-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
+            "height":"168",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Labour party leader Ed Miliband Photograph: Ray Tang/Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531906879/Labour-party-leader-Ed-Mi-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
+            "height":"180",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Labour party leader Ed Miliband Photograph: Ray Tang/Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531907921/Labour-party-leader-Ed-Mi-007.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
+            "height":"228",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Labour party leader Ed Miliband Photograph: Ray Tang/Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531908938/Labour-party-leader-Ed-Mi-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
             "height":"276",
-            "credit":"Erhan Dayi / Alamy/Alamy",
-            "caption":"‘We reckon it was a case of immigration misspelling – that the original was something like Schleperovski – from the Yiddish \"schlepper\".' Photograph: Erhan Dayi/Alamy",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Labour party leader Ed Miliband Photograph: Ray Tang/Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531908938/Labour-party-leader-Ed-Mi-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
+            "height":"276",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"'Much will depend on Ed Miliband’s ability to defend his plan to freeze energy prices.' Photograph: Ray Tang/Rex Features",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417492314",
+        "id":"gu-image-418619732",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379354556627/Close-up-of-pen-writing-o-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380531904004/Labour-party-leader-Ed-Mi-003.jpg",
           "typeData":{
-            "source":"Alamy",
-            "photographer":"Erhan Dayi / Alamy",
-            "altText":"Close-up of pen writing on an envelope.",
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Labour party leader Ed Miliband",
             "height":"84",
-            "credit":"Erhan Dayi / Alamy/Alamy",
-            "caption":"'We reckon it was a classic case of immigration misspelling … that the original was something like Schleperovski – from the Yiddish \"schlepper\".' Photograph: Erhan Dayi / Alamy/Alamy",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Labour party leader Ed Miliband Photograph: Ray Tang/Rex Features",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"commentisfree/2013/sep/17/full-face-veil-not-barbaric-debate-muslim-women",
+      "id":"commentisfree/2013/sep/30/how-do-religions-die",
       "sectionId":"commentisfree",
       "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-17T05:30:00Z",
-      "webTitle":"Full-face veils aren't barbaric – but our response can be | Maleiha Malik",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/full-face-veil-not-barbaric-debate-muslim-women",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/full-face-veil-not-barbaric-debate-muslim-women",
+      "webPublicationDate":"2013-09-30T08:59:00Z",
+      "webTitle":"How do religions die? | Andrew Brown",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/30/how-do-religions-die",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/30/how-do-religions-die",
       "fields":{
-        "trailText":"<p><strong>Maleiha Malik:</strong> The veil is a perfectly proper subject for debate in a liberal democracy – so long as Muslim women are not excluded</p>",
-        "headline":"Full-face veils aren't barbaric – but our response can be",
+        "trailText":"<strong>Andrew Brown: How to believe:</strong> Do they waste away, or get conquered by something better? Perhaps it is easier to think in terms of gods dying, rather than religions",
+        "headline":"How do religions die?",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tz9m",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359810274/pudles-veil-003.jpg",
-        "wordcount":"1038",
+        "shortUrl":"http://gu.com/p/3j5jc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303255843/Cortez-fights-the-Aztecs--005.jpg",
+        "wordcount":"770",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "id":"commentisfree/series/how-to-believe",
+        "type":"series",
+        "webTitle":"How to believe",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/how-to-believe",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/how-to-believe",
         "sectionId":"commentisfree",
         "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/islamic-veil",
-        "type":"keyword",
-        "webTitle":"Islamic veil",
-        "webUrl":"http://www.theguardian.com/world/islamic-veil",
-        "apiUrl":"http://content.guardianapis.com/world/islamic-veil",
-        "sectionId":"world",
-        "sectionName":"World news",
         "references":[]
       },{
         "id":"world/religion",
@@ -1063,15 +1182,6 @@
         "webTitle":"Religion",
         "webUrl":"http://www.theguardian.com/world/religion",
         "apiUrl":"http://content.guardianapis.com/world/religion",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/islam",
-        "type":"keyword",
-        "webTitle":"Islam",
-        "webUrl":"http://www.theguardian.com/world/islam",
-        "apiUrl":"http://content.guardianapis.com/world/islam",
         "sectionId":"world",
         "sectionName":"World news",
         "references":[]
@@ -1085,6 +1195,307 @@
         "sectionName":"World news",
         "references":[]
       },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/andrewbrown",
+        "type":"contributor",
+        "webTitle":"Andrew Brown",
+        "webUrl":"http://www.theguardian.com/profile/andrewbrown",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewbrown",
+        "bio":"<p>Andrew Brown is the editor of Cif belief. His most recent book is <a href=\"http://www.theorwellprize.co.uk/the-award/short-books/fishinginutopia.aspx\">Fishing in Utopia</a>, which won the 2009 Orwell prize</p>",
+        "rcsId":"GNL302224",
+        "r2ContributorId":"15354",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/12/1318438106802/Andrew-Brown.jpg",
+        "references":[]
+      },{
+        "id":"commentisfree/belief",
+        "type":"blog",
+        "webTitle":"Cif belief",
+        "webUrl":"http://www.theguardian.com/commentisfree/belief",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/belief",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418492373",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303252775/Cortez-fights-the-Aztecs--002.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"54",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303253783/Cortez-fights-the-Aztecs--003.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"340",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303254833/Cortez-fights-the-Aztecs--004.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"130",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303255843/Cortez-fights-the-Aztecs--005.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"84",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303256832/Cortez-fights-the-Aztecs--006.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"132",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303257897/Cortez-fights-the-Aztecs--007.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"168",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303258906/Cortez-fights-the-Aztecs--008.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"180",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303259928/Cortez-fights-the-Aztecs--009.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"228",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303260947/Cortez-fights-the-Aztecs--010.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"276",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303261990/Cortez-fights-the-Aztecs--011.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"372",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303260947/Cortez-fights-the-Aztecs--010.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"276",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Religion under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520. Illustration:Archivo Iconografico/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418492374",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380303255843/Cortez-fights-the-Aztecs--005.jpg",
+          "typeData":{
+            "source":"  Archivo Iconografico, S.A./CORBIS",
+            "photographer":"Unknown",
+            "altText":"Cortez fights the Aztecs 1520",
+            "height":"84",
+            "credit":"Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "caption":"Aztecs under attack: Hernan Cortez with 200 Spaniards and 5,000 Indians defeats a larger Aztec force in 1520.  Photograph: Unknown/  Archivo Iconografico, S.A./CORBIS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/sep/30/nigel-farage-tories-ukip-local-elections",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-30T08:32:26Z",
+      "webTitle":"Nigel Farage has made an offer the Tories shouldn't refuse | Simon Jenkins",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/30/nigel-farage-tories-ukip-local-elections",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/30/nigel-farage-tories-ukip-local-elections",
+      "fields":{
+        "trailText":"<strong>Simon Jenkins: First thoughts:</strong> The Tories are simply too unpopular to turn down a Ukip pact in local elections – it might just keep them in power",
+        "headline":"Nigel Farage has made an offer the Tories shouldn't refuse",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j6b5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529663774/Ukip-Leader-Nigel-Farage-003.jpg",
+        "wordcount":"357",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/series/first-thoughts",
+        "type":"series",
+        "webTitle":"First thoughts",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/first-thoughts",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/first-thoughts",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"politics/nigel-farage",
+        "type":"keyword",
+        "webTitle":"Nigel Farage",
+        "webUrl":"http://www.theguardian.com/politics/nigel-farage",
+        "apiUrl":"http://content.guardianapis.com/politics/nigel-farage",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/ukip",
+        "type":"keyword",
+        "webTitle":"UK Independence party (Ukip)",
+        "webUrl":"http://www.theguardian.com/politics/ukip",
+        "apiUrl":"http://content.guardianapis.com/politics/ukip",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/conservatives",
+        "type":"keyword",
+        "webTitle":"Conservatives",
+        "webUrl":"http://www.theguardian.com/politics/conservatives",
+        "apiUrl":"http://content.guardianapis.com/politics/conservatives",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"society/localgovernment",
+        "type":"keyword",
+        "webTitle":"Local government",
+        "webUrl":"http://www.theguardian.com/society/localgovernment",
+        "apiUrl":"http://content.guardianapis.com/society/localgovernment",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/local-elections",
+        "type":"keyword",
+        "webTitle":"Local elections",
+        "webUrl":"http://www.theguardian.com/politics/local-elections",
+        "apiUrl":"http://content.guardianapis.com/politics/local-elections",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
         "id":"uk/uk",
         "type":"keyword",
         "webTitle":"UK news",
@@ -1094,32 +1505,560 @@
         "sectionName":"UK news",
         "references":[]
       },{
-        "id":"world/france",
+        "id":"politics/localgovernment",
         "type":"keyword",
-        "webTitle":"France",
-        "webUrl":"http://www.theguardian.com/world/france",
-        "apiUrl":"http://content.guardianapis.com/world/france",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "webTitle":"Local politics",
+        "webUrl":"http://www.theguardian.com/politics/localgovernment",
+        "apiUrl":"http://content.guardianapis.com/politics/localgovernment",
+        "sectionId":"politics",
+        "sectionName":"Politics",
         "references":[]
       },{
-        "id":"world/europe-news",
+        "id":"politics/politics",
         "type":"keyword",
-        "webTitle":"Europe",
-        "webUrl":"http://www.theguardian.com/world/europe-news",
-        "apiUrl":"http://content.guardianapis.com/world/europe-news",
-        "sectionId":"world",
-        "sectionName":"World news",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
         "references":[]
       },{
-        "id":"profile/maleihamalik",
+        "id":"politics/general-election-2015",
+        "type":"keyword",
+        "webTitle":"General election 2015",
+        "webUrl":"http://www.theguardian.com/politics/general-election-2015",
+        "apiUrl":"http://content.guardianapis.com/politics/general-election-2015",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/simonjenkins",
         "type":"contributor",
-        "webTitle":"Maleiha Malik",
-        "webUrl":"http://www.theguardian.com/profile/maleihamalik",
-        "apiUrl":"http://content.guardianapis.com/profile/maleihamalik",
-        "bio":"<p>Maleiha Malik is a professor of law at King's College, London</p>",
-        "r2ContributorId":"23619",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/12/1371050743947/Maleiha-Malik.jpg",
+        "webTitle":"Simon Jenkins",
+        "webUrl":"http://www.theguardian.com/profile/simonjenkins",
+        "apiUrl":"http://content.guardianapis.com/profile/simonjenkins",
+        "bio":"<p>Simon Jenkins is a journalist and author. He writes for the Guardian as well as broadcasting for the BBC. He has edited the Times and the London Evening Standard and is chairman of the National Trust</p>",
+        "r2ContributorId":"19166",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/simon_jenkins_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418614235",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529660887/Ukip-Leader-Nigel-Farage-001.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"54",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"Ukip Leader Nigel Farage Photograph: Nils Jorgensen/i-Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529662431/Ukip-Leader-Nigel-Farage-002.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"130",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"Ukip Leader Nigel Farage Photograph: Nils Jorgensen/i-Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529663774/Ukip-Leader-Nigel-Farage-003.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"84",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"Ukip Leader Nigel Farage Photograph: Nils Jorgensen/i-Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529664799/Ukip-Leader-Nigel-Farage-004.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"132",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"Ukip Leader Nigel Farage Photograph: Nils Jorgensen/i-Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529665816/Ukip-Leader-Nigel-Farage-005.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"168",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"Ukip Leader Nigel Farage Photograph: Nils Jorgensen/i-Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529666848/Ukip-Leader-Nigel-Farage-006.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"180",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"Ukip Leader Nigel Farage Photograph: Nils Jorgensen/i-Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529667921/Ukip-Leader-Nigel-Farage-007.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"228",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"Ukip Leader Nigel Farage Photograph: Nils Jorgensen/i-Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529672987/Ukip-Leader-Nigel-Farage-008.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"276",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"Ukip Leader Nigel Farage Photograph: Nils Jorgensen/i-Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529672987/Ukip-Leader-Nigel-Farage-008.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"276",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"'Nigel Farage is not going to win the next general election, but if he can help a few Eurosceptic Tories save their seats, he will win the thanks of many other Tories.' Photograph: Nils Jorgensen/i-Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418614236",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380529663774/Ukip-Leader-Nigel-Farage-003.jpg",
+          "typeData":{
+            "source":"i-Images",
+            "photographer":"Nils Jorgensen",
+            "altText":"Ukip Leader Nigel Farage",
+            "height":"84",
+            "credit":"Nils Jorgensen/i-Images",
+            "caption":"Ukip Leader Nigel Farage Photograph: Nils Jorgensen/i-Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/sep/30/how-house-lords-improve-image",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-30T07:30:02Z",
+      "webTitle":"How the House of Lords can improve its image | Michael Berkeley",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/30/how-house-lords-improve-image",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/30/how-house-lords-improve-image",
+      "fields":{
+        "trailText":"<p><strong>Michael Berkeley: </strong>Reinstating the power of the appointments commission over all nominations for peerages could help restore respect</p>",
+        "headline":"How the House of Lords can improve its image",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j4et",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204381236/Peers-in-the-House-of-Lor-003.jpg",
+        "wordcount":"720",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"politics/lordreform",
+        "type":"keyword",
+        "webTitle":"Lords reform",
+        "webUrl":"http://www.theguardian.com/politics/lordreform",
+        "apiUrl":"http://content.guardianapis.com/politics/lordreform",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/lords",
+        "type":"keyword",
+        "webTitle":"House of Lords",
+        "webUrl":"http://www.theguardian.com/politics/lords",
+        "apiUrl":"http://content.guardianapis.com/politics/lords",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"profile/michaelberkeley",
+        "type":"contributor",
+        "webTitle":"Michael Berkeley",
+        "webUrl":"http://www.theguardian.com/profile/michaelberkeley",
+        "apiUrl":"http://content.guardianapis.com/profile/michaelberkeley",
+        "bio":"<p>Michael was artistic director of the Cheltenham International Festival of Music for 10 years. He currently presents Radio 3's Private Passions, which won the Broadcasting Press Guild's Radio Programme of the Year Award in 1996 and is Chairman of the Governors of The Royal Ballet</p>",
+        "rcsId":"GNL000450",
+        "r2ContributorId":"16120",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/4/20/1240241180332/berkeley.jpg",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"politics/partyfunding",
+        "type":"keyword",
+        "webTitle":"Party funding",
+        "webUrl":"http://www.theguardian.com/politics/partyfunding",
+        "apiUrl":"http://content.guardianapis.com/politics/partyfunding",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418604747",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204378521/Peers-in-the-House-of-Lor-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"54",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204379960/Peers-in-the-House-of-Lor-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"130",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204381236/Peers-in-the-House-of-Lor-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204382518/Peers-in-the-House-of-Lor-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"132",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204383828/Peers-in-the-House-of-Lor-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"168",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204385171/Peers-in-the-House-of-Lor-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"180",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204386563/Peers-in-the-House-of-Lor-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"228",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204387895/Peers-in-the-House-of-Lor-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204387895/Peers-in-the-House-of-Lor-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"276",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418604748",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/26/1380204381236/Peers-in-the-House-of-Lor-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Oli Scarff",
+            "altText":"Peers in the House of Lords",
+            "height":"84",
+            "credit":"Oli Scarff/Getty Images",
+            "caption":"'Given that Lords reform has stalled and an elected second chamber is simply not on the cards in the near future, it seems that we should be looking at how we can create, from what we have, a house that commands respect.' Photograph: Oli Scarff/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/belief/2013/sep/30/end-the-dead-popes-club",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-09-30T05:00:02Z",
+      "webTitle":"Pope Francis should give us a break from this flurry of papal saints | Paul Vallely",
+      "webUrl":"http://www.theguardian.com/commentisfree/belief/2013/sep/30/end-the-dead-popes-club",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/belief/2013/sep/30/end-the-dead-popes-club",
+      "fields":{
+        "trailText":"<strong>Paul Vallely: </strong>Elevating John XXIII and John Paul II to sainthood is political and divisive. It's time the church closed its dead popes society",
+        "headline":"Pope Francis should give us a break from this flurry of papal saints",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j66e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475531948/john-paul-ii-003.jpg",
+        "wordcount":"701",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"commentisfree/belief",
+        "type":"blog",
+        "webTitle":"Cif belief",
+        "webUrl":"http://www.theguardian.com/commentisfree/belief",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/belief",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/the-papacy",
+        "type":"keyword",
+        "webTitle":"The papacy",
+        "webUrl":"http://www.theguardian.com/world/the-papacy",
+        "apiUrl":"http://content.guardianapis.com/world/the-papacy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pope-francis",
+        "type":"keyword",
+        "webTitle":"Pope Francis",
+        "webUrl":"http://www.theguardian.com/world/pope-francis",
+        "apiUrl":"http://content.guardianapis.com/world/pope-francis",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/popejohnpaul2",
+        "type":"keyword",
+        "webTitle":"Pope John Paul II",
+        "webUrl":"http://www.theguardian.com/world/popejohnpaul2",
+        "apiUrl":"http://content.guardianapis.com/world/popejohnpaul2",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pope-benedict-xvi",
+        "type":"keyword",
+        "webTitle":"Pope Benedict XVI",
+        "webUrl":"http://www.theguardian.com/world/pope-benedict-xvi",
+        "apiUrl":"http://content.guardianapis.com/world/pope-benedict-xvi",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/catholicism",
+        "type":"keyword",
+        "webTitle":"Catholicism",
+        "webUrl":"http://www.theguardian.com/world/catholicism",
+        "apiUrl":"http://content.guardianapis.com/world/catholicism",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/christianity",
+        "type":"keyword",
+        "webTitle":"Christianity",
+        "webUrl":"http://www.theguardian.com/world/christianity",
+        "apiUrl":"http://content.guardianapis.com/world/christianity",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/religion",
+        "type":"keyword",
+        "webTitle":"Religion",
+        "webUrl":"http://www.theguardian.com/world/religion",
+        "apiUrl":"http://content.guardianapis.com/world/religion",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/paul-vallely",
+        "type":"contributor",
+        "webTitle":"Paul Vallely",
+        "webUrl":"http://www.theguardian.com/profile/paul-vallely",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-vallely",
+        "bio":"<p>Paul Vallely is author of Pope Francis – Untying the Knots</p>",
+        "r2ContributorId":"58898",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
         "references":[]
       },{
         "id":"theguardian/mainsection/commentanddebate",
@@ -1140,13 +2079,6 @@
         "sectionName":"News",
         "references":[]
       },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -1164,1058 +2096,136 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417492279",
+        "id":"gu-image-418575247",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359807954/pudles-veil-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475529767/john-paul-ii-001.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"54",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359809103/pudles-veil-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475530868/john-paul-ii-002.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"130",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359810274/pudles-veil-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475531948/john-paul-ii-003.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"84",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359811589/pudles-veil-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475533256/john-paul-ii-004.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"132",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359812686/pudles-veil-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475534262/john-paul-ii-005.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"168",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359813821/pudles-veil-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475535245/john-paul-ii-006.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"180",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359814894/pudles-veil-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475536261/john-paul-ii-007.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"228",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359815975/pudles-veil-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475537247/john-paul-ii-008.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"276",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359815975/pudles-veil-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475537247/john-paul-ii-008.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"276",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417492280",
+        "id":"gu-image-418575248",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379359810274/pudles-veil-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/29/1380475531948/john-paul-ii-003.jpg",
           "typeData":{
             "source":"Guardian",
-            "altText":"pudles veil",
+            "altText":"john paul ii",
             "height":"84",
             "credit":"Guardian",
-            "caption":"'Should there be a general ban on British Muslim women who freely choose to wear the full-face veil? The French and Belgian experience suggests caution.' Illustration by Daniel Pudles ",
+            "caption":"Clay busts of John Paul II. 'If the first half of his papacy was good for the world, the second was bad for the church.' Photograph: Guardian",
             "width":"140"
           }
         }]
       }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/17/rebranding-coal-seam-gas-australia1",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-17T03:52:00Z",
-      "webTitle":"What are the best (or worst) rebranding examples you can think of? | Open thread",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/rebranding-coal-seam-gas-australia1",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/rebranding-coal-seam-gas-australia1",
-      "fields":{
-        "trailText":"<p><strong>Open thread: </strong> The NSW government is set to wipe out 'coal seam gas' from official documents, replacing it with 'natural gas from coal seams'. Can you think of other remarkable rebranding exercises?</p>",
-        "headline":"What are the best (or worst) rebranding examples you can think of?",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tzd3",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390171349/c8827521-6660-4c09-a66b-feb704b751cf-140x84.jpeg",
-        "wordcount":"1",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"media/marketingandpr",
-        "type":"keyword",
-        "webTitle":"Marketing & PR",
-        "webUrl":"http://www.theguardian.com/media/marketingandpr",
-        "apiUrl":"http://content.guardianapis.com/media/marketingandpr",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"world/australia",
-        "type":"keyword",
-        "webTitle":"Australia",
-        "webUrl":"http://www.theguardian.com/world/australia",
-        "apiUrl":"http://content.guardianapis.com/world/australia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/new-south-wales",
-        "type":"keyword",
-        "webTitle":"New South Wales",
-        "webUrl":"http://www.theguardian.com/world/new-south-wales",
-        "apiUrl":"http://content.guardianapis.com/world/new-south-wales",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"environment/gas",
-        "type":"keyword",
-        "webTitle":"Gas",
-        "webUrl":"http://www.theguardian.com/environment/gas",
-        "apiUrl":"http://content.guardianapis.com/environment/gas",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"commentisfree/series/openthread",
-        "type":"series",
-        "webTitle":"Open thread",
-        "webUrl":"http://www.theguardian.com/commentisfree/series/openthread",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/series/openthread",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390170594/c8827521-6660-4c09-a66b-feb704b751cf-460x276.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390170594/c8827521-6660-4c09-a66b-feb704b751cf-460x276.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"276",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390171189/c8827521-6660-4c09-a66b-feb704b751cf-380x228.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390171189/c8827521-6660-4c09-a66b-feb704b751cf-380x228.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"228",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390171349/c8827521-6660-4c09-a66b-feb704b751cf-140x84.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390171349/c8827521-6660-4c09-a66b-feb704b751cf-140x84.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"84",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390172502/c8827521-6660-4c09-a66b-feb704b751cf-540x324.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390172502/c8827521-6660-4c09-a66b-feb704b751cf-540x324.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"324",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"540"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390172704/c8827521-6660-4c09-a66b-feb704b751cf-220x132.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390172704/c8827521-6660-4c09-a66b-feb704b751cf-220x132.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"132",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390173240/c8827521-6660-4c09-a66b-feb704b751cf-2060x1236.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390173240/c8827521-6660-4c09-a66b-feb704b751cf-2060x1236.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"1236",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"2060"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390173904/c8827521-6660-4c09-a66b-feb704b751cf-300x180.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390173904/c8827521-6660-4c09-a66b-feb704b751cf-300x180.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"180",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390174513/c8827521-6660-4c09-a66b-feb704b751cf-2048x1536.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390174513/c8827521-6660-4c09-a66b-feb704b751cf-2048x1536.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"1536",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"2048"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390175464/c8827521-6660-4c09-a66b-feb704b751cf-1020x612.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390175464/c8827521-6660-4c09-a66b-feb704b751cf-1020x612.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"612",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"1020"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390175968/c8827521-6660-4c09-a66b-feb704b751cf-1024x768.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390175968/c8827521-6660-4c09-a66b-feb704b751cf-1024x768.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"768",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"1024"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390176268/c8827521-6660-4c09-a66b-feb704b751cf-620x372.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379390176268/c8827521-6660-4c09-a66b-feb704b751cf-620x372.jpeg",
-            "source":"Getty Images",
-            "photographer":"Michael Rosenfeld",
-            "altText":"French fries ... or Freedom fries?",
-            "height":"372",
-            "credit":"Michael Rosenfeld/Getty Images",
-            "caption":"French fries ... or Freedom fries? Photograph: Michael Rosenfeld/Getty",
-            "mediaId":"gu-fc-ac355ba1-d9b8-40b5-9138-c1c5f4dbf8b1",
-            "width":"620"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/17/defence-philosophy-abbott",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-17T01:47:46Z",
-      "webTitle":"Philosophy is not a 'ridiculous' pursuit. It is worth funding | Paul Redding",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/defence-philosophy-abbott",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/defence-philosophy-abbott",
-      "fields":{
-        "trailText":"<p><strong>Paul Redding:</strong> My work was targetted by a Coalition MP, who described our research as 'ridiculous' – but philosophy is work, and the discipline is crucial to helping us understand our world</p>",
-        "headline":"Philosophy is not a 'ridiculous' pursuit. It is worth funding",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tzcg",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380495927/55b3e299-08ac-4cf2-99a6-857d18869dfd-140x84.jpeg",
-        "wordcount":"1",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"books/philosophy",
-        "type":"keyword",
-        "webTitle":"Philosophy",
-        "webUrl":"http://www.theguardian.com/books/philosophy",
-        "apiUrl":"http://content.guardianapis.com/books/philosophy",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"world/australia",
-        "type":"keyword",
-        "webTitle":"Australia",
-        "webUrl":"http://www.theguardian.com/world/australia",
-        "apiUrl":"http://content.guardianapis.com/world/australia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"profile/paul-redding",
-        "type":"contributor",
-        "webTitle":"Paul Redding",
-        "webUrl":"http://www.theguardian.com/profile/paul-redding",
-        "apiUrl":"http://content.guardianapis.com/profile/paul-redding",
-        "bio":"<p>Paul Redding is a professor of philosophy at the University of Sydney. In 2004 he was elected as a fellow of the Australian Academy of the Humanities in recognition of his contributions to the history of the tradition of continental idealist philosophy. He is the author of over 50 journal articles and book chapters and four books including Analytic Philosophy and the Return of Hegelian Thought (Cambridge University Press, 2007) and Continental Idealism: Leibniz to Nietzsche (Routledge, 2009)</p>",
-        "r2ContributorId":"58693",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379379711305/redding.jpg",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"world/tony-abbott",
-        "type":"keyword",
-        "webTitle":"Tony Abbott",
-        "webUrl":"http://www.theguardian.com/world/tony-abbott",
-        "apiUrl":"http://content.guardianapis.com/world/tony-abbott",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"education/education",
-        "type":"keyword",
-        "webTitle":"Education",
-        "webUrl":"http://www.theguardian.com/education/education",
-        "apiUrl":"http://content.guardianapis.com/education/education",
-        "sectionId":"education",
-        "sectionName":"Education",
-        "references":[]
-      },{
-        "id":"world/australian-politics",
-        "type":"keyword",
-        "webTitle":"Australian politics",
-        "webUrl":"http://www.theguardian.com/world/australian-politics",
-        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"education/universityfunding",
-        "type":"keyword",
-        "webTitle":"University funding",
-        "webUrl":"http://www.theguardian.com/education/universityfunding",
-        "apiUrl":"http://content.guardianapis.com/education/universityfunding",
-        "sectionId":"education",
-        "sectionName":"Education",
-        "references":[]
-      },{
-        "id":"education/research",
-        "type":"keyword",
-        "webTitle":"Research",
-        "webUrl":"http://www.theguardian.com/education/research",
-        "apiUrl":"http://content.guardianapis.com/education/research",
-        "sectionId":"education",
-        "sectionName":"Education",
-        "references":[]
-      },{
-        "id":"education/researchfunding",
-        "type":"keyword",
-        "webTitle":"Research funding",
-        "webUrl":"http://www.theguardian.com/education/researchfunding",
-        "apiUrl":"http://content.guardianapis.com/education/researchfunding",
-        "sectionId":"education",
-        "sectionName":"Education",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380493889/55b3e299-08ac-4cf2-99a6-857d18869dfd-220x132.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380493889/55b3e299-08ac-4cf2-99a6-857d18869dfd-220x132.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"132",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380494594/55b3e299-08ac-4cf2-99a6-857d18869dfd-2060x1236.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380494594/55b3e299-08ac-4cf2-99a6-857d18869dfd-2060x1236.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"1236",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"2060"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380495480/55b3e299-08ac-4cf2-99a6-857d18869dfd-380x228.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380495480/55b3e299-08ac-4cf2-99a6-857d18869dfd-380x228.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"228",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380495721/55b3e299-08ac-4cf2-99a6-857d18869dfd-620x372.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380495721/55b3e299-08ac-4cf2-99a6-857d18869dfd-620x372.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"372",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380495927/55b3e299-08ac-4cf2-99a6-857d18869dfd-140x84.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380495927/55b3e299-08ac-4cf2-99a6-857d18869dfd-140x84.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"84",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380496169/55b3e299-08ac-4cf2-99a6-857d18869dfd-1020x612.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380496169/55b3e299-08ac-4cf2-99a6-857d18869dfd-1020x612.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"612",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"1020"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380496623/55b3e299-08ac-4cf2-99a6-857d18869dfd-460x276.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380496623/55b3e299-08ac-4cf2-99a6-857d18869dfd-460x276.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"276",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380496779/55b3e299-08ac-4cf2-99a6-857d18869dfd-300x180.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380496779/55b3e299-08ac-4cf2-99a6-857d18869dfd-300x180.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"180",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380496934/55b3e299-08ac-4cf2-99a6-857d18869dfd-540x324.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380496934/55b3e299-08ac-4cf2-99a6-857d18869dfd-540x324.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"324",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"540"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380497284/55b3e299-08ac-4cf2-99a6-857d18869dfd-1024x768.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379380497284/55b3e299-08ac-4cf2-99a6-857d18869dfd-1024x768.jpeg",
-            "source":"Alamy",
-            "photographer":"INTERFOTO  / Alamy",
-            "altText":"B43K6E fine arts, Raphael, (1483 - 1520), painting, The School of Athens, 1510/11, fresco, detail, Vatican, Rome, Italy, Sanzio da fine arts Raphael (1483 - 1520) painting The School of Athens 1510/11 fresco detail Vatican Rome Italy Sanzio da Urbino Renaissance mural art painting philosophers Socrates Aristotle Alcibiades Diogenes of Sinope Heraclitus Ptolemy Averroes Pythagoras of Samos Plato Euclid Scuola di Atene historical historic",
-            "height":"768",
-            "credit":"INTERFOTO  / Alamy/Alamy",
-            "caption":"'Concepts are what make us distinctively us'. Photograph: Alamy",
-            "mediaId":"gu-fc-39e43af3-3c25-4c19-a37b-ad5c6bd9bab8",
-            "width":"1024"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/17/science-minister-abbott-australia",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-16T23:49:22Z",
-      "webTitle":"Australia, where is your science minister? | Graham Readfearn",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/science-minister-abbott-australia",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/science-minister-abbott-australia",
-      "fields":{
-        "trailText":"<p><strong>Graham Readfearn: </strong> Tony Abbott's front bench team will not have a science minister – instead, science will come under the industry minister's portfolio. The doesn't bode well for climate change</p>",
-        "headline":"Australia, where is your science minister?",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tzbn",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374370573/a4e94106-e13d-413d-8977-0828312d1fda-140x84.jpeg",
-        "wordcount":"1",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/australia",
-        "type":"keyword",
-        "webTitle":"Australia",
-        "webUrl":"http://www.theguardian.com/world/australia",
-        "apiUrl":"http://content.guardianapis.com/world/australia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/tony-abbott",
-        "type":"keyword",
-        "webTitle":"Tony Abbott",
-        "webUrl":"http://www.theguardian.com/world/tony-abbott",
-        "apiUrl":"http://content.guardianapis.com/world/tony-abbott",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"science/science",
-        "type":"keyword",
-        "webTitle":"Science",
-        "webUrl":"http://www.theguardian.com/science/science",
-        "apiUrl":"http://content.guardianapis.com/science/science",
-        "sectionId":"science",
-        "sectionName":"Science",
-        "references":[]
-      },{
-        "id":"world/coalition",
-        "type":"keyword",
-        "webTitle":"Coalition",
-        "webUrl":"http://www.theguardian.com/world/coalition",
-        "apiUrl":"http://content.guardianapis.com/world/coalition",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/liberal-party",
-        "type":"keyword",
-        "webTitle":"Liberal party",
-        "webUrl":"http://www.theguardian.com/world/liberal-party",
-        "apiUrl":"http://content.guardianapis.com/world/liberal-party",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"environment/climate-change",
-        "type":"keyword",
-        "webTitle":"Climate change",
-        "webUrl":"http://www.theguardian.com/environment/climate-change",
-        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"science/scienceofclimatechange",
-        "type":"keyword",
-        "webTitle":"Climate change",
-        "webUrl":"http://www.theguardian.com/science/scienceofclimatechange",
-        "apiUrl":"http://content.guardianapis.com/science/scienceofclimatechange",
-        "sectionId":"science",
-        "sectionName":"Science",
-        "references":[]
-      },{
-        "id":"environment/climate-change-scepticism",
-        "type":"keyword",
-        "webTitle":"Climate change scepticism",
-        "webUrl":"http://www.theguardian.com/environment/climate-change-scepticism",
-        "apiUrl":"http://content.guardianapis.com/environment/climate-change-scepticism",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"profile/graham-readfearn",
-        "type":"contributor",
-        "webTitle":"Graham Readfearn",
-        "webUrl":"http://www.theguardian.com/profile/graham-readfearn",
-        "apiUrl":"http://content.guardianapis.com/profile/graham-readfearn",
-        "r2ContributorId":"56258",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/1/1367418426419/Graham-Readfearn.jpg",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374366232/a4e94106-e13d-413d-8977-0828312d1fda-460x276.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374366232/a4e94106-e13d-413d-8977-0828312d1fda-460x276.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"276",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374366746/a4e94106-e13d-413d-8977-0828312d1fda-620x372.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374366746/a4e94106-e13d-413d-8977-0828312d1fda-620x372.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"372",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374367072/a4e94106-e13d-413d-8977-0828312d1fda-300x180.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374367072/a4e94106-e13d-413d-8977-0828312d1fda-300x180.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"180",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374367234/a4e94106-e13d-413d-8977-0828312d1fda-220x132.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374367234/a4e94106-e13d-413d-8977-0828312d1fda-220x132.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"132",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374367429/a4e94106-e13d-413d-8977-0828312d1fda-540x324.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374367429/a4e94106-e13d-413d-8977-0828312d1fda-540x324.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"324",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"540"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374367691/a4e94106-e13d-413d-8977-0828312d1fda-1020x612.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374367691/a4e94106-e13d-413d-8977-0828312d1fda-1020x612.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"612",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"1020"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374368437/a4e94106-e13d-413d-8977-0828312d1fda-2048x1536.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374368437/a4e94106-e13d-413d-8977-0828312d1fda-2048x1536.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"1536",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"2048"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374369763/a4e94106-e13d-413d-8977-0828312d1fda-2060x1236.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374369763/a4e94106-e13d-413d-8977-0828312d1fda-2060x1236.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"1236",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"2060"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374370437/a4e94106-e13d-413d-8977-0828312d1fda-380x228.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374370437/a4e94106-e13d-413d-8977-0828312d1fda-380x228.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"228",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374370573/a4e94106-e13d-413d-8977-0828312d1fda-140x84.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374370573/a4e94106-e13d-413d-8977-0828312d1fda-140x84.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"84",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374370974/a4e94106-e13d-413d-8977-0828312d1fda-1024x768.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379374370974/a4e94106-e13d-413d-8977-0828312d1fda-1024x768.jpeg",
-            "source":"AFP/Getty Images",
-            "photographer":"MARK GRAHAM",
-            "altText":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013.",
-            "height":"768",
-            "credit":"MARK GRAHAM/AFP/Getty Images",
-            "caption":"Australia's prime minister-elect Tony Abbott announcing his incoming cabinet in Canberra on 16 September 2013. Photograph: Mark Graham/AFP/Getty",
-            "mediaId":"gu-fc-e9a8ad4a-3b27-4a27-929d-2198070124b2",
-            "width":"1024"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2013/sep/17/in-praise-of-nautical-vocabulary",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2013-09-16T23:09:27Z",
-      "webTitle":"In praise of … nautical vocabulary | Editorial",
-      "webUrl":"http://www.theguardian.com/commentisfree/2013/sep/17/in-praise-of-nautical-vocabulary",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/sep/17/in-praise-of-nautical-vocabulary",
-      "fields":{
-        "trailText":"<strong>Editorial:</strong> Don't be taken aback by the ease with which the Costa Concordia operation has brought parbuckling into the landlubber's vocabulary",
-        "headline":"In praise of … nautical vocabulary",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tzbz",
-        "wordcount":"170",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/water-transport",
-        "type":"keyword",
-        "webTitle":"Water transport",
-        "webUrl":"http://www.theguardian.com/world/water-transport",
-        "apiUrl":"http://content.guardianapis.com/world/water-transport",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"commentisfree/series/in-praise-of",
-        "type":"series",
-        "webTitle":"In praise of ...",
-        "webUrl":"http://www.theguardian.com/commentisfree/series/in-praise-of",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/series/in-praise-of",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"world/costa-concordia",
-        "type":"keyword",
-        "webTitle":"Costa Concordia",
-        "webUrl":"http://www.theguardian.com/world/costa-concordia",
-        "apiUrl":"http://content.guardianapis.com/world/costa-concordia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"profile/editorial",
-        "type":"contributor",
-        "webTitle":"Editorial",
-        "webUrl":"http://www.theguardian.com/profile/editorial",
-        "apiUrl":"http://content.guardianapis.com/profile/editorial",
-        "bio":"<p>Editorials from the Guardian. All Guardian and Observer editorials can be found <a href=\"http://www.guardian.co.uk/tone/editorials\">here</a></p>",
-        "r2ContributorId":"56303",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/3/1367609515569/guardianlogo_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/editorials",
-        "type":"tone",
-        "webTitle":"Editorials",
-        "webUrl":"http://www.theguardian.com/tone/editorials",
-        "apiUrl":"http://content.guardianapis.com/tone/editorials",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/editorialsandreply",
-        "type":"newspaper-book-section",
-        "webTitle":"Editorials & reply",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[],
       "references":[]
     }],
     "storyPackage":[]

@@ -1089,45 +1089,28 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-411167807",
-        "relation":"gallery",
+        "id":"gu-image-411301870",
+        "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663041340/Outside-Kutupalong-Refuge-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/6/19/1371663370170/MDG--Muslim-Rohingya-refu-002.jpg",
           "typeData":{
-            "source":"Alamy",
-            "photographer":"Suthep Kritsanavarin",
-            "altText":"Rohingya refugees: Outside Kutupalong Refugee Camp",
-            "height":"480",
-            "credit":"Suthep Kritsanavarin/Alamy",
-            "caption":"Outside Kutupalong refugee camp, near Cox's Bazar in Bangladesh, about 40,000 unregistered Rohingyas who were forced from their villages have set up an overcrowded, unofficial camp. The majority of refugees are children, women and older people. The men search for work outside the camp. They are ineligible to receive humanitarian support from the UN high commissioner for refugees, the UNHCR, because they are outside the camp",
-            "width":"720"
-          }
-        }]
-      },{
-        "id":"gu-image-411167876",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663130757/Refugees-headed-for-Austr-020.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Hotli Simanjuntak",
-            "altText":"Rohingya refugees: Refugees headed for Australia rescued by Aceh fisherman",
-            "height":"480",
-            "credit":"Hotli Simanjuntak/EPA",
-            "caption":"Rohingya refugees sleep on the floor of the immigration office in Lhok Seumawe, northern Aceh, Indonesia in February. About 120 Rohingya refugees, including six woman and two children, were rescued by a local fisherman after getting stranded at sea while heading for Australia",
-            "width":"720"
+            "source":"AFP/Getty Images",
+            "photographer":"Munir Uz Zaman",
+            "altText":"MDG : Muslim Rohingya refugees trying to cross the Naf river into Bangladesh from Myanmar",
+            "height":"84",
+            "credit":"Munir Uz Zaman/AFP/Getty Images",
+            "caption":"Rohingya Muslims, trying to cross the Naf river into Bangladesh to escape sectarian violence in Myanmar, look on from an intercepted boat in Teknaf on July 13, 2012.  Photograph: Munir Uz Zaman/AFP/Getty Images",
+            "width":"140"
           }
         }]
       },{
         "id":"gu-image-411167952",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":1,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1143,56 +1126,21 @@
           }
         }]
       },{
-        "id":"gu-image-411168035",
+        "id":"gu-image-411168169",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":2,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663079800/Rohingya-refugees-from-My-016.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663066049/trying-to-cross-the-Naf-r-012.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Yongyot Pruksarak",
-            "altText":"Rohingya refugees: Rohingya refugees from Myanmar sail to seek employment in Malaysia",
+            "source":"AFP",
+            "photographer":"Munir Uz Zaman",
+            "altText":"Rohingya refugees: trying to cross the Naf river into Bangladesh",
             "height":"480",
-            "credit":"Yongyot Pruksarak/EPA",
-            "caption":"Rohingya refugees gather on a boat heading to Malaysia as they are rescued by Thai naval officers at the Andaman coast, Phuket island, southern Thailand in January. More than 200 Rohingyas arrived by boat along the southern Thai coast for a stopover on their way to Malaysia, where they could seek employment",
-            "width":"711"
-          }
-        }]
-      },{
-        "id":"gu-image-411168038",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663127429/Rohingya-refugees-in-Aceh-019.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Hotli Simanjuntak",
-            "altText":"Rohingya refugees: Rohingya refugees in Aceh",
-            "height":"480",
-            "credit":"Hotli Simanjuntak/EPA",
-            "caption":"Rohingya refugees queue for food at the training centre house in Krueng Raya, Aceh, in April",
-            "width":"720"
-          }
-        }]
-      },{
-        "id":"gu-image-411168040",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663083413/Rohingya-refugees-protest-017.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Dedi Sahputra",
-            "altText":"Rohingya refugees: Rohingya refugees protest",
-            "height":"480",
-            "credit":"Dedi Sahputra/EPA",
-            "caption":"Rohingya refugees hold a banner during a protest outside the UNHCR office in Medan, North Sumatra province, Indonesia, in March. About 100 Rohingya refugees staged a protest urging the UNHCR to resettle them in Australia, New Zealand and the US ",
+            "credit":"Munir Uz Zaman/AFP",
+            "caption":"Rohingya people, trying to cross the Naf river into Bangladesh to escape sectarian violence in Burma, look on from an intercepted boat in Teknaf in July last year. <a href=\"http://www.guardian.co.uk/world/2012/aug/07/bangladesh-persecuted-burmese-tribe-muslim\">Bangladesh has turned away boatloads of Rohingyas</a>",
             "width":"720"
           }
         }]
@@ -1200,6 +1148,7 @@
         "id":"gu-image-411168044",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":3,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1215,27 +1164,29 @@
           }
         }]
       },{
-        "id":"gu-image-411168049",
+        "id":"gu-image-411167807",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":4,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663075751/Thai-police-rescued-traff-015.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663041340/Outside-Kutupalong-Refuge-003.jpg",
           "typeData":{
-            "source":"EPA",
-            "photographer":"Thoranit Pirunla-ONG",
-            "altText":"Rohingya refugees: Thai police rescued trafficked Rohingya refugees from Myanmar",
+            "source":"Alamy",
+            "photographer":"Suthep Kritsanavarin",
+            "altText":"Rohingya refugees: Outside Kutupalong Refugee Camp",
             "height":"480",
-            "credit":"Thoranit Pirunla-ONG/EPA",
-            "caption":"Rohingya refugees wait for registration at an immigration detention centre in Sadao, Songkhla province, southern Thailand in January. Thai police raided a warehouse and rescued 307 refugees who had been held at a rubber plantation for three months by an alleged human-trafficking gang near the Malaysian border. Within two days, police and government officials rescued more than 700 Rohingya from the trafficking gang",
-            "width":"759"
+            "credit":"Suthep Kritsanavarin/Alamy",
+            "caption":"Outside Kutupalong refugee camp, near Cox's Bazar in Bangladesh, about 40,000 unregistered Rohingyas who were forced from their villages have set up an overcrowded, unofficial camp. The majority of refugees are children, women and older people. The men search for work outside the camp. They are ineligible to receive humanitarian support from the UN high commissioner for refugees, the UNHCR, because they are outside the camp",
+            "width":"720"
           }
         }]
       },{
         "id":"gu-image-411168054",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":5,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1254,6 +1205,7 @@
         "id":"gu-image-411168112",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":6,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1272,6 +1224,7 @@
         "id":"gu-image-411168114",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":7,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -1286,39 +1239,98 @@
           }
         }]
       },{
-        "id":"gu-image-411168169",
+        "id":"gu-image-411168035",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":8,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663066049/trying-to-cross-the-Naf-r-012.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663079800/Rohingya-refugees-from-My-016.jpg",
           "typeData":{
-            "source":"AFP",
-            "photographer":"Munir Uz Zaman",
-            "altText":"Rohingya refugees: trying to cross the Naf river into Bangladesh",
+            "source":"EPA",
+            "photographer":"Yongyot Pruksarak",
+            "altText":"Rohingya refugees: Rohingya refugees from Myanmar sail to seek employment in Malaysia",
             "height":"480",
-            "credit":"Munir Uz Zaman/AFP",
-            "caption":"Rohingya people, trying to cross the Naf river into Bangladesh to escape sectarian violence in Burma, look on from an intercepted boat in Teknaf in July last year. <a href=\"http://www.guardian.co.uk/world/2012/aug/07/bangladesh-persecuted-burmese-tribe-muslim\">Bangladesh has turned away boatloads of Rohingyas</a>",
+            "credit":"Yongyot Pruksarak/EPA",
+            "caption":"Rohingya refugees gather on a boat heading to Malaysia as they are rescued by Thai naval officers at the Andaman coast, Phuket island, southern Thailand in January. More than 200 Rohingyas arrived by boat along the southern Thai coast for a stopover on their way to Malaysia, where they could seek employment",
+            "width":"711"
+          }
+        }]
+      },{
+        "id":"gu-image-411168049",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663075751/Thai-police-rescued-traff-015.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Thoranit Pirunla-ONG",
+            "altText":"Rohingya refugees: Thai police rescued trafficked Rohingya refugees from Myanmar",
+            "height":"480",
+            "credit":"Thoranit Pirunla-ONG/EPA",
+            "caption":"Rohingya refugees wait for registration at an immigration detention centre in Sadao, Songkhla province, southern Thailand in January. Thai police raided a warehouse and rescued 307 refugees who had been held at a rubber plantation for three months by an alleged human-trafficking gang near the Malaysian border. Within two days, police and government officials rescued more than 700 Rohingya from the trafficking gang",
+            "width":"759"
+          }
+        }]
+      },{
+        "id":"gu-image-411167876",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663130757/Refugees-headed-for-Austr-020.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Hotli Simanjuntak",
+            "altText":"Rohingya refugees: Refugees headed for Australia rescued by Aceh fisherman",
+            "height":"480",
+            "credit":"Hotli Simanjuntak/EPA",
+            "caption":"Rohingya refugees sleep on the floor of the immigration office in Lhok Seumawe, northern Aceh, Indonesia in February. About 120 Rohingya refugees, including six woman and two children, were rescued by a local fisherman after getting stranded at sea while heading for Australia",
             "width":"720"
           }
         }]
       },{
-        "id":"gu-image-411301870",
-        "relation":"thumbnail",
+        "id":"gu-image-411168038",
+        "relation":"gallery",
         "type":"image",
+        "galleryIndex":11,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2013/6/19/1371663370170/MDG--Muslim-Rohingya-refu-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663127429/Rohingya-refugees-in-Aceh-019.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Munir Uz Zaman",
-            "altText":"MDG : Muslim Rohingya refugees trying to cross the Naf river into Bangladesh from Myanmar",
-            "height":"84",
-            "credit":"Munir Uz Zaman/AFP/Getty Images",
-            "caption":"Rohingya Muslims, trying to cross the Naf river into Bangladesh to escape sectarian violence in Myanmar, look on from an intercepted boat in Teknaf on July 13, 2012.  Photograph: Munir Uz Zaman/AFP/Getty Images",
-            "width":"140"
+            "source":"EPA",
+            "photographer":"Hotli Simanjuntak",
+            "altText":"Rohingya refugees: Rohingya refugees in Aceh",
+            "height":"480",
+            "credit":"Hotli Simanjuntak/EPA",
+            "caption":"Rohingya refugees queue for food at the training centre house in Krueng Raya, Aceh, in April",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-411168040",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/19/1371663083413/Rohingya-refugees-protest-017.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Dedi Sahputra",
+            "altText":"Rohingya refugees: Rohingya refugees protest",
+            "height":"480",
+            "credit":"Dedi Sahputra/EPA",
+            "caption":"Rohingya refugees hold a banner during a protest outside the UNHCR office in Medan, North Sumatra province, Indonesia, in March. About 100 Rohingya refugees staged a protest urging the UNHCR to resettle them in Australia, New Zealand and the US ",
+            "width":"720"
           }
         }]
       }],
