@@ -289,6 +289,11 @@ a.item__link {
         .item__image-container {
             display: none;
         }
+    } @else {
+        &.item--without-image .item__standfirst {
+            display: block;
+        }
+
     }
 }
 @mixin card-headline {
