@@ -1,7 +1,9 @@
 @(discussionId: String)(implicit request: RequestHeader)
-<form class=" component js-comment-box d-comment-box" data-discussion-id="@discussionId">
-    <div class="d-comment-box__errors"></div>
-    <label for="body" class="cta">Add your comment</label>
-    <textarea name="body" class="d-comment-box__body" placeholder="Join the discussion…"></textarea>
-    <button type="submit" class="submit-input d-comment-box__submit">Submit</button>
+<form class="component js-comment-box d-comment-box" data-discussion-id="@discussionId">
+    <div class="d-comment-box__messages"></div>
+    <label for="body" class="d-comment-box__add-comment js-show-comment-box cta">Add your comment</label>
+    <div class="d-comment-box__content">
+        <textarea name="body" class="d-comment-box__body" placeholder="Join the discussion…"></textarea>
+        <button type="submit" class="submit-input d-comment-box__submit">Submit</button>
+    </div>
 </form>

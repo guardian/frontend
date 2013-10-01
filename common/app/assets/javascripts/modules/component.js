@@ -39,7 +39,10 @@ Component.prototype.elem = null;
 Component.prototype.template = null;
 
 /** @type {Object.<string.Element>} */
-Component.prototype.elems = {};
+Component.prototype.elems = null;
+
+/** @type {Object.<string.Element>} */
+Component.prototype.options = null;
 
 /**
  * Uses the CONFIG.classes.component
@@ -48,7 +51,8 @@ Component.prototype.elems = {};
  */
 Component.prototype.attachTo = function(elem) {
     var selector = this.getClass('component');
-    
+    this.elems = {};
+
     elem = (elem && elem.nodeType === 1) ? [elem] : qwery(selector, this.context);
 
     if (elem.length === 0) { throw new ComponentError('No element of type "'+ selector +'" to attach to.'); }
@@ -74,7 +78,7 @@ Component.prototype.dispose = function() {};
  * @param {*} args
  */
 Component.prototype.on = function(eventName, handler, args) {
-    bean.on(this.elem, eventName, handler, args);
+    bean.on(this.elem, eventName, handler.bind(this), args);
 };
 
 /**
@@ -109,6 +113,16 @@ Component.prototype.getClass = function(elemName, sansDot) {
  */
 Component.prototype.getConf = function() {
     return this.constructor.CONFIG;
+};
+
+/**
+ * @param {Object} options
+ */
+Component.prototype.setOptions = function(options) {
+    this.options = {};
+    for (var prop in this.defaultOptions) {
+        this.options[prop] = options[prop] || this.defaultOptions[prop];
+    }
 };
 
 /**

@@ -42,7 +42,7 @@ define([
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<div class="d-actions">' +
                 '<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
-                    'Want to comment? Visit the desktop site</a>' +
+                    'Want our fully featured commenting experience? Head to our old site.</a>' +
                 '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
             clickstream           = new ClickStream({ addListener: false }),
             apiRoot               = config.page.discussionApiRoot,
@@ -135,16 +135,19 @@ define([
                         // Hide the 'Show more button' if there's no more messages on the server
                         self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
 
-                        commentsHaveLoaded = true;
                         currentPage = response.currentPage;
 
                         common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                         loadingInProgress = false;
 
                         RecommendComments.init(context, { apiRoot: apiRoot });
-                        if (config.switches.discussionPostComment) {
-                            self.buildCommentBox(response.commentBoxHtml);
+
+                        // Post a comment
+                        if (!commentsHaveLoaded && config.switches.discussionPostComment) {
+                            self.buildCommentBoxes(response.commentBoxHtml);
                         }
+
+                        commentsHaveLoaded = true;
                     },
                     error: function() {
                         self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments' +
@@ -216,13 +219,25 @@ define([
                 return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
             },
 
-            buildCommentBox: function(html) {
-                var elem = bonzo.create(html),
-                    commentBox;
+            buildCommentBoxes: function(html) {
+                var topBox, bottomBox,
+                    topBoxElem = bonzo.create(html),
+                    bottomBoxElem = bonzo.create(html);
 
-                bonzo(this.discussionContainerNode).prepend(elem);
-                commentBox = new CommentBox(context, { apiRoot: apiRoot });
-                commentBox.attachTo(elem[0]);
+                bonzo(this.discussionContainerNode).prepend(topBoxElem);
+                bonzo(this.showMoreBtnNode).after(bottomBoxElem);
+
+                topBox = new CommentBox(context, { apiRoot: apiRoot, condensed: true });
+                topBox.attachTo(topBoxElem[0]);
+                topBox.on('posted', this.addComment.bind(this));
+
+                bottomBox = new CommentBox(context, { apiRoot: apiRoot });
+                bottomBox.attachTo(bottomBoxElem[0]);
+                bottomBox.on('posted', this.addComment.bind(this));
+            },
+
+            addComment: function(comment) {
+                
             },
 
             bindEvents: function() {

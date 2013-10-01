@@ -1,11 +1,13 @@
 define([
     'ajax',
     'bean',
-    'modules/component'
+    'modules/component',
+    'modules/cookies'
 ], function(
     ajax,
     bean,
-    Component
+    Component,
+    cookies
 ) {
 
 /**
@@ -14,9 +16,7 @@ define([
  */
 function CommentBox(context, options) {
     this.context = context || document;
-    for (var prop in options) {
-        this.options[prop] = options[prop];
-    }
+    this.setOptions(options);
 }
 Component.create(CommentBox);
 
@@ -24,24 +24,28 @@ Component.create(CommentBox);
 CommentBox.CONFIG = {
     classes: {
         component: 'js-comment-box',
+        show: 'js-show-comment-box',
         body: 'd-comment-box__body',
         bodyExpanded: 'd-comment-box__body--expanded',
         submitButton: 'd-comment-box__submit',
-        errors: 'd-comment-box__errors',
-        error: 'd-comment-box__error'
+        messages: 'd-comment-box__messages',
+        error: 'd-comment-box__error',
+        condensed: 'd-comment-box--condensed'
     },
     errors: {
         EMPTY_COMMENT_BODY: 'Please write a comment',
-        COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long'
+        COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long',
+        API_ERROR: 'Sorry, there was a problem posting your comment.'
     }
 };
 
 /**
  * @type {Object.<string.*>}
  */
-CommentBox.prototype.options = {
-    maxLength: 5000,
-    apiRoot: null
+CommentBox.prototype.defaultOptions = {
+    apiRoot: null,
+    condensed: false,
+    maxLength: 5000
 };
 
 /**
@@ -60,21 +64,28 @@ CommentBox.prototype.ready = function() {
 
     this.setFormState();
 
+    // TODO (jamesgorrie): Could definitely use the this.on and make the default context this
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
+
+    if (this.options.condensed) {
+        this.elem.className = this.elem.className +' '+ this.getClass('condensed', true);
+        bean.on(this.context, 'click', [this.getElem('show')], this.showCommentBox.bind(this));
+    }
 };
 
 /**
  * @param {Event}
  */
 CommentBox.prototype.postComment = function(e) {
-    var comment = {
-        body: this.getElem('body').value
-    };
+    var body = this.getElem('body'),
+        comment = {
+            body: this.getElem('body').value
+        };
 
     e.preventDefault();
-    this.getElem('errors').innerHTML = '';
+    this.getElem('messages').innerHTML = '';
     this.errors = [];
 
     if (comment.body === '') {
@@ -87,13 +98,21 @@ CommentBox.prototype.postComment = function(e) {
 
     if (this.errors.length === 0) {
         var url = this.options.apiRoot +'/discussion/'+ this.getDiscussionId() +'/comment';
+        comment.GU_U = cookies.get('GU_U');
 
-        return ajax({
+        // TODO (jamesgorrie): abstract this to clearBox?
+        body.value = '';
+        this.setFormState();
+
+        this.emit('posted', comment);
+
+        return ajax.reqwest({
             url: url,
             type: 'json',
             method: 'post',
             crossOrigin: true,
             withCredentials: true,
+            data: comment,
             headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
         }).then(this.success.bind(this), this.fail.bind(this));
     }
@@ -108,7 +127,7 @@ CommentBox.prototype.error = function(type, message) {
     var error = document.createElement('div');
     error.className = this.getClass('error', true);
     error.innerHTML = message || this.getConf().errors[type];
-    this.getElem('errors').appendChild(error);
+    this.getElem('messages').appendChild(error);
     this.errors.push(type);
 };
 
@@ -124,9 +143,12 @@ CommentBox.prototype.success = function(resp) {
 };
 
 /**
+ * TODO (jamesgorrie); Make this more robust
  * @param {Reqwest=} resp (optional)
  */
-CommentBox.prototype.fail = function(resp) {};
+CommentBox.prototype.fail = function(resp) {
+    this.error('API_ERROR');
+};
 
 
 /**
@@ -151,6 +173,18 @@ CommentBox.prototype.setFormState = function(e) {
     } else {
         submitButton.removeAttribute('disabled');
         this.elem.setAttribute('data-disabled', true);
+    }
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
+CommentBox.prototype.showCommentBox = function(e) {
+    var condensedClass = this.getClass('condensed', true);
+
+    if (this.elem.className.match(condensedClass)) {
+        this.elem.className = this.elem.className.replace(condensedClass, '');
+        this.getElem('body').focus();
     }
 };
 
