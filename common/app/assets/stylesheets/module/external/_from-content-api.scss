@@ -159,13 +159,17 @@ figure {
 
         figcaption {
             background-color: $c-neutral7;
-            padding: $baseline*2 $gs-gutter/2 $gs-column-height $gs-gutter/2;
+            padding: $baseline*2 $gs-gutter/2 $baseline*6 $gs-gutter/2;
+
+            @include mq(wide) {
+                padding-bottom: $gs-column-height;
+            }
         }
     }
 
     &.img-landscape {
         @include mq(leftCol) {
-            width: gs-span(6);
+            width: gs-span(5);
             margin-top: $baseline;
             margin-left: - (gs-span(2) + $gs-gutter);
             margin-right: $gs-gutter;
@@ -191,6 +195,11 @@ figure {
     }
 }
 
+p + figure {
+    &.img-landscape {
+        margin-top: 18px;
+    }
+}
 
 /* Video embeds
    ========================================================================== */
