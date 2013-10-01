@@ -9,7 +9,8 @@ define([
     "modules/cricket",
     "modules/experiments/live-blog-show-more",
     "modules/notification-counter",
-    "modules/detect"
+    "modules/detect",
+    'modules/experiments/left-hand-card'
 ], function (
     common,
     AutoUpdate,
@@ -21,7 +22,8 @@ define([
     Cricket,
     LiveShowMore,
     NotificationCounter,
-    detect
+    detect,
+    LeftHandCard
 ) {
 
     var modules = {
@@ -123,7 +125,19 @@ define([
                     Cricket.cricketArticle(config, context, options);
                 }
             });
+        },
+
+        externalLinksCards: function () {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches && config.switches.externalLinksCards) {
+                    var card = new LeftHandCard({
+                        origin: 'internal',
+                        context: context
+                    });
+                }
+            });
         }
+
     };
 
     var ready = function (config, context) {
@@ -134,6 +148,7 @@ define([
             modules.logReading();
             modules.initDiscussion();
             modules.initCricket();
+            modules.externalLinksCards();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

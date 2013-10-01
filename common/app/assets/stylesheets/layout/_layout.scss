@@ -119,14 +119,14 @@ $headerHeight: 58px;
     }
 }
 
-.inline-image {
+.img--inline {
     width: $inArticleInlineImgWidth;
     float: left;
     clear: left;
     margin: 3px 0 0 0;
-    padding-right: $gs-gutter/2;
-    padding-bottom: 15px;
-    background: white;
+    background-color: $c-neutral7;
+    padding: $baseline*2 $gs-gutter/2 $baseline*6 $gs-gutter/2;
+
 
     @include mq(mobileLandscape) {
         padding-right: $gs-gutter;
@@ -138,7 +138,7 @@ $headerHeight: 58px;
     }
 }
 
-.img-tiny.inline-image {
+.img-tiny.img--inline {
     width: auto;
     max-width: $inArticleInlineImgWidth;
 }
