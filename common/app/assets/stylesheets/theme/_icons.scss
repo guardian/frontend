@@ -93,11 +93,10 @@ figcaption:before {
 
 //Quotes
 .from-content-api blockquote.quoted:before {
+    @extend .i;
+    @extend .i-quote-marks;
     content: '';
     position: absolute;
-    @include background-size(30px 19px);
-    width: 30px;
-    height: 19px;
 
     @if ($svg-support) {
         .svg & {
@@ -105,9 +104,7 @@ figcaption:before {
         }
     }
 
-    @include mq(tablet) {
-        @include background-size(34px 21px);
-        width: 34px;
-        height: 21px;
+    @include mq($to: tablet) {
+        @include transform(scale(0.85));
     }
 }
