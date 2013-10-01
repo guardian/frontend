@@ -13,6 +13,12 @@ $comment-dark: #951c55;
 .collection {
     position: relative;
 }
+.collection--rolled-up {
+    .items,
+    .items__show-more {
+        display: none;
+    }
+}
 .collection__title {
     margin-top: gs-height(1);
     @include fs-header(1);
@@ -22,6 +28,9 @@ $comment-dark: #951c55;
     color: #ffffff;
     background-color: $light-blue;
     border-top: $gs-baseline/3 solid $blue;
+}
+.collection__title a {
+    color: inherit;
 }
 .collection__display-toggle {
     @include box-sizing(border-box);
