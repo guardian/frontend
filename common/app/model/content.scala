@@ -25,6 +25,7 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
+  lazy val openGraphImage: String = mainPicture.flatMap(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -166,7 +167,7 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
-    "og:image" -> mainPicture.map(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
+    "og:image" -> openGraphImage
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
@@ -217,7 +218,7 @@ class Video(private val delegate: ApiContent) extends Content(delegate) {
     "og:type" -> "video",
     "og:video:type" -> "text/html",
     "og:video:url" -> webUrl,
-    "og:image" -> imageOfWidth(640).map(_.path).getOrElse(mainPicture.map(_.path).getOrElse(conf.Configuration.facebook.imageFallback))
+    "og:image" -> openGraphImage
   ) ++ tags.map("video:tag" -> _.name)
 }
 
@@ -238,7 +239,7 @@ class Gallery(private val delegate: ApiContent) extends Content(delegate) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
-    "og:image" -> mainPicture.map(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
+    "og:image" -> openGraphImage
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
