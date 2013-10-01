@@ -73,6 +73,7 @@ figcaption:before {
     display: inline-block;
     content: '';
     margin-right: 4px;
+    height: 11px;
 
     @if ($svg-support) {
         .svg & {
@@ -97,6 +98,7 @@ figcaption:before {
     @extend .i-quote-marks;
     content: '';
     position: absolute;
+    margin-top: -3px;
 
     @if ($svg-support) {
         .svg & {
@@ -105,6 +107,6 @@ figcaption:before {
     }
 
     @include mq($to: tablet) {
-        @include transform(scale(0.85));
+        @include transform(scale(0.8));
     }
 }

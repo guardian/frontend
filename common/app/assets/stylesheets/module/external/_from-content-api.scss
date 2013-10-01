@@ -83,6 +83,7 @@
             margin-top: $baseline;
         }
         + a + p, // Inline link cards are inserted between paragraphs
+        + .inline-image + p,
         + p {
             // Indent consecutive paragraphs
             // by the value of the line-height
@@ -138,29 +139,38 @@
 }
 
 .article blockquote {
-    margin: 28px 0 28px 28px;
+    margin: 28px 0 28px 24px;
     font-style: italic;
+
+    @include mq(tablet) {
+        margin-left: 28px;
+    }
 }
 
 .article blockquote,
 .article blockquote p {
-    @include fs-headline(1);
-    line-height: 24px;
-    line-height: 2.4rem;
 
     &.quoted {
         margin: 28px 0;
 
         p {
-            text-indent: 42px;
+            @include fs-headline(1);
+            line-height: 24px;
+            line-height: 2.4rem;
+            font-style: normal;
+            text-indent: 40px;
             color: $c-neutral2;
         }
     }
 
     @include mq(tablet) {
-        @include fs-headline(2, true);
-        line-height: 28px;
-        line-height: 2.8rem;
+
+        &.quoted p {
+            @include fs-headline(2, true);
+            line-height: 28px;
+            line-height: 2.8rem;
+            text-indent: 42px;
+        }
     }
 }
 
