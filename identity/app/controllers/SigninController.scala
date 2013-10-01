@@ -23,7 +23,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                  signInService : PlaySigninService)
   extends Controller with ExecutionContexts with SafeLogging {
 
-  val page = new IdentityPage("/signin", "Sign in", "signin")
+  val page = IdentityPage("/signin", "Sign in", "signin")
 
   val form = Form(
     Forms.tuple(
