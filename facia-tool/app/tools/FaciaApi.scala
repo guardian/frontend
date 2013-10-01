@@ -6,21 +6,21 @@ import play.api.libs.json.Json
 import services.S3FrontsApi
 import controllers.Identity
 
-trait FrontsApiRead {
+trait FaciaApiRead {
   def getSchema: Option[String]
   def getBlock(id: String): Option[Block]
   def getBlocksSince(since: DateTime): Seq[Block]
   def getBlocksSince(since: String): Seq[Block] = getBlocksSince(DateTime.parse(since))
 }
 
-trait FrontsApiWrite {
+trait FaciaApiWrite {
   def putBlock(id: String, block: Block, identity: Identity): Unit
   def publishBlock(id: String, identity: Identity): Unit
   def discardBlock(id: String, identity: Identity): Unit
   def archive(id: String, block: Block): Unit
 }
 
-object FrontsApi extends FrontsApiRead with FrontsApiWrite {
+object FaciaApi extends FaciaApiRead with FaciaApiWrite {
   implicit val trailRead = Json.reads[Trail]
   implicit val blockRead = Json.reads[Block]
 
