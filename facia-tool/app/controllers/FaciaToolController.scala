@@ -1,14 +1,13 @@
 package controllers
 
-import model._
-import model.UpdateList
+import frontsapi.model._
+import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
 import services.S3FrontsApi
-import scala.concurrent.Future
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
