@@ -37,16 +37,6 @@ GET           /ophan/pageviews                 controllers.OphanApiController.pl
 GET           /dev/switchboard                 controllers.SwitchboardController.renderSwitchboard()
 POST          /dev/switchboard                 controllers.SwitchboardController.save()
 
-# Fronts
-GET           /collections                     controllers.FrontsController.index()
-GET           /fronts/config/*id               controllers.FrontsController.getConfig(id)
-
-GET           /fronts/collection/*id           controllers.FrontsController.readBlock(id)
-POST          /fronts/collection/*id           controllers.FrontsController.updateBlock(id)
-DELETE        /fronts/collection/*id           controllers.FrontsController.deleteTrail(id)
-GET           /fronts/collection               controllers.FrontsController.listCollections
-GET           /fronts/config                   controllers.FrontsController.listConfigs
-
 # Analytics
 GET           /analytics/kpis                  controllers.AnalyticsController.kpis()
 GET           /analytics/pageviews             controllers.AnalyticsController.pageviews()

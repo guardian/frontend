@@ -70,7 +70,7 @@ object Frontend extends Build with Prototypes {
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     (test in Test) <<= (test in Test) dependsOn (gruntTask("test:unit:admin"))
   )
-  val faciaTool = application("facia-tool").dependsOn(commonWithTests, admin)
+  val faciaTool = application("facia-tool").dependsOn(commonWithTests)
   val porter = application("porter").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
