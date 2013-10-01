@@ -182,10 +182,10 @@ a.item__link {
     }
     .item__title {
         @include mq(mobile) {
-            min-height: gs-height(2);
+            min-height: gs-height(2) + $gs-baseline;
         }
         @include mq(tablet) {
-            min-height: gs-height(3);
+            min-height: gs-height(3) + $gs-baseline;
         }
     }
     .item__standfirst {
