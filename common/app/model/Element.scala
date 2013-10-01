@@ -4,6 +4,7 @@ import com.gu.openplatform.contentapi.model.{Element => ApiElement}
 
 class Element protected (val delegate: ApiElement) {
   lazy val index: Int = delegate.galleryIndex.getOrElse(0)
+  lazy val id: String = delegate.id
 }
 
 object Element {
