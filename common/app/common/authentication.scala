@@ -72,6 +72,7 @@ object NonAuthAction {
 }
 
 class AuthActionWithTimeout(loginUrl: String) extends AuthAction(loginUrl) {
+  import Play.current
 
   override def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async { request =>
     if (withinAllowedTime(request) || Play.isTest)
