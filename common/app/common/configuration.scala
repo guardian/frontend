@@ -50,6 +50,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object debug {
     lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").map(_.toBoolean).getOrElse(true)
+    lazy val beaconUrl: String = configuration("beacon.url")
   }
 
   override def toString(): String = configuration.toString
