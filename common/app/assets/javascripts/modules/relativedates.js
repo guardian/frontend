@@ -32,11 +32,6 @@ define(['common', 'bonzo'], function (common, bonzo) {
         return (relative.toDateString() === yesterday.toDateString());
     }
 
-    function isWithinPastWeek(date) {
-        var weekAgo = new Date().valueOf() - (7 * 24 * 60 * 60 * 1000);
-        return date.valueOf() >= weekAgo;
-    }
-
     function isValidDate(date) {
         if (Object.prototype.toString.call(date) !== "[object Date]") {
             return false;
@@ -44,12 +39,10 @@ define(['common', 'bonzo'], function (common, bonzo) {
         return !isNaN(date.getTime());
     }
 
-    function makeRelativeDate(epoch, opts) {
+    function makeRelativeDate(epoch, showTime) {
         var then = new Date(Number(epoch)),
             now = new Date(),
             delta;
-
-        opts = opts || {};
 
         if (!isValidDate(then)) {
             return false;
@@ -61,58 +54,64 @@ define(['common', 'bonzo'], function (common, bonzo) {
             return false;
 
         } else if (delta < 55) {
-            return delta + 's';
+            return 'Less than a minute ago';
+
+        } else if (delta < 90) {
+            return '1 minute ago';
+
+        } else if (delta < (8 * 60)) {
+            return (parseInt(delta / 60, 10)).toString(10) +
+                ' min ago';
 
         } else if (delta < (55 * 60)) {
-            return (Math.round(delta / 60, 10)) + 'm';
+            return (parseInt(delta / 60, 10)).toString(10) +
+                ' min ago';
+
+        } else if (delta < (90 * 60)) {
+            return '1 hour ago';
+        
+        } else if (delta < (5 * 60 * 60)) {
+            return (Math.round(delta / 3600)).toString(10) +
+                ' hours ago';
 
         } else if (isToday(then)) {
-            return (Math.round(delta / 3600)) + 'h';
-
-        } else if (isWithinPastWeek(then) && opts.format === 'short') {
-            return (Math.round(delta / 3600 / 24)) + 'd';
+            return 'Today' + withTime(then, true);
 
         } else if (isYesterday(then)) { // yesterday
-            return 'Yesterday' + withTime(then);
+            return 'Yesterday' + withTime(then, true);
 
         } else if (delta < 5 * 24 * 60 * 60) { // less than 5 days
             return [dayOfWeek(then.getDay()), then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
-                   (opts.showTime ? withTime(then) : '');
+                withTime(then, showTime);
 
         } else {
             return [then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
-                   (opts.showTime ? withTime(then) : '');
+                withTime(then, showTime);
 
         }
     }
     
-    function withTime(date) {
-        return ', ' + twelveHourClock(date.getHours()) + ':' + pad(date.getMinutes()) + ampm(date.getHours());
+    function withTime(date, show) {
+        return (show === true)
+            ? ', ' + twelveHourClock(date.getHours()) + ':' + pad(date.getMinutes()) + ampm(date.getHours())
+            : '';
     }
 
     function findValidTimestamps(context) {
         // `.blocktime time` used in blog html
-        return common.$g('.js-timestamp, .block-time time, .js-item__timestamp', context);
+        return common.$g('.js-timestamp, .block-time time', context);
     }
 
     function replaceValidTimestamps(context) {
-        findValidTimestamps(context).each(function(el, i) {
-            var $el = bonzo(el),
-                datetime = new Date($el.attr('datetime')),
-                relativeDate = makeRelativeDate(datetime.getTime(), {
-                                  // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
-                                  showTime: bonzo($el.parent()).hasClass('block-time'),
-                                  format:   $el.attr('data-relativeformat')
-                               });
+        findValidTimestamps(context).each(function(e, i) {
+            var el = bonzo(e),
+                datetime = new Date(el.attr('datetime')),
+                // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
+                relativeDate = makeRelativeDate(datetime.getTime(), bonzo(el.parent()).hasClass('block-time'));
 
-            $el.removeClass('js-timestamp');
-
+            el.removeClass('js-timestamp');
             if (relativeDate) {
-                // If we find .timestamp__text (facia), use that instead
-                var targetEl = $el[0].querySelector('.timestamp__text') || $el[0];
-
-                targetEl.setAttribute('title', bonzo(targetEl).text());
-                targetEl.innerHTML = relativeDate;
+                el.html('<span title="' + el.text() + '">' + relativeDate + '</span>');
             }
         });
     }

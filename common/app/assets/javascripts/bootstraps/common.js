@@ -29,6 +29,7 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
+    'modules/experiments/left-hand-card',
     'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
@@ -66,6 +67,7 @@ define([
     AdvertsAnalytics,
     Debug,
     ab,
+    LeftHandCard,
     swipeNav,
     VideoAdvert,
     CommentCount,
@@ -253,6 +255,17 @@ define([
 
         },
 
+        externalLinksCards: function (config) {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches && config.switches.externalLinksCards) {
+                    var card = new LeftHandCard({
+                        origin: 'all',
+                        context: context
+                    });
+                }
+            });
+        },
+
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
                 common.mediator.on('page:common:deferred:loaded', function(config, context) {
@@ -370,6 +383,7 @@ define([
             modules.initLightboxGalleries();
             modules.optIn();
             modules.displayReleaseMessage();
+            modules.externalLinksCards();
         }
         common.mediator.emit("page:common:ready", config, context);
     };
