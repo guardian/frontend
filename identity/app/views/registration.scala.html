@@ -1,5 +1,6 @@
-@(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, registrationForm: Form[(String, String, String, Boolean, Boolean)])(implicit request: RequestHeader)
+@(page: model.MetaData with tracking.TrackingParams, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, registrationForm: Form[(String, String, String, Boolean, Boolean)])(implicit request: RequestHeader)
 
+@import tracking.TrackingParams
 @import form.IdFormHelpers._
 @import views.html.fragments.form.{idInputEmail, idInputPassword, idInputUsername, idCheckbox}
 @import views.html.fragments.registrationFooter
@@ -9,6 +10,7 @@
 }{
 <div class="identity-wrapper">
     <h1>Create your Guardian account</h1>
+    <p>Already have an account? <a href="@idUrlBuilder.buildUrl("/signin", idRequest)">Sign in</a>.</p>
 
     @socialSignin(page, idRequest, idUrlBuilder)
 

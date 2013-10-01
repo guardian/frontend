@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":1557,
+    "total":1559,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
@@ -19,6 +19,218 @@
       "references":[]
     },
     "results":[{
+      "id":"technology/askjack/2013/sep/26/mp3-dj-music-wav-aiff",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-26T14:26:57Z",
+      "webTitle":"Which MP3s will play my DJ files?",
+      "webUrl":"http://www.theguardian.com/technology/askjack/2013/sep/26/mp3-dj-music-wav-aiff",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/sep/26/mp3-dj-music-wav-aiff",
+      "fields":{
+        "trailText":"<p>Pete is \"a bit of a bedroom DJ\" and wants to listen to his WAV AIFF music files on the move. Are there any suitable MP3s?</p>",
+        "headline":"Which MP3s will play my DJ files?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j4eb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380204715990/Sansa-Clip-003.jpg",
+        "wordcount":"1208",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.theguardian.com/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/digital-music-and-audio",
+        "type":"keyword",
+        "webTitle":"Digital music and audio",
+        "webUrl":"http://www.theguardian.com/technology/digital-music-and-audio",
+        "apiUrl":"http://content.guardianapis.com/technology/digital-music-and-audio",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.theguardian.com/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418350798",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380204722996/Sansa-Clip-008.jpg",
+          "typeData":{
+            "source":"Public Domain",
+            "altText":"Sansa Clip",
+            "height":"276",
+            "credit":"Public Domain",
+            "caption":"The Sansa Clip is a popular choice for playing FLAC files, and is well regarded for its sound quality.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418350799",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380204715990/Sansa-Clip-003.jpg",
+          "typeData":{
+            "source":"Public Domain",
+            "altText":"Sansa Clip",
+            "height":"84",
+            "credit":"Public Domain",
+            "caption":"The Sansa Clip is a popular choice for playing FLAC files, and is well regarded for its sound quality.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/askjack/2013/sep/19/using-microsoft-word-laptop-netbook",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-19T14:58:36Z",
+      "webTitle":"All I use is Microsoft Word – should I get a laptop or netbook?",
+      "webUrl":"http://www.theguardian.com/technology/askjack/2013/sep/19/using-microsoft-word-laptop-netbook",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/sep/19/using-microsoft-word-laptop-netbook",
+      "fields":{
+        "trailText":"<p>Charlotte, a novelist, wants a cheap but very light machine for working on manuscripts</p>",
+        "headline":"All I use is Microsoft Word – should I get a laptop or netbook?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tqk8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602481630/Asus-Eee-PC-X101CH-netboo-003.jpg",
+        "wordcount":"1170",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.theguardian.com/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.theguardian.com/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417769037",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602487576/Asus-Eee-PC-X101CH-netboo-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Asus Eee PC X101CH netbook",
+            "height":"276",
+            "credit":"PR",
+            "caption":"The purple Asus Eee PC X101CH weighs less than a kilo and has a 10.1in screen, a 1.6GHz Intel Atom processor and a 320GB hard drive.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417769038",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602481630/Asus-Eee-PC-X101CH-netboo-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Asus Eee PC X101CH netbook",
+            "height":"84",
+            "credit":"PR",
+            "caption":"The purple Asus Eee PC X101CH weighs less than a kilo and has a 10.1in screen, a 1.6GHz Intel Atom processor and a 320GB hard drive.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"technology/askjack/2013/sep/12/how-move-my-email-yahoo",
       "sectionId":"technology",
       "sectionName":"Technology",
@@ -2406,281 +2618,6 @@
             "height":"84",
             "credit":"PR",
             "caption":"The Acer Iconia Tab W510 is among models that work like a laptop but the screen can be detached and used separately as a tablet",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"technology/askjack/2013/may/09/editing-web-pages-windows-7-ie10",
-      "sectionId":"technology",
-      "sectionName":"Technology",
-      "webPublicationDate":"2013-05-09T13:17:24Z",
-      "webTitle":"Editing web pages in Windows 7 and accessing old websites with IE10",
-      "webUrl":"http://www.theguardian.com/technology/askjack/2013/may/09/editing-web-pages-windows-7-ie10",
-      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/may/09/editing-web-pages-windows-7-ie10",
-      "fields":{
-        "trailText":"<p><strong>Ask Jack: </strong>Chris has upgraded to Windows 7 and complains that he can no longer edit HTML files in Notepad, while Steve has upgraded to Internet Explorer 10, and his wife can no longer access the old NHS site she needs for her job…</p>",
-        "headline":"Editing web pages in Windows 7 and accessing old websites with IE10",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3fyye",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2009/5/22/1242995302843/Windows-7-003.jpg",
-        "wordcount":"956",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"technology/askjack",
-        "type":"blog",
-        "webTitle":"Ask Jack",
-        "webUrl":"http://www.theguardian.com/technology/askjack",
-        "apiUrl":"http://content.guardianapis.com/technology/askjack",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/windows-7",
-        "type":"keyword",
-        "webTitle":"Windows 7",
-        "webUrl":"http://www.theguardian.com/technology/windows-7",
-        "apiUrl":"http://content.guardianapis.com/technology/windows-7",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/internet",
-        "type":"keyword",
-        "webTitle":"Internet",
-        "webUrl":"http://www.theguardian.com/technology/internet",
-        "apiUrl":"http://content.guardianapis.com/technology/internet",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/microsoft",
-        "type":"keyword",
-        "webTitle":"Microsoft",
-        "webUrl":"http://www.theguardian.com/technology/microsoft",
-        "apiUrl":"http://content.guardianapis.com/technology/microsoft",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/computing",
-        "type":"keyword",
-        "webTitle":"Computing",
-        "webUrl":"http://www.theguardian.com/technology/computing",
-        "apiUrl":"http://content.guardianapis.com/technology/computing",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/technology",
-        "type":"keyword",
-        "webTitle":"Technology",
-        "webUrl":"http://www.theguardian.com/technology/technology",
-        "apiUrl":"http://content.guardianapis.com/technology/technology",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"profile/jackschofield",
-        "type":"contributor",
-        "webTitle":"Jack Schofield",
-        "webUrl":"http://www.theguardian.com/profile/jackschofield",
-        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
-        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
-        "rcsId":"GNL004401",
-        "r2ContributorId":"15761",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-408570319",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2009/5/22/1242995301183/Windows-7-001.jpg",
-          "typeData":{
-            "source":"Public Domain",
-            "altText":"Windows 7",
-            "height":"276",
-            "credit":"Public Domain",
-            "caption":"Windows 7: issues with Notepad editing web pages",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-408570320",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2009/5/22/1242995302843/Windows-7-003.jpg",
-          "typeData":{
-            "source":"Public Domain",
-            "altText":"Windows 7",
-            "height":"84",
-            "credit":"Public Domain",
-            "caption":"Windows 7 desktop image Photograph: Public Domain",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"technology/askjack/2013/may/02/how-transfer-files-from-dos-laptop",
-      "sectionId":"technology",
-      "sectionName":"Technology",
-      "webPublicationDate":"2013-05-02T14:30:40Z",
-      "webTitle":"How can I transfer files from my DOS laptop?",
-      "webUrl":"http://www.theguardian.com/technology/askjack/2013/may/02/how-transfer-files-from-dos-laptop",
-      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/may/02/how-transfer-files-from-dos-laptop",
-      "fields":{
-        "trailText":"<p><strong>Jack Schofield:</strong> Roger Funeaux is using a DOS machine to run his relational databases, and takes backups on floppies. There must be a simpler way to transfer files …</p>",
-        "headline":"How can I transfer files from my DOS laptop?",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3fhj9",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/2/1367504569232/DOS-commands-005.jpg",
-        "wordcount":"921",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"technology/computing",
-        "type":"keyword",
-        "webTitle":"Computing",
-        "webUrl":"http://www.theguardian.com/technology/computing",
-        "apiUrl":"http://content.guardianapis.com/technology/computing",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/file-sharing",
-        "type":"keyword",
-        "webTitle":"Filesharing",
-        "webUrl":"http://www.theguardian.com/technology/file-sharing",
-        "apiUrl":"http://content.guardianapis.com/technology/file-sharing",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/askjack",
-        "type":"blog",
-        "webTitle":"Ask Jack",
-        "webUrl":"http://www.theguardian.com/technology/askjack",
-        "apiUrl":"http://content.guardianapis.com/technology/askjack",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/technology",
-        "type":"keyword",
-        "webTitle":"Technology",
-        "webUrl":"http://www.theguardian.com/technology/technology",
-        "apiUrl":"http://content.guardianapis.com/technology/technology",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"profile/jackschofield",
-        "type":"contributor",
-        "webTitle":"Jack Schofield",
-        "webUrl":"http://www.theguardian.com/profile/jackschofield",
-        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
-        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
-        "rcsId":"GNL004401",
-        "r2ContributorId":"15761",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"technology/linux",
-        "type":"keyword",
-        "webTitle":"Linux",
-        "webUrl":"http://www.theguardian.com/technology/linux",
-        "apiUrl":"http://content.guardianapis.com/technology/linux",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/windows",
-        "type":"keyword",
-        "webTitle":"Windows",
-        "webUrl":"http://www.theguardian.com/technology/windows",
-        "apiUrl":"http://content.guardianapis.com/technology/windows",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/microsoft",
-        "type":"keyword",
-        "webTitle":"Microsoft",
-        "webUrl":"http://www.theguardian.com/technology/microsoft",
-        "apiUrl":"http://content.guardianapis.com/technology/microsoft",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-408212232",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/2/1367504575253/DOS-commands-010.jpg",
-          "typeData":{
-            "source":"Public",
-            "altText":"DOS commands",
-            "height":"276",
-            "credit":"Public",
-            "caption":"In the days before Windows, PC programs were run from a DOS command prompt, and a DOS emulator is still included in Windows for backwards compatibility",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-408212233",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/2/1367504569232/DOS-commands-005.jpg",
-          "typeData":{
-            "source":"Public",
-            "altText":"DOS commands",
-            "height":"84",
-            "credit":"Public",
-            "caption":"In the days before Windows, PC programs were run from a DOS command prompt, and a DOS emulator is\nstill included in Windows for backwards compatibility Photograph: Public",
             "width":"140"
           }
         }]

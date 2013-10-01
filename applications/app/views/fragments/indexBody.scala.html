@@ -1,0 +1,20 @@
+@(index: services.IndexPage)(implicit request: RequestHeader)
+
+<section class="front-section zone-@index.page.section" role="main">
+
+    @fragments.headers.sectionHead(index.page.webTitle)
+
+    @fragments.contributor(index.page)
+
+    <div class="trailblock" data-count="@index.trails.length" data-link-name="Section | block | @index.page.section">
+        @fragments.trailblocks.section(index.trails, numWithImages = 3, numItemsVisible = index.trails.size)
+    </div>
+
+</section>
+
+<div class="box-indent article-zone-no-indent">
+
+    @fragments.footballNav(index.page)
+
+    @fragments.mostPopularPlaceholder(index.page.section)
+</div>

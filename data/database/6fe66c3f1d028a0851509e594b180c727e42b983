@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":59419,
+    "total":59656,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
-    "pages":5942,
+    "pages":5966,
     "orderBy":"newest",
     "edition":{
       "id":"lifeandstyle",
@@ -29,93 +29,67 @@
       }]
     },
     "results":[{
-      "id":"lifeandstyle/wordofmouth/2013/sep/17/ghana-first-farmers-market-accra",
+      "id":"lifeandstyle/the-running-blog/2013/sep/30/running-blog-how-was-your-weekend",
       "sectionId":"lifeandstyle",
       "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-17T11:05:01Z",
-      "webTitle":"Ghana's first farmers' market: 'We need more like this'",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/wordofmouth/2013/sep/17/ghana-first-farmers-market-accra",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/wordofmouth/2013/sep/17/ghana-first-farmers-market-accra",
+      "webPublicationDate":"2013-09-30T08:42:21Z",
+      "webTitle":"Running blog: how was your weekend running?",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/the-running-blog/2013/sep/30/running-blog-how-was-your-weekend",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-running-blog/2013/sep/30/running-blog-how-was-your-weekend",
       "fields":{
-        "trailText":"<p><strong>Afua Hirsch:</strong> A fair in Accra selling local, organic sustainably grown produce is proving a hit among the growing middle class</p>",
-        "headline":"Ghana's first farmers' market: 'We need more like this'",
+        "trailText":"<p>Wilson Kipsang's world record this weekend was fantastic – but what did the weekend hold, albeit rather more sedately, for you?</p>",
+        "headline":"Running blog: how was your weekend running?",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tzgq",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414035511/Mocos-Savannah-Honey-005.jpg",
-        "wordcount":"803",
+        "shortUrl":"http://gu.com/p/3j6at",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/30/1380526739590/Wilson-Kipsang-winning-th-003.jpg",
+        "wordcount":"264",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"lifeandstyle/wordofmouth",
+        "id":"lifeandstyle/the-running-blog",
         "type":"blog",
-        "webTitle":"Word of Mouth blog",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/wordofmouth",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/wordofmouth",
+        "webTitle":"The running blog",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/the-running-blog",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-running-blog",
         "sectionId":"lifeandstyle",
         "sectionName":"Life and style",
         "references":[]
       },{
-        "id":"world/ghana",
-        "type":"keyword",
-        "webTitle":"Ghana",
-        "webUrl":"http://www.theguardian.com/world/ghana",
-        "apiUrl":"http://content.guardianapis.com/world/ghana",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/africa",
-        "type":"keyword",
-        "webTitle":"Africa",
-        "webUrl":"http://www.theguardian.com/world/africa",
-        "apiUrl":"http://content.guardianapis.com/world/africa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/world",
-        "type":"keyword",
-        "webTitle":"World news",
-        "webUrl":"http://www.theguardian.com/world/world",
-        "apiUrl":"http://content.guardianapis.com/world/world",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"travel/ghana",
-        "type":"keyword",
-        "webTitle":"Ghana",
-        "webUrl":"http://www.theguardian.com/travel/ghana",
-        "apiUrl":"http://content.guardianapis.com/travel/ghana",
-        "sectionId":"travel",
-        "sectionName":"Travel",
-        "references":[]
-      },{
-        "id":"travel/africa",
-        "type":"keyword",
-        "webTitle":"Africa",
-        "webUrl":"http://www.theguardian.com/travel/africa",
-        "apiUrl":"http://content.guardianapis.com/travel/africa",
-        "sectionId":"travel",
-        "sectionName":"Travel",
-        "references":[]
-      },{
-        "id":"travel/travel",
-        "type":"keyword",
-        "webTitle":"Travel",
-        "webUrl":"http://www.theguardian.com/travel/travel",
-        "apiUrl":"http://content.guardianapis.com/travel/travel",
-        "sectionId":"travel",
-        "sectionName":"Travel",
-        "references":[]
-      },{
-        "id":"lifeandstyle/food-and-drink",
-        "type":"keyword",
-        "webTitle":"Food & drink",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
+        "id":"lifeandstyle/series/weekend-debrief",
+        "type":"series",
+        "webTitle":"Weekend debrief",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/series/weekend-debrief",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/weekend-debrief",
         "sectionId":"lifeandstyle",
         "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/running",
+        "type":"keyword",
+        "webTitle":"Running",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/running",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/running",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/fitness",
+        "type":"keyword",
+        "webTitle":"Fitness",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/fitness",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/fitness",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/katecarter",
+        "type":"contributor",
+        "webTitle":"Kate Carter",
+        "webUrl":"http://www.theguardian.com/profile/katecarter",
+        "apiUrl":"http://content.guardianapis.com/profile/katecarter",
+        "bio":"<p>Kate Carter is <a href=\"http://www.guardian.co.uk/lifeandstyle\">Life &amp; Style</a> editor of guardian.co.uk</p>",
+        "r2ContributorId":"19160",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/10/6/1286363243830/kate-carter.jpg",
         "references":[]
       },{
         "id":"lifeandstyle/lifeandstyle",
@@ -125,22 +99,6 @@
         "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
         "sectionId":"lifeandstyle",
         "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"travel/travelfoodanddrink",
-        "type":"keyword",
-        "webTitle":"Food and drink",
-        "webUrl":"http://www.theguardian.com/travel/travelfoodanddrink",
-        "apiUrl":"http://content.guardianapis.com/travel/travelfoodanddrink",
-        "sectionId":"travel",
-        "sectionName":"Travel",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
         "references":[]
       },{
         "id":"tone/features",
@@ -150,410 +108,6 @@
         "apiUrl":"http://content.guardianapis.com/tone/features",
         "references":[]
       },{
-        "id":"profile/afuahirsch",
-        "type":"contributor",
-        "webTitle":"Afua Hirsch",
-        "webUrl":"http://www.theguardian.com/profile/afuahirsch",
-        "apiUrl":"http://content.guardianapis.com/profile/afuahirsch",
-        "bio":"<p>Afua Hirsch is the Guardian's west Africa correspondent based in Ghana</p>",
-        "r2ContributorId":"28094",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/11/8/1289231487480/afua-hirsch.jpg",
-        "references":[]
-      },{
-        "id":"environment/organics",
-        "type":"keyword",
-        "webTitle":"Organics",
-        "webUrl":"http://www.theguardian.com/environment/organics",
-        "apiUrl":"http://content.guardianapis.com/environment/organics",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"environment/environment",
-        "type":"keyword",
-        "webTitle":"Environment",
-        "webUrl":"http://www.theguardian.com/environment/environment",
-        "apiUrl":"http://content.guardianapis.com/environment/environment",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417513061",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414042154/Mocos-Savannah-Honey-010.jpg",
-          "typeData":{
-            "source":"Edison Gbenga",
-            "altText":"Moco's Savannah Honey",
-            "height":"276",
-            "credit":"Edison Gbenga",
-            "caption":"Moco's Savannah Honey is on sale at Accra Green Market for 10 Ghana cedis, and also exported to the UK. Photograph: Edison Gbenga/Phosmic Impressions",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417513062",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414035511/Mocos-Savannah-Honey-005.jpg",
-          "typeData":{
-            "source":"Edison Gbenga",
-            "altText":"Moco's Savannah Honey",
-            "height":"84",
-            "credit":"Edison Gbenga",
-            "caption":"Moco's Savannah Honey is on sale at Accra Green Market for 10 Ghana cedis, and also exported to the UK Photograph: Edison Gbenga",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-image-417513063",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414721793/Accra-Green-Market-010.jpg",
-          "typeData":{
-            "source":"Edison Gbenga",
-            "altText":"Accra Green Market",
-            "height":"276",
-            "credit":"Edison Gbenga",
-            "caption":"Displaying produce at Accra Green Market. Photograph: Edison Gbenga",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417513064",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/17/1379414872673/Carrots-at-Accra-Green-Ma-010.jpg",
-          "typeData":{
-            "source":"Edison Gbenga/Phosmic Impressions",
-            "altText":"Carrots at Accra Green Market",
-            "height":"276",
-            "credit":"Edison Gbenga/Phosmic Impressions",
-            "caption":"'Small, knobbly carrots' at Accra Green Market Photograph: Edison Gbenga/Phosmic Impressions",
-            "width":"460"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"lifeandstyle/2013/sep/17/lentils-and-couscous-recipe",
-      "sectionId":"lifeandstyle",
-      "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-17T11:00:01Z",
-      "webTitle":"Nigel Slater's lentils and couscous recipe",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/17/lentils-and-couscous-recipe",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/17/lentils-and-couscous-recipe",
-      "fields":{
-        "trailText":"Use brown basmati rice for a more substantial version of this light supper dish, says <strong>Nigel Slater</strong>",
-        "headline":"Nigel Slater's lentils and couscous recipe",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tk2x",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827501399/lentils-and-couscous-003.jpg",
-        "wordcount":"299",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"lifeandstyle/series/nigel-slater-midweek-dinner",
-        "type":"series",
-        "webTitle":"Nigel Slater's midweek dinner",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/series/nigel-slater-midweek-dinner",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/nigel-slater-midweek-dinner",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"lifeandstyle/food-and-drink",
-        "type":"keyword",
-        "webTitle":"Food & drink",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"lifeandstyle/lifeandstyle",
-        "type":"keyword",
-        "webTitle":"Life and style",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"profile/nigelslater",
-        "type":"contributor",
-        "webTitle":"Nigel Slater",
-        "webUrl":"http://www.theguardian.com/profile/nigelslater",
-        "apiUrl":"http://content.guardianapis.com/profile/nigelslater",
-        "rcsId":"GNL209262",
-        "r2ContributorId":"16196",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/9/14/1347615802202/Nigel-Slater-003.jpg",
-        "references":[]
-      },{
-        "id":"theobserver/magazine/life-and-style",
-        "type":"newspaper-book-section",
-        "webTitle":"Life & style",
-        "webUrl":"http://www.theguardian.com/theobserver/magazine/life-and-style",
-        "apiUrl":"http://content.guardianapis.com/theobserver/magazine/life-and-style",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"theobserver/magazine",
-        "type":"newspaper-book",
-        "webTitle":"Observer Magazine",
-        "webUrl":"http://www.theguardian.com/theobserver/magazine",
-        "apiUrl":"http://content.guardianapis.com/theobserver/magazine",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"tone/recipes",
-        "type":"tone",
-        "webTitle":"Recipes",
-        "webUrl":"http://www.theguardian.com/tone/recipes",
-        "apiUrl":"http://content.guardianapis.com/tone/recipes",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theobserver",
-        "type":"publication",
-        "webTitle":"The Observer",
-        "webUrl":"http://www.theguardian.com/theobserver/all",
-        "apiUrl":"http://content.guardianapis.com/theobserver/all",
-        "sectionId":"theobserver",
-        "sectionName":"From the Observer",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416967551",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827498099/lentils-and-couscous-001.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"54",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827500178/lentils-and-couscous-002.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"130",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827501399/lentils-and-couscous-003.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"84",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827502578/lentils-and-couscous-004.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"132",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827503839/lentils-and-couscous-005.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"168",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827505071/lentils-and-couscous-006.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"180",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827506316/lentils-and-couscous-007.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"228",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827507645/lentils-and-couscous-008.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"276",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827507645/lentils-and-couscous-008.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"276",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416967552",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/10/1378827501399/lentils-and-couscous-003.jpg",
-          "typeData":{
-            "source":"Observer",
-            "photographer":"Jonathan Lovekin",
-            "altText":"lentils and couscous",
-            "height":"84",
-            "credit":"Jonathan Lovekin/Observer",
-            "caption":"Bowled over: Nigel Slater's lentils and couscous dish. Photograph: Jonathan Lovekin for the Observer",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"lifeandstyle/wordofmouth/2013/sep/17/serving-temperature-affects-taste-food",
-      "sectionId":"lifeandstyle",
-      "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-17T07:30:00Z",
-      "webTitle":"Hot or not? How serving temperature affects the way food tastes",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/wordofmouth/2013/sep/17/serving-temperature-affects-taste-food",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/wordofmouth/2013/sep/17/serving-temperature-affects-taste-food",
-      "fields":{
-        "trailText":"<p>Freshly cooked, steaming dishes may smell delicious, but some researchers believe that heat impairs our ability to enjoy the flavour of food</p>",
-        "headline":"Hot or not? How serving temperature affects the way food tastes",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tz4f",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347943519/Hot-food-003.jpg",
-        "wordcount":"739",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"lifeandstyle/series/tasting-notes",
-        "type":"series",
-        "webTitle":"Tasting notes",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/series/tasting-notes",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/tasting-notes",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"lifeandstyle/wordofmouth",
-        "type":"blog",
-        "webTitle":"Word of Mouth blog",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/wordofmouth",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/wordofmouth",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"lifeandstyle/food-and-drink",
-        "type":"keyword",
-        "webTitle":"Food & drink",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"lifeandstyle/lifeandstyle",
-        "type":"keyword",
-        "webTitle":"Life and style",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
         "id":"tone/blog",
         "type":"tone",
         "webTitle":"Blogposts",
@@ -561,17 +115,6 @@
         "apiUrl":"http://content.guardianapis.com/tone/blog",
         "references":[]
       },{
-        "id":"profile/amyfleming",
-        "type":"contributor",
-        "webTitle":"Amy Fleming",
-        "webUrl":"http://www.theguardian.com/profile/amyfleming",
-        "apiUrl":"http://content.guardianapis.com/profile/amyfleming",
-        "bio":"<p>Amy Fleming is a freelance writer and former Guardian staff journalist. Follow her on Twitter <a href=\"http://twitter.com/#!/Amy_Fleming\">@amy_fleming</a></p>",
-        "rcsId":"GNL475699",
-        "r2ContributorId":"15346",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/09/10/amy_fleming140x140.jpg",
-        "references":[]
-      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -580,160 +123,84 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417435106",
+        "id":"gu-image-418610850",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347939619/Hot-food-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/30/1380526746372/Wilson-Kipsang-winning-th-008.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
-            "height":"54",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature rises beyond 35C'. Photograph: Alamy",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347942140/Hot-food-002.jpg",
-          "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
-            "height":"130",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature rises beyond 35C'. Photograph: Alamy",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347943519/Hot-food-003.jpg",
-          "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
-            "height":"84",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature rises beyond 35C'. Photograph: Alamy",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347944705/Hot-food-004.jpg",
-          "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
-            "height":"132",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature rises beyond 35C'. Photograph: Alamy",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347945924/Hot-food-005.jpg",
-          "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
-            "height":"168",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature rises beyond 35C'. Photograph: Alamy",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347947152/Hot-food-006.jpg",
-          "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
-            "height":"180",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature rises beyond 35C'. Photograph: Alamy",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347948345/Hot-food-007.jpg",
-          "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
-            "height":"228",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature rises beyond 35C'. Photograph: Alamy",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347949593/Hot-food-008.jpg",
-          "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
+            "source":"Roland Popp/dpa/Corbis",
+            "photographer":"Roland Popp",
+            "altText":"Wilson Kipsang winning the 40th Berlin Marathon ",
             "height":"276",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature rises beyond 35C'. Photograph: Alamy",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347949593/Hot-food-008.jpg",
-          "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
-            "height":"276",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature of food rises beyond 35C'. Photograph: Alamy",
+            "credit":"Roland Popp/Roland Popp/dpa/Corbis",
+            "caption":"Unless you are Wilson Kipsang, your weekend running probably did not include breaking a world record. Photograph: Roland Popp/Roland Popp/dpa/Corbis",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417435107",
+        "id":"gu-image-418610851",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379347943519/Hot-food-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/30/1380526739590/Wilson-Kipsang-winning-th-003.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"Hot food",
+            "source":"Roland Popp/dpa/Corbis",
+            "photographer":"Roland Popp",
+            "altText":"Wilson Kipsang winning the 40th Berlin Marathon ",
             "height":"84",
-            "credit":"Alamy",
-            "caption":"Research has found that 'the perception of taste decreases when the temperature rises beyond 35C'. Photograph: Alamy",
+            "credit":"Roland Popp/Roland Popp/dpa/Corbis",
+            "caption":"Wilson Kipsang winning the 40th Berlin Marathon and breaking the world record in the process Photograph: Roland Popp/Roland Popp/dpa/Corbis",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"lifeandstyle/2013/sep/17/few-women-science-engineering",
+      "id":"lifeandstyle/2013/sep/30/sex-repulses-me",
       "sectionId":"lifeandstyle",
       "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-17T06:30:00Z",
-      "webTitle":"Where are the women scientists and engineers?",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/17/few-women-science-engineering",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/17/few-women-science-engineering",
+      "webPublicationDate":"2013-09-30T06:00:09Z",
+      "webTitle":"Sex repulses me",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/30/sex-repulses-me",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/30/sex-repulses-me",
       "fields":{
-        "trailText":"<p>Science and technology are dominated by men – and the situation isn't improving. A former engineer asks who is to blame</p>",
-        "headline":"Where are the women scientists and engineers?",
+        "trailText":"<p>I used to have a healthy sex drive but now it has disappeared and I am disgusted by the thought of physical intimacy. What can I do?</p>",
+        "headline":"Sex repulses me",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tz54",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350892182/Space-scientist-Dr-Maggie-003.jpg",
-        "wordcount":"933",
+        "shortUrl":"http://gu.com/p/3j5fa",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296667216/Sexual-healing-003.jpg",
+        "wordcount":"275",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"lifeandstyle/women",
+        "id":"lifeandstyle/series/sexualhealing",
+        "type":"series",
+        "webTitle":"Sexual healing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/series/sexualhealing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/sexualhealing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/sex",
         "type":"keyword",
-        "webTitle":"Women",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "webTitle":"Sex",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/sex",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/sex",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/relationships",
+        "type":"keyword",
+        "webTitle":"Relationships",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/relationships",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/relationships",
         "sectionId":"lifeandstyle",
         "sectionName":"Life and style",
         "references":[]
@@ -745,6 +212,15 @@
         "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
         "sectionId":"lifeandstyle",
         "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/pamelastephensonconnolly",
+        "type":"contributor",
+        "webTitle":"Pamela Stephenson Connolly",
+        "webUrl":"http://www.theguardian.com/profile/pamelastephensonconnolly",
+        "apiUrl":"http://content.guardianapis.com/profile/pamelastephensonconnolly",
+        "r2ContributorId":"22750",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/07/17/pamela_stephenson_140x140.jpg",
         "references":[]
       },{
         "id":"tone/features",
@@ -772,96 +248,6 @@
         "sectionName":"From the Guardian",
         "references":[]
       },{
-        "id":"science/royal-society",
-        "type":"keyword",
-        "webTitle":"Royal Society",
-        "webUrl":"http://www.theguardian.com/science/royal-society",
-        "apiUrl":"http://content.guardianapis.com/science/royal-society",
-        "sectionId":"science",
-        "sectionName":"Science",
-        "references":[]
-      },{
-        "id":"science/science",
-        "type":"keyword",
-        "webTitle":"Science",
-        "webUrl":"http://www.theguardian.com/science/science",
-        "apiUrl":"http://content.guardianapis.com/science/science",
-        "sectionId":"science",
-        "sectionName":"Science",
-        "references":[]
-      },{
-        "id":"money/work-and-careers",
-        "type":"keyword",
-        "webTitle":"Work & careers",
-        "webUrl":"http://www.theguardian.com/money/work-and-careers",
-        "apiUrl":"http://content.guardianapis.com/money/work-and-careers",
-        "sectionId":"money",
-        "sectionName":"Money",
-        "references":[]
-      },{
-        "id":"media/radio4",
-        "type":"keyword",
-        "webTitle":"Radio 4",
-        "webUrl":"http://www.theguardian.com/media/radio4",
-        "apiUrl":"http://content.guardianapis.com/media/radio4",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"media/bbc",
-        "type":"keyword",
-        "webTitle":"BBC",
-        "webUrl":"http://www.theguardian.com/media/bbc",
-        "apiUrl":"http://content.guardianapis.com/media/bbc",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"media/radio",
-        "type":"keyword",
-        "webTitle":"Radio industry",
-        "webUrl":"http://www.theguardian.com/media/radio",
-        "apiUrl":"http://content.guardianapis.com/media/radio",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"media/media",
-        "type":"keyword",
-        "webTitle":"Media",
-        "webUrl":"http://www.theguardian.com/media/media",
-        "apiUrl":"http://content.guardianapis.com/media/media",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"science/people-in-science",
-        "type":"keyword",
-        "webTitle":"People in science",
-        "webUrl":"http://www.theguardian.com/science/people-in-science",
-        "apiUrl":"http://content.guardianapis.com/science/people-in-science",
-        "sectionId":"science",
-        "sectionName":"Science",
-        "references":[]
-      },{
-        "id":"technology/engineering",
-        "type":"keyword",
-        "webTitle":"Engineering",
-        "webUrl":"http://www.theguardian.com/technology/engineering",
-        "apiUrl":"http://content.guardianapis.com/technology/engineering",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/technology",
-        "type":"keyword",
-        "webTitle":"Technology",
-        "webUrl":"http://www.theguardian.com/technology/technology",
-        "apiUrl":"http://content.guardianapis.com/technology/technology",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -879,138 +265,650 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417510382",
+        "id":"gu-image-418482970",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350889841/Space-scientist-Dr-Maggie-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296664200/Sexual-healing-001.jpg",
           "typeData":{
-            "source":"Teri Pengilley",
-            "altText":"Space scientist Dr Maggie Aderin-Pocock.",
+            "source":"Alamy",
+            "altText":"Sexual healing",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296665938/Sexual-healing-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Sexual healing",
             "height":"130",
-            "credit":"Teri Pengilley",
-            "caption":"Festival star … space scientist Dr Maggie Aderin-Pocock. Photograph: Teri Pengilley",
-            "width":"140"
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
+            "width":"139"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350892182/Space-scientist-Dr-Maggie-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296667216/Sexual-healing-003.jpg",
           "typeData":{
-            "source":"Teri Pengilley",
-            "altText":"Space scientist Dr Maggie Aderin-Pocock.",
+            "source":"Alamy",
+            "altText":"Sexual healing",
             "height":"84",
-            "credit":"Teri Pengilley",
-            "caption":"Festival star … space scientist Dr Maggie Aderin-Pocock. Photograph: Teri Pengilley",
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350893855/Space-scientist-Dr-Maggie-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296668471/Sexual-healing-004.jpg",
           "typeData":{
-            "source":"Teri Pengilley",
-            "altText":"Space scientist Dr Maggie Aderin-Pocock.",
+            "source":"Alamy",
+            "altText":"Sexual healing",
             "height":"132",
-            "credit":"Teri Pengilley",
-            "caption":"Festival star … space scientist Dr Maggie Aderin-Pocock. Photograph: Teri Pengilley",
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350895470/Space-scientist-Dr-Maggie-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296669869/Sexual-healing-005.jpg",
           "typeData":{
-            "source":"Teri Pengilley",
-            "altText":"Space scientist Dr Maggie Aderin-Pocock.",
+            "source":"Alamy",
+            "altText":"Sexual healing",
             "height":"168",
-            "credit":"Teri Pengilley",
-            "caption":"Festival star … space scientist Dr Maggie Aderin-Pocock. Photograph: Teri Pengilley",
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350897034/Space-scientist-Dr-Maggie-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296671139/Sexual-healing-006.jpg",
           "typeData":{
-            "source":"Teri Pengilley",
-            "altText":"Space scientist Dr Maggie Aderin-Pocock.",
+            "source":"Alamy",
+            "altText":"Sexual healing",
             "height":"180",
-            "credit":"Teri Pengilley",
-            "caption":"Festival star … space scientist Dr Maggie Aderin-Pocock. Photograph: Teri Pengilley",
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350898875/Space-scientist-Dr-Maggie-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296672362/Sexual-healing-007.jpg",
           "typeData":{
-            "source":"Teri Pengilley",
-            "altText":"Space scientist Dr Maggie Aderin-Pocock.",
+            "source":"Alamy",
+            "altText":"Sexual healing",
             "height":"228",
-            "credit":"Teri Pengilley",
-            "caption":"Festival star … space scientist Dr Maggie Aderin-Pocock. Photograph: Teri Pengilley",
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350900642/Space-scientist-Dr-Maggie-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296673604/Sexual-healing-008.jpg",
           "typeData":{
-            "source":"Teri Pengilley",
-            "altText":"Space scientist Dr Maggie Aderin-Pocock.",
+            "source":"Alamy",
+            "altText":"Sexual healing",
             "height":"276",
-            "credit":"Teri Pengilley",
-            "caption":"Festival star … space scientist Dr Maggie Aderin-Pocock. Photograph: Teri Pengilley",
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350900642/Space-scientist-Dr-Maggie-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296673604/Sexual-healing-008.jpg",
           "typeData":{
-            "source":"Teri Pengilley",
-            "altText":"Space scientist Dr Maggie Aderin-Pocock.",
+            "source":"Alamy",
+            "altText":"Sexual healing",
             "height":"276",
-            "credit":"Teri Pengilley",
-            "caption":"Festival star … space scientist Dr Maggie Aderin-Pocock. Photograph: Teri Pengilley",
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417510383",
+        "id":"gu-image-418482971",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379350892182/Space-scientist-Dr-Maggie-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380296667216/Sexual-healing-003.jpg",
           "typeData":{
-            "source":"Teri Pengilley",
-            "altText":"Space scientist Dr Maggie Aderin-Pocock.",
+            "source":"Alamy",
+            "altText":"Sexual healing",
             "height":"84",
-            "credit":"Teri Pengilley",
-            "caption":"Festival star … space scientist Dr Maggie Aderin-Pocock. Photograph: Teri Pengilley",
+            "credit":"Alamy",
+            "caption":"'The thought of having sex makes my skin crawl.' Photograph: Alamy",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"lifeandstyle/2013/sep/17/sudoku-2606-medium",
+      "id":"lifeandstyle/2013/sep/30/marcella-hazan-giant-of-italian-cooking-dies-aged-89",
       "sectionId":"lifeandstyle",
       "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-16T23:15:00Z",
-      "webTitle":"Sudoku 2,606 medium",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/17/sudoku-2606-medium",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/17/sudoku-2606-medium",
+      "webPublicationDate":"2013-09-30T02:20:53Z",
+      "webTitle":"Marcella Hazan, giant of Italian cooking, dies aged 89",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/30/marcella-hazan-giant-of-italian-cooking-dies-aged-89",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/30/marcella-hazan-giant-of-italian-cooking-dies-aged-89",
+      "fields":{
+        "trailText":"Author of The Classic Italian Cookbook, published when she was nearly 50, brought authentic Italian cooking to US households",
+        "headline":"Marcella Hazan, giant of Italian cooking, dies aged 89",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j69b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507290166/b6dd6ac6-d87a-4435-b788-e0ade4726444-140x84.jpeg",
+        "wordcount":"1",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/italian-food-and-drink",
+        "type":"keyword",
+        "webTitle":"Italian food and drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/italian-food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/italian-food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/food-and-drink",
+        "type":"keyword",
+        "webTitle":"Food & drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288123/b6dd6ac6-d87a-4435-b788-e0ade4726444-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288123/b6dd6ac6-d87a-4435-b788-e0ade4726444-460x276.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"276",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288303/b6dd6ac6-d87a-4435-b788-e0ade4726444-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288303/b6dd6ac6-d87a-4435-b788-e0ade4726444-220x132.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"132",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288517/b6dd6ac6-d87a-4435-b788-e0ade4726444-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288517/b6dd6ac6-d87a-4435-b788-e0ade4726444-1020x612.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"612",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288785/b6dd6ac6-d87a-4435-b788-e0ade4726444-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288785/b6dd6ac6-d87a-4435-b788-e0ade4726444-300x180.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"180",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288904/b6dd6ac6-d87a-4435-b788-e0ade4726444-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507288904/b6dd6ac6-d87a-4435-b788-e0ade4726444-380x228.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"228",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507289406/b6dd6ac6-d87a-4435-b788-e0ade4726444-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507289406/b6dd6ac6-d87a-4435-b788-e0ade4726444-2060x1236.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"1236",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507290166/b6dd6ac6-d87a-4435-b788-e0ade4726444-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507290166/b6dd6ac6-d87a-4435-b788-e0ade4726444-140x84.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"84",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507290294/b6dd6ac6-d87a-4435-b788-e0ade4726444-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507290294/b6dd6ac6-d87a-4435-b788-e0ade4726444-540x324.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"324",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507290891/b6dd6ac6-d87a-4435-b788-e0ade4726444-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507290891/b6dd6ac6-d87a-4435-b788-e0ade4726444-2048x1536.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"1536",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507291722/b6dd6ac6-d87a-4435-b788-e0ade4726444-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507291722/b6dd6ac6-d87a-4435-b788-e0ade4726444-620x372.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"372",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507291987/b6dd6ac6-d87a-4435-b788-e0ade4726444-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380507291987/b6dd6ac6-d87a-4435-b788-e0ade4726444-1024x768.jpeg",
+            "source":"AP",
+            "photographer":"Chris O'Meara",
+            "altText":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida.",
+            "height":"768",
+            "credit":"Chris O'Meara/AP",
+            "caption":"Marcella Hazan in the kitchen of her home in Longboat Key, Florida. Photograph: Chris O'Meara/AP",
+            "mediaId":"gu-fc-5950794f-1f53-437e-96be-dce1a9839c91",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/gallery/2013/sep/30/surf-dog-competition-california",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-30T01:00:00Z",
+      "webTitle":"Fifth annual Surf City surf dog competition in California",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/gallery/2013/sep/30/surf-dog-competition-california",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/gallery/2013/sep/30/surf-dog-competition-california",
+      "fields":{
+        "trailText":"<p>Dozens of dogs surfing in categories dependent on their size are helped by their owners to catch the waves</p>",
+        "headline":"Fifth annual Surf City surf dog competition in California",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j69x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380497539591/Fifth-Annual-Surf-City-Su-003.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/dogs",
+        "type":"keyword",
+        "webTitle":"Dogs",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/dogs",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/dogs",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"sport/surfing",
+        "type":"keyword",
+        "webTitle":"Surfing",
+        "webUrl":"http://www.theguardian.com/sport/surfing",
+        "apiUrl":"http://content.guardianapis.com/sport/surfing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/animals",
+        "type":"keyword",
+        "webTitle":"Animals",
+        "webUrl":"http://www.theguardian.com/world/animals",
+        "apiUrl":"http://content.guardianapis.com/world/animals",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418593640",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380497539591/Fifth-Annual-Surf-City-Su-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Fifth Annual Surf City Surf Dog competition",
+            "height":"84",
+            "credit":"Michael Nelson/EPA",
+            "caption":"Louie, an Old English Bull dog rides a wave at the Fifth Annual Surf City Surf Dog competition in Huntington Beach, California, USA.  Photograph: Michael Nelson/EPA",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418591937",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496865943/Fifth-Annual-Surf-City-Su-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"471",
+            "credit":"Michael Nelson/EPA",
+            "caption":"A surf dog feels the puppy love from nearby handlers, assistants and pup-arazzi",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-418591933",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496874901/Fifth-Annual-Surf-City-Su-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"480",
+            "credit":"Michael Nelson/EPA",
+            "caption":"This surf dog looks calm and composed riding the cruft of a wave",
+            "width":"663"
+          }
+        }]
+      },{
+        "id":"gu-image-418591949",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496845118/Fifth-Annual-Surf-City-Su-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"480",
+            "credit":"Michael Nelson/EPA",
+            "caption":"Louie, an old English bulldog, feels paws-itively at home on a surfboard ",
+            "width":"662"
+          }
+        }]
+      },{
+        "id":"gu-image-418591935",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496871010/Fifth-Annual-Surf-City-Su-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"480",
+            "credit":"Michael Nelson/EPA",
+            "caption":"This dog appears all bark and no bite, leaping off the surfboard and heading for the beach",
+            "width":"702"
+          }
+        }]
+      },{
+        "id":"gu-image-418591931",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496877386/Fifth-Annual-Surf-City-Su-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"480",
+            "credit":"Michael Nelson/EPA",
+            "caption":"What a howler! A wave crashes over a surf dog, and its handlers are only yappy to help\r\n",
+            "width":"673"
+          }
+        }]
+      },{
+        "id":"gu-image-418591941",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496858763/Fifth-Annual-Surf-City-Su-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"600",
+            "credit":"Michael Nelson/EPA",
+            "caption":"Surf dog Joey, a West Highland terrier, keeps himself bone dry with a stroll along the beach ",
+            "width":"388"
+          }
+        }]
+      },{
+        "id":"gu-image-418591947",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496849235/Fifth-Annual-Surf-City-Su-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"476",
+            "credit":"Michael Nelson/EPA",
+            "caption":"A dog cruises into shore bark-to-front",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-418591939",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496861396/Fifth-Annual-Surf-City-Su-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"480",
+            "credit":"Michael Nelson/EPA",
+            "caption":"Skylar, an Australian shepherd, takes the ruff with the smooth  ",
+            "width":"725"
+          }
+        }]
+      },{
+        "id":"gu-image-418591954",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380497161505/Fifth-Annual-Surf-City-Su-011.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"480",
+            "credit":"Michael Nelson/EPA",
+            "caption":"A dog looking fetch-ing in a yellow wetsuit",
+            "width":"681"
+          }
+        }]
+      },{
+        "id":"gu-image-418591943",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496856213/Fifth-Annual-Surf-City-Su-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"480",
+            "credit":"Michael Nelson/EPA",
+            "caption":"A dog bow-wows out with pride after getting caught in a wave",
+            "width":"648"
+          }
+        }]
+      },{
+        "id":"gu-image-418591945",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/30/1380496851810/Fifth-Annual-Surf-City-Su-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Michael Nelson",
+            "altText":"Surf Dog competition : Fifth Annual Surf City Surf Dog competition",
+            "height":"480",
+            "credit":"Michael Nelson/EPA",
+            "caption":"A dog tries to kee-pup with the rest of the competition",
+            "width":"735"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/2013/sep/30/sudoku-2617-easy",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-29T23:15:00Z",
+      "webTitle":"Sudoku 2,617 easy",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/30/sudoku-2617-easy",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/30/sudoku-2617-easy",
       "fields":{
         "trailText":"<p>Fill the grid so that every row, every column and every 3x3 box contains the numbers 1 to 9</p>",
-        "headline":"Sudoku 2,606 medium",
+        "headline":"Sudoku 2,617 easy",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tjpn",
+        "shortUrl":"http://gu.com/p/3j382",
         "wordcount":"59",
         "liveBloggingNow":"false"
       },
@@ -1070,16 +968,16 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-416960717",
+        "id":"gu-image-418228898",
         "relation":"body",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/10/1378821978190/Sudoku2606.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/25/1380105391937/Sudoku2617.jpg",
           "typeData":{
             "source":"guardian.co.uk",
-            "altText":"Sudoku 2606",
+            "altText":"Sudoku 2617",
             "height":"467",
             "credit":"guardian.co.uk",
             "width":"460"
@@ -1088,37 +986,37 @@
       }],
       "references":[]
     },{
-      "id":"lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/16/thandie-newtons-beauty-website-thandiekay",
+      "id":"lifeandstyle/2013/sep/29/should-i-chew-gum",
       "sectionId":"lifeandstyle",
       "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-16T16:43:42Z",
-      "webTitle":"Thandie Newton's new beauty website: who is it for?",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/16/thandie-newtons-beauty-website-thandiekay",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/16/thandie-newtons-beauty-website-thandiekay",
+      "webPublicationDate":"2013-09-29T18:30:00Z",
+      "webTitle":"Should I chew gum?",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/29/should-i-chew-gum",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/29/should-i-chew-gum",
       "fields":{
-        "trailText":"<p>The co-creator of the new site ThandieKay, <strong>Kay Montano</strong>, explains why it's far more than a beauty site for mixed-race women</p>",
-        "headline":"Thandie Newton's new beauty website: who is it for?",
+        "trailText":"<p>Studies have found that it may help to reduce tooth decay, but is it that simple</p>",
+        "headline":"Should I chew gum?",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tz2b",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343064518/Thandie-Newton---attempti-003.jpg",
-        "wordcount":"678",
+        "shortUrl":"http://gu.com/p/3j5hf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298566505/WOMAN-CHEWING-GUM-003.jpg",
+        "wordcount":"391",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"lifeandstyle/the-womens-blog-with-jane-martinson",
-        "type":"blog",
-        "webTitle":"The women's blog with Jane Martinson",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson",
+        "id":"lifeandstyle/series/dr-dillner-health-dilemmas",
+        "type":"series",
+        "webTitle":"Dr ­Dillner’s health dilemmas",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/series/dr-dillner-health-dilemmas",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/dr-dillner-health-dilemmas",
         "sectionId":"lifeandstyle",
         "sectionName":"Life and style",
         "references":[]
       },{
-        "id":"lifeandstyle/women",
+        "id":"lifeandstyle/health-and-wellbeing",
         "type":"keyword",
-        "webTitle":"Women",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
         "sectionId":"lifeandstyle",
         "sectionName":"Life and style",
         "references":[]
@@ -1130,6 +1028,17 @@
         "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
         "sectionId":"lifeandstyle",
         "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/luisadillner",
+        "type":"contributor",
+        "webTitle":"Luisa Dillner",
+        "webUrl":"http://www.theguardian.com/profile/luisadillner",
+        "apiUrl":"http://content.guardianapis.com/profile/luisadillner",
+        "bio":"<p>Dr Luisa Dillner is a writer and doctor, and heads BMJ Group Research and Development</p>",
+        "rcsId":"GNL205039",
+        "r2ContributorId":"16019",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/07/17/luisa_dillner_140x140.jpg",
         "references":[]
       },{
         "id":"tone/features",
@@ -1157,22 +1066,755 @@
         "sectionName":"From the Guardian",
         "references":[]
       },{
-        "id":"culture/thandie-newton",
+        "id":"society/dentists",
         "type":"keyword",
-        "webTitle":"Thandie Newton",
-        "webUrl":"http://www.theguardian.com/culture/thandie-newton",
-        "apiUrl":"http://content.guardianapis.com/culture/thandie-newton",
-        "sectionId":"culture",
-        "sectionName":"Culture",
+        "webTitle":"Dentists",
+        "webUrl":"http://www.theguardian.com/society/dentists",
+        "apiUrl":"http://content.guardianapis.com/society/dentists",
+        "sectionId":"society",
+        "sectionName":"Society",
         "references":[]
       },{
-        "id":"culture/culture",
+        "id":"society/health",
         "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
+        "webTitle":"Health",
+        "webUrl":"http://www.theguardian.com/society/health",
+        "apiUrl":"http://content.guardianapis.com/society/health",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418490996",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298563061/WOMAN-CHEWING-GUM-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"Britain’s average of 120-130 pieces per person each year makes it the world’s second–largest consumer of gum. Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298565238/WOMAN-CHEWING-GUM-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"Britain’s average of 120-130 pieces per person each year makes it the world’s second–largest consumer of gum. Photograph: Alamy",
+            "width":"139"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298566505/WOMAN-CHEWING-GUM-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Britain’s average of 120-130 pieces per person each year makes it the world’s second–largest consumer of gum. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298567937/WOMAN-CHEWING-GUM-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"Britain’s average of 120-130 pieces per person each year makes it the world’s second–largest consumer of gum. Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298569390/WOMAN-CHEWING-GUM-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"Britain’s average of 120-130 pieces per person each year makes it the world’s second–largest consumer of gum. Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298570685/WOMAN-CHEWING-GUM-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"Britain’s average of 120-130 pieces per person each year makes it the world’s second–largest consumer of gum. Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298572083/WOMAN-CHEWING-GUM-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"Britain’s average of 120-130 pieces per person each year makes it the world’s second–largest consumer of gum. Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298573730/WOMAN-CHEWING-GUM-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Britain’s average of 120-130 pieces per person each year makes it the world’s second–largest consumer of gum. Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298573730/WOMAN-CHEWING-GUM-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Britain’s average of 120-130 pieces per person each year makes it the world’s second–largest consumer of gum. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418490997",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380298566505/WOMAN-CHEWING-GUM-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"WOMAN CHEWING GUM",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Britain's average of 120-130 pieces per person each year makes it the world's second–largest consumer of gum. Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/2013/sep/29/stroke-survivors-retraining-the-brain-aads",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-29T18:00:03Z",
+      "webTitle":"Stroke survivors: retraining the brain",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/29/stroke-survivors-retraining-the-brain-aads",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/29/stroke-survivors-retraining-the-brain-aads",
+      "fields":{
+        "trailText":"Some stroke patients struggle with simple tasks such as making a cup of tea, but new technology may have the answer",
+        "headline":"Stroke survivors: retraining the brain",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j5ta",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299913703/Stroke-003.jpg",
+        "wordcount":"763",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/health-and-wellbeing",
+        "type":"keyword",
+        "webTitle":"Health & wellbeing",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/health-and-wellbeing",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/health-and-wellbeing",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"science/neuroscience",
+        "type":"keyword",
+        "webTitle":"Neuroscience",
+        "webUrl":"http://www.theguardian.com/science/neuroscience",
+        "apiUrl":"http://content.guardianapis.com/science/neuroscience",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/medical-research",
+        "type":"keyword",
+        "webTitle":"Medical research",
+        "webUrl":"http://www.theguardian.com/science/medical-research",
+        "apiUrl":"http://content.guardianapis.com/science/medical-research",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418487978",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299912350/Stroke-002.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"130",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"139"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299913703/Stroke-003.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"84",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299915075/Stroke-004.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"132",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299916398/Stroke-005.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"168",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299918181/Stroke-006.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"180",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299919708/Stroke-007.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"228",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299921060/Stroke-008.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"276",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299908190/Stroke-001.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"54",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299921060/Stroke-008.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"276",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418487979",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/27/1380299913703/Stroke-003.jpg",
+          "typeData":{
+            "source":"Getty Images/Cultura RF",
+            "photographer":"Monty Rakusen",
+            "altText":"Stroke",
+            "height":"84",
+            "credit":"Monty Rakusen/Getty Images/Cultura RF",
+            "caption":"Simple tasks are a trial for people with AADS, but \rspecial electronic devices embedded in everyday could help. Photograph: Monty Rakusen/Getty Images/Cultura RF",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/2013/sep/29/10-tips-help-daughters-change-world",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-29T17:00:00Z",
+      "webTitle":"Ten tips to help our daughters change the world",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/29/10-tips-help-daughters-change-world",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/29/10-tips-help-daughters-change-world",
+      "fields":{
+        "trailText":"<p>How do we encourage young women to enter public life? <strong>Melissa Benn</strong> presents the girls' guide to 21st-century politics</p>",
+        "headline":"Ten tips to help our daughters change the world",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j5gf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/27/1380297913513/Stella-Creasy-007.jpg",
+        "wordcount":"1157",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"politics/women",
+        "type":"keyword",
+        "webTitle":"Women in politics",
+        "webUrl":"http://www.theguardian.com/politics/women",
+        "apiUrl":"http://content.guardianapis.com/politics/women",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/gender",
+        "type":"keyword",
+        "webTitle":"Gender",
+        "webUrl":"http://www.theguardian.com/world/gender",
+        "apiUrl":"http://content.guardianapis.com/world/gender",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/melissabenn",
+        "type":"contributor",
+        "webTitle":"Melissa Benn",
+        "webUrl":"http://www.theguardian.com/profile/melissabenn",
+        "apiUrl":"http://content.guardianapis.com/profile/melissabenn",
+        "bio":"<p>Melissa Benn writes regularly for the Guardian and other newspapers and magazines on a wide range of social issues, including education. <br />She is a founder of the Local Schools Network. Her latest book, School Wars: The Battle for Britain's Education, is published by Verso, and a new edition, with an afterword, comes out in November 2012. Her novel One of Us is in Vintage paperback. Her website is <a href=\"http://www.melissabenn.com\">here</a></p>",
+        "r2ContributorId":"23648",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/06/02/melissa_benn_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418625018",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/27/1380297923026/Stella-Creasy-012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ben Pruchnie",
+            "altText":"Stella Creasy",
+            "height":"276",
+            "credit":"Ben Pruchnie/Getty Images",
+            "caption":"Stella Creasy. Photograph: Ben Pruchnie/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418625019",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/27/1380297913513/Stella-Creasy-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Ben Pruchnie",
+            "altText":"Stella Creasy",
+            "height":"84",
+            "credit":"Ben Pruchnie/Getty Images",
+            "caption":"Stella Creasy. Photograph: Ben Pruchnie/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418625020",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/27/1380297802887/Lucy-Anne-Holmes-010.jpg",
+          "typeData":{
+            "source":"LNP",
+            "photographer":"Vickie Flores",
+            "altText":"Lucy-Anne Holmes",
+            "height":"276",
+            "credit":"Vickie Flores/LNP",
+            "caption":"Lucy-Anne Holmes. Photograph: Vickie Flores/LNP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418625021",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/27/1380297733593/Gloria-Steinem-008.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Gloria Steinem",
+            "height":"276",
+            "credit":"Bettmann/Corbis",
+            "caption":"Gloria Steinem. Photograph: Bettmann/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418625022",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/27/1380297548742/Caroline-Criado-Perez-010.jpg",
+          "typeData":{
+            "source":"Eyevine",
+            "photographer":"Jason Alden",
+            "altText":"Caroline Criado-Perez",
+            "height":"276",
+            "credit":"Jason Alden/Eyevine",
+            "caption":"Caroline Criado-Perez. Photograph: Jason Alden/Eyevine",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418625023",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/9/27/1380297608370/Malala-Yousafzai-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Darren Staples",
+            "altText":"Malala Yousafzai",
+            "height":"276",
+            "credit":"Darren Staples/Reuters",
+            "caption":"Malala Yousafzai. Photograph: Darren Staples/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-414463084",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/8/6/130806JackMonroe-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/8/6/130806JackMonroe_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/8/6/130806JackMonroe_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/8/6/130806JackMonroe/130806JackMonroe.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/8/6/130806JackMonroe-720.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/2013/sep/29/best-new-apricot-blushers",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-29T08:59:00Z",
+      "webTitle":"The new apricot blushers",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/29/best-new-apricot-blushers",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/29/best-new-apricot-blushers",
+      "fields":{
+        "trailText":"Peachy skin for autumn faces, by <strong>Eva Wiseman</strong>",
+        "headline":"The new apricot blushers",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j36g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105691461/selection-of-apricot-blus-003.jpg",
+        "wordcount":"146",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/series/the-beauty-spot",
+        "type":"series",
+        "webTitle":"The beauty spot",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/series/the-beauty-spot",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/the-beauty-spot",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
         "references":[]
       },{
         "id":"fashion/beauty",
@@ -1184,242 +1826,6 @@
         "sectionName":"Fashion",
         "references":[]
       },{
-        "id":"fashion/fashion",
-        "type":"keyword",
-        "webTitle":"Fashion",
-        "webUrl":"http://www.theguardian.com/fashion/fashion",
-        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
-        "sectionId":"fashion",
-        "sectionName":"Fashion",
-        "references":[]
-      },{
-        "id":"profile/bim-adewunmi",
-        "type":"contributor",
-        "webTitle":"Bim Adewunmi",
-        "webUrl":"http://www.theguardian.com/profile/bim-adewunmi",
-        "apiUrl":"http://content.guardianapis.com/profile/bim-adewunmi",
-        "bio":"<p>Bim Adewunmi is a freelance journalist and blogger, specialising in popular culture, feminism and race. She blogs at <a href=\"http://www.yorubagirldancing.com\">www.yorubagirldancing.com</a></p>",
-        "r2ContributorId":"38455",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/12/4/1354634960276/bim_adewunmi.jpg",
-        "references":[]
-      },{
-        "id":"world/race",
-        "type":"keyword",
-        "webTitle":"Race issues",
-        "webUrl":"http://www.theguardian.com/world/race",
-        "apiUrl":"http://content.guardianapis.com/world/race",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417434347",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343058693/Thandie-Newton---attempti-001.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"54",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343061442/Thandie-Newton---attempti-002.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"130",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343064518/Thandie-Newton---attempti-003.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"84",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343066025/Thandie-Newton---attempti-004.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"132",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343067248/Thandie-Newton---attempti-005.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"168",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343068428/Thandie-Newton---attempti-006.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"180",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343069967/Thandie-Newton---attempti-007.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"228",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343071395/Thandie-Newton---attempti-008.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"276",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343071395/Thandie-Newton---attempti-008.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"276",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417434348",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379343064518/Thandie-Newton---attempti-003.jpg",
-          "typeData":{
-            "source":"Michael Birt",
-            "altText":"Thandie Newton … attempting to redefine the beauty debate.",
-            "height":"84",
-            "credit":"Michael Birt",
-            "caption":"Thandie Newton … attempting to redefine the beauty debate. Photograph: Michael Birt",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"lifeandstyle/guardianwitness-blog/gallery/2013/sep/16/cats-doing-yoga-your-best-pictures",
-      "sectionId":"lifeandstyle",
-      "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-16T14:44:49Z",
-      "webTitle":"Cats doing yoga – your best pictures",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/guardianwitness-blog/gallery/2013/sep/16/cats-doing-yoga-your-best-pictures",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/guardianwitness-blog/gallery/2013/sep/16/cats-doing-yoga-your-best-pictures",
-      "fields":{
-        "trailText":"<p>We asked you to share your photos of yoga-loving cats via GuardianWitness. From downward-facing cats to cats on mats, here is a selection of your best photos</p>",
-        "headline":"Cats doing yoga – your best pictures",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tnzy",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331505927/downward-dog-cat-001.jpg",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"lifeandstyle/cats",
-        "type":"keyword",
-        "webTitle":"Cats",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/cats",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/cats",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"lifeandstyle/pets",
-        "type":"keyword",
-        "webTitle":"Pets",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/pets",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/pets",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"lifeandstyle/yoga",
-        "type":"keyword",
-        "webTitle":"Yoga",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/yoga",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/yoga",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"lifeandstyle/series/top-pets",
-        "type":"series",
-        "webTitle":"Top pets",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/series/top-pets",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/top-pets",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
         "id":"lifeandstyle/lifeandstyle",
         "type":"keyword",
         "webTitle":"Life and style",
@@ -1429,769 +1835,39 @@
         "sectionName":"Life and style",
         "references":[]
       },{
-        "id":"theguardian/guardianwitness-blog",
-        "type":"blog",
-        "webTitle":"GuardianWitness blog",
-        "webUrl":"http://www.theguardian.com/theguardian/guardianwitness-blog",
-        "apiUrl":"http://content.guardianapis.com/theguardian/guardianwitness-blog",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"profile/guardian-readers",
-        "type":"contributor",
-        "webTitle":"Guardian readers",
-        "webUrl":"http://www.theguardian.com/profile/guardian-readers",
-        "apiUrl":"http://content.guardianapis.com/profile/guardian-readers",
-        "bio":"<p>The Guardian readers contributor tag is applied to any content that is solely or partly created by you, our readers. It includes projects, galleries and stories involving data, photography, perspectives and more. Thank you for your ongoing inspiration and participation</p>",
-        "r2ContributorId":"35710",
-        "references":[]
-      },{
-        "id":"profile/rachel-obordo",
-        "type":"contributor",
-        "webTitle":"Rachel Obordo",
-        "webUrl":"http://www.theguardian.com/profile/rachel-obordo",
-        "apiUrl":"http://content.guardianapis.com/profile/rachel-obordo",
-        "bio":"<p>Rachel Obordo works on <a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a>. She is also a freelance writer and occasionally dabbles in brick-shaped projects, such as the <a href=\"http://www.guardian.co.uk/sport/series/brick-by-brick\">Guardian's Olympic Brick-by-brick series</a>. You can follow her on Twitter at <a href=\"https://twitter.com/Bordeaux8\">@bordeaux8</a></p>",
-        "r2ContributorId":"52292",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/26/1364299120125/RachelObordo.jpg",
-        "references":[]
-      },{
-        "id":"type/gallery",
-        "type":"type",
-        "webTitle":"Gallery",
-        "webUrl":"http://www.theguardian.com/inpictures",
-        "apiUrl":"http://content.guardianapis.com/inpictures",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417397041",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331521062/buddha-cat-008.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"Mike Peacock",
-            "altText":"Cat yoga: buddha cat",
-            "height":"480",
-            "credit":"Mike Peacock/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/520876\">Cookie the Buddha cat</a>",
-            "width":"640"
-          }
-        }]
-      },{
-        "id":"gu-image-417397045",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331533415/cat-on-yoga-mat-015.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"FranIndigo",
-            "altText":"Cat yoga: cat on yoga mat",
-            "height":"478",
-            "credit":"FranIndigo/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/520655\">Cat relaxation</a>: 'It's very important to have the right mat for cat yoga'",
-            "width":"640"
-          }
-        }]
-      },{
-        "id":"gu-image-417397047",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331513675/cat-yoga-pose-004.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"Azira",
-            "altText":"Cat yoga: cat yoga pose",
-            "height":"480",
-            "credit":"Azira/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/516653\">Paschimottanasana Puss</a>: 'Katerina Aeroflot Love-in-a-mist demonstrating paschimottanasana pose'",
-            "width":"640"
-          }
-        }]
-      },{
-        "id":"gu-image-417397049",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331535551/conked-out-yoga-cat-017.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"Lon7705",
-            "altText":"Cat yoga: conked out yoga cat",
-            "height":"478",
-            "credit":"Lon7705/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/515517\">Maxwell needed a little time out after his morning yoga class …</a> the plank was the final straw",
-            "width":"640"
-          }
-        }]
-      },{
-        "id":"gu-image-417397051",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331511543/happy-baby-yoga-pose-003.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"Poppysue",
-            "altText":"Cat yoga: happy baby yoga pose",
-            "height":"600",
-            "credit":"Poppysue/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/518316\">Tommy attempts the 'Happy Baby' pose</a>: 'After a hard day in bed, Tommy needs a good stretch and finds the 'Happy Baby' pose perfect for stretching his gluteus medius'",
-            "width":"364"
-          }
-        }]
-      },{
-        "id":"gu-image-417397053",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331532274/kitty-corpse-yoga-pose-014.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"ID1042439",
-            "altText":"Cat yoga: kitty corpse yoga pose",
-            "height":"480",
-            "credit":"ID1042439/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/522360\">Duke in savasana (kitty corpse pose)</a>: 'Second of two contributions from my yoga teacher, Nancy'",
-            "width":"640"
-          }
-        }]
-      },{
-        "id":"gu-image-417397055",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331530238/no-room-for-the-dog-013.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"Cagoolia",
-            "altText":"Cat yoga: no room for the dog",
-            "height":"600",
-            "credit":"Cagoolia/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/520275\">Making sure there's no room in the dog's basket for the mutt …</a>",
-            "width":"400"
-          }
-        }]
-      },{
-        "id":"gu-image-417397057",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331524217/online-yoga-tutorial-010.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"kavakavaroot",
-            "altText":"Cat yoga: online yoga tutorial",
-            "height":"600",
-            "credit":"kavakavaroot/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/524170\">Sugar following an online yoga tutorial</a>",
-            "width":"359"
-          }
-        }]
-      },{
-        "id":"gu-image-417397086",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331517399/qi-gong-cat-yoga-006.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"archieology",
-            "altText":"Cat yoga: qi gong cat yoga",
-            "height":"480",
-            "credit":"archieology/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/517071\">Archie's advanced Qi Gong</a>",
-            "width":"640"
-          }
-        }]
-      },{
-        "id":"gu-image-417397088",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331514794/yoga-cat-pose-005.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"ID3876359",
-            "altText":"Cat yoga: yoga cat pose",
-            "height":"427",
-            "credit":"ID3876359/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/515271\">Henderson in advanced pose</a>",
-            "width":"640"
-          }
-        }]
-      },{
-        "id":"gu-image-417397090",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331526142/yoga-pose-cat-011.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"YogaCatGirl",
-            "altText":"Cat yoga: yoga pose cat",
-            "height":"480",
-            "credit":"YogaCatGirl/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/521684\">Fergie perfecting his yoga pose</a>: 'Fergie is practising a very difficult side-stretching pose (a version of Anantasana) on his new yoga mat. He loves yoga so much, we got him his own yoga mat from <a href=\"http://felineyogi.com/\">felineyogi.com</a>'",
-            "width":"640"
-          }
-        }]
-      },{
-        "id":"gu-image-417397469",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379332794499/downward-dog-cat-018.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"Outi Kostia",
-            "altText":"Cat yoga: downward dog cat",
-            "height":"426",
-            "credit":"Outi Kostia/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/521979\">Downward-facing cat</a>: 'Cornish rex called Noki doing his favorite yoga move' ",
-            "width":"640"
-          }
-        }]
-      },{
-        "id":"gu-image-417418160",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379331505927/downward-dog-cat-001.jpg",
-          "typeData":{
-            "source":"GuardianWitness",
-            "photographer":"Outi Kostia",
-            "altText":"Trail Cat yoga: downward dog cat",
-            "height":"84",
-            "credit":"Outi Kostia/GuardianWitness",
-            "caption":"<a href=\"https://witness.theguardian.com/assignment/52247081e4b0c622abecf4c1/521979\">Downward facing cat</a>: 'Cornish rex called Noki doing his favorite yoga move'",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/16/mumsnet-poll-david-cameron-women",
-      "sectionId":"lifeandstyle",
-      "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-16T13:59:02Z",
-      "webTitle":"Mumsnet poll reveals the real extent of David Cameron's women problem",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/16/mumsnet-poll-david-cameron-women",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson/2013/sep/16/mumsnet-poll-david-cameron-women",
-      "fields":{
-        "trailText":"<p><strong>Jane Martinson: </strong>Female voters deemed Cameron 'out of touch' and were far less likely to vote for the Conservatives than in recent years</p>",
-        "headline":"Mumsnet poll reveals the real extent of David Cameron's women problem",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tnqb",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338262368/David-Cameron-meets-Helen-005.jpg",
-        "wordcount":"513",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"lifeandstyle/the-womens-blog-with-jane-martinson",
-        "type":"blog",
-        "webTitle":"The women's blog with Jane Martinson",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/the-womens-blog-with-jane-martinson",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/the-womens-blog-with-jane-martinson",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"lifeandstyle/women",
-        "type":"keyword",
-        "webTitle":"Women",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"politics/davidcameron",
-        "type":"keyword",
-        "webTitle":"David Cameron",
-        "webUrl":"http://www.theguardian.com/politics/davidcameron",
-        "apiUrl":"http://content.guardianapis.com/politics/davidcameron",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"politics/politics",
-        "type":"keyword",
-        "webTitle":"Politics",
-        "webUrl":"http://www.theguardian.com/politics/politics",
-        "apiUrl":"http://content.guardianapis.com/politics/politics",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"politics/conservatives",
-        "type":"keyword",
-        "webTitle":"Conservatives",
-        "webUrl":"http://www.theguardian.com/politics/conservatives",
-        "apiUrl":"http://content.guardianapis.com/politics/conservatives",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"lifeandstyle/lifeandstyle",
-        "type":"keyword",
-        "webTitle":"Life and style",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"profile/janemartinson",
-        "type":"contributor",
-        "webTitle":"Jane Martinson",
-        "webUrl":"http://www.theguardian.com/profile/janemartinson",
-        "apiUrl":"http://content.guardianapis.com/profile/janemartinson",
-        "bio":"<p>Jane Martinson is women's editor of the Guardian and former media editor</p>",
-        "rcsId":"GNL012366",
-        "r2ContributorId":"15791",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jane_martinson_140x140.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417410418",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338257205/David-Cameron-meets-Helen-002.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"54",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338259049/David-Cameron-meets-Helen-003.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"340",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338261099/David-Cameron-meets-Helen-004.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"130",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338262368/David-Cameron-meets-Helen-005.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"84",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338264387/David-Cameron-meets-Helen-006.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"132",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338265631/David-Cameron-meets-Helen-007.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"168",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338267254/David-Cameron-meets-Helen-008.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"180",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338268628/David-Cameron-meets-Helen-009.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"228",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338269921/David-Cameron-meets-Helen-010.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"276",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338271209/David-Cameron-meets-Helen-011.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"372",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338269921/David-Cameron-meets-Helen-010.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"276",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417410419",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338262368/David-Cameron-meets-Helen-005.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"Stefan Rousseau",
-            "altText":"David Cameron meets Helena Morrissey",
-            "height":"84",
-            "credit":"Stefan Rousseau/PA",
-            "caption":"David Cameron meets Helena Morrissey, founder of the 30% Club, which supports greater diversity in boardrooms. Photograph: Stefan Rousseau/PA",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-image-417410420",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379338595590/David-Cameron-in-a-Manche-010.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"WPA Pool",
-            "altText":"David Cameron in a Manchester mosque",
-            "height":"276",
-            "credit":"WPA Pool/Getty Images",
-            "caption":"David Cameron speaks to women during a visit to a mosque in Manchester. Photograph: WPA Pool/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-video-374034257",
-        "relation":"body",
-        "type":"video",
-        "assets":[{
-          "type":"video",
-          "mimeType":"mp4",
-          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_921094122001_110427calmdown-16x9.mp4",
-          "typeData":{
-            "source":"Press Association",
-            "embeddable":"false",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/bc/281851582/281851582_921096825001_110427calmdown-4634581.jpg?pubId=281851582",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://cdn.theguardian.tv/bc/281851582/281851582_921094123001_110427calmdown-4634581.jpg?pubId=281851582",
-            "width":"480",
-            "durationSeconds":"41"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/110427calmdown/110427calmdown.m3u8",
-          "typeData":{
-            "source":"Press Association",
-            "embeddable":"false",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://cdn.theguardian.tv/bc/281851582/281851582_921096825001_110427calmdown-4634581.jpg?pubId=281851582",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://cdn.theguardian.tv/bc/281851582/281851582_921094123001_110427calmdown-4634581.jpg?pubId=281851582",
-            "width":"480",
-            "durationSeconds":"41"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"lifeandstyle/2013/sep/16/nigel-slater-exclusive-recipe",
-      "sectionId":"lifeandstyle",
-      "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-16T12:45:30Z",
-      "webTitle":"Exclusive! Extract from Nigel Slater's new book",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/16/nigel-slater-exclusive-recipe",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/16/nigel-slater-exclusive-recipe",
-      "fields":{
-        "trailText":"<p>September's Observer Food Monthly features 20 recipes from Nigel Slater's new book, Eat: The Little Book of Fast Food. Here's a sneak preview</p>",
-        "headline":"Exclusive! Extract from Nigel Slater's new book",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tyt3",
-        "wordcount":"121",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"lifeandstyle/food-and-drink",
-        "type":"keyword",
-        "webTitle":"Food & drink",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417402180",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/12/1378991620254/Figs460x276.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "altText":"OFM Figs recipe",
-            "height":"276",
-            "credit":"Guardian",
-            "caption":"Photograph: Jonathan Lovekin ",
-            "width":"460"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"lifeandstyle/2013/sep/16/michael-gove-propaganda-academies",
-      "sectionId":"lifeandstyle",
-      "sectionName":"Life and style",
-      "webPublicationDate":"2013-09-16T12:21:34Z",
-      "webTitle":"Ignore Michael Gove's propaganda: we don't need academies",
-      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/16/michael-gove-propaganda-academies",
-      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/16/michael-gove-propaganda-academies",
-      "fields":{
-        "trailText":"A spelling mistake on a sign outside a state primary school had me banging my head in despair – but don't be panicked into thinking state education is fundamentally flawed",
-        "headline":"Ignore Michael Gove's propaganda: we don't need academies",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tnnc",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333367125/A-comprehensive-school-in-003.jpg",
-        "wordcount":"329",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"lifeandstyle/series/michele-hanson-certain-age",
-        "type":"series",
-        "webTitle":"Still here: reflections on later life",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/series/michele-hanson-certain-age",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/michele-hanson-certain-age",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"education/academies",
-        "type":"keyword",
-        "webTitle":"Academies",
-        "webUrl":"http://www.theguardian.com/education/academies",
-        "apiUrl":"http://content.guardianapis.com/education/academies",
-        "sectionId":"education",
-        "sectionName":"Education",
-        "references":[]
-      },{
-        "id":"lifeandstyle/lifeandstyle",
-        "type":"keyword",
-        "webTitle":"Life and style",
-        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
-        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
-        "sectionId":"lifeandstyle",
-        "sectionName":"Life and style",
-        "references":[]
-      },{
-        "id":"profile/michelehanson",
-        "type":"contributor",
-        "webTitle":"Michele Hanson",
-        "webUrl":"http://www.theguardian.com/profile/michelehanson",
-        "apiUrl":"http://content.guardianapis.com/profile/michelehanson",
-        "bio":"<p>Michele Hanson is an author and Guardian columnist. Her book about dogs, <a href=\"http://books.simonandschuster.co.uk/Absolutely-Barking/Michele-Hanson/9780857204912\">Absolutely Barking</a>, is published by Simon &amp; Schuster</p>",
-        "rcsId":"GNL009491",
-        "r2ContributorId":"16141",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/15/michele_hanson_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"theguardian/g2/features",
+        "id":"theobserver/magazine/life-and-style",
         "type":"newspaper-book-section",
-        "webTitle":"Comment & features",
-        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
-        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
+        "webTitle":"Life & style",
+        "webUrl":"http://www.theguardian.com/theobserver/magazine/life-and-style",
+        "apiUrl":"http://content.guardianapis.com/theobserver/magazine/life-and-style",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
         "references":[]
       },{
-        "id":"theguardian/g2",
+        "id":"theobserver/magazine",
         "type":"newspaper-book",
-        "webTitle":"G2",
-        "webUrl":"http://www.theguardian.com/theguardian/g2",
-        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
+        "webTitle":"Observer Magazine",
+        "webUrl":"http://www.theguardian.com/theobserver/magazine",
+        "apiUrl":"http://content.guardianapis.com/theobserver/magazine",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
         "references":[]
       },{
-        "id":"politics/michaelgove",
-        "type":"keyword",
-        "webTitle":"Michael Gove",
-        "webUrl":"http://www.theguardian.com/politics/michaelgove",
-        "apiUrl":"http://content.guardianapis.com/politics/michaelgove",
-        "sectionId":"politics",
-        "sectionName":"Politics",
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
         "references":[]
       },{
-        "id":"politics/politics",
-        "type":"keyword",
-        "webTitle":"Politics",
-        "webUrl":"http://www.theguardian.com/politics/politics",
-        "apiUrl":"http://content.guardianapis.com/politics/politics",
-        "sectionId":"politics",
-        "sectionName":"Politics",
-        "references":[]
-      },{
-        "id":"education/schools",
-        "type":"keyword",
-        "webTitle":"Schools",
-        "webUrl":"http://www.theguardian.com/education/schools",
-        "apiUrl":"http://content.guardianapis.com/education/schools",
-        "sectionId":"education",
-        "sectionName":"Education",
-        "references":[]
-      },{
-        "id":"education/education",
-        "type":"keyword",
-        "webTitle":"Education",
-        "webUrl":"http://www.theguardian.com/education/education",
-        "apiUrl":"http://content.guardianapis.com/education/education",
-        "sectionId":"education",
-        "sectionName":"Education",
+        "id":"profile/evawiseman",
+        "type":"contributor",
+        "webTitle":"Eva Wiseman",
+        "webUrl":"http://www.theguardian.com/profile/evawiseman",
+        "apiUrl":"http://content.guardianapis.com/profile/evawiseman",
+        "bio":"<p>Eva Wiseman is commissioning editor on the Observer magazine</p>",
+        "r2ContributorId":"24891",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/Gallery_Images/2010/9/24/1285331945743/Eva-Wiseman-byline-pic-001.jpg",
         "references":[]
       },{
         "id":"type/article",
@@ -2201,142 +1877,397 @@
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
       },{
-        "id":"publication/theguardian",
+        "id":"publication/theobserver",
         "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417398320",
+        "id":"gu-image-418229423",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333363221/A-comprehensive-school-in-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105687293/selection-of-apricot-blus-001.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"54",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333365885/A-comprehensive-school-in-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105690206/selection-of-apricot-blus-002.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"130",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
-            "width":"140"
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
+            "width":"139"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333367125/A-comprehensive-school-in-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105691461/selection-of-apricot-blus-003.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"84",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333368399/A-comprehensive-school-in-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105692715/selection-of-apricot-blus-004.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"132",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333369698/A-comprehensive-school-in-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105694025/selection-of-apricot-blus-005.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"168",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333370912/A-comprehensive-school-in-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105695469/selection-of-apricot-blus-006.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"180",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333372140/A-comprehensive-school-in-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105696948/selection-of-apricot-blus-007.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"228",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333373358/A-comprehensive-school-in-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105698269/selection-of-apricot-blus-008.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"276",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333373358/A-comprehensive-school-in-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105698269/selection-of-apricot-blus-008.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"276",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417398321",
+        "id":"gu-image-418229424",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/16/1379333367125/A-comprehensive-school-in-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/25/1380105691461/selection-of-apricot-blus-003.jpg",
           "typeData":{
-            "source":"Alamy",
-            "altText":"A comprehensive school in Wales … doing just fine.",
+            "source":"PR",
+            "altText":"selection of apricot blushers",
             "height":"84",
-            "credit":"Alamy",
-            "caption":"A comprehensive school in Wales … doing just fine. Photograph: Alamy",
+            "credit":"PR",
+            "caption":"Royal blush: the colours of the new season.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/2013/sep/29/gardens-october-checklist-dan-pearson",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-09-29T08:38:00Z",
+      "webTitle":"Gardens: the October checklist | Dan Pearson",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/sep/29/gardens-october-checklist-dan-pearson",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/sep/29/gardens-october-checklist-dan-pearson",
+      "fields":{
+        "trailText":"Be sure to enjoy the riot of autumn colour, but there are still jobs to be  done to keep the garden ticking over, says<strong> Dan Pearson</strong>",
+        "headline":"Gardens: the October checklist",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jxqd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951271282/Dan-Pearson-in-a-jacket-w-003.jpg",
+        "wordcount":"554",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"lifeandstyle/series/danpearsonongardens",
+        "type":"series",
+        "webTitle":"Dan Pearson on gardens",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/series/danpearsonongardens",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/danpearsonongardens",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"environment/autumn",
+        "type":"keyword",
+        "webTitle":"Autumn",
+        "webUrl":"http://www.theguardian.com/environment/autumn",
+        "apiUrl":"http://content.guardianapis.com/environment/autumn",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"lifeandstyle/gardeningadvice",
+        "type":"keyword",
+        "webTitle":"Gardening advice",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/gardeningadvice",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/gardeningadvice",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/gardens",
+        "type":"keyword",
+        "webTitle":"Gardens",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/gardens",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/gardens",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"theobserver/magazine/life-and-style",
+        "type":"newspaper-book-section",
+        "webTitle":"Life & style",
+        "webUrl":"http://www.theguardian.com/theobserver/magazine/life-and-style",
+        "apiUrl":"http://content.guardianapis.com/theobserver/magazine/life-and-style",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"theobserver/magazine",
+        "type":"newspaper-book",
+        "webTitle":"Observer Magazine",
+        "webUrl":"http://www.theguardian.com/theobserver/magazine",
+        "apiUrl":"http://content.guardianapis.com/theobserver/magazine",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/danpearson",
+        "type":"contributor",
+        "webTitle":"Dan Pearson",
+        "webUrl":"http://www.theguardian.com/profile/danpearson",
+        "apiUrl":"http://content.guardianapis.com/profile/danpearson",
+        "r2ContributorId":"20704",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2008/08/13/dan_pearson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418053673",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951266988/Dan-Pearson-in-a-jacket-w-001.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"54",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson with plants ready for planting. Photograph: Jason Ingram for the Observer",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951269722/Dan-Pearson-in-a-jacket-w-002.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"130",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson with plants ready for planting. Photograph: Jason Ingram for the Observer",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951271282/Dan-Pearson-in-a-jacket-w-003.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"84",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson with plants ready for planting. Photograph: Jason Ingram for the Observer",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951272829/Dan-Pearson-in-a-jacket-w-004.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"132",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson with plants ready for planting. Photograph: Jason Ingram for the Observer",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951274376/Dan-Pearson-in-a-jacket-w-005.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"168",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson with plants ready for planting. Photograph: Jason Ingram for the Observer",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951275953/Dan-Pearson-in-a-jacket-w-006.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"180",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson with plants ready for planting. Photograph: Jason Ingram for the Observer",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951277679/Dan-Pearson-in-a-jacket-w-007.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"228",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson with plants ready for planting. Photograph: Jason Ingram for the Observer",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951279265/Dan-Pearson-in-a-jacket-w-008.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"276",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson with plants ready for planting. Photograph: Jason Ingram for the Observer",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951279265/Dan-Pearson-in-a-jacket-w-008.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"276",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson gets ready for planting. Photograph: Jason Ingram for the Observer",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418053674",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/23/1379951271282/Dan-Pearson-in-a-jacket-w-003.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Jason Ingram",
+            "altText":"Dan Pearson in a jacket with plants and flowers",
+            "height":"84",
+            "credit":"Jason Ingram/Observer",
+            "caption":"Dan Pearson with plants ready for planting. Photograph: Jason Ingram for the Observer",
             "width":"140"
           }
         }]

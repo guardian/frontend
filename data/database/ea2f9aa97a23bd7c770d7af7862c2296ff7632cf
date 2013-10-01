@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":1557,
+    "total":1559,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
@@ -19,6 +19,218 @@
       "references":[]
     },
     "results":[{
+      "id":"technology/askjack/2013/sep/26/mp3-dj-music-wav-aiff",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-26T14:26:57Z",
+      "webTitle":"Which MP3s will play my DJ files?",
+      "webUrl":"http://www.theguardian.com/technology/askjack/2013/sep/26/mp3-dj-music-wav-aiff",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/sep/26/mp3-dj-music-wav-aiff",
+      "fields":{
+        "trailText":"<p>Pete is \"a bit of a bedroom DJ\" and wants to listen to his WAV AIFF music files on the move. Are there any suitable MP3s?</p>",
+        "headline":"Which MP3s will play my DJ files?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j4eb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380204715990/Sansa-Clip-003.jpg",
+        "wordcount":"1208",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.theguardian.com/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/digital-music-and-audio",
+        "type":"keyword",
+        "webTitle":"Digital music and audio",
+        "webUrl":"http://www.theguardian.com/technology/digital-music-and-audio",
+        "apiUrl":"http://content.guardianapis.com/technology/digital-music-and-audio",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.theguardian.com/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418350798",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380204722996/Sansa-Clip-008.jpg",
+          "typeData":{
+            "source":"Public Domain",
+            "altText":"Sansa Clip",
+            "height":"276",
+            "credit":"Public Domain",
+            "caption":"The Sansa Clip is a popular choice for playing FLAC files, and is well regarded for its sound quality.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418350799",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/26/1380204715990/Sansa-Clip-003.jpg",
+          "typeData":{
+            "source":"Public Domain",
+            "altText":"Sansa Clip",
+            "height":"84",
+            "credit":"Public Domain",
+            "caption":"The Sansa Clip is a popular choice for playing FLAC files, and is well regarded for its sound quality.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/askjack/2013/sep/19/using-microsoft-word-laptop-netbook",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-19T14:58:36Z",
+      "webTitle":"All I use is Microsoft Word – should I get a laptop or netbook?",
+      "webUrl":"http://www.theguardian.com/technology/askjack/2013/sep/19/using-microsoft-word-laptop-netbook",
+      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/sep/19/using-microsoft-word-laptop-netbook",
+      "fields":{
+        "trailText":"<p>Charlotte, a novelist, wants a cheap but very light machine for working on manuscripts</p>",
+        "headline":"All I use is Microsoft Word – should I get a laptop or netbook?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tqk8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602481630/Asus-Eee-PC-X101CH-netboo-003.jpg",
+        "wordcount":"1170",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"technology/askjack",
+        "type":"blog",
+        "webTitle":"Ask Jack",
+        "webUrl":"http://www.theguardian.com/technology/askjack",
+        "apiUrl":"http://content.guardianapis.com/technology/askjack",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/jackschofield",
+        "type":"contributor",
+        "webTitle":"Jack Schofield",
+        "webUrl":"http://www.theguardian.com/profile/jackschofield",
+        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
+        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
+        "rcsId":"GNL004401",
+        "r2ContributorId":"15761",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417769037",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602487576/Asus-Eee-PC-X101CH-netboo-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Asus Eee PC X101CH netbook",
+            "height":"276",
+            "credit":"PR",
+            "caption":"The purple Asus Eee PC X101CH weighs less than a kilo and has a 10.1in screen, a 1.6GHz Intel Atom processor and a 320GB hard drive.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417769038",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/gallery/2013/9/19/1379602481630/Asus-Eee-PC-X101CH-netboo-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Asus Eee PC X101CH netbook",
+            "height":"84",
+            "credit":"PR",
+            "caption":"The purple Asus Eee PC X101CH weighs less than a kilo and has a 10.1in screen, a 1.6GHz Intel Atom processor and a 320GB hard drive.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"technology/askjack/2013/sep/12/how-move-my-email-yahoo",
       "sectionId":"technology",
       "sectionName":"Technology",
@@ -1085,218 +1297,6 @@
             "height":"84",
             "credit":"Carl De Souza/AFP/Getty Images",
             "caption":"Elephants cross the Ewaso Nyiro river in Samburu game reserve. United Nations Environment Programme goodwill ambassador and Chinese actress Li Bingbing was on an official visit in Kenya to highlight issues of Africa's poaching crisis. Photograph: Carl De Souza/AFP/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"technology/askjack/2013/jul/18/hotmail-lost-accounts-security-risk",
-      "sectionId":"technology",
-      "sectionName":"Technology",
-      "webPublicationDate":"2013-07-18T13:25:00Z",
-      "webTitle":"Hotmail: are my lost accounts a security risk?",
-      "webUrl":"http://www.theguardian.com/technology/askjack/2013/jul/18/hotmail-lost-accounts-security-risk",
-      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/jul/18/hotmail-lost-accounts-security-risk",
-      "fields":{
-        "trailText":"<p><strong>Ask Jack:</strong> Richard can no longer access two old Hotmail accounts and is worried that this might leave him open to identity theft or fraud...</p>",
-        "headline":"Hotmail: are my lost accounts a security risk?",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3hd7f",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/7/18/1374154867304/Hotmail-003.jpg",
-        "wordcount":"1152",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"technology/askjack",
-        "type":"blog",
-        "webTitle":"Ask Jack",
-        "webUrl":"http://www.theguardian.com/technology/askjack",
-        "apiUrl":"http://content.guardianapis.com/technology/askjack",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/email",
-        "type":"keyword",
-        "webTitle":"Email",
-        "webUrl":"http://www.theguardian.com/technology/email",
-        "apiUrl":"http://content.guardianapis.com/technology/email",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/technology",
-        "type":"keyword",
-        "webTitle":"Technology",
-        "webUrl":"http://www.theguardian.com/technology/technology",
-        "apiUrl":"http://content.guardianapis.com/technology/technology",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"profile/jackschofield",
-        "type":"contributor",
-        "webTitle":"Jack Schofield",
-        "webUrl":"http://www.theguardian.com/profile/jackschofield",
-        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
-        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
-        "rcsId":"GNL004401",
-        "r2ContributorId":"15761",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-413119078",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/7/18/1374154873216/Hotmail-008.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Hotmail",
-            "height":"276",
-            "credit":"PR",
-            "caption":"Hotmail: replaced by Outlook.com",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-413119079",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/7/18/1374154867304/Hotmail-003.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Hotmail",
-            "height":"84",
-            "credit":"PR",
-            "caption":"Hotmail",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"technology/askjack/2013/jul/11/windows-8-pc-upgrade-hp-pavilion",
-      "sectionId":"technology",
-      "sectionName":"Technology",
-      "webPublicationDate":"2013-07-11T12:18:58Z",
-      "webTitle":"Should I upgrade my 8-year-old PC to Windows 8?",
-      "webUrl":"http://www.theguardian.com/technology/askjack/2013/jul/11/windows-8-pc-upgrade-hp-pavilion",
-      "apiUrl":"http://content.guardianapis.com/technology/askjack/2013/jul/11/windows-8-pc-upgrade-hp-pavilion",
-      "fields":{
-        "trailText":"<p>B Zeimetz has an old HP Pavilion that is suffering from glitches with Windows XP. He's wondering whether it would be best to upgrade the old hardware to Windows 8 or buy a new machine</p>",
-        "headline":"Should I upgrade my 8-year-old PC to Windows 8?",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3h8tz",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/7/11/1373544867898/Ask-Jack-003.jpg",
-        "wordcount":"1265",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"technology/askjack",
-        "type":"blog",
-        "webTitle":"Ask Jack",
-        "webUrl":"http://www.theguardian.com/technology/askjack",
-        "apiUrl":"http://content.guardianapis.com/technology/askjack",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"technology/windows-8",
-        "type":"keyword",
-        "webTitle":"Windows 8",
-        "webUrl":"http://www.theguardian.com/technology/windows-8",
-        "apiUrl":"http://content.guardianapis.com/technology/windows-8",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"profile/jackschofield",
-        "type":"contributor",
-        "webTitle":"Jack Schofield",
-        "webUrl":"http://www.theguardian.com/profile/jackschofield",
-        "apiUrl":"http://content.guardianapis.com/profile/jackschofield",
-        "bio":"<p>Jack Schofield is the Guardian's computer editor. Read the <a href=\"http://www.guardian.co.uk/technology/askjack\">Ask Jack blog </a> here</p>",
-        "rcsId":"GNL004401",
-        "r2ContributorId":"15761",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jack_schofield_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"technology/computing",
-        "type":"keyword",
-        "webTitle":"Computing",
-        "webUrl":"http://www.theguardian.com/technology/computing",
-        "apiUrl":"http://content.guardianapis.com/technology/computing",
-        "sectionId":"technology",
-        "sectionName":"Technology",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-412627527",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/7/11/1373544873736/Ask-Jack-008.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Ask Jack",
-            "height":"276",
-            "credit":"PR",
-            "caption":"Like this modern museum in a historic Amsterdam street, an upgrade to Windows 8 on an old PC may not look like a natural fit. ",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-412627528",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/7/11/1373544867898/Ask-Jack-003.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Ask Jack",
-            "height":"84",
-            "credit":"PR",
-            "caption":"Like this modern museum in a historic Amsterdam street, an upgrade to Windows 8 on an old PC may not look like a natural fit. ",
             "width":"140"
           }
         }]
