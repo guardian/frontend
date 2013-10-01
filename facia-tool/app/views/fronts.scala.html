@@ -66,12 +66,13 @@
             }">
 
             <div class="title" data-bind="text: name"></div>
+
             <iframe data-bind="
                 attr: {
                     src: $root.viewer.urlBase + '/' + $root.config()
                 },
                 style: {
-                    'width'  : width + 15 + 'px',
+                    'width'  : width + 15 + 'px', // +15 for vertical scrollbar
                     'height' : height + 'px'
                 }"></iframe>
         </div>

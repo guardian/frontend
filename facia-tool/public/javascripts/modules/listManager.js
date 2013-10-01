@@ -26,14 +26,15 @@ define([
 
         var self = this,
             model = {
-                viewer:         viewer,
-                showViewer:     knockout.observable(),
-
                 latestArticles: new LatestArticles(),
                 clipboard:      knockout.observableArray(),
                 collections:    knockout.observableArray(),
                 configs:        knockout.observableArray(),
                 config:         knockout.observable(),
+
+                viewer:         viewer,
+                showViewer:     knockout.observable(),
+
                 actions: {
                     flushClipboard: flushClipboard,
                     toggleViewer:   toggleViewer
@@ -41,36 +42,34 @@ define([
             };
 
         function getConfig() {
-            return [].concat(_.filter((common.util.queryParams().config || "").split(","), function(str){ return !!str; }));
+            return common.util.queryParams().front;
         }
 
-        function setConfig(ids) {
-            history.pushState({}, "", loc.pathname + '?' + common.util.ammendedQueryStr('config', [].concat(ids).join(',')));
+        function setConfig(id) {
+            history.pushState({}, "", loc.pathname + '?' + common.util.ammendedQueryStr('front', id));
             renderCollections();
         }
 
         function toggleViewer() {
             model.showViewer(!model.showViewer());
             if (model.showViewer()) {
-                model.viewer.layout();
+                model.viewer.render();
             }
         }
 
         function renderConfig() {
-            model.config(getConfig()[0]);
+            model.config(getConfig());
         }
 
         function renderCollections() {
             model.collections.removeAll();
-            getConfig().map(function(config){
-                fetchConfig(config, function(collections){
-                    model.collections(
-                        (collections || []).map(function(collection){
-                            return new List(collection);
-                        })
-                    );
-                    connectSortableLists();
-                });
+            fetchConfig(getConfig(), function(collections){
+                model.collections(
+                    (collections || []).map(function(collection){
+                        return new List(collection);
+                    })
+                );
+                connectSortableLists();
             });
         }
 
@@ -199,7 +198,7 @@ define([
                 type: 'json'
             }).then(
                 function(resp) {
-                    if (!_.isArray(resp) || resp.length === 0) {
+                    if (!(_.isArray(resp) && resp.length > 0)) {
                         window.console.log("ERROR: No configs were found");
                         return;
                     }
@@ -211,13 +210,14 @@ define([
         };
 
         function fetchConfig(id, callback) {
+            if (!(id && _.isFunction(callback))) {
+                return;
+            }
             reqwest({
                 url: common.config.apiBase + '/config/' + id,
                 type: 'json'
             }).then(
-                function(resp) {
-                    if (_.isFunction(callback)) { callback(resp); }
-                },
+                callback,
                 function(xhr) { window.console.log("ERROR: There was a problem fetching the config for " + id); }
             );
         };
@@ -253,7 +253,7 @@ define([
         model.config.subscribe(function(config) {
             var section = (config || '').split('/')[1]; // assumes ids are formed "edition/section/.."
             model.latestArticles.section(common.config.sectionSearches[section || 'default'] || section);
-            setConfig(config ? [config] : []);
+            setConfig(config);
         });
 
         knockout.bindingHandlers.makeDropabble = {
@@ -290,7 +290,7 @@ define([
             }
         };
 
-        this.init = function(callback) {
+        this.init = function() {
             fetchConfigs(function(){
                 knockout.applyBindings(model);
 
@@ -298,6 +298,7 @@ define([
                 window.onpopstate = renderConfig;
 
                 startPoller();
+
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
             });

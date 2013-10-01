@@ -14,35 +14,38 @@ function (
         return ((x % m) + m) % m;
     }
 
-    function layout(startAt) {
-        var acc = 0;
+    function render(startAt) {
+        var leftAcc = 0;
 
-        startAt = mod(startAt || 0, numPoints);
+        if(_.isUndefined(startAt)) {
+            startAt = showing = 0;
+        }
+        startAt = mod(startAt, numPoints);
         for (var i = 0; i < numPoints; i += 1) {
-            point = breakpoints[(i + startAt) % numPoints];
+            point = breakpoints[mod(i + startAt, numPoints)];
 
             if (!_.isFunction(point.zIndex)) { point.zIndex = ko.observable() };
             point.zIndex(i);
 
             if (!_.isFunction(point.left)) { point.left = ko.observable() };
-            point.left(acc);
+            point.left(leftAcc);
 
-            acc += point.width + 30;
+            leftAcc += point.width + 30;
         }
     }
 
     function shuffleLayout(dir) {
         showing = mod(showing + (dir === -1 ? -1 : 1), numPoints);
-        layout(showing);
+        render(showing);
     }
 
-    layout();
+    render();
 
     return {
         breakpoints: ko.observableArray(breakpoints),
         urlBase:     common.config.previewUrl,
 
-        layout:      layout,
+        render:      render,
         shuffleUp:   function() { shuffleLayout(1) },
         shuffleDown: function() { shuffleLayout(-1) }
     };
