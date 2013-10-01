@@ -188,6 +188,7 @@
             width: 100% !important;
         }
         .competition-table {
+            padding-top: 2px;
             @include mq($to: desktop) {
                 border-top: 2px solid $light-blue;
             }
