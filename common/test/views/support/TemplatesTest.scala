@@ -198,7 +198,7 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
 
   val bodyTextWithLinks = """
     <p>bar <a href="http://www.theguardian.com/section/2011/jan/01/words-for-url">the link</a></p>
-  """
+                          """
 
   val bodyWithBLocks = """<body>
       <!-- Block 14 --><span>some heading</span><p>some text</p>

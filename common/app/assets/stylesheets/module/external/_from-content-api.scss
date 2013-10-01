@@ -146,9 +146,21 @@ figure {
         margin-bottom: $baseline*2;
     }
 
-    &.img-extended {
+    &.img--extended {
         margin-top: $baseline*4;
         margin-bottom: $baseline*4;
+    }
+
+    &.img--landscape,
+    &.img--portrait {
+        figcaption {
+            background-color: $c-neutral7;
+            padding: $baseline*2 $gs-gutter/2 $baseline*6 $gs-gutter/2;
+
+            @include mq(wide) {
+                padding-bottom: $gs-column-height;
+            }
+        }
     }
 }
 

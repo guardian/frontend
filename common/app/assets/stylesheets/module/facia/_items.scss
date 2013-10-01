@@ -77,7 +77,7 @@ a.item__link {
     color: $darkGrey;
 }
 .item__meta {
-    color: $c-neutral2;
+    color: $grey;
     @include fs-data(2);
     margin-top: $gs-baseline*(5/3);
     padding-bottom: $gs-baseline;
