@@ -74,7 +74,7 @@ a.item__link {
 .item__standfirst {
     margin: $gs-baseline*2 0 0;
     @include fs-headline(1);
-    color: #676767;
+    color: $darkGrey;
 }
 .item__meta {
     color: $grey;
