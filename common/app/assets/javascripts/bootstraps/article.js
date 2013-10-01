@@ -129,8 +129,7 @@ define([
 
         externalLinksCards: function () {
             common.mediator.on('page:article:ready', function(config, context) {
-                //if (config.switches && config.switches.externalLinksCards) {
-                if (true) {
+                if (config.switches && config.switches.externalLinksCards) {
                     var card = new LeftHandCard({
                         origin: 'internal',
                         context: context
