@@ -6,7 +6,9 @@
          data-section="@config.section">
 
     @Seq(config.displayName, collection.displayName).find(_.nonEmpty).map { title =>
-        <h2 class="collection__title">@title</h2>
+        <h2 class="collection__title">
+            <a data-link-name="section heading" href="@LinkTo{/@config.section}">@title</a>
+        </h2>
     }
 
     <ul class="unstyled items item-count-@collection.items.size js-items--show-more items--cards">
