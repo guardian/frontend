@@ -74,8 +74,8 @@ object NonAuthAction {
 class AuthActionWithTimeout(loginUrl: String) extends AuthAction(loginUrl) {
 
   override def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async { request =>
-    if (withinAllowedTime(request))
-      Future{ f(request).withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)) }
+    if (withinAllowedTime(request) || Play.isTest)
+      Future { f(request).withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)) }
     else
       Future { Redirect(loginUrl).withSession(("loginFromUrl", request.uri)) }
   }
