@@ -6,17 +6,14 @@ import play.api.mvc._
 import play.api.libs.openid.OpenID
 import scala.concurrent.Future
 
-object Authenticated extends AuthAction(routes.Login.login.url) {
-  def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future.apply(f(request)))
-}
+object Authenticated extends AuthAction(routes.Login.login.url)
 
-object Login extends Controller with ExecutionContexts {
-  val openIdAttributes = Seq(
-    ("email", "http://axschema.org/contact/email"),
-    ("firstname", "http://axschema.org/namePerson/first"),
-    ("lastname", "http://axschema.org/namePerson/last")
-  )
-  val googleOpenIdUrl = "https://www.google.com/accounts/o8/id"
+object Login extends LoginController with Controller with ExecutionContexts {
+
+  val loginUrl: String = routes.Login.login.url
+  val baseUrl: String = "/admin"
+
+  def openIdCallback(secure: Boolean)(implicit request: RequestHeader): String = routes.Login.openIDCallback.absoluteURL(secure)
 
   def login = NonAuthAction {
     request =>
@@ -26,10 +23,10 @@ object Login extends Controller with ExecutionContexts {
 
   def loginPost = Action.async { implicit request =>
     OpenID
-      .redirectURL(googleOpenIdUrl, routes.Login.openIDCallback.absoluteURL(secure = true), openIdAttributes)
+      .redirectURL(googleOpenIdUrl, openIdCallback(secure=true), openIdAttributes)
       .map(Redirect(_))
       .recover {
-      case error => Redirect(routes.Login.login).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
+      case error => Redirect(loginUrl).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
     }
   }
 
@@ -46,20 +43,20 @@ object Login extends Controller with ExecutionContexts {
       val isTestUser = (credentials.email == "test.automation@gutest.com" && List("dev", "code", "gudev").contains(Configuration.environment.stage.toLowerCase))
 
       if (credentials.emailDomain == "guardian.co.uk" || isTestUser) {
-        Redirect(session.get("loginFromUrl").getOrElse("/admin")).withSession {
+        Redirect(session.get("loginFromUrl").getOrElse(baseUrl)).withSession {
           session + (Identity.KEY -> credentials.writeJson) - "loginFromUrl"
         }
       } else {
-        Redirect(routes.Login.login).flashing(
+        Redirect(loginUrl).flashing(
           ("error" -> "You can only log in using a Guardian Google Account")
         ).withSession(session - Identity.KEY)
       }
     }.recover {
-      case error => Redirect(routes.Login.login).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
+      case error => Redirect(loginUrl).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
     }
   }
 
   def logout = Action { implicit request =>
-    Redirect("/login").withNewSession
+    Redirect(loginUrl).withNewSession
   }
 }

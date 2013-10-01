@@ -8,6 +8,7 @@ import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
 import services.S3FrontsApi
+import scala.concurrent.Future
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -35,10 +36,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def getConfig(id: String) = Authenticated { request =>
-    S3FrontsApi.getConfig(id) map { json =>
+    S3FrontsApi.getConfig(id) map {json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
+
 
   def updateBlock(id: String): Action[AnyContent] = Authenticated { request =>
     request.body.asJson flatMap JsonExtract.build map {
