@@ -99,6 +99,7 @@ trait LoginController extends ExecutionContexts { self: Controller =>
     ("firstname", "http://axschema.org/namePerson/first"),
     ("lastname", "http://axschema.org/namePerson/last")
   )
+  val extraOpenIDParameters: Seq[String] = Nil
   val googleOpenIdUrl = "https://www.google.com/accounts/o8/id"
 
   val loginUrl: String
@@ -110,6 +111,7 @@ trait LoginController extends ExecutionContexts { self: Controller =>
   def loginPost = Action.async { implicit request =>
     OpenID
       .redirectURL(googleOpenIdUrl, openIdCallback(secure=true), openIdAttributes)
+      .map(_ + extraOpenIDParameters.mkString("&", "&", ""))
       .map(Redirect(_))
       .recover {
       case error => Redirect(loginUrl).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))
