@@ -1,55 +1,48 @@
 package controllers
 
-import frontsapi.model._
-import frontsapi.model.UpdateList
+import model._
+import model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import tools.FrontsApi
-import scala.concurrent.Future
+import tools.FaciaApi
 import services.S3FrontsApi
+import scala.concurrent.Future
 
 
-object FrontsController extends Controller with Logging with ExecutionContexts {
+object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
-  def index() = AuthAction{ request =>
+  def index() = Authenticated { request =>
     Ok(views.html.fronts(Configuration.environment.stage))
   }
 
-  def admin() = AuthAction { request =>
+  def admin() = Authenticated { request =>
     Redirect("/")
   }
 
-  def listCollections = AuthAction { request =>
-    Async {
-      Future{
-        Ok(Json.toJson(S3FrontsApi.listCollectionIds))
-      }
-    }
+  def listCollections = Authenticated { request =>
+    Ok(Json.toJson(S3FrontsApi.listCollectionIds))
   }
 
-  def listConfigs = AuthAction { request =>
-    Async {
-      Future{
-        Ok(Json.toJson(S3FrontsApi.listConfigsIds))
-      }
-    }
+  def listConfigs = Authenticated { request =>
+    Ok(Json.toJson(S3FrontsApi.listConfigsIds))
   }
 
-  def readBlock(id: String) = AuthAction{ request =>
+  def readBlock(id: String) = Authenticated { request =>
     S3FrontsApi.getBlock(id) map { json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
-  def getConfig(id: String) = AuthAction{ request =>
-    S3FrontsApi.getConfig(id) map { json =>
+  def getConfig(id: String) = Authenticated { request =>
+    S3FrontsApi.getConfig(id) map {json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
-  def updateBlock(id: String): Action[AnyContent] = AuthAction { request =>
+
+  def updateBlock(id: String): Action[AnyContent] = Authenticated { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
       case update: UpdateList => {
@@ -62,12 +55,12 @@ object FrontsController extends Controller with Logging with ExecutionContexts {
         val identity = Identity(request).get
         blockAction.publish.filter {_ == true}
           .map { _ =>
-            FrontsApi.publishBlock(id, identity)
+            FaciaApi.publishBlock(id, identity)
             Ok
           }
           .orElse {
           blockAction.discard.filter {_ == true}.map { _ =>
-            FrontsApi.discardBlock(id, identity)
+            FaciaApi.discardBlock(id, identity)
             Ok
           }
         } getOrElse NotFound("Invalid JSON")
@@ -81,13 +74,13 @@ object FrontsController extends Controller with Logging with ExecutionContexts {
     } getOrElse NotFound
   }
 
-  def updateTrail(id: String, trailId: String) = AuthAction{ request =>
+  def updateTrail(id: String, trailId: String) = Authenticated { request =>
     request.body.asJson.map{ json =>
     }
     Ok
   }
 
-  def deleteTrail(id: String) = AuthAction { request =>
+  def deleteTrail(id: String) = Authenticated { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList => {
         val identity = Identity(request).get
