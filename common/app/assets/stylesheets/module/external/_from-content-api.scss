@@ -145,13 +145,13 @@ figure {
         display: block;
     }
 
-    &.img-extended {
+    &.img--extended {
         margin-top: $baseline*4;
         margin-bottom: $baseline*4;
     }
 
-    &.img-landscape,
-    &.img-portrait {
+    &.img--landscape,
+    &.img--portrait {
         @include mq(leftCol) {
             float:left;
             clear: left;
@@ -167,7 +167,7 @@ figure {
         }
     }
 
-    &.img-landscape {
+    &.img--landscape {
         @include mq(leftCol) {
             width: gs-span(5);
             margin-top: $baseline;
@@ -181,7 +181,7 @@ figure {
         }
     }
 
-    &.img-portrait {
+    &.img--portrait {
         @include mq(leftCol) {
             width: gs-span(2);
             margin-top: $baseline;
@@ -196,7 +196,7 @@ figure {
 }
 
 p + figure {
-    &.img-landscape {
+    &.img--landscape {
         margin-top: 18px;
     }
 }
