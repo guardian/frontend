@@ -206,7 +206,7 @@ define([
             zoneLists = _.map(zoneNames, function(name) {
                 return {
                     name: name,
-                    list: []
+                    articles: []
                 };
             });
 
@@ -222,23 +222,17 @@ define([
                 item.zone = ["major", "minor", "other"][Math.min(2, Math.floor(index/2))];
 
                 zoneList = _.find(zoneLists, function(zone){ return zone.name === item.zone}) || zoneLists[0];
-
-                zoneList.list.push(new Article(item));
-
-                self[to].push(new Article({
-                    id: item.id,
-                    webTitleOverride: item.webTitleOverride
-                }));
+                zoneList.articles.push(new Article(item));
             });
-            console.log(zoneLists);
+            self[to](zoneLists);
         }
     }
 
     List.prototype.decorate = function() {
-        var list = this[this.state.liveMode() ? 'live' : 'draft']();
-
-        contentApi.decorateItems(list);
-        ophanApi.decorateItems(list);
+        _.each(this[this.state.liveMode() ? 'live' : 'draft'](), function(zone) {
+            contentApi.decorateItems(zone.articles);
+            ophanApi.decorateItems(zone.articles);
+        });
     };
 
     List.prototype.refresh = function() {

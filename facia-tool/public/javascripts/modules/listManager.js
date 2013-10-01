@@ -292,10 +292,10 @@ define([
 
         this.init = function() {
             fetchConfigs(function(){
-                knockout.applyBindings(model);
-
                 renderConfig();
                 window.onpopstate = renderConfig;
+
+                knockout.applyBindings(model);
 
                 startPoller();
 
