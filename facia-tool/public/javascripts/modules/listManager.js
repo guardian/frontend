@@ -2,7 +2,7 @@ define([
     'Reqwest',
     'knockout',
     'models/common',
-    'models/list',
+    'models/collection',
     'models/article',
     'models/latestArticles',
     'models/contentApi',
@@ -12,7 +12,7 @@ define([
     reqwest,
     knockout,
     common,
-    List,
+    Collection,
     Article,
     LatestArticles,
     contentApi,
@@ -66,7 +66,7 @@ define([
             fetchConfig(getConfig(), function(collections){
                 model.collections(
                     (collections || []).map(function(collection){
-                        return new List(collection);
+                        return new Collection(collection);
                     })
                 );
                 connectSortableLists();
@@ -95,7 +95,8 @@ define([
                     toList = fromList = item.parent();
                 },
                 stop: function(event, ui) {
-                    var toListPersists = toList.hasClass('persisted'),
+                    var withinCollection = (fromList.data('collection') === toList.data('collection')),
+                        toListPersists = toList.hasClass('persisted'),
                         fromListPersists = fromList.hasClass('persisted'),
                         index,
                         clone;
@@ -111,7 +112,7 @@ define([
                     }
 
                     // Delete out of fromList, if we've dragged between lists
-                    if(fromListPersists && toListPersists && fromList !==  toList) {
+                    if(fromListPersists && toListPersists && !withinCollection) {
                         saveList({
                             listEl: fromList,
                             itemEl: item,
@@ -140,18 +141,16 @@ define([
         };
 
         function saveList(opts) {
-            var itemId  = opts.itemEl.data('url'),
-                isLive  = opts.listEl.hasClass('is-live'),
-                method  = opts.delete ? 'delete' : 'post',
-                listObj = knockout.dataFor(opts.listEl[0]),
+            var article    = knockout.dataFor(opts.itemEl[0]),
+                zone       = knockout.dataFor(opts.listEl[0]),
+                collection = knockout.dataFor(opts.listEl.parent()[0]),
+                method     = opts.delete ? 'delete' : 'post',
                 delta;
 
-            if (!listObj || !listObj.id || !opts.itemEl.length || !itemId) { return; }
-
             delta = {
-                item:   itemId,
-                live:   isLive,
-                draft: !isLive
+                item:   article.meta.id(),
+                live:   collection.state.liveMode(),
+                draft: !collection.state.liveMode()
             };
 
             if (method === 'post') {
@@ -163,18 +162,21 @@ define([
                         delta.after = true;
                     }
                 }
+                delta.itemMeta = {
+                    zone: zone.name
+                }
             }
 
-            listObj.state.loadIsPending(true);
+            collection.state.loadIsPending(true);
 
             reqwest({
                 method: method,
-                url: common.config.apiBase + '/collection/' + listObj.id,
+                url: common.config.apiBase + '/collection/' + collection.id,
                 type: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify(delta)
             }).always(function(resp) {
-                listObj.load();
+                collection.load();
             });
         };
 
@@ -298,8 +300,6 @@ define([
                 knockout.applyBindings(model);
 
                 startPoller();
-
-                model.latestArticles.search();
                 model.latestArticles.startPoller();
             });
         };

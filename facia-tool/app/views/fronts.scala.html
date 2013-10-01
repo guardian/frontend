@@ -143,15 +143,7 @@
                 </div>
             </div>
 
-            <div class="needs-more" data-bind="if: needsMore">
-                Needs at least <span class="needs-more__num" data-bind="text: configMeta.min"></span>
-                article<span data-bind="text: configMeta.min() > 1 ? 's' : ''"></span>
-            </div>
-
             <div data-bind="
-                attr: {
-                    'data-list-id': id
-                },
                 css: {
                     'pending':   state.loadIsPending,
                     'is-live':   state.liveMode(),
@@ -160,7 +152,11 @@
                 foreach: state.liveMode() ? live : draft">
 
                 <div class="zone-name" data-bind="text: name"></div>
-                <div class="connectedList persisted" data-bind="template: {name: 'template_article', foreach: articles}"></div>
+                <div class="connectedList persisted" data-bind="
+                    attr: {
+                        'data-collection': $parent.id
+                    },
+                    template: {name: 'template_article', foreach: articles}"></div>
             </div>
         </div>
     </script>

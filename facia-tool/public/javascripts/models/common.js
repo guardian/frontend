@@ -15,6 +15,8 @@ define([
             ],
             previewUrl: 'http://www.theguardian.com',
 
+            defaultZoneName:      'default',
+
             searchPageSize:        50,
             sectionSearches: {
                 "default": "news|uk|uk-news|world",

@@ -15,18 +15,29 @@ define([
     contentApi,
     ophanApi
 ) {
+    var defaultZoneName = common.config.defaultZoneName || 0;
 
-    function List(opts) {
-        var self = this;
-
-        opts = opts || {};
+    function Collection(opts) {
+        var self = this,
+            zoneNames = _.isArray(opts.zones) ? opts.zones : [defaultZoneName]; // default zone is called 0
 
         if (!opts.id) { return; }
 
         this.id      = opts.id;
 
-        this.live   = ko.observableArray();
-        this.draft  = ko.observableArray();
+        this.live = _.map(zoneNames, function(n) {
+            return {
+                name: n,
+                articles: ko.observableArray()
+            };
+        })
+
+        this.draft = _.map(zoneNames, function(n) {
+            return {
+                name: n,
+                articles: ko.observableArray()
+            };
+        })
 
         // properties from the config, about this collection
         this.configMeta   = common.util.asObservableProps([
@@ -34,8 +45,7 @@ define([
             'min',
             'max',
             'roleName',
-            'roleDescription',
-            'zones']);
+            'roleDescription']);
         common.util.populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
@@ -51,14 +61,7 @@ define([
             'loadIsPending',
             'editingConfig',
             'timeAgo']);
-
         this.state.liveMode(common.config.defaultToLiveMode);
-
-        this.needsMore = ko.computed(function() {
-            if (self.state.liveMode()  && self.live().length  < self.configMeta.min()) { return true; }
-            if (!self.state.liveMode() && self.draft().length < self.configMeta.min()) { return true; }
-            return false;
-        });
 
         this.dropItem = function(item) {
             self.drop(item);
@@ -76,37 +79,37 @@ define([
         this.load();
     }
 
-    List.prototype.toggleEditingConfig = function() {
+    Collection.prototype.toggleEditingConfig = function() {
         this.state.editingConfig(!this.state.editingConfig());
     };
 
-    List.prototype.cancelEditingConfig = function() {
+    Collection.prototype.cancelEditingConfig = function() {
         this.state.editingConfig(false);
         this.load();
     };
 
-    List.prototype.setMode = function(isLiveMode) {
+    Collection.prototype.setMode = function(isLiveMode) {
         this.state.liveMode(isLiveMode);
         this.decorate();
     };
 
-    List.prototype.setLiveMode = function() {
+    Collection.prototype.setLiveMode = function() {
         this.setMode(true);
     };
 
-    List.prototype.setDraftMode = function() {
+    Collection.prototype.setDraftMode = function() {
         this.setMode(false);
     };
 
-    List.prototype.publishDraft = function() {
+    Collection.prototype.publishDraft = function() {
         this.processDraft(true);
     };
 
-    List.prototype.discardDraft = function() {
+    Collection.prototype.discardDraft = function() {
         this.processDraft(false);
     };
 
-    List.prototype.processDraft = function(goLive) {
+    Collection.prototype.processDraft = function(goLive) {
         var self = this;
 
         reqwest({
@@ -129,7 +132,7 @@ define([
         this.state.loadIsPending(true);
     };
 
-    List.prototype.drop = function(item) {
+    Collection.prototype.drop = function(item) {
         var self = this;
         self.live.remove(item);
         self.state.loadIsPending(true);
@@ -153,7 +156,7 @@ define([
         );
     };
 
-    List.prototype.load = function(opts) {
+    Collection.prototype.load = function(opts) {
         var self = this;
         opts = opts || {};
 
@@ -184,35 +187,25 @@ define([
         );
     };
 
-    List.prototype.populateLists = function(opts) {
-        opts = opts || {};
-
+    Collection.prototype.populateLists = function(opts) {
         if (common.state.uiBusy) { return; }
 
-        // Knockout doesn't seem to empty elements dragged into
-        // a container when it regenerates its DOM content. So empty it first.
-        this.containerEl = this.containerEl || $('[data-list-id="' + this.id + '"]');
-        if (this.containerEl) {
-            this.containerEl.empty();
-        }
+        // Knockout doesn't flush elements previously dragged into containers when it regenerates their DOM content.
+        // So, find then manually empty the containers.
+        this.elements = this.elements || $('[data-collection="' + this.id + '"]');
+        this.elements.empty();
 
         this.importList(opts, 'live', 'live');
         this.importList(opts, this.state.hasDraft() ? 'draft' : 'live', 'draft');
     };
 
-    List.prototype.importList = function(opts, from, to) {
+    Collection.prototype.importList = function(opts, from, to) {
         var self = this,
-            zoneNames = _.isArray(this.configMeta.zones()) ? this.configMeta.zones() : [0],
-            zoneLists = _.map(zoneNames, function(name) {
-                return {
-                    name: name,
-                    articles: []
-                };
-            });
+            zones = this[to];
 
-        if (this[to]) {
-            this[to].removeAll();
-        }
+        _.each(zones, function(zone) {
+            zone.articles.removeAll();
+        });
 
         if (opts[from]) {
             opts[from].forEach(function(item, index) {
@@ -220,29 +213,29 @@ define([
 
                 // FAKE A ZONE!
                 item.zone = ["major", "minor", "other"][Math.min(2, Math.floor(index/2))];
+                // FAKE A ZONE!
 
-                zoneList = _.find(zoneLists, function(zone){ return zone.name === item.zone}) || zoneLists[0];
+                zoneList = _.find(zones, function(zone){ return zone.name === item.zone; }) || zones[0];
                 zoneList.articles.push(new Article(item));
             });
-            self[to](zoneLists);
         }
     }
 
-    List.prototype.decorate = function() {
-        _.each(this[this.state.liveMode() ? 'live' : 'draft'](), function(zone) {
-            contentApi.decorateItems(zone.articles);
-            ophanApi.decorateItems(zone.articles);
+    Collection.prototype.decorate = function() {
+        _.each(this[this.state.liveMode() ? 'live' : 'draft'], function(zone) {
+            contentApi.decorateItems(zone.articles());
+            ophanApi.decorateItems(zone.articles());
         });
     };
 
-    List.prototype.refresh = function() {
+    Collection.prototype.refresh = function() {
         if (common.state.uiBusy || this.state.loadIsPending()) { return; }
         this.load({
             isRefresh: true
         });
     };
 
-    List.prototype.saveConfig = function() {
+    Collection.prototype.saveConfig = function() {
         var self = this;
 
         this.state.editingConfig(false);
@@ -263,9 +256,9 @@ define([
         });
     };
 
-    List.prototype.getTimeAgo = function(date) {
+    Collection.prototype.getTimeAgo = function(date) {
         return date ? humanized_time_span(date) : '';
     };
 
-    return List;
+    return Collection;
 });
