@@ -41,7 +41,8 @@ object Frontend extends Build with Prototypes {
     libraryDependencies += "com.gu" %% "pa-client" % "4.0",
     templatesImport ++= Seq(
       "pa._",
-      "feed._"
+      "feed._",
+      "football.controllers._"
     )
   )
   val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)

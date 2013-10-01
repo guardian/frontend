@@ -6,7 +6,7 @@ import model._
 
 // http://wiki.nginx.org/X-accel
 object ModelOrResult extends Results {
-  def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, SimpleResult] =
+  def apply[T](item: Option[T], response: ItemResponse): Either[T, SimpleResult] =
     item.map(Left(_)).orElse {
       response.content.map {
         case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
