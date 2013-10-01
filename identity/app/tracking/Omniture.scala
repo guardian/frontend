@@ -19,7 +19,7 @@ trait Omniture {
       "returnUrl" -> idRequest.returnUrl,
       "content-type" -> "userid", // For the no js omniture tracking
       "registrationType" -> "basicIdentity:Anewreg::theguardian",
-      "registrationEvent" -> "event30"
+      "identityEvent" -> "event30"
     )
     new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
   }
@@ -29,7 +29,17 @@ trait Omniture {
       "returnUrl" -> idRequest.returnUrl,
       "content-type" -> "userid", // For the no js omniture tracking
       "registrationType" -> "basicIdentity:Anewreg::theguardian",
-      "registrationEvent" -> "event33"
+      "identityEvent" -> "event33"
+    )
+    new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
+  }
+
+  def signinError(idRequest: IdentityRequest) : IdentityPage with TrackingParams = {
+    val newMetadata = addMetadata(
+      "returnUrl" -> idRequest.returnUrl,
+      "content-type" -> "userid", // For the no js omniture tracking
+      "identityEvent" -> "event34",
+      "identityErrorMessage" -> "Authentication failed"
     )
     new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
   }

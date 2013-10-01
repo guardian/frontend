@@ -142,9 +142,10 @@ define([
             if (config.page.section === "identity")  {
                 s.prop11 = 'Users';
                 s.prop9 = "userid";
+                s.eVar27 = config.page.identityErrorMessage || '';
                 s.eVar42 = config.page.returnUrl || '';
                 s.hier2="GU/Users/Registration";
-                s.events = s.apl(s.events, config.page.registrationEvent, ',');
+                s.events = s.apl(s.events, config.page.identityEvent, ',');
             }
 
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
