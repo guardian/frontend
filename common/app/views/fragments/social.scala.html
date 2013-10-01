@@ -15,7 +15,7 @@
         <li class="social__item">
             <a  class="social__action"
                 data-link-name="social-fb"
-                href="https://www.facebook.com/dialog/feed?app_id=180444840287&amp;redirect_uri=@helper.urlEncode(url)&amp;link=@helper.urlEncode(url)&amp;ref=responsive">
+                href="https://www.facebook.com/dialog/feed?app_id=@Configuration.javascript.pageData("guardian.page.fbAppId")&amp;redirect_uri=@helper.urlEncode(url)&amp;link=@helper.urlEncode(url)&amp;ref=responsive">
                 <span class="u-h">Share on Facebook</span>
                 <i class="i-share-facebook i social__icon"></i>
             </a>
