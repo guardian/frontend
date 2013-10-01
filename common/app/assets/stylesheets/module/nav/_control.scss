@@ -48,7 +48,7 @@
     float: right;
     width: auto;
     height: 28px;
-    padding: 15px $gutter 15px 0;
+    padding: 16px $gutter 15px 0;
 
     @include mq(tablet) {
         position: absolute;
@@ -73,7 +73,7 @@
 
 .control__menu.i {
     float: right;
-    margin-top: 8px;
+    margin-top: 7px;
     text-indent: -1000em;
 }
 
@@ -122,7 +122,7 @@ span.control__menu.i-menu {
         float: right;
         height: 28px;
         margin: 0;
-        padding: 17px 0 13px 0;
+        padding: 18px 0 13px 0;
         color: #fff;
 
         &.is-active {
@@ -162,7 +162,7 @@ span.control__menu.i-menu {
     }
 
 .control--topstories .i-top-stories {
-    margin: 5px $gutter 0 $gutter/2;
+    margin: 2px $gutter 0 $gutter/2;
 
     @include mq(tablet) {
         margin-left: 0;
@@ -181,7 +181,7 @@ span.control__menu.i-menu {
 .control--search {
     float:right;
     height: 28px;
-    padding: 15px $gutter 15px 0;
+    padding: 16px $gutter 15px 0;
     border: none;
 
     @include mq(tablet) {
@@ -192,7 +192,7 @@ span.control__menu.i-menu {
 }
 
 .control--search .i-search {
-    margin-top: $baseline*2;
+    margin-top: 5px;
     margin-left: 6px;
     margin-right: 2px;
 }
@@ -205,7 +205,7 @@ span.control__menu.i-menu {
 .control--profile {
     float: right;
     height: 28px;
-    padding: 17px 0 13px $gutter/2;
+    padding: 18px 0 13px $gutter/2;
     width: auto;
 
     &,
@@ -239,7 +239,7 @@ span.control__menu.i-menu {
 }
 
 .control--profile .i-profile {
-    margin: 5px $gutter 0 $gutter/2;
+    margin: 2px $gutter 0 $gutter/2;
 
     @include mq(tablet) {
         margin-left: 0;

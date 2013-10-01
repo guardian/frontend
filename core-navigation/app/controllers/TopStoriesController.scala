@@ -1,38 +1,40 @@
 package controllers
 
 import common._
+import com.gu.openplatform.contentapi.ApiError
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-
-import com.gu.openplatform.contentapi.ApiError
+import scala.concurrent.Future
 
 object TopStoriesController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
   val validFormats: Seq[String] = Seq("html", "json")
 
-  def renderJson() = render()
-  def render() = Action { implicit request =>
-    val promiseOfTopStories = lookup(Edition(request))
-    Async {
-      promiseOfTopStories.map(_.map { renderTopStories(_) } getOrElse { NotFound })
+  def renderTopStoriesJson() = renderTopStories()
+  def renderTopStories() = Action.async { implicit request =>
+    val response = lookup(Edition(request)) map { topStories =>
+      topStories map { renderTopStoriesPage(_) }
     }
+
+    response map { _ getOrElse NotFound }
   }
 
   def renderJsonTrails() = renderTrails()
-  def renderTrails() = Action { implicit request =>
-    val promiseOfTopStories = lookup(Edition(request))
-    Async {
-      promiseOfTopStories.map(_.map { renderTopStoriesTrails(_) } getOrElse { NotFound })
+  def renderTrails() = Action.async { implicit request =>
+    val response = lookup(Edition(request)) map { topStories =>
+      topStories map { renderTopStoriesTrails(_) }
     }
+
+    response map { _ getOrElse NotFound }
   }
 
-  private def lookup(edition: Edition)(implicit request: RequestHeader) = {
+  private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
     log.info(s"Fetching top stories for edition ${edition.id}")
     ContentApi.item("/", edition)
       .showEditorsPicks(true)
       .response
-      .map {response =>
+      .map { response =>
         SupportedContentFilter(response.editorsPicks map { Content(_) }) match {
           case Nil => None
           case picks => Some(picks)
@@ -43,7 +45,7 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
       }
   }
 
-  private def renderTopStories(trails: Seq[Trail])(implicit request: RequestHeader) = {
+  private def renderTopStoriesPage(trails: Seq[Trail])(implicit request: RequestHeader) = {
     val page = new Page(
       "top-stories",
       "top-stories",

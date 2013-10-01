@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":5913,
+    "total":5938,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
-    "pages":592,
+    "pages":594,
     "orderBy":"newest",
     "tag":{
       "id":"sport/rugbyleague",
@@ -19,20 +19,259 @@
       "references":[]
     },
     "results":[{
-      "id":"sport/blog/2013/sep/15/nrl-things-we-learned-this-weekend",
+      "id":"sport/2013/sep/30/andy-powell-world-cup-wales-squad",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-15T21:34:00Z",
-      "webTitle":"NRL: what we learned this weekend",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/15/nrl-things-we-learned-this-weekend",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/15/nrl-things-we-learned-this-weekend",
+      "webPublicationDate":"2013-09-30T10:26:12Z",
+      "webTitle":"Andy Powell ruled out of World Cup as Wales name 23-man squad",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/30/andy-powell-world-cup-wales-squad",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/30/andy-powell-world-cup-wales-squad",
       "fields":{
-        "trailText":"<p><strong>Paul Connolly: </strong>Refereeing blunders; conspiracy theories; Roosters rest; and other talking points</p>",
+        "trailText":"The Wigan prop has been denied the chance to return to the Millennium Stadium with Wales on the opening day of the World Cup",
+        "headline":"Andy Powell ruled out of World Cup as Wales name 23-man squad",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6cb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535226570/Andy-Powell-003.jpg",
+        "wordcount":"494",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wales-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Wales rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/wales-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/wales-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/england-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"England rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/england-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/england-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418620310",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535223571/Andy-Powell-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"54",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535225327/Andy-Powell-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"130",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535226570/Andy-Powell-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"84",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535227837/Andy-Powell-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"132",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535229116/Andy-Powell-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"168",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535230362/Andy-Powell-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"180",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535231590/Andy-Powell-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"228",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535232835/Andy-Powell-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"276",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535232835/Andy-Powell-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"276",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418620311",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/30/1380535226570/Andy-Powell-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Nigel French",
+            "altText":"Andy Powell",
+            "height":"84",
+            "credit":"Nigel French/PA",
+            "caption":"Andy Powell has been left out of Wales's World Cup squad due to a neck injury sustained during 'the longest season ever'. Photograph: Nigel French/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/29/nrl-what-we-learned-this-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-29T21:48:00Z",
+      "webTitle":"NRL: what we learned this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/29/nrl-what-we-learned-this-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/29/nrl-what-we-learned-this-weekend",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly: </strong>Muscles aren't everything; don't believe the hype; the NRL needs to find where its public has gone</p>",
         "headline":"NRL: what we learned this weekend",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn9p",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379245936412/Neil-Henry-003.jpg",
-        "wordcount":"1286",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j62m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380451023700/Glenn-Stewart-of-Manly-002.jpg",
+        "wordcount":"1169",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -54,20 +293,11 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/north-queensland-cowboys",
+        "id":"sport/sydney-roosters",
         "type":"keyword",
-        "webTitle":"North Queensland Cowboys",
-        "webUrl":"http://www.theguardian.com/sport/north-queensland-cowboys",
-        "apiUrl":"http://content.guardianapis.com/sport/north-queensland-cowboys",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/cronulla-sharks",
-        "type":"keyword",
-        "webTitle":"Cronulla Sharks",
-        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
-        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -81,33 +311,6 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/sydney-roosters",
-        "type":"keyword",
-        "webTitle":"Sydney Roosters",
-        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
-        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/newcastle-knights",
-        "type":"keyword",
-        "webTitle":"Newcastle Knights",
-        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
-        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/canterbury-bulldogs",
-        "type":"keyword",
-        "webTitle":"Canterbury Bulldogs",
-        "webUrl":"http://www.theguardian.com/sport/canterbury-bulldogs",
-        "apiUrl":"http://content.guardianapis.com/sport/canterbury-bulldogs",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
         "id":"sport/manly-sea-eagles",
         "type":"keyword",
         "webTitle":"Manly Sea Eagles",
@@ -117,11 +320,11 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/melbourne-storm",
+        "id":"sport/newcastle-knights",
         "type":"keyword",
-        "webTitle":"Melbourne Storm",
-        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
-        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -151,16 +354,6 @@
         "apiUrl":"http://content.guardianapis.com/sport/sport",
         "sectionId":"sport",
         "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/paul-connolly",
-        "type":"contributor",
-        "webTitle":"Paul Connolly",
-        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
-        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
-        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
-        "r2ContributorId":"56450",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
         "references":[]
       },{
         "id":"sport/blog",
@@ -179,6 +372,16 @@
         "apiUrl":"http://content.guardianapis.com/tone/blog",
         "references":[]
       },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
         "id":"type/article",
         "type":"type",
         "webTitle":"Article",
@@ -187,138 +390,58 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417360144",
+        "id":"gu-image-418592813",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379245966555/Neil-Henry-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380450944195/Glenn-Stewart-of-Manly-002.jpg",
           "typeData":{
             "source":"AAP Image",
-            "photographer":"Colin Whelan",
-            "altText":"Neil Henry",
+            "photographer":"Dean Lewins",
+            "altText":"Glenn Stewart of Manly",
             "height":"276",
-            "credit":"Colin Whelan/AAP Image",
-            "caption":"Neil Henry was furious at the refereeing decisions during his team's defeat.  Photograph: Colin Whelan/AAP Image",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Glenn Stewart: like a very, very athletic George Costanza.  Photograph: Dean Lewins/AAP Image",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417360145",
+        "id":"gu-image-418592814",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379245936412/Neil-Henry-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380451023700/Glenn-Stewart-of-Manly-002.jpg",
           "typeData":{
             "source":"AAP Image",
-            "photographer":"Colin Whelan",
-            "altText":"Neil Henry",
+            "photographer":"Dean Lewins",
+            "altText":"Glenn Stewart of Manly",
             "height":"84",
-            "credit":"Colin Whelan/AAP Image",
-            "caption":"Neil Henry was furious at the refereeing decisions during his team's defeat.  Photograph: Colin Whelan/AAP Image",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Glenn Stewart  Photograph: Dean Lewins/AAP Image",
             "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-video-417358794",
-        "relation":"body",
-        "type":"video",
-        "assets":[{
-          "type":"video",
-          "mimeType":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/16/130816NRLhighlights130916_FromGAus-16x9.mp4",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298853464/NRL-roundup-16-sept-013.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298858486/NRL-roundup-16-sept-015.jpg",
-            "width":"480",
-            "durationSeconds":"8"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/16/130816NRLhighlights130916_FromGAus_3gpSml16x9.3gp",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298853464/NRL-roundup-16-sept-013.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298858486/NRL-roundup-16-sept-015.jpg",
-            "width":"480",
-            "durationSeconds":"8"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/16/130816NRLhighlights130916_FromGAus_3gpLg16x9.3gp",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298853464/NRL-roundup-16-sept-013.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298858486/NRL-roundup-16-sept-015.jpg",
-            "width":"480",
-            "durationSeconds":"8"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/2013/9/16/130816NRLhighlights130916_FromGAus/130816NRLhighlights130916_FromGAus.m3u8",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298853464/NRL-roundup-16-sept-013.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298858486/NRL-roundup-16-sept-015.jpg",
-            "width":"480",
-            "durationSeconds":"8"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/webm",
-          "file":"http://cdn.theguardian.tv/webM/640/2013/9/16/130816NRLhighlights130916_FromGAus_vpx.webm",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298853464/NRL-roundup-16-sept-013.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379298858486/NRL-roundup-16-sept-015.jpg",
-            "width":"480",
-            "durationSeconds":"8"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/15/st-helens-leeds-rhinos",
+      "id":"sport/2013/sep/28/wigan-warrington-super-league-grand-final",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-15T21:07:00Z",
-      "webTitle":"St Helens desperate to take play-off revenge on Leeds Rhinos",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/15/st-helens-leeds-rhinos",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/15/st-helens-leeds-rhinos",
+      "webPublicationDate":"2013-09-28T19:27:09Z",
+      "webTitle":"Warrington and Wigan bring clash of styles to Super League Grand Final",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/28/wigan-warrington-super-league-grand-final",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/28/wigan-warrington-super-league-grand-final",
       "fields":{
-        "trailText":"St Helens will be quietly confident of giving Leeds a dose of their own medicine in their preliminary semi-final on Friday",
-        "headline":"St Helens desperate to take play-off revenge on Leeds Rhinos",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tnb6",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253345916/James-Roby-St-Helens-003.jpg",
-        "wordcount":"561",
+        "trailText":"A young Wigan Warriors side who are chasing a rare double will face a veteran Warrington Wolves at Old Trafford in the Super League Grand Final",
+        "headline":"Warrington and Wigan bring clash of styles to Super League Grand Final",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6x4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380390072441/Joel-Monaghan-003.jpg",
+        "wordcount":"686",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -331,38 +454,11 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/sthelens",
+        "id":"sport/wiganwarriors",
         "type":"keyword",
-        "webTitle":"St Helens",
-        "webUrl":"http://www.theguardian.com/sport/sthelens",
-        "apiUrl":"http://content.guardianapis.com/sport/sthelens",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/leedsrhinos",
-        "type":"keyword",
-        "webTitle":"Leeds Rhinos",
-        "webUrl":"http://www.theguardian.com/sport/leedsrhinos",
-        "apiUrl":"http://content.guardianapis.com/sport/leedsrhinos",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/warrington",
-        "type":"keyword",
-        "webTitle":"Warrington",
-        "webUrl":"http://www.theguardian.com/sport/warrington",
-        "apiUrl":"http://content.guardianapis.com/sport/warrington",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/hullkr",
-        "type":"keyword",
-        "webTitle":"Hull KR",
-        "webUrl":"http://www.theguardian.com/sport/hullkr",
-        "apiUrl":"http://content.guardianapis.com/sport/hullkr",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.theguardian.com/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -390,6 +486,15 @@
         "webTitle":"Sport",
         "webUrl":"http://www.theguardian.com/sport/sport",
         "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/warrington",
+        "type":"keyword",
+        "webTitle":"Warrington",
+        "webUrl":"http://www.theguardian.com/sport/warrington",
+        "apiUrl":"http://content.guardianapis.com/sport/warrington",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -405,266 +510,11 @@
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
         "references":[]
       },{
-        "id":"tone/news",
+        "id":"tone/features",
         "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"theguardian/sport/news",
-        "type":"newspaper-book-section",
-        "webTitle":"News & features",
-        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
-        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/sport",
-        "type":"newspaper-book",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417328914",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253342891/James-Roby-St-Helens-001.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"54",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253344646/James-Roby-St-Helens-002.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"130",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253345916/James-Roby-St-Helens-003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"84",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253347106/James-Roby-St-Helens-004.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"132",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253348125/James-Roby-St-Helens-005.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"168",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253349217/James-Roby-St-Helens-006.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"180",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253350236/James-Roby-St-Helens-007.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"228",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253351230/James-Roby-St-Helens-008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"276",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253351230/James-Roby-St-Helens-008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"276",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417328915",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379253345916/James-Roby-St-Helens-003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Jason Cairnduff",
-            "altText":"James Roby, St Helens",
-            "height":"84",
-            "credit":"Jason Cairnduff/Action Images",
-            "caption":"The return of James Roby at hooker has given a major boost to St Helens and also to England. Photograph: Jason Cairnduff/Action Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/15/newcastle-knights-canterbury-bulldogs-match-report",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-15T08:33:00Z",
-      "webTitle":"Newcastle Knights 22-6 Canterbury Bulldogs | NRL match report",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/15/newcastle-knights-canterbury-bulldogs-match-report",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/15/newcastle-knights-canterbury-bulldogs-match-report",
-      "fields":{
-        "trailText":"<p>Newcastle are two games away from an NRL grand final after beating an undisciplined Canterbury 22-6 in Sunday's elimination final</p>",
-        "headline":"Newcastle Knights make short work of Canterbury Bulldogs",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn94",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379230930925/James-Graham-of-the-Bulld-001.jpg",
-        "wordcount":"427",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/newcastle-knights",
-        "type":"keyword",
-        "webTitle":"Newcastle Knights",
-        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
-        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/canterbury-bulldogs",
-        "type":"keyword",
-        "webTitle":"Canterbury Bulldogs",
-        "webUrl":"http://www.theguardian.com/sport/canterbury-bulldogs",
-        "apiUrl":"http://content.guardianapis.com/sport/canterbury-bulldogs",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
         "references":[]
       },{
         "id":"type/article",
@@ -675,526 +525,58 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417318938",
+        "id":"gu-image-418536884",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379230946476/James-Graham-of-the-Bulld-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380390078161/Joel-Monaghan-008.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Nolan",
-            "altText":"James Graham of the Bulldogs",
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Joel Monaghan",
             "height":"276",
-            "credit":"Mark Nolan/Getty Images",
-            "caption":"James Graham of the Bulldogs is tackled during his side's defeat to Newcastle.  Photograph: Mark Nolan/Getty Images",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Joel Monaghan is one of a number of thritysomethings in the Warrington side that will face Wigan in the Super League Grand Final. Photograph: Ed Sykes/Action Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417318939",
+        "id":"gu-image-418536885",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379230930925/James-Graham-of-the-Bulld-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380390072441/Joel-Monaghan-003.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Nolan",
-            "altText":"James Graham of the Bulldogs",
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Joel Monaghan",
             "height":"84",
-            "credit":"Mark Nolan/Getty Images",
-            "caption":"James Graham of the Bulldogs is tackled during his side's defeat to Newcastle.  Photograph: Mark Nolan/Getty Images",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Joel Monaghan is one of a number of thritysomethings in the Warrington side that will face Wigan in the Super League Grand Final. Photograph: Ed Sykes/Action Images",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/14/st-helens-hull-kr-super-league",
+      "id":"sport/2013/sep/28/sydney-roosters-newcastle-knights-nrl",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-14T19:26:07Z",
-      "webTitle":"St Helens 46-10 Hull KR | Super League elimination play-off report",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/14/st-helens-hull-kr-super-league",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/14/st-helens-hull-kr-super-league",
+      "webPublicationDate":"2013-09-28T14:34:15Z",
+      "webTitle":"Sydney Roosters 40-14 Newcastle Knights | NRL match report",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/28/sydney-roosters-newcastle-knights-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/28/sydney-roosters-newcastle-knights-nrl",
       "fields":{
-        "trailText":"St Helens booked their place in the Super League preliminary semi-final with a crushing 46-10 victory over Hull KR",
-        "headline":"St Helens brush aside Hull KR after hat-trick by Adam Swift",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn7e",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/14/1379186522422/St-Helens-v-Hull-KR-001.jpg",
-        "wordcount":"471",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/super-league-xviii",
-        "type":"keyword",
-        "webTitle":"Super League XVIII",
-        "webUrl":"http://www.theguardian.com/sport/super-league-xviii",
-        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sthelens",
-        "type":"keyword",
-        "webTitle":"St Helens",
-        "webUrl":"http://www.theguardian.com/sport/sthelens",
-        "apiUrl":"http://content.guardianapis.com/sport/sthelens",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/hullkr",
-        "type":"keyword",
-        "webTitle":"Hull KR",
-        "webUrl":"http://www.theguardian.com/sport/hullkr",
-        "apiUrl":"http://content.guardianapis.com/sport/hullkr",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/superleague",
-        "type":"keyword",
-        "webTitle":"Super League",
-        "webUrl":"http://www.theguardian.com/sport/superleague",
-        "apiUrl":"http://content.guardianapis.com/sport/superleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417296669",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/14/1379186522422/St-Helens-v-Hull-KR-001.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"John Rushworth",
-            "altText":"St Helens v Hull KR",
-            "height":"84",
-            "credit":"John Rushworth/Action Images",
-            "caption":"Hull KR's David Hodgson, centre, battles with Louie McCarthy-Scarsbrook, left, and Lance Hohaia of St Helens in the Super League play-offs. Photograph: John Rushworth/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/14/1379186524457/St-Helens-v-Hull-KR-002.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"John Rushworth",
-            "altText":"St Helens v Hull KR",
-            "height":"132",
-            "credit":"John Rushworth/Action Images",
-            "caption":"Hull KR's David Hodgson, centre, battles with Louie McCarthy-Scarsbrook, left, and Lance Hohaia of St Helens in the Super League play-offs. Photograph: John Rushworth/Action Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/14/1379186525844/St-Helens-v-Hull-KR-003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"John Rushworth",
-            "altText":"St Helens v Hull KR",
-            "height":"168",
-            "credit":"John Rushworth/Action Images",
-            "caption":"Hull KR's David Hodgson, centre, battles with Louie McCarthy-Scarsbrook, left, and Lance Hohaia of St Helens in the Super League play-offs. Photograph: John Rushworth/Action Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/14/1379186526956/St-Helens-v-Hull-KR-004.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"John Rushworth",
-            "altText":"St Helens v Hull KR",
-            "height":"180",
-            "credit":"John Rushworth/Action Images",
-            "caption":"Hull KR's David Hodgson, centre, battles with Louie McCarthy-Scarsbrook, left, and Lance Hohaia of St Helens in the Super League play-offs. Photograph: John Rushworth/Action Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/14/1379186528041/St-Helens-v-Hull-KR-005.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"John Rushworth",
-            "altText":"St Helens v Hull KR",
-            "height":"228",
-            "credit":"John Rushworth/Action Images",
-            "caption":"Hull KR's David Hodgson, centre, battles with Louie McCarthy-Scarsbrook, left, and Lance Hohaia of St Helens in the Super League play-offs. Photograph: John Rushworth/Action Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/14/1379186529125/St-Helens-v-Hull-KR-006.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"John Rushworth",
-            "altText":"St Helens v Hull KR",
-            "height":"276",
-            "credit":"John Rushworth/Action Images",
-            "caption":"Hull KR's David Hodgson, centre, battles with Louie McCarthy-Scarsbrook, left, and Lance Hohaia of St Helens in the Super League play-offs. Photograph: John Rushworth/Action Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/14/1379186529125/St-Helens-v-Hull-KR-006.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"John Rushworth",
-            "altText":"St Helens v Hull KR",
-            "height":"276",
-            "credit":"John Rushworth/Action Images",
-            "caption":"Hull KR's David Hodgson, centre, battles with Louie McCarthy-Scarsbrook, left, and Lance Hohaia of St Helens. Photograph: John Rushworth/Action Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417296670",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/14/1379186522422/St-Helens-v-Hull-KR-001.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"John Rushworth",
-            "altText":"St Helens v Hull KR",
-            "height":"84",
-            "credit":"John Rushworth/Action Images",
-            "caption":"Hull KR's David Hodgson, centre, battles with Louie McCarthy-Scarsbrook, left, and Lance Hohaia of St Helens in the Super League play-offs. Photograph: John Rushworth/Action Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/14/warrington-leeds-super-league-play-off",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-14T18:42:53Z",
-      "webTitle":"Warrington 40-20 Leeds | Super League play-off match report",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/14/warrington-leeds-super-league-play-off",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/14/warrington-leeds-super-league-play-off",
-      "fields":{
-        "trailText":"Ben Westwood scored four tries as Warrington defeated Leeds to reach the Super League play-off semis",
-        "headline":"Warrington beat Leeds in controversial Super League play-off encounter",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn73",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179882329/Warrington-Wolves-v-Leeds-003.jpg",
-        "wordcount":"565",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/super-league-xviii",
-        "type":"keyword",
-        "webTitle":"Super League XVIII",
-        "webUrl":"http://www.theguardian.com/sport/super-league-xviii",
-        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/superleague",
-        "type":"keyword",
-        "webTitle":"Super League",
-        "webUrl":"http://www.theguardian.com/sport/superleague",
-        "apiUrl":"http://content.guardianapis.com/sport/superleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/warrington",
-        "type":"keyword",
-        "webTitle":"Warrington",
-        "webUrl":"http://www.theguardian.com/sport/warrington",
-        "apiUrl":"http://content.guardianapis.com/sport/warrington",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/leedsrhinos",
-        "type":"keyword",
-        "webTitle":"Leeds Rhinos",
-        "webUrl":"http://www.theguardian.com/sport/leedsrhinos",
-        "apiUrl":"http://content.guardianapis.com/sport/leedsrhinos",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"profile/andywilson",
-        "type":"contributor",
-        "webTitle":"Andy Wilson",
-        "webUrl":"http://www.theguardian.com/profile/andywilson",
-        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
-        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
-        "rcsId":"GNL249938",
-        "r2ContributorId":"15381",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
-        "references":[]
-      },{
-        "id":"theobserver/sport/news",
-        "type":"newspaper-book-section",
-        "webTitle":"News & features",
-        "webUrl":"http://www.theguardian.com/theobserver/sport/news",
-        "apiUrl":"http://content.guardianapis.com/theobserver/sport/news",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theobserver/sport",
-        "type":"newspaper-book",
-        "webTitle":"Observer Sport",
-        "webUrl":"http://www.theguardian.com/theobserver/sport",
-        "apiUrl":"http://content.guardianapis.com/theobserver/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theobserver",
-        "type":"publication",
-        "webTitle":"The Observer",
-        "webUrl":"http://www.theguardian.com/theobserver/all",
-        "apiUrl":"http://content.guardianapis.com/theobserver/all",
-        "sectionId":"theobserver",
-        "sectionName":"From the Observer",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417292433",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179879953/Warrington-Wolves-v-Leeds-001.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"54",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game at Halliwell Jones Stadium Photograph: Craig Brough/Action Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179881328/Warrington-Wolves-v-Leeds-002.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"130",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game at Halliwell Jones Stadium Photograph: Craig Brough/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179882329/Warrington-Wolves-v-Leeds-003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"84",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game at Halliwell Jones Stadium Photograph: Craig Brough/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179883461/Warrington-Wolves-v-Leeds-004.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"132",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game at Halliwell Jones Stadium Photograph: Craig Brough/Action Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179884721/Warrington-Wolves-v-Leeds-005.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"168",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game at Halliwell Jones Stadium Photograph: Craig Brough/Action Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179885746/Warrington-Wolves-v-Leeds-006.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"180",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game at Halliwell Jones Stadium Photograph: Craig Brough/Action Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179886849/Warrington-Wolves-v-Leeds-007.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"228",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game at Halliwell Jones Stadium Photograph: Craig Brough/Action Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179887897/Warrington-Wolves-v-Leeds-008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"276",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game at Halliwell Jones Stadium Photograph: Craig Brough/Action Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179887897/Warrington-Wolves-v-Leeds-008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"276",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game. Photograph: Craig Brough/Action Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417292434",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379179882329/Warrington-Wolves-v-Leeds-003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Craig Brough",
-            "altText":"Warrington Wolves v Leeds Rhinos - Super League Qualifying Play-Off",
-            "height":"84",
-            "credit":"Craig Brough/Action Images",
-            "caption":"Warrington's Ben Westwood scores his team's first try against Leeds in their Super League play-off game at Halliwell Jones Stadium Photograph: Craig Brough/Action Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/14/sydney-roosters-manly-sea-eagles-nrl",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-14T11:28:28Z",
-      "webTitle":"Sydney Roosters 4-0 Manly Sea Eagles",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/14/sydney-roosters-manly-sea-eagles-nrl",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/14/sydney-roosters-manly-sea-eagles-nrl",
-      "fields":{
-        "trailText":"<p>The Sydney Roosters will get a well-deserved week off after holding out Manly 4-0 to win a brutally absorbing NRL qualifying final</p>",
-        "headline":"Sydney Roosters grind out victory over Manly Sea Eagles",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn44",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379157100269/Sydney-Roosters-001.jpg",
-        "wordcount":"324",
+        "trailText":"<p>The Roosters rounded off a difficult week to comfortably beat Newcastle and book their place in the NRL grand final against Manly</p>",
+        "headline":"Sydney Roosters surge past Knights and into grand final",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j5qe",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380378358989/Sydney-Roosters-celebrate-001.jpg",
+        "wordcount":"421",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1216,11 +598,11 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/manly-sea-eagles",
+        "id":"sport/newcastle-knights",
         "type":"keyword",
-        "webTitle":"Manly Sea Eagles",
-        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
-        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -1267,428 +649,58 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417278916",
+        "id":"gu-image-418529446",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379157120881/Sydney-Roosters-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380378383308/Sydney-Roosters-celebrate-003.jpg",
           "typeData":{
             "source":"AAP Image",
-            "photographer":"Renee Mckay",
-            "altText":"Sydney Roosters",
+            "photographer":"Colin Whelan",
+            "altText":"Sydney Roosters celebrate",
             "height":"276",
-            "credit":"Renee Mckay/AAP Image",
-            "caption":"Roger Tuivasa Sheck celebrates his try with team-mate Sonny Bill Williams.  Photograph: Renee Mckay/AAP Image",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Sydney Roosters celebrate Aidan Guerra's try.  Photograph: Colin Whelan/AAP Image",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417278917",
+        "id":"gu-image-418529447",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379157100269/Sydney-Roosters-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380378358989/Sydney-Roosters-celebrate-001.jpg",
           "typeData":{
             "source":"AAP Image",
-            "photographer":"Renee Mckay",
-            "altText":"Sydney Roosters",
+            "photographer":"Colin Whelan",
+            "altText":"Sydney Roosters celebrate",
             "height":"84",
-            "credit":"Renee Mckay/AAP Image",
-            "caption":"Roger Tuivasa Sheck celebrates his try with team-mate Sonny Bill Williams.  Photograph: Renee Mckay/AAP Image",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Sydney Roosters celebrate Aidan Guerra's try.  Photograph: Colin Whelan/AAP Image",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/14/cronulla-sharks-north-queensland-cowboys-nrl",
+      "id":"sport/2013/sep/27/wigan-leeds-super-league-semi-final",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-14T10:58:16Z",
-      "webTitle":"Cronulla Sharks 20-18 North Queensland Cowboys",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/14/cronulla-sharks-north-queensland-cowboys-nrl",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/14/cronulla-sharks-north-queensland-cowboys-nrl",
+      "webPublicationDate":"2013-09-27T21:30:00Z",
+      "webTitle":"Wigan 22-12 Leeds | Super League semi-final match report",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/27/wigan-leeds-super-league-semi-final",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/27/wigan-leeds-super-league-semi-final",
       "fields":{
-        "trailText":"<p>The NRL boss Dave Smith was forced to apologise for an refereeing blunder that had the Cowboys' Neil Henry suggesting a Sydney conspiracy</p>",
-        "headline":"Cowboys fume after refereeing error helps end finals bid",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn3z",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379156251099/Cronulla-Sharks-001.jpg",
-        "wordcount":"539",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/cronulla-sharks",
-        "type":"keyword",
-        "webTitle":"Cronulla Sharks",
-        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
-        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/north-queensland-cowboys",
-        "type":"keyword",
-        "webTitle":"North Queensland Cowboys",
-        "webUrl":"http://www.theguardian.com/sport/north-queensland-cowboys",
-        "apiUrl":"http://content.guardianapis.com/sport/north-queensland-cowboys",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417277569",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379156273002/Cronulla-Sharks-003.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Renee Mckay",
-            "altText":"Cronulla Sharks",
-            "height":"276",
-            "credit":"Renee Mckay/AAP Image",
-            "caption":"Beau Ryan celebrates his try with team-mates. Photograph: Renee Mckay/AAP Image",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417277570",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379156251099/Cronulla-Sharks-001.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Renee Mckay",
-            "altText":"Cronulla Sharks",
-            "height":"84",
-            "credit":"Renee Mckay/AAP Image",
-            "caption":"Beau Ryan celebrates his try with team-mates. Photograph: Renee Mckay/AAP Image",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/13/super-league-hull-shaul-catalans",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-13T22:53:29Z",
-      "webTitle":"Hull 14-4 Catalan Dragons | Super League play-offs match report",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/13/super-league-hull-shaul-catalans",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/13/super-league-hull-shaul-catalans",
-      "fields":{
-        "trailText":"Hull's young star Jamie Shaul brightened up a miserable night with a spectacular try as Steve Menzies bowed out for beaten Catalans",
-        "headline":"Jamie Shaul lights up dull Hull night as Dragons' Steve Menzies bows out",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn28",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110520468/Hull-FCs-Jamie-Shaul-scor-003.jpg",
-        "wordcount":"586",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/superleague",
-        "type":"keyword",
-        "webTitle":"Super League",
-        "webUrl":"http://www.theguardian.com/sport/superleague",
-        "apiUrl":"http://content.guardianapis.com/sport/superleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/hull-fc",
-        "type":"keyword",
-        "webTitle":"Hull FC",
-        "webUrl":"http://www.theguardian.com/sport/hull-fc",
-        "apiUrl":"http://content.guardianapis.com/sport/hull-fc",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/catalans",
-        "type":"keyword",
-        "webTitle":"Catalan Dragons",
-        "webUrl":"http://www.theguardian.com/sport/catalans",
-        "apiUrl":"http://content.guardianapis.com/sport/catalans",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"theguardian/sport/news",
-        "type":"newspaper-book-section",
-        "webTitle":"News & features",
-        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
-        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/sport",
-        "type":"newspaper-book",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417262487",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110517998/Hull-FCs-Jamie-Shaul-scor-001.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"54",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110519434/Hull-FCs-Jamie-Shaul-scor-002.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"130",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110520468/Hull-FCs-Jamie-Shaul-scor-003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"84",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110521476/Hull-FCs-Jamie-Shaul-scor-004.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"132",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110522813/Hull-FCs-Jamie-Shaul-scor-005.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"168",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110524456/Hull-FCs-Jamie-Shaul-scor-006.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"180",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110525578/Hull-FCs-Jamie-Shaul-scor-007.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"228",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110526791/Hull-FCs-Jamie-Shaul-scor-008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"276",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110526791/Hull-FCs-Jamie-Shaul-scor-008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"276",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417262488",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/13/1379110520468/Hull-FCs-Jamie-Shaul-scor-003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Lee Smith",
-            "altText":"Hull FC's Jamie Shaul scores against Catalans Dragons",
-            "height":"84",
-            "credit":"Lee Smith/Action Images",
-            "caption":"Hull FC's Jamie Shaul finishes off his 80-metre try at the KC Stadium on Friday night with a flourish.  Photograph: Lee Smith/Action Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/13/leeds-warrington-super-league-playoff",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-13T19:12:00Z",
-      "webTitle":"Leeds aiming for another Grand Final, says Jamie Jones-Buchanan",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/13/leeds-warrington-super-league-playoff",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/13/leeds-warrington-super-league-playoff",
-      "fields":{
-        "trailText":"<p>Leeds Rhinos, the defending champions, have a Grand Final rematch against Warrington with the winner earning a week off in the Super League play-offs</p>",
-        "headline":"Leeds Rhinos aiming for another Grand Final, says Jamie Jones-Buchanan",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tnv8",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/13/1379096765241/Jamie-Jones-Buchanan-003.jpg",
-        "wordcount":"536",
+        "trailText":"Leeds. having held the trophy since 2011 and for five of the last six seasons, were beaten in the Super League semi-finals by Wigan",
+        "headline":"Wigan battle past Leeds to reach Super League Grand Final",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j5mk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312422466/Wigan-Warriors-v-Leeds-Rh-003.jpg",
+        "wordcount":"764",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1697,6 +709,15 @@
         "webTitle":"Super League XVIII",
         "webUrl":"http://www.theguardian.com/sport/super-league-xviii",
         "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/wiganwarriors",
+        "type":"keyword",
+        "webTitle":"Wigan Warriors",
+        "webUrl":"http://www.theguardian.com/sport/wiganwarriors",
+        "apiUrl":"http://content.guardianapis.com/sport/wiganwarriors",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -1710,20 +731,20 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
         "id":"sport/superleague",
         "type":"keyword",
         "webTitle":"Super League",
         "webUrl":"http://www.theguardian.com/sport/superleague",
         "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -1737,38 +758,22 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/warrington",
-        "type":"keyword",
-        "webTitle":"Warrington",
-        "webUrl":"http://www.theguardian.com/sport/warrington",
-        "apiUrl":"http://content.guardianapis.com/sport/warrington",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sthelens",
-        "type":"keyword",
-        "webTitle":"St Helens",
-        "webUrl":"http://www.theguardian.com/sport/sthelens",
-        "apiUrl":"http://content.guardianapis.com/sport/sthelens",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/hullkr",
-        "type":"keyword",
-        "webTitle":"Hull KR",
-        "webUrl":"http://www.theguardian.com/sport/hullkr",
-        "apiUrl":"http://content.guardianapis.com/sport/hullkr",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/news",
+        "id":"tone/matchreports",
         "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
         "references":[]
       },{
         "id":"theguardian/sport/news",
@@ -1806,58 +811,342 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417256428",
+        "id":"gu-image-418507940",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/13/1379096772288/Jamie-Jones-Buchanan-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312419787/Wigan-Warriors-v-Leeds-Rh-001.jpg",
           "typeData":{
             "source":"Getty Images",
-            "photographer":"Alex Livesey",
-            "altText":"Jamie Jones-Buchanan",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
+            "height":"54",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at DW Stadium. Photograph: Gareth Copley/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312421195/Wigan-Warriors-v-Leeds-Rh-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
+            "height":"130",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at DW Stadium. Photograph: Gareth Copley/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312422466/Wigan-Warriors-v-Leeds-Rh-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
+            "height":"84",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at DW Stadium. Photograph: Gareth Copley/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312423759/Wigan-Warriors-v-Leeds-Rh-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
+            "height":"132",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at DW Stadium. Photograph: Gareth Copley/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312425006/Wigan-Warriors-v-Leeds-Rh-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
+            "height":"168",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at DW Stadium. Photograph: Gareth Copley/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312426376/Wigan-Warriors-v-Leeds-Rh-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
+            "height":"180",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at DW Stadium. Photograph: Gareth Copley/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312427704/Wigan-Warriors-v-Leeds-Rh-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
+            "height":"228",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at DW Stadium. Photograph: Gareth Copley/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312428989/Wigan-Warriors-v-Leeds-Rh-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
             "height":"276",
-            "credit":"Alex Livesey/Getty Images",
-            "caption":"Jamie Jones-Buchanan is a key part of the Leeds side that take on Warrington in the Super League play-offs. Photograph: Alex Livesey/Getty Images",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at DW Stadium. Photograph: Gareth Copley/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312428989/Wigan-Warriors-v-Leeds-Rh-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
+            "height":"276",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at the DW Stadium. Photograph: Gareth Copley/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417256429",
+        "id":"gu-image-418507941",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/13/1379096765241/Jamie-Jones-Buchanan-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312422466/Wigan-Warriors-v-Leeds-Rh-003.jpg",
           "typeData":{
             "source":"Getty Images",
-            "photographer":"Alex Livesey",
-            "altText":"Jamie Jones-Buchanan",
+            "photographer":"Gareth Copley",
+            "altText":"Wigan Warriors v Leeds Rhinos",
             "height":"84",
-            "credit":"Alex Livesey/Getty Images",
-            "caption":"Jamie Jones-Buchanan is key part of the Leeds Rhinos side that take on Warrington Wolves in the Super League playoffs. Photograph: Alex Livesey/Getty Images",
+            "credit":"Gareth Copley/Getty Images",
+            "caption":"Sam Tomkins of Wigan looks to get past Kylie Leuluai of Leeds at DW Stadium. Photograph: Gareth Copley/Getty Images",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/13/south-sydney-rabbitohs-melbourne-nrl-match-report",
+      "id":"sport/2013/sep/27/danny-brough-scotland-captain-world-cup",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-13T12:15:28Z",
-      "webTitle":"South Sydney Rabbitohs 20-10 Melbourne Storm | NRL match report",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/13/south-sydney-rabbitohs-melbourne-nrl-match-report",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/13/south-sydney-rabbitohs-melbourne-nrl-match-report",
+      "webPublicationDate":"2013-09-27T16:36:01Z",
+      "webTitle":"Huddersfield's Danny Brough to be Scotland's captain in World Cup",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/27/danny-brough-scotland-captain-world-cup",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/27/danny-brough-scotland-captain-world-cup",
       "fields":{
-        "trailText":"<p>South Sydney are one win away from the grand final after some staunch defence delivered victory over Melbourne</p>",
-        "headline":"Rabbitohs down Storm to edge closer to NRL grand final",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tme4",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/13/1379073118127/Sam-Burgess-of-the-Rabbit-003.jpg",
-        "wordcount":"442",
+        "trailText":"Danny Brough, the Huddersfield half-back, will captain Scotland in the upcoming World Cup",
+        "headline":"Huddersfield's Danny Brough to be Scotland's captain in World Cup",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j5t8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380299469503/Danny-Brough-003.jpg",
+        "wordcount":"540",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/rugby-league-world-cup-2013",
+        "type":"keyword",
+        "webTitle":"Rugby League World Cup 2013",
+        "webUrl":"http://www.theguardian.com/sport/rugby-league-world-cup-2013",
+        "apiUrl":"http://content.guardianapis.com/sport/rugby-league-world-cup-2013",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/scotland-rugby-league-team",
+        "type":"keyword",
+        "webTitle":"Scotland rugby league team",
+        "webUrl":"http://www.theguardian.com/sport/scotland-rugby-league-team",
+        "apiUrl":"http://content.guardianapis.com/sport/scotland-rugby-league-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/huddersfieldgiants",
+        "type":"keyword",
+        "webTitle":"Huddersfield Giants",
+        "webUrl":"http://www.theguardian.com/sport/huddersfieldgiants",
+        "apiUrl":"http://content.guardianapis.com/sport/huddersfieldgiants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.theguardian.com/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.theguardian.com/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"sport/rugbyleagueworldcup2008",
+        "type":"keyword",
+        "webTitle":"Rugby league World Cup 2008",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleagueworldcup2008",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleagueworldcup2008",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418487558",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380299475916/Danny-Brough-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Danny Brough",
+            "height":"276",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Danny Brough, the Huddersfield Giants half-back, will lead Scotland in the upcoming World Cup.  Photograph: Anna Gowthorpe/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418487559",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380299469503/Danny-Brough-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Anna Gowthorpe",
+            "altText":"Danny Brough",
+            "height":"84",
+            "credit":"Anna Gowthorpe/PA",
+            "caption":"Danny Brough, the Huddersfield Giants half-back, will lead Scotland in the upcoming World Cup.  Photograph: Anna Gowthorpe/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/27/manly-sea-eagles-south-sydney-rabbitohs",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-27T12:22:52Z",
+      "webTitle":"South Sydney Rabbitohs 20-30 Manly Sea Eagles | NRL match report",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/27/manly-sea-eagles-south-sydney-rabbitohs",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/27/manly-sea-eagles-south-sydney-rabbitohs",
+      "fields":{
+        "trailText":"<p>Manly are into their fourth grand final in seven years as South Sydney stumbled at the penultimate hurdle for the second straight year</p>",
+        "headline":"Manly scream back to beat Rabbitohs and make grand final",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j58c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380282806044/Manlys-David-Williams-003.jpg",
+        "wordcount":"453",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1870,20 +1159,20 @@
         "sectionName":"Sport",
         "references":[]
       },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
         "id":"sport/south-sydney-rabbitohs",
         "type":"keyword",
         "webTitle":"South Sydney Rabbitohs",
         "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
         "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/melbourne-storm",
-        "type":"keyword",
-        "webTitle":"Melbourne Storm",
-        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
-        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -1915,11 +1204,11 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"tone/matchreports",
+        "id":"tone/news",
         "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
         "references":[]
       },{
         "id":"type/article",
@@ -1930,38 +1219,607 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417216166",
+        "id":"gu-image-418461855",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/13/1379073132703/Sam-Burgess-of-the-Rabbit-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380282820526/Manlys-David-Williams-008.jpg",
           "typeData":{
-            "source":"Mark Nolan",
-            "photographer":"Getty Image",
-            "altText":"Sam Burgess of the Rabbitohs",
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Manly's David Williams",
             "height":"276",
-            "credit":"Getty Image/Mark Nolan",
-            "caption":"Sam Burgess of the Rabbitohs is tackled during his side's victory over Melbourne Storm. Photograph: Getty Image/Mark Nolan",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Manly's David Williams celebrates his try.  Photograph: Dean Lewins/AAP Image",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417216167",
+        "id":"gu-image-418461856",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/13/1379073118127/Sam-Burgess-of-the-Rabbit-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380282806044/Manlys-David-Williams-003.jpg",
           "typeData":{
-            "source":"Mark Nolan",
-            "photographer":"Getty Image",
-            "altText":"Sam Burgess of the Rabbitohs",
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Manly's David Williams",
             "height":"84",
-            "credit":"Getty Image/Mark Nolan",
-            "caption":"Sam Burgess of the Rabbitohs is tackled during his side's victory over Melbourne Storm. Photograph: Getty Image/Mark Nolan",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Manly's David Williams celebrates his try  Photograph: Dean Lewins/AAP Image",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418461857",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380282929628/John-Sutton-of-the-Rabbit-008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"John Sutton of the Rabbitohs",
+            "height":"276",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"A disappointed John Sutton contemplates defeat.  Photograph: Dean Lewins/AAP Image",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/26/nrl-what-to-look-out-for-finals-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-26T22:39:09Z",
+      "webTitle":"NRL: what to look out for this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/26/nrl-what-to-look-out-for-finals-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/26/nrl-what-to-look-out-for-finals-weekend",
+      "fields":{
+        "trailText":"<p><strong>Matt Cleary: </strong>Manly to revel in the hatred; Adam Reynolds to feed off the Burgesses; Roosters to continue as normal</p>",
+        "headline":"NRL: what to look out for this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j4qx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378643058800/Sam-Burgess-001.jpg",
+        "wordcount":"826",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/south-sydney-rabbitohs",
+        "type":"keyword",
+        "webTitle":"South Sydney Rabbitohs",
+        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
+        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/newcastle-knights",
+        "type":"keyword",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/matt-cleary",
+        "type":"contributor",
+        "webTitle":"Matt Cleary",
+        "webUrl":"http://www.theguardian.com/profile/matt-cleary",
+        "apiUrl":"http://content.guardianapis.com/profile/matt-cleary",
+        "bio":"<p>Matt Cleary is a freelance sports journalist from Sydney who contributes to Inside Sport, Inside Cricket, Inside Rugby and several golf and travel magazines who pay him to play golf on holidays. The Australian Golf Writers Association once gave him an award for playing golf in Ireland. Australian Golf Digest paid him to spend four months playing golf on a full lap of Australia. Each week Rugby League Week pays him to drink beer and watch rugby league. Chances are he has a better job than you</p>",
+        "r2ContributorId":"56746",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/30/1369892888173/Matt-Cleary-002.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418396231",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378643071540/Sam-Burgess-006.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Sam Burgess",
+            "height":"276",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Sam Burgess: 'arms like roast porks'.  Photograph: Dean Lewins/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418396232",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378643058800/Sam-Burgess-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Sam Burgess",
+            "height":"84",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Sam Burgess was at the centre of some questionable incidents against the Roosters.  Photograph: Dean Lewins/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/26/warrington-huddersfield-super-league",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-26T21:20:00Z",
+      "webTitle":"Warrington 30-22 Huddersfield | Super League semi-final match report",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/26/warrington-huddersfield-super-league",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/26/warrington-huddersfield-super-league",
+      "fields":{
+        "trailText":"Lee Briers, Warrington's old master, will have another crack at winning Super League's Grand Final after steering Wolves past Huddersfield 30-22",
+        "headline":"Warrington fight off valiant Huddersfield to earn Grand Final tilt",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j4p6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229693781/Simon-Grix-Warrington-Wol-003.jpg",
+        "wordcount":"613",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/super-league-xviii",
+        "type":"keyword",
+        "webTitle":"Super League XVIII",
+        "webUrl":"http://www.theguardian.com/sport/super-league-xviii",
+        "apiUrl":"http://content.guardianapis.com/sport/super-league-xviii",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/superleague",
+        "type":"keyword",
+        "webTitle":"Super League",
+        "webUrl":"http://www.theguardian.com/sport/superleague",
+        "apiUrl":"http://content.guardianapis.com/sport/superleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/warrington",
+        "type":"keyword",
+        "webTitle":"Warrington",
+        "webUrl":"http://www.theguardian.com/sport/warrington",
+        "apiUrl":"http://content.guardianapis.com/sport/warrington",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/huddersfieldgiants",
+        "type":"keyword",
+        "webTitle":"Huddersfield Giants",
+        "webUrl":"http://www.theguardian.com/sport/huddersfieldgiants",
+        "apiUrl":"http://content.guardianapis.com/sport/huddersfieldgiants",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"profile/andywilson",
+        "type":"contributor",
+        "webTitle":"Andy Wilson",
+        "webUrl":"http://www.theguardian.com/profile/andywilson",
+        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
+        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
+        "rcsId":"GNL249938",
+        "r2ContributorId":"15381",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418391629",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229691102/Simon-Grix-Warrington-Wol-001.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"54",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington Wolves\ragainst Huddersfield Giants in the Super League qualifying semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229692770/Simon-Grix-Warrington-Wol-002.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"130",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington Wolves\ragainst Huddersfield Giants in the Super League qualifying semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229693781/Simon-Grix-Warrington-Wol-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"84",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington Wolves\ragainst Huddersfield Giants in the Super League qualifying semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229695162/Simon-Grix-Warrington-Wol-004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"132",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington Wolves\ragainst Huddersfield Giants in the Super League qualifying semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229696179/Simon-Grix-Warrington-Wol-005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"168",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington Wolves\ragainst Huddersfield Giants in the Super League qualifying semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229697330/Simon-Grix-Warrington-Wol-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"180",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington Wolves\ragainst Huddersfield Giants in the Super League qualifying semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229698389/Simon-Grix-Warrington-Wol-007.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"228",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington Wolves\ragainst Huddersfield Giants in the Super League qualifying semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229699417/Simon-Grix-Warrington-Wol-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"276",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington Wolves\ragainst Huddersfield Giants in the Super League qualifying semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229699417/Simon-Grix-Warrington-Wol-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"276",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington against Huddersfield in Thursday's Super League semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418391630",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/26/1380229693781/Simon-Grix-Warrington-Wol-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Ed Sykes",
+            "altText":"Simon Grix Warrington Wolves",
+            "height":"84",
+            "credit":"Ed Sykes/Action Images",
+            "caption":"Simon Grix scores the third try for Warrington Wolves\ragainst Huddersfield Giants in the Super League qualifying semi-final. Photograph: Ed Sykes/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/26/sydney-roosters-rebut-hgh-allegations",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-26T05:10:33Z",
+      "webTitle":"Sydney Roosters rebut human growth hormone allegations",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/26/sydney-roosters-rebut-hgh-allegations",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/26/sydney-roosters-rebut-hgh-allegations",
+      "fields":{
+        "trailText":"<p>The Roosters say they 'have nothing to hide' over claims players recorded elevated human growth hormone readings</p>",
+        "headline":"Sydney Roosters rebut human growth hormone allegations",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j424",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/11/1363000082337/Scientist-filling-test-tu-003.jpg",
+        "wordcount":"305",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/asada",
+        "type":"keyword",
+        "webTitle":"Asada",
+        "webUrl":"http://www.theguardian.com/sport/asada",
+        "apiUrl":"http://content.guardianapis.com/sport/asada",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418291754",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/11/1363000089890/Scientist-filling-test-tu-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"moodboard / Alamy",
+            "altText":"Scientist filling test tubes",
+            "height":"276",
+            "credit":"moodboard / Alamy/Alamy",
+            "caption":"Sydney Roosters say their players have are regularly tested. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418291755",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/11/1363000082337/Scientist-filling-test-tu-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"moodboard / Alamy",
+            "altText":"Scientist filling test tubes",
+            "height":"84",
+            "credit":"moodboard / Alamy/Alamy",
+            "caption":"Nesta's What Works project seeks to build and share an evidence base for social policy. Photograph: moodboard / Alamy/Alamy",
             "width":"140"
           }
         }]

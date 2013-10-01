@@ -260,9 +260,28 @@
         "references":[]
       }],
       "elements":[{
+        "id":"gu-image-403099260",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/27/1359297478375/Nightclub-fire-in-Brazil-005.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"STRINGER/BRAZIL",
+            "altText":"Nightclub fire in Brazil",
+            "height":"84",
+            "credit":"STRINGER/BRAZIL/REUTERS",
+            "caption":"Nightclub fire in Brazil Photograph: STRINGER/BRAZIL/REUTERS",
+            "width":"140"
+          }
+        }]
+      },{
         "id":"gu-image-403097191",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":1,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -281,6 +300,7 @@
         "id":"gu-image-403097193",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":2,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -295,62 +315,10 @@
           }
         }]
       },{
-        "id":"gu-image-403097195",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/27/1359299760633/A-victim-of-the-fire-is-c-004.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Deivid Dutra",
-            "altText":"Rio nightclub: A victim of the fire is carried away from the Kiss nightclub",
-            "height":"480",
-            "credit":"Deivid Dutra/AP",
-            "caption":"A victim of the fire is carried away from the Kiss nightclub",
-            "width":"696"
-          }
-        }]
-      },{
-        "id":"gu-image-403097197",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/27/1359299763136/Brazil-fire-in-a-night-cl-005.jpg",
-          "typeData":{
-            "source":"EPA",
-            "photographer":"Ronald Mendes",
-            "altText":"Rio nightclub: Brazil fire in a night club",
-            "height":"462",
-            "credit":"Ronald Mendes/EPA",
-            "caption":"Relatives of the Kiss nightclub victims are seen comforting each other",
-            "width":"760"
-          }
-        }]
-      },{
-        "id":"gu-image-403097199",
-        "relation":"gallery",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/27/1359299755191/Fire-fighters-attempt-to--002.jpg",
-          "typeData":{
-            "source":"Reuters",
-            "altText":"Rio nightclub: Fire-fighters attempt to extinguish the fire at Kiss nightclub",
-            "height":"480",
-            "credit":"Reuters",
-            "caption":"Firefighters tackle the blaze",
-            "width":"720"
-          }
-        }]
-      },{
         "id":"gu-image-403097201",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":3,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -365,26 +333,28 @@
           }
         }]
       },{
-        "id":"gu-image-403097203",
+        "id":"gu-image-403097199",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":4,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/27/1359299752650/Relatives-of-the-victims--001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/27/1359299755191/Fire-fighters-attempt-to--002.jpg",
           "typeData":{
             "source":"Reuters",
-            "altText":"Rio nightclub: Relatives of the victims arrive at the Kiss nightclub",
+            "altText":"Rio nightclub: Fire-fighters attempt to extinguish the fire at Kiss nightclub",
             "height":"480",
             "credit":"Reuters",
-            "caption":"Distraught relatives of victims arrive at the Kiss nightclub",
-            "width":"710"
+            "caption":"Firefighters tackle the blaze",
+            "width":"720"
           }
         }]
       },{
         "id":"gu-image-403097205",
         "relation":"gallery",
         "type":"image",
+        "galleryIndex":5,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
@@ -400,21 +370,59 @@
           }
         }]
       },{
-        "id":"gu-image-403099260",
-        "relation":"thumbnail",
+        "id":"gu-image-403097195",
+        "relation":"gallery",
         "type":"image",
+        "galleryIndex":6,
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/27/1359297478375/Nightclub-fire-in-Brazil-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/27/1359299760633/A-victim-of-the-fire-is-c-004.jpg",
           "typeData":{
-            "source":"REUTERS",
-            "photographer":"STRINGER/BRAZIL",
-            "altText":"Nightclub fire in Brazil",
-            "height":"84",
-            "credit":"STRINGER/BRAZIL/REUTERS",
-            "caption":"Nightclub fire in Brazil Photograph: STRINGER/BRAZIL/REUTERS",
-            "width":"140"
+            "source":"AP",
+            "photographer":"Deivid Dutra",
+            "altText":"Rio nightclub: A victim of the fire is carried away from the Kiss nightclub",
+            "height":"480",
+            "credit":"Deivid Dutra/AP",
+            "caption":"A victim of the fire is carried away from the Kiss nightclub",
+            "width":"696"
+          }
+        }]
+      },{
+        "id":"gu-image-403097203",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/27/1359299752650/Relatives-of-the-victims--001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "altText":"Rio nightclub: Relatives of the victims arrive at the Kiss nightclub",
+            "height":"480",
+            "credit":"Reuters",
+            "caption":"Distraught relatives of victims arrive at the Kiss nightclub",
+            "width":"710"
+          }
+        }]
+      },{
+        "id":"gu-image-403097197",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/27/1359299763136/Brazil-fire-in-a-night-cl-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Ronald Mendes",
+            "altText":"Rio nightclub: Brazil fire in a night club",
+            "height":"462",
+            "credit":"Ronald Mendes/EPA",
+            "caption":"Relatives of the Kiss nightclub victims are seen comforting each other",
+            "width":"760"
           }
         }]
       }],

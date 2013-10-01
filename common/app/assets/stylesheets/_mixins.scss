@@ -60,7 +60,7 @@
 
     @if $size-only == false {
         font-family: $serif;
-        -webkit-font-smoothing: subpixel-antialiased;
+        -webkit-font-smoothing: antialiased;
         text-rendering: optimizeSpeed;
     }
 }
@@ -72,7 +72,7 @@
 
     @if $size-only == false {
         font-family: $sans-serif;
-        -webkit-font-smoothing: subpixel-antialiased;
+        -webkit-font-smoothing: antialiased;
         text-rendering: optimizeSpeed;
     }
 }
@@ -106,14 +106,12 @@
 @mixin animation($args) {
     -webkit-animation: $args;
     -moz-animation: $args;
-    -ms-animation: $args;
     animation: $args;
 }
 
 @mixin keyframes($name) {
     @-webkit-keyframes $name { @content; }
     @-moz-keyframes $name { @content; }
-    @-ms-keyframes $name { @content; }
     @keyframes $name { @content; }
 }
 

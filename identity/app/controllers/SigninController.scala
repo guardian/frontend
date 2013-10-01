@@ -9,11 +9,10 @@ import services.{PlaySigninService, IdentityUrlBuilder, IdRequestParser, ReturnU
 import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
 import play.api.i18n.Messages
-import play.api.data.FormError
 import idapiclient.EmailPassword
 import utils.SafeLogging
 import form.Mappings.{idEmail, idPassword}
-import client.Error
+import scala.concurrent.Future
 
 
 @Singleton
@@ -24,7 +23,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                  signInService : PlaySigninService)
   extends Controller with ExecutionContexts with SafeLogging {
 
-  val page = new IdentityPage("/signin", "Sign in", "signin")
+  val page = IdentityPage("/signin", "Sign in", "signin")
 
   val form = Form(
     Forms.tuple(
@@ -43,38 +42,41 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     Ok(views.html.signin(page, idRequest, idUrlBuilder, filledForm))
   }
 
-  def processForm = Action { implicit request =>
+  def processForm = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = form.bindFromRequest
-    boundForm.fold(
-      formWithErrors => {
-        logger.info("Invalid login form submission")
+
+    def onError(formWithErrors: Form[(String, String, Boolean)]): Future[SimpleResult] = {
+      logger.info("Invalid login form submission")
+      Future {
         Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
-      },
-      { case (email, password, rememberMe) => {
+      }
+    }
+
+    def onSuccess(form: (String, String, Boolean)): Future[SimpleResult] = form match {
+      case (email, password, rememberMe) =>
         logger.trace("authing with ID API")
-        Async {
-          val authResponse = api.authBrowser(EmailPassword(email, password), idRequest.omnitureData)
-          signInService.getCookies(  authResponse, rememberMe ) map(_ match {
-            case Left(errors) => {
-              logger.error(errors.toString())
-              logger.info(s"Auth failed for user, ${errors.toString()}")
-              val formWithErrors = errors.foldLeft(boundForm) { (formFold, error) =>
-                val errorMessage =
-                  if ("Invalid email or password" == error.message) Messages("error.login")
-                  else error.description
-                formFold.withError(error.context.getOrElse(""), errorMessage)
-              }
-              Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
+        val authResponse = api.authBrowser(EmailPassword(email, password), idRequest.omnitureData)
+        signInService.getCookies(authResponse, rememberMe) map {
+          case Left(errors) => {
+            logger.error(errors.toString())
+            logger.info(s"Auth failed for user, ${errors.toString()}")
+            val formWithErrors = errors.foldLeft(boundForm) { (formFold, error) =>
+              val errorMessage =
+                if ("Invalid email or password" == error.message) Messages("error.login")
+                else error.description
+              formFold.withError(error.context.getOrElse(""), errorMessage)
             }
-            case Right(responseCookies) => {
-              logger.trace("Logging user in")
-              SeeOther(returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl))
-                .withCookies(responseCookies:_*)
-            }
-          })
+            Ok(views.html.signin(page, idRequest, idUrlBuilder, formWithErrors))
+          }
+          case Right(responseCookies) => {
+            logger.trace("Logging user in")
+            SeeOther(returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl))
+              .withCookies(responseCookies:_*)
+          }
         }
-      }}
-    )
+    }
+
+    boundForm.fold[Future[SimpleResult]](onError, onSuccess)
   }
 }

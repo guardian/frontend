@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import feed.Competitions
@@ -12,7 +12,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
     .find(_.id == competitionId)
     .filter(_.hasLeagueTable)
     .map { Table(_).topOfTableSnippet }
-    .filterNot(_.multiGroup) //Ensures eurpoean cups don't come through
+    .filterNot(_.multiGroup) //Ensures European cups don't come through
 
   private def loadTableWithTeam(teamId: String): Option[Table] = Competitions.withTeam(teamId)
     .competitions
@@ -29,9 +29,10 @@ object CompetitionTablesController extends Controller with Logging with Competit
         val html = () => football.views.html.fragments.frontTableBlock(table)
         renderFormat(html, html, 60)
       }.getOrElse(Cached(600)(NoContent))
-    } getOrElse (BadRequest("need a competition id"))
+    } getOrElse BadRequest("need a competition id")
   }
 
+  def renderTeamJson(teamId: String) = renderTeam(teamId)
   def renderTeam(teamId: String) = Action { implicit request =>
     loadTableWithTeam(teamId).map { table =>
       val html = () => football.views.html.fragments.frontTableBlock(table, Some(teamId))

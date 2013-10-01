@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import model._
@@ -10,21 +10,19 @@ object CompetitionListController extends Controller with CompetitionListFilters 
 
   val page = Page("football/competitions", "football", "Leagues & competitions", "GFE:Football:automatic:Leagues & competitions")
 
-  def renderJson() = render()
-  def render = Action { implicit request =>
+  val competitionList = List(
+    "English",
+    "European",
+    "Scottish",
+    "Internationals",
+    "Rest of world"
+  )
 
-    val competitionList = List(
-      "English",
-      "European",
-      "Scottish",
-      "Internationals",
-      "Rest of world"
-    )
-    
+  def renderCompetitionListJson() = renderCompetitionList()
+  def renderCompetitionList() = Action { implicit request =>
     val htmlResponse = () => football.views.html.competitions(filters, page, competitionList)
     val jsonResponse = () => football.views.html.fragments.competitionsBody(filters, page, competitionList)
-    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
-    
-  }
 
+    renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+  }
 }

@@ -3,16 +3,20 @@ define([
     'common',
     'bonzo',
     //Modules
-    'modules/facia-popular',
-    'modules/facia-relativise-timestamp',
-    'modules/facia-items-show-more',
+    'modules/detect',
+    'modules/facia/popular',
+    'modules/facia/relativise-timestamp',
+    'modules/facia/items-show-more',
+    'modules/facia/collection-display-toggle',
     'modules/footballfixtures'
 ], function (
     common,
     bonzo,
+    detect,
     popular,
     RelativiseTimestamp,
     ItemsShowMore,
+    CollectionDisplayToggle,
     FootballFixtures
 ) {
 
@@ -44,21 +48,27 @@ define([
 
         showFootballFixtures: function(path) {
             common.mediator.on('page:front:ready', function(config, context) {
-                if (config.page.edition === 'UK' && config.page.pageId === "") {
+                if (config.page.edition === 'UK' && (config.page.pageId === "" || config.page.pageId === "sport")) {
                     // wrap the return sports stats component in an 'item'
                     var $statsItem = bonzo(bonzo.create('<li class="item item--sport-stats"></li>'));
                     common.mediator.on('modules:footballfixtures:render', function() {
                         // only show 7 rows
                         common.$g('.match:nth-child(n + 8)', $statsItem)
                             .addClass('u-h');
-                        // add it adter the first item
-                        common.$g('.collection--news.collection--sport-section .item:first-child', context)
+                        // toggle class
+                        common.$g('.collection--sport-section .items')
+                            .removeClass('items--without-sport-stats')
+                            .addClass('items--with-sport-stats');
+                        // add it after the first item
+                        common.$g('.collection--sport-section .item:first-child', context)
                             .after($statsItem);
-                        // now hide one of the shown ones
-                        common.$g('.collection--news.collection--sport-section .item.u-h', context)
-                            .first()
-                            .previous()
-                            .addClass('u-h');
+                        // now hide one of the shown ones (but not on mobile)
+                        if (detect.getBreakpoint() !== 'mobile') {
+                            common.$g('.collection--sport-section .item.u-h', context)
+                                .first()
+                                .previous()
+                                .addClass('u-h');
+                        }
                     });
                     new FootballFixtures({
                         prependTo: $statsItem,
@@ -68,6 +78,15 @@ define([
                         expandable: false
                     }).init();
                 }
+            });
+        },
+
+        showCollectionDisplayToggle: function () {
+            common.mediator.on('page:front:ready', function(config, context) {
+                common.$g('.js-collection--display-toggle', context).each(function(collection) {
+                    new CollectionDisplayToggle(collection, config)
+                        .addToggle();
+                });
             });
         }
 
@@ -80,6 +99,7 @@ define([
             modules.relativiseTimestamps();
             modules.showItemsShowMore();
             modules.showFootballFixtures();
+            modules.showCollectionDisplayToggle();
         }
         common.mediator.emit("page:front:ready", config, context);
     };

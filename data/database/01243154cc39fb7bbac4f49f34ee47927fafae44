@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":13650,
+    "total":13692,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
-    "pages":1365,
+    "pages":1370,
     "orderBy":"newest",
     "tag":{
       "id":"sport/horse-racing",
@@ -19,533 +19,20 @@
       "references":[]
     },
     "results":[{
-      "id":"sport/2013/sep/16/racing-sir-henry-cecil-memorial",
+      "id":"sport/blog/2013/sep/30/live-horse-racing-september-30-2013",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-16T18:34:00Z",
-      "webTitle":"Racing industry pays its respects at Sir Henry Cecil memorial",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/16/racing-sir-henry-cecil-memorial",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/16/racing-sir-henry-cecil-memorial",
+      "webPublicationDate":"2013-09-30T10:43:39Z",
+      "webTitle":"Talking Horses: Hamilton tips in our daily horse racing blog",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/30/live-horse-racing-september-30-2013",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/30/live-horse-racing-september-30-2013",
       "fields":{
-        "trailText":"<p>Over a thousand people attended the memorial service for Sir Henry Cecil at Ely Cathedral</p>",
-        "headline":"Racing industry pays its respects at Sir Henry Cecil memorial",
+        "trailText":"<strong>Tony Paley:</strong> Join the discussion on our blog and enter our tipping competition for the chance to win new Felix Francis book",
+        "headline":"Talking Horses: Hamilton tips in our daily horse racing blog",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tz8g",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379352637526/Henry-Cecil-Memorial-003.jpg",
-        "wordcount":"728",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/henry-cecil",
-        "type":"keyword",
-        "webTitle":"Sir Henry Cecil",
-        "webUrl":"http://www.theguardian.com/sport/henry-cecil",
-        "apiUrl":"http://content.guardianapis.com/sport/henry-cecil",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/frankel",
-        "type":"keyword",
-        "webTitle":"Frankel",
-        "webUrl":"http://www.theguardian.com/sport/frankel",
-        "apiUrl":"http://content.guardianapis.com/sport/frankel",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/gregwood",
-        "type":"contributor",
-        "webTitle":"Greg Wood",
-        "webUrl":"http://www.theguardian.com/profile/gregwood",
-        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
-        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
-        "rcsId":"GNL004789",
-        "r2ContributorId":"15683",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417445424",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379352646107/Henry-Cecil-Memorial-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Henry Cecil Memorial",
-            "height":"276",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Mourners gather at the trainer Sir Henry Cecil's memorial service at Ely Cathedral on Monday. Photograph: Alan Crowhurst/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417445425",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379352637526/Henry-Cecil-Memorial-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Henry Cecil Memorial",
-            "height":"84",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Mourners gather at trainer Sir Henry Cecil's memorial service at Ely Cathedral on Monday. Photograph: Alan Crowhurst/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/16/paul-bittar-blanket-ban-steroids",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-16T18:10:00Z",
-      "webTitle":"Paul Bittar to investigate blanket ban on steroids in British racing",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/16/paul-bittar-blanket-ban-steroids",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/16/paul-bittar-blanket-ban-steroids",
-      "fields":{
-        "trailText":"The British Horseracing Authority was taken by surprise by Australia's move for a blanket ban on the use of anabolic steroids in horses in and out of competition",
-        "headline":"Paul Bittar to investigate blanket ban on steroids in British racing",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tz6p",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379349090348/Paul-Bittar-003.jpg",
-        "wordcount":"738",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/british-horseracing-authority",
-        "type":"keyword",
-        "webTitle":"British Horseracing Authority",
-        "webUrl":"http://www.theguardian.com/sport/british-horseracing-authority",
-        "apiUrl":"http://content.guardianapis.com/sport/british-horseracing-authority",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/drugs-in-sport",
-        "type":"keyword",
-        "webTitle":"Drugs in sport",
-        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/gregwood",
-        "type":"contributor",
-        "webTitle":"Greg Wood",
-        "webUrl":"http://www.theguardian.com/profile/gregwood",
-        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
-        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
-        "rcsId":"GNL004789",
-        "r2ContributorId":"15683",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417437474",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379349098794/Paul-Bittar-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Paul Bittar",
-            "height":"276",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Paul Bittar, chief executive of the British Horseracing Authority, was taken by surprise by Australian announcement. Photograph: Alan Crowhurst/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417437475",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379349090348/Paul-Bittar-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Paul Bittar",
-            "height":"84",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Paul Bittar, chief executive of the British Horseracing Authority, xxxx Photograph: Alan Crowhurst/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/16/horse-racing-tips-tuesday-17-september",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-16T15:05:51Z",
-      "webTitle":"Horse racing tips: Tuesday 17 September",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/16/horse-racing-tips-tuesday-17-september",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/16/horse-racing-tips-tuesday-17-september",
-      "fields":{
-        "trailText":"<strong>Tuesday tips:</strong> Rutherglen at Chepstow is the best bet of the day",
-        "headline":"Horse racing tips: Tuesday 17 September",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tz38",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/5/24/1306232894576/Chepstow-003.jpg",
-        "wordcount":"78",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/horse-racing-tips",
-        "type":"keyword",
-        "webTitle":"Horse racing tips",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing-tips",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing-tips",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/gregwood",
-        "type":"contributor",
-        "webTitle":"Greg Wood",
-        "webUrl":"http://www.theguardian.com/profile/gregwood",
-        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
-        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
-        "rcsId":"GNL004789",
-        "r2ContributorId":"15683",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417420852",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/5/24/1306232899663/Chepstow-007.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Chepstow",
-            "height":"276",
-            "credit":"David Davies/PA",
-            "caption":"They race on Tuesday at Chepstow, above, where Rutherglen appeals in the 4.50 race. Photograph: David Davies/PA",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417420853",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/5/24/1306232894576/Chepstow-003.jpg",
-          "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Chepstow",
-            "height":"84",
-            "credit":"David Davies/PA",
-            "caption":"Kepler's Law appeals as a value bet when stepped up significantly in distance at Chepstow, above, today. Photograph: David Davies/PA",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/16/australian-racing-ban-steroids",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-16T11:42:07Z",
-      "webTitle":"Australian Racing Board announces complete ban on anabolic steroids",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/16/australian-racing-ban-steroids",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/16/australian-racing-ban-steroids",
-      "fields":{
-        "trailText":"Strict new rules regarding the use of anabolic steroids in Australia are likely to prove controversial with some racehorse trainers",
-        "headline":"Australian Racing Board announces complete ban on anabolic steroids",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tnzv",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/20/1369059955022/Mahmood-Al-Zarooni-003.jpg",
-        "wordcount":"471",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/drugs-in-sport",
-        "type":"keyword",
-        "webTitle":"Drugs in sport",
-        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/godolphin",
-        "type":"keyword",
-        "webTitle":"Godolphin",
-        "webUrl":"http://www.theguardian.com/sport/godolphin",
-        "apiUrl":"http://content.guardianapis.com/sport/godolphin",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "type":"keyword",
-        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
-        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/gregwood",
-        "type":"contributor",
-        "webTitle":"Greg Wood",
-        "webUrl":"http://www.theguardian.com/profile/gregwood",
-        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
-        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
-        "rcsId":"GNL004789",
-        "r2ContributorId":"15683",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417395913",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/20/1369059961022/Mahmood-Al-Zarooni-008.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Kirsty Wigglesworth",
-            "altText":"Mahmood Al Zarooni",
-            "height":"276",
-            "credit":"Kirsty Wigglesworth/AP",
-            "caption":"Differing attitudes to the use of steroids were highlighted as a result of the Godolphin drugs scandal involving Mahmood al-Zarooni. Photograph: Kirsty Wigglesworth/AP",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417395914",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/20/1369059955022/Mahmood-Al-Zarooni-003.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Kirsty Wigglesworth",
-            "altText":"Mahmood Al Zarooni",
-            "height":"84",
-            "credit":"Kirsty Wigglesworth/AP",
-            "caption":"Mahmood al-Zarooni leaves a hearing at the British Horseracing Authority in late April, when he was given an eight-year worldwide ban. Photograph: Kirsty Wigglesworth/AP",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/blog/2013/sep/16/live-horse-racing-september-16-2013",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-16T11:14:16Z",
-      "webTitle":"Talking Horses: Brighton tips in our daily horse racing blog",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/16/live-horse-racing-september-16-2013",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/16/live-horse-racing-september-16-2013",
-      "fields":{
-        "trailText":"<strong>Tony Paley:</strong> Join the discussion on our blog and enter our tipping competition for the chance to win a £25 bet",
-        "headline":"Talking Horses: Brighton tips in our daily horse racing blog",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tnmy",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/9/12/1315826137834/A-lone-racehorse-on-Brigh-003.jpg",
-        "wordcount":"226",
+        "shortUrl":"http://gu.com/p/3j6ee",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/4/30/1367314969431/Bath-003.jpg",
+        "wordcount":"310",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -620,79 +107,61 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417392247",
+        "id":"gu-image-418626893",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/9/12/1315826141544/A-lone-racehorse-on-Brigh-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/4/30/1367314976251/Bath-008.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":"Frank Baron",
-            "altText":"A lone racehorse on Brighton racecourse, far from the stands",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Bath",
             "height":"276",
-            "credit":"Frank Baron/Guardian",
-            "caption":"They race on Monday at Brighton, above, where Silvee makes plenty of appeal in the 4.50 race. Photograph: Frank Baron for the Guardian",
+            "credit":"David Davies/PA",
+            "caption":"They race on Monday at Bath, above, where Tioga Pass (2.30) appeals in the second race on the card. Photograph: David Davies/PA",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417392248",
+        "id":"gu-image-418626894",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/9/12/1315826137834/A-lone-racehorse-on-Brigh-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/4/30/1367314969431/Bath-003.jpg",
           "typeData":{
-            "source":"Guardian",
-            "photographer":"Frank Baron",
-            "altText":"A lone racehorse on Brighton racecourse, far from the stands",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Bath",
             "height":"84",
-            "credit":"Frank Baron/Guardian",
-            "caption":"The hilltop course at Brighton will be windy and unwelcoming today, even if racing goes ahead. Photograph: Frank Baron for the Guardian",
+            "credit":"David Davies/PA",
+            "caption":"They race on Tuesday at Bath, above, where Marishi Ten (2.20) appeals in the first race on the card. Photograph: David Davies/PA",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/15/frankie-dettori-treve-longchamp-arc-trials",
+      "id":"sport/2013/sep/30/godolphin-stable-drug-seizure",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-15T20:44:00Z",
-      "webTitle":"Frankie Dettori leaps for joy after Longchamp win brings Arc into view",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/15/frankie-dettori-treve-longchamp-arc-trials",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/15/frankie-dettori-treve-longchamp-arc-trials",
+      "webPublicationDate":"2013-09-29T23:33:39Z",
+      "webTitle":"Godolphin stable orders inquiry into drug seizure",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/30/godolphin-stable-drug-seizure",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/30/godolphin-stable-drug-seizure",
       "fields":{
-        "trailText":"Frankie Dettori claimed his first Group One success since his drugs ban when Treve won the Prix Vermeille impressively",
-        "headline":"Frankie Dettori leaps for joy after Longchamp win brings Arc into view",
+        "trailText":"Thousands of pounds worth of anaesthetics, anti-inflammatories, sedatives and bute seized and destroyed at Stansted on 3 May",
+        "headline":"Godolphin stable orders inquiry into drug seizure",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tna8",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261551377/Frankie-Dettori-celebrate-003.jpg",
-        "wordcount":"526",
+        "shortUrl":"http://gu.com/p/3j69v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497582798/Sheikh-Mohammed-bin-Rashi-005.jpg",
+        "wordcount":"354",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"sport/frankie-dettori",
-        "type":"keyword",
-        "webTitle":"Frankie Dettori",
-        "webUrl":"http://www.theguardian.com/sport/frankie-dettori",
-        "apiUrl":"http://content.guardianapis.com/sport/frankie-dettori",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/prix-de-larc-de-triomphe",
-        "type":"keyword",
-        "webTitle":"Prix de l'Arc de Triomphe",
-        "webUrl":"http://www.theguardian.com/sport/prix-de-larc-de-triomphe",
-        "apiUrl":"http://content.guardianapis.com/sport/prix-de-larc-de-triomphe",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
         "id":"sport/horse-racing",
         "type":"keyword",
         "webTitle":"Horse racing",
@@ -711,11 +180,358 @@
         "sectionName":"Sport",
         "references":[]
       },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
         "id":"tone/news",
         "type":"tone",
         "webTitle":"News",
         "webUrl":"http://www.theguardian.com/tone/news",
         "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "type":"keyword",
+        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
+        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/godolphin",
+        "type":"keyword",
+        "webTitle":"Godolphin",
+        "webUrl":"http://www.theguardian.com/sport/godolphin",
+        "apiUrl":"http://content.guardianapis.com/sport/godolphin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418592151",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497578497/Sheikh-Mohammed-bin-Rashi-002.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"54",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497579960/Sheikh-Mohammed-bin-Rashi-003.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"340",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497581281/Sheikh-Mohammed-bin-Rashi-004.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"130",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497582798/Sheikh-Mohammed-bin-Rashi-005.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"84",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497583978/Sheikh-Mohammed-bin-Rashi-006.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"132",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497585075/Sheikh-Mohammed-bin-Rashi-007.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"168",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497587013/Sheikh-Mohammed-bin-Rashi-008.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"180",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497588535/Sheikh-Mohammed-bin-Rashi-009.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"228",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497589857/Sheikh-Mohammed-bin-Rashi-010.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"276",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497591043/Sheikh-Mohammed-bin-Rashi-011.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"372",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497589857/Sheikh-Mohammed-bin-Rashi-010.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"276",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418592152",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/30/1380497582798/Sheikh-Mohammed-bin-Rashi-005.jpg",
+          "typeData":{
+            "source":"Reutesr",
+            "photographer":"Caren Firouz",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"84",
+            "credit":"Caren Firouz/Reutesr",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum attends the World Equestrian Games in Lexington, Kentucky, in 2010.  Photograph: Caren Firouz/Reutesr",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/29/bha-sheikh-mohammed-drugs",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-29T21:24:00Z",
+      "webTitle":"BHA too quick to insist drug seizure has nothing to do with racing | Greg Wood",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/29/bha-sheikh-mohammed-drugs",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/29/bha-sheikh-mohammed-drugs",
+      "fields":{
+        "trailText":"<strong>Greg Wood:</strong> Racing's governing body must investigate further any possible links with Sheikh Mohammed's endurance operation and his thoroughbreds",
+        "headline":"BHA is too quick to insist drug seizures nothing to do with racing",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j65g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472716424/Latest-drug-seizure-highl-003.jpg",
+        "wordcount":"863",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "type":"keyword",
+        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
+        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/godolphin",
+        "type":"keyword",
+        "webTitle":"Godolphin",
+        "webUrl":"http://www.theguardian.com/sport/godolphin",
+        "apiUrl":"http://content.guardianapis.com/sport/godolphin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/british-horseracing-authority",
+        "type":"keyword",
+        "webTitle":"British Horseracing Authority",
+        "webUrl":"http://www.theguardian.com/sport/british-horseracing-authority",
+        "apiUrl":"http://content.guardianapis.com/sport/british-horseracing-authority",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/gregwood",
+        "type":"contributor",
+        "webTitle":"Greg Wood",
+        "webUrl":"http://www.theguardian.com/profile/gregwood",
+        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
+        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
+        "rcsId":"GNL004789",
+        "r2ContributorId":"15683",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
         "references":[]
       },{
         "id":"theguardian/sport/news",
@@ -753,162 +569,670 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417336113",
+        "id":"gu-image-418572116",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261547460/Frankie-Dettori-celebrate-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472713124/Latest-drug-seizure-highl-001.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"54",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261549565/Frankie-Dettori-celebrate-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472715234/Latest-drug-seizure-highl-002.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"130",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261551377/Frankie-Dettori-celebrate-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472716424/Latest-drug-seizure-highl-003.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"84",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261553003/Frankie-Dettori-celebrate-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472717421/Latest-drug-seizure-highl-004.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"132",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261554687/Frankie-Dettori-celebrate-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472718458/Latest-drug-seizure-highl-005.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"168",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261556610/Frankie-Dettori-celebrate-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472719499/Latest-drug-seizure-highl-006.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"180",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261558517/Frankie-Dettori-celebrate-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472720513/Latest-drug-seizure-highl-007.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"228",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261560352/Frankie-Dettori-celebrate-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472721560/Latest-drug-seizure-highl-008.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"276",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261560352/Frankie-Dettori-celebrate-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472721560/Latest-drug-seizure-highl-008.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"276",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drugs seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417336114",
+        "id":"gu-image-418572117",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379261551377/Frankie-Dettori-celebrate-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380472716424/Latest-drug-seizure-highl-003.jpg",
           "typeData":{
-            "source":"Getty Images",
-            "photographer":"Alan Crowhurst",
-            "altText":"Frankie Dettori celebrates in the winner's enclosure after riding Treve at Longchamp",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation",
             "height":"84",
-            "credit":"Alan Crowhurst/Getty Images",
-            "caption":"Frankie Dettori celebrates in the winner's enclosure after riding Treve in the Qatar Prix Vermeille at Longchamp.  Photograph: Alan Crowhurst/Getty Images",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Latest drug seizure highlights the accountability of Sheikh Mohammed's endurance horse operation. Photograph: Julian Herbert/Action Images",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/15/horse-racing-tips-monday",
+      "id":"sport/2013/sep/29/sheikh-mohammed-grim-year-godolphin",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-15T17:00:01Z",
-      "webTitle":"Horse racing tips: Monday 16 September",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/15/horse-racing-tips-monday",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/15/horse-racing-tips-monday",
+      "webPublicationDate":"2013-09-29T18:14:00Z",
+      "webTitle":"Sheikh Mohammed hit by new blow in grim year for Godolphin ruler",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/29/sheikh-mohammed-grim-year-godolphin",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/29/sheikh-mohammed-grim-year-godolphin",
       "fields":{
-        "trailText":"Ambitious Boy (Wolverhampton 4.30) won cosily at Haydock and will not be put out by a 5lb rise and an extra furlong",
-        "headline":"Horse racing tips: Monday 16 September",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tn7g",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255942064/In-Brightons-second-race--003.jpg",
-        "wordcount":"53",
+        "trailText":"Sheikh Mohammed has been rocked by a series of doping revelations centred on the disgraced trainer Mahmood al-Zarooni",
+        "headline":"Sheikh Mohammed hit by new blow in grim year for Godolphin ruler",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j675",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477006572/Mahmood-al-Zarooni-centre-003.jpg",
+        "wordcount":"856",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "type":"keyword",
+        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
+        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/godolphin",
+        "type":"keyword",
+        "webTitle":"Godolphin",
+        "webUrl":"http://www.theguardian.com/sport/godolphin",
+        "apiUrl":"http://content.guardianapis.com/sport/godolphin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418577700",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477004644/Mahmood-al-Zarooni-centre-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing",
+            "height":"130",
+            "credit":"Andy Rain/EPA",
+            "caption":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing following his ban.  Photograph: Andy Rain/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477006572/Mahmood-al-Zarooni-centre-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing",
+            "height":"84",
+            "credit":"Andy Rain/EPA",
+            "caption":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing following his ban.  Photograph: Andy Rain/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477007833/Mahmood-al-Zarooni-centre-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing",
+            "height":"132",
+            "credit":"Andy Rain/EPA",
+            "caption":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing following his ban.  Photograph: Andy Rain/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477009129/Mahmood-al-Zarooni-centre-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing",
+            "height":"168",
+            "credit":"Andy Rain/EPA",
+            "caption":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing following his ban.  Photograph: Andy Rain/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477010571/Mahmood-al-Zarooni-centre-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing",
+            "height":"180",
+            "credit":"Andy Rain/EPA",
+            "caption":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing following his ban.  Photograph: Andy Rain/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477011895/Mahmood-al-Zarooni-centre-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing",
+            "height":"228",
+            "credit":"Andy Rain/EPA",
+            "caption":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing following his ban.  Photograph: Andy Rain/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477013361/Mahmood-al-Zarooni-centre-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing",
+            "height":"276",
+            "credit":"Andy Rain/EPA",
+            "caption":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing following his ban.  Photograph: Andy Rain/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477013361/Mahmood-al-Zarooni-centre-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing",
+            "height":"276",
+            "credit":"Andy Rain/EPA",
+            "caption":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing following his ban.  Photograph: Andy Rain/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418577701",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380477006572/Mahmood-al-Zarooni-centre-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Andy Rain",
+            "altText":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing",
+            "height":"84",
+            "credit":"Andy Rain/EPA",
+            "caption":"Mahmood al-Zarooni, centre, leaving a British Horseracing Authority disciplinary hearing following his ban.  Photograph: Andy Rain/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/29/sheikh-mohammed-inquiry-drugs-dubai",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-29T18:04:25Z",
+      "webTitle":"Sheikh Mohammed starts inquiry after police seize drugs from Dubai jet",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/29/sheikh-mohammed-inquiry-drugs-dubai",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/29/sheikh-mohammed-inquiry-drugs-dubai",
+      "fields":{
+        "trailText":"Sheikh Mohammed bin Rashid Al Maktoum has ordered an internal investigation after unlicensed veterinary goods were seized at Stansted airport from a Dubai government-owned plane",
+        "headline":"Sheikh Mohammed launches inquiry after police seize drugs from Dubai jet",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j65k",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476590564/Sheikh-Mohammed-bin-Rashi-003.jpg",
+        "wordcount":"1111",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "type":"keyword",
+        "webTitle":"Sheikh Mohammed bin Rashid al Maktoum",
+        "webUrl":"http://www.theguardian.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "apiUrl":"http://content.guardianapis.com/sport/sheikh-mohammed-bin-rashid-al-maktoum",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/godolphin",
+        "type":"keyword",
+        "webTitle":"Godolphin",
+        "webUrl":"http://www.theguardian.com/sport/godolphin",
+        "apiUrl":"http://content.guardianapis.com/sport/godolphin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/drugs-in-sport",
+        "type":"keyword",
+        "webTitle":"Drugs in sport",
+        "webUrl":"http://www.theguardian.com/sport/drugs-in-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/drugs-in-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/british-horseracing-authority",
+        "type":"keyword",
+        "webTitle":"British Horseracing Authority",
+        "webUrl":"http://www.theguardian.com/sport/british-horseracing-authority",
+        "apiUrl":"http://content.guardianapis.com/sport/british-horseracing-authority",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/james-riach",
+        "type":"contributor",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418577304",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476587215/Sheikh-Mohammed-bin-Rashi-001.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"54",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters Photograph:   Caren Firouz / Reuters/REUTERS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476589560/Sheikh-Mohammed-bin-Rashi-002.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"130",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters Photograph:   Caren Firouz / Reuters/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476590564/Sheikh-Mohammed-bin-Rashi-003.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"84",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters Photograph:   Caren Firouz / Reuters/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476591581/Sheikh-Mohammed-bin-Rashi-004.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"132",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters Photograph:   Caren Firouz / Reuters/REUTERS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476592748/Sheikh-Mohammed-bin-Rashi-005.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"168",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters Photograph:   Caren Firouz / Reuters/REUTERS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476593759/Sheikh-Mohammed-bin-Rashi-006.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"180",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters Photograph:   Caren Firouz / Reuters/REUTERS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476594825/Sheikh-Mohammed-bin-Rashi-007.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"228",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters Photograph:   Caren Firouz / Reuters/REUTERS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476595847/Sheikh-Mohammed-bin-Rashi-008.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"276",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters Photograph:   Caren Firouz / Reuters/REUTERS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476595847/Sheikh-Mohammed-bin-Rashi-008.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"276",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418577305",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380476590564/Sheikh-Mohammed-bin-Rashi-003.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"  Caren Firouz / Reuters",
+            "altText":"Sheikh Mohammed bin Rashid Al Maktoum",
+            "height":"84",
+            "credit":"  Caren Firouz / Reuters/REUTERS",
+            "caption":"Sheikh Mohammed bin Rashid Al Maktoum, the owner of Godolphin, Birtain's largest Flat racing operation. Photograph: Caren Firouz/Reuters Photograph:   Caren Firouz / Reuters/REUTERS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/29/horse-racing-tips-monday",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-29T17:00:02Z",
+      "webTitle":"Horse racing tips: Monday 30 September",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/29/horse-racing-tips-monday",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/29/horse-racing-tips-monday",
+      "fields":{
+        "trailText":"Master Bond carries top weight at Hamilton but won decisively at Beverley and can follow up at the Scottish track",
+        "headline":"Horse racing tips: Monday 30 September",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j6xm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464336690/Colin-Tizzard-is-due-to-s-003.jpg",
+        "wordcount":"48",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -965,162 +1289,162 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417332397",
+        "id":"gu-image-418566588",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255939235/In-Brightons-second-race--001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464333400/Colin-Tizzard-is-due-to-s-001.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"54",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola, a filly who has won in testing ground over this distance.  Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255940899/In-Brightons-second-race--002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464335430/Colin-Tizzard-is-due-to-s-002.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"130",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola, a filly who has won in testing ground over this distance.  Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255942064/In-Brightons-second-race--003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464336690/Colin-Tizzard-is-due-to-s-003.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"84",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola, a filly who has won in testing ground over this distance.  Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255943165/In-Brightons-second-race--004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464337947/Colin-Tizzard-is-due-to-s-004.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"132",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola, a filly who has won in testing ground over this distance.  Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255944318/In-Brightons-second-race--005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464339273/Colin-Tizzard-is-due-to-s-005.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"168",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola, a filly who has won in testing ground over this distance.  Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255945459/In-Brightons-second-race--006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464340651/Colin-Tizzard-is-due-to-s-006.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"180",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola, a filly who has won in testing ground over this distance.  Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255946564/In-Brightons-second-race--007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464341969/Colin-Tizzard-is-due-to-s-007.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"228",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola, a filly who has won in testing ground over this distance.  Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255947800/In-Brightons-second-race--008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464343298/Colin-Tizzard-is-due-to-s-008.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"276",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola, a filly who has won in testing ground over this distance.  Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255947800/In-Brightons-second-race--008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464343298/Colin-Tizzard-is-due-to-s-008.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"276",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success on Anginola, who has won in testing ground over this distance. Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417332398",
+        "id":"gu-image-418566589",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379255942064/In-Brightons-second-race--003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380464336690/Colin-Tizzard-is-due-to-s-003.jpg",
           "typeData":{
-            "source":"Getty",
-            "photographer":"Julian Herbert",
-            "altText":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola",
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Colin Tizzard is due to saddle Ivor's King for a debut over fences at Newton Abbot ",
             "height":"84",
-            "credit":"Julian Herbert/Getty",
-            "caption":"In Brighton's second race Fergus Sweeney has prospects of success aboard Anginola, a filly who has won in testing ground over this distance.  Photograph: Julian Herbert/Getty",
+            "credit":"David Davies/PA",
+            "caption":"Colin Tizzard is due to saddle Ivor's King, his talented front-running hurdler, for a debut over fences at Newton Abbot.  Photograph: David Davies/PA",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/14/horse-racing-tips-sunday",
+      "id":"sport/2013/sep/28/horse-racing-tips-sunday",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-14T19:14:09Z",
-      "webTitle":"Horse racing tips: Sunday 15 September",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/14/horse-racing-tips-sunday",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/14/horse-racing-tips-sunday",
+      "webPublicationDate":"2013-09-28T17:30:00Z",
+      "webTitle":"Horse racing tips: Sunday 29 September",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/28/horse-racing-tips-sunday",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/28/horse-racing-tips-sunday",
       "fields":{
-        "trailText":"After finishing second on his last two starts, Boom And Bust has a fine opportunity to put his head in front in Bath's 4.20 contest",
-        "headline":"Horse racing tips: Sunday 15 September",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn6m",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185951174/Marcus-Tregoning-saddles--003.jpg",
-        "wordcount":"36",
+        "trailText":"Soryah can land her third win of the season in the Totepool Handicap over 10 furlongs at Epsom",
+        "headline":"Horse racing tips: Sunday 29 September",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j6vx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382031945/Luca-Cumani-has-strong-pr-003.jpg",
+        "wordcount":"47",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1177,179 +1501,179 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417296085",
+        "id":"gu-image-418531421",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185948488/Marcus-Tregoning-saddles--001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382028750/Luca-Cumani-has-strong-pr-001.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"54",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185950118/Marcus-Tregoning-saddles--002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382030499/Luca-Cumani-has-strong-pr-002.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"130",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185951174/Marcus-Tregoning-saddles--003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382031945/Luca-Cumani-has-strong-pr-003.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"84",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185952246/Marcus-Tregoning-saddles--004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382033389/Luca-Cumani-has-strong-pr-004.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"132",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185953318/Marcus-Tregoning-saddles--005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382034911/Luca-Cumani-has-strong-pr-005.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"168",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185954651/Marcus-Tregoning-saddles--006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382036355/Luca-Cumani-has-strong-pr-006.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"180",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185955716/Marcus-Tregoning-saddles--007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382037836/Luca-Cumani-has-strong-pr-007.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"228",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185956971/Marcus-Tregoning-saddles--008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382039263/Luca-Cumani-has-strong-pr-008.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"276",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185956971/Marcus-Tregoning-saddles--008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382039263/Luca-Cumani-has-strong-pr-008.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"276",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417296086",
+        "id":"gu-image-418531422",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379185951174/Marcus-Tregoning-saddles--003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380382031945/Luca-Cumani-has-strong-pr-003.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"David Davies",
-            "altText":"Marcus Tregoning saddles Boom And Bust in the fifth race at Bath",
+            "source":"Getty Images",
+            "photographer":"Alan Crowhurst",
+            "altText":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom",
             "height":"84",
-            "credit":"David Davies/PA",
-            "caption":"Marcus Tregoning has had a quiet season so far in 2013 but may be successful with Boom And Bust in the fifth race at Bath.  Photograph: David Davies/PA",
+            "credit":"Alan Crowhurst/Getty Images",
+            "caption":"Luca Cumani has strong prospects with Soryah in the fourth race at Epsom on Sunday.  Photograph: Alan Crowhurst/Getty Images",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"sport/2013/sep/14/st-leger-aidan-obrien-leading-light",
+      "id":"sport/2013/sep/28/sky-lantern-newmarket-vorda-cheveley-park",
       "sectionId":"sport",
       "sectionName":"Sport",
-      "webPublicationDate":"2013-09-14T15:31:21Z",
-      "webTitle":"Leading Light storms home in style to take St Leger for Aidan O'Brien",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/14/st-leger-aidan-obrien-leading-light",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/14/st-leger-aidan-obrien-leading-light",
+      "webPublicationDate":"2013-09-28T16:53:00Z",
+      "webTitle":"Sky Lantern's Newmarket triumph tempts Hannon to run filly at Ascot",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/28/sky-lantern-newmarket-vorda-cheveley-park",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/28/sky-lantern-newmarket-vorda-cheveley-park",
       "fields":{
-        "trailText":"Aidan O'Brien landed his fourth St Leger when the 7-2 favourite Leading Light won Doncaster's Classic",
-        "headline":"Leading Light storms home in style to take St Leger for Aidan O'Brien",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tn5k",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172617759/Leading-Light-and-Joseph--003.jpg",
-        "wordcount":"681",
+        "trailText":"Sky Lantern could run in the QEII at Ascot following her win in Newmarket's Sun Chariot Stakes",
+        "headline":"Sky Lantern's Newmarket triumph tempts Hannon to run filly at Ascot",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j5qy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380724112/Vorda-and-Olivier-Peslier-003.jpg",
+        "wordcount":"622",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"sport/st-leger-stakes",
+        "id":"sport/1000-guineas",
         "type":"keyword",
-        "webTitle":"St Leger",
-        "webUrl":"http://www.theguardian.com/sport/st-leger-stakes",
-        "apiUrl":"http://content.guardianapis.com/sport/st-leger-stakes",
+        "webTitle":"1,000 Guineas",
+        "webUrl":"http://www.theguardian.com/sport/1000-guineas",
+        "apiUrl":"http://content.guardianapis.com/sport/1000-guineas",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"sport/aidan-o-brien",
+        "id":"sport/2000-guineas",
         "type":"keyword",
-        "webTitle":"Aidan O'Brien",
-        "webUrl":"http://www.theguardian.com/sport/aidan-o-brien",
-        "apiUrl":"http://content.guardianapis.com/sport/aidan-o-brien",
+        "webTitle":"2,000 Guineas",
+        "webUrl":"http://www.theguardian.com/sport/2000-guineas",
+        "apiUrl":"http://content.guardianapis.com/sport/2000-guineas",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -1388,15 +1712,6 @@
         "webTitle":"News",
         "webUrl":"http://www.theguardian.com/tone/news",
         "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"sport/camelot",
-        "type":"keyword",
-        "webTitle":"Camelot",
-        "webUrl":"http://www.theguardian.com/sport/camelot",
-        "apiUrl":"http://content.guardianapis.com/sport/camelot",
-        "sectionId":"sport",
-        "sectionName":"Sport",
         "references":[]
       },{
         "id":"theobserver/sport/news",
@@ -1434,270 +1749,179 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417289282",
+        "id":"gu-image-418530669",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172614584/Leading-Light-and-Joseph--001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380721584/Vorda-and-Olivier-Peslier-001.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"54",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172616450/Leading-Light-and-Joseph--002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380723050/Vorda-and-Olivier-Peslier-002.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"130",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172617759/Leading-Light-and-Joseph--003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380724112/Vorda-and-Olivier-Peslier-003.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"84",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172619133/Leading-Light-and-Joseph--004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380725147/Vorda-and-Olivier-Peslier-004.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"132",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172620546/Leading-Light-and-Joseph--005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380726195/Vorda-and-Olivier-Peslier-005.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"168",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172622043/Leading-Light-and-Joseph--006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380727262/Vorda-and-Olivier-Peslier-006.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"180",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172623457/Leading-Light-and-Joseph--007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380728338/Vorda-and-Olivier-Peslier-007.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"228",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172624957/Leading-Light-and-Joseph--008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380729588/Vorda-and-Olivier-Peslier-008.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"276",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172624957/Leading-Light-and-Joseph--008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380729588/Vorda-and-Olivier-Peslier-008.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"276",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417289283",
+        "id":"gu-image-418530670",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/14/1379172617759/Leading-Light-and-Joseph--003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/28/1380380724112/Vorda-and-Olivier-Peslier-003.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Giles",
-            "altText":"Leading Light and Joseph O'Brien win the Ladbrokes St Leger Stakes at Doncaster",
+            "source":"Action Images",
+            "photographer":"Julian Herbert",
+            "altText":"Vorda and Olivier Peslier beat Princess Noor to win the Cheveley Park at Newmarket",
             "height":"84",
-            "credit":"John Giles/PA",
-            "caption":"Leading Light and Joseph O'Brien (purple cap) win the Ladbrokes St Leger Stakes at Doncaster.  Photograph: John Giles/PA",
+            "credit":"Julian Herbert/Action Images",
+            "caption":"Vorda and Olivier Peslier beat Princess Noor, Johnny Murtagh, far side, to win the Cheveley Park at Newmarket.  Photograph: Julian Herbert/Action Images",
             "width":"140"
           }
         }]
       }],
       "references":[]
     },{
-      "id":"society/2013/sep/14/highbrow-betting-gambling-cultural-events",
-      "sectionId":"society",
-      "sectionName":"Society",
-      "webPublicationDate":"2013-09-14T07:00:00Z",
-      "webTitle":"Highbrow betting: gambling on cultural events is on the up",
-      "webUrl":"http://www.theguardian.com/society/2013/sep/14/highbrow-betting-gambling-cultural-events",
-      "apiUrl":"http://content.guardianapis.com/society/2013/sep/14/highbrow-betting-gambling-cultural-events",
+      "id":"sport/blog/2013/sep/28/horse-racing-tips-talking-saturday",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-27T23:01:01Z",
+      "webTitle":"Talking Horses: Saturday's tips in our daily racing blog | Greg Wood",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/28/horse-racing-tips-talking-saturday",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/28/horse-racing-tips-talking-saturday",
       "fields":{
-        "trailText":"Will you be taking a flutter on the Man Booker? Or the Mercury music prize? Bookmakers are reporting a rise in 'highbrow' betting. <strong>Andrew Martin</strong> approves",
-        "headline":"Highbrow betting: gambling on cultural events is on the up",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tmjq",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379093295833/david-bowie-005.jpg",
-        "wordcount":"1409",
+        "trailText":"<strong>Greg Wood:</strong> There have been Cambridgeshire Handicap winners at 100-1 but King George River has plenty of appeal at 18-1",
+        "headline":"Talking Horses: Saturday's tips in our daily racing blog",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j5mh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312730126/Elusive-Kate-ridden-by-Wi-003.jpg",
+        "wordcount":"393",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"society/gambling",
-        "type":"keyword",
-        "webTitle":"Gambling",
-        "webUrl":"http://www.theguardian.com/society/gambling",
-        "apiUrl":"http://content.guardianapis.com/society/gambling",
-        "sectionId":"society",
-        "sectionName":"Society",
+        "id":"sport/series/talking-horses",
+        "type":"series",
+        "webTitle":"Talking Horses",
+        "webUrl":"http://www.theguardian.com/sport/series/talking-horses",
+        "apiUrl":"http://content.guardianapis.com/sport/series/talking-horses",
+        "sectionId":"sport",
+        "sectionName":"Sport",
         "references":[]
       },{
-        "id":"music/mercuryprize",
-        "type":"keyword",
-        "webTitle":"Mercury prize",
-        "webUrl":"http://www.theguardian.com/music/mercuryprize",
-        "apiUrl":"http://content.guardianapis.com/music/mercuryprize",
-        "sectionId":"music",
-        "sectionName":"Music",
-        "references":[]
-      },{
-        "id":"books/man-booker-prize-2013",
-        "type":"keyword",
-        "webTitle":"Man Booker prize 2013",
-        "webUrl":"http://www.theguardian.com/books/man-booker-prize-2013",
-        "apiUrl":"http://content.guardianapis.com/books/man-booker-prize-2013",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"books/man-booker-international-prize",
-        "type":"keyword",
-        "webTitle":"Man Booker International prize",
-        "webUrl":"http://www.theguardian.com/books/man-booker-international-prize",
-        "apiUrl":"http://content.guardianapis.com/books/man-booker-international-prize",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"culture/awards-and-prizes",
-        "type":"keyword",
-        "webTitle":"Awards and prizes",
-        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
-        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
-        "sectionId":"culture",
-        "sectionName":"Culture",
-        "references":[]
-      },{
-        "id":"business/williamhill",
-        "type":"keyword",
-        "webTitle":"William Hill",
-        "webUrl":"http://www.theguardian.com/business/williamhill",
-        "apiUrl":"http://content.guardianapis.com/business/williamhill",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/ladbrokes",
-        "type":"keyword",
-        "webTitle":"Ladbrokes",
-        "webUrl":"http://www.theguardian.com/business/ladbrokes",
-        "apiUrl":"http://content.guardianapis.com/business/ladbrokes",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"books/jim-crace",
-        "type":"keyword",
-        "webTitle":"Jim Crace",
-        "webUrl":"http://www.theguardian.com/books/jim-crace",
-        "apiUrl":"http://content.guardianapis.com/books/jim-crace",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"profile/andrewmartin",
-        "type":"contributor",
-        "webTitle":"Andrew Martin",
-        "webUrl":"http://www.theguardian.com/profile/andrewmartin",
-        "apiUrl":"http://content.guardianapis.com/profile/andrewmartin",
-        "bio":"<p>Andrew Martin is the author of Death on a Branch Line and The Somme Stations.  Underground, Overground: A Passenger's History of the Tube is published in May 2012</p>",
-        "r2ContributorId":"27021",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/9/1357753804891/Andrew-Martin.jpg",
-        "references":[]
-      },{
-        "id":"books/fiction",
-        "type":"keyword",
-        "webTitle":"Fiction",
-        "webUrl":"http://www.theguardian.com/books/fiction",
-        "apiUrl":"http://content.guardianapis.com/books/fiction",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"books/books",
-        "type":"keyword",
-        "webTitle":"Books",
-        "webUrl":"http://www.theguardian.com/books/books",
-        "apiUrl":"http://content.guardianapis.com/books/books",
-        "sectionId":"books",
-        "sectionName":"Books",
-        "references":[]
-      },{
-        "id":"sport/horse-racing",
-        "type":"keyword",
-        "webTitle":"Horse racing",
-        "webUrl":"http://www.theguardian.com/sport/horse-racing",
-        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
@@ -1711,38 +1935,175 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"theguardian/mainsection/saturday",
-        "type":"newspaper-book-section",
-        "webTitle":"Saturday",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/saturday",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/saturday",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection",
-        "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"culture/culture",
+        "id":"sport/horse-racing",
         "type":"keyword",
-        "webTitle":"Culture",
-        "webUrl":"http://www.theguardian.com/culture/culture",
-        "apiUrl":"http://content.guardianapis.com/culture/culture",
-        "sectionId":"culture",
-        "sectionName":"Culture",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/gregwood",
+        "type":"contributor",
+        "webTitle":"Greg Wood",
+        "webUrl":"http://www.theguardian.com/profile/gregwood",
+        "apiUrl":"http://content.guardianapis.com/profile/gregwood",
+        "bio":"<p>Greg Wood is the Guardian's <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>correspondent. He was named Journalist of the Year at the 2009 Derby awards</p>",
+        "rcsId":"GNL004789",
+        "r2ContributorId":"15683",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/greg_wood_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418503677",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312736639/Elusive-Kate-ridden-by-Wi-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Steve Parsons",
+            "altText":"Elusive Kate ridden by William Buick (left) beats Sky Lantern",
+            "height":"276",
+            "credit":"Steve Parsons/PA",
+            "caption":"Elusive Kate beat Sky Lantern at Newmarket in July, with the two horses facing off again at 3.10pm. Photograph: Steve Parsons/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418503678",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380312730126/Elusive-Kate-ridden-by-Wi-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Steve Parsons",
+            "altText":"Elusive Kate ridden by William Buick (left) beats Sky Lantern",
+            "height":"84",
+            "credit":"Steve Parsons/PA",
+            "caption":"Elusive Kate ridden by William Buick (left) beats Sky Lantern Photograph: Steve Parsons/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/27/willie-carson-fillies-mile-chriselliam",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-27T17:49:59Z",
+      "webTitle":"Willie Carson hails Newmarket Fillies' Mile victory for Chriselliam",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/27/willie-carson-fillies-mile-chriselliam",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/27/willie-carson-fillies-mile-chriselliam",
+      "fields":{
+        "trailText":"The Charlie Hills-trained filly Chriselliam pulled off an unexpected victory for the former jockey Willie Carson as part owner",
+        "headline":"Willie Carson hails Newmarket Fillies' Mile victory for Chriselliam",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j55y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380298380799/Chriselliam-003.jpg",
+        "wordcount":"730",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/richard-hughes",
+        "type":"keyword",
+        "webTitle":"Richard Hughes",
+        "webUrl":"http://www.theguardian.com/sport/richard-hughes",
+        "apiUrl":"http://content.guardianapis.com/sport/richard-hughes",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mickael-barzalona",
+        "type":"keyword",
+        "webTitle":"Mickaël Barzalona",
+        "webUrl":"http://www.theguardian.com/sport/mickael-barzalona",
+        "apiUrl":"http://content.guardianapis.com/sport/mickael-barzalona",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/tonypaley",
+        "type":"contributor",
+        "webTitle":"Tony Paley",
+        "webUrl":"http://www.theguardian.com/profile/tonypaley",
+        "apiUrl":"http://content.guardianapis.com/profile/tonypaley",
+        "bio":"<p>Tony Paley is racing editor for the Guardian and Observer and contributes to <a href=\"http://www.guardian.co.uk/film\">guardian.co.uk/film</a></p>",
+        "rcsId":"GNL420646",
+        "r2ContributorId":"16543",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/03/31/tony_paley_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
         "references":[]
       },{
         "id":"type/article",
@@ -1762,93 +2123,39 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417251511",
+        "id":"gu-image-418490030",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379093301824/david-bowie-010.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380298388271/Chriselliam-008.jpg",
           "typeData":{
-            "source":"WireImage",
-            "photographer":"Larry Busacca",
-            "altText":"david bowie",
+            "source":"Getty Images",
+            "photographer":"Charlie Crowhurst",
+            "altText":"Chriselliam",
             "height":"276",
-            "credit":"Larry Busacca/WireImage",
-            "caption":"Worth a punt? You can get odds of 9-2 on David Bowie winning this year's Mercury music prize. Photograph: Larry Busacca/WireImage",
+            "credit":"Charlie Crowhurst/Getty Images",
+            "caption":"Richard Hughes rides Chriselliam to victory in the Shadwell Fillies' Mile at Newmarket on Friday. Photograph: Charlie Crowhurst/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417251512",
+        "id":"gu-image-418490031",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379093295833/david-bowie-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380298380799/Chriselliam-003.jpg",
           "typeData":{
-            "source":"WireImage",
-            "photographer":"Larry Busacca",
-            "altText":"david bowie",
+            "source":"Getty Images",
+            "photographer":"Charlie Crowhurst",
+            "altText":"Chriselliam",
             "height":"84",
-            "credit":"Larry Busacca/WireImage",
-            "caption":"Worth a punt … you can get odds of 9-2 on David Bowie winning this year's Mercury music prize.  Photograph: Larry Busacca/WireImage",
+            "credit":"Charlie Crowhurst/Getty Images",
+            "caption":"NEWMARKET, ENGLAND - SEPTEMBER 27: Richard Hughes rides Chriselliam (R) to win The Shadwell Fillies' Mile at Newmarket racecourse on September 27, 2013 in Newmarket, England. (Photo by Charlie Crowhurst/Getty Images)\rHorse Racing\rHorses\rNewmarket Photograph: Charlie Crowhurst/Getty Images",
             "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-image-417251513",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379093842178/Eleanor-Catton-010.jpg",
-          "typeData":{
-            "source":"Guardian",
-            "photographer":"Linda Nylind",
-            "altText":"Eleanor Catton",
-            "height":"276",
-            "credit":"Linda Nylind/Guardian",
-            "caption":"Eleanor Catton is second favourite to win the Man Booker prize with her 823-page novel, The Luminaries, behind the favourite, Jim Crace. The odds of her winning are 4-1.  Photograph: Linda Nylind for the Guardian",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417251514",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379093669419/Bradley-Manning-010.jpg",
-          "typeData":{
-            "source":"AP",
-            "photographer":"Patrick Semansky",
-            "altText":"Bradley Manning",
-            "height":"276",
-            "credit":"Patrick Semansky/AP",
-            "caption":"Chelsea (formerly Bradley) Manning … could be a good tip for the Nobel peace prize. Photograph: Patrick Semansky/AP",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417251515",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/13/1379093539016/EL-James-author-of-50-Sha-010.jpg",
-          "typeData":{
-            "source":"PR",
-            "photographer":"Michael Lionstar",
-            "altText":"EL James, author of 50 Shades of Grey",
-            "height":"276",
-            "credit":"Michael Lionstar/PR",
-            "caption":"EL James, author of 50 Shades of Grey, is 500-1 to win the Nobel prize for literature.  Photograph: Michael Lionstar",
-            "width":"460"
           }
         }]
       }],
@@ -3512,6 +3819,7 @@
         "apiUrl":"http://content.guardianapis.com/profile/timlewis",
         "bio":"<p>Tim Lewis is a writer at the Observer</p>",
         "r2ContributorId":"20731",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380276536662/TimLewisprofile.jpg",
         "references":[]
       },{
         "id":"type/article",

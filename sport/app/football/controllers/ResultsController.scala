@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import conf._
@@ -89,6 +89,7 @@ object ResultsController extends ResultsRenderer with Logging {
     TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamResultsController.render(tag, teamId) }
   }
 
+  def renderTagJson(tag: String) = renderTag(tag)
   def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
 
   override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {

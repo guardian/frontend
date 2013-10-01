@@ -8,7 +8,7 @@ import org.scalatest.FlatSpec
 class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
   
   "Live Matches Controller" should "200 when content type is live match" in Fake {
-    val result = controllers.LiveMatchesController.render()(TestRequest())
+    val result = football.controllers.LiveMatchesController.renderLiveMatches()(TestRequest())
     status(result) should be(200)
   }
 
@@ -16,7 +16,7 @@ class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, "/football/live?callback=foo")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Accept" -> "application/javascript")
-    val result = controllers.LiveMatchesController.render()(fakeRequest)
+    val result = football.controllers.LiveMatchesController.renderLiveMatches()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
@@ -26,7 +26,7 @@ class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.LiveMatchesController.render()(fakeRequest)
+    val result = football.controllers.LiveMatchesController.renderLiveMatchesJson()(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")
@@ -35,7 +35,7 @@ class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
   val competitionId = "premierleague"
   
   it should "200 when content type is competition live match" in Fake {
-    val result = controllers.LiveMatchesController.renderFor(competitionId)(TestRequest())
+    val result = football.controllers.LiveMatchesController.renderLiveMatchesFor(competitionId)(TestRequest())
     status(result) should be(200)
   }
 
@@ -43,7 +43,7 @@ class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
     val fakeRequest = FakeRequest(GET, "/football/" + competitionId + "/live?callback=foo")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Accept" -> "application/javascript")
-    val result = controllers.LiveMatchesController.renderFor(competitionId)(fakeRequest)
+    val result = football.controllers.LiveMatchesController.renderLiveMatchesFor(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript")
   }
@@ -53,7 +53,7 @@ class LiveMatchesControllerTest extends FlatSpec with ShouldMatchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
       
-    val result = controllers.LiveMatchesController.renderFor(competitionId)(fakeRequest)
+    val result = football.controllers.LiveMatchesController.renderLiveMatchesJsonFor(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json")
     contentAsString(result) should startWith("{\"config\"")

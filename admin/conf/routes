@@ -34,18 +34,8 @@ GET           /ophan/pageviews/*path           controllers.OphanApiController.pa
 GET           /ophan/pageviews                 controllers.OphanApiController.platformPageViews()
 
 #Development endpoints
-GET           /dev/switchboard                 controllers.SwitchboardController.render()
+GET           /dev/switchboard                 controllers.SwitchboardController.renderSwitchboard()
 POST          /dev/switchboard                 controllers.SwitchboardController.save()
-
-# Fronts
-GET           /collections                     controllers.FrontsController.index()
-GET           /fronts/config/*id               controllers.FrontsController.getConfig(id)
-
-GET           /fronts/collection/*id           controllers.FrontsController.readBlock(id)
-POST          /fronts/collection/*id           controllers.FrontsController.updateBlock(id)
-DELETE        /fronts/collection/*id           controllers.FrontsController.deleteTrail(id)
-GET           /fronts/collection               controllers.FrontsController.listCollections
-GET           /fronts/config                   controllers.FrontsController.listConfigs
 
 # Analytics
 GET           /analytics/kpis                  controllers.AnalyticsController.kpis()
@@ -54,13 +44,13 @@ GET           /analytics/browsers              controllers.AnalyticsController.b
 GET           /analytics/abtests               controllers.AnalyticsController.abtests()
 
 # Metrics
-GET           /metrics/loadbalancers           controllers.metrics.DashboardController.render()
-GET           /metrics/fastly                  controllers.metrics.FastlyController.render()
+GET           /metrics/loadbalancers           controllers.metrics.DashboardController.renderDashboard()
+GET           /metrics/fastly                  controllers.metrics.FastlyController.renderFastly()
 
 # Radiator
-GET           /radiator                        controllers.RadiatorController.render()
+GET           /radiator                        controllers.RadiatorController.renderRadiator()
 GET           /radiator/pingdom                controllers.RadiatorController.pingdom()
 GET           /radiator/commit/*hash           controllers.RadiatorController.commitDetail(hash)
 
 # Football Troubleshooter
-GET           /troubleshoot/football           controllers.FootballTroubleshooterController.render()
+GET           /troubleshoot/football           controllers.FootballTroubleshooterController.renderFootballTroubleshooter()
