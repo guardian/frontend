@@ -12,36 +12,36 @@ import services.S3FrontsApi
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
-  def index() = Authenticated { request =>
+  def index() = AuthenticatedWithTimeout { request =>
     Ok(views.html.fronts(Configuration.environment.stage))
   }
 
-  def admin() = Authenticated { request =>
+  def admin() = AuthenticatedWithTimeout { request =>
     Redirect("/")
   }
 
-  def listCollections = Authenticated { request =>
+  def listCollections = AuthenticatedWithTimeout { request =>
     Ok(Json.toJson(S3FrontsApi.listCollectionIds))
   }
 
-  def listConfigs = Authenticated { request =>
+  def listConfigs = AuthenticatedWithTimeout { request =>
     Ok(Json.toJson(S3FrontsApi.listConfigsIds))
   }
 
-  def readBlock(id: String) = Authenticated { request =>
+  def readBlock(id: String) = AuthenticatedWithTimeout { request =>
     S3FrontsApi.getBlock(id) map { json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
-  def getConfig(id: String) = Authenticated { request =>
+  def getConfig(id: String) = AuthenticatedWithTimeout { request =>
     S3FrontsApi.getConfig(id) map {json =>
       Ok(json).as("application/json")
     } getOrElse NotFound
   }
 
 
-  def updateBlock(id: String): Action[AnyContent] = Authenticated { request =>
+  def updateBlock(id: String): Action[AnyContent] = AuthenticatedWithTimeout { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList if update.item == update.position.getOrElse("") => Conflict
       case update: UpdateList => {
@@ -73,13 +73,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def updateTrail(id: String, trailId: String) = Authenticated { request =>
+  def updateTrail(id: String, trailId: String) = AuthenticatedWithTimeout { request =>
     request.body.asJson.map{ json =>
     }
     Ok
   }
 
-  def deleteTrail(id: String) = Authenticated { request =>
+  def deleteTrail(id: String) = AuthenticatedWithTimeout { request =>
     request.body.asJson flatMap JsonExtract.build map {
       case update: UpdateList => {
         val identity = Identity(request).get

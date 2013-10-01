@@ -8,6 +8,8 @@ import scala.concurrent.Future
 
 object Authenticated extends AuthAction(routes.Login.login.url)
 
+object AuthenticatedWithTimeout extends AuthActionWithTimeout("/login")
+
 object Login extends LoginController with Controller with ExecutionContexts {
 
   val loginUrl: String = routes.Login.login.url

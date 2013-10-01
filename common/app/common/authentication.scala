@@ -10,6 +10,7 @@ import play.api.Play
 import scala.concurrent.Future
 import play.api.libs.openid.OpenID
 import conf.Configuration
+import org.joda.time.DateTime
 
 case class Identity(openid: String, email: String, firstName: String, lastName: String) {
   implicit val formats = Serialization.formats(NoTypeHints)
@@ -70,7 +71,22 @@ object NonAuthAction {
 
 }
 
-class AuthAction(loginRoute: String) extends ExecutionContexts {
+class AuthActionWithTimeout(loginUrl: String) extends AuthAction(loginUrl) {
+
+  override def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async { request =>
+    if (withinAllowedTime(request))
+      Future{ f(request).withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)) }
+    else
+      Future { Redirect(loginUrl).withSession(("loginFromUrl", request.uri)) }
+  }
+
+  def withinAllowedTime(request: Request[AnyContent]): Boolean = {
+    lazy val oneMinuteAgo: Long = DateTime.now.getMillis - Configuration.cookies.sessionExpiryTime.toMillis
+    request.session.get(Configuration.cookies.lastSeenKey).exists(new DateTime(_).getMillis > oneMinuteAgo)
+  }
+}
+
+class AuthAction(loginUrl: String) extends ExecutionContexts {
   import Play.current
 
   def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future { f(request) })
@@ -86,7 +102,7 @@ class AuthAction(loginRoute: String) extends ExecutionContexts {
       val authenticatedRequest = Identity(request) map { id => f(new AuthenticatedRequest(Some(id), request)) }
       authenticatedRequest getOrElse {
         Future {
-          Redirect(loginRoute).withSession(request.session + ("loginFromUrl", request.uri))
+          Redirect(loginUrl).withSession(request.session + ("loginFromUrl", request.uri))
         }
       }
     }
@@ -132,7 +148,10 @@ trait LoginController extends ExecutionContexts { self: Controller =>
 
       if (credentials.emailDomain == "guardian.co.uk" || isTestUser) {
         Redirect(session.get("loginFromUrl").getOrElse(baseUrl)).withSession {
-          session + (Identity.KEY -> credentials.writeJson) - "loginFromUrl"
+          session +
+           (Identity.KEY -> credentials.writeJson) +
+            (Configuration.cookies.lastSeenKey -> DateTime.now.toString) -
+            "loginFromUrl"
         }
       } else {
         Redirect(loginUrl).flashing(

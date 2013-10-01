@@ -84,6 +84,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
 
+  object cookies {
+    import scala.concurrent.duration._
+    lazy val lastSeenKey: String = "lastseen"
+    lazy val sessionExpiryTime = 1.minute
+  }
+
   object proxy {
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
 
