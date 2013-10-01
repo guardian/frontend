@@ -171,15 +171,23 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
         fig.attr("itemtype", "http://schema.org/ImageObject")
 
         fig.getElementsByTag("img").foreach { img =>
+          fig.addClass("img")
           img.attr("itemprop", "contentURL")
           val src = img.attr("src")
           img.attr("src", ImgSrc(src, Naked))
           Option(img.attr("width")).filter(_.isInt) foreach { width =>
             fig.addClass(width.toInt match {
-              case width if width <= 220 => "img-base inline-image"
-              case width if width < 460 => "img-median inline-image"
-              case width => "img-extended"
+              case width if width <= 220 => "img--base img--inline"
+              case width if width < 460 => "img--median img--inline"
+              case width => "img--extended"
             })
+            Option(img.attr("height")).filter(_.isInt) foreach { height =>
+              fig.addClass(height.toInt match {
+                case height if height > width.toInt => "img--portrait"
+                case height if height < width.toInt => "img--landscape"
+                case height => ""
+              })
+            }
           }
         }
         fig.getElementsByTag("figcaption").foreach { figcaption =>
@@ -305,6 +313,8 @@ object OmnitureAnalyticsData {
     val section = data.get("section").getOrElse("")
     val platform = "frontend"
     val publication = data.get("publication").getOrElse("")
+    val registrationEvent = data.get("registrationEvent").getOrElse("")
+    val registrationType = data.get("registrationType").getOrElse("")
 
     val isContent = page match {
       case c: Content => true
@@ -335,8 +345,11 @@ object OmnitureAnalyticsData {
       ("v19", platform),
       ("v67", "nextgen-served"),
       ("c30", (if (isContent) "content" else "non-content")),
-      ("c56", jsSupport)
+      ("c56", jsSupport),
+      ("event", registrationEvent),
+      ("v23", registrationType)
     )
+
 
     Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString ("&"))
   }

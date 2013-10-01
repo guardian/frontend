@@ -44,10 +44,6 @@
     > p {
         margin-bottom: 0;
 
-        + figure,
-        + video {
-            margin-top: $baseline;
-        }
         + a + p, // Inline link cards are inserted between paragraphs
         + p {
             // Indent consecutive paragraphs
@@ -143,14 +139,41 @@ figure {
 
     img {
         display: block;
-        margin-bottom: $baseline*2;
     }
 
-    &.img-extended {
+    &.img {
+        margin-top: $baseline*4;
+        margin-bottom: $baseline*5;
+
+        @include mq(leftCol) {
+            margin-top: $baseline*5;
+            margin-bottom: $baseline*6;
+        }
+    }
+
+    &.img--extended {
         margin-top: $baseline*4;
         margin-bottom: $baseline*4;
     }
+
+    &.img--landscape,
+    &.img--portrait {
+        figcaption {
+            background-color: $c-neutral7;
+            padding: $baseline*2 $gs-gutter/2 $baseline*6 $gs-gutter/2;
+
+            @include mq(wide) {
+                padding-bottom: $gs-column-height;
+            }
+        }
+    }
 }
+
+p + figure,
+p + video {
+    margin-top: $baseline;
+}
+
 
 
 /* Video embeds

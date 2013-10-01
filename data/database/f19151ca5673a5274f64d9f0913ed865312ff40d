@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":176,
+    "total":188,
     "startIndex":1,
     "pageSize":20,
     "currentPage":1,
-    "pages":9,
+    "pages":10,
     "orderBy":"newest",
     "tag":{
       "id":"sport/nrl",
@@ -19,6 +19,1809 @@
       "references":[]
     },
     "results":[{
+      "id":"sport/blog/2013/sep/29/nrl-what-we-learned-this-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-29T21:48:00Z",
+      "webTitle":"NRL: what we learned this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/29/nrl-what-we-learned-this-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/29/nrl-what-we-learned-this-weekend",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly: </strong>Muscles aren't everything; don't believe the hype; the NRL needs to find where its public has gone</p>",
+        "headline":"NRL: what we learned this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j62m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380451023700/Glenn-Stewart-of-Manly-002.jpg",
+        "wordcount":"1169",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nrl-what-we-learned-this-weekend",
+        "type":"series",
+        "webTitle":"NRL: what we learned this weekend",
+        "webUrl":"http://www.theguardian.com/sport/series/nrl-what-we-learned-this-weekend",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nrl-what-we-learned-this-weekend",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/south-sydney-rabbitohs",
+        "type":"keyword",
+        "webTitle":"South Sydney Rabbitohs",
+        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
+        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/newcastle-knights",
+        "type":"keyword",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418592813",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380450944195/Glenn-Stewart-of-Manly-002.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Glenn Stewart of Manly",
+            "height":"276",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Glenn Stewart: like a very, very athletic George Costanza.  Photograph: Dean Lewins/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418592814",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/29/1380451023700/Glenn-Stewart-of-Manly-002.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Glenn Stewart of Manly",
+            "height":"84",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Glenn Stewart  Photograph: Dean Lewins/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/28/sydney-roosters-newcastle-knights-nrl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-28T14:34:15Z",
+      "webTitle":"Sydney Roosters 40-14 Newcastle Knights | NRL match report",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/28/sydney-roosters-newcastle-knights-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/28/sydney-roosters-newcastle-knights-nrl",
+      "fields":{
+        "trailText":"<p>The Roosters rounded off a difficult week to comfortably beat Newcastle and book their place in the NRL grand final against Manly</p>",
+        "headline":"Sydney Roosters surge past Knights and into grand final",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j5qe",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380378358989/Sydney-Roosters-celebrate-001.jpg",
+        "wordcount":"421",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/newcastle-knights",
+        "type":"keyword",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418529446",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380378383308/Sydney-Roosters-celebrate-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Sydney Roosters celebrate",
+            "height":"276",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Sydney Roosters celebrate Aidan Guerra's try.  Photograph: Colin Whelan/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418529447",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/28/1380378358989/Sydney-Roosters-celebrate-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Sydney Roosters celebrate",
+            "height":"84",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Sydney Roosters celebrate Aidan Guerra's try.  Photograph: Colin Whelan/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/27/manly-sea-eagles-south-sydney-rabbitohs",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-27T12:22:52Z",
+      "webTitle":"South Sydney Rabbitohs 20-30 Manly Sea Eagles | NRL match report",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/27/manly-sea-eagles-south-sydney-rabbitohs",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/27/manly-sea-eagles-south-sydney-rabbitohs",
+      "fields":{
+        "trailText":"<p>Manly are into their fourth grand final in seven years as South Sydney stumbled at the penultimate hurdle for the second straight year</p>",
+        "headline":"Manly scream back to beat Rabbitohs and make grand final",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j58c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380282806044/Manlys-David-Williams-003.jpg",
+        "wordcount":"453",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/south-sydney-rabbitohs",
+        "type":"keyword",
+        "webTitle":"South Sydney Rabbitohs",
+        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
+        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418461855",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380282820526/Manlys-David-Williams-008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Manly's David Williams",
+            "height":"276",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Manly's David Williams celebrates his try.  Photograph: Dean Lewins/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418461856",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380282806044/Manlys-David-Williams-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Manly's David Williams",
+            "height":"84",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Manly's David Williams celebrates his try  Photograph: Dean Lewins/AAP Image",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-418461857",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/27/1380282929628/John-Sutton-of-the-Rabbit-008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"John Sutton of the Rabbitohs",
+            "height":"276",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"A disappointed John Sutton contemplates defeat.  Photograph: Dean Lewins/AAP Image",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/26/nrl-what-to-look-out-for-finals-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-26T22:39:09Z",
+      "webTitle":"NRL: what to look out for this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/26/nrl-what-to-look-out-for-finals-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/26/nrl-what-to-look-out-for-finals-weekend",
+      "fields":{
+        "trailText":"<p><strong>Matt Cleary: </strong>Manly to revel in the hatred; Adam Reynolds to feed off the Burgesses; Roosters to continue as normal</p>",
+        "headline":"NRL: what to look out for this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j4qx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378643058800/Sam-Burgess-001.jpg",
+        "wordcount":"826",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/south-sydney-rabbitohs",
+        "type":"keyword",
+        "webTitle":"South Sydney Rabbitohs",
+        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
+        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/newcastle-knights",
+        "type":"keyword",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/matt-cleary",
+        "type":"contributor",
+        "webTitle":"Matt Cleary",
+        "webUrl":"http://www.theguardian.com/profile/matt-cleary",
+        "apiUrl":"http://content.guardianapis.com/profile/matt-cleary",
+        "bio":"<p>Matt Cleary is a freelance sports journalist from Sydney who contributes to Inside Sport, Inside Cricket, Inside Rugby and several golf and travel magazines who pay him to play golf on holidays. The Australian Golf Writers Association once gave him an award for playing golf in Ireland. Australian Golf Digest paid him to spend four months playing golf on a full lap of Australia. Each week Rugby League Week pays him to drink beer and watch rugby league. Chances are he has a better job than you</p>",
+        "r2ContributorId":"56746",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/30/1369892888173/Matt-Cleary-002.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418396231",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378643071540/Sam-Burgess-006.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Sam Burgess",
+            "height":"276",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Sam Burgess: 'arms like roast porks'.  Photograph: Dean Lewins/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418396232",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378643058800/Sam-Burgess-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Sam Burgess",
+            "height":"84",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Sam Burgess was at the centre of some questionable incidents against the Roosters.  Photograph: Dean Lewins/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/26/sydney-roosters-rebut-hgh-allegations",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-26T05:10:33Z",
+      "webTitle":"Sydney Roosters rebut human growth hormone allegations",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/26/sydney-roosters-rebut-hgh-allegations",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/26/sydney-roosters-rebut-hgh-allegations",
+      "fields":{
+        "trailText":"<p>The Roosters say they 'have nothing to hide' over claims players recorded elevated human growth hormone readings</p>",
+        "headline":"Sydney Roosters rebut human growth hormone allegations",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j424",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/11/1363000082337/Scientist-filling-test-tu-003.jpg",
+        "wordcount":"305",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/sydney-roosters",
+        "type":"keyword",
+        "webTitle":"Sydney Roosters",
+        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/asada",
+        "type":"keyword",
+        "webTitle":"Asada",
+        "webUrl":"http://www.theguardian.com/sport/asada",
+        "apiUrl":"http://content.guardianapis.com/sport/asada",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418291754",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/11/1363000089890/Scientist-filling-test-tu-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"moodboard / Alamy",
+            "altText":"Scientist filling test tubes",
+            "height":"276",
+            "credit":"moodboard / Alamy/Alamy",
+            "caption":"Sydney Roosters say their players have are regularly tested. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418291755",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/11/1363000082337/Scientist-filling-test-tu-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"moodboard / Alamy",
+            "altText":"Scientist filling test tubes",
+            "height":"84",
+            "credit":"moodboard / Alamy/Alamy",
+            "caption":"Nesta's What Works project seeks to build and share an evidence base for social policy. Photograph: moodboard / Alamy/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/video/2013/sep/23/nrl-semi-rugby-australia-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-23T04:27:28Z",
+      "webTitle":"NRL: semi-finals video highlights",
+      "webUrl":"http://www.theguardian.com/sport/video/2013/sep/23/nrl-semi-rugby-australia-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/sep/23/nrl-semi-rugby-australia-video",
+      "fields":{
+        "trailText":"<p>The Newcastle Knights dispatched the Melbourne Storm 18-16 in front of a 19,649 crowd at AAMI Park</p>",
+        "headline":"NRL: semi-finals video highlights",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jxc7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379907406516/NRL-highlights-005.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cronulla-sharks",
+        "type":"keyword",
+        "webTitle":"Cronulla Sharks",
+        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/melbourne-storm",
+        "type":"keyword",
+        "webTitle":"Melbourne Storm",
+        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
+        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/newcastle-knights",
+        "type":"keyword",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-417990103",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379907406516/NRL-highlights-005.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"NRL highlights",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"NRL highlights Photograph: AAP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379907424363/NRL-highlights-012.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"NRL highlights",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"NRL highlights Photograph: AAP",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910096435/NRL-001.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"NRL",
+            "height":"90",
+            "credit":"AAP",
+            "caption":"NRL Photograph: AAP",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910099235/NRL-002.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"NRL",
+            "height":"225",
+            "credit":"AAP",
+            "caption":"NRL Photograph: AAP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910101570/NRL-003.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"NRL",
+            "height":"360",
+            "credit":"AAP",
+            "caption":"NRL Photograph: AAP",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/23/130923nrl_FromGAus-16x9.mp4",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910096435/NRL-001.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910101570/NRL-003.jpg",
+            "width":"480",
+            "durationSeconds":"56"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/23/130923nrl_FromGAus_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910096435/NRL-001.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910101570/NRL-003.jpg",
+            "width":"480",
+            "durationSeconds":"56"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/23/130923nrl_FromGAus_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910096435/NRL-001.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910101570/NRL-003.jpg",
+            "width":"480",
+            "durationSeconds":"56"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/23/130923nrl_FromGAus/130923nrl_FromGAus.m3u8",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910096435/NRL-001.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910101570/NRL-003.jpg",
+            "width":"480",
+            "durationSeconds":"56"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/23/130923nrl_FromGAus_vpx.webm",
+          "typeData":{
+            "source":"AAP",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910096435/NRL-001.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379910101570/NRL-003.jpg",
+            "width":"480",
+            "durationSeconds":"56"
+          }
+        }]
+      },{
+        "id":"gu-image-417990859",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/23/1379907406516/NRL-highlights-005.jpg",
+          "typeData":{
+            "source":"AAP",
+            "altText":"NRL highlights",
+            "height":"84",
+            "credit":"AAP",
+            "caption":"NRL highlights Photograph: AAP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/22/nrl-things-we-learned-this-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-22T21:43:59Z",
+      "webTitle":"NRL: what we learned this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/22/nrl-things-we-learned-this-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/22/nrl-things-we-learned-this-weekend",
+      "fields":{
+        "trailText":"<p><strong>Paul Connolly: </strong>Knights draw in; passing Storm; Cronulla's wait continues; and the brilliance of Daly Cherry-Evans</p>",
+        "headline":"NRL: what we learned this weekend",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jx4m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/22/1379838796440/Manly-Sea-Eagles-001.jpg",
+        "wordcount":"1147",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/series/nrl-what-we-learned-this-weekend",
+        "type":"series",
+        "webTitle":"NRL: what we learned this weekend",
+        "webUrl":"http://www.theguardian.com/sport/series/nrl-what-we-learned-this-weekend",
+        "apiUrl":"http://content.guardianapis.com/sport/series/nrl-what-we-learned-this-weekend",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cronulla-sharks",
+        "type":"keyword",
+        "webTitle":"Cronulla Sharks",
+        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/melbourne-storm",
+        "type":"keyword",
+        "webTitle":"Melbourne Storm",
+        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
+        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/newcastle-knights",
+        "type":"keyword",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/paul-connolly",
+        "type":"contributor",
+        "webTitle":"Paul Connolly",
+        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
+        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
+        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
+        "r2ContributorId":"56450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417941632",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/22/1379838824917/Manly-Sea-Eagles-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dan Humbrechts",
+            "altText":"Manly Sea Eagles",
+            "height":"276",
+            "credit":"Dan Humbrechts/AAP Image",
+            "caption":"Manly made it past the Cronulla but they showed signs of fatigue.  Photograph: Dan Humbrechts/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417941633",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/22/1379838796440/Manly-Sea-Eagles-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dan Humbrechts",
+            "altText":"Manly Sea Eagles",
+            "height":"84",
+            "credit":"Dan Humbrechts/AAP Image",
+            "caption":"Manly made it past the Cronulla but they showed signs of fatigue.  Photograph: Dan Humbrechts/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/21/newcastle-knights-melbourne-storm-nrl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-21T12:09:34Z",
+      "webTitle":"Melbourne Storm 16-18 Newcastle Knights | NRL match report ",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/21/newcastle-knights-melbourne-storm-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/21/newcastle-knights-melbourne-storm-nrl",
+      "fields":{
+        "trailText":"<p>Newcastle shocked the defending champions Melbourne, eliminating the Storm from the finals race with a gripping  win</p>",
+        "headline":"Newcastle Knights stun reigning champions Melbourne Storm",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jxvn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/21/1379762967421/Newcastle-celebrate-a-try-003.jpg",
+        "wordcount":"343",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/melbourne-storm",
+        "type":"keyword",
+        "webTitle":"Melbourne Storm",
+        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
+        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/newcastle-knights",
+        "type":"keyword",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417910777",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/21/1379762983890/Newcastle-celebrate-a-try-008.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Newcastle celebrate a try against Newcastle Knights",
+            "height":"276",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Newcastle celebrate a try against Newcastle Knights.  Photograph: Colin Whelan/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417910778",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/21/1379762967421/Newcastle-celebrate-a-try-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Colin Whelan",
+            "altText":"Newcastle celebrate a try against Newcastle Knights",
+            "height":"84",
+            "credit":"Colin Whelan/AAP Image",
+            "caption":"Newcastle celebrate a try against Newcastle Knights.  Photograph: Colin Whelan/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/20/manly-sea-eagles-cronulla-sharks-nrl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-20T12:17:00Z",
+      "webTitle":"Manly Sea Eagles 24-18 Cronulla Sharks | NRL match report",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/20/manly-sea-eagles-cronulla-sharks-nrl",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/20/manly-sea-eagles-cronulla-sharks-nrl",
+      "fields":{
+        "trailText":"<p>Manly earned another attempt at taking down South Sydney after a Daly Cherry-Evans masterclass helped beat Cronulla</p>",
+        "headline":"Manly Sea Eagles hold off Cronulla Sharks",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jvb6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/20/1379676759743/Manly-Sea-Eagles-celebrat-005.jpg",
+        "wordcount":"378",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cronulla-sharks",
+        "type":"keyword",
+        "webTitle":"Cronulla Sharks",
+        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417847231",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/20/1379676783052/Manly-Sea-Eagles-celebrat-010.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dan Himbrechts",
+            "altText":"Manly Sea Eagles celebrate",
+            "height":"276",
+            "credit":"Dan Himbrechts/AAP Image",
+            "caption":"The Sea Eagles' Daly-Cherry Evans (second right) and Matt Ballin (right) congratulate Kieran Foran.  Photograph: Dan Himbrechts/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417847232",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/20/1379676759743/Manly-Sea-Eagles-celebrat-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dan Himbrechts",
+            "altText":"Manly Sea Eagles celebrate",
+            "height":"84",
+            "credit":"Dan Himbrechts/AAP Image",
+            "caption":"The Sea Eagles' Daly-Cherry Evans (second right) and Matt Ballin (right) congratulate Kieran Foran.  Photograph: Dan Himbrechts/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/20/nrl-sea-eagles-stewart-injured",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-20T05:34:21Z",
+      "webTitle":"Brett Stewart's injury a blow to Manly's NRL premiership hopes",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/20/nrl-sea-eagles-stewart-injured",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/20/nrl-sea-eagles-stewart-injured",
+      "fields":{
+        "trailText":"<p>Hamstring problem rules Sea Eagles' prolific try scorer out of semi-final clash with Cronulla, with Hiku his likely replacement</p>",
+        "headline":"Brett Stewart's injury a blow to Manly's NRL premiership hopes",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jv39",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/20/1379654349501/Brett-Stewart-005.jpg",
+        "wordcount":"235",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cronulla-sharks",
+        "type":"keyword",
+        "webTitle":"Cronulla Sharks",
+        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/sydney",
+        "type":"keyword",
+        "webTitle":"Sydney",
+        "webUrl":"http://www.theguardian.com/world/sydney",
+        "apiUrl":"http://content.guardianapis.com/world/sydney",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417810102",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/20/1379654361304/Brett-Stewart-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Renee McKay",
+            "altText":"Brett Stewart",
+            "height":"276",
+            "credit":"Renee McKay/Getty Images",
+            "caption":"Manly's Brett Stewart failed a fitness test on Friday morning. Photograph: Renee McKay/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417810103",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/20/1379654349501/Brett-Stewart-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Renee McKay",
+            "altText":"Brett Stewart",
+            "height":"84",
+            "credit":"Renee McKay/Getty Images",
+            "caption":"Brett Stewart runs in a try: NRL Round 17, Manly Warringah Sea Eagles v Parramatta Eels, Brookvale Oval, Monday 8th July 2013. Photo: Copyright © Renee McKay/Action Photographics Photograph: Renee McKay/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/sep/19/nrl-what-to-look-out-for-finals-weekend",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-19T22:34:43Z",
+      "webTitle":"NRL: what to look out for this weekend",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/19/nrl-what-to-look-out-for-finals-weekend",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/19/nrl-what-to-look-out-for-finals-weekend",
+      "fields":{
+        "trailText":"<p><strong>Matt Cleary: </strong>Tries aren't everything; keeping the semitendinosus in order; Fijian power; other finals talking points</p>",
+        "headline":"NRL: what to look out for this weekend",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tq7k",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/19/1379573830513/Sisa-Waqa-of-Melbourne-St-005.jpg",
+        "wordcount":"724",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/melbourne-storm",
+        "type":"keyword",
+        "webTitle":"Melbourne Storm",
+        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
+        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/manly-sea-eagles",
+        "type":"keyword",
+        "webTitle":"Manly Sea Eagles",
+        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cronulla-sharks",
+        "type":"keyword",
+        "webTitle":"Cronulla Sharks",
+        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/newcastle-knights",
+        "type":"keyword",
+        "webTitle":"Newcastle Knights",
+        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
+        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/matt-cleary",
+        "type":"contributor",
+        "webTitle":"Matt Cleary",
+        "webUrl":"http://www.theguardian.com/profile/matt-cleary",
+        "apiUrl":"http://content.guardianapis.com/profile/matt-cleary",
+        "bio":"<p>Matt Cleary is a freelance sports journalist from Sydney who contributes to Inside Sport, Inside Cricket, Inside Rugby and several golf and travel magazines who pay him to play golf on holidays. The Australian Golf Writers Association once gave him an award for playing golf in Ireland. Australian Golf Digest paid him to spend four months playing golf on a full lap of Australia. Each week Rugby League Week pays him to drink beer and watch rugby league. Chances are he has a better job than you</p>",
+        "r2ContributorId":"56746",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/30/1369892888173/Matt-Cleary-002.jpg",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417711321",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/19/1379573844322/Sisa-Waqa-of-Melbourne-St-010.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"Sisa Waqa of Melbourne Storm",
+            "height":"276",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"Sisa Waqa considers who he will hit incredibly hard this weekend.  Photograph: Renee McKay/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417711322",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/19/1379573830513/Sisa-Waqa-of-Melbourne-St-005.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee McKay",
+            "altText":"Sisa Waqa of Melbourne Storm",
+            "height":"84",
+            "credit":"Renee McKay/AAP Image",
+            "caption":"Sisa Waqa considers who he will hit incredibly hard this weekend.  Photograph: Renee McKay/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/sep/18/north-queensland-cowboys-cronulla-sharks-referee",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-09-18T05:09:09Z",
+      "webTitle":"Cowboys' Brent Tate: referee did not cost us finals place",
+      "webUrl":"http://www.theguardian.com/sport/2013/sep/18/north-queensland-cowboys-cronulla-sharks-referee",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/18/north-queensland-cowboys-cronulla-sharks-referee",
+      "fields":{
+        "trailText":"<p>North Queensland have admitted the seventh-tackle refereeing howler did not cost them the NRL elimination final against Cronulla</p>",
+        "headline":"Cowboys' Brent Tate: referee did not cost us finals place",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tp8h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379156251099/Cronulla-Sharks-001.jpg",
+        "wordcount":"456",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"sport/north-queensland-cowboys",
+        "type":"keyword",
+        "webTitle":"North Queensland Cowboys",
+        "webUrl":"http://www.theguardian.com/sport/north-queensland-cowboys",
+        "apiUrl":"http://content.guardianapis.com/sport/north-queensland-cowboys",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cronulla-sharks",
+        "type":"keyword",
+        "webTitle":"Cronulla Sharks",
+        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
+        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nrl",
+        "type":"keyword",
+        "webTitle":"NRL",
+        "webUrl":"http://www.theguardian.com/sport/nrl",
+        "apiUrl":"http://content.guardianapis.com/sport/nrl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/rugbyleague",
+        "type":"keyword",
+        "webTitle":"Rugby league",
+        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
+        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417581221",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379156273002/Cronulla-Sharks-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee Mckay",
+            "altText":"Cronulla Sharks",
+            "height":"276",
+            "credit":"Renee Mckay/AAP Image",
+            "caption":"Cronulla benefitted from a refereeing mistake during their victory over the Cowboys. Photograph: Renee Mckay/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417581222",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/14/1379156251099/Cronulla-Sharks-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Renee Mckay",
+            "altText":"Cronulla Sharks",
+            "height":"84",
+            "credit":"Renee Mckay/AAP Image",
+            "caption":"Beau Ryan celebrates his try with team-mates. Photograph: Renee Mckay/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"sport/video/2013/sep/16/nrl-finals-newcastle-canterbury-play-off",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -1306,2000 +3109,6 @@
             "height":"84",
             "credit":"Renee McKay/Getty Images",
             "caption":"Eels coach Ricky Stuart Photograph: Renee McKay/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/blog/2013/sep/08/nrl-things-we-learned-this-weekend",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-08T13:25:01Z",
-      "webTitle":"NRL: what we learned this weekend",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/08/nrl-things-we-learned-this-weekend",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/08/nrl-things-we-learned-this-weekend",
-      "fields":{
-        "trailText":"<p><strong>Paul Connolly: </strong>Should the minors become more major?; Sam Burgess needs to control himself; and in praise of retiring heroes</p>",
-        "headline":"NRL: what we learned this weekend",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3ttdz",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378643058800/Sam-Burgess-001.jpg",
-        "wordcount":"1261",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/series/nrl-what-we-learned-this-weekend",
-        "type":"series",
-        "webTitle":"NRL: what we learned this weekend",
-        "webUrl":"http://www.theguardian.com/sport/series/nrl-what-we-learned-this-weekend",
-        "apiUrl":"http://content.guardianapis.com/sport/series/nrl-what-we-learned-this-weekend",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sydney-roosters",
-        "type":"keyword",
-        "webTitle":"Sydney Roosters",
-        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
-        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/south-sydney-rabbitohs",
-        "type":"keyword",
-        "webTitle":"South Sydney Rabbitohs",
-        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
-        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"profile/paul-connolly",
-        "type":"contributor",
-        "webTitle":"Paul Connolly",
-        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
-        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
-        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
-        "r2ContributorId":"56450",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416790208",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378643071540/Sam-Burgess-006.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Dean Lewins",
-            "altText":"Sam Burgess",
-            "height":"276",
-            "credit":"Dean Lewins/AAP Image",
-            "caption":"Sam Burgess was at the centre of some questionable incidents against the Roosters.  Photograph: Dean Lewins/AAP Image",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416790209",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378643058800/Sam-Burgess-001.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Dean Lewins",
-            "altText":"Sam Burgess",
-            "height":"84",
-            "credit":"Dean Lewins/AAP Image",
-            "caption":"Sam Burgess was at the centre of some questionable incidents against the Roosters.  Photograph: Dean Lewins/AAP Image",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/08/manly-sea-eagles-penrith-newcastle-parramatta",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-08T07:58:00Z",
-      "webTitle":"Manly will face Roosters after defeat to Penrith Panthers",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/08/manly-sea-eagles-penrith-newcastle-parramatta",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/08/manly-sea-eagles-penrith-newcastle-parramatta",
-      "fields":{
-        "trailText":"<p>Manly will play minor premiers Sydney Roosters, while Newcastle thrashed the Eels</p>",
-        "headline":"Manly will face Roosters after defeat to Penrith Panthers",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3ttcb",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378626770968/Penrith-v-Manly-003.jpg",
-        "wordcount":"447",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/manly-sea-eagles",
-        "type":"keyword",
-        "webTitle":"Manly Sea Eagles",
-        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
-        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/newcastle-knights",
-        "type":"keyword",
-        "webTitle":"Newcastle Knights",
-        "webUrl":"http://www.theguardian.com/sport/newcastle-knights",
-        "apiUrl":"http://content.guardianapis.com/sport/newcastle-knights",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/parramatta-eels",
-        "type":"keyword",
-        "webTitle":"Parramatta Eels",
-        "webUrl":"http://www.theguardian.com/sport/parramatta-eels",
-        "apiUrl":"http://content.guardianapis.com/sport/parramatta-eels",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/penrith-panthers",
-        "type":"keyword",
-        "webTitle":"Penrith Panthers",
-        "webUrl":"http://www.theguardian.com/sport/penrith-panthers",
-        "apiUrl":"http://content.guardianapis.com/sport/penrith-panthers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416781503",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378626787530/Penrith-v-Manly-008.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Grant Trouville",
-            "altText":"Penrith v Manly",
-            "height":"276",
-            "credit":"Grant Trouville/AAP Image",
-            "caption":"James Segeyaro attacks during Penrith's victory over Manly.  Photograph: Grant Trouville/AAP Image",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416781504",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/8/1378626770968/Penrith-v-Manly-003.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Grant Trouville",
-            "altText":"Penrith v Manly",
-            "height":"84",
-            "credit":"Grant Trouville/AAP Image",
-            "caption":"James Segeyaro attacks during Penrith's victory over Manly.  Photograph: Grant Trouville/AAP Image",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/07/dragons-warriors-storm-titans-nrl",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-07T10:42:00Z",
-      "webTitle":"Warriors and Titans miss out as Cowboys make finals | NRL round-up",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/07/dragons-warriors-storm-titans-nrl",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/07/dragons-warriors-storm-titans-nrl",
-      "fields":{
-        "trailText":"<p><strong>NRL round-up: </strong>Melbourne beat Titans in a golden-point thriller as the Cowboys made it to the finals</p>",
-        "headline":"Warriors and Titans miss out as Cowboys make finals",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tt6v",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/7/1378550403014/Melbourne-Storm-celebrate-001.jpg",
-        "wordcount":"907",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/st-george-illawarra-dragons",
-        "type":"keyword",
-        "webTitle":"St George Illawarra Dragons",
-        "webUrl":"http://www.theguardian.com/sport/st-george-illawarra-dragons",
-        "apiUrl":"http://content.guardianapis.com/sport/st-george-illawarra-dragons",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/new-zealand-warriors",
-        "type":"keyword",
-        "webTitle":"New Zealand Warriors",
-        "webUrl":"http://www.theguardian.com/sport/new-zealand-warriors",
-        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-warriors",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/gold-coast-titans",
-        "type":"keyword",
-        "webTitle":"Gold Coast Titans",
-        "webUrl":"http://www.theguardian.com/sport/gold-coast-titans",
-        "apiUrl":"http://content.guardianapis.com/sport/gold-coast-titans",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/melbourne-storm",
-        "type":"keyword",
-        "webTitle":"Melbourne Storm",
-        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
-        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416745205",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/7/1378550353424/Melbourne-Storm-celebrate-001.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Ian Knight",
-            "altText":"Melbourne Storm celebrate",
-            "height":"276",
-            "credit":"Ian Knight/AAP Image",
-            "caption":"Melbourne Storm celebrate during their victory over the Titans.  Photograph: Ian Knight/AAP Image",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416745206",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/7/1378550403014/Melbourne-Storm-celebrate-001.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Ian Knight",
-            "altText":"Melbourne Storm celebrate",
-            "height":"84",
-            "credit":"Ian Knight/AAP Image",
-            "caption":"Melbourne Storm celebrate during their victory over the Titans.  Photograph: Ian Knight/AAP Image",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/06/south-sydney-rabbitohs-roosters-nrl-match-report",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-06T12:13:50Z",
-      "webTitle":"South Sydney Rabbitohs 12-24 Sydney Roosters | NRL match report",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/06/south-sydney-rabbitohs-roosters-nrl-match-report",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/06/south-sydney-rabbitohs-roosters-nrl-match-report",
-      "fields":{
-        "trailText":"<p>The Sydney Roosters are the new NRL minor premiers after coming from behind to beat bitter rivals South Sydney 24-12 </p>",
-        "headline":"Roosters wrap up minor premiership after beating Rabbitohs",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3thhg",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/6/1378468423465/Roosters-celebrate-003.jpg",
-        "wordcount":"472",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/south-sydney-rabbitohs",
-        "type":"keyword",
-        "webTitle":"South Sydney Rabbitohs",
-        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
-        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sydney-roosters",
-        "type":"keyword",
-        "webTitle":"Sydney Roosters",
-        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
-        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416672195",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/6/1378468459974/Roosters-celebrate-008.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Dean Lewins",
-            "altText":"Roosters celebrate",
-            "height":"276",
-            "credit":"Dean Lewins/AAP Image",
-            "caption":"The Roosters Aidan Guerra celebrates his try during his side's victory over the Rabbitohs.  Photograph: Dean Lewins/AAP Image",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416672196",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/6/1378468423465/Roosters-celebrate-003.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Dean Lewins",
-            "altText":"Roosters celebrate",
-            "height":"84",
-            "credit":"Dean Lewins/AAP Image",
-            "caption":"The Roosters Aidan Guerra celebrates his try during his side's victory over the Rabbitohs.  Photograph: Dean Lewins/AAP Image",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/blog/2013/sep/05/nrl-what-to-look-out-for-this-weekend",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-05T21:47:00Z",
-      "webTitle":"NRL: what to look out for this weekend",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/05/nrl-what-to-look-out-for-this-weekend",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/05/nrl-what-to-look-out-for-this-weekend",
-      "fields":{
-        "trailText":"<p><strong>Matt Cleary: </strong>A Roosters-Rabbitohs blockbuster; farewell to thrills; thoughts on Barba; other talking points</p>",
-        "headline":"NRL: what to look out for this weekend",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tgee",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/10/1376089486702/Benji-Marshall-003.jpg",
-        "wordcount":"950",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"profile/matt-cleary",
-        "type":"contributor",
-        "webTitle":"Matt Cleary",
-        "webUrl":"http://www.theguardian.com/profile/matt-cleary",
-        "apiUrl":"http://content.guardianapis.com/profile/matt-cleary",
-        "bio":"<p>Matt Cleary is a freelance sports journalist from Sydney who contributes to Inside Sport, Inside Cricket, Inside Rugby and several golf and travel magazines who pay him to play golf on holidays. The Australian Golf Writers Association once gave him an award for playing golf in Ireland. Australian Golf Digest paid him to spend four months playing golf on a full lap of Australia. Each week Rugby League Week pays him to drink beer and watch rugby league. Chances are he has a better job than you</p>",
-        "r2ContributorId":"56746",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/30/1369892888173/Matt-Cleary-002.jpg",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416630354",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/10/1376089499902/Benji-Marshall-008.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Robb Cox",
-            "altText":"Benji Marshall",
-            "height":"276",
-            "credit":"Robb Cox/AAP Image",
-            "caption":"Benji Marshall has produced some brilliant moments in his NRL career.  Photograph: Robb Cox/AAP Image",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416630355",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/10/1376089486702/Benji-Marshall-003.jpg",
-          "typeData":{
-            "source":"AAP Image",
-            "photographer":"Robb Cox",
-            "altText":"Benji Marshall",
-            "height":"84",
-            "credit":"Robb Cox/AAP Image",
-            "caption":"Benji Marshall in action for his current club, Wests Tigers.  Photograph: Robb Cox/AAP Image",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/05/wati-holmwood-streaker-sentenced-to-jail",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-05T05:21:00Z",
-      "webTitle":"State of Origin streaker sentenced to jail",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/05/wati-holmwood-streaker-sentenced-to-jail",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/05/wati-holmwood-streaker-sentenced-to-jail",
-      "fields":{
-        "trailText":"<p>The rugby league State of Origin streaker Wati Holmwood has been sentenced to three months' jail</p>",
-        "headline":"State of Origin streaker sentenced to jail",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tgdg",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/18/1374106908307/Ati-Holmwood-the-State-of-003.jpg",
-        "wordcount":"320",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/state-of-origin",
-        "type":"keyword",
-        "webTitle":"State of Origin",
-        "webUrl":"http://www.theguardian.com/sport/state-of-origin",
-        "apiUrl":"http://content.guardianapis.com/sport/state-of-origin",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"world/australia",
-        "type":"keyword",
-        "webTitle":"Australia",
-        "webUrl":"http://www.theguardian.com/world/australia",
-        "apiUrl":"http://content.guardianapis.com/world/australia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416561371",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/18/1374106908307/Ati-Holmwood-the-State-of-003.jpg",
-          "typeData":{
-            "source":"Matt King",
-            "photographer":"Getty Images",
-            "altText":"Ati Holmwood, the State of Origin streaker",
-            "height":"84",
-            "credit":"Getty Images/Matt King",
-            "caption":"Ati Holmwood, the State of Origin streaker Photograph: Getty Images/Matt King",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-video-413073646",
-        "relation":"body",
-        "type":"video",
-        "assets":[{
-          "type":"video",
-          "mimeType":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/7/18/130718streaker_FromGAus-16x9.mp4",
-          "typeData":{
-            "source":"Network Nine",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104675742/Streaker-escorted-off-004.jpg",
-            "width":"480",
-            "durationSeconds":"42"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/7/18/130718streaker_FromGAus_3gpLg16x9.3gp",
-          "typeData":{
-            "source":"Network Nine",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104675742/Streaker-escorted-off-004.jpg",
-            "width":"480",
-            "durationSeconds":"42"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/7/18/130718streaker_FromGAus_3gpSml16x9.3gp",
-          "typeData":{
-            "source":"Network Nine",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104675742/Streaker-escorted-off-004.jpg",
-            "width":"480",
-            "durationSeconds":"42"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/2013/7/18/130718streaker_FromGAus/130718streaker_FromGAus.m3u8",
-          "typeData":{
-            "source":"Network Nine",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104670703/Streaker-escorted-off-002.jpg",
-            "height":"360",
-            "durationMinutes":"0",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/18/1374104675742/Streaker-escorted-off-004.jpg",
-            "width":"480",
-            "durationSeconds":"42"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/video/2013/sep/03/nrl-paramatta-eels-illawarra",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-03T09:50:00Z",
-      "webTitle":"NRL round up: Parramatta Eels beat St George Illawarra 26-22",
-      "webUrl":"http://www.theguardian.com/sport/video/2013/sep/03/nrl-paramatta-eels-illawarra",
-      "apiUrl":"http://content.guardianapis.com/sport/video/2013/sep/03/nrl-paramatta-eels-illawarra",
-      "fields":{
-        "trailText":"<p>St George Illawarra Dragons record the club's sixth straight loss in round 25 of the NRL during an away game at Parramatta Stadium</p>",
-        "headline":"NRL round up: Parramatta Eels beat St George Illawarra 26-22",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tenz",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/3/1378196177048/NRL-round-25-010.jpg",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/video",
-        "type":"type",
-        "webTitle":"Video",
-        "webUrl":"http://www.theguardian.com/video",
-        "apiUrl":"http://content.guardianapis.com/video",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-video-416388335",
-        "relation":"main",
-        "type":"video",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/3/1378196177048/NRL-round-25-010.jpg",
-          "typeData":{
-            "source":"AAP",
-            "altText":"NRL round 25",
-            "height":"84",
-            "credit":"AAP",
-            "caption":"NRL round 25 Photograph: AAP",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/3/1378196166735/NRL-round-25-005.jpg",
-          "typeData":{
-            "source":"AAP",
-            "altText":"NRL round 25",
-            "height":"360",
-            "credit":"AAP",
-            "caption":"NRL round 25 Photograph: AAP",
-            "width":"640"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/3/1378196156405/NRL-round-25-002.jpg",
-          "typeData":{
-            "source":"AAP",
-            "altText":"NRL round 25",
-            "height":"90",
-            "credit":"AAP",
-            "caption":"NRL round 25 Photograph: AAP",
-            "width":"120"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/3/1378196159837/NRL-round-25-003.jpg",
-          "typeData":{
-            "source":"AAP",
-            "altText":"NRL round 25",
-            "height":"225",
-            "credit":"AAP",
-            "caption":"NRL round 25 Photograph: AAP",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/3/1378196162264/NRL-round-25-004.jpg",
-          "typeData":{
-            "source":"AAP",
-            "altText":"NRL round 25",
-            "height":"360",
-            "credit":"AAP",
-            "caption":"NRL round 25 Photograph: AAP",
-            "width":"480"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/3/130803NRLroundup_FromGAus-16x9.mp4",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/3/130803NRLroundup_FromGAus_3gpSml16x9.3gp",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/3/130803NRLroundup_FromGAus_3gpLg16x9.3gp",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/2013/9/3/130803NRLroundup_FromGAus/130803NRLroundup_FromGAus.m3u8",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/webm",
-          "file":"http://cdn.theguardian.tv/webM/640/2013/9/3/130803NRLroundup_FromGAus_vpx.webm",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        }]
-      },{
-        "id":"gu-image-416413556",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/3/1378196177048/NRL-round-25-010.jpg",
-          "typeData":{
-            "source":"AAP",
-            "altText":"NRL round 25",
-            "height":"84",
-            "credit":"AAP",
-            "caption":"NRL round 25 Photograph: AAP",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/02/qrl-penis-biting-claim",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-02T04:53:09Z",
-      "webTitle":"Queensland Rugby League weighs into penis biting claim",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/02/qrl-penis-biting-claim",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/02/qrl-penis-biting-claim",
-      "fields":{
-        "trailText":"<p>QRL is monitoring a claim that ex-NRL player Anthony Watts bit another player during a match on the Gold Coast</p>",
-        "headline":"Queensland Rugby League weighs into penis biting claim",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3te46",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378096597941/anthony-watts-003.jpg",
-        "wordcount":"307",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416299086",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378096609835/anthony-watts-008.jpg",
-          "typeData":{
-            "source":"AAPIMAGE",
-            "photographer":"Lee Besford",
-            "altText":"anthony watts",
-            "height":"276",
-            "credit":"Lee Besford/AAPIMAGE",
-            "caption":"Former Sydney Roosters hooker Anthony Watts is facing allegations that he bit the penis of another player in the Gold Coast Rugby League competition. Photograph: AAP/Lee Besford",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416299087",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378096597941/anthony-watts-003.jpg",
-          "typeData":{
-            "source":"AAPIMAGE",
-            "photographer":"Lee Besford",
-            "altText":"anthony watts",
-            "height":"84",
-            "credit":"Lee Besford/AAPIMAGE",
-            "caption":"Sydney Roosters hooker Anthony Watts leaves  Waverley Court this morning. Watts is was appearing to face charges of assault on his long-term girlfriend Shannon Kiss at his Sydney home earlier this week. Thursday April 21st . (AAP Image/Lee Besford) Photograph: Lee Besford/AAPIMAGE",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/sep/02/nrl-sydney-roosters-form-slump",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-02T04:32:53Z",
-      "webTitle":"Jake Friend insists Roosters aren't worried by form slump",
-      "webUrl":"http://www.theguardian.com/sport/2013/sep/02/nrl-sydney-roosters-form-slump",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/sep/02/nrl-sydney-roosters-form-slump",
-      "fields":{
-        "trailText":"<p>Sunday's defeat raises questions heading into Friday's minor premiership decider against South Sydney</p>",
-        "headline":"Jake Friend insists Roosters aren't worried by form slump",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3te3y",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378087142873/sydney-roosters-001.jpg",
-        "wordcount":"377",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sydney-roosters",
-        "type":"keyword",
-        "webTitle":"Sydney Roosters",
-        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
-        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/south-sydney-rabbitohs",
-        "type":"keyword",
-        "webTitle":"South Sydney Rabbitohs",
-        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
-        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/cronulla-sharks",
-        "type":"keyword",
-        "webTitle":"Cronulla Sharks",
-        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
-        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416298940",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378087145634/sydney-roosters-002.jpg",
-          "typeData":{
-            "source":"AAPIMAGE",
-            "photographer":"RENEE MCKAY",
-            "altText":"sydney roosters",
-            "height":"276",
-            "credit":"RENEE MCKAY/AAPIMAGE",
-            "caption":"Sydney Roosters face a big test against South Sydney for the NRL minor premiership on Friday. Photograph: AAP/Renee McKay",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416298941",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378087142873/sydney-roosters-001.jpg",
-          "typeData":{
-            "source":"AAPIMAGE",
-            "photographer":"RENEE MCKAY",
-            "altText":"sydney roosters",
-            "height":"84",
-            "credit":"RENEE MCKAY/AAPIMAGE",
-            "caption":"Luke Douglas is tackled by Frank Paul Nuuausala: NRL Round 25, Roosters v Titans, Allianz Stadium, Sunday 1st September, 2013. Photo: Copyright © Renee McKay/Action Photographics Photograph: RENEE MCKAY/AAPIMAGE",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/blog/2013/sep/02/nrl-five-things-we-learned",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-09-02T02:16:00Z",
-      "webTitle":"NRL: Five things we learned this weekend",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/sep/02/nrl-five-things-we-learned",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/sep/02/nrl-five-things-we-learned",
-      "fields":{
-        "trailText":"<p>The Roosters' defence has crumbled; are the Storm as good as we thought?; and the year that got away</p>",
-        "headline":"NRL: Five things we learned this weekend",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3te3h",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378082853850/gold-coast-titans-002.jpg",
-        "wordcount":"1253",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/series/nrl-what-we-learned-this-weekend",
-        "type":"series",
-        "webTitle":"NRL: what we learned this weekend",
-        "webUrl":"http://www.theguardian.com/sport/series/nrl-what-we-learned-this-weekend",
-        "apiUrl":"http://content.guardianapis.com/sport/series/nrl-what-we-learned-this-weekend",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/paul-connolly",
-        "type":"contributor",
-        "webTitle":"Paul Connolly",
-        "webUrl":"http://www.theguardian.com/profile/paul-connolly",
-        "apiUrl":"http://content.guardianapis.com/profile/paul-connolly",
-        "bio":"<p>Paul Connolly is an <a href=\"http://www.ausport.gov.au/about/events/asc_media_awards/2012_winners\">award-winning</a> sports journalist and the author of three books, including <a href=\"http://www.affirmpress.com.au/the-mighty-bras\">The Mighty Bras</a>, a memoir of a suburban football season. He is also the editor of the upcoming book Rugby League's Greatest Hits</p>",
-        "r2ContributorId":"56450",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/16/1368662336382/Paul-Connolly-003.jpg",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"sport/sydney-roosters",
-        "type":"keyword",
-        "webTitle":"Sydney Roosters",
-        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
-        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/new-zealand-warriors",
-        "type":"keyword",
-        "webTitle":"New Zealand Warriors",
-        "webUrl":"http://www.theguardian.com/sport/new-zealand-warriors",
-        "apiUrl":"http://content.guardianapis.com/sport/new-zealand-warriors",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/manly-sea-eagles",
-        "type":"keyword",
-        "webTitle":"Manly Sea Eagles",
-        "webUrl":"http://www.theguardian.com/sport/manly-sea-eagles",
-        "apiUrl":"http://content.guardianapis.com/sport/manly-sea-eagles",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/melbourne-storm",
-        "type":"keyword",
-        "webTitle":"Melbourne Storm",
-        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
-        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/penrith-panthers",
-        "type":"keyword",
-        "webTitle":"Penrith Panthers",
-        "webUrl":"http://www.theguardian.com/sport/penrith-panthers",
-        "apiUrl":"http://content.guardianapis.com/sport/penrith-panthers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416403457",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378082853850/gold-coast-titans-002.jpg",
-          "typeData":{
-            "source":"AAPIMAGE",
-            "photographer":"RENEE MCKAY",
-            "altText":"gold coast titans",
-            "height":"84",
-            "credit":"RENEE MCKAY/AAPIMAGE",
-            "caption":"Greg Bird comes up against Jake Friend: NRL Round 25, Roosters v Titans, Allianz Stadium, Sunday 1st September, 2013. Photo: Copyright © Renee McKay/Action Photographics Photograph: RENEE MCKAY/AAPIMAGE",
-            "width":"140"
-          }
-        }]
-      },{
-        "id":"gu-video-416388335",
-        "relation":"body",
-        "type":"video",
-        "assets":[{
-          "type":"video",
-          "mimeType":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/3/130803NRLroundup_FromGAus-16x9.mp4",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/3/130803NRLroundup_FromGAus_3gpSml16x9.3gp",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/3/130803NRLroundup_FromGAus_3gpLg16x9.3gp",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/2013/9/3/130803NRLroundup_FromGAus/130803NRLroundup_FromGAus.m3u8",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/webm",
-          "file":"http://cdn.theguardian.tv/webM/640/2013/9/3/130803NRLroundup_FromGAus_vpx.webm",
-          "typeData":{
-            "source":"AAP",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
-            "width":"480",
-            "durationSeconds":"57"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/2013/aug/30/burgess-brothers-history-south-sydney",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-08-30T15:06:01Z",
-      "webTitle":"Brothers in lore: Burgess quartet make history with South Sydney",
-      "webUrl":"http://www.theguardian.com/sport/2013/aug/30/burgess-brothers-history-south-sydney",
-      "apiUrl":"http://content.guardianapis.com/sport/2013/aug/30/burgess-brothers-history-south-sydney",
-      "fields":{
-        "trailText":"Yorkshire's Sam, Luke, Tom and George Burgess became the first set of four brothers to feature for the same team in 103 years after playing in a NRL game",
-        "headline":"Brothers in lore: Burgess quartet make history with South Sydney",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3td9a",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874903644/The-Burgess-brothers-with-005.jpg",
-        "wordcount":"451",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/rugbyleague",
-        "type":"keyword",
-        "webTitle":"Rugby league",
-        "webUrl":"http://www.theguardian.com/sport/rugbyleague",
-        "apiUrl":"http://content.guardianapis.com/sport/rugbyleague",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/south-sydney-rabbitohs",
-        "type":"keyword",
-        "webTitle":"South Sydney Rabbitohs",
-        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
-        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/features",
-        "type":"tone",
-        "webTitle":"Features",
-        "webUrl":"http://www.theguardian.com/tone/features",
-        "apiUrl":"http://content.guardianapis.com/tone/features",
-        "references":[]
-      },{
-        "id":"profile/andywilson",
-        "type":"contributor",
-        "webTitle":"Andy Wilson",
-        "webUrl":"http://www.theguardian.com/profile/andywilson",
-        "apiUrl":"http://content.guardianapis.com/profile/andywilson",
-        "bio":"<p>Andy Wilson is the Guardian's <a href=\"http://www.guardian.co.uk/sport/rugbyleague\">rugby league</a> correspondent. Follow him on Twitter <a href=\"http://twitter.com/andywiz\">@andywiz</a></p>",
-        "rcsId":"GNL249938",
-        "r2ContributorId":"15381",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/andy_wilson_140x140.jpg",
-        "references":[]
-      },{
-        "id":"theguardian/sport/news",
-        "type":"newspaper-book-section",
-        "webTitle":"News & features",
-        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
-        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"theguardian/sport",
-        "type":"newspaper-book",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"publication/theguardian",
-        "type":"publication",
-        "webTitle":"The Guardian",
-        "webUrl":"http://www.theguardian.com/theguardian/all",
-        "apiUrl":"http://content.guardianapis.com/theguardian/all",
-        "sectionId":"theguardian",
-        "sectionName":"From the Guardian",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416180630",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874899585/The-Burgess-brothers-with-002.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"54",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874900933/The-Burgess-brothers-with-003.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"340",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"480"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874902416/The-Burgess-brothers-with-004.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"130",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874903644/The-Burgess-brothers-with-005.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"84",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874904890/The-Burgess-brothers-with-006.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"132",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874906203/The-Burgess-brothers-with-007.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"168",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874907435/The-Burgess-brothers-with-008.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"180",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874908721/The-Burgess-brothers-with-009.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"228",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874909996/The-Burgess-brothers-with-010.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"276",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874911312/The-Burgess-brothers-with-011.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"372",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874909996/The-Burgess-brothers-with-010.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"276",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416180631",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/30/1377874903644/The-Burgess-brothers-with-005.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Metcalfe",
-            "altText":"The Burgess brothers with mother Julie",
-            "height":"84",
-            "credit":"Mark Metcalfe/Getty Images",
-            "caption":"Tom, George, Luke and Sam Burgess with their mother, Julie, after South Sydney's victory over Wests Tigers in Sydney. Photograph: Mark Metcalfe/Getty Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"sport/blog/2013/aug/30/nrl-five-things-look-for-weekend",
-      "sectionId":"sport",
-      "sectionName":"Sport",
-      "webPublicationDate":"2013-08-30T02:09:07Z",
-      "webTitle":"NRL - five things to look out for this weekend",
-      "webUrl":"http://www.theguardian.com/sport/blog/2013/aug/30/nrl-five-things-look-for-weekend",
-      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/aug/30/nrl-five-things-look-for-weekend",
-      "fields":{
-        "trailText":"<p>The marauding Burgess Brothers; hate runs hot in Brookvale; Big Kade hit hard; Cows in for a roasting; game of pride</p>",
-        "headline":"NRL - five things to look out for this weekend",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tcnk",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2010/5/5/1273073240246/Sam-Burgess-002.jpg",
-        "wordcount":"837",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"sport/nrl",
-        "type":"keyword",
-        "webTitle":"NRL",
-        "webUrl":"http://www.theguardian.com/sport/nrl",
-        "apiUrl":"http://content.guardianapis.com/sport/nrl",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/australia-sport",
-        "type":"keyword",
-        "webTitle":"Australia sport",
-        "webUrl":"http://www.theguardian.com/sport/australia-sport",
-        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/south-sydney-rabbitohs",
-        "type":"keyword",
-        "webTitle":"South Sydney Rabbitohs",
-        "webUrl":"http://www.theguardian.com/sport/south-sydney-rabbitohs",
-        "apiUrl":"http://content.guardianapis.com/sport/south-sydney-rabbitohs",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/wests-tigers",
-        "type":"keyword",
-        "webTitle":"Wests Tigers",
-        "webUrl":"http://www.theguardian.com/sport/wests-tigers",
-        "apiUrl":"http://content.guardianapis.com/sport/wests-tigers",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/parramatta-eels",
-        "type":"keyword",
-        "webTitle":"Parramatta Eels",
-        "webUrl":"http://www.theguardian.com/sport/parramatta-eels",
-        "apiUrl":"http://content.guardianapis.com/sport/parramatta-eels",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/north-queensland-cowboys",
-        "type":"keyword",
-        "webTitle":"North Queensland Cowboys",
-        "webUrl":"http://www.theguardian.com/sport/north-queensland-cowboys",
-        "apiUrl":"http://content.guardianapis.com/sport/north-queensland-cowboys",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/st-george-illawarra-dragons",
-        "type":"keyword",
-        "webTitle":"St George Illawarra Dragons",
-        "webUrl":"http://www.theguardian.com/sport/st-george-illawarra-dragons",
-        "apiUrl":"http://content.guardianapis.com/sport/st-george-illawarra-dragons",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/melbourne-storm",
-        "type":"keyword",
-        "webTitle":"Melbourne Storm",
-        "webUrl":"http://www.theguardian.com/sport/melbourne-storm",
-        "apiUrl":"http://content.guardianapis.com/sport/melbourne-storm",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/cronulla-sharks",
-        "type":"keyword",
-        "webTitle":"Cronulla Sharks",
-        "webUrl":"http://www.theguardian.com/sport/cronulla-sharks",
-        "apiUrl":"http://content.guardianapis.com/sport/cronulla-sharks",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sydney-roosters",
-        "type":"keyword",
-        "webTitle":"Sydney Roosters",
-        "webUrl":"http://www.theguardian.com/sport/sydney-roosters",
-        "apiUrl":"http://content.guardianapis.com/sport/sydney-roosters",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"profile/matt-cleary",
-        "type":"contributor",
-        "webTitle":"Matt Cleary",
-        "webUrl":"http://www.theguardian.com/profile/matt-cleary",
-        "apiUrl":"http://content.guardianapis.com/profile/matt-cleary",
-        "bio":"<p>Matt Cleary is a freelance sports journalist from Sydney who contributes to Inside Sport, Inside Cricket, Inside Rugby and several golf and travel magazines who pay him to play golf on holidays. The Australian Golf Writers Association once gave him an award for playing golf in Ireland. Australian Golf Digest paid him to spend four months playing golf on a full lap of Australia. Each week Rugby League Week pays him to drink beer and watch rugby league. Chances are he has a better job than you</p>",
-        "r2ContributorId":"56746",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/30/1369892888173/Matt-Cleary-002.jpg",
-        "references":[]
-      },{
-        "id":"sport/blog",
-        "type":"blog",
-        "webTitle":"Sportblog",
-        "webUrl":"http://www.theguardian.com/sport/blog",
-        "apiUrl":"http://content.guardianapis.com/sport/blog",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-416127892",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2010/5/5/1273073243787/Sam-Burgess-006.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Kolbe",
-            "altText":"Sam Burgess",
-            "height":"276",
-            "credit":"Mark Kolbe/Getty Images",
-            "caption":"Sam Burgess and his brothers George, Tom and Luke spell bad news for Wests Tigers. Photograph: Mark Kolbe/Getty Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-416127893",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2010/5/5/1273073240246/Sam-Burgess-002.jpg",
-          "typeData":{
-            "source":"Getty Images",
-            "photographer":"Mark Kolbe",
-            "altText":"Sam Burgess",
-            "height":"84",
-            "credit":"Mark Kolbe/Getty Images",
-            "caption":"Sam Burgess will not be released by the South Sydney Rabbitohs for England's fixture against France. Photograph: Mark Kolbe/Getty Images",
             "width":"140"
           }
         }]
