@@ -40,7 +40,7 @@
                 }
                 @trail.mainPicture(620).map{ mainPicture =>
                     <div class="item__image-container">
-                        <img class="item__image" src="" alt="" data-src="@mainPicture.path" />
+                        <img class="item__image" alt="" data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)" />
                     </div>
                 }
             </li>
