@@ -6,6 +6,7 @@
     padding: $baseline 0 $baseline*4;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
+    margin-bottom: 0;
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
@@ -114,12 +115,10 @@
 .article__standfirst {
     @include fs-bodyCopy(3, true);
     text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
     margin-bottom: $baseline*3;
 
     @include mq(tablet) {
         @include fs-bodyCopy(4, true);
-        -webkit-font-smoothing: antialiased;
         margin-bottom: $baseline*4;
     }
 }

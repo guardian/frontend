@@ -6,10 +6,9 @@
     position: relative;
     overflow: hidden;
     margin: 0;
-    padding: $baseline 0 $baseline*3;
+    padding: $baseline 0 $baseline*2;
 
     .relative-timestamp {
-        vertical-align: top;
         display: inline-block;
     }
 }
@@ -25,8 +24,10 @@
 
 .trail__headline {
     @include fs-headline(2);
+    margin-bottom: $baseline*4;
     @include mq(tablet) {
         @include fs-headline(3);
+        margin-bottom: $baseline*6;
     }
 }
 
@@ -56,31 +57,24 @@
 }
 
 .trail__text {
-    @extend %type-7;
-    display: block;
-    clear: left;
-    padding: 0;
-    color: #555555;
+    @include fs-bodyCopy(3, true);
     text-rendering: optimizeLegibility;
+
+    @include mq(tablet) {
+        @include fs-bodyCopy(4, true);
+    }
 
     @include mq(tablet) {
         clear: none;
     }
 }
 
-@include mq(850px) {
-    .trail .img img {
-        width: 160px;
-    }
-}
 
 /* ==========================================================================
    Trail counters
    ========================================================================== */
 
 .trail__count {
-    vertical-align: top;
-
     a,
     a:hover,
     a:focus,
@@ -92,7 +86,7 @@
     }
 
     i {
-        float: left;
+        vertical-align: -3px;
         margin-right: 4px;
     }
     .relative-timestamp + & {
@@ -133,34 +127,42 @@
 
 .trail--featured {
     .trail__headline {
-        margin-bottom: $baseline;
+        @include fs-headline(4);
+        margin-bottom: $baseline*6;
+
+        @include mq(tablet) {
+            @include fs-headline(5);
+            margin-bottom: $baseline*8;
+        }
+    }
+    .trail__img {
+        margin-bottom: $baseline*4;
     }
 }
 
 .trail--thumbnail {
-    .trail__headline {
-        padding: 0;
-        margin-bottom: $baseline;
-    }
-
     .trail__img {
+        float: left;
+        width: 35%;
         margin-right: $gs-gutter;
         margin-bottom: $baseline;
+
+        img {
+            margin-top: 3px; // Align with top of text
+            display: block;
+        }
 
         .ab-expandable-trails--on & {
             margin-bottom: 0;
         }
     }
-
-    .trail__img { width: 35%; }
-
-    .trail__img img {
-        width: $trailblockImgWidth;
-        margin-top: 3px; // Align with top of text
-    }
-
+    .trail__img,
     .trail__text {
-        padding: 0;
+        margin-bottom: $baseline;
+    }
+    .trail__break {
+        clear: both;
+        margin-bottom: $baseline*3;
     }
 }
 
@@ -185,10 +187,12 @@
         background-color: #ffffff;
     }
 
-    .relative-timestamp,
     .trail__headline {
         margin-left: $gutter/2;
         margin-right: $gutter/2;
+    }
+    .relative-timestamp {
+        margin-left: $gutter/2;
     }
 }
 
