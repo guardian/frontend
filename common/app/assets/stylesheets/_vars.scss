@@ -37,20 +37,20 @@ $trailblockImgWidthLarge: 140px;
 @import 'layout/_grid-system';
 
 // Article breakpoints
-$a-leftCol-width:    gs-span(2);
-$a-leftCol-trigger:  gs-span(13) + $gutter*2;
 $a-rightCol-width:   gs-span(4);
-$a-rightCol-trigger: gs-span(11) + $gutter*2;
+$a-rightCol-trigger: gs-span(11) + $gs-gutter*2; // 900px
+$a-leftCol-width:    gs-span(2); // Grows to 3 columns on wide viewports
+$a-leftCol-trigger:  gs-span(13) + $gs-gutter*2; // 1060px
 
 $mq-breakpoints: (
-    (mobile  gs-span(4) + $gutter*2)  // 340px
-    (tablet  gs-span(8) + $gutter*2)  // 660px
-    (desktop gs-span(12) + $gutter*2) // 980px
-    (wide    gs-span(16) + $gutter*2) // 1300px
+    (mobile  gs-span(4)  + $gs-gutter)   // 320px
+    (tablet  gs-span(8)  + $gs-gutter*2) // 660px
+    (desktop gs-span(12) + $gs-gutter*2) // 980px
+    (wide    gs-span(16) + $gs-gutter*2) // 1300px
 
     // Tweakpoints
+    (mobileLandscape gs-span(6) + $gs-gutter) // 480px
     (desktopAd 810px)
-    (mobileLandscape 480px)
 
     // Article layout
     (rightCol $a-rightCol-trigger)

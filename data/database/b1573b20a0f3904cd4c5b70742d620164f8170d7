@@ -2,11 +2,11 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":16760,
+    "total":16862,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
-    "pages":1676,
+    "pages":1687,
     "orderBy":"newest",
     "tag":{
       "id":"football/premierleague",
@@ -22,46 +22,31 @@
       }]
     },
     "results":[{
-      "id":"football/2013/sep/17/swansea-jonjo-shelvey-apologises-liverpool",
+      "id":"football/blog/2013/sep/30/premier-league-talking-points-liverpool",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-09-17T00:05:35Z",
-      "webTitle":"Swansea's Jonjo Shelvey apologises after handing goals to Liverpool",
-      "webUrl":"http://www.theguardian.com/football/2013/sep/17/swansea-jonjo-shelvey-apologises-liverpool",
-      "apiUrl":"http://content.guardianapis.com/football/2013/sep/17/swansea-jonjo-shelvey-apologises-liverpool",
+      "webPublicationDate":"2013-09-30T09:56:00Z",
+      "webTitle":"Premier League: 10 talking points from the weekend's action | Guardian writers",
+      "webUrl":"http://www.theguardian.com/football/blog/2013/sep/30/premier-league-talking-points-liverpool",
+      "apiUrl":"http://content.guardianapis.com/football/blog/2013/sep/30/premier-league-talking-points-liverpool",
       "fields":{
-        "trailText":"The former Liverpool player Jonjo Shelvey apologised to Swansea fans after presenting his old club with two goals in a 2-2 draw",
-        "headline":"Swansea's Jonjo Shelvey apologises after handing goals to Liverpool",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tzc6",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376045335/Jonjo-Shelvey-of-Swansea--003.jpg",
-        "wordcount":"375",
+        "trailText":"<strong>Guardian writers:</strong> Liverpool can make a back-three fashionable again, Flamini is Arsenal's unsung hero and what was Chamakh thinking?",
+        "headline":"Premier League: 10 talking points from the weekend's action",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j69g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/30/1380509813312/Saido-Berahino-003.jpg",
+        "wordcount":"1676",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"football/swansea",
-        "type":"keyword",
-        "webTitle":"Swansea City",
-        "webUrl":"http://www.theguardian.com/football/swansea",
-        "apiUrl":"http://content.guardianapis.com/football/swansea",
+        "id":"football/series/ten-talking-points-weekend-action",
+        "type":"series",
+        "webTitle":"Ten talking points from this weekend's action",
+        "webUrl":"http://www.theguardian.com/football/series/ten-talking-points-weekend-action",
+        "apiUrl":"http://content.guardianapis.com/football/series/ten-talking-points-weekend-action",
         "sectionId":"football",
         "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/65"
-        }]
-      },{
-        "id":"football/liverpool",
-        "type":"keyword",
-        "webTitle":"Liverpool",
-        "webUrl":"http://www.theguardian.com/football/liverpool",
-        "apiUrl":"http://content.guardianapis.com/football/liverpool",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/9"
-        }]
+        "references":[]
       },{
         "id":"football/premierleague",
         "type":"keyword",
@@ -74,24 +59,6 @@
           "type":"pa-football-competition",
           "id":"pa-football-competition/100"
         }]
-      },{
-        "id":"football/michael-laudrup",
-        "type":"keyword",
-        "webTitle":"Michael Laudrup",
-        "webUrl":"http://www.theguardian.com/football/michael-laudrup",
-        "apiUrl":"http://content.guardianapis.com/football/michael-laudrup",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/brendan-rodgers",
-        "type":"keyword",
-        "webTitle":"Brendan Rodgers",
-        "webUrl":"http://www.theguardian.com/football/brendan-rodgers",
-        "apiUrl":"http://content.guardianapis.com/football/brendan-rodgers",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
       },{
         "id":"football/football",
         "type":"keyword",
@@ -111,37 +78,265 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"profile/joe-lovejoy",
-        "type":"contributor",
-        "webTitle":"Joe Lovejoy",
-        "webUrl":"http://www.theguardian.com/profile/joe-lovejoy",
-        "apiUrl":"http://content.guardianapis.com/profile/joe-lovejoy",
-        "r2ContributorId":"33669",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"theguardian/mainsection/sport",
-        "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"theguardian/mainsection",
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/louisetaylor",
+        "type":"contributor",
+        "webTitle":"Louise Taylor",
+        "webUrl":"http://www.theguardian.com/profile/louisetaylor",
+        "apiUrl":"http://content.guardianapis.com/profile/louisetaylor",
+        "bio":"<p>Louise Taylor is north-east football correspondent for the Guardian</p>",
+        "r2ContributorId":"22724",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/09/18/louisetaylor.jpg",
+        "references":[]
+      },{
+        "id":"profile/jamiejackson",
+        "type":"contributor",
+        "webTitle":"Jamie Jackson",
+        "webUrl":"http://www.theguardian.com/profile/jamiejackson",
+        "apiUrl":"http://content.guardianapis.com/profile/jamiejackson",
+        "bio":"<p>Jamie Jackson is the Manchester football correspondent for the Guardian and Observer</p>",
+        "r2ContributorId":"19396",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2008/11/11/jamiejacks.jpg",
+        "references":[]
+      },{
+        "id":"profile/pauldoyle",
+        "type":"contributor",
+        "webTitle":"Paul Doyle",
+        "webUrl":"http://www.theguardian.com/profile/pauldoyle",
+        "apiUrl":"http://content.guardianapis.com/profile/pauldoyle",
+        "bio":"<p>Paul Doyle is the  <br /><a href=\"http://www.guardian.co.uk/football\">chief football writer for guardian.co.uk</a></p>",
+        "rcsId":"GNL034658",
+        "r2ContributorId":"16231",
+        "references":[]
+      },{
+        "id":"profile/jacob-steinberg",
+        "type":"contributor",
+        "webTitle":"Jacob Steinberg",
+        "webUrl":"http://www.theguardian.com/profile/jacob-steinberg",
+        "apiUrl":"http://content.guardianapis.com/profile/jacob-steinberg",
+        "bio":"<p>Jacob is a football and tennis writer for the Guardian</p>",
+        "r2ContributorId":"33875",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/6/1357492202523/Jacob-Steinberg-byline-002.jpg",
+        "references":[]
+      },{
+        "id":"profile/jonny-weeks",
+        "type":"contributor",
+        "webTitle":"Jonny Weeks",
+        "webUrl":"http://www.theguardian.com/profile/jonny-weeks",
+        "apiUrl":"http://content.guardianapis.com/profile/jonny-weeks",
+        "bio":"<p>Jonny Weeks works on the picture desk at the Guardian &amp; Observer and is also a writer and photographer</p>",
+        "r2ContributorId":"35809",
+        "references":[]
+      },{
+        "id":"profile/michael-butler",
+        "type":"contributor",
+        "webTitle":"Michael Butler",
+        "webUrl":"http://www.theguardian.com/profile/michael-butler",
+        "apiUrl":"http://content.guardianapis.com/profile/michael-butler",
+        "bio":"<p>Michael is a freelance writer and subeditor and definitely started supporting Blackburn Rovers before 1994/5, before anyone asks</p>",
+        "r2ContributorId":"53429",
+        "references":[]
+      },{
+        "id":"profile/dominicfifield",
+        "type":"contributor",
+        "webTitle":"Dominic Fifield",
+        "webUrl":"http://www.theguardian.com/profile/dominicfifield",
+        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
+        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
+        "rcsId":"GNL004637",
+        "r2ContributorId":"15597",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/01/dominic_fifield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/richardrae",
+        "type":"contributor",
+        "webTitle":"Richard Rae",
+        "webUrl":"http://www.theguardian.com/profile/richardrae",
+        "apiUrl":"http://content.guardianapis.com/profile/richardrae",
+        "bio":"<p>Richard Rae is a freelance sports writer who has covered cricket, football and rugby of both codes for the Guardian since 2001</p>",
+        "rcsId":"GNL442814",
+        "r2ContributorId":"16332",
+        "references":[]
+      },{
+        "id":"profile/stuartjames",
+        "type":"contributor",
+        "webTitle":"Stuart James",
+        "webUrl":"http://www.theguardian.com/profile/stuartjames",
+        "apiUrl":"http://content.guardianapis.com/profile/stuartjames",
+        "bio":"<p>Stuart James is a <a href=\"http://www.guardian.co.uk/football\">football writer</a> who covers the midlands region for the Guardian. He is a former professional footballer</p>",
+        "rcsId":"GNL014001",
+        "r2ContributorId":"16491",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/stuart_james_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418595951",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/30/1380509819841/Saido-Berahino-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"Saido Berahino",
+            "height":"276",
+            "credit":"Peter Powell/EPA",
+            "caption":"Saido Berahino scored the winner for West Brom against Manchester United at Old Trafford. Photograph: Peter Powell/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418595952",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/30/1380509813312/Saido-Berahino-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Peter Powell",
+            "altText":"Saido Berahino",
+            "height":"84",
+            "credit":"Peter Powell/EPA",
+            "caption":"Saido Berahino Photograph: Peter Powell/EPA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/2013/sep/29/fulham-cardiff-city-premier-league-match-report",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-09-29T22:10:00Z",
+      "webTitle":"Martin Jol realises end could be nigh after Fulham vote of confidence",
+      "webUrl":"http://www.theguardian.com/football/2013/sep/29/fulham-cardiff-city-premier-league-match-report",
+      "apiUrl":"http://content.guardianapis.com/football/2013/sep/29/fulham-cardiff-city-premier-league-match-report",
+      "fields":{
+        "trailText":"Martin Jol made it clear after Fulham's defeat by Cardiff City that his job as manager is under threat",
+        "headline":"Martin Jol knows writing may be on the wall at Fulham if not in the programme",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j65m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380492553862/Martin-Jol-003.jpg",
+        "wordcount":"702",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/martin-jol",
+        "type":"keyword",
+        "webTitle":"Martin Jol",
+        "webUrl":"http://www.theguardian.com/football/martin-jol",
+        "apiUrl":"http://content.guardianapis.com/football/martin-jol",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/fulham",
+        "type":"keyword",
+        "webTitle":"Fulham",
+        "webUrl":"http://www.theguardian.com/football/fulham",
+        "apiUrl":"http://content.guardianapis.com/football/fulham",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/55"
+        }]
+      },{
+        "id":"football/cardiffcity",
+        "type":"keyword",
+        "webTitle":"Cardiff City",
+        "webUrl":"http://www.theguardian.com/football/cardiffcity",
+        "apiUrl":"http://content.guardianapis.com/football/cardiffcity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/52"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"profile/pauldoyle",
+        "type":"contributor",
+        "webTitle":"Paul Doyle",
+        "webUrl":"http://www.theguardian.com/profile/pauldoyle",
+        "apiUrl":"http://content.guardianapis.com/profile/pauldoyle",
+        "bio":"<p>Paul Doyle is the  <br /><a href=\"http://www.guardian.co.uk/football\">chief football writer for guardian.co.uk</a></p>",
+        "rcsId":"GNL034658",
+        "r2ContributorId":"16231",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
         "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
         "references":[]
       },{
         "id":"type/article",
@@ -161,171 +356,67 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417466227",
+        "id":"gu-image-418590117",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376041075/Jonjo-Shelvey-of-Swansea--001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380492559123/Martin-Jol-008.jpg",
           "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
-            "height":"54",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376043946/Jonjo-Shelvey-of-Swansea--002.jpg",
-          "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
-            "height":"130",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376045335/Jonjo-Shelvey-of-Swansea--003.jpg",
-          "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
-            "height":"84",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376046806/Jonjo-Shelvey-of-Swansea--004.jpg",
-          "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
-            "height":"132",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376048313/Jonjo-Shelvey-of-Swansea--005.jpg",
-          "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
-            "height":"168",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376049606/Jonjo-Shelvey-of-Swansea--006.jpg",
-          "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
-            "height":"180",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376052741/Jonjo-Shelvey-of-Swansea--007.jpg",
-          "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
-            "height":"228",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376054127/Jonjo-Shelvey-of-Swansea--008.jpg",
-          "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
+            "source":"REX/BPI",
+            "photographer":"REX/BPI",
+            "altText":"Martin Jol",
             "height":"276",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376054127/Jonjo-Shelvey-of-Swansea--008.jpg",
-          "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
-            "height":"276",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
+            "credit":"REX/BPI/REX/BPI",
+            "caption":"Martin Jol gestures to Fulham's goalscorer Bryan Ruiz during his side's home defeat to Cardiff. Photograph: REX/BPI",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417466228",
+        "id":"gu-image-418590118",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/17/1379376045335/Jonjo-Shelvey-of-Swansea--003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380492553862/Martin-Jol-003.jpg",
           "typeData":{
-            "source":"Liverpool FC via Getty Images",
-            "photographer":"Andrew Powell",
-            "altText":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool",
+            "source":"REX/BPI",
+            "photographer":"REX/BPI",
+            "altText":"Martin Jol",
             "height":"84",
-            "credit":"Andrew Powell/Liverpool FC via Getty Images",
-            "caption":"Jonjo Shelvey of Swansea City celebrates after scoring the opening goal against Liverpool.  Photograph: Andrew Powell/Liverpool FC via Getty Images",
+            "credit":"REX/BPI/REX/BPI",
+            "caption":"Martin Jol Photograph: REX/BPI",
             "width":"140"
           }
         }]
       }],
       "references":[{
         "type":"pa-football-team",
-        "id":"pa-football-team/9"
+        "id":"pa-football-team/52"
       },{
         "type":"pa-football-team",
-        "id":"pa-football-team/65"
+        "id":"pa-football-team/55"
       },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/100"
       }]
     },{
-      "id":"football/2013/sep/16/swansea-city-liverpool-premier-league",
+      "id":"football/2013/sep/29/hull-west-ham-premier-league-match-report",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-09-16T21:09:00Z",
-      "webTitle":"Swansea City 2-2 Liverpool | Premier League match report",
-      "webUrl":"http://www.theguardian.com/football/2013/sep/16/swansea-city-liverpool-premier-league",
-      "apiUrl":"http://content.guardianapis.com/football/2013/sep/16/swansea-city-liverpool-premier-league",
+      "webPublicationDate":"2013-09-29T22:01:01Z",
+      "webTitle":"Hull's Tom Huddlestone could be a hair's breadth from England call-up",
+      "webUrl":"http://www.theguardian.com/football/2013/sep/29/hull-west-ham-premier-league-match-report",
+      "apiUrl":"http://content.guardianapis.com/football/2013/sep/29/hull-west-ham-premier-league-match-report",
       "fields":{
-        "trailText":"<p>Liverpool went top of the Premier League after a 2-2 draw in which Swansea's Jonjo Shelvey had played a bizarre part in all four goals</p>",
-        "headline":"Liverpool confounded as Jonjo Shelvey is Swansea's sinner then saint",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tzaj",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363430901/Swansea-Citys-Jonjo-Shelv-003.jpg",
-        "wordcount":"650",
+        "trailText":"Tom Huddlestone's passing masterclass in Hull's 1-0 home win over West Ham could put the midfielder in line for an England call-up",
+        "headline":"Hull's Tom Huddlestone could be a hair's breadth from England call-up",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j66p",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477298026/Hull-City-v-West-Ham-Unit-003.jpg",
+        "wordcount":"545",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -341,28 +432,28 @@
           "id":"pa-football-competition/100"
         }]
       },{
-        "id":"football/swansea",
+        "id":"football/hullcity",
         "type":"keyword",
-        "webTitle":"Swansea City",
-        "webUrl":"http://www.theguardian.com/football/swansea",
-        "apiUrl":"http://content.guardianapis.com/football/swansea",
+        "webTitle":"Hull City",
+        "webUrl":"http://www.theguardian.com/football/hullcity",
+        "apiUrl":"http://content.guardianapis.com/football/hullcity",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-team",
-          "id":"pa-football-team/65"
+          "id":"pa-football-team/26"
         }]
       },{
-        "id":"football/liverpool",
+        "id":"football/westhamunited",
         "type":"keyword",
-        "webTitle":"Liverpool",
-        "webUrl":"http://www.theguardian.com/football/liverpool",
-        "apiUrl":"http://content.guardianapis.com/football/liverpool",
+        "webTitle":"West Ham United",
+        "webUrl":"http://www.theguardian.com/football/westhamunited",
+        "apiUrl":"http://content.guardianapis.com/football/westhamunited",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-team",
-          "id":"pa-football-team/9"
+          "id":"pa-football-team/43"
         }]
       },{
         "id":"football/football",
@@ -390,30 +481,32 @@
         "apiUrl":"http://content.guardianapis.com/tone/matchreports",
         "references":[]
       },{
-        "id":"profile/joe-lovejoy",
+        "id":"profile/richardrae",
         "type":"contributor",
-        "webTitle":"Joe Lovejoy",
-        "webUrl":"http://www.theguardian.com/profile/joe-lovejoy",
-        "apiUrl":"http://content.guardianapis.com/profile/joe-lovejoy",
-        "r2ContributorId":"33669",
+        "webTitle":"Richard Rae",
+        "webUrl":"http://www.theguardian.com/profile/richardrae",
+        "apiUrl":"http://content.guardianapis.com/profile/richardrae",
+        "bio":"<p>Richard Rae is a freelance sports writer who has covered cricket, football and rugby of both codes for the Guardian since 2001</p>",
+        "rcsId":"GNL442814",
+        "r2ContributorId":"16332",
         "references":[]
       },{
-        "id":"theguardian/mainsection/sport",
+        "id":"theguardian/sport/news",
         "type":"newspaper-book-section",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
         "sectionId":"sport",
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"theguardian/mainsection",
+        "id":"theguardian/sport",
         "type":"newspaper-book",
-        "webTitle":"Main section",
-        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
-        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
-        "sectionId":"news",
-        "sectionName":"News",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
         "references":[]
       },{
         "id":"type/article",
@@ -433,80 +526,208 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417507682",
-        "relation":"body",
+        "id":"gu-image-418584598",
+        "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379360333767/Swansea-Citys-Jonjo-Shelv-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477295221/Hull-City-v-West-Ham-Unit-001.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey",
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
+            "height":"54",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maiga. Photograph: Matthew Lewis/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477296694/Hull-City-v-West-Ham-Unit-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
+            "height":"130",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maiga. Photograph: Matthew Lewis/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477298026/Hull-City-v-West-Ham-Unit-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
+            "height":"84",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maiga. Photograph: Matthew Lewis/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477299336/Hull-City-v-West-Ham-Unit-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
+            "height":"132",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maiga. Photograph: Matthew Lewis/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477300624/Hull-City-v-West-Ham-Unit-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
+            "height":"168",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maiga. Photograph: Matthew Lewis/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477302001/Hull-City-v-West-Ham-Unit-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
+            "height":"180",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maiga. Photograph: Matthew Lewis/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477303545/Hull-City-v-West-Ham-Unit-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
+            "height":"228",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maiga. Photograph: Matthew Lewis/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477304896/Hull-City-v-West-Ham-Unit-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
             "height":"276",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey had a very mixed evening. Photograph: Nick Potts/PA",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maiga. Photograph: Matthew Lewis/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477304896/Hull-City-v-West-Ham-Unit-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
+            "height":"276",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maïga. Photograph: Matthew Lewis/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417507683",
+        "id":"gu-image-418584599",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/16/1379363430901/Swansea-Citys-Jonjo-Shelv-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380477298026/Hull-City-v-West-Ham-Unit-003.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"Nick Potts",
-            "altText":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, at the Liberty Stadium ",
+            "source":"Getty Images",
+            "photographer":"Matthew Lewis",
+            "altText":"Hull City v West Ham United - Premier League",
             "height":"84",
-            "credit":"Nick Potts/PA",
-            "caption":"Swansea City's Jonjo Shelvey and Liverpool's Daniel Sturridge, left, compete for the ball at the Liberty Stadium.  Photograph: Nick Potts/PA",
+            "credit":"Matthew Lewis/Getty Images",
+            "caption":"Another good hair day for Hull's Tom Huddlestone, here against West Ham's Modibo Maiga. Photograph: Matthew Lewis/Getty Images",
             "width":"140"
           }
         }]
       }],
       "references":[{
         "type":"pa-football-team",
-        "id":"pa-football-team/9"
+        "id":"pa-football-team/26"
       },{
         "type":"pa-football-team",
-        "id":"pa-football-team/65"
+        "id":"pa-football-team/43"
       },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/100"
       }]
     },{
-      "id":"football/2013/sep/16/sunderland-lee-cattermole-paolo-di-canio",
+      "id":"football/2013/sep/29/southampton-crystal-palace-match-report",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-09-16T21:00:00Z",
-      "webTitle":"Sunderland manager Paolo Di Canio offers Lee Cattermole a fresh start",
-      "webUrl":"http://www.theguardian.com/football/2013/sep/16/sunderland-lee-cattermole-paolo-di-canio",
-      "apiUrl":"http://content.guardianapis.com/football/2013/sep/16/sunderland-lee-cattermole-paolo-di-canio",
+      "webPublicationDate":"2013-09-29T22:01:00Z",
+      "webTitle":"Southampton in nosebleed territory but soaring Saints are a work in progress",
+      "webUrl":"http://www.theguardian.com/football/2013/sep/29/southampton-crystal-palace-match-report",
+      "apiUrl":"http://content.guardianapis.com/football/2013/sep/29/southampton-crystal-palace-match-report",
       "fields":{
-        "trailText":"Sunderland manager Paolo Di Canio had a 'man-to-man' talk with former captain and said he can make Lee Cattermole a 'better player'",
-        "headline":"Sunderland manager Paolo Di Canio offers Lee Cattermole a fresh start",
+        "trailText":"Southampton's 2-0 defeat of Crystal Palace has lifted Mauricio Pochettino's team to fifth in the Premier League",
+        "headline":"Southampton in nosebleed territory but soaring Saints are a work in progress",
         "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tz2e",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343106931/Soccer---Paolo-Di-Canio-F-003.jpg",
-        "wordcount":"540",
+        "shortUrl":"http://gu.com/p/3j63g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462949985/Dani-Osvaldo-scores-his-f-003.jpg",
+        "wordcount":"545",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"football/sunderland",
+        "id":"football/premierleague",
         "type":"keyword",
-        "webTitle":"Sunderland",
-        "webUrl":"http://www.theguardian.com/football/sunderland",
-        "apiUrl":"http://content.guardianapis.com/football/sunderland",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/southampton",
+        "type":"keyword",
+        "webTitle":"Southampton",
+        "webUrl":"http://www.theguardian.com/football/southampton",
+        "apiUrl":"http://content.guardianapis.com/football/southampton",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-team",
-          "id":"pa-football-team/39"
+          "id":"pa-football-team/18"
+        }]
+      },{
+        "id":"football/crystalpalace",
+        "type":"keyword",
+        "webTitle":"Crystal Palace",
+        "webUrl":"http://www.theguardian.com/football/crystalpalace",
+        "apiUrl":"http://content.guardianapis.com/football/crystalpalace",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/5"
         }]
       },{
         "id":"football/football",
@@ -514,15 +735,6 @@
         "webTitle":"Football",
         "webUrl":"http://www.theguardian.com/football/football",
         "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/paolo-di-canio",
-        "type":"keyword",
-        "webTitle":"Paolo Di Canio",
-        "webUrl":"http://www.theguardian.com/football/paolo-di-canio",
-        "apiUrl":"http://content.guardianapis.com/football/paolo-di-canio",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[]
@@ -536,34 +748,40 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"tone/news",
+        "id":"tone/matchreports",
         "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
         "references":[]
       },{
-        "id":"profile/louisetaylor",
+        "id":"profile/jacob-steinberg",
         "type":"contributor",
-        "webTitle":"Louise Taylor",
-        "webUrl":"http://www.theguardian.com/profile/louisetaylor",
-        "apiUrl":"http://content.guardianapis.com/profile/louisetaylor",
-        "bio":"<p>Louise Taylor is north-east football correspondent for the Guardian</p>",
-        "r2ContributorId":"22724",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/09/18/louisetaylor.jpg",
+        "webTitle":"Jacob Steinberg",
+        "webUrl":"http://www.theguardian.com/profile/jacob-steinberg",
+        "apiUrl":"http://content.guardianapis.com/profile/jacob-steinberg",
+        "bio":"<p>Jacob is a football and tennis writer for the Guardian</p>",
+        "r2ContributorId":"33875",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/6/1357492202523/Jacob-Steinberg-byline-002.jpg",
         "references":[]
       },{
-        "id":"football/premierleague",
-        "type":"keyword",
-        "webTitle":"Premier League",
-        "webUrl":"http://www.theguardian.com/football/premierleague",
-        "apiUrl":"http://content.guardianapis.com/football/premierleague",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/100"
-        }]
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
       },{
         "id":"type/article",
         "type":"type",
@@ -571,707 +789,217 @@
         "webUrl":"http://www.theguardian.com/articles",
         "apiUrl":"http://content.guardianapis.com/articles",
         "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417421198",
+        "id":"gu-image-418584770",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343103879/Soccer---Paolo-Di-Canio-F-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462946960/Dani-Osvaldo-scores-his-f-001.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"54",
-            "credit":"John Walton/PA",
-            "caption":"Sunderland manager Paolo Di Canio insists he needs the 'intensity' of a British midfielder and Lee Cattermole can fit that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Dani Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343105494/Soccer---Paolo-Di-Canio-F-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462948960/Dani-Osvaldo-scores-his-f-002.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"130",
-            "credit":"John Walton/PA",
-            "caption":"Sunderland manager Paolo Di Canio insists he needs the 'intensity' of a British midfielder and Lee Cattermole can fit that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Dani Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343106931/Soccer---Paolo-Di-Canio-F-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462949985/Dani-Osvaldo-scores-his-f-003.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"84",
-            "credit":"John Walton/PA",
-            "caption":"Sunderland manager Paolo Di Canio insists he needs the 'intensity' of a British midfielder and Lee Cattermole can fit that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Dani Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343108234/Soccer---Paolo-Di-Canio-F-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462950987/Dani-Osvaldo-scores-his-f-004.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"132",
-            "credit":"John Walton/PA",
-            "caption":"Sunderland manager Paolo Di Canio insists he needs the 'intensity' of a British midfielder and Lee Cattermole can fit that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Dani Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343109540/Soccer---Paolo-Di-Canio-F-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462952013/Dani-Osvaldo-scores-his-f-005.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"168",
-            "credit":"John Walton/PA",
-            "caption":"Sunderland manager Paolo Di Canio insists he needs the 'intensity' of a British midfielder and Lee Cattermole can fit that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Dani Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343111039/Soccer---Paolo-Di-Canio-F-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462953150/Dani-Osvaldo-scores-his-f-006.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"180",
-            "credit":"John Walton/PA",
-            "caption":"Sunderland manager Paolo Di Canio insists he needs the 'intensity' of a British midfielder and Lee Cattermole can fit that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Dani Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343112343/Soccer---Paolo-Di-Canio-F-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462954283/Dani-Osvaldo-scores-his-f-007.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"228",
-            "credit":"John Walton/PA",
-            "caption":"Sunderland manager Paolo Di Canio insists he needs the 'intensity' of a British midfielder and Lee Cattermole can fit that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Dani Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343113783/Soccer---Paolo-Di-Canio-F-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462955456/Dani-Osvaldo-scores-his-f-008.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"276",
-            "credit":"John Walton/PA",
-            "caption":"Sunderland manager Paolo Di Canio insists he needs the 'intensity' of a British midfielder and Lee Cattermole can fit that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Dani Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343113783/Soccer---Paolo-Di-Canio-F-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462955456/Dani-Osvaldo-scores-his-f-008.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"276",
-            "credit":"John Walton/PA",
-            "caption":"The Sunderland manager, Paolo Di Canio, insists he needs the 'intensity' of a British midfielder and Lee Cattermole fits that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Daniel Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417421199",
+        "id":"gu-image-418584771",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379343106931/Soccer---Paolo-Di-Canio-F-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380462949985/Dani-Osvaldo-scores-his-f-003.jpg",
           "typeData":{
-            "source":"PA",
-            "photographer":"John Walton",
-            "altText":"Soccer - Paolo Di Canio File Photo",
+            "source":"Action Images",
+            "photographer":"Adam Holt",
+            "altText":"Dani Osvaldo scores his first goals for the Saints",
             "height":"84",
-            "credit":"John Walton/PA",
-            "caption":"Sunderland manager Paolo Di Canio insists he needs the 'intensity' of a British midfielder and Lee Cattermole can fit that bill. Photograph: John Walton/PA",
+            "credit":"Adam Holt/Action Images",
+            "caption":"Dani Osvaldo celebrates after scoring the first goal of Southampton's 2-0 win against Crystal Palace. Photograph: Adam Holt/Action Images",
             "width":"140"
           }
         }]
       }],
       "references":[{
         "type":"pa-football-team",
-        "id":"pa-football-team/39"
+        "id":"pa-football-team/5"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/18"
       },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/100"
       }]
     },{
-      "id":"football/2013/sep/16/premierleague-liverpool",
+      "id":"football/blog/2013/sep/29/david-moyes-manchester-united",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-09-16T20:56:00Z",
-      "webTitle":"Swansea City 2-2 Liverpool – as it happened | Georgina Turner",
-      "webUrl":"http://www.theguardian.com/football/2013/sep/16/premierleague-liverpool",
-      "apiUrl":"http://content.guardianapis.com/football/2013/sep/16/premierleague-liverpool",
+      "webPublicationDate":"2013-09-29T22:00:01Z",
+      "webTitle":"David Moyes at Manchester United: where is it all going wrong? | Jamie Jackson",
+      "webUrl":"http://www.theguardian.com/football/blog/2013/sep/29/david-moyes-manchester-united",
+      "apiUrl":"http://content.guardianapis.com/football/blog/2013/sep/29/david-moyes-manchester-united",
       "fields":{
-        "trailText":"<p><strong>Minute-by-minute report:</strong> Liverpool hung on for a draw in South Wales to return to the top of the Premier League table</p>",
-        "headline":"Swansea City 2-2 Liverpool – as it happened",
+        "trailText":"<strong>Jamie Jackson:</strong> Six reasons why David Moyes is struggling to settle in at Old Trafford",
+        "headline":"David Moyes at Manchester United: where is it all going wrong?",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tz69",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/16/1379348948133/Swansea-v-Liverpool-005.jpg",
-        "wordcount":"1",
+        "shortUrl":"http://gu.com/p/3j63t",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466140880/David-Moyes-and-Steve-Cla-003.jpg",
+        "wordcount":"903",
         "liveBloggingNow":"false"
       },
       "tags":[{
-        "id":"football/swansea",
+        "id":"football/manchester-united",
         "type":"keyword",
-        "webTitle":"Swansea City",
-        "webUrl":"http://www.theguardian.com/football/swansea",
-        "apiUrl":"http://content.guardianapis.com/football/swansea",
+        "webTitle":"Manchester United",
+        "webUrl":"http://www.theguardian.com/football/manchester-united",
+        "apiUrl":"http://content.guardianapis.com/football/manchester-united",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-team",
-          "id":"pa-football-team/65"
+          "id":"pa-football-team/12"
         }]
       },{
-        "id":"football/liverpool",
+        "id":"football/david-moyes",
         "type":"keyword",
-        "webTitle":"Liverpool",
-        "webUrl":"http://www.theguardian.com/football/liverpool",
-        "apiUrl":"http://content.guardianapis.com/football/liverpool",
+        "webTitle":"David Moyes",
+        "webUrl":"http://www.theguardian.com/football/david-moyes",
+        "apiUrl":"http://content.guardianapis.com/football/david-moyes",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/westbrom",
+        "type":"keyword",
+        "webTitle":"West Bromwich Albion",
+        "webUrl":"http://www.theguardian.com/football/westbrom",
+        "apiUrl":"http://content.guardianapis.com/football/westbrom",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-team",
-          "id":"pa-football-team/9"
+          "id":"pa-football-team/42"
         }]
-      },{
-        "id":"football/premierleague",
-        "type":"keyword",
-        "webTitle":"Premier League",
-        "webUrl":"http://www.theguardian.com/football/premierleague",
-        "apiUrl":"http://content.guardianapis.com/football/premierleague",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/100"
-        }]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.theguardian.com/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      },{
-        "id":"tone/blog",
-        "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"profile/georginaturner",
-        "type":"contributor",
-        "webTitle":"Georgina Turner",
-        "webUrl":"http://www.theguardian.com/profile/georginaturner",
-        "apiUrl":"http://content.guardianapis.com/profile/georginaturner",
-        "bio":"<p>Georgina Turner is a freelance writer, usually on the subject of sport but sometimes on even less important things, like the telly</p>",
-        "rcsId":"GNL014313",
-        "r2ContributorId":"15663",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/1/23/1232728139781/gturner.jpg",
-        "references":[]
-      },{
-        "id":"tone/minutebyminute",
-        "type":"tone",
-        "webTitle":"Minute by minutes",
-        "webUrl":"http://www.theguardian.com/tone/minutebyminute",
-        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367248181/31b265ad-2fc4-4126-b536-bcde979e32a5-460x276.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367248181/31b265ad-2fc4-4126-b536-bcde979e32a5-460x276.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"276",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367248649/31b265ad-2fc4-4126-b536-bcde979e32a5-1020x612.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367248649/31b265ad-2fc4-4126-b536-bcde979e32a5-1020x612.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"612",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"1020"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367248894/31b265ad-2fc4-4126-b536-bcde979e32a5-140x84.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367248894/31b265ad-2fc4-4126-b536-bcde979e32a5-140x84.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"84",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367249046/31b265ad-2fc4-4126-b536-bcde979e32a5-620x372.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367249046/31b265ad-2fc4-4126-b536-bcde979e32a5-620x372.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"372",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"620"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367249237/31b265ad-2fc4-4126-b536-bcde979e32a5-380x228.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367249237/31b265ad-2fc4-4126-b536-bcde979e32a5-380x228.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"228",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367249719/31b265ad-2fc4-4126-b536-bcde979e32a5-2060x1236.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367249719/31b265ad-2fc4-4126-b536-bcde979e32a5-2060x1236.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"1236",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"2060"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367250865/31b265ad-2fc4-4126-b536-bcde979e32a5-2048x1536.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367250865/31b265ad-2fc4-4126-b536-bcde979e32a5-2048x1536.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"1536",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"2048"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367251738/31b265ad-2fc4-4126-b536-bcde979e32a5-300x180.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367251738/31b265ad-2fc4-4126-b536-bcde979e32a5-300x180.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"180",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367251917/31b265ad-2fc4-4126-b536-bcde979e32a5-540x324.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367251917/31b265ad-2fc4-4126-b536-bcde979e32a5-540x324.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"324",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"540"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367252172/31b265ad-2fc4-4126-b536-bcde979e32a5-1024x768.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367252172/31b265ad-2fc4-4126-b536-bcde979e32a5-1024x768.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"768",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"1024"
-          }
-        },{
-          "type":"image",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367252448/31b265ad-2fc4-4126-b536-bcde979e32a5-220x132.jpeg",
-          "typeData":{
-            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/16/1379367252448/31b265ad-2fc4-4126-b536-bcde979e32a5-220x132.jpeg",
-            "source":"  Rogan Thomson/ActionPlus/Corbis",
-            "photographer":"Rogan Thomson",
-            "altText":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals.",
-            "height":"132",
-            "credit":"Rogan Thomson/  Rogan Thomson/ActionPlus/Corbis",
-            "caption":"Jonjo Shelvey scored and made Swansea's equaliser, but was at fault for both Liverpool goals. Photograph: Rogan Thomson/ActionPlus/Corbis",
-            "mediaId":"gu-fc-6822d0f5-9a79-47e3-a3f0-7f169e9c98ac",
-            "width":"220"
-          }
-        }]
-      }],
-      "references":[{
-        "type":"pa-football-team",
-        "id":"pa-football-team/9"
-      },{
-        "type":"pa-football-team",
-        "id":"pa-football-team/65"
-      },{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/100"
-      }]
-    },{
-      "id":"media/2013/sep/16/paddy-power-ads-homophobia-football",
-      "sectionId":"media",
-      "sectionName":"Media",
-      "webPublicationDate":"2013-09-16T09:22:54Z",
-      "webTitle":"Paddy Power ads back push to tackle homophobia in football",
-      "webUrl":"http://www.theguardian.com/media/2013/sep/16/paddy-power-ads-homophobia-football",
-      "apiUrl":"http://content.guardianapis.com/media/2013/sep/16/paddy-power-ads-homophobia-football",
-      "fields":{
-        "trailText":"Bookmaker joins forces with Stonewall for campaign that includes sending rainbow laces to top English and Scottish clubs. By <strong>Mark Sweney</strong>",
-        "headline":"Paddy Power ads back push to tackle homophobia in football",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tnj6",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321915782/Paddy-Powers-Right-Behind-003.jpg",
-        "wordcount":"337",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"media/advertising",
-        "type":"keyword",
-        "webTitle":"Advertising",
-        "webUrl":"http://www.theguardian.com/media/advertising",
-        "apiUrl":"http://content.guardianapis.com/media/advertising",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"media/media",
-        "type":"keyword",
-        "webTitle":"Media",
-        "webUrl":"http://www.theguardian.com/media/media",
-        "apiUrl":"http://content.guardianapis.com/media/media",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"football/premierleague",
-        "type":"keyword",
-        "webTitle":"Premier League",
-        "webUrl":"http://www.theguardian.com/football/premierleague",
-        "apiUrl":"http://content.guardianapis.com/football/premierleague",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/100"
-        }]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.theguardian.com/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"world/gay-rights",
-        "type":"keyword",
-        "webTitle":"Gay rights",
-        "webUrl":"http://www.theguardian.com/world/gay-rights",
-        "apiUrl":"http://content.guardianapis.com/world/gay-rights",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"society/sexuality",
-        "type":"keyword",
-        "webTitle":"Sexuality",
-        "webUrl":"http://www.theguardian.com/society/sexuality",
-        "apiUrl":"http://content.guardianapis.com/society/sexuality",
-        "sectionId":"society",
-        "sectionName":"Society",
-        "references":[]
-      },{
-        "id":"uk/uk",
-        "type":"keyword",
-        "webTitle":"UK news",
-        "webUrl":"http://www.theguardian.com/uk/uk",
-        "apiUrl":"http://content.guardianapis.com/uk/uk",
-        "sectionId":"uk-news",
-        "sectionName":"UK news",
-        "references":[]
-      },{
-        "id":"profile/marksweney",
-        "type":"contributor",
-        "webTitle":"Mark Sweney",
-        "webUrl":"http://www.theguardian.com/profile/marksweney",
-        "apiUrl":"http://content.guardianapis.com/profile/marksweney",
-        "bio":"<p>Mark Sweney is media business correspondent at <a href=\"http://www.MediaGuardian.co.uk\">MediaGuardian.co.uk</a>. He joined in March 2006. Previously he worked at Haymarket Publishing for six years, primarily as a news reporter, on Revolution, Campaign and Marketing weekly magazines. He is a New Zealander</p>",
-        "r2ContributorId":"19516",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/16/mark_sweney_140x140.jpg",
-        "references":[]
-      },{
-        "id":"tone/news",
-        "type":"tone",
-        "webTitle":"News",
-        "webUrl":"http://www.theguardian.com/tone/news",
-        "apiUrl":"http://content.guardianapis.com/tone/news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417378864",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321912910/Paddy-Powers-Right-Behind-001.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"54",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321914735/Paddy-Powers-Right-Behind-002.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"130",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321915782/Paddy-Powers-Right-Behind-003.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"84",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321916853/Paddy-Powers-Right-Behind-004.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"132",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321917912/Paddy-Powers-Right-Behind-005.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"168",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321918998/Paddy-Powers-Right-Behind-006.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"180",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321920121/Paddy-Powers-Right-Behind-007.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"228",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321921203/Paddy-Powers-Right-Behind-008.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"276",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321921203/Paddy-Powers-Right-Behind-008.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"276",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad: aims to battle homophobia in football",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417378865",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379321915782/Paddy-Powers-Right-Behind-003.jpg",
-          "typeData":{
-            "source":"PR",
-            "altText":"Paddy Power's Right Behind Gay Footballers ad",
-            "height":"84",
-            "credit":"PR",
-            "caption":"Paddy Power's Right Behind Gay Footballers ad",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/100"
-      }]
-    },{
-      "id":"football/blog/2013/sep/16/premier-league-talking-points-football",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-09-16T08:00:00Z",
-      "webTitle":"Premier League: 10 talking points from the weekend's action",
-      "webUrl":"http://www.theguardian.com/football/blog/2013/sep/16/premier-league-talking-points-football",
-      "apiUrl":"http://content.guardianapis.com/football/blog/2013/sep/16/premier-league-talking-points-football",
-      "fields":{
-        "trailText":"<p><strong>Guardian writers:</strong> Everton and Manchester City have swapped midfielders to contrasting effect while Sunderland fans should keep the faith</p>",
-        "headline":"Premier League: 10 talking points from the weekend's action",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tnf7",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379278484690/Gareth-Barry-of-Everton-003.jpg",
-        "wordcount":"1712",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/series/ten-talking-points-weekend-action",
-        "type":"series",
-        "webTitle":"Ten talking points from this weekend's action",
-        "webUrl":"http://www.theguardian.com/football/series/ten-talking-points-weekend-action",
-        "apiUrl":"http://content.guardianapis.com/football/series/ten-talking-points-weekend-action",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
       },{
         "id":"sport/blog",
         "type":"blog",
@@ -1312,72 +1040,11 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"tone/blog",
+        "id":"tone/comment",
         "type":"tone",
-        "webTitle":"Blogposts",
-        "webUrl":"http://www.theguardian.com/tone/blog",
-        "apiUrl":"http://content.guardianapis.com/tone/blog",
-        "references":[]
-      },{
-        "id":"profile/jacob-steinberg",
-        "type":"contributor",
-        "webTitle":"Jacob Steinberg",
-        "webUrl":"http://www.theguardian.com/profile/jacob-steinberg",
-        "apiUrl":"http://content.guardianapis.com/profile/jacob-steinberg",
-        "bio":"<p>Jacob is a football and tennis writer for the Guardian</p>",
-        "r2ContributorId":"33875",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/1/6/1357492202523/Jacob-Steinberg-byline-002.jpg",
-        "references":[]
-      },{
-        "id":"profile/sachinnakrani",
-        "type":"contributor",
-        "webTitle":"Sachin Nakrani",
-        "webUrl":"http://www.theguardian.com/profile/sachinnakrani",
-        "apiUrl":"http://content.guardianapis.com/profile/sachinnakrani",
-        "bio":"<p>Sachin Nakrani is a sports journalist for the Guardian specialising in football. He also writes about boxing and cricket</p>",
-        "r2ContributorId":"22725",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/19/1376894358476/Sachin-Nakrani-003.jpg",
-        "references":[]
-      },{
-        "id":"profile/louisetaylor",
-        "type":"contributor",
-        "webTitle":"Louise Taylor",
-        "webUrl":"http://www.theguardian.com/profile/louisetaylor",
-        "apiUrl":"http://content.guardianapis.com/profile/louisetaylor",
-        "bio":"<p>Louise Taylor is north-east football correspondent for the Guardian</p>",
-        "r2ContributorId":"22724",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/09/18/louisetaylor.jpg",
-        "references":[]
-      },{
-        "id":"profile/stuartjames",
-        "type":"contributor",
-        "webTitle":"Stuart James",
-        "webUrl":"http://www.theguardian.com/profile/stuartjames",
-        "apiUrl":"http://content.guardianapis.com/profile/stuartjames",
-        "bio":"<p>Stuart James is a <a href=\"http://www.guardian.co.uk/football\">football writer</a> who covers the midlands region for the Guardian. He is a former professional footballer</p>",
-        "rcsId":"GNL014001",
-        "r2ContributorId":"16491",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/stuart_james_140x140.jpg",
-        "references":[]
-      },{
-        "id":"profile/richardrae",
-        "type":"contributor",
-        "webTitle":"Richard Rae",
-        "webUrl":"http://www.theguardian.com/profile/richardrae",
-        "apiUrl":"http://content.guardianapis.com/profile/richardrae",
-        "bio":"<p>Richard Rae is a freelance sports writer who has covered cricket, football and rugby of both codes for the Guardian since 2001</p>",
-        "rcsId":"GNL442814",
-        "r2ContributorId":"16332",
-        "references":[]
-      },{
-        "id":"profile/andyhunter",
-        "type":"contributor",
-        "webTitle":"Andy Hunter",
-        "webUrl":"http://www.theguardian.com/profile/andyhunter",
-        "apiUrl":"http://content.guardianapis.com/profile/andyhunter",
-        "bio":"<p>Andy Hunter is a football correspondent for the Guardian based in Liverpool</p>",
-        "r2ContributorId":"22565",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2010/7/26/1280168367302/Andy-Hunter-002.jpg",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
         "references":[]
       },{
         "id":"profile/jamiejackson",
@@ -1388,170 +1055,6 @@
         "bio":"<p>Jamie Jackson is the Manchester football correspondent for the Guardian and Observer</p>",
         "r2ContributorId":"19396",
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2008/11/11/jamiejacks.jpg",
-        "references":[]
-      },{
-        "id":"profile/pauldoyle",
-        "type":"contributor",
-        "webTitle":"Paul Doyle",
-        "webUrl":"http://www.theguardian.com/profile/pauldoyle",
-        "apiUrl":"http://content.guardianapis.com/profile/pauldoyle",
-        "bio":"<p>Paul Doyle is the  <br /><a href=\"http://www.guardian.co.uk/football\">chief football writer for guardian.co.uk</a></p>",
-        "rcsId":"GNL034658",
-        "r2ContributorId":"16231",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-417384100",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379278490217/Gareth-Barry-of-Everton-008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Gareth Barry of Everton",
-            "height":"276",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Gareth Barry excelled on his Everton debut against Chelsea, whose own midfield was imbalanced. Photograph: Ed Sykes/Action Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417384101",
-        "relation":"body",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/16/1379325423772/Premier-League-infographi-001.jpg",
-          "typeData":{
-            "source":"WhoScored.com",
-            "altText":"Premier League infographic",
-            "height":"765",
-            "credit":"WhoScored.com",
-            "caption":"Infographic courtesy of <a href=\"http://www.whoscored.com/\">WhoScored.com</a>, where you can find more stats, including live in-game data and unique player and team ratings  Photograph: WhoScored.com",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417384102",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379278484690/Gareth-Barry-of-Everton-003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Ed Sykes",
-            "altText":"Gareth Barry of Everton",
-            "height":"84",
-            "credit":"Ed Sykes/Action Images",
-            "caption":"Gareth Barry of Everton Photograph: Ed Sykes/Action Images",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[{
-        "type":"pa-football-competition",
-        "id":"pa-football-competition/100"
-      }]
-    },{
-      "id":"football/2013/sep/15/hull-cardiff-bruce",
-      "sectionId":"football",
-      "sectionName":"Football",
-      "webPublicationDate":"2013-09-15T22:00:04Z",
-      "webTitle":"Hull must step up in front of goal, says Bruce after Cardiff draw",
-      "webUrl":"http://www.theguardian.com/football/2013/sep/15/hull-cardiff-bruce",
-      "apiUrl":"http://content.guardianapis.com/football/2013/sep/15/hull-cardiff-bruce",
-      "fields":{
-        "trailText":"Bruce accepted a point against Cardiff but felt Hull paid a price that they would have avoided in the Championship for poor finishing",
-        "headline":"Hull must step up in front of goal, says Bruce after Cardiff draw",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tnec",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271741211/Cardiff-Citys-Kevin-Theop-003.jpg",
-        "wordcount":"618",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"football/premierleague",
-        "type":"keyword",
-        "webTitle":"Premier League",
-        "webUrl":"http://www.theguardian.com/football/premierleague",
-        "apiUrl":"http://content.guardianapis.com/football/premierleague",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-competition",
-          "id":"pa-football-competition/100"
-        }]
-      },{
-        "id":"football/hullcity",
-        "type":"keyword",
-        "webTitle":"Hull City",
-        "webUrl":"http://www.theguardian.com/football/hullcity",
-        "apiUrl":"http://content.guardianapis.com/football/hullcity",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/26"
-        }]
-      },{
-        "id":"football/cardiffcity",
-        "type":"keyword",
-        "webTitle":"Cardiff City",
-        "webUrl":"http://www.theguardian.com/football/cardiffcity",
-        "apiUrl":"http://content.guardianapis.com/football/cardiffcity",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/52"
-        }]
-      },{
-        "id":"football/football",
-        "type":"keyword",
-        "webTitle":"Football",
-        "webUrl":"http://www.theguardian.com/football/football",
-        "apiUrl":"http://content.guardianapis.com/football/football",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"sport/sport",
-        "type":"keyword",
-        "webTitle":"Sport",
-        "webUrl":"http://www.theguardian.com/sport/sport",
-        "apiUrl":"http://content.guardianapis.com/sport/sport",
-        "sectionId":"sport",
-        "sectionName":"Sport",
-        "references":[]
-      },{
-        "id":"tone/matchreports",
-        "type":"tone",
-        "webTitle":"Match reports",
-        "webUrl":"http://www.theguardian.com/tone/matchreports",
-        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
-        "references":[]
-      },{
-        "id":"profile/richardrae",
-        "type":"contributor",
-        "webTitle":"Richard Rae",
-        "webUrl":"http://www.theguardian.com/profile/richardrae",
-        "apiUrl":"http://content.guardianapis.com/profile/richardrae",
-        "bio":"<p>Richard Rae is a freelance sports writer who has covered cricket, football and rugby of both codes for the Guardian since 2001</p>",
-        "rcsId":"GNL442814",
-        "r2ContributorId":"16332",
         "references":[]
       },{
         "id":"theguardian/sport/news",
@@ -1589,171 +1092,324 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417343388",
+        "id":"gu-image-418568958",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271738759/Cardiff-Citys-Kevin-Theop-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466138147/David-Moyes-and-Steve-Cla-001.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"54",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Bromwich Albion.  Photograph: Alex Livesey/Getty Images",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271740169/Cardiff-Citys-Kevin-Theop-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466139612/David-Moyes-and-Steve-Cla-002.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"130",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Bromwich Albion.  Photograph: Alex Livesey/Getty Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271741211/Cardiff-Citys-Kevin-Theop-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466140880/David-Moyes-and-Steve-Cla-003.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"84",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Bromwich Albion.  Photograph: Alex Livesey/Getty Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271742252/Cardiff-Citys-Kevin-Theop-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466142362/David-Moyes-and-Steve-Cla-004.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"132",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Bromwich Albion.  Photograph: Alex Livesey/Getty Images",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271743287/Cardiff-Citys-Kevin-Theop-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466143646/David-Moyes-and-Steve-Cla-005.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"168",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Bromwich Albion.  Photograph: Alex Livesey/Getty Images",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271744378/Cardiff-Citys-Kevin-Theop-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466145048/David-Moyes-and-Steve-Cla-006.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"180",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Bromwich Albion.  Photograph: Alex Livesey/Getty Images",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271745482/Cardiff-Citys-Kevin-Theop-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466146347/David-Moyes-and-Steve-Cla-007.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"228",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Bromwich Albion.  Photograph: Alex Livesey/Getty Images",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271746537/Cardiff-Citys-Kevin-Theop-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466147661/David-Moyes-and-Steve-Cla-008.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"276",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Bromwich Albion.  Photograph: Alex Livesey/Getty Images",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271746537/Cardiff-Citys-Kevin-Theop-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466147661/David-Moyes-and-Steve-Cla-008.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"276",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Brom. Photograph: Alex Livesey/Getty Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417343389",
+        "id":"gu-image-418568959",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379271741211/Cardiff-Citys-Kevin-Theop-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380466140880/David-Moyes-and-Steve-Cla-003.jpg",
           "typeData":{
-            "source":"Action Images ",
-            "photographer":"John Clifton",
-            "altText":"Cardiff City's Kevin Theophile-Catherine and Robbie Brady of Hull City",
+            "source":"Getty Images",
+            "photographer":"Alex Livesey",
+            "altText":"David Moyes and Steve Clarke",
             "height":"84",
-            "credit":"John Clifton/Action Images ",
-            "caption":"Kevin Theophile-Catherine, left, and Robbie Brady challenge for the ball as Hull City are held to a 1-1 draw by Cardiff City.\r Photograph: John Clifton/Action Images ",
+            "credit":"Alex Livesey/Getty Images",
+            "caption":"Manchester United's manager David Moyes shows his concern as his side slip to defeat against Steve Clarke's West Bromwich Albion.  Photograph: Alex Livesey/Getty Images",
             "width":"140"
           }
         }]
       }],
       "references":[{
         "type":"pa-football-team",
-        "id":"pa-football-team/26"
+        "id":"pa-football-team/42"
       },{
         "type":"pa-football-team",
-        "id":"pa-football-team/52"
+        "id":"pa-football-team/12"
       },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/100"
       }]
     },{
-      "id":"football/2013/sep/15/aston-villa-newcastle-united-premier-league",
+      "id":"football/2013/sep/29/swansea-city-arsenal-premier-league",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-09-15T22:00:03Z",
-      "webTitle":"Alan Pardew says Yohan Cabaye has been 'perfect' since window shut",
-      "webUrl":"http://www.theguardian.com/football/2013/sep/15/aston-villa-newcastle-united-premier-league",
-      "apiUrl":"http://content.guardianapis.com/football/2013/sep/15/aston-villa-newcastle-united-premier-league",
+      "webPublicationDate":"2013-09-29T22:00:00Z",
+      "webTitle":"Arsène Wenger says confident Arsenal can figure in 'very open' title race",
+      "webUrl":"http://www.theguardian.com/football/2013/sep/29/swansea-city-arsenal-premier-league",
+      "apiUrl":"http://content.guardianapis.com/football/2013/sep/29/swansea-city-arsenal-premier-league",
       "fields":{
-        "trailText":"The Newcastle United manager Alan Pardew has given his playmaker Yohan Cabaye the chance to redeem himself",
-        "headline":"Alan Pardew says Yohan Cabaye has been 'perfect' since window shut",
+        "trailText":"<p>Arsène Wenger has said that six or seven teams can be title contenders in an open title race this season</p>",
+        "headline":"Arsène Wenger says confident Arsenal can figure in 'very open' title race",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j63b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380454914080/Aaron-Ramsey-003.jpg",
+        "wordcount":"741",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/arsenal",
+        "type":"keyword",
+        "webTitle":"Arsenal",
+        "webUrl":"http://www.theguardian.com/football/arsenal",
+        "apiUrl":"http://content.guardianapis.com/football/arsenal",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/1006"
+        }]
+      },{
+        "id":"football/swansea",
+        "type":"keyword",
+        "webTitle":"Swansea City",
+        "webUrl":"http://www.theguardian.com/football/swansea",
+        "apiUrl":"http://content.guardianapis.com/football/swansea",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/65"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/stuartjames",
+        "type":"contributor",
+        "webTitle":"Stuart James",
+        "webUrl":"http://www.theguardian.com/profile/stuartjames",
+        "apiUrl":"http://content.guardianapis.com/profile/stuartjames",
+        "bio":"<p>Stuart James is a <a href=\"http://www.guardian.co.uk/football\">football writer</a> who covers the midlands region for the Guardian. He is a former professional footballer</p>",
+        "rcsId":"GNL014001",
+        "r2ContributorId":"16491",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/stuart_james_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418617147",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380454914080/Aaron-Ramsey-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"Aaron Ramsey",
+            "height":"84",
+            "credit":"David Davies/PA",
+            "caption":"Arsenal's Aaron Ramsey celebrates scoring his side's second goal at Swansea, his eighth of the season.  Photograph: David Davies/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1006"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/65"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/2013/sep/29/aston-villa-manchester-city-premier-league",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-09-29T21:59:00Z",
+      "webTitle":"Manchester City told to shape up for Bayern Munich after Aston Villa defeat",
+      "webUrl":"http://www.theguardian.com/football/2013/sep/29/aston-villa-manchester-city-premier-league",
+      "apiUrl":"http://content.guardianapis.com/football/2013/sep/29/aston-villa-manchester-city-premier-league",
+      "fields":{
+        "trailText":"Manuel Pellegrini has admitted his Manchester City side's defending must improve for the visit of the European champions Bayern Munich on Wednesday",
+        "headline":"Manchester City told to shape up for Bayern Munich after Aston Villa defeat",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tnc7",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258505586/Newcastle-Uniteds-Yohan-C-003.jpg",
-        "wordcount":"646",
+        "shortUrl":"http://gu.com/p/3j64v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459730212/Andreas-Weimann-scores-fo-003.jpg",
+        "wordcount":"757",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -1781,26 +1437,17 @@
           "id":"pa-football-team/2"
         }]
       },{
-        "id":"football/newcastleunited",
+        "id":"football/manchestercity",
         "type":"keyword",
-        "webTitle":"Newcastle United",
-        "webUrl":"http://www.theguardian.com/football/newcastleunited",
-        "apiUrl":"http://content.guardianapis.com/football/newcastleunited",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.theguardian.com/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-team",
-          "id":"pa-football-team/31"
+          "id":"pa-football-team/11"
         }]
-      },{
-        "id":"football/alan-pardew",
-        "type":"keyword",
-        "webTitle":"Alan Pardew",
-        "webUrl":"http://www.theguardian.com/football/alan-pardew",
-        "apiUrl":"http://content.guardianapis.com/football/alan-pardew",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
       },{
         "id":"football/football",
         "type":"keyword",
@@ -1827,15 +1474,14 @@
         "apiUrl":"http://content.guardianapis.com/tone/matchreports",
         "references":[]
       },{
-        "id":"profile/stuartjames",
+        "id":"profile/james-riach",
         "type":"contributor",
-        "webTitle":"Stuart James",
-        "webUrl":"http://www.theguardian.com/profile/stuartjames",
-        "apiUrl":"http://content.guardianapis.com/profile/stuartjames",
-        "bio":"<p>Stuart James is a <a href=\"http://www.guardian.co.uk/football\">football writer</a> who covers the midlands region for the Guardian. He is a former professional footballer</p>",
-        "rcsId":"GNL014001",
-        "r2ContributorId":"16491",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/stuart_james_140x140.jpg",
+        "webTitle":"James Riach",
+        "webUrl":"http://www.theguardian.com/profile/james-riach",
+        "apiUrl":"http://content.guardianapis.com/profile/james-riach",
+        "bio":"<p>James Riach is a sports journalist for the Guardian, specialising in football. He is based in London</p>",
+        "r2ContributorId":"49942",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376408310613/JamesRiach.jpg",
         "references":[]
       },{
         "id":"theguardian/sport/news",
@@ -1873,149 +1519,149 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417334064",
+        "id":"gu-image-418565502",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258502481/Newcastle-Uniteds-Yohan-C-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459727173/Andreas-Weimann-scores-fo-001.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"54",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany, left, and Jose Hart are left floundering as Andreas Weimann scores the winner for Aston Villa. Photograph: Andrew Boyers/Action Images",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258504237/Newcastle-Uniteds-Yohan-C-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459729156/Andreas-Weimann-scores-fo-002.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"130",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany, left, and Jose Hart are left floundering as Andreas Weimann scores the winner for Aston Villa. Photograph: Andrew Boyers/Action Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258505586/Newcastle-Uniteds-Yohan-C-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459730212/Andreas-Weimann-scores-fo-003.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"84",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany, left, and Jose Hart are left floundering as Andreas Weimann scores the winner for Aston Villa. Photograph: Andrew Boyers/Action Images",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258506662/Newcastle-Uniteds-Yohan-C-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459731222/Andreas-Weimann-scores-fo-004.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"132",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany, left, and Jose Hart are left floundering as Andreas Weimann scores the winner for Aston Villa. Photograph: Andrew Boyers/Action Images",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258507768/Newcastle-Uniteds-Yohan-C-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459732251/Andreas-Weimann-scores-fo-005.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"168",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany, left, and Jose Hart are left floundering as Andreas Weimann scores the winner for Aston Villa. Photograph: Andrew Boyers/Action Images",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258508958/Newcastle-Uniteds-Yohan-C-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459733512/Andreas-Weimann-scores-fo-006.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"180",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany, left, and Jose Hart are left floundering as Andreas Weimann scores the winner for Aston Villa. Photograph: Andrew Boyers/Action Images",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258510124/Newcastle-Uniteds-Yohan-C-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459734639/Andreas-Weimann-scores-fo-007.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"228",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany, left, and Jose Hart are left floundering as Andreas Weimann scores the winner for Aston Villa. Photograph: Andrew Boyers/Action Images",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258511181/Newcastle-Uniteds-Yohan-C-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459735785/Andreas-Weimann-scores-fo-008.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"276",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany, left, and Jose Hart are left floundering as Andreas Weimann scores the winner for Aston Villa. Photograph: Andrew Boyers/Action Images",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258511181/Newcastle-Uniteds-Yohan-C-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459735785/Andreas-Weimann-scores-fo-008.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"276",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany and Joe Hart are left floundering as Andreas Weimann scores Villa's winner. Photograph: Andrew Boyers/Action Images",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417334065",
+        "id":"gu-image-418565503",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/9/15/1379258505586/Newcastle-Uniteds-Yohan-C-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380459730212/Andreas-Weimann-scores-fo-003.jpg",
           "typeData":{
             "source":"Action Images",
-            "photographer":"Alan Walter",
-            "altText":"Newcastle United's Yohan Cabaye has been on best behaviour since the transfer window closed",
+            "photographer":"Andrew Boyers",
+            "altText":"Andreas Weimann scores for Aston Villa",
             "height":"84",
-            "credit":"Alan Walter/Action Images",
-            "caption":"Yohan Cabaye, the Newcastle United midfielder, has been on best behaviour since the transfer window closed. Photograph: Alan Walter/Action Images",
+            "credit":"Andrew Boyers/Action Images",
+            "caption":"Manchester City's Vincent Kompany, left, and Jose Hart are left floundering as Andreas Weimann scores the winner for Aston Villa. Photograph: Andrew Boyers/Action Images",
             "width":"140"
           }
         }]
       }],
       "references":[{
         "type":"pa-football-team",
-        "id":"pa-football-team/31"
+        "id":"pa-football-team/11"
       },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/100"
@@ -2024,23 +1670,56 @@
         "id":"pa-football-team/2"
       }]
     },{
-      "id":"football/2013/sep/15/arsene-wenger-mesut-ozil-arsenal-sunderland",
+      "id":"football/2013/sep/29/tottenham-andros-townsend-chelsea",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-09-15T22:00:02Z",
-      "webTitle":"Arsène Wenger: Mesut Özil has given everyone at Arsenal huge lift",
-      "webUrl":"http://www.theguardian.com/football/2013/sep/15/arsene-wenger-mesut-ozil-arsenal-sunderland",
-      "apiUrl":"http://content.guardianapis.com/football/2013/sep/15/arsene-wenger-mesut-ozil-arsenal-sunderland",
+      "webPublicationDate":"2013-09-29T21:30:01Z",
+      "webTitle":"Tottenham's Andros Townsend apologises for 'dive' against Chelsea",
+      "webUrl":"http://www.theguardian.com/football/2013/sep/29/tottenham-andros-townsend-chelsea",
+      "apiUrl":"http://content.guardianapis.com/football/2013/sep/29/tottenham-andros-townsend-chelsea",
       "fields":{
-        "trailText":"The Arsenal manager said Mesut Özil has already shown he is a great player after a man of the match performance in his debut at Sunderland",
-        "headline":"Arsène Wenger: Mesut Özil has given everyone at Arsenal huge lift",
-        "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tncx",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257649386/Mesut-Ozil-003.jpg",
-        "wordcount":"775",
+        "trailText":"The Tottenham winger has admitted he must eradicate diving from his game after his booking against Chelsea",
+        "headline":"Tottenham's Andros Townsend apologises for 'dive' against Chelsea",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j63v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452910951/Andros-Townsend-and-Frank-003.jpg",
+        "wordcount":"526",
         "liveBloggingNow":"false"
       },
       "tags":[{
+        "id":"football/tottenham-hotspur",
+        "type":"keyword",
+        "webTitle":"Tottenham Hotspur",
+        "webUrl":"http://www.theguardian.com/football/tottenham-hotspur",
+        "apiUrl":"http://content.guardianapis.com/football/tottenham-hotspur",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/19"
+        }]
+      },{
+        "id":"football/chelsea",
+        "type":"keyword",
+        "webTitle":"Chelsea",
+        "webUrl":"http://www.theguardian.com/football/chelsea",
+        "apiUrl":"http://content.guardianapis.com/football/chelsea",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/4"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
         "id":"football/premierleague",
         "type":"keyword",
         "webTitle":"Premier League",
@@ -2053,39 +1732,6 @@
           "id":"pa-football-competition/100"
         }]
       },{
-        "id":"football/mesut-ozil",
-        "type":"keyword",
-        "webTitle":"Mesut Ozil",
-        "webUrl":"http://www.theguardian.com/football/mesut-ozil",
-        "apiUrl":"http://content.guardianapis.com/football/mesut-ozil",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/sunderland",
-        "type":"keyword",
-        "webTitle":"Sunderland",
-        "webUrl":"http://www.theguardian.com/football/sunderland",
-        "apiUrl":"http://content.guardianapis.com/football/sunderland",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/39"
-        }]
-      },{
-        "id":"football/arsenal",
-        "type":"keyword",
-        "webTitle":"Arsenal",
-        "webUrl":"http://www.theguardian.com/football/arsenal",
-        "apiUrl":"http://content.guardianapis.com/football/arsenal",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[{
-          "type":"pa-football-team",
-          "id":"pa-football-team/1006"
-        }]
-      },{
         "id":"sport/sport",
         "type":"keyword",
         "webTitle":"Sport",
@@ -2093,6 +1739,254 @@
         "apiUrl":"http://content.guardianapis.com/sport/sport",
         "sectionId":"sport",
         "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/dominicfifield",
+        "type":"contributor",
+        "webTitle":"Dominic Fifield",
+        "webUrl":"http://www.theguardian.com/profile/dominicfifield",
+        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
+        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
+        "rcsId":"GNL004637",
+        "r2ContributorId":"15597",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/01/dominic_fifield_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418561401",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452908220/Andros-Townsend-and-Frank-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"54",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452909937/Andros-Townsend-and-Frank-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"130",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452910951/Andros-Townsend-and-Frank-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"84",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452911952/Andros-Townsend-and-Frank-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"132",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452912938/Andros-Townsend-and-Frank-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"168",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452913956/Andros-Townsend-and-Frank-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"180",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452914995/Andros-Townsend-and-Frank-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"228",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452916122/Andros-Townsend-and-Frank-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"276",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452916122/Andros-Townsend-and-Frank-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"276",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418561402",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/29/1380452910951/Andros-Townsend-and-Frank-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Andros Townsend and Frank Lampard",
+            "height":"84",
+            "credit":"Sang Tan/AP",
+            "caption":"Andros Townsend and Frank Lampard compete for the ball during Tottenham's 1-1 draw with Chelsea at White Hart Lane. Photograph: Sang Tan/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/19"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/4"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/2013/sep/29/tottenham-chelsea-premier-league-match-report",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-09-29T21:30:01Z",
+      "webTitle":"Chelsea's Torres could face further charges for Vertonghen scratch",
+      "webUrl":"http://www.theguardian.com/football/2013/sep/29/tottenham-chelsea-premier-league-match-report",
+      "apiUrl":"http://content.guardianapis.com/football/2013/sep/29/tottenham-chelsea-premier-league-match-report",
+      "fields":{
+        "trailText":"<p>Fernando Torres could miss all Chelsea's October fixtures if the FA punishes him further over an incident with Tottenham's Jan Vertonghen</p>",
+        "headline":"Chelsea's Torres could face further charges for Vertonghen scratch",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j64m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469080238/Fernando-Torres-Jan-Verto-003.jpg",
+        "wordcount":"824",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"football/fernando-torres",
+        "type":"keyword",
+        "webTitle":"Fernando Torres",
+        "webUrl":"http://www.theguardian.com/football/fernando-torres",
+        "apiUrl":"http://content.guardianapis.com/football/fernando-torres",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/tottenham-hotspur",
+        "type":"keyword",
+        "webTitle":"Tottenham Hotspur",
+        "webUrl":"http://www.theguardian.com/football/tottenham-hotspur",
+        "apiUrl":"http://content.guardianapis.com/football/tottenham-hotspur",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/19"
+        }]
+      },{
+        "id":"football/chelsea",
+        "type":"keyword",
+        "webTitle":"Chelsea",
+        "webUrl":"http://www.theguardian.com/football/chelsea",
+        "apiUrl":"http://content.guardianapis.com/football/chelsea",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/4"
+        }]
+      },{
+        "id":"football/fa",
+        "type":"keyword",
+        "webTitle":"The FA",
+        "webUrl":"http://www.theguardian.com/football/fa",
+        "apiUrl":"http://content.guardianapis.com/football/fa",
+        "sectionId":"football",
+        "sectionName":"Football",
         "references":[]
       },{
         "id":"football/football",
@@ -2111,14 +2005,15 @@
         "apiUrl":"http://content.guardianapis.com/tone/matchreports",
         "references":[]
       },{
-        "id":"profile/louisetaylor",
+        "id":"profile/dominicfifield",
         "type":"contributor",
-        "webTitle":"Louise Taylor",
-        "webUrl":"http://www.theguardian.com/profile/louisetaylor",
-        "apiUrl":"http://content.guardianapis.com/profile/louisetaylor",
-        "bio":"<p>Louise Taylor is north-east football correspondent for the Guardian</p>",
-        "r2ContributorId":"22724",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2008/09/18/louisetaylor.jpg",
+        "webTitle":"Dominic Fifield",
+        "webUrl":"http://www.theguardian.com/profile/dominicfifield",
+        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
+        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
+        "rcsId":"GNL004637",
+        "r2ContributorId":"15597",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/01/dominic_fifield_140x140.jpg",
         "references":[]
       },{
         "id":"theguardian/sport/news",
@@ -2156,171 +2051,170 @@
         "references":[]
       }],
       "elements":[{
-        "id":"gu-image-417333731",
+        "id":"gu-image-418586068",
         "relation":"main",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257645913/Mesut-Ozil-001.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469077804/Fernando-Torres-Jan-Verto-001.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"54",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"54"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257647663/Mesut-Ozil-002.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469079191/Fernando-Torres-Jan-Verto-002.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"130",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257649386/Mesut-Ozil-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469080238/Fernando-Torres-Jan-Verto-003.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"84",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"140"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257650449/Mesut-Ozil-004.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469081286/Fernando-Torres-Jan-Verto-004.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"132",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"220"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257651873/Mesut-Ozil-005.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469082310/Fernando-Torres-Jan-Verto-005.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"168",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"280"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257652896/Mesut-Ozil-006.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469083339/Fernando-Torres-Jan-Verto-006.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"180",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"300"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257653961/Mesut-Ozil-007.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469084380/Fernando-Torres-Jan-Verto-007.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"228",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"380"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257655052/Mesut-Ozil-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469085453/Fernando-Torres-Jan-Verto-008.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"276",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"460"
           }
         },{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257655052/Mesut-Ozil-008.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469085453/Fernando-Torres-Jan-Verto-008.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"276",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face-off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"460"
           }
         }]
       },{
-        "id":"gu-image-417333732",
+        "id":"gu-image-418586069",
         "relation":"thumbnail",
         "type":"image",
         "assets":[{
           "type":"image",
           "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/9/15/1379257649386/Mesut-Ozil-003.jpg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/9/29/1380469080238/Fernando-Torres-Jan-Verto-003.jpg",
           "typeData":{
-            "source":"AFP/Getty Images",
-            "photographer":"Ian Macnicol",
-            "altText":"Mesut Ozil",
+            "source":"AP",
+            "photographer":"Sang Tan",
+            "altText":"Fernando Torres, Jan Vertonghen",
             "height":"84",
-            "credit":"Ian Macnicol/AFP/Getty Images",
-            "caption":"Mesut Özil controls the ball on his way to setting up Arsenal's first goal against Sunderland at the Stadium of Light. Photograph: Ian Macnicol/AFP/Getty Images",
+            "credit":"Sang Tan/AP",
+            "caption":"Chelsea's Fernando Torres, left, puts his hand to Tottenham Hotspur's Jan Vertonghen during their face off at White Hart Lane. Photograph: Sang Tan/AP",
             "width":"140"
           }
         }]
       }],
       "references":[{
         "type":"pa-football-team",
-        "id":"pa-football-team/39"
+        "id":"pa-football-team/19"
       },{
         "type":"pa-football-team",
-        "id":"pa-football-team/1006"
+        "id":"pa-football-team/4"
       },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/100"
       }]
     },{
-      "id":"football/2013/sep/15/stoke-mark-hughes-manchester-city",
+      "id":"football/2013/sep/29/stoke-norwich-premier-league-match-report",
       "sectionId":"football",
       "sectionName":"Football",
-      "webPublicationDate":"2013-09-15T22:00:01Z",
-      "webTitle":"Stoke's Mark Hughes cannot resist dig at former employers Manchester City",
-      "webUrl":"http://www.theguardian.com/football/2013/sep/15/stoke-mark-hughes-manchester-city",
-      "apiUrl":"http://content.guardianapis.com/football/2013/sep/15/stoke-mark-hughes-manchester-city",
+      "webPublicationDate":"2013-09-29T20:16:00Z",
+      "webTitle":"Stoke City 0-1 Norwich City | Premier League match report",
+      "webUrl":"http://www.theguardian.com/football/2013/sep/29/stoke-norwich-premier-league-match-report",
+      "apiUrl":"http://content.guardianapis.com/football/2013/sep/29/stoke-norwich-premier-league-match-report",
       "fields":{
-        "trailText":"The Stoke manager questioned Manuel Pellegrini's team selection after his side's 0-0 draw with Manchester City",
-        "headline":"Stoke's Mark Hughes cannot resist dig at former employers Manchester City",
+        "trailText":"<p>Mark Hughes's Stoke were ineffective and Norwich did enough to claim the points in an uninspiring game</p>",
+        "headline":"Jonny Howson's speculative effort is enough as Norwich beat dismal Stoke",
         "hasStoryPackage":"true",
-        "shortUrl":"http://gu.com/p/3tnbk",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256273327/Mark-Hughes-Stoke-City-v--003.jpg",
-        "wordcount":"721",
+        "shortUrl":"http://gu.com/p/3j652",
+        "wordcount":"749",
         "liveBloggingNow":"false"
       },
       "tags":[{
@@ -2348,35 +2242,17 @@
           "id":"pa-football-team/38"
         }]
       },{
-        "id":"football/manchestercity",
+        "id":"football/norwichcity",
         "type":"keyword",
-        "webTitle":"Manchester City",
-        "webUrl":"http://www.theguardian.com/football/manchestercity",
-        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
+        "webTitle":"Norwich City",
+        "webUrl":"http://www.theguardian.com/football/norwichcity",
+        "apiUrl":"http://content.guardianapis.com/football/norwichcity",
         "sectionId":"football",
         "sectionName":"Football",
         "references":[{
           "type":"pa-football-team",
-          "id":"pa-football-team/11"
+          "id":"pa-football-team/14"
         }]
-      },{
-        "id":"football/mark-hughes",
-        "type":"keyword",
-        "webTitle":"Mark Hughes",
-        "webUrl":"http://www.theguardian.com/football/mark-hughes",
-        "apiUrl":"http://content.guardianapis.com/football/mark-hughes",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
-      },{
-        "id":"football/manuel-pellegrini",
-        "type":"keyword",
-        "webTitle":"Manuel Pellegrini",
-        "webUrl":"http://www.theguardian.com/football/manuel-pellegrini",
-        "apiUrl":"http://content.guardianapis.com/football/manuel-pellegrini",
-        "sectionId":"football",
-        "sectionName":"Football",
-        "references":[]
       },{
         "id":"football/football",
         "type":"keyword",
@@ -2396,21 +2272,20 @@
         "sectionName":"Sport",
         "references":[]
       },{
-        "id":"profile/sachinnakrani",
-        "type":"contributor",
-        "webTitle":"Sachin Nakrani",
-        "webUrl":"http://www.theguardian.com/profile/sachinnakrani",
-        "apiUrl":"http://content.guardianapis.com/profile/sachinnakrani",
-        "bio":"<p>Sachin Nakrani is a sports journalist for the Guardian specialising in football. He also writes about boxing and cricket</p>",
-        "r2ContributorId":"22725",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/19/1376894358476/Sachin-Nakrani-003.jpg",
-        "references":[]
-      },{
         "id":"tone/matchreports",
         "type":"tone",
         "webTitle":"Match reports",
         "webUrl":"http://www.theguardian.com/tone/matchreports",
         "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"profile/jonny-weeks",
+        "type":"contributor",
+        "webTitle":"Jonny Weeks",
+        "webUrl":"http://www.theguardian.com/profile/jonny-weeks",
+        "apiUrl":"http://content.guardianapis.com/profile/jonny-weeks",
+        "bio":"<p>Jonny Weeks works on the picture desk at the Guardian &amp; Observer and is also a writer and photographer</p>",
+        "r2ContributorId":"35809",
         "references":[]
       },{
         "id":"theguardian/sport/news",
@@ -2447,153 +2322,13 @@
         "sectionName":"From the Guardian",
         "references":[]
       }],
-      "elements":[{
-        "id":"gu-image-417332523",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256270525/Mark-Hughes-Stoke-City-v--001.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"54",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"54"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256272299/Mark-Hughes-Stoke-City-v--002.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"130",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256273327/Mark-Hughes-Stoke-City-v--003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"84",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256274399/Mark-Hughes-Stoke-City-v--004.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"132",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"220"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256275511/Mark-Hughes-Stoke-City-v--005.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"168",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"280"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256276553/Mark-Hughes-Stoke-City-v--006.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"180",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256277692/Mark-Hughes-Stoke-City-v--007.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"228",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"380"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256278768/Mark-Hughes-Stoke-City-v--008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"276",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"460"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256278768/Mark-Hughes-Stoke-City-v--008.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"276",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"460"
-          }
-        }]
-      },{
-        "id":"gu-image-417332524",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/9/15/1379256273327/Mark-Hughes-Stoke-City-v--003.jpg",
-          "typeData":{
-            "source":"Action Images",
-            "photographer":"Alex Morton",
-            "altText":"Mark Hughes, Stoke City v Manchester City",
-            "height":"84",
-            "credit":"Alex Morton/Action Images",
-            "caption":"Mark Hughes said he was happy with the team Manchester City selected as his decent start at Stoke continued. Photograph: Alex Morton/Action Images",
-            "width":"140"
-          }
-        }]
-      }],
+      "elements":[],
       "references":[{
         "type":"pa-football-team",
         "id":"pa-football-team/38"
       },{
         "type":"pa-football-team",
-        "id":"pa-football-team/11"
+        "id":"pa-football-team/14"
       },{
         "type":"pa-football-competition",
         "id":"pa-football-competition/100"
@@ -3074,7 +2809,7 @@
         "bio":"<p>Rebecca Smithers is consumer affairs correspondent for the <a href=\"http://www.guardian.co.uk/money/consumer-affairs\">Guardian</a></p>",
         "rcsId":"GNL002880",
         "r2ContributorId":"16313",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/rebecca_smithers_140x140.jpg",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/9/25/1380117825699/Rebecca-Smithers-003.jpg",
         "references":[]
       },{
         "id":"tone/news",

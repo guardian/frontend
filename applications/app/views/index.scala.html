@@ -1,0 +1,7 @@
+@(index: services.IndexPage)(implicit request: RequestHeader)
+
+@main(index.page, Switches.all){  }{
+
+    @fragments.indexBody(index)
+
+}
