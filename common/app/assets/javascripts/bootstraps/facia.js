@@ -5,7 +5,6 @@ define([
     //Modules
     'modules/detect',
     'modules/facia/popular',
-    'modules/facia/relativise-timestamp',
     'modules/facia/items-show-more',
     'modules/facia/collection-display-toggle',
     'modules/footballfixtures'
@@ -14,7 +13,6 @@ define([
     bonzo,
     detect,
     popular,
-    RelativiseTimestamp,
     ItemsShowMore,
     CollectionDisplayToggle,
     FootballFixtures
@@ -25,15 +23,6 @@ define([
         showPopular: function () {
             common.mediator.on('page:front:ready', function(config, context) {
                 popular.render(context);
-            });
-        },
-
-        relativiseTimestamps: function () {
-            common.mediator.on('page:front:ready', function(config, context) {
-                common.toArray(context.querySelectorAll('.js-item__timestamp')).forEach(function(timestamp) {
-                    new RelativiseTimestamp(timestamp)
-                        .relativise();
-                });
             });
         },
 
@@ -96,7 +85,6 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.showPopular();
-            modules.relativiseTimestamps();
             modules.showItemsShowMore();
             modules.showFootballFixtures();
             modules.showCollectionDisplayToggle();
