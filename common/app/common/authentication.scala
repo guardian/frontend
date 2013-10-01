@@ -71,6 +71,8 @@ object NonAuthAction {
 class AuthAction(loginRoute: String) extends ExecutionContexts {
   import Play.current
 
+  def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future { f(request) })
+
   def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = Action.async { _ match {
     case authenticatedRequest: AuthenticatedRequest[_] => f(authenticatedRequest)
 
@@ -87,4 +89,23 @@ class AuthAction(loginRoute: String) extends ExecutionContexts {
       }
     }
   }
+}
+
+trait LoginController {
+  val openIdAttributes = Seq(
+    ("email", "http://axschema.org/contact/email"),
+    ("firstname", "http://axschema.org/namePerson/first"),
+    ("lastname", "http://axschema.org/namePerson/last")
+  )
+  val googleOpenIdUrl = "https://www.google.com/accounts/o8/id"
+
+  val loginUrl: String
+  val baseUrl: String //Where to go if there is no loginFromUrl
+
+  def openIdCallback(secure: Boolean)(implicit request: RequestHeader): String
+
+  def login: Action[AnyContent]
+  def loginPost: Action[AnyContent]
+  def openIDCallback: Action[AnyContent]
+  def logout: Action[AnyContent]
 }
