@@ -6,26 +6,36 @@
     position: relative;
     overflow: hidden;
     margin: 0;
-    padding: $baseline*3 0;
-}
+    padding: $baseline 0 $baseline*3;
 
+    .relative-timestamp {
+        vertical-align: top;
+        display: inline-block;
+    }
+}
 .trail + .trail {
-    border-top: 1px solid $medianMushroom;
+    border-top: 1px solid $c-neutral7;
 }
 
-.trail + .trail--gallery,
+.trail--gallery,
 .trail--gallery + .trail {
     border-top: none;
+    padding-top: $baseline*3;
 }
 
-.trail__headline {}
+.trail__headline {
+    @include fs-headline(2);
+    @include mq(tablet) {
+        @include fs-headline(3);
+    }
+}
 
     .trail__headline a,
     .trail__headline a:hover,
     .trail__headline a:focus,
     .trail__headline a:active,
     .trail h2 a {
-        color: #333333;
+        color: $c-neutral1;
     }
 
     .trail__headline a:active {
@@ -69,24 +79,25 @@
    ========================================================================== */
 
 .trail__count {
-    position: absolute;
-    top: $baseline*3;
-    right: 0;
+    vertical-align: top;
 
     a,
     a:hover,
     a:focus,
     a:active {
         @extend %type-11;
-        float: right;
         display: inline-block;
-        margin: 0 0 0 4px;
+        margin: 0 0 0 $gutter/2;
         color: $c-neutral2;
     }
 
     i {
         float: left;
         margin-right: 4px;
+    }
+    .relative-timestamp + & {
+        border-left: 1px solid $c-neutral7;
+        margin-left: 6px;
     }
 }
 
@@ -103,17 +114,6 @@
     i {
         @extend .i-comment-grey;
     }
-}
-
-.trail__count--imagecount {
-    a,
-    a:hover,
-    a:focus,
-    a:active {
-        color: #666666;
-    }
-
-    right: 8px;
 }
 
 
@@ -143,24 +143,20 @@
         margin-bottom: $baseline;
     }
 
-    .media {
-        padding: 0 0 $baseline 0;
-
-        .ab-expandable-trails--on & {
-            padding-bottom: 0;
-        }
-    }
-
-    .media__img { width: 35%; }
-
-    .media__img img {
-        width: $trailblockImgWidth;
-        margin-top: 3px; // Align with top of text
-        margin-bottom: 5px;
+    .trail__img {
+        margin-right: $gs-gutter;
+        margin-bottom: $baseline;
 
         .ab-expandable-trails--on & {
             margin-bottom: 0;
         }
+    }
+
+    .trail__img { width: 35%; }
+
+    .trail__img img {
+        width: $trailblockImgWidth;
+        margin-top: 3px; // Align with top of text
     }
 
     .trail__text {

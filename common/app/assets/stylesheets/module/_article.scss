@@ -3,7 +3,7 @@
 }
 
 .article-zone {
-    padding: 13px 0 14px;
+    padding: $baseline 0 $baseline*4;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
     @include mq(mobileLandscape) {
@@ -12,11 +12,8 @@
     }
     font-weight: bolder;
     line-height: 1;
-    border-bottom: 1px solid $mushroom;
-
-    @include mq(tablet) {
-        border-top: none;
-    }
+    border-bottom: 1px solid $c-neutral7;
+    border-top: 2px solid $c-neutral3;
 
     .article__popular & {
         border-bottom: none;
