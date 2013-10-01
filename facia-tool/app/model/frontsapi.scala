@@ -1,4 +1,4 @@
-package model
+package frontsapi.model
 
 import play.api.libs.json.{Json, JsValue}
 import tools.FaciaApi
