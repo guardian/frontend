@@ -158,13 +158,14 @@ figure {
         @include mq(leftCol) {
             float:left;
             width: gs-span(6) + $gs-gutter;
+            margin-top: 0;
             margin-left: - gs-span(2) + $gs-gutter;
             margin-right: $gs-gutter;
         }
 
         @include mq(wide) {
             width: gs-span(6) + $gs-gutter;
-            margin-left: - gs-span(3) + $gs-gutter;
+            margin-left: - gs-span(4);
         }
     }
 }
