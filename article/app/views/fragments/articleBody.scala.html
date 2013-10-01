@@ -29,9 +29,19 @@
                 <div class="article-v2__main-column">
 
                     @if(!article.hasVideoAtTop) {
-                        @article.mainPicture.map{ mainPicture =>
-                            @article.mainPicture(width=220).map{ smallCrop =>
-                                @fragments.img(mainPicture, smallCrop)
+                        @if(article.hasMainVideo) {
+                            @article.mainVideo.map{ mainVideo =>
+                                <video data-media-id="@mainVideo.id" class="gu-video" controls="controls" poster="">
+                                    @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
+                                        <source src="@url"></source>
+                                    }
+                                </video>
+                            }
+                        } else {
+                            @article.mainPicture.map{ mainPicture =>
+                                @article.mainPicture(width=220).map{ smallCrop =>
+                                    @fragments.img(mainPicture, smallCrop)
+                                }
                             }
                         }
                     }

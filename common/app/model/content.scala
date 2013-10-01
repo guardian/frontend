@@ -26,6 +26,7 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val openGraphImage: String = mainPicture.flatMap(_.url).getOrElse(conf.Configuration.facebook.imageFallback)
+  lazy val bodyImages = imageMap("body")
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -121,6 +122,7 @@ class Content protected (delegate: ApiContent) extends Trail with Tags with Meta
   override lazy val videos: List[VideoElement] = videoMap("main") ++ videoMap("body")
   override lazy val thumbnail: Option[ImageElement] = imageMap("thumbnail").headOption
   override lazy val mainPicture: Option[ImageAsset] = largestMainPicture.orElse(thumbnail.flatMap(_.largestImage))
+  override lazy val mainVideo: Option[VideoElement] = videoMap("main").headOption
 
   private def elements(elementType: String): Map[String,List[Element]] = {
     // Find the elements associated with a given element type, keyed by a relation string.
@@ -149,10 +151,14 @@ class Article(private val delegate: ApiContent) extends Content(delegate) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
   lazy val isReview = tones.exists(_.id == "tone/reviews")
-  lazy val bodyImages = imageMap("body")
+
+  // A legacy body have an embedded video at the top.
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .map(e => e.hasClass("gu-video") && e.tagName() == "video")
     .getOrElse(false)
+
+  // True if the content model has at least one video asset in the 'main' relation.
+  lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
