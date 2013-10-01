@@ -59,17 +59,6 @@
                 text-indent: 28px;
                 text-indent: 2.8rem;
             }
-
-            .bullet {
-                text-indent: 0;
-                margin-left: -24px;
-                margin-left: -2.4rem;
-
-                @include mq(tablet) {
-                    margin-left: -28px;
-                    margin-left: -2.8rem;
-                }
-            }
         }
     }
     > p,
@@ -86,6 +75,9 @@
             margin-top: $baseline*3;
         }
     }
+}
+.no-indent {
+    text-indent: 0 !important;
 }
 
 .from-content-api--small {
