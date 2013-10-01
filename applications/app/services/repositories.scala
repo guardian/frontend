@@ -47,4 +47,4 @@ trait Index extends ConciergeRepository with QueryDefaults {
   }
 }
 
-object Concierges extends Index
+object Concierge extends Index
