@@ -67,19 +67,29 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
     val figures = (body \\ "figure").toList
 
     val baseImg = figures(1)
-    (baseImg \ "@class").text should include("img-base inline-image")
+    (baseImg \ "@class").text should include("img--base img--inline")
     (baseImg \ "img" \ "@class").text should be("gu-image")
     (baseImg \ "img" \ "@width").text should be("140")
 
     val medianImg = figures(2)
-    (medianImg \ "@class").text should include("img-median inline-image")
+    (medianImg \ "@class").text should include("img--median img--inline")
     (medianImg \ "img" \ "@class").text should be("gu-image")
     (medianImg \ "img" \ "@width").text should be("250")
 
     val extendedImg = figures(0)
-    (extendedImg \ "@class").text should include("img-extended")
+    (extendedImg \ "@class").text should include("img--extended")
     (extendedImg \ "img" \ "@class").text should be("gu-image")
     (extendedImg \ "img" \ "@width").text should be("600")
+
+    val landscapeImg = figures(3)
+    (landscapeImg \ "@class").text should include("img--landscape")
+    (landscapeImg \ "img" \ "@class").text should be("gu-image")
+    (landscapeImg \ "img" \ "@width").text should be("500")
+
+    val portaitImg = figures(4)
+    (portaitImg \ "@class").text should include("img--portrait")
+    (portaitImg \ "img" \ "@class").text should be("gu-image")
+    (portaitImg \ "img" \ "@height").text should be("700")
 
     (body \\ "figure").foreach { fig =>
       (fig \ "@itemprop").text should be("associatedMedia")
@@ -191,6 +201,17 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
        <figcaption>Image caption</figcaption>
      </figure>
 
+
+     <figure>
+       <img src='http://www.a.b.c/img2.jpg' alt='Meldrum House in Oldmeldrum\n' width='500' height='100' class='gu-image'/>
+       <figcaption>Image caption</figcaption>
+     </figure>
+
+
+     <figure>
+       <img src='http://www.a.b.c/img2.jpg' alt='Meldrum House in Oldmeldrum\n' width='500' height='700' class='gu-image'/>
+       <figcaption>Image caption</figcaption>
+     </figure>
 
     <p>But first to <a href="http://www.glengarioch.com/verify.php" title="">Glen Garioch distillery</a></p>
   </span>
