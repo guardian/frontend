@@ -102,15 +102,6 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
         verify(api).register(Matchers.anyObject(), Matchers.anyObject(), Matchers.eq(Some("123.456.789.12")))
       }
 
-      "should try to sign the user in after registration" ignore   {
-        // The nested async cause this test fo fail - and we've no way of refactoring them as yet
-       // when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
-        registrationController.processForm()(fakeRequest)
-        // Thread.sleep(500) -- makes tests pass
-        //verify(api).register(Matchers.eq(user), Matchers.same(omnitureData))
-        verify(api).authBrowser(auth, omnitureData)
-      }
-
       "should set login cookies on valid auth response" in Fake {
 
         val result = registrationController.processForm()(fakeRequest)
