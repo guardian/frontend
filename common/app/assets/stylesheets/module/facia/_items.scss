@@ -130,6 +130,7 @@ a.item__link {
 }
 .item__image-container {
     margin-top: $gs-baseline;
+    overflow: hidden;
 }
 .item__image {
     display: block;
@@ -289,6 +290,11 @@ a.item__link {
         .item__image-container {
             display: none;
         }
+    } @else {
+        &.item--without-image .item__standfirst {
+            display: block;
+        }
+
     }
 }
 @mixin card-headline {
