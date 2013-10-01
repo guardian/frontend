@@ -75,7 +75,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
 
       "should create the user with the username, email and password required" in Fake {
         registrationController.processForm()(fakeRequest)
-        verify(userCreationService).createUser("test@example.com", "username", "password", false, false, Matchers.any[Option[String]])
+        verify(userCreationService).createUser(Matchers.eq("test@example.com"), Matchers.eq("username"), Matchers.eq("password"), Matchers.eq(false), Matchers.eq(false), Matchers.any[Option[String]])
       }
 
       "should pass marketing values to the create user service" in Fake {
@@ -102,10 +102,11 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
         verify(api).register(Matchers.anyObject(), Matchers.anyObject(), Matchers.eq(Some("123.456.789.12")))
       }
 
-      "should try to sign the user in after registration" ignore  {
+      "should try to sign the user in after registration" ignore   {
         // The nested async cause this test fo fail - and we've no way of refactoring them as yet
        // when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
         registrationController.processForm()(fakeRequest)
+        // Thread.sleep(500) -- makes tests pass
         //verify(api).register(Matchers.eq(user), Matchers.same(omnitureData))
         verify(api).authBrowser(auth, omnitureData)
       }
