@@ -45,13 +45,17 @@ define([
 
     var popular =  {
 
-        render:  function () {
+        render:  function (config) {
+            var hasSection = config.page && config.page.section !== 'global';
             return ajax({
-                url: '/most-read.json',
+                url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
                 type: 'json',
                 crossOrigin: true
             }).then(
                 function(resp) {
+                    if (resp.fullTrails.length === 0) {
+                        return;
+                    }
                     var $items = bonzo(bonzo.create('<ul class="unstyled items"></ul>'));
                     resp.fullTrails.forEach(function(trail, index) {
                         var $item = bonzo(bonzo.create(
