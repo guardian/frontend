@@ -30,3 +30,15 @@ Add the following to your ```/etc/hosts```:
 ## Now run the setup script:
 
     nginx/setup.sh
+
+## Setup Nginx
+
+You will have to make sure the ```sites-enabled``` folder in included in your ```nginx.conf```:
+    
+    # ...
+    http {
+        include       mime.types;
+        default_type  application/octet-stream;
+        # THIS IS WHAT YOU MUST ADD
+        include sites-enabled/*; 
+    #...
