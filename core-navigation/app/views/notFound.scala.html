@@ -1,0 +1,16 @@
+@(page: Page, popular: MostPopular)(implicit request: RequestHeader)
+
+@main(page, Switches.all){
+}{
+    <section class="front-section zone-@popular.section">
+        <h2 class="section-head zone-color">Oops</h2>
+        <div class="headline-list box-indent"
+             data-link-name="@popular.heading">
+            <ul class="unstyled">
+                @popular.trails.zipWithRowInfo.map{ case (trail, info) =>
+                    <li><span class="count">@info.rowNum</span> @fragments.linkText(trail, info)</li>
+                }
+            </ul>
+        </div>
+    </section>
+}
