@@ -2,11 +2,15 @@
     li {
         display: block;
         overflow: auto;
-        border-bottom: 1px solid #dddddd;
-        padding: $baseline*2 0;
+        border-bottom: 1px solid $c-neutral4;
+        padding: $baseline 0 $baseline*5;
 
         &:last-child {
             border-bottom: none;
+        }
+
+        @include mq(tablet) {
+            padding: $baseline*2 0 $baseline*6;
         }
     }
 
@@ -14,6 +18,10 @@
         float: left;
         width: 90%;
         padding-left: $baseline*2;
+
+        @include mq(tablet) {
+            @include fs-bodyCopy(3);
+        }
     }
 
     a {
@@ -25,11 +33,11 @@
     }
 
     .count {
-        @extend %type-7;
+        @include fs-bodyCopy(1);
         float: left;
         line-height: 20px;
         line-height: 2rem;
-        color: #777777;
+        color: $c-neutral4;
         width: 12px;
     }
 }

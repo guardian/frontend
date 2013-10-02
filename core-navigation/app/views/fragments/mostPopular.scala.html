@@ -10,7 +10,7 @@
             <div class="tabs">
                 <ol class="tabs__container js-tabs" id="js-popular-tabs">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
-                        <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected}">
+                        <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-border}">
                             <a href="#tabs-popular-@info.rowNum" class="type-6" data-link-name="tab @info.rowNum @section.heading">@Html(section.heading)</a>
                         </li>
                     }
@@ -20,7 +20,7 @@
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                class="@if(isTabbed){tabs__pane @if(!info.isFirst){ js-hidden}} box-indent headline-list"
+                class="@if(isTabbed){tabs__pane @if(!info.isFirst){ js-hidden}} headline-list"
                 data-link-name="@section.heading"
                 data-link-context="most-read/@section.section">
 

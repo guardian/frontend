@@ -30,8 +30,8 @@ define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwer
                 var paneToHide = container.querySelector('#' + currentTab.getAttribute('href').substring(1));
 
                 // show hide stuff
-                bonzo(currentTab.parentNode).removeClass('tabs__tab--selected');
-                bonzo(clickedTab.parentNode).addClass('tabs__tab--selected');
+                bonzo(currentTab.parentNode).removeClass('tabs__tab--selected tone-colour tone-border');
+                bonzo(clickedTab.parentNode).addClass('tabs__tab--selected tone-colour tone-border');
                 bonzo(paneToHide).hide();
                 bonzo(paneToShow).removeClass('js-hidden').show().focus();
 
