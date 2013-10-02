@@ -5,8 +5,10 @@
          data-collection-type="@style.className"
          data-section="@config.section">
 
-    @Seq(config.displayName, collection.displayName).find(_.nonEmpty).map { title =>
-        <h2 class="collection__title">@title</h2>
+    @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
+        @if(title.nonEmpty) {
+            <h2 class="collection__title">@title</h2>
+        }
     }
 
     <ul class="unstyled items item-count-@collection.items.size">
@@ -38,7 +40,7 @@
                 }
                 @trail.mainPicture(620).map{ mainPicture =>
                     <div class="item__image-container">
-                        <img class="item__image" src="@mainPicture.path" alt="" />
+                        <img class="item__image" alt="" data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)" />
                     </div>
                 }
             </li>
