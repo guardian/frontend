@@ -224,6 +224,14 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
+object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
+  def clean(body: Document): Document = {
+    val bullets = body.getElementsByClass("bullet")
+    bullets flatMap { _.parentTag("p") } foreach { _.addClass("no-indent") }
+    body
+  }
+}
+
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
@@ -400,7 +408,7 @@ object StripHtmlTags {
 }
 
 object StripHtmlTagsAndUnescapeEntities{
-  def apply( html: String) : String = {
+  def apply(html: String) : String = {
     val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
     val stripped = doc.body.html
     val unescaped = StringEscapeUtils.unescapeHtml(stripped)
