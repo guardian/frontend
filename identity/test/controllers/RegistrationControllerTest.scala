@@ -28,7 +28,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
   val createdUser = mock[User]
   val omnitureData = mock[OmnitureTracking]
 
-  val identityRequest = IdentityRequest(omnitureData, Some("http://example.com/comeback"))
+  val identityRequest = IdentityRequest(omnitureData, Some("http://example.com/comeback"), Some("123.456.789.12"))
   val conf = new IdentityConfiguration
   val signinService = new PlaySigninService(conf)
   val user = User("test@example.com", "123")

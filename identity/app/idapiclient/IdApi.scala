@@ -13,42 +13,27 @@ import utils.SafeLogging
 import idapiclient.requests.TokenPassword
 
 
-abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth) extends SafeLogging {
+abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, val clientAuth: Auth)
+  extends IdApiUtils with SafeLogging {
+
   implicit def executionContext: ExecutionContext
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
-
-  protected def apiUrl(path: String) = urlJoin(apiRootUrl, path)
-
-  protected def urlJoin(pathParts: String*) = {
-    pathParts.filter(_.nonEmpty).map(slug => {
-      slug.stripPrefix("/").stripSuffix("/")
-    }) mkString "/"
-  }
-
   def jsonField(field: String)(json: JValue): JValue = json \ field
-
-  private def buildParams(auth: Option[Auth] = None,
-                          trackingData: Option[OmnitureTracking] = None,
-                          extra: Parameters = Iterable.empty): Parameters = {
-    extra ++ clientAuth.parameters ++
-      auth.map(_.parameters).getOrElse(Iterable.empty) ++
-      trackingData.map(tracking => {
-        tracking.parameters ++ tracking.ipAddress.map("ip" -> _)
-      }).getOrElse(Iterable.empty)
-  }
 
   // AUTH
 
   def authApp(auth: Auth, trackingData: OmnitureTracking): Future[Response[AccessTokenResponse]] = {
     val params = buildParams(Some(auth), Some(trackingData))
-    val response = http.GET(apiUrl("auth"), params, auth.headers ++ clientAuth.headers)
+    val headers = buildHeaders(Some(auth))
+    val response = http.GET(apiUrl("auth"), params, headers)
     response map jsonBodyParser.extract[AccessTokenResponse](jsonField("accessToken"))
   }
 
   def authBrowser(userAuth: Auth, trackingData: OmnitureTracking): Future[Response[CookiesResponse]] = {
     val params = buildParams(Some(userAuth), Some(trackingData), Iterable("format" -> "cookies"))
-    val response = http.POST(apiUrl("auth"), None, params, userAuth.headers ++ clientAuth.headers)
+    val headers = buildHeaders(Some(userAuth))
+    val response = http.POST(apiUrl("auth"), None, params, headers)
     response map jsonBodyParser.extract[CookiesResponse](jsonField("cookies"))
   }
 
@@ -57,14 +42,15 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   def user(userId: String, auth: Auth = Anonymous): Future[Response[User]] = {
     val apiPath = urlJoin("user", userId)
     val params = buildParams(Some(auth))
-    val response = http.GET(apiUrl(apiPath), params, auth.headers ++ clientAuth.headers)
+    val headers = buildHeaders(Some(auth))
+    val response = http.GET(apiUrl(apiPath), params, headers)
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
     val params = buildParams(Some(auth))
-    val response = http.GET(apiUrl(apiPath), params, auth.headers ++ clientAuth.headers)
+    val response = http.GET(apiUrl(apiPath), params, buildHeaders(Some(auth)))
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
@@ -73,41 +59,65 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
   def userForToken( token : String ): Future[Response[User]] = {
     val apiPath = urlJoin("pwd-reset", "user-for-token")
     val params = buildParams(extra = Iterable("token" -> token))
-    val response = http.GET(apiUrl(apiPath), params, clientAuth.headers)
+    val response = http.GET(apiUrl(apiPath), params, buildHeaders())
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
 
   def resetPassword( token : String, newPassword : String ): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
-    val response = http.POST(apiUrl(apiPath), Some(postBody), buildParams(), clientAuth.headers)
+    val response = http.POST(apiUrl(apiPath), Some(postBody), buildParams(), buildHeaders())
     response map jsonBodyParser.extract[Unit]({_ => JNothing})
   }
 
-  def sendPasswordResetEmail( emailAddress : String ): Future[Response[Unit]] = {
+  def sendPasswordResetEmail(emailAddress : String, clientIp: Option[String]): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset","send-password-reset-email")
-    val params = buildParams(extra = Iterable("email-address" -> emailAddress, "type" -> "reset"))
-    val response = http.GET(apiUrl(apiPath), params, clientAuth.headers)
+    val params = buildParams(extra = Iterable("email-address" -> emailAddress, "type" -> "reset"), clientIp = clientIp)
+    val response = http.GET(apiUrl(apiPath), params, buildHeaders())
     response map jsonBodyParser.extract[Unit]({_ => JNothing})
   }
 
- def register(user: User, trackingParameters : OmnitureTracking, clientIp: Option[String]): Future[Response[User]] = {
+  def register(user: User, trackingParameters : OmnitureTracking, clientIp: Option[String]): Future[Response[User]] = {
     val userData = write(user)
     val params = buildParams(trackingData = Some(trackingParameters))
-    val response = http.POST(apiUrl("user"), Some(userData), params,
-      clientAuth.headers ++ clientIp.map(ip => Iterable("X-GU-ID-REMOTE-IP" -> ip)).getOrElse(Iterable.empty)
-    )
+    val headers = buildHeaders(extra = clientIp.map(ip => Iterable("X-GU-ID-REMOTE-IP" -> ip)))
+    val response = http.POST(apiUrl("user"), Some(userData), params, headers)
     response map jsonBodyParser.extract[User](jsonField("user"))
   }
-
-  // EMAILS
-
-  // don't have a clear return type for this
-  // def emailsForUser
-  // ...etc
 }
 
 class SynchronousIdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth)
   extends IdApi(apiRootUrl, http, jsonBodyParser, clientAuth) {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
+}
+
+trait IdApiUtils {
+  val apiRootUrl: String
+  val clientAuth: Auth
+
+  implicit object ParamsOpt2Params extends (Option[Parameters] => Parameters) {
+    def apply(paramsOpt: Option[Parameters]): Parameters = paramsOpt.getOrElse(Iterable.empty)
+  }
+
+  protected def buildParams(auth: Option[Auth] = None,
+                          trackingData: Option[OmnitureTracking] = None,
+                          extra: Parameters = Iterable.empty,
+                          clientIp: Option[String] = None): Parameters = {
+    extra ++ clientAuth.parameters ++
+      auth.map(_.parameters) ++
+      trackingData.map(_.parameters) ++
+      clientIp.orElse(trackingData.flatMap(_.ipAddress)).map("ip" -> _)
+  }
+
+  protected def buildHeaders(auth: Option[Auth] = None, extra: Parameters = Iterable.empty): Parameters = {
+    extra ++ clientAuth.headers ++ auth.map(_.headers)
+  }
+
+  protected def apiUrl(path: String) = urlJoin(apiRootUrl, path)
+
+  protected def urlJoin(pathParts: String*) = {
+    pathParts.filter(_.nonEmpty).map(slug => {
+      slug.stripPrefix("/").stripSuffix("/")
+    }) mkString "/"
+  }
 }

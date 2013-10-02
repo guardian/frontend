@@ -12,7 +12,7 @@ import play.api.data._
 import play.api.mvc.SimpleResult
 import scala.concurrent.Future
 import services._
-import utils.{ RemoteAddress, SafeLogging }
+import utils.SafeLogging
 
 @Singleton
 class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
@@ -21,7 +21,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      idRequestParser : IdRequestParser,
                                      idUrlBuilder : IdentityUrlBuilder,
                                      signinService : PlaySigninService  )
-  extends Controller with ExecutionContexts with SafeLogging with RemoteAddress {
+  extends Controller with ExecutionContexts with SafeLogging {
 
   val page = new IdentityPage("/register", "Register", "register")
 
@@ -57,7 +57,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     def onSuccess(form: (String, String, String, Boolean, Boolean)): Future[SimpleResult] = form match {
       case (email, username, password, gnmMarketing, thirdPartyMarketing) => {
         val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing)
-        val registeredUser: Future[Response[User]] = api.register(user, omnitureData, clientIp(request))
+        val registeredUser: Future[Response[User]] = api.register(user, omnitureData, idRequest.clientIp)
 
         val result: Future[SimpleResult] = registeredUser flatMap {
           case Left(errors) =>

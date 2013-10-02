@@ -30,7 +30,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
   val api = mock[IdApiClient]
   val conf = new IdentityConfiguration
   val omnitureData = mock[OmnitureTracking]
-  val identityRequest = IdentityRequest(omnitureData, Some("http://example.com/return"))
+  val identityRequest = IdentityRequest(omnitureData, Some("http://example.com/return"), None)
   val signInService = new PlaySigninService(conf)
 
   val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService)

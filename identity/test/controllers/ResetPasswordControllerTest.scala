@@ -21,7 +21,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val omnitureData = mock[OmnitureTracking]
-  val identityRequest = IdentityRequest(omnitureData, None)
+  val identityRequest = IdentityRequest(omnitureData, None, Some("123.456.789.10"))
 
   val resetPasswordController = new ResetPasswordController(api, requestParser, idUrlBuilder)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
@@ -45,15 +45,21 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     val fakeRequest = FakeRequest(POST, "/reset").withFormUrlEncodedBody("email-address" -> emailAddress)
 
     "with an api response validating the user" - {
-      when(api.sendPasswordResetEmail(any[String])).thenReturn(Future.successful(Right()))
+      when(api.sendPasswordResetEmail(any[String], any[Option[String]])).thenReturn(Future.successful(Right()))
+
       "should ask the api to send a reset email to the the the specified user" in Fake {
         resetPasswordController.processPasswordResetRequestForm(fakeRequest)
-        verify(api).sendPasswordResetEmail(emailAddress)
+        verify(api).sendPasswordResetEmail(Matchers.eq(emailAddress), any[Option[String]])
+      }
+
+      "should give the client's IP to the Identity API" in Fake {
+        resetPasswordController.processPasswordResetRequestForm(fakeRequest)
+        verify(api).sendPasswordResetEmail(Matchers.any[String], Matchers.eq(Some("123.456.789.10")))
       }
     }
 
     "with an api is unable to locate the user" - {
-      when(api.sendPasswordResetEmail(any[String])).thenReturn(Future.successful(Left(userNotFound)))
+      when(api.sendPasswordResetEmail(any[String], any[Option[String]])).thenReturn(Future.successful(Left(userNotFound)))
 
         "should redirect to the form" in Fake {
           val result = resetPasswordController.processPasswordResetRequestForm(fakeRequest)

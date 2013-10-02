@@ -288,17 +288,17 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validResponse)))
 
       "accesses the reset password endpoint" in {
-        api.sendPasswordResetEmail(testEmail)
+        api.sendPasswordResetEmail(testEmail, None)
         verify(http).GET(Matchers.eq("http://example.com/pwd-reset/send-password-reset-email"),  Matchers.anyObject(), Matchers.anyObject())
       }
 
       "adds the email address and type parameters" in {
-        api.sendPasswordResetEmail(testEmail)
+        api.sendPasswordResetEmail(testEmail, None)
         verify(http).GET(Matchers.eq("http://example.com/pwd-reset/send-password-reset-email"), Matchers.eq(List(("email-address", testEmail), ("type", "reset")) ++ clientAuthHeaders), Matchers.eq(Nil))
       }
 
       "returns an user object" in {
-        api.sendPasswordResetEmail(testEmail).map( _ match {
+        api.sendPasswordResetEmail(testEmail, None).map( _ match {
           case Left(error) => fail("Got left(%s), instead of expected Right".format(error.toString()))
           case Right(_: Unit) => {
           }
@@ -308,13 +308,18 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       "when recieving an error response" - {
         when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
         "returns the errors" in {
-          api.sendPasswordResetEmail(testEmail).map( _ match {
+          api.sendPasswordResetEmail(testEmail, None).map( _ match {
             case Right(user) => fail("Got right(%s) instead of expected left".format(user.toString))
             case Left(responseErrors) => {
               responseErrors should equal(errors)
             }
           })
         }
+      }
+
+      "passes the client IP to the API" in {
+        api.sendPasswordResetEmail(testEmail, Some("123.456.789.10"))
+        verify(http).GET(Matchers.anyString(), Matchers.argThat(new ParamsIncludes(Iterable("ip" -> "123.456.789.10"))), Matchers.anyObject())
       }
     }
   }
