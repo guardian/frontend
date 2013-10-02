@@ -232,9 +232,7 @@ a.list-header__status__control:visited {
     cursor: move;
     padding: 1px 3px 4px 4px;
     position: relative;
-    -webkit-border-radius: 2px;
-       -moz-border-radius: 2px;
-            border-radius: 2px;
+    border-radius: 2px;
     background-color: #FFFFFF;
 }
 
@@ -327,10 +325,7 @@ a.list-header__status__control:visited {
     padding: 0px 3px;
     cursor: pointer;
     z-index: 99;
-    -webkit-border-radius: 2px;
-       -moz-border-radius: 2px;
-            border-radius: 2px;
-
+    border-radius: 2px;
 }
 
 .collection .trail:hover .trail__remove {
@@ -481,10 +476,6 @@ button {
 iframe {
     margin: 10px 0 0 0;
     border: 1px solid #999999;
-    -webkit-border-radius: 5px;
-       -moz-border-radius: 5px;
-            border-radius: 5px;
-    -webkit-box-shadow: 1px 1px 7px #666666;
-       -moz-box-shadow: 1px 1px 7px #666666;
-            box-shadow: 1px 1px 7px #666666;
+    border-radius: 5px;
+    box-shadow: 1px 1px 7px #666666;
 }
