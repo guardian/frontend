@@ -16,28 +16,13 @@ define([
     ophanApi
 ) {
     function Collection(opts) {
-        var self = this,
-            zoneNames = _.isArray(opts.zones) ? opts.zones : [common.config.defaultZoneName];
+        var self = this;
 
-        if (!opts.id) { return; }
+        if (!opts || !opts.id) { return; }
+        this.id = opts.id;
 
-        this.id      = opts.id;
-
-        this.live = _.map(zoneNames, function(n) {
-            return {
-                name: n,
-                isDefaultZone: n === common.config.defaultZoneName,
-                articles: ko.observableArray()
-            };
-        })
-
-        this.draft = _.map(zoneNames, function(n) {
-            return {
-                name: n,
-                isDefaultZone: n === common.config.defaultZoneName,
-                articles: ko.observableArray()
-            };
-        })
+        this.live  = this.createZones(opts.zones);
+        this.draft = this.createZones(opts.zones);
 
         // properties from the config, about this collection
         this.configMeta   = common.util.asObservableProps([
@@ -78,6 +63,15 @@ define([
 
         this.load();
     }
+
+    Collection.prototype.createZones = function(zoneNames) {
+        return _.map(_.isArray(zoneNames) ? zoneNames : [undefined], function(n) {
+            return {
+                name: n,
+                articles: ko.observableArray()
+            };
+        })
+    };
 
     Collection.prototype.toggleEditingConfig = function() {
         this.state.editingConfig(!this.state.editingConfig());
@@ -213,7 +207,6 @@ define([
 
                 // FAKE A ZONE!
                 item.zone = ["major", "minor", "other"][Math.min(2, Math.floor(index/2))];
-                // FAKE A ZONE!
 
                 zoneList = _.find(zones, function(zone){ return zone.name === item.zone; }) || zones[0];
                 zoneList.articles.push(new Article(item));

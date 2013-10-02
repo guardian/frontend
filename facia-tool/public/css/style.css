@@ -73,7 +73,7 @@ input[type=text] {
 }
 
 #collections .connectedList {
-    min-height: 50px;
+    padding: 0 0 10px 0;
 }
 
 .pending {
@@ -215,10 +215,7 @@ a.list-header__status__control:visited {
     float: left;
     padding: 0 0 5px 0;
     position: relative;
-}
-
-.collection--isMajor {
-    border-top: 3px solid #999999;
+    border-top: 2px solid #999999;
 }
 
 .collection:first-child {
@@ -235,10 +232,9 @@ a.list-header__status__control:visited {
     -webkit-border-radius: 2px;
        -moz-border-radius: 2px;
             border-radius: 2px;
-    background-color: #FFFFFF;
 }
 
-.is-draft .trail {
+.draft-zones {
     background-color: #EEEEEE;
 }
 

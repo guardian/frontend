@@ -79,11 +79,8 @@
     </script>
 
     <script type="text/html" id="template_collection">
-        <div class="collection" data-bind="
-            css: { 'collection--isMajor': configMeta.displayName() || collectionMeta.displayName() }">
-
+        <div class="collection">
             <div class="list-header">
-
                 <div class="list-header__title" data-bind="visible: !state.editingConfig()">
                     <span class="list-header__saving" data-bind="visible: state.loadIsPending">SAVING</span>
 
@@ -124,7 +121,7 @@
                         }">
                         <span class="list-header__status__draft__title" data-bind="click: setDraftMode">
                             DRAFT
-                            <span data-bind="if: state.hasDraft">EXISTS</span>
+                            <span data-bind="if: state.hasDraft() && state.liveMode()">EXISTS</span>
                         </span>
                         <span data-bind="if: !state.liveMode() && state.hasDraft()">
                             &middot; <a class="list-header__status__control" data-bind="click: publishDraft">publish draft</a>
@@ -143,22 +140,25 @@
                 </div>
             </div>
 
-            <div data-bind="
-                css: {
-                    'pending':   state.loadIsPending,
-                    'is-live':   state.liveMode(),
-                    'is-draft': !state.liveMode()
-                },
-                foreach: state.liveMode() ? live : draft">
+            <div data-bind="css: {'pending': state.loadIsPending}">
+                <div class="live-zones" data-bind="
+                    visible: state.liveMode,
+                    template: {name: 'template_zones', foreach: live}"></div>
 
-                <div class="zone-name" data-bind="visible: !isDefaultZone, text: name"></div>
-                <div class="connectedList persisted" data-bind="
-                    attr: {
-                        'data-collection': $parent.id
-                    },
-                    template: {name: 'template_article', foreach: articles}"></div>
+                <div class="draft-zones" data-bind="
+                    visible: !state.liveMode(),
+                    template: {name: 'template_zones', foreach: draft}"></div>
             </div>
         </div>
+    </script>
+
+    <script type="text/html" id="template_zones">
+        <!-- ko if: !_.isUndefined(name) -->
+        <div class="zone-name" data-bind="text: name"></div>
+        <!-- /ko -->
+        <div class="connectedList persisted" data-bind="
+            attr: { 'data-collection': $parent.id },
+            template: {name: 'template_article', foreach: articles}"></div>
     </script>
 
     <script type="text/html" id="template_search_controls">

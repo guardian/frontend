@@ -163,7 +163,7 @@ define([
                     }
                 }
                 delta.itemMeta = {
-                    zone: zone.name !== common.config.defaultZoneName ? zone.name : undefined
+                    zone: zone.name
                 }
             }
 
