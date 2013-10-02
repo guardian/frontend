@@ -18,7 +18,7 @@ $meta: #767676;
     }
 }
 .collection__title {
-    margin-top: gs-height(1);
+    margin-top: 30px;
     @include fs-header(1);
     @include box-sizing(border-box);
     height: gs-height(1);
@@ -67,7 +67,7 @@ a.item__link {
 .item__byline {
     margin: $gs-baseline/3 0 0;
     color: $comment-light;
-    @include fs-header(2);
+    @include fs-header(4);
 }
 .item__standfirst {
     margin: $gs-baseline*2 0 0;
@@ -127,7 +127,7 @@ a.item__link {
     }
 }
 .item__image-container {
-    margin-top: $gs-baseline;
+    margin-top: $gs-baseline/2;
     overflow: hidden;
 }
 .item__image {
@@ -168,7 +168,7 @@ a.item__link {
 .items--cards {
     font-size: 0;
     .item {
-        margin-top: $gs-baseline;
+        margin-top: 18px;
         @include mq(tablet) {
             display: inline-block;
             vertical-align: top;
@@ -180,8 +180,8 @@ a.item__link {
         }
     }
     .item__title {
-        @include mq(mobile) {
-            min-height: gs-height(2) + $gs-baseline;
+        @include mq($to: tablet) {
+            min-height: gs-height(2);
         }
         @include mq(tablet) {
             min-height: gs-height(3) + $gs-baseline;
@@ -213,6 +213,7 @@ a.item__link {
 
 @mixin first-row($first-row-size) {
     .item:nth-child(-n + #{$first-row-size}) {
+        margin-top: $gs-baseline/2;
         .item__title {
             padding-top: 0;
             border-top-style: none;
@@ -251,17 +252,15 @@ a.item__link {
 @mixin card($without-extras: false, $not-first-row: false) {
     @include mq($to: tablet) {
         width: 100%;
+        .item__title {
+            min-height: 0;
+        }
     }
     @if $without-extras {
         .item__standfirst,
         .item__image-container,
         .item__duration {
             display: none;
-        }
-        @include mq($to: tablet) {
-            .item__title {
-                min-height: 0;
-            }
         }
         @include mq(tablet) {
             .item__title {
