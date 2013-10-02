@@ -5,6 +5,7 @@ import play.api.Play.current
 import play.api._
 import play.api.mvc._
 import play.api.mvc.Results._
+import scala.concurrent.Future
 import utils.SafeLogging
 
 object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetrics.asFilters: _*) with SafeLogging {
@@ -26,20 +27,16 @@ object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetri
   override def onError(request: RequestHeader, ex: Throwable) = {
     logger.error("Serving error page", ex)
     if (Play.mode == Mode.Prod) {
-      InternalServerError(
-        views.html.errors._50x()
-      )
+      Future.successful(InternalServerError(views.html.errors._50x()))
     } else {
       super.onError(request, ex)
     }
   }
 
-  override def onHandlerNotFound(request: RequestHeader): Result = {
+  override def onHandlerNotFound(request: RequestHeader) = {
     logger.info(s"Serving 404, no handler found for ${request.path}")
     if (Play.mode == Mode.Prod) {
-      NotFound(
-        views.html.errors._404()
-      )
+      Future.successful(NotFound(views.html.errors._404()))
     } else {
       super.onHandlerNotFound(request)
     }
@@ -48,7 +45,7 @@ object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetri
   override def onBadRequest(request: RequestHeader, error: String) = {
     logger.info(s"Serving 400, could not bind request to handler for ${request.uri}")
     if (Play.mode == Mode.Prod) {
-      BadRequest("Bad Request: " + error)
+      Future.successful(BadRequest("Bad Request: " + error))
     } else {
       super.onBadRequest(request, error)
     }
