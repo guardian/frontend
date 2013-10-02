@@ -1,4 +1,4 @@
-@(config: Config, collection: Collection, style: SectionZone)(implicit request: RequestHeader)
+@(config: Config, collection: Collection, style: SectionZone, containerIndex: Int)(implicit request: RequestHeader)
 
 <section class="collection collection--@style.className collection--@{config.section}-section collection--@style.collectionType-type js-collection--display-toggle"
          data-link-name="block | @collection.displayName.getOrElse(config.id)"
@@ -15,7 +15,7 @@
 
     <ul class="unstyled items item-count-@collection.items.size js-items--show-more items--cards">
         @collection.items.zipWithIndex.map{ case (trail, index) =>
-            @fragments.items.standard(trail, index)
+            @fragments.items.standard(trail, index, mainItem = containerIndex == 0 && index == 0)
         }
     </ul>
 
