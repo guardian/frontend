@@ -10,7 +10,8 @@ define([
     'modules/userPrefs',
     'modules/analytics/clickstream',
     'modules/inview',
-    'modules/detect'
+    'modules/detect',
+    'modules/id',
 ], function (
     common,
     bonzo,
@@ -22,7 +23,8 @@ define([
     userPrefs,
     ClickStream,
     Inview,
-    Detect
+    Detect,
+    Id
     ) {
 
     var Discussion = function(options) {
@@ -229,15 +231,36 @@ define([
 
                 topBox = new CommentBox(context, { apiRoot: apiRoot, condensed: true });
                 topBox.attachTo(topBoxElem[0]);
-                topBox.on('posted', this.addComment.bind(this));
+                topBox.on('posted', this.addComment.bind(this, false));
 
                 bottomBox = new CommentBox(context, { apiRoot: apiRoot });
                 bottomBox.attachTo(bottomBoxElem[0]);
-                bottomBox.on('posted', this.addComment.bind(this));
+                bottomBox.on('posted', this.addComment.bind(this, true));
             },
 
-            addComment: function(comment) {
-                
+            addComment: function(takeToTop, resp) {
+                // TODO (jamesgorrie): this is weird, but we don't have templating
+                var thread = bonzo(qwery('.d-thread', this.discussionContainerNode)[0]),
+                    comment = bonzo(qwery('.d-comment', this.discussionContainerNode)[0]).clone(),
+                    recommend = bonzo(comment[0].querySelector('.d-comment__recommend')),
+                    actions = bonzo(comment[0].querySelector('.d-comment__actions')),
+                    datetime = bonzo(comment[0].querySelector('time')),
+                    author = bonzo(comment[0].querySelector('.d-comment__author')),
+                    body = bonzo(comment[0].querySelector('.d-comment__body'));
+
+                comment[0].id = 'comment-'+ resp.id;
+                recommend.remove();
+                actions.remove();
+                author.html(Id.getUserFromCookie().displayName);
+                datetime.html('Just now');
+
+                body.html('<p>'+ resp.body.replace('\n\n', '</p><p>') +'</p>');
+                thread.prepend(comment);
+
+                if (takeToTop) {
+                    window.location.hash = '';
+                    window.location.hash = 'comment-'+ resp.id;
+                }
             },
 
             bindEvents: function() {

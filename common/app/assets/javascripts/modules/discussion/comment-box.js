@@ -33,8 +33,9 @@ CommentBox.CONFIG = {
         condensed: 'd-comment-box--condensed'
     },
     errors: {
-        EMPTY_COMMENT_BODY: 'Please write a comment',
-        COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long',
+        EMPTY_COMMENT_BODY: 'Please write a comment.',
+        COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
+        ENHANCE_YOUR_CALM: 'You\'ll need to wait a minute before posting another comment.   ',
         API_ERROR: 'Sorry, there was a problem posting your comment.'
     }
 };
@@ -100,11 +101,7 @@ CommentBox.prototype.postComment = function(e) {
         var url = this.options.apiRoot +'/discussion/'+ this.getDiscussionId() +'/comment';
         comment.GU_U = cookies.get('GU_U');
 
-        // TODO (jamesgorrie): abstract this to clearBox?
-        body.value = '';
-        this.setFormState();
-
-        this.emit('posted', comment);
+        this.setFormState(true);
 
         return ajax.reqwest({
             url: url,
@@ -114,7 +111,7 @@ CommentBox.prototype.postComment = function(e) {
             withCredentials: true,
             data: comment,
             headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
-        }).then(this.success.bind(this), this.fail.bind(this));
+        }).then(this.success.bind(this, comment), this.fail.bind(this));
     }
 };
 
@@ -132,10 +129,15 @@ CommentBox.prototype.error = function(type, message) {
 };
 
 /**
+* @param {Object} comment
  * @param {Object} resp
  */
-CommentBox.prototype.success = function(resp) {
+CommentBox.prototype.success = function(comment, resp) {
+    comment.id = parseInt(resp.message, 10);
+    this.emit('posted', comment);
     if (resp.status === 'ok') {
+        this.getElem('body').value = '';
+        this.setFormState();
         this.emit('success', { id: parseInt(resp.message, 10) });
     } else {
         this.fail();
@@ -146,8 +148,14 @@ CommentBox.prototype.success = function(resp) {
  * TODO (jamesgorrie); Make this more robust
  * @param {Reqwest=} resp (optional)
  */
-CommentBox.prototype.fail = function(resp) {
-    this.error('API_ERROR');
+CommentBox.prototype.fail = function(xhr) {
+    this.setFormState();
+
+    if (xhr.status === 420) {
+        this.error('ENHANCE_YOUR_CALM');
+    } else {
+        this.error('API_ERROR');
+    }
 };
 
 
@@ -161,13 +169,15 @@ CommentBox.prototype.getDiscussionId = function() {
 
 /**
  * Set the form to be postable or not dependant on the comment
- * @param {Event=} e (optional)
+ * @param {Boolean|Event=} disabled (optional)
  */
-CommentBox.prototype.setFormState = function(e) {
+CommentBox.prototype.setFormState = function(disabled) {
+    disabled = typeof disabled === 'boolean' ? disabled : false;
+
     var commentBody = this.getElem('body'),
         submitButton = this.getElem('submitButton');
 
-    if (commentBody.value.length === 0) {
+    if (disabled || commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
         this.elem.setAttribute('data-disabled', true);
     } else {
