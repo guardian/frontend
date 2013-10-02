@@ -2,14 +2,17 @@ package model
 
 import com.gu.openplatform.contentapi.model.{Element => ApiElement}
 
-class Element protected (val delegate: ApiElement, val index: Int)
+class Element protected (val delegate: ApiElement) {
+  lazy val index: Int = delegate.galleryIndex.getOrElse(0)
+  lazy val id: String = delegate.id
+}
 
 object Element {
-  def apply(delegate: ApiElement, index: Int): Element = {
+  def apply(delegate: ApiElement): Element = {
     delegate.elementType match {
-      case "image" => new ImageElement(delegate, index)
-      case "video" => new VideoElement(delegate, index)
-      case _ => new Element(delegate, index)
+      case "image" => new ImageElement(delegate)
+      case "video" => new VideoElement(delegate)
+      case _ => new Element(delegate)
     }
   }
 }
@@ -17,23 +20,26 @@ object Element {
 trait ImageContainer {
   self: Element =>
   lazy val imageCrops: List[ImageAsset] = delegate.assets.filter(_.assetType == "image").map(ImageAsset(_,index)).
-                                      sortBy(-_.width)
+                                           sortBy(-_.width)
 
   // The image crop with the largest width.
-  lazy val largestImage : Option[ImageAsset] = imageCrops.headOption
+  lazy val largestImage: Option[ImageAsset] = imageCrops.headOption
 }
 
 trait VideoContainer {
   self: Element =>
-  lazy val videoAssets: List[VideoAsset] = delegate.assets.filter(_.assetType == "video").map(VideoAsset(_))
+  lazy val videoAssets: List[VideoAsset] = delegate.assets.filter(_.assetType == "video").map(VideoAsset(_)).
+                                            sortBy(-_.width)
+
+  lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 }
 
-class ImageElement(delegate: ApiElement, index: Int) extends Element(delegate, index) with ImageContainer
+class ImageElement(delegate: ApiElement) extends Element(delegate) with ImageContainer
 {
   // Image elements only contain images.
 }
 
-class VideoElement(delegate: ApiElement, index: Int) extends Element(delegate, index) with ImageContainer with VideoContainer
+class VideoElement(delegate: ApiElement) extends Element(delegate) with ImageContainer with VideoContainer
 {
   // Video elements can have both images and videos.
 }

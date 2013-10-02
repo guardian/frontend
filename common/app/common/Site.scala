@@ -1,6 +1,7 @@
 package common
 
 import play.api.mvc.RequestHeader
+import conf.Switches
 
 // TODO rethink/ remove me
 object Host {
@@ -8,6 +9,8 @@ object Host {
 }
 
 object IsFacia {
-  def apply(request: RequestHeader): Option[String] =
-    request.headers.get("X-Gu-Facia").filter(_=="true")
+
+  def apply(request: RequestHeader): Boolean =
+    request.headers.get("X-Gu-Facia").filter(_=="true").isDefined &&
+    Switches.FaciaSwitch.isSwitchedOn
 }

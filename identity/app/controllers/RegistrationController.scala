@@ -23,7 +23,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      signinService : PlaySigninService  )
   extends Controller with ExecutionContexts with SafeLogging {
 
-  val page = new IdentityPage("/register", "Register", "register")
+  val page = IdentityPage("/register", "Register", "register")
 
   val registrationForm = Form(
     Forms.tuple(
@@ -37,9 +37,10 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
   def renderForm = Action { implicit request =>
     logger.trace("Rendering registration form")
+
     val idRequest = idRequestParser(request)
     val filledForm = registrationForm.fill("","","",true,false)
-    Ok(views.html.registration(page, idRequest, idUrlBuilder, filledForm ))
+    Ok(views.html.registration(page.registrationStart(idRequest), idRequest, idUrlBuilder, filledForm ))
   }
 
   def processForm = Action.async { implicit request =>
@@ -50,13 +51,13 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     def onError(formWithErrors: Form[(String, String, String, Boolean, Boolean)]): Future[SimpleResult] = {
       logger.info("Invalid registration request")
       Future {
-        Ok(views.html.registration(page, idRequest, idUrlBuilder, formWithErrors))
+        Ok(views.html.registration(page.registrationError(idRequest), idRequest, idUrlBuilder, formWithErrors))
       }
     }
 
     def onSuccess(form: (String, String, String, Boolean, Boolean)): Future[SimpleResult] = form match {
       case (email, username, password, gnmMarketing, thirdPartyMarketing) => {
-        val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing)
+        val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing, idRequest.clientIp)
         val registeredUser: Future[Response[User]] = api.register(user, omnitureData, idRequest.clientIp)
 
         val result: Future[SimpleResult] = registeredUser flatMap {
@@ -68,7 +69,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
               }
             }
             formWithError.fill(email,username,"",thirdPartyMarketing,gnmMarketing)
-            Future { Ok(views.html.registration(page, idRequest, idUrlBuilder, formWithError)) }
+            Future { Ok(views.html.registration(page.registrationError(idRequest), idRequest, idUrlBuilder, formWithError)) }
 
           case Right(user) =>
             val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)

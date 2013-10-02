@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import model.{ Trail, Cached, Content }
 import play.api.mvc.{ SimpleResult, RequestHeader, Action, Controller }

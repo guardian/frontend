@@ -1,0 +1,12 @@
+@(headerLink: model.Link, links: Seq[model.Link])(implicit request: RequestHeader)
+@import common.LinkTo
+<h3 class="article-zone type-2">
+    <a class="zone-color" href="@headerLink.url" data-link-name="football index @headerLink.linkName">@headerLink.linkText</a>
+</h3>
+<div class="sections u-cf football-nav" data-link-name="football bottom nav">
+    <ul class="nav nav--columns nav--top-border-off sections u-cf">
+    @links.map{ link: model.Link =>
+        <li class="nav__item"><a class="nav__link" href="@LinkTo{@link.url}" data-link-name="@link.linkName">@link.linkText</a></li>
+    }
+    </ul>
+</div>

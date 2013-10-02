@@ -41,7 +41,7 @@ object Fastly extends ExecutionContexts with Logging {
 
         blocks flatMap { block =>
           val service: String = (block \ "service_id").as[String]
-          val timestamp: Long = (block \ "start_time").as[String].toLong * 1000
+          val timestamp: Long = (block \ "start_time").as[Long] * 1000
           val statistics: List[(String, JsValue)] = block.fieldSet.toList
 
           val filtered = statistics filter {
@@ -52,7 +52,7 @@ object Fastly extends ExecutionContexts with Logging {
           }
 
           filtered map {
-            case (name, json) => FastlyStatistic(service, region, timestamp, name, json.as[String])
+            case (name, stat) => FastlyStatistic(service, region, timestamp, name, stat.asOpt[Double].map(_.toString) getOrElse stat.as[String])
           }
         }
       }

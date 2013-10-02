@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import feed.Competitions
 

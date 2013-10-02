@@ -3,8 +3,9 @@ define([
     'ajax',
     'bonzo',
     'modules/facia/relativise-timestamp',
-    'modules/facia/items-show-more'
-], function (common, ajax, bonzo, RelativiseTimestamp, ItemsShowMore) {
+    'modules/facia/items-show-more',
+    'modules/facia/image-upgrade',
+], function (common, ajax, bonzo, RelativiseTimestamp, ItemsShowMore, ImageUpgrade) {
 
     var updateTmpl = function(tmpl, trail) {
             return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {
@@ -14,7 +15,7 @@ define([
             });
         },
         collectionTmpl =
-            '<section class="collection collection--popular items--cards" data-collection-type="popular">' +
+            '<section class="collection collection--popular items--cards" data-collection-type="container" data-section="popular">' +
                 '<h2 class="collection__title">Popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
@@ -35,7 +36,7 @@ define([
             return updateTmpl(
                 '<div class="item__image-container">' +
                     '<a href="@trail.url" class="item__link">' +
-                        '<img class="item__image" alt="" src="@trail.mainPicture.path" />' +
+                        '<img class="item__image" alt="" data-src="@trail.mainPicture.item"  data-src-main="@trail.mainPicture.itemMain" />' +
                     '</a>' +
                 '</div>',
                 trail
@@ -52,7 +53,7 @@ define([
             }).then(
                 function(resp) {
                     var $items = bonzo(bonzo.create('<ul class="unstyled items"></ul>'));
-                    resp.fullTrails.forEach(function(trail) {
+                    resp.fullTrails.forEach(function(trail, index) {
                         var $item = bonzo(bonzo.create(
                             itemTmpl(trail)
                         ));
@@ -60,10 +61,14 @@ define([
                         new RelativiseTimestamp(common.$g('.item__timestamp', $item))
                             .relativise();
 
-                        // is there an image
-                        if (trail.mainPicture) {
-                            $item.addClass('item--with-image')
-                                .append(imageTmpl(trail));
+                        // only show images for the first 3 items
+                        if (index < 3 && trail.mainPicture) {
+                            var imageContainer = $item.addClass('item--with-image')
+                                .append(imageTmpl(trail))[0];
+                            if (index < 3) {
+                                new ImageUpgrade(imageContainer, index === 0)
+                                    .upgrade();
+                            }
                         }
 
                         // add item to the items

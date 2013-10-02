@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import conf._
@@ -6,9 +6,6 @@ import feed.Competitions
 import play.api.mvc.{ Action, Controller }
 import model._
 import model.Page
-import pa.{ Round, LeagueTableEntry }
-import common.TeamCompetitions
-
 
 case class TablesPage(
     page: Page,

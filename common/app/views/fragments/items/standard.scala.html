@@ -11,12 +11,14 @@
         </a>
     </h2>
     @if(trail.trailType == Option("comment")) {
-        <p class="item__byline">@trail.byline</p>
+        @trail.byline.map { byLine =>
+            <p class="item__byline">@Html(byLine)</p>
+        }
     }
     @trail.trailText.map { text =>
         <p class="item__standfirst">@cleanTrailText(text)(Edition(request))</p>
     }
-    <div class="item__meta item__meta--grey">
+    <div class="item__meta">
         <time class="item__timestamp js-item__timestamp"
               itemprop="datePublished"
               datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
@@ -25,10 +27,10 @@
             <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
         </time>
     </div>
-    @trail.mainPicture(620).map{ mainPicture =>
+    @trail.mainPicture.map{ mainPicture =>
         <div class="item__image-container">
             <a href="@LinkTo{@trail.url}" class="item__link">
-                <img class="item__image" src="@mainPicture.path" alt="" />
+                <img class="item__image" alt="" data-src="@ImgSrc(mainPicture, FrontItem)" data-src-main="@ImgSrc(mainPicture, FrontItemMain)" />
             </a>
         </div>
     }

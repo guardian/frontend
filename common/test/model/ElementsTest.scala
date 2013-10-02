@@ -16,6 +16,7 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
       override def videos = Nil
       override def thumbnail = None
       override def mainPicture = None
+      override def mainVideo = None
     }
 
     images.imageOfWidth(70).get.caption should be(Some("exact size"))
@@ -30,6 +31,7 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
       override def videos = Nil
       override def thumbnail = None
       override def mainPicture = images.find(_.delegate.id == "test-image-2").headOption.flatMap(_.largestImage)
+      override def mainVideo = None
     }
 
     images.imageOfWidth(70).get.caption should be(Some("most appropriate"))
@@ -44,6 +46,7 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
       override def videos = Nil
       override def thumbnail = None
       override def mainPicture = None
+      override def mainVideo = None
     }
 
     images.largestMainPicture.get.caption should be(Some("main picture"))
@@ -57,6 +60,7 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
       override def images = Nil
       override def thumbnail = None
       override def mainPicture = None
+      override def mainVideo = None
     }
 
     images.largestMainPicture.get.caption should be(Some("main video picture"))
@@ -69,6 +73,7 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
       override def videos = Nil
       override def thumbnail = None
       override def mainPicture = None
+      override def mainVideo = None
     }
 
     images.largestMainPicture.get.caption should be(Some("biggest main picture"))
@@ -82,6 +87,7 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
       override def videos = Nil
       override def thumbnail = None
       override def mainPicture = None
+      override def mainVideo = None
     }
 
     images.mainPicture(80).get.caption should be(Some("main picture 2"))
@@ -92,14 +98,14 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
                       index: Int,
                       caption: String,
                       width: Int): ImageElement = {
-    new ImageElement(ApiElement(id, relation, "image", List(asset(caption, width))), index)
+    new ImageElement(ApiElement(id, relation, "image", Some(0), List(asset(caption, width))))
   }
 
   private def image(  id: String,
                       relation: String,
                       index: Int,
                       assets: List[Asset]): ImageElement = {
-    new ImageElement(ApiElement(id, relation, "image", assets), index)
+    new ImageElement(ApiElement(id, relation, "image", Some(0), assets))
   }
 
   private def video(  id: String,
@@ -107,7 +113,7 @@ class ElementsTest extends FlatSpec with ShouldMatchers {
                       index: Int,
                       caption: String,
                       width: Int): VideoElement = {
-    new VideoElement(ApiElement(id, relation, "video", List(asset(caption, width))), index)
+    new VideoElement(ApiElement(id, relation, "video", Some(0), List(asset(caption, width))))
   }
 
   private def asset(caption: String, width: Int): Asset = {

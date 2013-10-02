@@ -1,4 +1,4 @@
-package controllers
+package football.controllers
 
 import common._
 import feed.Competitions
@@ -29,7 +29,7 @@ object CompetitionTablesController extends Controller with Logging with Competit
         val html = () => football.views.html.fragments.frontTableBlock(table)
         renderFormat(html, html, 60)
       }.getOrElse(Cached(600)(NoContent))
-    } getOrElse (BadRequest("need a competition id"))
+    } getOrElse BadRequest("need a competition id")
   }
 
   def renderTeamJson(teamId: String) = renderTeam(teamId)
