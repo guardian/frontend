@@ -9,7 +9,7 @@ import play.api.libs.json._
 import play.api.libs.json.Json
 import scala.concurrent.Future
 import scala.util.Random
-import views.support.cleanTrailText
+import views.support.{cleanTrailText, ImgSrc, FrontItem, FrontItemMain}
 
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
@@ -42,9 +42,10 @@ object MostPopularController extends Controller with Logging with ExecutionConte
                 "trailText" -> trail.trailText.map{ text =>
                   cleanTrailText(text)(Edition(request)).toString()
                 },
-                "mainPicture" -> trail.mainPicture(620).map{ mainPicture =>
+                "mainPicture" -> trail.mainPicture.map{ mainPicture =>
                   Json.obj(
-                    "path" -> mainPicture.path
+                    "item" -> ImgSrc(mainPicture, FrontItem),
+                    "itemMain" -> ImgSrc(mainPicture, FrontItemMain)
                   )
                 },
                 "published" ->Json.obj(
