@@ -127,6 +127,12 @@
     box-shadow: $args;
 }
 
+@mixin background-size($args) {
+    -webkit-background-size: $args;
+    -moz-background-size: $args;
+    background-size: $args;
+}
+
 @mixin rotate($val) {
     -moz-transform: rotate($val);  /* FF3.5+ */
     -o-transform: rotate($val);  /* Opera 10.5 */

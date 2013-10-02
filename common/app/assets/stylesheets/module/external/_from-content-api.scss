@@ -25,6 +25,40 @@
         margin: 0 0 $baseline*2 0;
         padding: 0;
     }
+    > ol,
+    > ul {
+       margin-top: 0.8em;
+       list-style: none;
+    }
+    > ol {
+        counter-reset: li;
+    }
+    > ol > li:before {
+        content: counter(li)".";
+        counter-increment: li;
+        @include fs-header(1);
+        margin-right: 4px;
+
+        @include mq(tablet) {
+            @include fs-header(2, true);
+        }
+    }
+    > ul > li {
+        text-indent: 20px;
+    }
+    > ul > li:before {
+        font-size: 48px;
+        content: "\2022";
+        color: $c-neutral5;
+        position: absolute;
+        left: -22px;
+        top: 1px;
+    }
+    > ol > li,
+    > ul > li {
+        position: relative;
+        margin-bottom: 0.8em;
+    }
     h2 {
         @include fs-header(2);
 
@@ -45,6 +79,7 @@
         margin-bottom: 0;
 
         + a + p, // Inline link cards are inserted between paragraphs
+        + .inline-image + p,
         + p {
             // Indent consecutive paragraphs
             // by the value of the line-height
@@ -99,10 +134,39 @@
     }
 }
 
+.article blockquote {
+    margin: 28px 0 28px 24px;
+    font-style: italic;
+
+    @include mq(tablet) {
+        margin-left: 28px;
+    }
+}
+
 .article blockquote,
 .article blockquote p {
+
+    &.quoted {
+        margin: 28px 0;
+
+        p {
+            @include fs-headline(1);
+            line-height: 24px;
+            line-height: 2.4rem;
+            font-style: normal;
+            text-indent: 40px;
+            color: $c-neutral2;
+        }
+    }
+
     @include mq(tablet) {
-        @include fs-bodyCopy(4, true);
+
+        &.quoted p {
+            @include fs-headline(2, true);
+            line-height: 28px;
+            line-height: 2.8rem;
+            text-indent: 42px;
+        }
     }
 }
 
