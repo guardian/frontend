@@ -96,11 +96,12 @@
 }
 
 .is-live-icon {
-    padding: $baseline;
-    margin-right: 5px;
+    padding: 1px 4px 2px 4px;
+    margin: 1px 3px 0 0;
     font-size: 10px;
     font-style: normal;
     line-height: 1;
     color: #fff;
     background-color: #ec1c1c;
+    display: inline-block;
 }
