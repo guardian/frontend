@@ -161,7 +161,7 @@ object VideoEmbedCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
@@ -169,12 +169,15 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
           val src = img.attr("src")
           img.attr("src", ImgSrc(src, Naked))
+
           Option(img.attr("width")).filter(_.isInt) foreach { width =>
             fig.addClass(width.toInt match {
               case width if width <= 220 => "img--base img--inline"
@@ -200,6 +203,10 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
       }
     }
     body
+  }
+
+  def findImageFromId(id:String): Option[ImageAsset] = {
+    contentImages.filter(_.id == id).headOption.flatMap(_.largestImage)
   }
 }
 
