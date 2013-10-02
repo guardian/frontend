@@ -8,7 +8,8 @@
 /* Core elements
    ========================================================================== */
 
-.from-content-api {
+.from-content-api,
+.from-content-api .block-elements {
 
     @include fs-bodyCopy(3);
     color: #333333;
@@ -18,7 +19,6 @@
     }
 
     > p,
-    > blockquote,
     ul,
     ol,
     address {
@@ -154,8 +154,13 @@
             line-height: 24px;
             line-height: 2.4rem;
             font-style: normal;
-            text-indent: 40px;
             color: $c-neutral2;
+            margin-bottom: 0;
+            text-indent: 24px;
+
+            &:first-child {
+                text-indent: 40px;
+            }
         }
     }
 
@@ -165,7 +170,11 @@
             @include fs-headline(2, true);
             line-height: 28px;
             line-height: 2.8rem;
-            text-indent: 42px;
+            text-indent: 28px;
+
+            &:first-child {
+                text-indent: 42px;
+            }
         }
     }
 }
