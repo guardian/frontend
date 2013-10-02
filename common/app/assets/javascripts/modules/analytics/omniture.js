@@ -145,7 +145,7 @@ define([
                 s.eVar27 = config.page.identityErrorMessage || '';
                 s.eVar42 = config.page.returnUrl || '';
                 s.hier2="GU/Users/Registration";
-                s.events = s.apl(s.events, config.page.identityEvent, ',');
+                s.events = s.apl(s.events, config.page.omnitureEvent, ',');
             }
 
             s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
