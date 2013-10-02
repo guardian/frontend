@@ -25,7 +25,7 @@ define([
             fixture = {
                 id: fixturesId,
                 fixtures: [
-                    '<form class="js-comment-box d-comment-box component" data-discussion-id="'+ discussionId +'"><div class="d-comment-box__errors"></div><label for="body" class="cta">Add your comment</label><textarea name="body" class="d-comment-box__body" placeholder="Join the discussion…"></textarea><button type="submit" class="submit-input d-comment-box__submit">Submit</button></form>'
+                    '<form class="js-comment-box d-comment-box component" data-discussion-id="'+ discussionId +'"><div class="d-comment-box__messages"></div><label for="body" class="cta">Add your comment</label><textarea name="body" class="d-comment-box__body" placeholder="Join the discussion…"></textarea><button type="submit" class="submit-input d-comment-box__submit">Submit</button></form>'
                 ]
             };
 

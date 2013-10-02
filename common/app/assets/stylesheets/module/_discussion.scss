@@ -409,6 +409,16 @@ $keylineSize: 1px;
    ========================================================================== */
 .d-comment-box {}
 
+.d-comment-box--condensed {
+    .d-comment-box__content {
+        display: none;
+    }
+
+    .d-comment-box__add-comment {
+        display: block;
+    }
+}
+
 .d-comment-box__body {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -419,10 +429,20 @@ $keylineSize: 1px;
     resize: vertical;
     width: 100%;
 
-    &:focus {
-        height: 150px;
-    }
+    font-family: $sans-serif;
+    font-size: 14px;
+    font-size: 1.4rem;
 }
 
-.comment-box__submit {
+.d-comment-box__body--expanded {
+    height: 150px;
+}
+
+.d-comment-box__error {
+    background: #ffcc66;
+    padding: $baseline*2 $gutter;
+}
+
+.d-comment-box__add-comment {
+    display: none;
 }

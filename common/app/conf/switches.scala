@@ -98,7 +98,7 @@ object Switches extends Collections {
     "If this switch is on, users can recommend comments",
     safeState = Off)
 
-  val DiscussionPostComment = Switch("Discussion", "discussion-post-comment",
+  val DiscussionPostCommentSwitch = Switch("Discussion", "discussion-post-comment",
     "If this switch is on, users will be able to post comments",
     safeState = Off)
 
@@ -248,7 +248,7 @@ object Switches extends Collections {
     QuantcastSwitch,
     OmnitureDomReadySwitch,
     DiscussionSwitch,
-    DiscussionPostComment,
+    DiscussionPostCommentSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,

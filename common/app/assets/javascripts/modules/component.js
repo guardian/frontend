@@ -39,15 +39,21 @@ Component.prototype.elem = null;
 Component.prototype.template = null;
 
 /** @type {Object.<string.Element>} */
-Component.prototype.elems = {};
+Component.prototype.elems = null;
+
+/** @type {Object.<string.Element>} */
+Component.prototype.options = null;
 
 /**
  * Uses the CONFIG.classes.component
- * TODO (jamesgorrie): accept elements, strings etc
+ * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?
+ * @param {Element|string=} elem (optional)
  */
-Component.prototype.attachTo = function() {
-    var selector = this.getClass('component'),
-        elem = qwery(selector, this.context);
+Component.prototype.attachTo = function(elem) {
+    var selector = this.getClass('component');
+    this.elems = {};
+
+    elem = (elem && elem.nodeType === 1) ? [elem] : qwery(selector, this.context);
 
     if (elem.length === 0) { throw new ComponentError('No element of type "'+ selector +'" to attach to.'); }
     this.elem = elem[0];
@@ -72,7 +78,7 @@ Component.prototype.dispose = function() {};
  * @param {*} args
  */
 Component.prototype.on = function(eventName, handler, args) {
-    bean.on(this.elem, eventName, handler, args);
+    bean.on(this.elem, eventName, handler.bind(this), args);
 };
 
 /**
@@ -110,6 +116,16 @@ Component.prototype.getConf = function() {
 };
 
 /**
+ * @param {Object} options
+ */
+Component.prototype.setOptions = function(options) {
+    this.options = {};
+    for (var prop in this.defaultOptions) {
+        this.options[prop] = options[prop] || this.defaultOptions[prop];
+    }
+};
+
+/**
  * @param {Function} child
  */
 Component.create = function(child) {
@@ -118,6 +134,9 @@ Component.create = function(child) {
     child.prototype = new Tmp();
     child.prototype.constructor = child;
 };
+
+
+
 
 /** @contructor */
 function ComponentError(message) {

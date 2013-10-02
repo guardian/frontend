@@ -5,24 +5,26 @@ define([
     'qwery',
     'bean',
     'ajax',
-    'modules/discussion/recommend-comments',
     'modules/discussion/comment-box',
+    'modules/discussion/recommend-comments',
     'modules/userPrefs',
     'modules/analytics/clickstream',
     'modules/inview',
-    'modules/detect'
+    'modules/detect',
+    'modules/id',
 ], function (
     common,
     bonzo,
     qwery,
     bean,
     ajax,
-    RecommendComments,
     CommentBox,
+    RecommendComments,
     userPrefs,
     ClickStream,
     Inview,
-    Detect
+    Detect,
+    Id
     ) {
 
     var Discussion = function(options) {
@@ -42,9 +44,10 @@ define([
             actionsTemplate       = '<button class="js-show-more-comments cta" data-link-name="Show more comments">Show more comments</button>' +
                 '<div class="d-actions">' +
                 '<a data-link-name="Comment on desktop" class="d-actions__link" href="/' + config.page.pageId + '?view=desktop#start-of-comments">' +
-                    'Want to comment? Visit the desktop site</a>' +
+                    'Want our fully featured commenting experience? Head to our old site.</a>' +
                 '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
             clickstream           = new ClickStream({ addListener: false }),
+            apiRoot               = config.page.discussionApiRoot,
             self;
 
         return {
@@ -134,13 +137,19 @@ define([
                         // Hide the 'Show more button' if there's no more messages on the server
                         self.showMoreBtnNode.style.display = (response.hasMore === true) ? 'block' : 'none';
 
-                        commentsHaveLoaded = true;
                         currentPage = response.currentPage;
-
-                        RecommendComments.init(context, { apiRoot: config.page.discussionApiRoot });
 
                         common.mediator.emit('fragment:ready:dates', self.discussionContainerNode);
                         loadingInProgress = false;
+
+                        RecommendComments.init(context, { apiRoot: apiRoot });
+
+                        // Post a comment
+                        if (!commentsHaveLoaded && config.switches.discussionPostComment) {
+                            self.buildCommentBoxes(response.commentBoxHtml);
+                        }
+
+                        commentsHaveLoaded = true;
                     },
                     error: function() {
                         self.discussionContainerNode.innerHTML = '<div class="preload-msg">Error loading comments' +
@@ -210,6 +219,48 @@ define([
 
             buildShowMoreLabel: function(num) {
                 return (num === 1) ? 'Show 1 more reply' : 'Show '+num+' more replies';
+            },
+
+            buildCommentBoxes: function(html) {
+                var topBox, bottomBox,
+                    topBoxElem = bonzo.create(html),
+                    bottomBoxElem = bonzo.create(html);
+
+                bonzo(this.discussionContainerNode).prepend(topBoxElem);
+                bonzo(this.showMoreBtnNode).after(bottomBoxElem);
+
+                topBox = new CommentBox(context, { apiRoot: apiRoot, condensed: true });
+                topBox.attachTo(topBoxElem[0]);
+                topBox.on('posted', this.addComment.bind(this, false));
+
+                bottomBox = new CommentBox(context, { apiRoot: apiRoot });
+                bottomBox.attachTo(bottomBoxElem[0]);
+                bottomBox.on('posted', this.addComment.bind(this, true));
+            },
+
+            addComment: function(takeToTop, resp) {
+                // TODO (jamesgorrie): this is weird, but we don't have templating
+                var thread = bonzo(qwery('.d-thread', this.discussionContainerNode)[0]),
+                    comment = bonzo(qwery('.d-comment', this.discussionContainerNode)[0]).clone(),
+                    recommend = bonzo(comment[0].querySelector('.d-comment__recommend')),
+                    actions = bonzo(comment[0].querySelector('.d-comment__actions')),
+                    datetime = bonzo(comment[0].querySelector('time')),
+                    author = bonzo(comment[0].querySelector('.d-comment__author')),
+                    body = bonzo(comment[0].querySelector('.d-comment__body'));
+
+                comment[0].id = 'comment-'+ resp.id;
+                recommend.remove();
+                actions.remove();
+                author.html(Id.getUserFromCookie().displayName);
+                datetime.html('Just now');
+
+                body.html('<p>'+ resp.body.replace('\n\n', '</p><p>') +'</p>');
+                thread.prepend(comment);
+
+                if (takeToTop) {
+                    window.location.hash = '';
+                    window.location.hash = 'comment-'+ resp.id;
+                }
             },
 
             bindEvents: function() {
