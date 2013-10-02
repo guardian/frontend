@@ -5,14 +5,11 @@
 .published-time {
     @extend %type-9;
     display: block;
-    border-top: 2px solid $darkMushroom;
-    padding: $baseline*4 0 $baseline;
+    border-top: 1px dotted $c-neutral3;
+    padding: $baseline 0 $baseline;
     margin-top: $baseline*2;
 }
 
-    .is-summary .published-time {
-        border-color: $articleOrange;
-    }
 
 .block-time {
     line-height: 15px;
@@ -38,6 +35,11 @@
     padding-top: 0;
 }
 
+/* Blocks
+   ========================================================================== */
+.block {
+    margin-bottom: $baseline*6;
+}
 
 /* Block titles
    ========================================================================== */
@@ -47,37 +49,6 @@
 .live-blog .block-title {
     margin-bottom: 10px;
 }
-
-    .is-summary > .block-title,
-    .is-key-event > .block-title {
-        color: $articleOrange;
-    }
-
-
-/* Block quotes
-   ========================================================================== */
-
-/*.block blockquote {
-    padding-left: 20px;
-    border-left: 5px solid $darkMushroom;
-    margin: 20px 0;
-
-    &:before,
-    &:after {
-        display: none !important;
-    }
-}
-
-    .block .quoted {
-        border-left: none;
-        padding: 0;
-        margin: 0 0 10px;
-
-        &:before,
-        &:after {
-            display: inline-block !important;
-        }
-    }*/
 
 
 /* Tweets
