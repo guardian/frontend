@@ -12,7 +12,8 @@ import views.support.InBodyLinkCleaner
 object BodyCleaner {
   def apply(article: Article, html: String)(implicit request: RequestHeader) = withJsoup(BulletCleaner(html))(
     InBodyElementCleaner,
-    PictureCleaner(article),
+    UnindentBulletParents,
+    PictureCleaner(article.bodyImages),
     InBodyLinkCleaner("in body link")(Edition(request)),
     BlockNumberCleaner,
     TweetCleaner,

@@ -161,7 +161,7 @@ object VideoEmbedCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
@@ -169,25 +169,26 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
           val src = img.attr("src")
           img.attr("src", ImgSrc(src, Naked))
-          Option(img.attr("width")).filter(_.isInt) foreach { width =>
-            fig.addClass(width.toInt match {
+
+          asset.foreach { image =>
+            fig.addClass(image.width match {
               case width if width <= 220 => "img--base img--inline"
               case width if width < 460 => "img--median"
               case width => "img--extended"
             })
-            Option(img.attr("height")).filter(_.isInt) foreach { height =>
-              fig.addClass(height.toInt match {
-                case height if height > width.toInt => "img--portrait"
-                case height if height < width.toInt => "img--landscape"
-                case height => ""
-              })
-            }
+            fig.addClass(image.height match {
+              case height if height > image.width => "img--portrait"
+              case height if height < image.width => "img--landscape"
+              case height => ""
+            })
           }
         }
         fig.getElementsByTag("figcaption").foreach { figcaption =>
@@ -200,6 +201,10 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
       }
     }
     body
+  }
+
+  def findImageFromId(id:String): Option[ImageAsset] = {
+    contentImages.filter(_.id == id).headOption.flatMap(_.largestImage)
   }
 }
 
@@ -222,6 +227,14 @@ case class VideoPosterCleaner(videos: Seq[VideoAsset]) extends HtmlCleaner {
 
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
+}
+
+object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
+  def clean(body: Document): Document = {
+    val bullets = body.getElementsByClass("bullet")
+    bullets flatMap { _.parentTag("p") } foreach { _.addClass("no-indent") }
+    body
+  }
 }
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
@@ -400,7 +413,7 @@ object StripHtmlTags {
 }
 
 object StripHtmlTagsAndUnescapeEntities{
-  def apply( html: String) : String = {
+  def apply(html: String) : String = {
     val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
     val stripped = doc.body.html
     val unescaped = StringEscapeUtils.unescapeHtml(stripped)

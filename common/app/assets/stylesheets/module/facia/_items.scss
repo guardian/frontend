@@ -9,6 +9,7 @@ $dark-green: #19646c;
 
 $comment-light: #fb8935;
 $comment-dark: #951c55;
+$meta: #767676;
 
 .collection {
     position: relative;
@@ -54,7 +55,7 @@ $comment-dark: #951c55;
 .item__title {
     @include box-sizing(border-box);
     border-top: 2px solid $light-blue;
-    padding-top: $gs-baseline*(2/3);
+    padding-top: 2px;
     color: #000000;
     @include mq($to: tablet) {
         @include fs-headline(3);
@@ -69,7 +70,7 @@ a.item__link {
 .item__byline {
     margin: $gs-baseline/3 0 0;
     color: $comment-light;
-    @include fs-header(1);
+    @include fs-header(2);
 }
 .item__standfirst {
     margin: $gs-baseline*2 0 0;
@@ -77,16 +78,16 @@ a.item__link {
     color: $darkGrey;
 }
 .item__meta {
-    color: $grey;
+    color: $meta;
     @include fs-data(2);
-    margin-top: $gs-baseline*(5/3);
-    padding-bottom: $gs-baseline;
+    margin-top: gs-height(1) - 16;
     overflow: hidden;
     min-height: 16px;
     .item__timestamp,
     .trail__count {
         position: relative;
         float: left;
+        padding-top: 1px;
         i {
             margin: 0;
             position: absolute;
@@ -95,14 +96,14 @@ a.item__link {
     }
     .item__timestamp {
         min-width: gs-span(1) - 16;
-        padding: 0 $gs-gutter/2 0 16px;
+        padding-right: $gs-gutter/2;
+        padding-left: 16px;
         i {
             @extend .i-clock-grey;
             left: 0;
         }
     }
     .trail__count {
-        padding-bottom: 0;
         padding-left: 28px;
         top: 0;
         a {
@@ -130,6 +131,7 @@ a.item__link {
 }
 .item__image-container {
     margin-top: $gs-baseline;
+    overflow: hidden;
 }
 .item__image {
     display: block;
@@ -144,7 +146,7 @@ a.item__link {
     @include fs-data(4);
     position: relative;
     left: 50%;
-    margin-top: $gs-baseline*2;
+    margin-top: $gs-baseline;
     margin-left: -(gs-span(1) + $gs-gutter/2);
 }
 
@@ -157,19 +159,19 @@ a.item__link {
     .item__title {
         border-top-color: $comment-dark;
         position: relative;
-        padding-top: 40px;
+        padding-top: $gs-baseline*2 + 2;
     }
     .item__link .i {
         position: absolute;
         left: 0;
-        top: $gs-baseline*(2/3);
+        top: 2px;
     }
 }
 
 .items--cards {
     font-size: 0;
     .item {
-        margin-top: $gs-baseline*2;
+        margin-top: $gs-baseline;
         @include mq(tablet) {
             display: inline-block;
             vertical-align: top;
@@ -181,8 +183,11 @@ a.item__link {
         }
     }
     .item__title {
+        @include mq(mobile) {
+            min-height: gs-height(2) + $gs-baseline;
+        }
         @include mq(tablet) {
-            min-height: gs-height(3);
+            min-height: gs-height(3) + $gs-baseline;
         }
     }
     .item__standfirst {
@@ -217,7 +222,7 @@ a.item__link {
         }
         &.item--comment {
             .item__title {
-                padding-top: 32px;
+                padding-top: $gs-baseline*2;
             }
             .item__link .i {
                 top: 0;
@@ -257,10 +262,7 @@ a.item__link {
         }
         @include mq($to: tablet) {
             .item__title {
-                @include fs-headline(1, $size-only: true);
-            }
-            .item__meta {
-                padding-bottom: 0;
+                min-height: 0;
             }
         }
         @include mq(tablet) {
@@ -283,21 +285,29 @@ a.item__link {
     border-left: 1px dotted $grey;
     .item__title {
         @include fs-headline(1, $size-only: true);
-        min-height: gs-height(2);
     }
     @if $without-image {
         .item__image-container {
             display: none;
         }
+    } @else {
+        &.item--without-image .item__standfirst {
+            display: block;
+        }
+
     }
 }
 @mixin card-headline {
     padding: 0;
     border-left-style: none;
+    .item__title,
+    .item__byline {
+        @include fs-headline(1, $size-only: true);
+    }
     .item__title {
         min-height: 0;
         @include fs-headline(1, $size-only: true);
-        padding-top: $gs-baseline*(2/3);
+        padding-top: 2px;
         border-top-color: $grey;
         border-top-width: 1px;
         .i {
