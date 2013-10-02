@@ -286,6 +286,9 @@ a.item__link {
     .item__title {
         @include fs-headline(1, $size-only: true);
     }
+    .item__byline {
+        @include fs-header(1, $size-only: true);
+    }
     @if $without-image {
         .item__image-container {
             display: none;
