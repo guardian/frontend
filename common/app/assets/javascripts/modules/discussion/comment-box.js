@@ -103,12 +103,11 @@ CommentBox.prototype.postComment = function(e) {
 
         this.setFormState(true);
 
-        return ajax.reqwest({
+        return ajax({
             url: url,
             type: 'json',
             method: 'post',
             crossOrigin: true,
-            withCredentials: true,
             data: comment,
             headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
         }).then(this.success.bind(this, comment), this.fail.bind(this));

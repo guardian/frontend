@@ -7,13 +7,15 @@ define(['common', 'modules/cookies'], function(common, Cookies) {
      */
     var Id = {};
 
+    Id.cookieName = 'GU_U';
+
     /**
      * The array returned from the cookie is in the format
      * [ id, email, displayname, userGroupBitmask ]
      * @return {?Object} the user information
      */
     Id.getUserFromCookie = function() {
-        var cookieData = Cookies.get('GU_U'),
+        var cookieData = Cookies.get(Id.cookieName),
             userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null,
             user;
 
@@ -28,6 +30,13 @@ define(['common', 'modules/cookies'], function(common, Cookies) {
 
         return null;
     };
+
+    /**
+     * @return {string}
+     */
+    Id.getCookie = function() {
+        return Cookies.get(Id.cookieName);
+    },
 
     /**
      * Handles unicode chars correctly

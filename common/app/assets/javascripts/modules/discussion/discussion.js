@@ -48,6 +48,7 @@ define([
                 '<a href="#article" class="top" data-link-name="Discussion: Return to article">Return to article</a></div>',
             clickstream           = new ClickStream({ addListener: false }),
             apiRoot               = config.page.discussionApiRoot,
+            currentUserAvatarUrl,
             self;
 
         return {
@@ -246,7 +247,8 @@ define([
                     actions = bonzo(comment[0].querySelector('.d-comment__actions')),
                     datetime = bonzo(comment[0].querySelector('time')),
                     author = bonzo(comment[0].querySelector('.d-comment__author')),
-                    body = bonzo(comment[0].querySelector('.d-comment__body'));
+                    body = bonzo(comment[0].querySelector('.d-comment__body')),
+                    avatar = bonzo(comment[0].querySelector('.d-comment__avatar'))[0];
 
                 comment[0].id = 'comment-'+ resp.id;
                 recommend.remove();
@@ -260,6 +262,23 @@ define([
                 if (takeToTop) {
                     window.location.hash = '';
                     window.location.hash = 'comment-'+ resp.id;
+                }
+
+                // avatar oddity as only discussion knows where it lives
+                if (currentUserAvatarUrl) {
+                    avatar.src = currentUserAvatarUrl;
+                } else {
+                    avatar.src = 'http://static.guim.co.uk/sys-images/Guardian/Pix/site_furniture/2010/09/01/no-user-image.gif';
+                    return ajax({
+                        url: apiRoot +'/profile/me',
+                        type: 'jsonp',
+                        crossOrigin: true,
+                        data: { GU_U: Id.getCookie() },
+                        headers: { 'D2-X-UID': 'zHoBy6HNKsk' }
+                    }).then(function(resp) {
+                        currentUserAvatarUrl = resp.userProfile.avatar;
+                        avatar.src = currentUserAvatarUrl;
+                    });
                 }
             },
 
