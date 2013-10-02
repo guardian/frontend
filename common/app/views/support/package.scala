@@ -178,7 +178,7 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
           Option(img.attr("width")).filter(_.isInt) foreach { width =>
             fig.addClass(width.toInt match {
               case width if width <= 220 => "img--base img--inline"
-              case width if width < 460 => "img--median img--inline"
+              case width if width < 460 => "img--median"
               case width => "img--extended"
             })
             Option(img.attr("height")).filter(_.isInt) foreach { height =>
