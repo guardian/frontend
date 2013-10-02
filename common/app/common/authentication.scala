@@ -71,12 +71,8 @@ object NonAuthAction {
 
 }
 
-class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) {
+class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) with implicits.Dates {
   import Play.current
-
-  implicit class DateTimeWithExpiry(d: DateTime) {
-    def isSessionExpired: Boolean = DateTime.now.minusMillis(Configuration.cookies.sessionExpiryTime).isBefore(d)
-  }
 
   override def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async { request =>
     if (withinAllowedTime(request) || Play.isTest)
@@ -86,7 +82,7 @@ class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) {
   }
 
   def withinAllowedTime(request: Request[AnyContent]): Boolean =
-    request.session.get(Configuration.cookies.lastSeenKey).map(new DateTime(_)).exists(_.isSessionExpired)
+    request.session.get(Configuration.cookies.lastSeenKey).map(new DateTime(_)).exists(_.age < Configuration.cookies.sessionExpiryTime)
 }
 
 class AuthAction(loginUrl: String) extends ExecutionContexts {
