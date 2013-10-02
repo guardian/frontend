@@ -83,6 +83,7 @@ trait Football {
     override lazy val section: String = "football"
     override lazy val webPublicationDate: DateTime = m.date
     override lazy val sectionName: String = "Football"
+    override lazy val mainVideo: Option[VideoElement] = None
   }
 
   implicit class Match2hasStarted(m: FootballMatch) {
