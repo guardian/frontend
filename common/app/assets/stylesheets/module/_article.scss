@@ -49,8 +49,16 @@
         &:hover,
         &:active,
         &:focus {
-            color: #333333;
+            color: $c-neutral1;
         }
+    }
+
+    em {
+        font-style: normal;
+    }
+
+    strong {
+        font-weight: normal;
     }
 }
 

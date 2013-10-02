@@ -119,14 +119,14 @@ $headerHeight: 58px;
     }
 }
 
-.img--inline {
+
+.img--inline{
     width: $inArticleInlineImgWidth;
     float: left;
     clear: left;
     margin: 3px 0 0 0;
     background-color: $c-neutral7;
     padding: $baseline*2 $gs-gutter/2 $baseline*6 $gs-gutter/2;
-
 
     @include mq(mobileLandscape) {
         padding-right: $gs-gutter;

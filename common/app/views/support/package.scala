@@ -185,7 +185,7 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
               fig.addClass(height.toInt match {
                 case height if height > width.toInt => "img--portrait"
                 case height if height < width.toInt => "img--landscape"
-                case height => "img"
+                case height => ""
               })
             }
           }

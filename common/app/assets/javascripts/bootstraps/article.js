@@ -10,7 +10,7 @@ define([
     "modules/experiments/live-blog-show-more",
     "modules/notification-counter",
     "modules/detect",
-    'modules/experiments/left-hand-card'
+    "modules/experiments/left-hand-card"
 ], function (
     common,
     AutoUpdate,
@@ -126,18 +126,17 @@ define([
                 }
             });
         },
-
+        
         externalLinksCards: function () {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches && config.switches.externalLinksCards) {
                     var card = new LeftHandCard({
-                        origin: 'internal',
-                        context: context
+                            origin: 'internal',
+                            context: context
                     });
                 }
             });
         }
-
     };
 
     var ready = function (config, context) {
