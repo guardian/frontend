@@ -70,7 +70,7 @@ a.item__link {
 .item__byline {
     margin: $gs-baseline/3 0 0;
     color: $comment-light;
-    @include fs-header(2d);
+    @include fs-header(2);
 }
 .item__standfirst {
     margin: $gs-baseline*2 0 0;
