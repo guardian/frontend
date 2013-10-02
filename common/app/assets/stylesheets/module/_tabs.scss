@@ -72,7 +72,7 @@
 
 .tabs__tab--selected {
     a {
-        background: #fff;
+        background: #ffffff;
     }
 
     @include mq(tablet) {
@@ -94,7 +94,7 @@
 
     .tabs__tab {
         display: table-cell;
-        border-left: 2px solid #fff;
+        border-left: 2px solid #ffffff;
         width: auto;
         float: none;
 
