@@ -1,15 +1,32 @@
-Frontend Nginx Dev Config
-=========================
+# Frontend Nginx Dev Config
 
-To run nginx on your local dev machine you need to add the following lines to your /etc/hosts file:
+## Setup Mac
 
-127.0.1.1   profile.thegulocal.com
-127.0.1.1   m.thegulocal.com
+Install Homebrew:
 
-Make sure you have nginx installed:
+    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 
-sudo apt-get install nginx
+Install nginx:
 
-And run the setup script:
+    brew install nginx
 
-nginx/setup.sh
+Add the following to your ```/etc/hosts```:
+
+    127.0.0.1   profile.thegulocal.com
+    127.0.0.1   m.thegulocal.com
+
+## Setup Linux
+
+Install nginx:
+
+    sudo apt-get install nginx
+
+
+Add the following to your ```/etc/hosts```:
+
+    127.0.1.1   profile.thegulocal.com
+    127.0.1.1   m.thegulocal.com
+
+## Now run the setup script:
+
+    nginx/setup.sh
