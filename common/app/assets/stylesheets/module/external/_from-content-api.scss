@@ -177,11 +177,11 @@
 .caption,
 figcaption,
 .main-caption {
-    @include fs-data(2);
-    color: #666666;
+    @include fs-data(1);
+    color: $c-neutral2;
 
     @include mq(tablet) {
-        @include fs-data(3, true);
+        @include fs-data(2, true);
     }
 }
 
