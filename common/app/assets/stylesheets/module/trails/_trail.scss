@@ -6,14 +6,14 @@
     position: relative;
     overflow: hidden;
     margin: 0;
-    padding: $baseline 0 $baseline*2;
+    padding: $baseline 0 $baseline*3;
 
     .relative-timestamp {
         display: inline-block;
     }
 }
 .trail + .trail {
-    border-top: 1px solid $c-neutral7;
+    border-top: 1px solid $c-neutral5;
 }
 
 .trail--gallery,
@@ -24,10 +24,10 @@
 
 .trail__headline {
     @include fs-headline(2);
-    margin-bottom: $baseline*4;
+    margin-bottom: $baseline*6 - 3px;
     @include mq(tablet) {
-        @include fs-headline(3);
-        margin-bottom: $baseline*6;
+        @include fs-headline(3, true);
+        margin-bottom: $baseline*8 - 3px;
     }
 }
 
@@ -57,7 +57,7 @@
 }
 
 .trail__text {
-    @include fs-bodyCopy(3, true);
+    @include fs-bodyCopy(1);
     text-rendering: optimizeLegibility;
 
     @include mq(tablet) {
@@ -74,15 +74,26 @@
    Trail counters
    ========================================================================== */
 
+.trail__count a,
+.trail__count a:hover,
+.trail__count a:focus,
+.trail__count a:active,
+.trail .relative-timestamp {
+    color: $c-neutral2;
+    @include fs-data(2);
+
+    @include mq(tablet) {
+        @include fs-data(3, true);
+    }
+}
+
 .trail__count {
     a,
     a:hover,
     a:focus,
     a:active {
-        @extend %type-11;
         display: inline-block;
         margin: 0 0 0 $gutter/2;
-        color: $c-neutral2;
     }
 
     i {
@@ -90,7 +101,7 @@
         margin-right: 4px;
     }
     .relative-timestamp + & {
-        border-left: 1px solid $c-neutral7;
+        border-left: 1px solid $c-neutral5;
         margin-left: 6px;
     }
 }
@@ -131,7 +142,7 @@
         margin-bottom: $baseline*6;
 
         @include mq(tablet) {
-            @include fs-headline(5);
+            @include fs-headline(5, true);
             margin-bottom: $baseline*8;
         }
     }
@@ -143,12 +154,19 @@
 .trail--thumbnail {
     .trail__img {
         float: left;
-        width: 35%;
-        margin-right: $gs-gutter;
         margin-bottom: $baseline;
+        margin-right: $gs-gutter/2;
+        margin-top: 3px; // Align with top of text
+        position: relative;
+        overflow: hidden;
+        height: 71px;
+        width: 120px;
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter;
+        }
 
         img {
-            margin-top: 3px; // Align with top of text
+            width: 100%;
             display: block;
         }
 
@@ -162,7 +180,7 @@
     }
     .trail__break {
         clear: both;
-        margin-bottom: $baseline*3;
+        margin-bottom: $baseline*5;
     }
 }
 
