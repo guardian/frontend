@@ -8,6 +8,11 @@
                 color: $colour;
             }
         }
+
+        .tone-border {
+            border-color: $colour;
+        }
+
         .tone-background { background-color: $colour; }
         .commentcount {
             i {
