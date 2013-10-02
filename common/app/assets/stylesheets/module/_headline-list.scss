@@ -35,8 +35,6 @@
     .count {
         @include fs-bodyCopy(1);
         float: left;
-        line-height: 20px;
-        line-height: 2rem;
         color: $c-neutral4;
         width: 12px;
     }
