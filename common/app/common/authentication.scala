@@ -74,6 +74,10 @@ object NonAuthAction {
 class AuthActionWithTimeout(loginUrl: String) extends AuthAction(loginUrl) {
   import Play.current
 
+  implicit class DateTimeWithExpiry(d: DateTime) {
+    def isSessionExpired: Boolean = DateTime.now.minusMillis(Configuration.cookies.sessionExpiryTime).isBefore(d)
+  }
+
   override def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async { request =>
     if (withinAllowedTime(request) || Play.isTest)
       Future { f(request).withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)) }
@@ -81,10 +85,8 @@ class AuthActionWithTimeout(loginUrl: String) extends AuthAction(loginUrl) {
       Future { Redirect(loginUrl).withSession(("loginFromUrl", request.uri)) }
   }
 
-  def withinAllowedTime(request: Request[AnyContent]): Boolean = {
-    lazy val oneMinuteAgo: Long = DateTime.now.getMillis - Configuration.cookies.sessionExpiryTime
-    request.session.get(Configuration.cookies.lastSeenKey).exists(new DateTime(_).getMillis > oneMinuteAgo)
-  }
+  def withinAllowedTime(request: Request[AnyContent]): Boolean =
+    request.session.get(Configuration.cookies.lastSeenKey).map(new DateTime(_)).exists(_.isSessionExpired)
 }
 
 class AuthAction(loginUrl: String) extends ExecutionContexts {
