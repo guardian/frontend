@@ -233,7 +233,6 @@
     padding: .275em .6em .375em;
     border: 0;
     border-radius: 4px;
-    background: #F6644F;
     text-align: center;
     color: white;
 
@@ -250,7 +249,7 @@
         left: 6px;
         border-width: 0 0 8px 8px;
         border-style: solid;
-        border-color: transparent #F6644F;
+        border-color: transparent #4490ce; // TODO
     }
 }
 
@@ -301,18 +300,25 @@
 .d-show-cta:focus {
     @extend %type-6;
     line-height: 1;
-    color: #444;
+    color: $c-neutral1;
     position: relative;
     display: block;
-    padding: $baseline*4 $gutter/2;
+    padding: 8px 8px 24px 6px;
     text-align: left;
     overflow: auto;
     background-color: $mushroom;
+    position: relative;
 
     .d-commentcount {
         position: absolute;
         top: 13px;
         right: 10px;
+    }
+
+    i {
+        position: absolute;
+        left: 6px;
+        bottom: 6px;
     }
 }
 
