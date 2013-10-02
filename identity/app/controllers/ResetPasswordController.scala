@@ -62,7 +62,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
 
     def onSuccess(form: (String)): Future[SimpleResult] = form match {
       case (email) =>
-        api.sendPasswordResetEmail(email, idRequest.clientIp) map {
+        api.sendPasswordResetEmail(email, idRequest.trackingData) map {
           case Left(errors) =>
             logger.info(s"Request new password returned errors ${errors.toString()}")
             val formWithError = errors.foldLeft(boundForm) { (form, error) =>

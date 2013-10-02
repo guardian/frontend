@@ -18,7 +18,7 @@ import org.joda.time.DateTime
 import idapiclient.ClientAuth
 import idapiclient.responses.CookieResponse
 import idapiclient.EmailPassword
-import idapiclient.OmnitureTracking
+import idapiclient.TrackingData
 import services.IdentityRequest
 import idapiclient.responses.CookiesResponse
 
@@ -29,8 +29,8 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val api = mock[IdApiClient]
   val conf = new IdentityConfiguration
-  val omnitureData = mock[OmnitureTracking]
-  val identityRequest = IdentityRequest(omnitureData, Some("http://example.com/return"), None)
+  val trackingData = mock[TrackingData]
+  val identityRequest = IdentityRequest(trackingData, Some("http://example.com/return"), None)
   val signInService = new PlaySigninService(conf)
 
   val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService)
@@ -50,7 +50,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
       "so api is not called" in Fake {
         signinController.processForm()(fakeRequest)
-        verify(api, never).authBrowser(any[Auth], same(omnitureData))
+        verify(api, never).authBrowser(any[Auth], same(trackingData))
       }
 
       "form is re-shown with errors" in Fake {
@@ -64,11 +64,11 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
       val clientAuth = ClientAuth("frontend-dev-client-token")
 
       "if api call succeeds" - {
-        when(api.authBrowser(any[Auth], same(omnitureData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
+        when(api.authBrowser(any[Auth], same(trackingData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
 
         "should call authBrowser with provided credentials" in Fake {
           signinController.processForm()(fakeRequest)
-          verify(api).authBrowser(auth, omnitureData)
+          verify(api).authBrowser(auth, trackingData)
         }
 
 

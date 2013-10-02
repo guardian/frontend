@@ -46,7 +46,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
   def processForm = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = registrationForm.bindFromRequest
-    val omnitureData = idRequest.omnitureData
+    val trackingData = idRequest.trackingData
 
     def onError(formWithErrors: Form[(String, String, String, Boolean, Boolean)]): Future[SimpleResult] = {
       logger.info("Invalid registration request")
@@ -58,7 +58,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     def onSuccess(form: (String, String, String, Boolean, Boolean)): Future[SimpleResult] = form match {
       case (email, username, password, gnmMarketing, thirdPartyMarketing) => {
         val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing, idRequest.clientIp)
-        val registeredUser: Future[Response[User]] = api.register(user, omnitureData, idRequest.clientIp)
+        val registeredUser: Future[Response[User]] = api.register(user, trackingData)
 
         val result: Future[SimpleResult] = registeredUser flatMap {
           case Left(errors) =>
@@ -73,7 +73,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
           case Right(user) =>
             val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
-            val authResponse = api.authBrowser(EmailPassword(email, password), omnitureData)
+            val authResponse = api.authBrowser(EmailPassword(email, password), trackingData)
             val response: Future[SimpleResult] = signinService.getCookies(authResponse, false) map {
               case Left(errors) => {
                 Ok(views.html.registration_confirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl))
