@@ -1,5 +1,4 @@
 define('bootstraps/app', [
-    "qwery",
     "common",
     "domReady",
     "ajax",
@@ -21,7 +20,6 @@ define('bootstraps/app', [
     "modules/pageconfig",
     "bootstraps/tag"
 ], function (
-    qwery,
     common,
     domReady,
     ajax,
@@ -104,8 +102,8 @@ define('bootstraps/app', [
 
                 bootstrapCommon.init(config, context, contextHtml);
 
-                //Fronts
-                if(qwery('.facia-container').length) {
+                // Fronts
+                if(config.page.isFacia) {
                     Facia.init(config, context);
                 } else if (config.page.isFront){
                     Front.init(config, context);
