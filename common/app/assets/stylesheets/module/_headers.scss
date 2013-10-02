@@ -5,7 +5,7 @@
 .sub-section-head {
     position: relative;
     overflow: hidden;
-    border-top: $baseline solid $c-neutral6;
+    border-top: $baseline/2 solid $c-newsAccent;
 
     h1 {
         @include fs-header(5);
@@ -26,28 +26,28 @@
     }
 }
 
-
 .front-section-head a {
-    color: #fff;
+    color: #ffffff;
 }
 
 .sub-section-head {
-    border-bottom: 1px solid $mushroom;
+    margin: 0 $gs-gutter/2;
+
+    a {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .section-head {
-    @extend %type-1;
+    @include fs-header(5);
+    height: $gs-column-height;
     -webkit-font-smoothing: antialiased;
     line-height: 1;
     font-weight: bolder;
-    padding: 14px 0 15px;
+    padding: $baseline 0 $baseline*2;
     margin: 0 $gs-gutter/2;
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
-    border-top: 4px solid $mushroom;
-    border-bottom: 1px solid $mushroom;
+    border-top: $baseline/2 solid $c-newsAccent;
     @include box-sizing(border-box);
 
     &.zone-color {

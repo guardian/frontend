@@ -2,12 +2,12 @@
 
 <@element class="trail trail--headline t@rowNum" data-link-name="trail" @trail.discussionId.map{ id => data-discussion-id="@id" }>
 
+    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
     <h@headingLevel class="trail__headline">
         <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
             @cleanTrailText(trail.headline)(Edition(request))
         </a>
     </h@headingLevel>
-
-    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
 </@element>

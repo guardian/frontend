@@ -4,6 +4,8 @@
     @trail.discussionId.map{ id => data-discussion-id="@id" }
     @CricketMatch(trail).map{ id => data-cricket-match="@id" } >
 
+    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
     <h@headingLevel class="trail__headline">
         <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
             @RemoveOuterParaHtml(trail.headline)
@@ -27,6 +29,5 @@
     }
     @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
     <div class="trail__break"></div>
-    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
 
 </@element>
