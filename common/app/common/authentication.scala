@@ -71,7 +71,7 @@ object NonAuthAction {
 
 }
 
-class AuthActionWithTimeout(loginUrl: String) extends AuthAction(loginUrl) {
+class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) {
   import Play.current
 
   implicit class DateTimeWithExpiry(d: DateTime) {

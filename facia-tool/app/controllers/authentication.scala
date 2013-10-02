@@ -8,7 +8,7 @@ import scala.concurrent.Future
 
 object Authenticated extends AuthAction(routes.Login.login.url)
 
-object AuthenticatedWithTimeout extends AuthActionWithTimeout("/login")
+object ExpiringAuthentication extends ExpiringAuthAction("/login")
 
 object Login extends LoginController with Controller with ExecutionContexts {
 
