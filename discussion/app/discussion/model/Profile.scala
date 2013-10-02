@@ -1,24 +1,44 @@
 package discussion
 package model
 
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsObject, JsValue}
 
 case class Profile(
   avatar: String,
   displayName: String,
   isStaff: Boolean = false,
-  isContributor: Boolean = false
+  isContributor: Boolean = false,
+  privateFields: Option[PrivateProfileFields]
 )
 
 object Profile {
 
   def apply(json: JsValue): Profile = {
-    val badges = json \ "userProfile" \ "badge" \\ "name"
+    val profileJson = json \ "userProfile"
+    val badges = profileJson \ "badge" \\ "name"
     Profile(
-      avatar = (json \ "userProfile" \ "avatar").as[String],
-      displayName = (json \ "userProfile" \ "displayName").as[String],
+      avatar = (profileJson \ "avatar").as[String],
+      displayName = (profileJson \ "displayName").as[String],
       isStaff = badges.exists(_.as[String] == "Staff"),
-      isContributor = badges.exists(_.as[String] == "Contributor")
+      isContributor = badges.exists(_.as[String] == "Contributor"),
+      privateFields = getPrivateFields(profileJson \ "privateFields")
+    )
+  }
+
+  private def getPrivateFields(json: JsValue): Option[PrivateProfileFields] = json match {
+    case obj: JsObject => Some(PrivateProfileFields(obj))
+    case _ => println("Error: %s" format json);None
+  }
+}
+
+case class PrivateProfileFields(canPostComment: Boolean, isPremoderated: Boolean, isSocial: Boolean)
+
+object PrivateProfileFields{
+  def apply(json: JsObject): PrivateProfileFields = {
+    PrivateProfileFields(
+      canPostComment = (json \\ "canPostComment") exists { _.as[Boolean] },
+      isPremoderated = (json \\ "isPremoderated") exists { _.as[Boolean] },
+      isSocial = (json \\ "isSocial") exists { _.as[Boolean] }
     )
   }
 }
