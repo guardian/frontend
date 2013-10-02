@@ -21,8 +21,8 @@ define([
         if (!opts || !opts.id) { return; }
         this.id = opts.id;
 
-        this.live  = this.createZones(opts.zones);
-        this.draft = this.createZones(opts.zones);
+        this.live  = this.createGroups(opts.groups);
+        this.draft = this.createGroups(opts.groups);
 
         // properties from the config, about this collection
         this.configMeta   = common.util.asObservableProps([
@@ -60,10 +60,10 @@ define([
         this.load();
     }
 
-    Collection.prototype.createZones = function(zoneNames) {
+    Collection.prototype.createGroups = function(groupNames) {
         var dropItem = this.drop.bind(this);
 
-        return _.map(_.isArray(zoneNames) ? zoneNames : [undefined], function(n) {
+        return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(n) {
             return {
                 name: n,
                 articles: ko.observableArray(),
@@ -194,29 +194,29 @@ define([
 
     Collection.prototype.importList = function(opts, from, to) {
         var self = this,
-            zones = this[to];
+            groups = this[to];
 
-        _.each(zones, function(zone) {
-            zone.articles.removeAll();
+        _.each(groups, function(group) {
+            group.articles.removeAll();
         });
 
         if (opts[from]) {
             opts[from].forEach(function(item, index) {
-                var zoneList;
+                var groupList;
 
-                // FAKE A ZONE!
-                item.zone = ["major", "minor", "other"][Math.min(2, Math.floor(index/2))];
+                // FAKE a group - for testing.
+                //item.group = ["major", "minor", "other"][Math.min(2, Math.floor(index/2))];
 
-                zoneList = _.find(zones, function(zone){ return zone.name === item.zone; }) || zones[0];
-                zoneList.articles.push(new Article(item));
+                groupList = _.find(groups, function(group){ return group.name === item.group; }) || groups[0];
+                groupList.articles.push(new Article(item));
             });
         }
     }
 
     Collection.prototype.decorate = function() {
-        _.each(this[this.state.liveMode() ? 'live' : 'draft'], function(zone) {
-            contentApi.decorateItems(zone.articles());
-            ophanApi.decorateItems(zone.articles());
+        _.each(this[this.state.liveMode() ? 'live' : 'draft'], function(group) {
+            contentApi.decorateItems(group.articles());
+            ophanApi.decorateItems(group.articles());
         });
     };
 
