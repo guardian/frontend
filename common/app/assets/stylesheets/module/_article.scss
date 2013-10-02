@@ -123,13 +123,14 @@
 }
 
 .article__standfirst {
-    @include fs-bodyCopy(3, true);
+    @include fs-headline(1, true);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     margin-bottom: $baseline*3;
+    color: $c-neutral2;
 
     @include mq(tablet) {
-        @include fs-bodyCopy(4, true);
+        @include fs-headline(2, true);
         -webkit-font-smoothing: antialiased;
         margin-bottom: $baseline*4;
     }
