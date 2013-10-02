@@ -9,6 +9,7 @@ $dark-green: #19646c;
 
 $comment-light: #fb8935;
 $comment-dark: #951c55;
+$meta: #767676;
 
 .collection {
     position: relative;
@@ -69,7 +70,7 @@ a.item__link {
 .item__byline {
     margin: $gs-baseline/3 0 0;
     color: $comment-light;
-    @include fs-header(1);
+    @include fs-header(2);
 }
 .item__standfirst {
     margin: $gs-baseline*2 0 0;
@@ -77,7 +78,7 @@ a.item__link {
     color: #676767;
 }
 .item__meta {
-    color: $grey;
+    color: $meta;
     @include fs-data(2);
     margin-top: gs-height(1) - 16;
     overflow: hidden;
@@ -86,6 +87,7 @@ a.item__link {
     .trail__count {
         position: relative;
         float: left;
+        padding-top: 1px;
         i {
             margin: 0;
             position: absolute;
@@ -94,14 +96,14 @@ a.item__link {
     }
     .item__timestamp {
         min-width: gs-span(1) - 16;
-        padding: 0 $gs-gutter/2 0 16px;
+        padding-right: $gs-gutter/2;
+        padding-left: 16px;
         i {
             @extend .i-clock-grey;
             left: 0;
         }
     }
     .trail__count {
-        padding-bottom: 0;
         padding-left: 28px;
         top: 0;
         a {
@@ -157,7 +159,7 @@ a.item__link {
     .item__title {
         border-top-color: $comment-dark;
         position: relative;
-        padding-top: 34px;
+        padding-top: $gs-baseline*2 + 2;
     }
     .item__link .i {
         position: absolute;
@@ -220,7 +222,7 @@ a.item__link {
         }
         &.item--comment {
             .item__title {
-                padding-top: 32px;
+                padding-top: $gs-baseline*2;
             }
             .item__link .i {
                 top: 0;
@@ -258,6 +260,11 @@ a.item__link {
         .item__image-container {
             display: none;
         }
+        @include mq($to: tablet) {
+            .item__title {
+                min-height: 0;
+            }
+        }
         @include mq(tablet) {
             .item__title {
                 @include fs-headline(3, $size-only: true);
@@ -293,6 +300,10 @@ a.item__link {
 @mixin card-headline {
     padding: 0;
     border-left-style: none;
+    .item__title,
+    .item__byline {
+        @include fs-headline(1, $size-only: true);
+    }
     .item__title {
         min-height: 0;
         @include fs-headline(1, $size-only: true);
