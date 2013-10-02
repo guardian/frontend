@@ -32,6 +32,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     def apply(key: String, default: String) = properties.getOrElse(key, default).toLowerCase
 
     val stage = apply("STAGE", "unknown")
+
+    lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
   }
 
   object switches {

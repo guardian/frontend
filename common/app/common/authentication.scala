@@ -145,7 +145,7 @@ trait LoginController extends ExecutionContexts { self: Controller =>
       )
 
       // allow test user access
-      val isTestUser = (credentials.email == "test.automation@gutest.com" && List("dev", "code", "gudev").contains(Configuration.environment.stage.toLowerCase))
+      val isTestUser = (credentials.email == "test.automation@gutest.com" && Configuration.environment.isNonProd)
 
       if (credentials.emailDomain == "guardian.co.uk" || isTestUser) {
         Redirect(session.get("loginFromUrl").getOrElse(baseUrl)).withSession {
