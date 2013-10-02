@@ -86,7 +86,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object cookies {
     lazy val lastSeenKey: String = "lastseen"
-    lazy val sessionExpiryTime = configuration.getStringProperty("auth.timeout").map(_.toInt).getOrElse(60000)
+    lazy val sessionExpiryTime = configuration.getIntegerProperty("auth.timeout").getOrElse(60000)
   }
 
   object proxy {
