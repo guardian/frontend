@@ -20,7 +20,7 @@ object Element {
 trait ImageContainer {
   self: Element =>
   lazy val imageCrops: List[ImageAsset] = delegate.assets.filter(_.assetType == "image").map(ImageAsset(_,index)).
-                                      sortBy(-_.width)
+                                           sortBy(-_.width)
 
   // The image crop with the largest width.
   lazy val largestImage: Option[ImageAsset] = imageCrops.headOption
@@ -28,7 +28,10 @@ trait ImageContainer {
 
 trait VideoContainer {
   self: Element =>
-  lazy val videoAssets: List[VideoAsset] = delegate.assets.filter(_.assetType == "video").map(VideoAsset(_))
+  lazy val videoAssets: List[VideoAsset] = delegate.assets.filter(_.assetType == "video").map(VideoAsset(_)).
+                                            sortBy(-_.width)
+
+  lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 }
 
 class ImageElement(delegate: ApiElement) extends Element(delegate) with ImageContainer
