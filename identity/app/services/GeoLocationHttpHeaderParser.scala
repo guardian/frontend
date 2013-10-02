@@ -1,12 +1,12 @@
 package services
 
-import play.api.mvc.Request
+import play.api.mvc.RequestHeader
 
 
 class GeoLocationHttpHeaderParser {
   private val HeaderKeyValueFormat = """([^:]+):([^:]+)""".r
 
-  def apply( request: Request[Any]) : GeoLocationHttpHeader = {
+  def apply( request: RequestHeader) : GeoLocationHttpHeader = {
     val geoHeaderOption = request.headers.get("X-GU-ID-Geolocation")
 
     geoHeaderOption.map { geoHeaderValue =>

@@ -41,10 +41,10 @@ abstract class IdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyPar
     response map jsonBodyParser.extract[CookiesResponse](jsonField("cookies"))
   }
 
-  def unauth(auth: Auth, trackingData: OmnitureTracking): Future[Response[Unit]] = {
+  def unauth(trackingData: OmnitureTracking, auth: Auth): Future[Response[Unit]] = {
     val response = http.GET(apiUrl("unauth"),
-      auth.parameters ++ clientAuth.parameters ++ trackingData.parameters,
-      auth.headers ++ clientAuth.headers ++ trackingData.parameters
+      clientAuth.parameters ++ trackingData.parameters ++ auth.parameters,
+      clientAuth.headers ++ trackingData.parameters ++ auth.headers
     )
     response map jsonBodyParser.extractUnit
   }
