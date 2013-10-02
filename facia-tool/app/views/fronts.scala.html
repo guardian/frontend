@@ -186,8 +186,8 @@
 
             <img data-bind="attr: {src: fields.thumbnail}" />
 
-            <div class="trail__remove">
-                <i class="icon-remove icon-white" data-bind="click: $parent.dropItem"></i>
+            <div class="trail__remove" data-bind="click: $parent.dropItem">
+                <i class="icon-remove icon-white"></i>
             </div>
 
             <a class="trail_stats u-cf" target="_blank" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + meta.id()}">

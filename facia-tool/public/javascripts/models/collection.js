@@ -48,10 +48,6 @@ define([
             'timeAgo']);
         this.state.liveMode(common.config.defaultToLiveMode);
 
-        this.dropItem = function(item) {
-            self.drop(item);
-        };
-
         this.saveItemConfig = function(item) {
             item.saveConfig(self.id);
             self.load();
@@ -65,10 +61,13 @@ define([
     }
 
     Collection.prototype.createZones = function(zoneNames) {
+        var dropItem = this.drop.bind(this);
+
         return _.map(_.isArray(zoneNames) ? zoneNames : [undefined], function(n) {
             return {
                 name: n,
-                articles: ko.observableArray()
+                articles: ko.observableArray(),
+                dropItem: dropItem
             };
         })
     };
@@ -128,7 +127,7 @@ define([
 
     Collection.prototype.drop = function(item) {
         var self = this;
-        self.live.remove(item);
+
         self.state.loadIsPending(true);
         reqwest({
             method: 'delete',
