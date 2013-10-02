@@ -161,7 +161,7 @@ object VideoEmbedCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
@@ -169,17 +169,28 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
           val src = img.attr("src")
           img.attr("src", ImgSrc(src, Naked))
+<<<<<<< HEAD
           Option(img.attr("width")).filter(_.isInt) foreach { width =>
             fig.addClass(width.toInt match {
               case width if width <= 220 => "img--base img--inline"
               case width if width < 460 => "img--median img--inline"
               case width => "img--extended"
+=======
+
+          asset.foreach { image =>
+            fig.addClass(image.width match {
+              case width if width <= 220 => "img-base inline-image"
+              case width if width < 460 => "img-median inline-image"
+              case width => "img-extended"
+>>>>>>> master
             })
             Option(img.attr("height")).filter(_.isInt) foreach { height =>
               fig.addClass(height.toInt match {
@@ -200,6 +211,10 @@ case class PictureCleaner(imageHolder: Elements) extends HtmlCleaner with implic
       }
     }
     body
+  }
+
+  def findImageFromId(id:String): Option[ImageAsset] = {
+    contentImages.filter(_.id == id).headOption.flatMap(_.largestImage)
   }
 }
 
