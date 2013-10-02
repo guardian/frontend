@@ -60,17 +60,17 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
 
     val figures = (body \\ "figure").toList
 
-    val baseImg = figures(1)
+    val baseImg = figures(0)
     (baseImg \ "@class").text should include("img--base img--inline")
     (baseImg \ "img" \ "@class").text should be("gu-image")
     (baseImg \ "img" \ "@width").text should be("140")
 
-    val medianImg = figures(2)
-    (medianImg \ "@class").text should include("img--median img--inline")
+    val medianImg = figures(1)
+    (medianImg \ "@class").text should include("img--median")
     (medianImg \ "img" \ "@class").text should be("gu-image")
     (medianImg \ "img" \ "@width").text should be("250")
 
-    val extendedImg = figures(0)
+    val extendedImg = figures(2)
     (extendedImg \ "@class").text should include("img--extended")
     (extendedImg \ "img" \ "@class").text should be("gu-image")
     (extendedImg \ "img" \ "@width").text should be("600")
@@ -196,13 +196,13 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
      </figure>
 
 
-     <figure>
+     <figure data-media-id="gu-image-4">
        <img src='http://www.a.b.c/img2.jpg' alt='Meldrum House in Oldmeldrum\n' width='500' height='100' class='gu-image'/>
        <figcaption>Image caption</figcaption>
      </figure>
 
 
-     <figure>
+     <figure data-media-id="gu-image-5">
        <img src='http://www.a.b.c/img2.jpg' alt='Meldrum House in Oldmeldrum\n' width='500' height='700' class='gu-image'/>
        <figcaption>Image caption</figcaption>
      </figure>
@@ -211,14 +211,17 @@ class TemplatesTest extends FlatSpec with ShouldMatchers {
   </span>
                                    """
 
-  private def asset(caption: String, width: Int): ApiAsset = {
-    ApiAsset("image", Some("image/jpeg"), Some("http://www.foo.com/bar"), Map("caption" -> caption, "width" -> width.toString))
+  private def asset(caption: String, width: Int, height: Int): ApiAsset = {
+    ApiAsset("image", Some("image/jpeg"), Some("http://www.foo.com/bar"), Map("caption" -> caption, "width" -> width.toString, "height" -> height.toString))
   }
 
   val bodyImages: List[ImageElement] = List(
-    new ImageElement(ApiElement("gu-image-1", "body", "image", Some(0), List(asset("caption", 140)))),
-    new ImageElement(ApiElement("gu-image-2", "body", "image", Some(0), List(asset("caption", 250)))),
-    new ImageElement(ApiElement("gu-image-3", "body", "image", Some(0), List(asset("caption", 600)))))
+    new ImageElement(ApiElement("gu-image-1", "body", "image", Some(0), List(asset("caption", 140, 100)))),
+    new ImageElement(ApiElement("gu-image-2", "body", "image", Some(0), List(asset("caption", 250, 100)))),
+    new ImageElement(ApiElement("gu-image-3", "body", "image", Some(0), List(asset("caption", 600, 100)))),
+    new ImageElement(ApiElement("gu-image-4", "body", "image", Some(0), List(asset("caption", 500, 100)))),
+    new ImageElement(ApiElement("gu-image-5", "body", "image", Some(0), List(asset("caption", 500, 700))))
+  )
 
   val bodyTextWithLinks = """
     <p>bar <a href="http://www.theguardian.com/section/2011/jan/01/words-for-url">the link</a></p>

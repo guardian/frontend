@@ -177,28 +177,18 @@ case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner
           img.attr("itemprop", "contentURL")
           val src = img.attr("src")
           img.attr("src", ImgSrc(src, Naked))
-<<<<<<< HEAD
-          Option(img.attr("width")).filter(_.isInt) foreach { width =>
-            fig.addClass(width.toInt match {
-              case width if width <= 220 => "img--base img--inline"
-              case width if width < 460 => "img--median img--inline"
-              case width => "img--extended"
-=======
 
           asset.foreach { image =>
             fig.addClass(image.width match {
-              case width if width <= 220 => "img-base inline-image"
-              case width if width < 460 => "img-median inline-image"
-              case width => "img-extended"
->>>>>>> master
+              case width if width <= 220 => "img--base img--inline"
+              case width if width < 460 => "img--median"
+              case width => "img--extended"
             })
-            Option(img.attr("height")).filter(_.isInt) foreach { height =>
-              fig.addClass(height.toInt match {
-                case height if height > width.toInt => "img--portrait"
-                case height if height < width.toInt => "img--landscape"
-                case height => ""
-              })
-            }
+            fig.addClass(image.height match {
+              case height if height > image.width => "img--portrait"
+              case height if height < image.width => "img--landscape"
+              case height => ""
+            })
           }
         }
         fig.getElementsByTag("figcaption").foreach { figcaption =>
