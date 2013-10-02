@@ -35,7 +35,7 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
       .showEditorsPicks(true)
       .response
       .map { response =>
-        SupportedContentFilter(response.editorsPicks map { Content(_) }) match {
+        response.editorsPicks map { Content(_) } match {
           case Nil => None
           case picks => Some(picks)
         }

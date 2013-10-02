@@ -99,8 +99,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       .showMostViewed(true)
       .response.map{response =>
       val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-          val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)
-
+          val popular = response.mostViewed map { Content(_) } take (10)
           if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
     }
   }
@@ -113,7 +112,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
       .response.map{response =>
       val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-      val popular = SupportedContentFilter(response.mostViewed map { Content(_) }) take (10)
+      val popular = response.mostViewed map { Content(_) } take (10)
 
       if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
     }

@@ -63,7 +63,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
       .response
 
     val result = response map { response =>
-      val storyPackage = SupportedContentFilter(response.storyPackage map { Content(_) }).toList
+      val storyPackage = response.storyPackage map { Content(_) }
 
       val supportedContent = response.content.filter { c => c.isArticle || c.isLiveBlog || c.isSudoku }
       val content = supportedContent map { Content(_) } map {

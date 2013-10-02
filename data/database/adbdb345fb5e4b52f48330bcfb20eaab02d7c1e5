@@ -2,7 +2,7 @@
   "response":{
     "status":"ok",
     "userTier":"internal",
-    "total":507,
+    "total":508,
     "startIndex":1,
     "pageSize":10,
     "currentPage":1,
@@ -17,6 +17,370 @@
       "references":[]
     },
     "results":[{
+      "id":"tv-and-radio/video/2013/oct/01/julia-gillard-sexism-roast-video",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2013-10-01T21:00:00Z",
+      "webTitle":"Julia Gillard on sexism: The Roast - video",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/video/2013/oct/01/julia-gillard-sexism-roast-video",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/video/2013/oct/01/julia-gillard-sexism-roast-video",
+      "fields":{
+        "trailText":"<p>The Roast is a daily comedy news show that promises to destroy every bastion of journalism</p>",
+        "headline":"Julia Gillard on sexism: The Roast - video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3j79x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624298426/Julia-Gillard-reveals-mur-026.jpg",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"tv-and-radio/series/the-roast",
+        "type":"series",
+        "webTitle":"The Roast",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/series/the-roast",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/series/the-roast",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/julia-gillard",
+        "type":"keyword",
+        "webTitle":"Julia Gillard",
+        "webUrl":"http://www.theguardian.com/world/julia-gillard",
+        "apiUrl":"http://content.guardianapis.com/world/julia-gillard",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-418730618",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624260728/Julia-Gillard-reveals-mur-001.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624277906/Julia-Gillard-reveals-mur-012.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"372",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624279377/Julia-Gillard-reveals-mur-013.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"90",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624280864/Julia-Gillard-reveals-mur-014.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"225",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624282383/Julia-Gillard-reveals-mur-015.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"360",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624283924/Julia-Gillard-reveals-mur-016.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"340",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624285413/Julia-Gillard-reveals-mur-017.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"54",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624286789/Julia-Gillard-reveals-mur-018.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"130",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624289752/Julia-Gillard-reveals-mur-020.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"132",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624291191/Julia-Gillard-reveals-mur-021.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"168",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624292675/Julia-Gillard-reveals-mur-022.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"180",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624294156/Julia-Gillard-reveals-mur-023.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"228",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624295559/Julia-Gillard-reveals-mur-024.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"276",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624296979/Julia-Gillard-reveals-mur-025.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"230",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624298426/Julia-Gillard-reveals-mur-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn’t do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/2/131001RoastEp125_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/1/131001RoastEp125_8139499.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/1/131001RoastEp125_8139499.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/1/131001RoastEp125/131001RoastEp125.m3u8",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/1/131001RoastEp125_8139499.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/1/131001RoastEp125_8139499.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/2/131001RoastEp125-16x9.mp4",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/1/131001RoastEp125_8139499.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/1/131001RoastEp125_8139499.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/02/131001RoastEp125_vpx.webm",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/1/131001RoastEp125_8139499.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/1/131001RoastEp125_8139499.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/2/131001RoastEp125_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/1/131001RoastEp125_8139499.jpg",
+            "height":"360",
+            "durationMinutes":"9",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/1/131001RoastEp125_8139499.jpg",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        }]
+      },{
+        "id":"gu-image-418734114",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380624298426/Julia-Gillard-reveals-mur-026.jpg",
+          "typeData":{
+            "source":"ABC2 Australia",
+            "photographer":"ABC2 Australia",
+            "altText":"Julia Gillard reveals \"murderous rage\" at sexist attacks during public interview: The Roast - video",
+            "height":"84",
+            "credit":"ABC2 Australia/ABC2 Australia",
+            "caption":"The US leaves raising the debt ceiling to the absolute last second and Julia Gillard is given warm response at first interview. Hopefully she doesn't do a Rudd and try to be PM again\r Photograph: ABC2 Australia",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"sport/video/2013/sep/26/bob-hawke-joke-americas-cup-video",
       "sectionId":"sport",
       "sectionName":"Sport",
@@ -2654,192 +3018,6 @@
             "height":"84",
             "credit":"AAP",
             "caption":"Julie Bishop sworn in Photograph: AAP",
-            "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"world/video/2013/sep/18/us-ambassador-john-berry-australia-video",
-      "sectionId":"world",
-      "sectionName":"World news",
-      "webPublicationDate":"2013-09-18T02:56:16Z",
-      "webTitle":"US ambassador John Berry's introduction to Australia - video",
-      "webUrl":"http://www.theguardian.com/world/video/2013/sep/18/us-ambassador-john-berry-australia-video",
-      "apiUrl":"http://content.guardianapis.com/world/video/2013/sep/18/us-ambassador-john-berry-australia-video",
-      "fields":{
-        "trailText":"<p>The new US ambassador to Australia, John Berry, has posted a colourful welcome video on the embassy website</p>",
-        "headline":"US ambassador John Berry's introduction to Australia - video",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/3tp8x",
-        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469673228/US-ambassador-John-Berry-010.jpg",
-        "liveBloggingNow":"false"
-      },
-      "tags":[{
-        "id":"world/australia",
-        "type":"keyword",
-        "webTitle":"Australia",
-        "webUrl":"http://www.theguardian.com/world/australia",
-        "apiUrl":"http://content.guardianapis.com/world/australia",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"world/canberra",
-        "type":"keyword",
-        "webTitle":"Canberra",
-        "webUrl":"http://www.theguardian.com/world/canberra",
-        "apiUrl":"http://content.guardianapis.com/world/canberra",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"type/video",
-        "type":"type",
-        "webTitle":"Video",
-        "webUrl":"http://www.theguardian.com/video",
-        "apiUrl":"http://content.guardianapis.com/video",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-video-417575037",
-        "relation":"main",
-        "type":"video",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469673228/US-ambassador-John-Berry-010.jpg",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "altText":"US ambassador John Berry",
-            "height":"84",
-            "credit":"US embassy Canberra",
-            "caption":"US ambassador John Berry Photograph: US embassy Canberra",
-            "width":"140"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469664013/US-ambassador-John-Berry-005.jpg",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "altText":"US ambassador John Berry",
-            "height":"360",
-            "credit":"US embassy Canberra",
-            "caption":"US ambassador John Berry Photograph: US embassy Canberra",
-            "width":"640"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469647323/US-ambassador-John-Berry-002.jpg",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "altText":"US ambassador John Berry",
-            "height":"90",
-            "credit":"US embassy Canberra",
-            "caption":"US ambassador John Berry Photograph: US embassy Canberra",
-            "width":"120"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469653253/US-ambassador-John-Berry-003.jpg",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "altText":"US ambassador John Berry",
-            "height":"225",
-            "credit":"US embassy Canberra",
-            "caption":"US ambassador John Berry Photograph: US embassy Canberra",
-            "width":"300"
-          }
-        },{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469656391/US-ambassador-John-Berry-004.jpg",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "altText":"US ambassador John Berry",
-            "height":"360",
-            "credit":"US embassy Canberra",
-            "caption":"US ambassador John Berry Photograph: US embassy Canberra",
-            "width":"480"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/mp4",
-          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/18/130818USambassadortoAustralia_FromGAus-16x9.mp4",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469647323/US-ambassador-John-Berry-002.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469656391/US-ambassador-John-Berry-004.jpg",
-            "width":"480",
-            "durationSeconds":"15"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:small",
-          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/18/130818USambassadortoAustralia_FromGAus_3gpSml16x9.3gp",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469647323/US-ambassador-John-Berry-002.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469656391/US-ambassador-John-Berry-004.jpg",
-            "width":"480",
-            "durationSeconds":"15"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/3gpp:large",
-          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/18/130818USambassadortoAustralia_FromGAus_3gpLg16x9.3gp",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469647323/US-ambassador-John-Berry-002.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469656391/US-ambassador-John-Berry-004.jpg",
-            "width":"480",
-            "durationSeconds":"15"
-          }
-        },{
-          "type":"video",
-          "mimeType":"video/m3u8",
-          "file":"http://cdn.theguardian.tv/ad/2013/9/18/130818USambassadortoAustralia_FromGAus/130818USambassadortoAustralia_FromGAus.m3u8",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "embeddable":"true",
-            "blockAds":"false",
-            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469647323/US-ambassador-John-Berry-002.jpg",
-            "height":"360",
-            "durationMinutes":"2",
-            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469656391/US-ambassador-John-Berry-004.jpg",
-            "width":"480",
-            "durationSeconds":"15"
-          }
-        }]
-      },{
-        "id":"gu-image-417575827",
-        "relation":"thumbnail",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/18/1379469673228/US-ambassador-John-Berry-010.jpg",
-          "typeData":{
-            "source":"US embassy Canberra",
-            "altText":"US ambassador John Berry",
-            "height":"84",
-            "credit":"US embassy Canberra",
-            "caption":"US ambassador John Berry Photograph: US embassy Canberra",
             "width":"140"
           }
         }]
