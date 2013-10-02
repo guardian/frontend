@@ -172,6 +172,7 @@
     margin-bottom: $baseline*2;
     min-height: 20px;
     padding: $baseline - 1 0 $baseline*3 - 1 0;
+    color: $c-neutral2;
 
     article & {
         @include mq(tablet, leftCol) {

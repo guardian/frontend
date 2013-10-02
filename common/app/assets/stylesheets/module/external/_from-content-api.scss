@@ -224,10 +224,10 @@ figure {
     &.img--portrait {
         figcaption {
             background-color: $c-neutral7;
-            padding: $baseline*2 $gs-gutter/2 $baseline*6 $gs-gutter/2;
+            padding: $baseline 6px $baseline*6 6px;
 
             @include mq(wide) {
-                padding-bottom: $gs-column-height;
+                padding: $baseline*1.5 8px $gs-column-height 8px;
             }
         }
     }
