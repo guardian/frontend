@@ -51,7 +51,8 @@ define('bootstraps/app', [
         attachGlobalErrorHandler: function (config) {
             var e = new Errors({
                 window: window,
-                isDev: config.page.isDev
+                isDev: config.page.isDev,
+                beaconUrl: config.page.beaconUrl
             });
             e.init();
             common.mediator.on("module:error", e.log);
