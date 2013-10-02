@@ -1,9 +1,9 @@
 .social-wrapper {
-   padding: $baseline*3 0 $baseline*4;
-   max-width: gs-span(4);
-   overflow: hidden;
-   white-space: nowrap;
-   margin-bottom: $baseline*4;
+    padding: $baseline*3 0 $baseline*4;
+    max-width: gs-span(4);
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: $baseline*4;
 }
 .social__item {
     float: left;
@@ -21,13 +21,6 @@
 }
 .social__icon {
     position: absolute;
-    left: 5px;
-    bottom: 3px;
-}
-.social__icon--dock {
     left: 0;
-}
-.social__icon--small {
-    @include transform(scale(0.9));
-    @include transform-origin(0 100%);
+    bottom: 3px;
 }
