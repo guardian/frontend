@@ -95,7 +95,7 @@ define([
                 switches: switches,
                 responseSelector: responseSelector,
                 progressToggle: true,
-                progressColour: '#20a111'
+                progressColour: '#70d2e6'
             }).init();
         }
     };
