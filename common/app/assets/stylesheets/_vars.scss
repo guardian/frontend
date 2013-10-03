@@ -133,9 +133,14 @@ $c-neutral7: #f4f4ee;
 
 /* Tones
    ========================================================================== */
-$c-newsDefault: #4490CE;
-$c-featureDefault: #D23D54;
+$c-newsDefault: #065E91;
+$c-newsAccent: #21BDFF;
+
+$c-featureDefault: #981F5C;
+$c-featureAccent: #F57188;
+
 $c-commentDefault: #FB8935;
+$c-commentAccent: #FEC000;
 
 
 /* Zones
@@ -152,14 +157,15 @@ $environmentGreen: #4A7801;
 $lifeandstyleOrange: #EA721E;
 $moneyPurple: #7D0068;
 $newsRed: #D61D00;
-$sportBright: #20A111;
-$sportDark: #005D1D;
-$sportMid: #057227;
+
 $travelBlue: #066EC9;
 
 
 /* Football
    ========================================================================== */
 
+$sportBright: #4bc6df;
+$sportMid: #005689;
+$sportDark: #003f64;
 $homeColour: $sportBright;
 $awayColour: #19646E;
