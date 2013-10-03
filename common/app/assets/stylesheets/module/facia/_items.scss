@@ -221,7 +221,7 @@ a.item__link {
 }
 
 @mixin first-row($first-row-size) {
-    .item:nth-child(-n + #{$first-row-size}) {
+    .item:nth-child(-n+#{$first-row-size}) {
         margin-top: $gs-baseline/2;
         .item__title {
             padding-top: 0;
@@ -249,11 +249,11 @@ a.item__link {
     @include first-row($row-size);
     // stylings for begining and end of rows
     .item:first-child,
-    .item:nth-child(#{$row-size}n + #{$first-row-size + 1}) {
+    .item:nth-child(#{$row-size}n+#{$first-row-size + 1}) {
         @include row-start;
     }
-    .item:nth-child(#{$row-size}n + #{$first-row-size}),
-    .item:nth-child(#{$row-size}n + #{$first-row-size + $row-size}) {
+    .item:nth-child(#{$row-size}n+#{$first-row-size}),
+    .item:nth-child(#{$row-size}n+#{$first-row-size + $row-size}) {
         @include row-end;
     }
 }
